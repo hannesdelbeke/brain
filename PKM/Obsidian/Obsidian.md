@@ -14,4 +14,5 @@ for more info see the [official docs](https://help.obsidian.md/Obsidian/Index)
 
 Obsidian let's you type [[Markdown]] and uses [[WYSIWYG]] to instantly show you a formatted version. 
 
-#obsidian #PKM
+[[personal knowledge management|PKM]]
+#obsidian
