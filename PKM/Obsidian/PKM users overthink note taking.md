@@ -8,6 +8,4 @@ examples
   > I spent more time than I am proud of reading articles about the ZettelKasten Method.
   > thinking of note-taking systems is a bit of a hobby of mine
   
-  
-  
-  
+[[personal knowledge management|PKM]]
