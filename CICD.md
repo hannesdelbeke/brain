@@ -5,3 +5,4 @@ aliases:
   - CI/CD
   - CI-CD
 ---
+automate [[deployment]]
