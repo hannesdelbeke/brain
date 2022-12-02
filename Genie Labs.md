@@ -5,7 +5,7 @@ Easy create [[Artificial intelligence|AI]] [[3d model|3d models]] & [[texture|te
 • [[user generated content|UGC]] tool for mid-size live studios 
 	• API to enable AI-UGC directly in your game 
 	• Players can retexture avatars, props, weapon skins. 
-• Their proprietary tech adjusts to the avatar style of the studio. 
+• Their proprietary tech adjusts to the [[avatar]] style of the studio. 
 • Key value for their customers: 
 	• Works with their art style. 
 	• IP leak protection, legal compliance, and a good interface for the players. 

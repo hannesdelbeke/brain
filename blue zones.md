@@ -27,3 +27,4 @@ nine common practices. Called the [Power 9](https://www.bluezones.com/2016/11/p
 	- [Loneliness](https://www.medicalnewstoday.com/articles/320534) is a top risk factor for a shorter life
 
 [[longevity]]
+[[health]]
