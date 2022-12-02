@@ -7,3 +7,5 @@ aliases:
   - immunization
   - immunisation
 ---
+[[physical health]]
+prevent [[illness]]

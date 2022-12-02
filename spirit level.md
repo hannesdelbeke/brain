@@ -5,3 +5,4 @@ aliases:
 
 [[straight]]
 [[horizontal]]
+[[tool]]

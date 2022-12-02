@@ -173,6 +173,6 @@ The height is the same as the circumference. The width is 2 times the radius, ju
 
 `-21.5150514219615068158126571107187718614782171433752`
 
-Now knowing all of this, it easy to automate the whole proces! This will make creating modular curved pieces much easier for the artist, which was my final goal. This was quite different from my usual process, which barely uses mathematics and is more pure scripting and automating. I decided to write down my though process so people can understand why this number was used and how they can use it for their own solutions.
+Now knowing all of this, it easy to automate the whole proces! This will make creating modular curved pieces much easier for the artist, which was my final goal. This was quite different from my usual process, which barely uses [[mathematics]] and is more pure scripting and automating. I decided to write down my though process so people can understand why this number was used and how they can use it for their own solutions.
 
 [http://www.scriptspot.com/3ds-max/scripts/advanced-bend-modifier](http://www.scriptspot.com/3ds-max/scripts/advanced-bend-modifier)
