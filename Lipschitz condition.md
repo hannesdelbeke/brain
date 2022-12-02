@@ -1,4 +1,2 @@
 
-special conditions that guarantee a [[unique]] mathematical solution 
-
-[[math]]
+special conditions that guarantee a [[unique]] [[mathematics|mathematical]] solution 

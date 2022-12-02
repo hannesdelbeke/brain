@@ -2,3 +2,4 @@
 aliases:
   - KPI
 ---
+[[sales]]

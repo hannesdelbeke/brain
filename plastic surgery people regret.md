@@ -11,3 +11,4 @@
 	- Botox - at first I did not regret it at all and I loved it, but then I loved it so much I kept going back for more…and I just got carried away with the whole thing. My face definitely started to look weird af
 	- Got botox for crows feet and regret it. Now when I smile, I don't look happy. I just look scary instead because my mouth is smiling but my eyes look stoic
 - micro blading doesn't age well
+[[plastic surgery]]

@@ -1,4 +1,4 @@
-click a [[thumbnail]] on your [[mobile]] phone to launch a [[macro]] or [[action]] on your device, similar to an [[app launcher]]
+click a [[thumbnail]] on your [[mobile phone]] to launch a [[macro]] or [[action]] on your device, similar to an [[app launcher]]
 
 Deckboard is not open source, but there is a free version with limited grid.
 ## Review

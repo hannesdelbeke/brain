@@ -1,1 +1,1 @@
-ad free [[Twitch]]
+[[ad-block|ad free]] [[Twitch]]
