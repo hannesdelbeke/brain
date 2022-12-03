@@ -1,4 +1,4 @@
-[[unity]] 
+[[Unity]] 
  [[tool launcher]]
 
 unity menu's tend to contain a lot of files.

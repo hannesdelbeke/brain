@@ -23,7 +23,7 @@ Annotate any website (or pdf)
 > 	- syncs several notes in 1 page
 
 ### Needed
-- bidirectional sync would allow me to add [[wikilinks]] to the notes, linking [[Obsidian ]] notes to my web notes
+- bidirectional sync would allow me to add [[wikilink]] to the notes, linking [[Obsidian ]] notes to my web notes
 - better [[backup]] support, or a better sync plugin would give me more control over my notes
 
 ### Other

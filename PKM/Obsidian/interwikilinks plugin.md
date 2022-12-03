@@ -1,4 +1,4 @@
-What if [[wikilinks]] to other websites just worked?
+What if [[wikilink]] to other websites just worked?
 Currently it's only local vault files.
 
 turns out this exists already.

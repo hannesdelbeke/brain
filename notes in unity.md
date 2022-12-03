@@ -1,4 +1,4 @@
-create [[notes]] in [[unity]]
+create [[notes]] in [[Unity]]
 
 might be useful to link [[obsidian]] to unity.
 create some kind of living documentation during gamedev

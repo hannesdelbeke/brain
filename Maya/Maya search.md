@@ -1,11 +1,13 @@
 a command [[search bar]] added in [[Autodesk Maya|Maya]] 2022
 
-press `CTRL + F`
-or go to the menu Help > Search bar
+open:
+- press `CTRL + F`
+- or go to the menu Help > Search bar
 
+extend
+- to add custom command, see [[maya runTimeCommand]] 
 ### Cons
-no favorite
-no custom command support 
+- no favoriting ⭐
 
 similar to
 - [[Maya quick launcher]]
