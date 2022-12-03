@@ -1,0 +1,1 @@
+often opposed to [[minimalism]]

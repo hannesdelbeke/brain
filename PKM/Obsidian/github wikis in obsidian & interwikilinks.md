@@ -1,6 +1,6 @@
 > [!NOTE] conclusion
 > As long as interwiki-links aren't supported for obsidian (and GitHub)
-> I'll use separate vaults and normal [[wikilinks]]
+> I'll use separate vaults and normal [[wikilink]]
 
 problem:
 - interwiki links don't work in github

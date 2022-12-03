@@ -1,3 +1,4 @@
+
 ### Scenario
 - you want to add private comments to a slack thread for yourself
 - you want to privately annotate on a shared document from your team. e.g. google-doc
@@ -43,4 +44,4 @@ Slack supports URL links to threads. We could have a database that gets the thre
 If linking to a specific line, what happens if the line changes?
 let's link to the whole doc, or thread for now.
 
-#link
+[[link]]

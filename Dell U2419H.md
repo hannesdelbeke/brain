@@ -1,13 +1,13 @@
-[[monitor]]
-USB turns of when in powersave mode (computer off)
+[[monitor]][[hardware]]
+[[USB]] turns of when in powersave mode (computer off)
 
 
 1920x1080
 16:9
 LED
-- 1x DisplayPort (HDCP), 
+- 1x [[DisplayPort]] (HDCP), 
 - 1x DisplayPort out (MST), 
-- 1x HDMI (HDCP), 
+- 1x [[HDMI]] (HDCP), 
 - 2 x USB 3.0 downstream, 
 - 2 x USB 3.0 downstream with Battery Charging 1.2, 
 - 1x USB 3.0 upstream, 

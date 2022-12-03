@@ -1,0 +1,1 @@
+A pure virtual solution (no [[hardware]] required) that replaces a previous hardware solution.

@@ -5,4 +5,4 @@
 - [gameplay on twitter](https://twitter.com/i/status/1224050361335414784) 
 - water shader GIF on twitter https://twitter.com/hannesdelbeke/status/1224052945530097665
 
-[[unity]] [[GitLab]] [[Global Game Jam]]
+[[Unity]] [[GitLab]] [[Global Game Jam]]
