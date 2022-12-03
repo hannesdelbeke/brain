@@ -8,4 +8,4 @@ TODO
 - [ ] backup WhatsApp, default supports google drive backup which should be enough.
 - [ ] backup contacts (google contacts)
 - [ ] backup google drive
-- [ ] 
+- [ ] read [article](https://github.com/geerlingguy/my-backup-plan) on different backups, code, pictures, ...

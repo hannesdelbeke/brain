@@ -1,4 +1,4 @@
-[[orthodontist]] [[manchester]]
+[[orthodontist]] [[Manchester]]
 
 https://www.orthodonticsmanchester.co.uk/ starts cheap
 https://www.ringwaydental.com/prices/ medium 4k

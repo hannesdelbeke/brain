@@ -13,11 +13,15 @@ Don't spend more time on notes than work.
 - [ ] ability edit obsidian vault online, in the browser
 	- [ ] action to auto sync from gitwiki to repo
 - [ ] right click and button hover show short keys, [thread](https://forum.obsidian.md/t/adding-shortcuts-to-the-right-click-context-menu/46160) 
-- [ ] note linking duplicate source (what does this mean?)
+- [ ] [[note linking duplicate source]]
 - [x] improve [[navigate sibling page]], next & previous button
 - [x] automatic support for submodules, workaround for manually pulling and pushing submodules., see [[Obsidian submodule]]
 - [x] [[auto collapse linked mentions in Obsidian]] (Work around)
 
+my own workflow improvements, not related to obsidian
+- [ ] [[minimize pkm image size]]
+- [ ] [[link unlinked noted]]
+- [ ] [[discover a garden's essence]]
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
 - [ ] support folders starting with `.` see forum [post](https://forum.obsidian.md/t/enable-use-of-hidden-files-and-folders-starting-with-a-dot-dotfiles-dotfolders-within-obsidian/26908)
@@ -42,8 +46,12 @@ Don't spend more time on notes than work.
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
 - [ ] [[Obsidian auto complete]]
 - [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)
+- [ ] exclude folders, e.g. daily folder, from backlinks
+	- [ ] Settings > Files & Links > Excluded files
 - [x] support code in dropdown, workaround: [[toggle code in Obsidian]]
 - [x] open web URLs in obsidian tab.  https://github.com/MamoruDS/obsidian-open-link-with
+- [x] [[Obsidian quick move]] the current note to a folder
+- [x] [[Obsidian distinguish internal & external links]]
 
 related to improvements:
 plugin development

@@ -2,7 +2,7 @@
 
 potentially an Obsidian plugin to redirect notes to URLs or other notes
 - https://en.wikipedia.org/wiki/Wikipedia:Redirect
-- enable [[wikilinks]] to a single source, for non wikilinks. When you update the source URL in the note, it auto updates everywhere because of wikilinks.
+- enable [[wikilink]] to a single source, for non wikilinks. When you update the source URL in the note, it auto updates everywhere because of wikilinks.
 - [feature request](https://forum.obsidian.md/t/note-as-a-url-redirect/34718) on forum
 
 ### workaround 

@@ -6,4 +6,4 @@ imagine you can subscribe to others PKM wikis, add them to your favorites or res
 - notification when someone links to your page, likes your note, ...
 - link requests
 
-[[Obsidian]] social media
+[[Obsidian]] [[social media]]

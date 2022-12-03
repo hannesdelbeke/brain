@@ -12,7 +12,7 @@ options:
 
 ## Hashtag purpose vs link
 The use of tags is quite divided. 
-- Some say to use tags for note statuses instead of linking. Since linking should always be decisive with [[wikilinks]]
+- Some say to use tags for note statuses instead of linking. Since linking should always be decisive with [[wikilink]]
 - But [[Tags can help with new insights]] by finding new connections, whereas wikilinks rely on the author making the connection. Limited to their knowledge.
 
 This [post](https://forum.obsidian.md/t/a-guide-on-links-vs-tags-in-obsidian/28231) discusses differences between links and tags.

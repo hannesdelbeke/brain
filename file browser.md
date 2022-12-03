@@ -13,6 +13,10 @@ Useful when a studio has thousands of assets, and the assets do not have a thumb
 
 An asset browser speeds up finding the right asset instantly, by providing a search and visual preview.
 
+suggested features
+- [[search bar]]
+- [[favorite]]
+- easy load / import / open file
 ## Blender
 - [[Blender]] has a [file browser](https://docs.blender.org/manual/en/latest/editors/file_browser.html), which is basic and similar to the experience in explorer.
 - Blender has an [asset browser](https://docs.blender.org/manual/en/latest/editors/asset_browser.html), which is slow. It needs to load all the `.blend` files to generate the thumbnails. And it requires assets to be marked as an asset in the blend file.
