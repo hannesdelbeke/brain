@@ -10,5 +10,5 @@ no exit fee
 
 [estimate fees](https://www.fidelity.co.uk/estimate-my-fees/)
 
-II might be cheaper
+`II` might be cheaper
 
