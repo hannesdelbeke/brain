@@ -5,4 +5,4 @@
 Links:
 - A similar experience to chrome would be great for indies.
 take your tools with you, across studios.
-[[Chrome remembers extensions]]
+[[chrome remembers extensions]]
