@@ -11,7 +11,7 @@ https://github.com/csaez/quicklauncher
 
 - see `flowlauncher` for windows
 ### improvements
-- even quicker is voice control (e.g. with chat GPT / amazon alexa) [[speech to text]]
+- even quicker is voice control (e.g. with chat GPT / amazon alexa) [[speech to text - Python]]
 - show completer when pressing backspace
 - make modular, so it can be reused outside Maya
 
