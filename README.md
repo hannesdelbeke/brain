@@ -7,4 +7,5 @@ The goal:
 - Share learnings to help others  
 - A automated way, to let me publish notes in an easy way without wasting time
 - Tightly link posts, and split knowledge in small atomic chunks where possible.
+- Allow unfinished notes to prevent writer's block
 
