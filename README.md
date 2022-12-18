@@ -32,4 +32,4 @@ My private setup:
 
 ### Links
 Markdown [[wikilinks]] aren't supported by GitHub preview.
-Wikilinks use is preffered in all files, expect this README.md file, which is the GitHub landing page.
+- Please use wikilinks in all files, expect this README.md file, which is the GitHub landing page.
