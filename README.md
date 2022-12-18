@@ -1,10 +1,10 @@
 # Public notes about game dev & anything else
 
 - knowledge is organized based on zettel / digital garden.  
-- For managing this wiki, I use Obsidian
+- For managing this wiki, I use [Obsidian](https://obsidian.md/)
   
-The main goal is   
-- to publish learnings that would help other devs  
-- do this in an easy way. no extra effort on my side. I don't have much time.  
-- tightly link posts, and split knowledge in small atomic chunks where possible.
+The goal:
+- Share learnings to help others  
+- A automated way, to let me publish notes in an easy way without wasting time
+- Tightly link posts, and split knowledge in small atomic chunks where possible.
 

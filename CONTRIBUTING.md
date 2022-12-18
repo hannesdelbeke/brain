@@ -21,3 +21,9 @@ My private setup:
 ### Links
 Markdown [[wikilinks]] aren't supported by GitHub preview.
 - Please use wikilinks in all files, expect this README.md file, which is the GitHub landing page.
+
+## writing content
+lots of devs write bad docs. You won't if you write tight. keep it short!
+e.g. Compare the following:
+> When I was working on a plugin in maya, I saw that adding ABC to the path did X. 
+> In maya, adding ABC to the path does X.
