@@ -1,11 +1,11 @@
 #public #git #submodule #obsidian
 
-the git plugin doesn't support pulling updates on submodules
-instead of updating the git plugin code, we can use [execute code](https://github.com/twibiral/obsidian-execute-code) from notes plugin
+The [git plugin](https://github.com/denolehov/obsidian-git) doesn't support submodules.
+Instead we can use [execute code](https://github.com/twibiral/obsidian-execute-code) plugin to easily update submodules from in Obsidian
 
-if on windows, do this first: [[bash on windows]]
+If on windows, first add support for [[bash on windows]]
 
-## run this to update submodules in obsidian directory
+## pull submodule
 ```shell
 RAWVAULT=(@vault)
 
@@ -26,7 +26,7 @@ git submodule update --remote
 echo $VAULT  # this fixes it
 ```
 
-push submodule updates
+## push submodule
 ```shell
 RAWVAULT=(@vault)
 

@@ -9,3 +9,5 @@ winget install git.git
 
 you can test that it worked by running `cmd` and typing `bash`,
 if installed successfully it displays a blinking $
+
+3. restart Obsidian, you now can run bash code with [execute code](https://github.com/twibiral/obsidian-execute-code)
