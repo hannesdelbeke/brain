@@ -1,7 +1,8 @@
 #public #git #submodule #obsidian
 
-The [git plugin](https://github.com/denolehov/obsidian-git) doesn't support submodules.
-Instead we can use [execute code](https://github.com/twibiral/obsidian-execute-code) plugin to easily update submodules from in Obsidian
+~~The [git plugin](https://github.com/denolehov/obsidian-git) doesn't support submodules.~~ It now does on PC!
+
+Instead we can use [execute code](https://github.com/twibiral/obsidian-execute-code) plugin to easily update submodules from in Obsidian (PC only)
 
 If on windows, first add support for [[bash on windows]]
 
