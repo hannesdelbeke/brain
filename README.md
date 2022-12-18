@@ -14,7 +14,7 @@ You can edit any page on github or your favorite text program, but for the best 
 
 ### links
 Markdown [[wikilinks]] aren't supported by GitHub preview.
-The exception to this is this README.md file, to act as a landing page on GitHub
+Wikilinks use is preffered in all files, expect this README.md file, which is the GitHub landing page.
 
 ## Setup in Obsidian
 
