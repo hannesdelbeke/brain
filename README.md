@@ -1,12 +1,14 @@
-# Home
-
-## Public notes about game dev & anything else
+Read the notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
 
 - knowledge is organized based on zettel / digital garden.  
 - For managing this wiki, I use [Obsidian](https://obsidian.md/)
   
-The goal:
+**Goal**:
 - Share learnings to help others  
-- A automated way, to let me publish notes in an easy way without wasting time
+- Automated build & deploy site, publish notes without wasting time
 - Tightly link posts, and split knowledge in small atomic chunks where possible.
 - Allow unfinished notes to prevent writer's block
+- compatible with [Obsidian](<[Obsidian](https://obsidian.md/)>)
+
+### Site hosting
+Hosted on GitHub pages, see [build repo](https://github.com/hannesdelbeke/wiki) 
