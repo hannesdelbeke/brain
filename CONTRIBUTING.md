@@ -19,11 +19,10 @@ My private setup:
 - get the obsidian git plugin, and in options: enable update submodules
 
 ### Links
-Markdown [[wikilinks]] aren't supported by GitHub preview.
-- Please use wikilinks in all files, expect this README.md file, which is the GitHub landing page.
+Markdown [[wikilinks]] aren't supported by GitHub preview, but are heavily used in Obsidian & other wiki apps. The site theme supports conversion, so please use wikilinks in all files, except files meant to be read on GitHub like the [[README]]
 
-## writing content
-lots of devs write bad docs. You won't if you write tight. keep it short!
+## Writing content
+keep it short!
 e.g. Compare the following:
 > When I was working on a plugin in maya, I saw that adding ABC to the path did X. 
 > In maya, adding ABC to the path does X.
