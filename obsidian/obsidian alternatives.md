@@ -54,7 +54,7 @@
 - https://nota.md/
 	- mac only
 	- not released
-	- [[wikilinks
+	- [[wikilinks]]
 - [typora](https://support.typora.io/Links/)
 	- no wiki links, see [doc](https://support.typora.io/Links/)
 
