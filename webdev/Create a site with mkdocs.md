@@ -1,3 +1,6 @@
+mkdocs creates a HTML site from markdown.
+This is compatible with [[Obsidian]]
+
 - Create a new project in PyCharm
 - install the package  `mkdocs-material`
 - create an empty mkdocs project
@@ -17,4 +20,4 @@ mkdocs build
 
 more details can be found on the MkDocs-material [tutorial](https://squidfunk.github.io/mkdocs-material/creating-your-site/)
 
-#website #python #mkdocs
+#website #python #mkdocs #markdown
