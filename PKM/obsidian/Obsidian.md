@@ -6,4 +6,6 @@ install on windows with [[winget]]
 winget install -e --id Obsidian.Obsidian
 ```
 
+for more info see the [official docs](https://help.obsidian.md/Obsidian/Index)
+
 #obsidian #PKM
