@@ -20,5 +20,7 @@ Don't spend more time on notes than work.
 	- there's a plugin that does this, but it's all or nothing
 - [ ] date a note was edited (based on git)
 - [ ] open note on GitHub shortcut
+- [ ] spaces on tab in code blocks
+- [ ] no spellcheck in links, see [bug report](https://forum.obsidian.md/t/disable-spellcheck-in-urls-and-links/50118) 
 
 #obsidian 

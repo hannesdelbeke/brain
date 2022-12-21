@@ -1,0 +1,60 @@
+
+A study on how mkdocs theme toggles a menu without JavaScript
+context: if we click the Folder22 label, it opens and shows all labels for the files inside
+
+
+```HTML
+<!-- this contains both the parent & child element-->
+<li class="md-nav__item md-nav__item--nested">
+
+    [<!-- make a toggle checkbox to control '__nav_6' 
+      the previous sibling element is named '__nav_5' -->
+    <input class="md-nav__toggle md-toggle" 
+    data-md-toggle="__nav_6" id="__nav_6" type="checkbox">
+    
+    <!-- make a parent label that'll be triggered by the checkbox  -->
+    <label class="md-nav__link" for="__nav_6"> <!-- 'for' is an attribute -->
+        Folder22
+        
+        <!-- put an icon in the label, so that it's on the same line,
+        and inherits the wrapping/layout -->
+        <span class="md-nav__icon md-icon">
+        </span>
+        
+    </label>
+    
+    <!-- make a child label that shows when clicking the parent -->
+    <nav class="md-nav" data-md-level="1">
+        <!-- An _unordered list_ starts with the <_ul_> tag -->
+        <ul class="md-nav__list">
+            <!-- Each list item starts with the <li> tag -->
+            <li class="md-nav__item"> 
+                <a class="md-nav__link" title="Test2"
+                href="http://127.0.0.1:8000/wiki/folder22/test2/">
+                    Test2
+                </a>
+            </li>
+        </ul>
+    </nav>
+</li>
+```
+
+`~` is the [[subsequent-sibling combinator]]
+
+```CSS
+/* note the ~ */
+.md-nav--primary .md-nav__title .md-nav__icon, .md-nav__toggle~.md-nav {
+    display: none;
+}
+
+.md-nav__toggle:checked~.md-nav, .md-nav__toggle:indeterminate~.md-nav {
+    display: block;
+}
+```
+
+**Notes**
+- note it uses [[BEM naming convention]]
+- md toggle comes from mkdocs, md -> makedocs
+- every toggle needs a unique id!
+
+#HTML #CSS 
