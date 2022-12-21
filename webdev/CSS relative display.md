@@ -2,7 +2,6 @@ An element takes up space (width & height)
 The [display](https://www.w3schools.com/cssref/pr_class_display.php) decides if the next element is shown on the same line, or a new one.
 e.g. to draw an element next to another without taking up any space
 
-
 ```html
 <style>
 .testclass {
@@ -21,4 +20,4 @@ e.g. to draw an element next to another without taking up any space
 <body>
 ```
 
-#html #css
+#HTML  #CSS

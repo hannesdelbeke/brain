@@ -44,6 +44,6 @@ To prevent the site breaking when renaming classes without knowing you have to r
 const nav = document.querySelector('.js-site-navigation')
 ```
 
-#css #naming-convention #HTML
+#CSS #naming-convention #HTML
 
 [1]: https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849
