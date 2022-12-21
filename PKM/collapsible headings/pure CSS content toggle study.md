@@ -2,6 +2,19 @@
 A study on how mkdocs theme toggles a menu without JavaScript
 context: if we click the Folder22 label, it opens and shows all labels for the files inside
 
+## Learnings
+
+`.md-nav__toggle` contains checked state
+`.md-nav` comes after toggle
+
+```CSS
+/* hide the nav that comes after the checkbox, when checkbox is toggled */
+.md-nav__toggle:checked~.md-nav{
+	display: none;
+}
+```
+
+## Study
 
 ```HTML
 <!-- this contains both the parent & child element-->
@@ -47,6 +60,7 @@ context: if we click the Folder22 label, it opens and shows all labels for the f
     display: none;
 }
 
+/* with ~ we select the nav, after the toggle*/
 .md-nav__toggle:checked~.md-nav, .md-nav__toggle:indeterminate~.md-nav {
     display: block;
 }
