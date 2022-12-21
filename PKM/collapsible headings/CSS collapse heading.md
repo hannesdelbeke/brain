@@ -8,7 +8,6 @@ based on the [[pure CSS content toggle study]]
 test
  test
   
-
 ```CSS
 /* hide the nav that comes after the checkbox, when checkbox is toggled */
 .md-heading-toggle:checked~.md-ch-heading-content{
