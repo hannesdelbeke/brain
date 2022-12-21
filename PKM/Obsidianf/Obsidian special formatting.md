@@ -1,4 +1,3 @@
-### obsidian formatting
 [[Obsidian]] uses industry-standard Commonmark, GFM, Github [[wikilinks]], and [[YAML front matter]]. The only Obsidian-specific extensions it adds are:
 
 ```txt
