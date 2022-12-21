@@ -71,4 +71,36 @@ context: if we click the Folder22 label, it opens and shows all labels for the f
 - md toggle comes from mkdocs, md -> makedocs
 - every toggle needs a unique id!
 
+nav icon rotate and hover
+```CSS
+.md-nav__icon{
+	border-radius:100%;
+	height:.9rem;
+	transition:background-color .25s,transform .25s;
+	width:.9rem
+}
+[dir=rtl] .md-nav__icon{
+	transform:rotate(180deg)
+}
+.md-nav__icon:hover{
+	background-color:var(--md-accent-fg-color--transparent)
+}
+.md-nav__icon:after{
+	background-color:currentcolor;
+	content:"";
+	display:inline-block;
+	height:100%;
+	-webkit-mask-image:var(--md-nav-icon--next);
+	mask-image:var(--md-nav-icon--next);
+	-webkit-mask-position:center;
+	mask-position:center;
+	-webkit-mask-repeat:no-repeat;
+	mask-repeat:no-repeat;
+	-webkit-mask-size:contain;
+	mask-size:contain;
+	vertical-align:-.1rem;
+	width:100%
+}
+```
+
 #HTML #CSS 
