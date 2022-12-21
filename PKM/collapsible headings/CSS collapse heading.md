@@ -3,11 +3,12 @@ based on the [[pure CSS content toggle study]]
 setup in mkdocs:
 ```
 input, class md-nav__toggle md-toggle
-	label, class md-nav__link
-		text
-		span, class md-nav__icon md-icon
+label, class md-nav__link
+	text dropdown title
+	span, class md-nav__icon md-ico
+label (title again but usually not visible)
+	content of dropdown
 ```
-
 
 `.md-ch-heading__toggle` contains checked state
 `.md-ch-heading-content` comes after toggle
