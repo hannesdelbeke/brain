@@ -1,4 +1,14 @@
+
+## Toggle headers
+- [x] prototype with JavaScript, see [repo](https://github.com/hannesdelbeke/mkdocs-collapsable-headers)
+- [ ] better UX
+- [ ] pure CSS implementation
+- [ ] release on PyPi, share with the community
+
 based on the [[pure CSS content toggle study]]
+
+- [ ] TODO check out this [tutorial](https://developer.mozilla.org/en-US/docs/Web/CSS/:checked) that hides text content with just CSS.
+- [ ] https://www.digitalocean.com/community/tutorials/css-collapsible
 
 setup in mkdocs:
 ```
@@ -66,8 +76,9 @@ current CSS
 </div>
 ```
 
-we might be able to reuse headerlink, it auto hides when not hovering header
-note that it doesn't work on the left side!
+## show / hide toggle button
+we might be able to reuse headerlink, it auto hides when not hovering header.
+Note that it doesn't trigger when hovering mouse on the left side of the heading!
 
 ```HTML
 <a class="headerlink" href="http://127.0.0.1:8000/wiki/folder1/test1b/#h1" title="Permanent link">¶</a>

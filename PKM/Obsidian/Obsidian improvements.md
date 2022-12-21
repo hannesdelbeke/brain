@@ -10,7 +10,7 @@ Don't spend more time on notes than work.
 - [ ] support for submodules, workaround to [[update submodule in obsidian]]
 
 ### low priority 
-- [ ] [[lazy load obsidian plugins]] seems nice but don't need it yet
+- [ ] [lazy load Obsidian plugins](https://github.com/ohm-en/obsidian-plugin-manager) seems nice but don't need it yet
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
 - [ ] preview on hover URL link improves reading quick summaries
 	- this site does it well [Andy](https://notes.andymatuschak.org/)
