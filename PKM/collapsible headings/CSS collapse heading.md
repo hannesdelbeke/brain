@@ -1,5 +1,14 @@
 based on the [[pure CSS content toggle study]]
 
+setup in mkdocs:
+```
+input, class md-nav__toggle md-toggle
+	label, class md-nav__link
+		text
+		span, class md-nav__icon md-icon
+```
+
+
 `.md-ch-heading__toggle` contains checked state
 `.md-ch-heading-content` comes after toggle
 - [ ] How is checked state passed by clicking the icon?
