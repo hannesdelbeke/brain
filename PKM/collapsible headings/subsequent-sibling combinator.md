@@ -1,6 +1,6 @@
-this is a [combinator](https://w3c.github.io/csswg-drafts/selectors/#selector-combinator)  
+The `~` tilde symbol is a [combinator](https://w3c.github.io/csswg-drafts/selectors/#selector-combinator)  
 
-h1 ~ pre
+`h1 ~ pre`
 represents a `pre` element following an `h1`. It is a correct and valid, but partial, description of:
 
 ```HTML
