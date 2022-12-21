@@ -17,6 +17,10 @@ context: if we click the Folder22 label, it opens and shows all labels for the f
 ## Study
 
 ```HTML
+<!-- parent elements for reference -->
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<ul class="md-nav__list">
+
 <!-- this contains both the parent & child element-->
 <li class="md-nav__item md-nav__item--nested">
 
@@ -79,13 +83,18 @@ nav icon rotate and hover
 	transition:background-color .25s,transform .25s;
 	width:.9rem
 }
+/* dir is used for directionality of the language 
+default we set it rotated to language direction, 
+then when 'checked' we rotate it to 0 degrees */
 [dir=rtl] .md-nav__icon{
 	transform:rotate(180deg)
 }
 .md-nav__icon:hover{
 	background-color:var(--md-accent-fg-color--transparent)
 }
-.md-nav__icon:after{
+/* after inserts text after the element 
+done in CSS (instead of HTML) so it's easy to customize */
+.md-nav__icon:after{ 
 	background-color:currentcolor;
 	content:"";
 	display:inline-block;
