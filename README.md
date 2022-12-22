@@ -11,8 +11,5 @@ Read the notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
 - compatible with [Obsidian](https://obsidian.md/)
 
 ### Site hosting
-<<<<<<< HEAD
+
 Hosted on GitHub pages, see [hannesdelbeke/wiki](https://github.com/hannesdelbeke/wiki) 
-=======
-Hosted on GitHub pages, see [build repo](https://github.com/hannesdelbeke/wiki) 
->>>>>>> b2b8b66f08e0e5010d0bba085094c36f2db5b7f8
