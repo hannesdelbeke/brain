@@ -1,4 +1,4 @@
-The goal is **to start a conversation between managers and each of their employees**. This survey allows employees to communicate their needs, so managers know what to work on.
+The goal is **to start a conversation between managers and each of their employees**. This survey allows employees to communicate their needs, so managers know what to work on.
 
 The [gallup survey](https://studentaffairs.unt.edu/gallup-questions-descriptions) contains 12 questions:
 	1. At work, I know what's expected of me.
