@@ -5,6 +5,7 @@
 Instead we can use [execute code](https://github.com/twibiral/obsidian-execute-code) plugin to easily update submodules from in Obsidian (PC only)
 
 If on windows, first add support for [[bash on windows]]
+Then restart Obsidian, you now can run bash code with [execute code](https://github.com/twibiral/obsidian-execute-code)
 
 ## pull submodule
 ```shell
