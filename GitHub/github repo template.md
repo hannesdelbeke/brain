@@ -1,7 +1,6 @@
 a repo can act as a template.
 if you create a new repo from a template, it will be a new repo with a copy of the same file.
 
-
 ## Fork
 the difference with a fork is that a fork is supposed to be merged back to the main repo.
 and should act as a temporary repo.
