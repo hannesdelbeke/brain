@@ -17,6 +17,8 @@ Sculpting tends to be more relevant for artists and less for technical artists.
 | Mudbox   | paid |
 | Sculptris | Free |
 ZBrush is currently the industry standard app for sculpting
+great resources on sculpting:
+- https://mister-chad.com/3d+modeling/sculpting+tools
 
 ## concepts
 importing & exporting
