@@ -9,11 +9,7 @@ Then restart Obsidian, you now can run bash code with [execute code](https://git
 
 ## pull submodule
 ```shell
-RAWVAULT=(@vault)
-
-# bug fix since the plugin has issues
-WORDTOREMOVE="app://local/"
-VAULT="${RAWVAULT//$WORDTOREMOVE/}"
+VAULT=@vault_path
 
 # replace C:/ with /C/ in the path
 WORDTOREMOVE=":"
@@ -25,16 +21,12 @@ cd "${VAULT//$WORDTOREMOVE/}"
 # update sumbodules
 git submodule update --remote
 
-echo $VAULT  # this fixes it
+echo Done!
 ```
 
 ## push submodule
 ```shell
-RAWVAULT=(@vault)
-
-# bug fix since the plugin has issues
-WORDTOREMOVE="app://local/"
-VAULT="${RAWVAULT//$WORDTOREMOVE/}"
+VAULT=@vault_path
 
 # replace C:/ with /C/ in the path
 WORDTOREMOVE=":"
@@ -56,5 +48,5 @@ git add "${SUBMODULE}"
 git commit -m "updated my submodule"
 git push
 
-echo $VAULT  # this fixes it
+echo Done!
 ```
