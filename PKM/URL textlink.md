@@ -1,4 +1,4 @@
-To create a link to highlighted text on a website:
+URL textlinks let you link to highlighted text on a website.
 
 1. select text in Chrome
 2. right mouse click
