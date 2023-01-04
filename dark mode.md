@@ -26,5 +26,5 @@ Force dark mode on windows apps
 new online accounts
 - [[gmail dark theme]]
 - google extension [dark reader](https://chromewebstore.google.com/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh)
-- [[microsoft outlook office app]]
+- [[microsoft outlook office - dark mode]]
 
