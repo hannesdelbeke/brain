@@ -28,4 +28,4 @@ note-link-janitor can automatically run in a CI pipeline such as GitHub actions.
 
 Incase of updates ensure we don't break dependencies
 - used in [Obsidian Publisher template](https://github.com/ObsidianPublisher/obsidian-mkdocs-publisher-template/pull/12#event-8149371371)
-- used by my wiki / public brain [[obsidian web integration]]
+- used by my wiki / public brain [[Obsidian web integration -]]
