@@ -10,3 +10,5 @@ wikilinks are easier to type and read, but they aren’t part of the markdown st
 a [table](https://www.reddit.com/r/ObsidianMD/comments/k0po5z/comment/gdnw146) comparing Wikilinks and standard markdown links
 
 [wikipedia entry](https://en.wikipedia.org/wiki/Help:Link)
+
+[this article](https://ia.net/writer/support/general/wikilinks) from ia-writer explains wikilinks with nice gifs
