@@ -1,4 +1,9 @@
 ### alternatives to obsidian
+- noteshub (paid) [[noteshub whiteboard]]
+	- kanban
+	- whiteboard
+	- write notes
+	- music notes
 - [Zim wiki](https://zim-wiki.org/)
 - Standard Notes
 - https://docs.logseq.com/#/page/videos

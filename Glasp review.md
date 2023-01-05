@@ -11,4 +11,4 @@ The perfect workflow would have a plugin in Obsidian to auto sync notes. And sup
 
 PS: Glasp has daily Notion sync / export. Daily is too slow, and it's not clear if sync includes edits in Notion.
 
-[[obsidian web integration]]
+[[Obsidian web integration -]]
