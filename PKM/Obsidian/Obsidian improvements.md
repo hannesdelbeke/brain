@@ -7,7 +7,7 @@ Don't spend more time on notes than work.
 	exclude download of some folders to your pc. e.g. personal / work
 	ideally even exclude from the git repo, to avoid any accidental leaking of data.
 	You could use another vault, but then you can't link in your master vault on your own pc.
-- [ ] support for submodules, workaround to [[update submodule in obsidian]]
+- [ ] support for submodules, workaround to [[Obsidian submodule]]
 
 ### low priority 
 - [ ] [lazy load Obsidian plugins](https://github.com/ohm-en/obsidian-plugin-manager) seems nice but don't need it yet
