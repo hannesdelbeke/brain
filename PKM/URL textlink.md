@@ -8,4 +8,6 @@ currently only [build in](https://support.google.com/chrome/answer/10256233?hl=e
 
 #toolidea #chrome
 
+related: Obsidian [discussion](https://forum.obsidian.md/t/create-a-note-that-linked-to-a-specific-paragraph-in-a-pdf/4233/41) of linking to highlighted pdf text
+
 [Firefox plugin]: https://addons.mozilla.org/en-GB/firefox/addon/link-to-text-fragment
