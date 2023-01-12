@@ -28,7 +28,7 @@ You can learn a few fields thoroughly, or try all fields at the same time.
 ## How to learn
 - [[visualize your progress]]
 - [[apply new knowledge]]
-- [[Goal driven learning]]
+- [[goal driven learning]]
 - [[build a portfolio]]
 
 
