@@ -10,8 +10,9 @@ an Obsidian extension to leave private comments.
 - The private comments can be stored in another note, and are displayed at the bottom, under mentions.
 - the plugin handles connections between note and comment with a database, and the connection is not saved in the note.
 
-A mockup:
-![[Obsidian private comments-1673286147963.jpeg]]
+> [!INFO] mockup
+> ![[Obsidian private comments-1673286147963.jpeg]]
+
 #toolidea #obsidian #comment #metadata #sharing #team
 
 obsidian forum [post](https://forum.obsidian.md/t/private-comments-on-note/51874)
