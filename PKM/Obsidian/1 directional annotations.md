@@ -17,6 +17,9 @@ Or at least store a private link to my private note in Obsidian.
 
 Ideally I would not have to search my notes, but could instantly see which threads have private notes attached.
 
+Slack supports URL links to threads. We could have a database that gets the thread link, and links a note to it.
+#pluginidea
+
 > [!NOTE] Google Keep
 > [google docs](https://docs.google.com/) & google sheets now supports [google keep](https://www.google.com/keep/)
 > this let's you take private notes in a document. it stores a link to the doc in the note, and when viewing notes in keep from the document, it shows related notes at the top, in a related category.
@@ -42,3 +45,19 @@ Ideally I would not have to search my notes, but could instantly see which threa
 ### challenges
 If linking to a specific line, what happens if the line changes?
 let's link to the whole doc, or thread for now.
+
+## Explorer
+I find myself in need to attach notes to files.
+e.g. this file contains this, or is used by this.
+
+[NoteZilla](https://www.conceptworld.com/Notezilla/Sticky-Notes-For-Windows) (paid 30$) nicely handles this by letting you stick notes to windows.
+The UX is not perfect but ok. Seems to work well on win 11 (2023)
+When pinning a note to a window, it disappears when the window is not active.
+**Where does the data live?**
+in a local database `%appdata%\Conceptworld\Notezilla\Notes9.db`
+which uses `SQLite format 3`
+(related,  [article](https://www.makeuseof.com/obsidian-dataview-notes-guide/) to turn Obsidian vault into a database)
+
+Notezilla covers the need to pin notes to a window, but it doesn't support bi-directional syncing with Obsidian. An Obsidian plugin could take care of this.
+recreating all stickies as md files, and syncing them back to the database when they are changed.
+#pluginidea

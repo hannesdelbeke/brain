@@ -9,7 +9,7 @@ It supports various open source plugins, such as [[setup Obsidian Git]]
 > ```
 > or download and install from https://obsidian.md/
 
-If you want to start using it, check out this [[Intro to Obsidian]]
+If you want to start using it, check out this [[Intro to Obsidian]], another great [article](https://www.proofofconcept.pub/p/how-i-write-with-obsidian) discussing what you can use Obsidian for.
 for more info see the [official docs](https://help.obsidian.md/Obsidian/Index)
 
 #obsidian #PKM
