@@ -1,4 +1,5 @@
-# What is technical art
+# Intro tech art
+## What is technical art
 - Brief intro on what is [Technical Art at Ubisoft](https://www.youtube.com/watch?v=mJCkPqpn_Zk) (3 min)
 - A more in depth [video](https://www.youtube.com/watch?v=kr7XYXMM7-U) on tech-art by Riot Games (12 min)
 
@@ -9,7 +10,7 @@
 [[TA brings value to the team]]
 [[TA background]]
 
-# Learn
+## Learn
 [[learn technical art]]
 
 ## Communities
