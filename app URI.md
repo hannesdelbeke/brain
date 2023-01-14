@@ -3,7 +3,7 @@ aliases:
   - app link
   - universal link
 ---
-
+	
 
 An app [[Uniform Resource Identifier]] launches an app from a [[URL]].
 this can be useful if an app wants to open another app.
