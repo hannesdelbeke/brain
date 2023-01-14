@@ -13,3 +13,5 @@ Read the notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
 ### Site hosting
 
 Hosted on GitHub pages, see [hannesdelbeke/wiki](https://github.com/hannesdelbeke/wiki) 
+
+%this is the first page of the wiki%
