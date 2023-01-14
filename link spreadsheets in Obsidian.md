@@ -5,7 +5,7 @@ I want to [[link]] my [[spreadsheets]] in [[my vault]]. e.g. A finance review no
 > I'll [[keep using google drive for my sheets in my vault]], but sync gdrive files to a local folder inside my vault, so I can link them.
 ### Concerns
 - How often do I need to link to sheets? 
-- Is it worth doing this work just for [[Obsidian auto complete]]? 
+- Is it worth doing this work just for [[Obsidian autocomplete]]? 
 - There's no [[Obsidian backlinks]] support for non-supported files.
 	- [ ] [[TODO - show backlinks for non supported files]]
 ### Log

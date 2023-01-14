@@ -28,5 +28,4 @@ Note in [[Obsidian]], first define height, then width. Else height won't work.
 ```HTML
 <iframe src="https://www.example.com" height="200" width="800" ></iframe>
 ```
-<iframe src="https://www.example.com" height="200" width="800" ></iframe>
-[[wrapping]]
+<iframe src="https://www.google.com" height="200" width="800" ></iframe>
