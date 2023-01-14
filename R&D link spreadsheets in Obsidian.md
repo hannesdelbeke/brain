@@ -20,7 +20,7 @@
 - ❌ [[tested Univer plugin]]
 - ❌ [[tested sheets plusnplugin]]
 - ✅ don't use an obsidian plugin, just [[Obsidian link non-supported files|link to a non-supported file format]].
-I tested this, and it opens the file with the default editor, and works out-of-the-box with [[Obsidian auto complete]].
+I tested this, and it opens the file with the default editor, and works out-of-the-box with [[Obsidian autocomplete]].
 This is nice, since it's [[the best solution is generic|a generic solution]] that also works for other file types.
 
 So I can just use [[xlsx]] (or another format) and edit it locally.

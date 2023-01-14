@@ -44,7 +44,7 @@ I ran into some issues:
 > 'C:\repos\pkm\google-drive\admin\work\archive\2016 Freejam\robocraft\robocraft wallpapers**NaNimage**\ScreensRhino-4.jpeg'
 
 > [!warning]- slow autocomplete
-> After integrating drive in [[my vault]], the [[Obsidian auto complete]] is terribly slow. (5 seconds). I also rebuild the cache as a test, which might have slowed things.
+> After integrating drive in [[my vault]], the [[Obsidian autocomplete]] is terribly slow. (5 seconds). I also rebuild the cache as a test, which might have slowed things.
 > However, after fixing the previous image bugs and restarting it seems fine again.
 
 this might be an option
