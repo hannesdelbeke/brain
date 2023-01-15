@@ -6,7 +6,7 @@ but not on Android (due to limitations of the git library it uses.)
 
 
 > [!TIP] Tip
-> We can use [execute code](https://github.com/twibiral/obsidian-execute-code) to update all submodules from within Obsidian
+> We can use the [execute code](https://github.com/twibiral/obsidian-execute-code) plugin to update all submodules from within Obsidian
 
 ## Update on Windows
 If on windows, first add support for [[bash on windows]]
