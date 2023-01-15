@@ -1,3 +1,4 @@
+%%this is the front page of the wiki%%
 Read the notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
 
 - knowledge is organized based on zettel / digital garden.  
@@ -14,4 +15,3 @@ Read the notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
 
 Hosted on GitHub pages, see [hannesdelbeke/wiki](https://github.com/hannesdelbeke/wiki) 
 
-%this is the first page of the wiki%
