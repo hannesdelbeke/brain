@@ -4,4 +4,6 @@ reddit [discussion](https://www.reddit.com/r/PKMS/comments/10a07wh/comment/j41oy
 This YouTube [vid](https://www.youtube.com/watch?v=NdIV_69rxXI&feature=youtu.be) shows the alias feature. 
 It applies to notes, not hashtags
 
+- [plugin](https://github.com/jglev/obsidian-redirect) to add aliases to non-note files, using metadata 
+
 #aliases
