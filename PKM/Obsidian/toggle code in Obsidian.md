@@ -1,3 +1,4 @@
+Instead of toggle, we can use callouts in Obsidian.
 
 ### ✅ Callouts
 see the [docs](https://help.obsidian.md/How+to/Use+callouts) for more info
