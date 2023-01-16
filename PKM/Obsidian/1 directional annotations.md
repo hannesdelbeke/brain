@@ -30,6 +30,7 @@ Slack supports URL links to threads. We could have a database that gets the thre
 >   The sync script only syncs notes too Obsidian, not back to Keep. So keep notes will become outdated when updated in Obsidian.
 
 ### Notes
+- The concept of annotating external files and saving the comments in an .md file is used by the [annotator](https://github.com/elias-sundqvist/obsidian-annotator) plugin, to annotate pdf's inside Obsidian. It has nice example GIFs.
 - Similar to [[Obsidian private comments]]
 - Similar to [[Obsidian submodule]], because we don't want to share submodules with everyone.
 - similar to [[save quotes n lines]], we reference external data that can't reference back. (Sometimes even physical media like books)
@@ -46,18 +47,7 @@ Slack supports URL links to threads. We could have a database that gets the thre
 If linking to a specific line, what happens if the line changes?
 let's link to the whole doc, or thread for now.
 
-## Explorer
-I find myself in need to attach notes to files.
-e.g. this file contains this, or is used by this.
 
-[NoteZilla](https://www.conceptworld.com/Notezilla/Sticky-Notes-For-Windows) (paid 30$) nicely handles this by letting you stick notes to windows.
-The UX is not perfect but ok. Seems to work well on win 11 (2023)
-When pinning a note to a window, it disappears when the window is not active.
-**Where does the data live?**
-in a local database `%appdata%\Conceptworld\Notezilla\Notes9.db`
-which uses `SQLite format 3`
-(related,  [article](https://www.makeuseof.com/obsidian-dataview-notes-guide/) to turn Obsidian vault into a database)
+relates to [[add notes to explorer]]
 
-Notezilla covers the need to pin notes to a window, but it doesn't support bi-directional syncing with Obsidian. An Obsidian plugin could take care of this.
-recreating all stickies as md files, and syncing them back to the database when they are changed.
-#pluginidea
+### inspiration
