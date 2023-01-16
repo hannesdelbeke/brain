@@ -19,6 +19,7 @@ Allow better tutorial links. I can provide a link to a website, and add links to
 ## Related extensions
 - [Note Board - sticky notes app](https://chrome.google.com/webstore/detail/note-board-sticky-notes-a/goficmpcgcnombioohjcgdhbaloknabb) save sticky notes on websites
 - [super simple highlighter](https://chrome.google.com/webstore/detail/super-simple-highlighter/hhlhjgianpocpoppaiihmlpgcoehlhio?hl=en) save highlighted text on websites
+- https://web.hypothes.is/ make notes for anything on the web!
 
 
 #toolidea #extension #chrome #browser #URL #link #productivity
