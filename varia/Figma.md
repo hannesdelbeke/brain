@@ -4,9 +4,10 @@ Every element is a node.
 Teams
 	Projects
 		Files
-			Pages
-				Nodes
-				Vectors, groups, ...
+			document
+				Pages aka Canvas
+					Nodes
+					Vectors, groups, ...
 
 data can be requested with a REST API
 
