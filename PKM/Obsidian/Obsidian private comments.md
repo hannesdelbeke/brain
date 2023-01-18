@@ -13,6 +13,8 @@ an Obsidian extension to leave private comments.
 > [!INFO] mockup
 > ![[Obsidian private comments-1673286147963.jpeg]]
 
-#toolidea #obsidian #comment #metadata #sharing #team
+#toolidea #obsidian #comment #metadata #sharing #team #link
 
 obsidian forum [post](https://forum.obsidian.md/t/private-comments-on-note/51874)
+
+Get inspired by [[Hypothesis review]] , which supports private comments on any website.

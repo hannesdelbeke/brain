@@ -27,6 +27,6 @@ Don't spend more time on notes than work.
 - [ ] no spellcheck in links, see [bug report](https://forum.obsidian.md/t/disable-spellcheck-in-urls-and-links/50118) 
 - [x] support code in dropdown, workaround: [[toggle code in Obsidian]]
 - [ ] add shortcut for adding to callout . select text, insert call out
-- [ ] [[improve callout formatting]]
+- [ ] [[STYLE improve callout formatting]]
 
 #obsidian 

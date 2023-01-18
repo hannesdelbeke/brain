@@ -9,5 +9,5 @@ potentially an Obsidian plugin to redirect notes to URLs or other notes
 use normal URLs and replace source everywhere when needed
 
 Notes:
-- if it redirects to an URL, does it work with the "open link in notetab" plugin?
+- if it redirects to an URL, does it work with the "open link in note-tab" plugin?
 - similar to [[Aliases]]

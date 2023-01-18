@@ -1,5 +1,5 @@
-the default formatting is inconsistent in Obsidian, add to [[Obsidian improvements]]
-This note won't look the same in the WebView, inspect it in Obsidian 
+the default formatting is inconsistent in Obsidian
+This note won't look the same in the WebView, inspect it in Obsidian !
 
 sample text sample text sample text
 sample text sample text sample text
