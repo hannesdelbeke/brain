@@ -53,5 +53,6 @@ And an easy to install chrome extension
 this seems very powerful but complex. to get highlights in your browser
 - great [discussion](https://www.reddit.com/r/ObsidianMD/comments/oo96v0/trying_to_collect_my_browsing_highlights_through/) regarding memex, hypothesis, promnesia, [Readwise.io](https://readwise.io/)
 
+- checkout https://pinboard.in/tour/
 
 #PKM #impressive #socialnetwork #community #pluginidea #link
