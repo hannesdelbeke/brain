@@ -20,6 +20,8 @@ And an easy to install chrome extension
 - https://www.fleetingnotes.app/  
 	- [**discord**](https://discord.gg/xrj6yuGNmx)
 	- https://github.com/fleetingnotes obsidian and chrome plugin
+	- great backlinking support, can sync to [[Obsidian]] 
+	- no sidebar, notes disappear in browser
 
 ### unknown
 - https://spade.tools/ save highlights in cloud
