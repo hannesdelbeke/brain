@@ -58,13 +58,15 @@ in a local database `%appdata%\Conceptworld\Notezilla\Notes9.db`
 which uses `SQLite format 3`
 (related,  [article](https://www.makeuseof.com/obsidian-dataview-notes-guide/) to turn Obsidian vault into a database)
 
-Notezilla covers the need to pin notes to a window, but it doesn't support bi-directional syncing with Obsidian. An Obsidian plugin could take care of this.
+NoteZilla covers the need to pin notes to a window, but it doesn't support bi-directional syncing with Obsidian. An Obsidian plugin could take care of this.
 recreating all stickies as md files, and syncing them back to the database when they are changed.
 #pluginidea
 
 > [!NOTE]
 > - notes are private, and not shared with the team
 > - can't sync w Obsidian
+
+NoteZilla links notes to folders, just like [[Google Keep]] links notes to google docs.
 
 ## other
 you can't add metafile comments to a folder.

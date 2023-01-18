@@ -20,20 +20,16 @@ Ideally I would not have to search my notes, but could instantly see which threa
 Slack supports URL links to threads. We could have a database that gets the thread link, and links a note to it.
 #pluginidea
 
-> [!NOTE] Google Keep
-> [google docs](https://docs.google.com/) & google sheets now supports [google keep](https://www.google.com/keep/)
-> this let's you take private notes in a document. it stores a link to the doc in the note, and when viewing notes in keep from the document, it shows related notes at the top, in a related category.
-> 
-> Disadvantage: 
-> - data lives in the cloud, only an issue when Google goes offline.
-> - You need an additional sync process to get your data offline / in Obsidian. This can be quite technical. There's a Python [sync script](https://github.com/djsudduth/keep-it-markdown) on GitHub.
->   The sync script only syncs notes too Obsidian, not back to Keep. So keep notes will become outdated when updated in Obsidian.
+### same concept
+- [[Google Keep]] lets you link private notes on shared docs in the google Workspace
+- annotate external files (pdf) & save comments in an .md file with the [annotator](https://github.com/elias-sundqvist/obsidian-annotator) Obsidian plugin. It has nice example GIFs.
+- [[Hypothesis review]] lets you annotate any website (private or public)
 
 ### Notes
-- The concept of annotating external files and saving the comments in an .md file is used by the [annotator](https://github.com/elias-sundqvist/obsidian-annotator) plugin, to annotate pdf's inside Obsidian. It has nice example GIFs.
 - Similar to [[Obsidian private comments]]
 - Similar to [[Obsidian submodule]], because we don't want to share submodules with everyone.
 - similar to [[save quotes n lines]], we reference external data that can't reference back. (Sometimes even physical media like books)
+- Relates to [[add notes to explorer]]
 - The need for private comments is described in this google slides [discussion](https://support.google.com/edu/classroom/thread/13728889), There's no real solution but a workaround is to use copies of the slides.
 
 - Except for a plugin in every single app, to link to Obsidian. Are there other solutions? 🤔
@@ -47,7 +43,4 @@ Slack supports URL links to threads. We could have a database that gets the thre
 If linking to a specific line, what happens if the line changes?
 let's link to the whole doc, or thread for now.
 
-
-relates to [[add notes to explorer]]
-
-### inspiration
+#link
