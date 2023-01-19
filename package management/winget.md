@@ -20,9 +20,14 @@ start ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1
 ```
 
 - Search app installer, and install this app
+- open a new terminal and run the command: `winget`
 
-
+### Other
 [official docs](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
-on [winget.run](https://winget.run/) & [winstall.app](https://winstall.app/) you can search packages
 
-it's a relatively new (2020) package manager for windows and likely will replace chocolatey & scoop
+it's a relatively new (2020) package manager for windows and likely will replace chocolatey & scoop. Atm chocolatey is still more capable IMO
+
+### Create new distributions
+quickly create installation scripts for public software on
+-   https://winstall.app/
+-   https://winget.run/
