@@ -1,5 +1,5 @@
-winget allows quick app install on windows through shell.
-
+winget allows quick app install on windows from a terminal.
+![[install.gif]]
 [official docs](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
 on [winget.run](https://winget.run/) & [winstall.app](https://winstall.app/) you can search packages
 
