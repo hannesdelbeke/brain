@@ -1,4 +1,4 @@
-When using [[Python in Unreal]], you can add a python command to the menu. 
+When using [[Python in Unreal]], you can add a python command to the [[menu]]. 
 
 
 It's a good practice to let the user launch your tool from  the Menu.
