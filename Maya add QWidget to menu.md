@@ -1,6 +1,7 @@
 # WIP
 [[Maya Python-]]
 [[Qt]]
+[[menu]]
 
 - [x] adds a widget under the file menu.
 - [x] can we add it in the menu bar itself
