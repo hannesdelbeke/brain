@@ -1,6 +1,6 @@
 overwrite your widget's method  `contextMenuEvent` 
 
-make a menu in init of the main widget
+make a [[menu]] in init of the main widget
 ```python
 self.menu = QtWidgets.QMenu()  # used in contextMenuEvent
 ```
@@ -19,11 +19,9 @@ use `addAction` to add menu entries
 self.menu.addAction("Action 1")
 ```
 
-[[Qt]] 
-
 > [!question]
 > how to pass the widget to `menu.exec`?
 > a workaround is to save widget in self.last_widget
 
-
-#python
+[[Qt]] 
+[[python stubs]]
