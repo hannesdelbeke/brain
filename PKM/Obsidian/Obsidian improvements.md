@@ -10,6 +10,7 @@ Don't spend more time on notes than work.
 - [x] support for submodules, workaround to [[Obsidian submodule]]
 - [ ] [[interwikilinks plugin]]
 - [ ] [[Obsidian private comments]], allowing private local comments that don't live in the note
+- [ ] improve how you [[navigate sibling page]]s
 
 ### low priority 
 - [ ] [lazy load Obsidian plugins](https://github.com/ohm-en/obsidian-plugin-manager) seems nice but don't need it yet
