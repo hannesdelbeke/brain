@@ -1,6 +1,7 @@
 Tabbers are great for e.g. showing the same code in different languages.
+![[Obsidian Tabber-1674600128447.jpeg|150]]
 
-Proposal for Obsidian
+Proposal for Obsidian #pluginidea 
 > [!info]+ Tabber proposal
 > - markdown friendly
 > - still renders nicely when plugin not installed
@@ -27,17 +28,17 @@ Proposal for Obsidian
 > > > [!TAB]- tab3 title
 > > > Contents tab 3
 > ```
+![[Obsidian Tabber-1674601442427.jpeg]]
 
 ### Steps for nice UX in Obsidian
 - [ ] plugin to preview tabs in [[Obsidian]] 
 	[reference](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.01+Plugins+by+Category/Plugins+with+custom+views) of plugins that alter view 
 - [ ] publish to mkdocs
 	- [ ] since mkdocs already supports tabbers, we can write a convertor, see [docs](https://python-markdown.github.io/extensions/api/)
-	- [ ] then on mkdoc build, ensure we use the settings from [material docs](https://squidfunk.github.io/mkdocs-material/reference/content-tabs/)
-
+	- [ ] then on MkDocs build, ensure we use the settings from [material docs](https://squidfunk.github.io/mkdocs-material/reference/content-tabs/)
 
 ## Other tab solutions
-íí
+
 ### MkDocs content tabs
 https://squidfunk.github.io/mkdocs-material/reference/content-tabs/
 mkdocs already supports a tabber! it looks bad in [[Obsidian]] though
@@ -62,7 +63,7 @@ https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
   - doesn't read well without plugin
 
 ### R markdown
-- rmarkdown supports tabsets, see [docs](https://bookdown.org/yihui/rmarkdown-cookbook/html-tabs.html)
+- r markdown supports `tabsets`, see [docs](https://bookdown.org/yihui/rmarkdown-cookbook/html-tabs.html)
   it uses headers for this, doesn't render nicely without plugin
 
 ### MediaWiki tabber plugin
@@ -82,7 +83,7 @@ https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
 
 ### HTML tabs
 tabber in HTML [source](https://www.w3schools.com/howto/howto_js_tabs.asp)
-
+also option for pure CSS with radio-buttons
 
 
 
