@@ -37,7 +37,7 @@ Proposal for Obsidian
 
 
 ## Other tab solutions
-
+íí
 ### MkDocs content tabs
 https://squidfunk.github.io/mkdocs-material/reference/content-tabs/
 mkdocs already supports a tabber! it looks bad in [[Obsidian]] though
