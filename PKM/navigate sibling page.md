@@ -16,14 +16,7 @@ The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-materi
 - Might link unrelated notes in a flat hierarchy setup, popular in the Zettelkasten community.
 - maintaining a nav file wastes time if not automated
 
-## [[Obsidian]]
-- in-depth [discussion](https://forum.obsidian.md/t/daily-notes-next-previous/4573/13) on a previous and next button in the daily notes plugin, and workarounds with templates.
-- short [thread](https://forum.obsidian.md/t/automatic-next-and-previous-sibling-for-breadcrumbs/40469), repeating the same
-  It [mentions](https://breadcrumbs-wiki.onrender.com/docs/Alternative%20Hierarchies/Hierarchy%20Notes) the same concept exists for breadcrumbs too.
-- there are default Obsidian commands for `Open next daily note` and `Open previous daily note`, but no buttons. there [used to be](https://forum.obsidian.md/t/daily-notes-next-and-previous-fail-when-using-folder-in-template/27623), not sure where this is
-- [thread](https://forum.obsidian.md/t/is-there-a-shortcut-for-opening-next-note/23812/2) requesting hotkeys for this feature
-- popular [thread](https://forum.obsidian.md/t/iterate-through-files-in-the-file-sidebar-with-keyboard/629/60) requesting this
-- [quick explorer](https://github.com/pjeby/quick-explorer) plugin adds hotkeys for this feature. But no visual preview.
+## Obsidian plugin
 
 > [!Question] Obsidian navigate plugin #pluginidea
 > - Next & Previous visual button.
@@ -32,5 +25,16 @@ The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-materi
 >   use folder hierarchy as default.
 >   ![[navigate sibling page-1674170180221.jpeg]]
 >   Created a [forum thread](https://forum.obsidian.md/t/navigate-sibling-page-previous-next/52701) to discuss this plugin idea
+>   
+>   the [2hoplink](https://github.com/tokuhirom/obsidian-2hop-links-plugin) plugin can be used as reference, since it adds page-links at bottom of file.
+
+> [!reference]- 
+> - in-depth [discussion](https://forum.obsidian.md/t/daily-notes-next-previous/4573/13) on a previous and next button in the daily notes plugin, and workarounds with templates.
+> - short [thread](https://forum.obsidian.md/t/automatic-next-and-previous-sibling-for-breadcrumbs/40469), repeating the same
+>   It [mentions](https://breadcrumbs-wiki.onrender.com/docs/Alternative%20Hierarchies/Hierarchy%20Notes) the same concept exists for breadcrumbs too.
+> - there are default Obsidian commands for `Open next daily note` and `Open previous daily note`, but no buttons. there [used to be](https://forum.obsidian.md/t/daily-notes-next-and-previous-fail-when-using-folder-in-template/27623), not sure where this is
+> - [thread](https://forum.obsidian.md/t/is-there-a-shortcut-for-opening-next-note/23812/2) requesting hotkeys for this feature
+> - popular [thread](https://forum.obsidian.md/t/iterate-through-files-in-the-file-sidebar-with-keyboard/629/60) requesting this
+> - [quick explorer](https://github.com/pjeby/quick-explorer) plugin adds hotkeys for this feature. But no visual preview.
 
 #PKM #UX #browser #navigation

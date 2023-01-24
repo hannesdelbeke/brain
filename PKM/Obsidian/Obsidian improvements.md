@@ -31,4 +31,8 @@ Don't spend more time on notes than work.
 - [ ] [[STYLE improve callout formatting]]
 - [ ] [[Obsidian Tabber]] 
 
+related to improvements:
+plugin development
+- great resource https://marcus.se.net/obsidian-plugin-docs/
+
 #obsidian 
