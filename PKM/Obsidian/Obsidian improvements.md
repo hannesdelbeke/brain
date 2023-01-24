@@ -29,5 +29,6 @@ Don't spend more time on notes than work.
 - [x] support code in dropdown, workaround: [[toggle code in Obsidian]]
 - [ ] add shortcut for adding to callout . select text, insert call out
 - [ ] [[STYLE improve callout formatting]]
+- [ ] [[Obsidian Tabber]] 
 
 #obsidian 
