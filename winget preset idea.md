@@ -60,3 +60,4 @@ Ideally also supports chocolatey, scoop etc.
 [NiNite]: https://ninite.com/
 
 [[template]]
+[[preset]]
