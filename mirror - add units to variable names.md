@@ -1,9 +1,7 @@
+written by [Ruud van Asseldonk](https://ruudvanasseldonk.com/)  
+[published](<[published](https://ruudvanasseldonk.com/2022/03/20/please-put-units-in-names)>) 20 March, 2022
 # Please put units in names
 or use strong types, to create more [[intuitive code]]
-
-[source](https://ruudvanasseldonk.com/2022/03/20/please-put-units-in-names)
-written by [Ruud van Asseldonk](https://ruudvanasseldonk.com/)  
-published 20 March, 2022
 
 There is one code readability trap that is easy to avoid once you are aware of it, yet the trap is pervasive: omitting units. Consider the following three snippets in Python, Java, and Haskell:
 
@@ -140,3 +138,4 @@ show-transactions --minimum-amount "32 EUR"
 ```
 
 [[naming convention]]
+[[precise]]
