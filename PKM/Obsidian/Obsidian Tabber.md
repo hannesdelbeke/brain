@@ -28,12 +28,14 @@ Proposal for Obsidian #pluginidea
 > > > [!TAB]- tab3 title
 > > > Contents tab 3
 > ```
+> TODO: render tabs in Obsidian preview & HTML publishing
 ![[Obsidian Tabber-1674601442427.jpeg]]
 
 [discussion](https://forum.obsidian.md/t/tabber-plugin/53054) in Obsidian  forum
 
 ### Steps for nice UX in Obsidian
 - [ ] plugin to preview tabs in Obsidian 
+	⚠️ GREAT [reference](https://marcus.se.net/obsidian-plugin-docs/editor/markdown-post-processing) on editing HTML with markdown post processor.
 	[reference](https://publish.obsidian.md/hub/02+-+Community+Expansions/02.01+Plugins+by+Category/Plugins+with+custom+views) of plugins that alter view 
 - [ ] publish to mkdocs
 	- [ ] since mkdocs already supports tabbers, we can write a convertor, see [docs](https://python-markdown.github.io/extensions/api/)
