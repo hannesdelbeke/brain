@@ -3,7 +3,7 @@ Sliding panes allow you to view digital pages side by side.
 Whereas traditional tabs and apps only show the current page.
 This means you cant easily compare info between multiple files.
 
-| ![[responsive-jquery-accordion.gif]] | ![[fa87950159683a6a2f6d75f44ce8c56e634aa848.gif]] |
+| ![[responsive-jquery-accordion.gif]] | ![[obsidian panes.gif]] |
 | ------------------------------------ | ------------------------------------------------- |
 
 > [!QUESTION] sliding panes Chrome extension
