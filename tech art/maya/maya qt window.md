@@ -14,7 +14,7 @@ self.setParent(mayaWindow)
 ```
 
 ## other
-you might want to make your window dockable in maya: [[dockable widget maya]]
+you might want to make your window dockable in maya: [[Maya dockable widget]]
 
 [source](https://forums.cgsociety.org/t/pyside2-parent-window-to-main-window/1923035/8)
 [outdated stackoverflow](https://stackoverflow.com/questions/22331337/how-to-get-maya-main-window-pointer-using-pyside/75249025#75249025)
