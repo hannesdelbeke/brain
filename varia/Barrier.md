@@ -11,8 +11,8 @@ When moving your cursor of the side of 1 screen, it appears on other computer's 
 
 if you get the error `# is:openERROR: ssl certificate doesn't exist:`
 > [!ERROR]-
-> run this line in cmd: (requires git for windows installed)
-> ```BAT
+run this: (requires [[bash on windows]])
+```shell
 > openssl req -x509 -nodes -days 365 -subj /CN=Barrier -newkey rsa:4096 -keyout Barrier.pem -out Barrier.pem
 > ```
 > source fix: git [issues](https://github.com/debauchee/barrier/issues/231)
