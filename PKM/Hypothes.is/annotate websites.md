@@ -18,6 +18,7 @@ And an easy to install chrome extension
 - [Marker.io](https://marker.io/) (50$/month 5 users) makes it easy for your team and clients to take web page screenshots and annotate them.
 - [markups.kdanmobile.com](https://markups.kdanmobile.com/) has the same concept. limitation on free. 40$/user/year
 - https://www.fleetingnotes.app/  
+	- ⚠️ bug on chrome, now you need to press back twice to go back, very annoying
 	- [**discord**](https://discord.gg/xrj6yuGNmx)
 	- https://github.com/fleetingnotes obsidian and chrome plugin
 	- great backlinking support, can sync to [[Obsidian]] 
