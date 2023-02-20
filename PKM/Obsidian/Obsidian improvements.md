@@ -3,7 +3,7 @@ Don't spend more time on notes than work.
 
 ### I want this!
 - [ ] [[obsidian web integration]] would allow for community growth
-- [ ] use obsidian with separated streams of notes / submodules
+- [ ] use obsidian with separated streams of notes / submodules (submodule have issues)
 	exclude download of some folders to your pc. e.g. personal / work
 	ideally even exclude from the git repo, to avoid any accidental leaking of data.
 	You could use another vault, but then you can't link in your master vault on your own pc.
@@ -11,6 +11,8 @@ Don't spend more time on notes than work.
 - [x] support for submodules, workaround to [[Obsidian submodule]]
 - [ ] [[Obsidian private comments]], allowing private local comments that don't live in the note
 - [x] improve [[navigate sibling page]], next & previous button
+- [ ] ability edit obsidian vault online, in the browser
+	- [ ] action to auto sync from gitwiki to repo
 
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
