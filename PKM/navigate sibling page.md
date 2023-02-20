@@ -16,9 +16,9 @@ The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-materi
 - Might link unrelated notes in a flat hierarchy setup, popular in the Zettelkasten community.
 - maintaining a nav file wastes time if not automated
 
-## Obsidian plugin
+## Obsidian plugin ✅
 
-> [!Question] Obsidian navigate plugin #pluginidea
+> [!Question]- Obsidian navigate plugin
 > - Next & Previous visual button.
 > - customizable next & previous, visualized at the bottom (or top?) of the note.
 >   e.g. define `nav-next` & `nav-previous` in the frontmatter
@@ -27,6 +27,18 @@ The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-materi
 >   Created a [forum thread](https://forum.obsidian.md/t/navigate-sibling-page-previous-next/52701) to discuss this plugin idea
 >   
 >   the [2hoplink](https://github.com/tokuhirom/obsidian-2hop-links-plugin) plugin can be used as reference, since it adds page-links at bottom of file.
+>   
+>   
+> ## Solution
+> the author from quick explorer got back to me and provided a solution.
+> 
+> 1. install the plugins
+> -   [quick explorer](https://github.com/pjeby/quick-explorer) - for previous & next command
+> -   [commander](https://github.com/phibr0/obsidian-commander) - for adding command buttons
+> 
+> 2. On hovering the top bar, a button appears to add custom command buttons.
+>    - Add the previous file & next file commands.
+>    - For icon use double left `<<` & double right arrow  `>>`
 
 > [!reference]- 
 > - in-depth [discussion](https://forum.obsidian.md/t/daily-notes-next-previous/4573/13) on a previous and next button in the daily notes plugin, and workarounds with templates.

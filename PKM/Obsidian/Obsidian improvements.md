@@ -10,7 +10,7 @@ Don't spend more time on notes than work.
 	- [ ] proposal: [[interwikilinks plugin]]
 - [x] support for submodules, workaround to [[Obsidian submodule]]
 - [ ] [[Obsidian private comments]], allowing private local comments that don't live in the note
-- [ ] improve [[navigate sibling page]], next & previous button
+- [x] improve [[navigate sibling page]], next & previous button
 
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
