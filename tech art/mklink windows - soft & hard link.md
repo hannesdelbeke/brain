@@ -7,6 +7,7 @@ mklink /j "DESTINATION" "SOURCE_FOLDER"
 Using `/j` instead of `/d` shows all individual files in source control.
 this way code can be shared easily across 2 repos. e.g. when development happens in git, but distribution to artists uses a different source control.
 
+## unlink symlink
 > [!WARNING]
 > if you want to delete this link, do not delete it in explorer.
 > since this also deletes all content of the original folder.
