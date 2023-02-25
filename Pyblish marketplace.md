@@ -25,3 +25,5 @@ Pyblish plugins
 - [pyblish repo collection](https://github.com/hannesdelbeke/pyblish-repo-collection): collection of links to usefull pyblish resources
 - https://github.com/readyplayerme/pyblish-plugins blender plugins / actions
 - https://github.com/readyplayerme/blender-asset-validator blender plugins / actions (DUPE)
+
+[[todo]]
