@@ -35,6 +35,7 @@ Don't spend more time on notes than work.
 - [ ] add shortcut for adding to callout . select text, insert call out
 - [ ] [[STYLE improve callout formatting]]
 - [ ] [[Obsidian Tabber]] 
+- [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
 
 related to improvements:
 plugin development
