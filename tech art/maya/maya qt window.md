@@ -19,5 +19,6 @@ you might want to make your window dockable in maya: [[Maya dockable widget]]
 [source](https://forums.cgsociety.org/t/pyside2-parent-window-to-main-window/1923035/8)
 [outdated stackoverflow](https://stackoverflow.com/questions/22331337/how-to-get-maya-main-window-pointer-using-pyside/75249025#75249025)
 
+[[Qt]]
 
-#maya #qt #ui #widget
+#maya #ui #widget
