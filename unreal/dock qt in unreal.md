@@ -1,4 +1,4 @@
-docking a qt widget in unreal is not possible by default.
+docking a [[Qt]] widget in unreal is not possible by default.
 parenting is.
 
 ## possible workaround
@@ -16,4 +16,4 @@ when we move it, it moves with it.
 - c++ ref http://www.kehomsforge.com/tutorials/multi/uColumns/part14
 - py https://discourse.techart.online/t/editor-utilitty-widget-menus-in-unreal/12923
 	
-#unreal #qt #slate #widget #ui #toolidea
+#unreal #slate #widget #ui #toolidea

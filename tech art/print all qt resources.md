@@ -40,6 +40,8 @@ w = Window()
 w.show()
 ```
 
+[[Qt]]
+
 #icons
 
 #todo share this here https://discourse.techart.online/t/extracting-maya-icons/4094/6

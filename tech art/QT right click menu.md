@@ -20,5 +20,6 @@ use addaction to add menu entries
 self.menu.addAction("Action 1")
 ```
 
+[[Qt]] 
 
-#qt #python
+#python
