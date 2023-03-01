@@ -22,4 +22,9 @@ self.menu.addAction("Action 1")
 
 [[Qt]] 
 
+> [!question]
+> how to pass the widget to `menu.exec`?
+> a workaround is to save widget in self.last_widget
+
+
 #python
