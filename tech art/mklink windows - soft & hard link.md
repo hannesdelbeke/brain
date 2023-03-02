@@ -18,6 +18,10 @@ this way code can be shared easily across 2 repos. e.g. when development happens
 > 
 > Pay attention when linking to folders under sourcecontrol, since swapping branches can trigger a folder delete.
 
+## relative symlinks
+you can cd to a directory, and just use folder names to make links relative. don't use C:/ or it will be explicit.
+e.g. `mklink /j "vendor" "../vendor"`
+
 ## backlink to original folder
 To see backlinks in the folder
 print all `symlinks` in a folder, [source](https://superuser.com/questions/823959/how-to-view-all-the-symbolic-links-junction-points-hard-links-in-a-folder-using) 
