@@ -7,6 +7,23 @@ mklink /j "DESTINATION" "SOURCE_FOLDER"
 Using `/j` instead of `/d` shows all individual files in source control.
 this way code can be shared easily across 2 repos. e.g. when development happens in git, but distribution to artists uses a different source control.
 
+> [!options]-
+> Without any extra options, `mklink` creates a symbolic link to a file. The below command creates a symbolic, or “**soft**”, link at `Link` pointing to the file `Target` :
+> 
+> `mklink Link Target`
+> 
+> Use /D when you want to create a **soft link** pointing to a directory. like so:
+> 
+> `mklink /D Link Target`
+> 
+> Use /H when you want to create a **hard link** pointing to a **file**:
+> 
+> `mklink /H Link Target`
+> 
+> Use /J to create a **hard link** pointing to a **directory**, also known as a directory junction:
+> 
+> `mklink /J Link Target`
+
 ## unlink symlink
 > [!WARNING]
 > if you want to delete this link, do not delete it in explorer.
