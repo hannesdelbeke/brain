@@ -38,6 +38,7 @@ this way code can be shared easily across 2 repos. e.g. when development happens
 ## relative symlinks
 you can cd to a directory, and just use folder names to make links relative. don't use C:/ or it will be explicit.
 e.g. `mklink /j "vendor" "../vendor"`
+both types of slashes are accepted for paths
 
 ## backlink to original folder
 To see backlinks in the folder
