@@ -4,7 +4,7 @@ on windows, you can have 1 folder in 2 places at the same time.
 mklink /j "DESTINATION" "SOURCE_FOLDER"
 ```
 
-Using `/j` instead of `/d` shows all individual files in source control.
+For folders, using `/j` instead of `/d` shows all individual files in source control.
 this way code can be shared easily across 2 repos. e.g. when development happens in git, but distribution to artists uses a different source control.
 
 > [!options]-
