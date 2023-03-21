@@ -1,0 +1,23 @@
+QT is a UI framework with a python implementation.
+this means it works in all apps that support Python.
+
+This is great since it allows us to make UI and reuse it across apps.
+
+pick one of the following py modules
+- PySide2
+- PySide6
+- PyQt5 
+- PyQt6
+
+there are also modules to handle compatibility between the qt modules. 
+- Qt.py
+- qtpy
+
+try not to mix and match multiple qt libs. not sure how it would handle a shared QApplication instance. or if you can run 2.
+
+Several apps use QT for their UI
+- 3ds max
+- maya
+- Krita
+
+#ui
