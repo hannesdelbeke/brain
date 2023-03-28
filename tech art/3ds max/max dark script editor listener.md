@@ -16,6 +16,7 @@ source: [thread](https://forums.autodesk.com/t5/3ds-max-ideas/listener-window-ba
 ## manually set theme
 [thread](https://forums.cgsociety.org/t/change-background-color-in-maxscript-editor/1223336) instructing how to set the script editor to a dark background 
 Saving this in main max install folder (ctrl-s) (needs admin rights) , and restart, does the trick.
+- [x] packaged see [repo](https://github.com/hannesdelbeke/dark-listener-max)
 
 ## darkscintilla (dead)
 someone made this, but download link is dead
