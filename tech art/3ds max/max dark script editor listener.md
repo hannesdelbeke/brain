@@ -18,10 +18,17 @@ source: [thread](https://forums.autodesk.com/t5/3ds-max-ideas/listener-window-ba
 Saving this in main max install folder (ctrl-s) (needs admin rights) , and restart, does the trick.
 - [x] packaged see [repo](https://github.com/hannesdelbeke/dark-listener-max)
 
-## darkscintilla (dead)
-someone made this, but download link is dead
+tested max packaging
+https://help.autodesk.com/view/MAXDEV/2023/ENU/?guid=packagexml_example
+c:/max test plug
+- logs `C:\Users\hanne\AppData\Local\Autodesk\3dsMax\2024 - 64bit\ENU\Network`
+- `C:\Users\hanne\AppData\Local\Autodesk\3dsMax\2024 - 64bit\ENU\scripts\startup`
+
+## darkscintilla
+someone made this, but download link is dead (works in edge)
 - https://www.scriptspot.com/3ds-max/scripts/darkscintilla-maxscript-editor-dark-scheme
 - https://discourse.techart.online/t/darkscintilla-dark-scheme-for-maxscript-editor/1807
 
 - some properties files can be [found](https://github.com/MerlinEl/Micra/blob/37e40f9d061d53ad81333134f4a75096b4395600/Micra4/App/Maxscript_Settings/dark/MXS_EditorUser.properties) on GitHub, how to install?
+- mzp installer doesn't work. installs in correct folder but nothing happens on restart
 
