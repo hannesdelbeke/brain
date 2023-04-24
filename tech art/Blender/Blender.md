@@ -4,3 +4,6 @@
 
 Russian [wiki](https://github.com/jafdett/BlenderFAQ)
 recommended [list of addons](https://github.com/Epicrex/3DArtistsHandbookAddonEdition/wiki/Blender-Addons-List) 
+
+blender addons require bl_info.
+they only show in the addon manager if they are in the addon folder. in the site package folder they are just normal py modules.
