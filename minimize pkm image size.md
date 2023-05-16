@@ -1,4 +1,5 @@
-I try avoid using images in my notes. Mainly because of their size. I don't want to end up with a repo that's several Gbs. Ideally it's pure text & vector images and is just a few Mbs big.
+I try avoid using images in my notes due to their [[large filesize]]. 
+	I don't want to end up with a repo that's several Gbs. Ideally it's pure text & [[vector image]]  and is just a few Mbs big.
 ## current
 - For now I convert to jpg, and scale down if needed.
 - I really ask myself every time, do I need an image?
@@ -10,7 +11,8 @@ I try avoid using images in my notes. Mainly because of their size. I don't want
 - notes will degrade because of hotlinking
 ## next
 The quality of my notes could be better if I added a quick sketch.
-- [ ] how to add lots of image, without introducing issues with reposize on git
+- [ ] how to add lots of image, without introducing issues with reposize on git 
+	- [ ] [[vector screenshot]]
 - [x] figure out a way to sketch vector art
       vectors tend to be smaller than pixels.
       [[Excelidraw]] does this well, see [[Excalidraw test embed]]. image is only a few kb.
