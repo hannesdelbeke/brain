@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: cfd31c43
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 When you add a menu item to a default Maya menu (e.g. `Windows`, `Mesh`, `File`, ...) on startup, it overwrites the whole menu.
 
 There's a partial fix that works for some menus.
@@ -31,4 +42,3 @@ depending which menu, run a different build command
 adding itself to the `File` menu, but the same doesn't work for the window
 
 [[RnD to add to maya windows menu on startup]]
-

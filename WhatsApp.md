@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: ca922b20
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[chat]]
 [[Android app]]
 [[instant messaging]]

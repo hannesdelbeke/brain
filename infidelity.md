@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: dfbdebdc
+sentiment-label:
+- contemplative
+tags:
+- journal
+- relationship
+- self-reflection
+- communication
+---
+
 It seems bad [[relationship]]s lead to infidelity, instead of the other way around.
 This means that when you consider infidelity, look at yourself and your relationship and try figure out what's wrong.
 
@@ -10,4 +24,3 @@ This means that when you consider infidelity, look at yourself and your relation
 	  *I guess men are just horny instead?*
     
 - **Impact of Secrecy:** Negative effects were stronger for perpetrators who kept their infidelity secret compared to those whose infidelity was known. Disclosure of infidelity might help couples address relationship problems.
-

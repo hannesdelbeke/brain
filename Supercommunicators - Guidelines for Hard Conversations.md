@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 0ea06d47
+sentiment-label:
+- skeptical
+tags:
+- journal
+- communication
+- self-reflection
+---
+
 This [review](https://nutreats.co.za/supercommunicators-book-review/) of [[Supercommunicators - How to Unlock the Secret Language of Connection]] seems to handle very different topics than what i remember from the book. Perhaps it's hallucinated [[AI slop]]?
 
 - start with establishing the boundaries of the conversation

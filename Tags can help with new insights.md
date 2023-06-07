@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: adbe6877
+sentiment-label:
+- inspired
+tags:
+- journal
+- self-reflection
+- hobby
+---
+
 ## Tags can help with new insights
 However this vague connection is the strength of hashtags.
 When I tagged a note, and years later give another note the same tag, I might discover a connection with a previously completely unrelated note. This could lead to inspirations and new connections in my mind. 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1d34e556
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 execute console (run from script editor)
 ```python
 import bpy

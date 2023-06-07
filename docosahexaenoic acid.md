@@ -1,7 +1,16 @@
 ---
 aliases:
-  - DHA
+- DHA
+sentiment:
+- 5
+sentiment-hash: 896ea5d6
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 an [[essential fatty acid]]
 
 ### sources

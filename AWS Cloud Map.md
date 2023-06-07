@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6d7e6a72
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Cloud Map
 AWS Cloud Map is a cloud resource discovery service. With Cloud Map, you can define custom names
 for your application resources, and it maintains the updated location of these dynamically changing

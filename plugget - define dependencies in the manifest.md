@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6084030a
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ```json
 {

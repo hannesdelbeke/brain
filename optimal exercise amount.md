@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6716831b
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 ## super TLDR
 Optimal weekly [[exercise]] is 6 hours [[moderate aerobic activity|moderate]] AND 2.5 hours [[vigorous aerobic activity|vigorous]]
 ## Notes

@@ -1,9 +1,15 @@
 ---
 aliases:
-  - screen copy
-  - scrcpy
+- screen copy
+- scrcpy
+sentiment:
+- 5
+sentiment-hash: 37e3982f
+sentiment-label:
+- factual
+tags:
+- technical
 ---
-
 
 https://github.com/Genymobile/scrcpy
 

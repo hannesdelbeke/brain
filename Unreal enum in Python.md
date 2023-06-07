@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 313814ed
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Enumeration value names are automatically exposed as upper-case `SNAKE_CASE`
 
 ## C++ to Python

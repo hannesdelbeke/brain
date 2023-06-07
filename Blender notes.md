@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: bfdbd645
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 seems the best solution would be native text
 and add richtext support
 

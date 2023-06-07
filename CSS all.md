@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 22197a5b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 not sure what this note is but it was used with [[CSS collapse heading]]
 
 ```CSS

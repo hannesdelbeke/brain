@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: af00fac7
+sentiment-label:
+- inspired
+tags:
+- creative
+- planning
+- technical
+- work
+---
+
 imagine a [[Unreal tool]] to browse for console commands.
 customize a command, and save it. (similar to the [[buttonizer]])
 it can be used as a [[tool launcher]], it can be used to run commonly used commands
@@ -51,6 +65,3 @@ then read all commands up until you find `Cmd: *`
 
 i think some of these commands can contain input arguments
 so maybe we save them as a customizable string.
-
-
-

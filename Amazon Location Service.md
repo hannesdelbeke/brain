@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b47e9197
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Location Service
 Amazon Location Service makes it easy for developers to add location functionality to applications
 without compromising data security and user privacy.

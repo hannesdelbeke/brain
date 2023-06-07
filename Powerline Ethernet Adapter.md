@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0616308c
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 Extend your [[Ethernet]] at home through your electric wall sockets
 
 TLDR: Usually not reliable, only use when no [[WiFi]] or [[Ethernet port]] are available.

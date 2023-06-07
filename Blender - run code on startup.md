@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d80f4180
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 run code on [[Blender]] [[startup]]
 
 - Cleanest way is to wrap your code in a [[Blender addon]], and run the startup code on addon load. Then enable addon to load on startup

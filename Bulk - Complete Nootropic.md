@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 274de494
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
 
 | Name                                  | Per Serving (6 capsule)          | Reference Intake of an average adult (%) |
 | ------------------------------------- | -------------------------------- | ---------------------------------------- |

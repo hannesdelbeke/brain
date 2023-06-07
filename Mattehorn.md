@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 902995ec
+sentiment-label:
+- factual
+tags:
+- planning
+- outdoors
+- hobby
+- travel
+---
 
 > If you are a full time mountaineer, in 1 year Matterhorn should be fine. But if you are a city dweller and a beginner mountaineer, 1 year goal for Matterhorn is not realistic. You should set your sights on learning and trying out other easier peaks like those in Monte Rosa, Gran Paradiso, even Mt Blanc is easier because its not technical. This will give you and understanding of how your body deals with altitude and what gear works for you etc
 

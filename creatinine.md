@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 788f9712
+sentiment-label:
+- factual
+tags:
+- medical
+---
 
 # Creatinine
 

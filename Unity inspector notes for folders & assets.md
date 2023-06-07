@@ -1,3 +1,18 @@
+---
+sentiment:
+- 5
+sentiment-hash: 865d7017
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 I wrote a tool to add notes to folders & assets in the [[Unity inspector]].
 https://github.com/hannesdelbeke/unity-folder-notes
 

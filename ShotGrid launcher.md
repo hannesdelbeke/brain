@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9a71368e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 toolkit [[app launcher]] and project launcher
 ![](https://developers.shotgridsoftware.com/en/guides/pipeline-integrations/administration/images/Beyond-your-first-project/project_ready.png)

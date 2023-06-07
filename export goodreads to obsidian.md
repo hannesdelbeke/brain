@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 553650cc
+sentiment-label:
+- proactive
+tags:
+- planning
+- technical
+- journal
+- self-reflection
+- hobby
+---
+
 It'd be nice to [[own your data]] of what books I read. 
 a [[backup]] in case [[Goodreads]] goes down.
 If I want both my data, and goodreads, the list needs to stay [[synced]]

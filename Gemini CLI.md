@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: aefdd6c4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Gemini CLI is intended to be run from commandline.
 it can launch sub agents etc to do tasks
 

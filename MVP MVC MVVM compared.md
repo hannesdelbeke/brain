@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0974862e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 MVVM, [[model view presenter|MVP]], and MVC are all architectural patterns used in software development, particularly for building user interfaces. While they share similarities, they differ in how they separate the concerns and handle the interactions between components. Here's a comparison of MVVM, MVP, and MVC:
 
 1. MVVM (Model-View-ViewModel): MVVM divides an application into three main components:

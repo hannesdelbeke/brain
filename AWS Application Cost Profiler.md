@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: a460299f
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- work
+- finance
+---
+
 # AWS Application Cost Profiler
 AWS Application Cost Profiler provides you the ability to track the consumption of shared AWS resources
 used by software applications and report granular cost breakdown across tenant base. You can achieve

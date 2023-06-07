@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 710913a8
+sentiment-label:
+- factual
+tags:
+- planning
+- home
+- hobby
+---
+
 [![](https://morrisdirect.co.uk/image/catalog/Blog-posts/Morris-Dehumidifiers/Loft%20Dehumidifier%20-%20What%20You%20Should%20Know/Morris-attic-dehumidifier.jpg)]color wall, wood
 
 - [[acoustic wall panel]]

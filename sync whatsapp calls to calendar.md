@@ -1,6 +1,17 @@
 ---
 created: 2026-04-23
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 4bf75cf9
+sentiment-label:
+- pragmatic
+tags:
+- planning
+- technical
+- hobby
 ---
+
 I want to visualize [[Whatsapp]] calls on my [[Google calendar]], just how I [[2025-10 link Strava to Google calendar|visualize Strava activities on my Google calendar]].
 - start time
 - duration

@@ -1,9 +1,17 @@
 ---
 aliases:
-  - Blender add-on
-  - Blender add-ons
-  - Blender addons
-  - addons
+- Blender add-on
+- Blender add-ons
+- Blender addons
+- addons
+sentiment:
+- 5
+sentiment-hash: e4f5ebc7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 > [!warning]

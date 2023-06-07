@@ -1,3 +1,15 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 0c509a37
+sentiment-label:
+- proud
+tags:
+- technical
+- creative
+- work
+---
 
 https://github.com/hannesdelbeke/texture-browser-unreal-plugin
 ## Engine resource browser

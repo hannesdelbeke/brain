@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 3
+- 6
+sentiment-hash: a4e21bf2
+sentiment-label:
+- annoyed
+- focused
+tags:
+- journal
+- technical
+- planning
+- work
+---
+
 ⚠️ IMO this whole summary is kinda shit
 I asked [[OpenAI Codex]] to analyze [[Game dev flow]].
 It assumed I want to combine my whole personal vault with a unity repo, instead of talking about general project documentation practices.

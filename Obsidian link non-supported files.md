@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: bbb2242d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 You can include non-supported [[file format|file formats]] in your [[Obsidian vault|vault]].
 They will work with [[Obsidian autocomplete]], and [[wikilink|wikilinks]].
 When clicked, your pc opens the file with the default editor for that file type.

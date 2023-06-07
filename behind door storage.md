@@ -1,6 +1,14 @@
 ---
 aliases:
-  - back of door storage
+- back of door storage
+sentiment:
+- 5
+sentiment-hash: f77626d9
+sentiment-label:
+- factual
+tags:
+- planning
+- home
 ---
 
 You can use either 

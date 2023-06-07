@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 14da4ff9
+sentiment-label:
+- reflective
+tags:
+- social
+- relationship
+- communication
+- self-reflection
+---
+
 AI generated
 ## 🔓 **Ways to Be More Vulnerable**
 ### 1. **Share When You’re Not “Fine”**

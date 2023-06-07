@@ -1,7 +1,16 @@
 ---
 aliases:
-  - Legionnaires' disease
+- Legionnaires' disease
+sentiment:
+- 5
+sentiment-hash: 14b2daa0
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Legionnaires' disease is a lung infection you can get from inhaling droplets of water from things like [[air conditioning]] or hot tubs.
 
 Heat water to 60 degrees to kill the bacteria, distribute it above 50C

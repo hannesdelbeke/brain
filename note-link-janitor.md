@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 20c34bda
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 `note-link-janitor` is a batch script to add [[backlink]] at the bottom for all [[wikilink]] in a file of markdown files. 
 
 The [original version](https://github.com/andymatuschak/note-link-janitor) from [[Andy Matuschak]] dropped support, so I made a [fork](https://github.com/hannesdelbeke/note-link-janitor) with some fixes.

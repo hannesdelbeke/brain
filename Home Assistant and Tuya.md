@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 66de9914
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 advice seems
 
@@ -37,4 +46,3 @@ concerns:
 - [[tuya-home-assist]] official HA extension by Tuya 1
 - [[tuya-smart-life]] official HA extension by Tuya 2
 - [[flash tuya devices]] outdated or complicated
-

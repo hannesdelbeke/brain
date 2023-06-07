@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7319cdad
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 winget allows quick app install on windows from a terminal.
 
 > [!Example]+

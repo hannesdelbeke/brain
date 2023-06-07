@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1a60c6a0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Node tools are an accessible way to expand [[Blender]] and customize tools or [[Blender addon|addons]] without requiring [[Python]]. Similar to [[Unreal Blueprints Visual Scripting|Unreal Blueprints]] but atm more limited.
 ## create
 To create a new Node Tool you go to the Geometry Nodes editor, and switch the context to Tool.

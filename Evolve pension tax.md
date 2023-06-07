@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 80778af5
+sentiment-label:
+- factual
+tags:
+- financial
+- technical
+- finance
+- work
+---
+
 Crystal operates a ‘net pay’ arrangement, meaning your contributions are taken out of your earnings before they are taxed. (AFAIK this is [[SMART salary sacrifice]])
 As your pension contribution reduces your earnings subject to tax, you receive your full amount of tax relief straightaway via [[Pay As You Earn|PAYE]] (unless you earn less than the tax threshold, please see the section above ‘What if I don’t pay tax’).
 Your pension contribution does not reduce the amount of your wages that are subject to National Insurance Contributions (NI).

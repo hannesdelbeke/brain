@@ -1,3 +1,16 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: '79223277'
+sentiment-label:
+- enthusiastic
+tags:
+- creative
+- planning
+- hobby
+---
+
 Create a game in 1 day. Theme: periodic
 Let's not be original, just make a rhythm game. The selling point will be silly cute art.
 
@@ -50,4 +63,3 @@ Creating a Dance Dance game in Unity with 2D images is certainly achievable and 
 - can add e.g. 2 opposites to add extra moves
 ## build target
 pc (web), later phone. portrait screen format
-

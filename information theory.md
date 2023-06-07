@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e1b492da
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+---
+
 how to quantify and transmit [[information]],
 
 **maximally informative questions**.

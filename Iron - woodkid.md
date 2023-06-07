@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 6f3eded9
+sentiment-label:
+- inspired
+tags:
+- creative
+- memory
+- hobby
+---
+
 an [[epic]] [[orchestra]] intro
 [[male vocals]]
 

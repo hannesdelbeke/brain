@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: b2429fb1
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 ## problem solve techniques
 It's always good to isolate the problem and solve it piece by piece. 
 While maintaining some form of higher level overview that enables you to step back and see the whole picture. e.g. a design document or user story.

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8212ff8a
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 Like the [[public/Maya plugin manager]], but for [[Maya module|Maya modules]] instead of plugins
 https://github.com/hannesdelbeke/maya-module-manager
 

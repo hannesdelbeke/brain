@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6a85840b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 A study on how mkdocs theme toggles a menu without JavaScript
 context: if we click the Folder22 label, it opens and shows all labels for the files inside

@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 09ae6adb
+sentiment-label:
+- analytical
+tags:
+- technical
+- self-reflection
+- work
+---
+
 when you focus on [[optimization]] too early.
 resulting in wasted effort.
 

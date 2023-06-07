@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 25529e1e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Unlimited photo storage
 [[Amazon Prime]] members get unlimited full-resolution photo storage and 5 GB for video from Amazon Photos. Not a Prime member? Everyone gets 5 GB for photos and videos.
 

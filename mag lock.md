@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d95d3073
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 a magnetic lock
 
 pros

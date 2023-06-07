@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 473b76a2
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 common [[Blender]] errors
 
 crash when click menu

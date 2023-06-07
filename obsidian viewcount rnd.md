@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ab1a462f
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 check out project https://github.com/decaf-dev/obsidian-view-count seems to atm development is dropped and it's archived on github.
 use `gh` cli
 first check all forks, and summarize what changes they did in each fork. write the summary here:
@@ -42,4 +53,4 @@ install [Moyf/obsidian-view-count](https://github.com/Moyf/obsidian-view-count) 
 draft for later, dont do this now:
 - [x] fork the repo, and ask me which changes are worth bringing over.
 	will continue from https://github.com/Moyf/obsidian-view-count
-- [x] then ensure see if there is support for renaming files. 
+- [x] then ensure see if there is support for renaming files.

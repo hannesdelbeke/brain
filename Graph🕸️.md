@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8446a814
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 %%do not change this file, it contains the I-frame for the [[graph theory|graph]]%%
 use mouse scroll to zoom in/out, and hold left click while dragging to pan.
 <iframe id="ytplayer" type="text/html" width="750" height="750" src="../assets/graph.html" frameborder="0" scrolling="no"></iframe>

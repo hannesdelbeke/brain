@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 5
+- 7
+sentiment-hash: ae967ed3
+sentiment-label:
+- focused
+- satisfied
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 describe the wrapping of an existing mel plugin, and the issues i ran in.
 
 First I created a repo from the [[Maya plugin template]]

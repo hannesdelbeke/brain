@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 17e63618
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Artists often want to put all tools on a [[Maya shelf]].
 - It's always there in front of them. The artist doesn't has to search for anything.
 - it's simple, just click a button to launch the tool.

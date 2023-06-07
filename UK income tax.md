@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2cfc3ef5
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
 
 | Band               | Taxable income      | Tax rate |
 | ------------------ | ------------------- | -------- |

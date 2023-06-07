@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2c6bde1f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 > [!warning] P4 Streams
 > Ensure your stream is setup before pulling latest.

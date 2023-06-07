@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6ba5b96c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 - [ ] these are research notes that could use a cleanup #todo
 

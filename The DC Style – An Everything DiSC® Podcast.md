@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2629398b
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- self-reflection
+---
 
 # The DC Style –An Everything DiSC® Podcast
 © by John Wiley & Sons, Inc. All rights reserved.
@@ -379,4 +390,4 @@ And so let me give you kind of a reminder of the assumptions and maybe add a few
 
 And if this assumption is realistic in that situation, great. You know, I run with it. But if it's not, then I learn to challenge it and replace it with a statement that's more accurate, more fitting for the circumstances. And it absolutely takes some time and deliberate effort. But ultimately, I end up having more control over how I see the world and really how I interact with it. 
 
-All right, well, thank you, everyone, for your time. 
+All right, well, thank you, everyone, for your time.

@@ -1,6 +1,15 @@
 ---
+sentiment:
+- 5
+sentiment-hash: 7032f647
+sentiment-label:
+- factual
 source: https://around-the-corner.typepad.com/adn/2013/04/distributing-plug-insfiles-on-maya-and-3ds-max.html
+tags:
+- technical
+- work
 ---
+
 # Distributing plug-ins/files on Maya
 (and 3ds Max)
 

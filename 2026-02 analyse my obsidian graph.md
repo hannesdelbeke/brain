@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: f0f7760a
+sentiment-label:
+- reflective
+tags:
+- journal
+- self-reflection
+- hobby
+- work
+---
+
 When I look at my [[Obsidian graph view]], I notice patterns 
 - I color each past job in a different color
 - I color public and private notes
@@ -20,4 +34,3 @@ I often reference them, and have 75% of the whole vault public as of 2026-02. Th
 ---
 
 I don't often look at the graph, but found it interesting that patterns appeared after a year of use.
-

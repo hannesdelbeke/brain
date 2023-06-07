@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '67636337'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Managed Blockchain
 Amazon Managed Blockchain is a fully managed service that makes it easy to create and manage
 scalable blockchain networks using the popular open source frameworks Hyperledger Fabric and

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: b8a08daf
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 design process with 4 phases
 - **Discover:** 
   Understand the issue rather than merely assuming what it is. Speak to and spend time with people affected by the issues.

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: d46d305b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Redshift
 Amazon Redshift is the most widely used cloud data warehouse. It makes it fast, simple and costeffective to analyze all your data using standard SQL and your existing Business Intelligence (BI) tools.
 

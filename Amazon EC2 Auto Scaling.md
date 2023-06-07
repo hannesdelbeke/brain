@@ -1,6 +1,14 @@
 ---
 aliases:
-  - Amazon EC2
+- Amazon EC2
+sentiment:
+- 5
+sentiment-hash: a7f2b01c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 # Amazon EC2 Auto Scaling

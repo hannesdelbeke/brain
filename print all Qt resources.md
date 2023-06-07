@@ -1,5 +1,13 @@
 ---
 alias: print all default native qt icons
+sentiment:
+- 5
+sentiment-hash: e87b3abc
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 ![[print all qt resources-1676464679534.jpeg]]

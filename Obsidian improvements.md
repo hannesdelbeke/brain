@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 8f2b470d
+sentiment-label:
+- focused
+tags:
+- planning
+- technical
+- procrastination
+- self-reflection
+- work
+- hobby
+---
+
 Remember plugin minimalism, less is more.
 Don't spend more time on notes than work.
 
@@ -71,4 +87,4 @@ related to improvements:
 plugin development
 - great resource https://marcus.se.net/obsidian-plugin-docs/
 
-[[Obsidian]] 
+[[Obsidian]]

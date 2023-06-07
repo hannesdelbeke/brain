@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6d1edfd7
+sentiment-label:
+- factual
+tags:
+- technical
+- health
+- hobby
+---
+
 Unlimited, flexible access to a network of fitness venues across the UK.
 https://www.hussle.com/
 

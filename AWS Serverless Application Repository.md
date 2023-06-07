@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '06111765'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## AWS Serverless Application Repository
 The AWS Serverless Application Repository enables you to quickly deploy code samples, components, and complete applications for common use cases such as web and mobile back-ends, event and data processing, logging, monitoring, IoT, and more. Each application is packaged with an AWS Serverless Application Model (SAM) template that defines the AWS resources used. Publicly shared applications also include a link to the application’s source code. There is no additional charge to use the Serverless Application Repository - you only pay for the AWS resources used in the applications you deploy.
 

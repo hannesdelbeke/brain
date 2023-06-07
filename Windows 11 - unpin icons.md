@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e5022dd5
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To unpin all [[icon|icons]] from the [[Windows task bar]] (the bar that's at bottom, ⚠️ not the [[Windows start menu]] you see when you press 🪟 key ) in [[Windows 11]]:
 ```batch
 DEL /F /S /Q /A "%AppData%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\*"

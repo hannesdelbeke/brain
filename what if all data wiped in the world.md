@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 7777dc7c
+sentiment-label:
+- contemplative
+tags:
+- journal
+- self-reflection
+- finance
+---
+
 if all the data was wiped, how would it affect you?
 e.g. credit card, savings, mortgage, ...
 your earnings and savings are gone, your debts are gone, ...

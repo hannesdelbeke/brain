@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 079db84e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 collapsible headings is inspired by the feature in [[Obsidian]]
 ## Toggle headers
 - [x] prototype with JavaScript, see [repo](https://github.com/hannesdelbeke/mkdocs-collapsable-headers)

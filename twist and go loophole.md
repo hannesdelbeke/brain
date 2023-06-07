@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d8858551
+sentiment-label:
+- factual
+tags:
+- technical
+- travel
+---
+
 The Department for Transport has today confirmed to Pedelecs that an ordinary cycle, already ridden on public roads as such and subsequently converted to a ‘twist and go’ electric bike, will not require type approval.
 
 The DfT further clarified that type approval ‘only applies to new vehicles, not converted ones’.

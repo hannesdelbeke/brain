@@ -1,3 +1,18 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 0aa800bc
+sentiment-label:
+- inspired
+tags:
+- planning
+- creative
+- technical
+- work
+- hobby
+---
+
 # Vision
 Imagine easily installing apps when upgrading pc. You log in and your apps automatically install in the background. No more time is wasted on reinstalling apps.
 

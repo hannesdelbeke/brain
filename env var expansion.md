@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b87f248c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 On Windows, ``%name%`` expansion is also supported in addition to `$name` and `${name}` expansion.
 
 On Windows:

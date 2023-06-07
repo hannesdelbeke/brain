@@ -1,3 +1,21 @@
+---
+energy: 5
+sentiment:
+- 6
+- 4
+sentiment-hash: 4978c996
+sentiment-label:
+- ambitious
+- underwhelmed
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 repo https://github.com/hannesdelbeke/blender-pyflow
 mentioned this on blender artists node [thread](https://blenderartists.org/t/unreal-blueprints-houdini-nodes-in-blender/1484937/3)
 

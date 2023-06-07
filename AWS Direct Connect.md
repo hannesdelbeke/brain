@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0dfb5d5e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Direct Connect
 AWS Direct Connect makes it easy to establish a dedicated network connection from your premises
 to AWS. Using AWS Direct Connect, you can establish private connectivity between AWS and your

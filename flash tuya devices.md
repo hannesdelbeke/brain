@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: ae3f04f9
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
 
 - In the past you could flash Tuya devices with custom firmware like Tasmota or ESPHome, but now Tuya has made it harder to do so. Hardware (e.g. chip) can also be unpredictable
 

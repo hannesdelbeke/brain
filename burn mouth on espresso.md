@@ -1,3 +1,18 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 172e9b1c
+sentiment-label:
+- annoyed
+tags:
+- journal
+- medical
+- self-reflection
+- health
+- home
+---
+
 I keep burning my mouth on [[espresso]].
 It's too hot.
 

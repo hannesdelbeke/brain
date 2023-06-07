@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 7f86290c
+sentiment-label:
+- pleased
+tags:
+- technical
+- planning
+---
+
 discovered https://privacy.sexy, where you can generate a list of apps & features to uninstall.
 
 uninstall preinstalled apps on win 11 pc from scan

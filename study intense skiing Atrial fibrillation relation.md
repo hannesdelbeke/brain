@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7773cba3
+sentiment-label:
+- factual
+tags:
+- medical
+- technical
+- outdoors
+- health
+---
 
 study https://academic.oup.com/eurjpc/article/27/19/2354/6125486
 

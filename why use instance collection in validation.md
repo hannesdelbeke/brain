@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2fe03621
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Why do we use instance collection in validation?
 Why not just do a simple validation test like this?
 ```python

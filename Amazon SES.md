@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a8e0d257
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon SES
 Amazon Simple Email Service (Amazon SES) is a cost-effective, flexible, and scalable email service that
 enables developers to send mail from within any application. You can configure Amazon SES quickly

@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7d8ac118
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+- health
+---
+
 shoots jet of cleaning solution to clean hairs and dirt of your shaver
 
 CON

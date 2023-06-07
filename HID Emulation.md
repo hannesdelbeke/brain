@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b0f20af3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 HID emulation is the process of using a device, like a microcontroller or computer, to pretend to be a standard Human Interface Device (HID) such as a keyboard, mouse, or gamepad. This allows one device to control another as if it were a physical input device
 
 e.g. a USB switcher / [[keyboard video mouse|KVM]] takes 5-10 seconds when switching between two computers. because the pc treats it as a newly plugged in [[USB]] device

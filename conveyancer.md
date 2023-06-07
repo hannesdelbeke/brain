@@ -1,6 +1,15 @@
 ---
 aliases:
-  - conveyancers
+- conveyancers
+sentiment:
+- 5
+sentiment-hash: 9918ec8d
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- home
 ---
 
 A Conveyancer is someone who can help you through the process of selling buying or mortgaging a property.

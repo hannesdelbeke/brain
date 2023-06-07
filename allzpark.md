@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b3ba5873
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[app launcher]]
 
 [[rez]] only

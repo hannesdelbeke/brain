@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a0ae1381
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 when installing a [[Blender addon]], in a addon path, Blender won't detect it if the addon [[path]] didn't exist on startup.
 
 to fix, add path manually when creating it

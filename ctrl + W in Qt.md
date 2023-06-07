@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e2892ea4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 You can add a `QShortcut` for the ctrl-W [[close tab]] to your widget class to close the widget-window when the shortcut is pressed. This will work without interfering with Maya's global shortcuts as long as your tool has focus.
 ### Steps to Add `Ctrl+W` Shortcut
 

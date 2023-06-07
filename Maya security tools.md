@@ -1,7 +1,14 @@
 ---
 aliases:
-  - Maya scanner
-  - MayaScanner
+- Maya scanner
+- MayaScanner
+sentiment:
+- 5
+sentiment-hash: acef6824
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 > [!warning]

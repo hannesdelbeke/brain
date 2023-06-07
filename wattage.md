@@ -1,1 +1,11 @@
-"Wattage" and [[watt|watts]] both relate to [[electricity|electrical]] power, but "wattage" is a more general term referring to the amount of power a device uses or produces, while "watts" is the unit of measurement for that power. Essentially, wattage is the concept, and watts are the quantity. 
+---
+sentiment:
+- 5
+sentiment-hash: fe1479a6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
+"Wattage" and [[watt|watts]] both relate to [[electricity|electrical]] power, but "wattage" is a more general term referring to the amount of power a device uses or produces, while "watts" is the unit of measurement for that power. Essentially, wattage is the concept, and watts are the quantity.

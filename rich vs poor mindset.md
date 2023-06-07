@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 9ff74def
+sentiment-label:
+- reflective
+tags:
+- journal
+- self-reflection
+- finance
+- work
+---
+
 This is not [[rich]] people vs. poor people. There are many poor people with a rich mindset, financially poor due to circumstance. And there are many rich people with a poor mindset.
 
 | Rich Mindset                                                                                                                                                                                                                                                                                                              | Poor mindset                                                                                                                                                            |

@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 82af9d3d
+sentiment-label:
+- factual
+tags:
+- medical
+- relationship
+- self-reflection
+- health
+---
+
 ## Cause
 - Around 20% of people, originates in childhood, often from unpredictable or insensitive parenting.
 	- Emotionally distant caregivers
@@ -47,3 +60,5 @@
 [source](https://www.simplypsychology.org/anxious-attachment-style.html)
 
 [[relationship]]
+[[anxiety]]
+[[anxiety disorder]]

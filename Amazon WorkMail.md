@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 06eaf2ff
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon WorkMail
 Amazon WorkMail is a secure, managed business email and calendar service with support for existing
 desktop and mobile email client applications. Amazon WorkMail gives users the ability to seamlessly

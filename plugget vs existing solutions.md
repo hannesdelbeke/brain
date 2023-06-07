@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dee22524
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[AI article]]
 
 are there existing tools that could replace [[plugget]]
@@ -60,4 +71,3 @@ Each software has its own "internal" attempts at this:
 You have identified a gap: **The "General Purpose App-Store" for DCC Tools.** 
 
 **Conclusion:** You aren't reinventing the wheel; you're building a bridge between wheels that currently don't talk to each other.
-

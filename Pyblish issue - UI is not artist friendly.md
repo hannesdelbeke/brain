@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 4d37de5d
+sentiment-label:
+- dissatisfied
+tags:
+- technical
+- work
+---
+
 [[Pyblish lite]] & [[Pyblish qml]] feel to technical for artists.
 - Pyblish UI confuses artists
 - show what went wrong, filter by instance type e.g. mesh, or textures

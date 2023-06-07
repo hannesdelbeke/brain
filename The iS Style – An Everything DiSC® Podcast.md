@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: d073d078
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 The i S Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the i S style. It is an Everything DiSC® production brought to you by Wiley.
 Dr. Mark Scullard: All right, so we're going to spend some time talking about the i S style, which is a combination of influence and steadiness. And if you have an i S style, uh, you know, I think what you're going to find is that, you know, roughly, you know, 70, 80 percent of what we're going to talk about will probably fit for you. You know, some of it will be spot on, uh, there'll be some of it feels like, well, that's not really me or maybe even some, you know, that's like, well, that used to be me in the past when I was younger. But I think the real value here is more about listening for those insights that really help you make sense of your past experiences or that, um, really help you see your thought processes and your habits in a new light. 

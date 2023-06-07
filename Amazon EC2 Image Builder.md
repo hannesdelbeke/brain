@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 321953a1
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon EC2 Image Builder
 EC2 Image Builder simplifies the building, testing, and deployment of Virtual Machine and container images for use on AWS or on-premises.
 Keeping Virtual Machine and container images up-to-date can be time consuming, resource intensive, and error-prone. Currently, customers either manually update and snapshot VMs or have teams that build automation scripts to maintain images.

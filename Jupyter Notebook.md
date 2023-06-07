@@ -1,7 +1,16 @@
 ---
 aliases:
-  - IPython Notebook
+- IPython Notebook
+sentiment:
+- 5
+sentiment-hash: 93325d2c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 Kernels are programming language specific processes that run independently and interact with the Jupyter Applications and their user interfaces
 
 [[setup Blender as a Jupyter  kernel]]
@@ -18,4 +27,3 @@ Jupyter notebooks are the most popular, but here are some other ones:
 | **Visual Studio Code**        | Python, R, Java, Scala, and many others | Git             | via extensions                                                                                                                                                                           | via Microsoft    | Real-time collaboration via Live Share | Code debugging                  |
 | **Google Colab**              | Python, R                               | Git             | Google Drive                                                                                                                                                                             | via Google Cloud | No real-time                           |                                 |
 | **JetBrains Datalore**        | Python, R, SQL                          |                 |                                                                                                                                                                                          |                  |                                        |                                 |
-

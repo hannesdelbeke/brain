@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e23de25b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A [[PySide]] agnostic version, supports both [[PySide2]] & [[PySide6]] 
 It provides support for PyQt5, PySide2, PyQt6 and PySide6 using the Qt5 layout
 

@@ -1,8 +1,16 @@
 ---
 aliases:
-  - unlinked note
-  - undiscoverable note
+- unlinked note
+- undiscoverable note
+sentiment:
+- 5
+sentiment-hash: da7759f0
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 An orphan note is a note that has no links to another note, and therefore is undiscoverable. 
 
 > [!warning]

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 13b38800
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Simple Queue Service
 Amazon Simple Queue Service (Amazon SQS) is a fully managed message queuing service that enables
 you to decouple and scale microservices, distributed systems, and serverless applications. SQS eliminates

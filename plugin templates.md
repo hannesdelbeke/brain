@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: f420a566
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 a collection of [[template|templates]]
 
 - [ ] [[3ds max plugin template]]

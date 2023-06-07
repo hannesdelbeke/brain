@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4a9f19b9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Kinesis Data Streams
 Amazon Kinesis Data Streams is a massively scalable and durable real-time data streaming service. KDS
 can continuously capture gigabytes of data per second from hundreds of thousands of sources such as

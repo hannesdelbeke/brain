@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2b92f997
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- work
+- finance
+---
+
 # AWS Cost Explorer
 AWS Cost Explorer has an easy-to-use interface that lets you visualize, understand, and manage your
 AWS costs and usage over time. Get started quickly by creating custom reports (including charts and

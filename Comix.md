@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b1a666ef
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 a comic reader
 
 it's a Python script, works on linux, mac, windows

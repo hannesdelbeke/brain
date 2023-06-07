@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: b9f2b04c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 research sponsored by [[BBSA]] (BIASED)
 [source](https://bbsa.org.uk/wp-content/uploads/2023/03/March-2023-BBSA-Initial-Report-v2.pdf)
 

@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 8085519b
+sentiment-label:
+- critical
+tags:
+- technical
+- work
+---
+
 #### Pyblish inconsistent logic
 Some of the core logic is flawed IMO:
  - actions are not directly aware of the plugins/instances they belong too

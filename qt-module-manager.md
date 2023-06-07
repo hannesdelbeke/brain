@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2b2db556
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A Qt module manager to view and [[python reload]] the imported [[Python module|Python modules]]
 
 https://github.com/hannesdelbeke/qt-module-manager

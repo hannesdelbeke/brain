@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: dcc6276e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 Simplify your Python [[package management]] with a [[Python pip|pip]] manager that can run in Maya, Max, Substance, Unreal, Blender, ...
 
 repo: https://github.com/hannesdelbeke/pip-qt

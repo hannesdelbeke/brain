@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b42da817
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 The **outliner** let's you edit the scene hierarchy in [[Autodesk Maya]]
 

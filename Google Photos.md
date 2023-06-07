@@ -1,5 +1,16 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 6be8e570
+sentiment-label:
+- annoyed
+tags:
+- planning
+- technical
+- home
+---
 
- 
 tl;dr: copy your photos from your phone to your computer instead
 don't rely on photos as a backup
  

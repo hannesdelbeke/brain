@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ef9bd69a
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 Loxone is a building automation system that can be used to control and automate homes, offices, and other commercial buildings. It can be used to control [[lighting]], [[heating]], [[ventilation]], [[security]], and more. 
 
 How it works

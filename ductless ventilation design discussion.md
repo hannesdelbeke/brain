@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: f8a7ab54
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 can we avoid using [[ducting]]?
 
 [video](https://www.youtube.com/watch?v=5VPqFSITm0w) discuss

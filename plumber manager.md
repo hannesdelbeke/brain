@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a4ce84eb
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 https://github.com/hasielhassan/PlumberManager
 
 A helper tool to design CG Pipeline interactive diagrams and data flow documentation

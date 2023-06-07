@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: aed4838d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 the metadata ends and the Markdown document begins upon the first blank line (if the first line was blank, then no metadata).
 
 ```

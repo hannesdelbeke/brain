@@ -1,6 +1,16 @@
 ---
 aliases:
-  - Obsidian - publishing
+- Obsidian - publishing
+sentiment:
+- 5
+sentiment-hash: '94000648'
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- creative
+- hobby
 ---
 
 R&D notes on how I can make some of my obsidian notes public, and keep them in sync with my personal notes. How to automate the publishing step, what tech to use, where to host, etc.

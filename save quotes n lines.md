@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 7e4730e3
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+---
+
 want to save references to quotes, from an epub.
 	great UX, remembers date, user, page, line and allows me to write comments.
 
@@ -15,4 +27,4 @@ Physical media doesn't support backlinks
   This has been used for years in papers.
 
 https://www.zotero.org/ let's you highlight notes in pdf, and can be linked to [[Obsidian]] with a plugin
-mainly a reference manager. 
+mainly a reference manager.

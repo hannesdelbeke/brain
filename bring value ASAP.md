@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 3020e375
+sentiment-label:
+- pragmatic
+tags:
+- journal
+- planning
+- communication
+- self-reflection
+- work
+---
+
 ## bring value ASAP
 Often it's better to develop a prototype exporter that works 90% in 1 day, 
 than to have an exporter that works 100% in a month.

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5bf57906
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 NuGetForUnity is a [[NuGet]] client to run inside [[Unity]].
 
 🔹 **What it is:**

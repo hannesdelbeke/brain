@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 41e018b4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Torrent sites
 - www.bitsearch.to
 - https://1337x.to

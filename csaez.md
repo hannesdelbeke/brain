@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: bcd76b6a
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 his github https://github.com/csaez
 

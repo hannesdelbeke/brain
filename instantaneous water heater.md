@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 87ea1e81
+sentiment-label:
+- factual
+tags:
+- planning
+- financial
+- home
+- finance
+---
+
 e.g. electric [[shower]] or tap.
 ## cost
 Since electricity costs 4 times more than gas, instant water heating is more expensive.

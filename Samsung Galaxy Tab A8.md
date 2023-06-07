@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 3
+sentiment-hash: b61f323d
+sentiment-label:
+- frustrated
+tags:
+- journal
+- technical
+- hobby
+---
+
 expensive entry lvl tablet.
 great screen but poor performance. laggy even after factory reset.
 

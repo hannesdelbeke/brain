@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5d483c48
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 comment [source](https://www.reddit.com/r/homeassistant/comments/1bu60zn/comment/kxrb32i)
 
 > Hey, it's ok to have a smart switch on the light.

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: fadf9fee
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 [[Obsidian]]
 
 legend:

@@ -1,8 +1,17 @@
 ---
 aliases:
-  - Unity Asset searcher
-  - Unity Command searcher
+- Unity Asset searcher
+- Unity Command searcher
+sentiment:
+- 5
+sentiment-hash: 0bbc24a6
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 [[Unity native feature|Unity ships with]] a default search tool.  
 in the project Tab, next to the search bar there's an expand icon.
 You can search assets, [[GameObject|gameobjects]] in your open scene,  menu commands, and settings.

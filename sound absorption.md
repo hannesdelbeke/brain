@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 11eb9289
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+- hobby
+---
+
 - **Open structure is essential**: Materials like rockwool, fiberglass, and acoustic foam absorb sound by allowing air to enter their pores. The sound energy is dissipated as heat through friction and viscous losses.
 - **Density matters—but not linearly**:
     - _Too low_: Air passes through without much resistance → poor absorption.

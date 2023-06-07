@@ -1,6 +1,15 @@
 ---
 alias: API Gateway
+sentiment:
+- 5
+sentiment-hash: 682e33f5
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 # Amazon API Gateway
 https://aws.amazon.com/api-gateway/
 

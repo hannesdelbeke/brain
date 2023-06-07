@@ -1,8 +1,17 @@
 ---
 aliases:
-  - roller blinds
-  - external roller blinds
-  - roller blind
+- roller blinds
+- external roller blinds
+- roller blind
+sentiment:
+- 5
+sentiment-hash: 2608b65f
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+- home
 ---
 
 great at keeping the heat out in summer, reduces internal temp by 1-2C [paper](https://cris.brighton.ac.uk/ws/portalfiles/portal/286104/EPPM%20Paper%20External%20roller%20blind_4.pdf)

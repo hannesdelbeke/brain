@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 70f84bad
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 an [[extension cord]] for a [[electric vehicle|EV]] needs to ensure it's safe, to avoid an electrical fire.
 - don't coil it when in use
 - ensure it doesn't get too hot.

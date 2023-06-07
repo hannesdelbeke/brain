@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8c76088a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Cloud computing is providing developers and IT departments with the ability to focus on what matters most and avoid undifferentiated work like 
 - procurement
 - maintenance

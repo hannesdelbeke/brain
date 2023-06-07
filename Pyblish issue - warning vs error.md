@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: aa4a8950
+sentiment-label:
+- constructive
+tags:
+- technical
+- work
+---
+
 [[Pyblish]]  saves errors and warnings in different locations.
 This makes it harder to write code for e.g. for a custom UI
 

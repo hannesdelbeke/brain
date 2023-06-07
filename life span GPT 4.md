@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 613ed8dc
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Increasing human [[lifespan]] involves a multifaceted approach combining diet, lifestyle, and potentially [[supplement|supplements]]. Here are some research-supported strategies for extending lifespan:
 
 ### Supplements

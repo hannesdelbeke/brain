@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2d12e293
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 thin athletes [[longevity|live longer]] than bulky athletes
 
 sports with lower [[body mass index|BMI]] are better for longevity

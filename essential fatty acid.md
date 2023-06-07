@@ -1,7 +1,16 @@
 ---
 aliases:
-  - essential fatty acids
+- essential fatty acids
+sentiment:
+- 5
+sentiment-hash: 8d4bfe09
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Essential fatty acids must be obtained from food, the body can't make them. (just like [[essential amino acids]])
 
 Some excellent sources of [[alpha-linolenic acid|omega-3]] and [[linoleic acid|Omega-6]] essential fatty acids are [[fish]], flaxseed oil, hemp, walnuts, and leafy vegetables

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: daf42a89
+sentiment-label:
+- factual
+tags:
+- medical
+---
+
 there's a difference between low levels, and a deficiency.
 e.g. You don't need to take creatine [[supplement|supplements]] as a [[vegetarian]], but will do better if you do.
 

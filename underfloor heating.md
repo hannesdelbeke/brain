@@ -1,9 +1,18 @@
 ---
 aliases:
-  - floor heating
-  - radiant heating
-  - radiant floor heating
+- floor heating
+- radiant heating
+- radiant floor heating
+sentiment:
+- 5
+sentiment-hash: 5fcbc512
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
+
 Radiant heating systems supply heat directly to the floor or to panels in the wall or ceiling of a house.
 
 Radiant heating is the effect you feel from the warmth of a hot stovetop.
@@ -19,4 +28,4 @@ There are three types of radiant floor heat
 	- in **dry installations** the installer "sandwiches" the radiant floor tubing between two layers of plywood or attaches the tubing under the finished floor or subfloor
 
 see https://www.energy.gov/energysaver/radiant-heating
-[great article](https://www.imsheatpumps.co.uk/blog/air-source-heat-pumps-underfloor-heating-your-guide/) 
+[great article](https://www.imsheatpumps.co.uk/blog/air-source-heat-pumps-underfloor-heating-your-guide/)

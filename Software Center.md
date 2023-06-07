@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b8cf2cd9
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Software center distributes [[software]] to users in your organisation.
 Users can choose from a pre-configured list, which apps to install on their computer..
 

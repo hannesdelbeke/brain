@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: d0a49b61
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ## Issue starting strava sync
 but cant get strava auth to work, despite having client id and secret.

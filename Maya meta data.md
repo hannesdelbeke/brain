@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 292a7020
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Autodesk Maya]] has a [[metadata]] API that allows storing scene-wide metadata independent of objects.
 
 - supported types: string, int, and float
@@ -18,4 +29,3 @@ cmds.setAttr(f"{metadataStream}.stringAttr", "Project XYZ", type="string")
 ```
 
 you can use [[mayapy]] to access this metadata externally
-

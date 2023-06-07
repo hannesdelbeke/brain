@@ -1,4 +1,19 @@
-
+---
+energy: 7
+sentiment:
+- 4
+- 8
+sentiment-hash: 4e95871a
+sentiment-label:
+- critical
+- inspired
+tags:
+- creative
+- journal
+- technical
+- self-reflection
+- work
+---
 
 Developers are told "to focus on the product" and let SaaS vendors handle the rest, but integrating third-party services, whether it's auth, queuing, file storage, or image optimization, comes at a cost. Not just in dollars but in time, friction, and mental overhead.
 

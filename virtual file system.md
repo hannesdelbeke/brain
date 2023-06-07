@@ -1,6 +1,14 @@
 ---
 aliases: VFS
+sentiment:
+- 5
+sentiment-hash: 9380dba1
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 Instead of using an app or terminal to access your [[version control]], a Virtual File System(VFS)  lets you browse your computer like normal. Displaying files and folders from the version control server. When you open a file, it downloads the file on the fly. So you can access large repos without having to first download everything.
 
 e.g. 

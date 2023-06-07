@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: a909eee8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- communication
+- work
+---
 
 examples
 - in a daily dev note I can link the script I worked on that day

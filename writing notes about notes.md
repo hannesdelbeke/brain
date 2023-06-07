@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 3c35a7d8
+sentiment-label:
+- skeptical
+tags:
+- journal
+- procrastination
+- self-reflection
+- work
+---
 
 > People who write about note-taking ... aren’t applying their notes to some exogenous creative problem.
 

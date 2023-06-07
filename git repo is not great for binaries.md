@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9458608c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 ## Context
 This was written when I looked into [[link spreadsheets in Obsidian|how to link spreadsheets in Obsidian]].
 Spreadsheets are [[xlsx]] files, which are binaries, not [[ASCII]] files. So any change to them uploads a whole new file to git, instead of just the [[file diff]].

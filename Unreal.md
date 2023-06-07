@@ -4,7 +4,15 @@ aliases:
 - unreal engine
 - unreal 5
 - unreal 4
+sentiment:
+- 5
+sentiment-hash: 562d675f
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 unreal navigation: RMB + WASD (QE) , scroll up or down to change fly speed
 
 [[Unreal Python cheat sheet]]

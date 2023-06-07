@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3f88f8b5
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+---
+
 from [Enabling environments, games, and the Primer](https://notes.andymatuschak.org/zGSGS1UHDogPKtvZB5hdT2A)
 
 You can read a book about starting a startup, or you can join [Y Combinator](https://notes.andymatuschak.org/z9MxCsvv8DcHndqRECbxrRi). Which do you choose? This is the power of an [Enabling environment](https://notes.andymatuschak.org/z492hGrHvRvJiEY9UfB4Mby).

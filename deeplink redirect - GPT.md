@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: f80d1b52
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ## Redirect
 

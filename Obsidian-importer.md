@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: efc566e0
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 a [[Obsidian plugin]] to import data into your [[Obsidian vault|vault]]
 
 note that it's meant as a 1 time action, not a live link.

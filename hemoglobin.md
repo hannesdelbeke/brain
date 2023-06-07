@@ -1,6 +1,13 @@
 ---
 aliases:
-  - haemoglobin
+- haemoglobin
+sentiment:
+- 5
+sentiment-hash: 03cf8fba
+sentiment-label:
+- factual
+tags:
+- medical
 ---
 
 a protein within red blood cells

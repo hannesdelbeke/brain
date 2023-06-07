@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c17aab9a
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 https://assetstore.unity.com/packages/tools/utilities/devtasks-offline-project-manager-307257
 
 No free trail version

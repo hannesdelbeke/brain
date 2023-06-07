@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 477b63e5
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 ## always set process priority to high
 The example below always starts `obsidian.exe` with high priority.
 

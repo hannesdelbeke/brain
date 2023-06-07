@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b16e1928
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Obsidian]] image embeds aren't compatible with logseq when using [[wikilink]] in Obsidian.
 
 [[logseq]] embeds images like this:  

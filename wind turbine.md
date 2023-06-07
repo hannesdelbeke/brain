@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0f7b6a18
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+- outdoors
+---
 
 can be hooked up in your home grid to supply electricity.
 add a [[battery]]

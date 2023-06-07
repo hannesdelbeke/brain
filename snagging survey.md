@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: e23dff6b
+sentiment-label:
+- factual
+tags:
+- planning
+- home
+- finance
+---
+
 A snagging survey is a house survey that ensures the fixtures and fittings are up to standards on a new build.
 
 In the UK, you have a two-year period after completion to report any snags in a new-build home, and the developer is legally obliged to fix them. (according to the [New Homes Quality Code](https://newhomesinspectionsuk.com/snagging-survey-guide/) and warranties like the NHBC warranty.)

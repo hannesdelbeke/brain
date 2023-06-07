@@ -1,6 +1,14 @@
 ---
 aliases:
-  - AI browser access
+- AI browser access
+sentiment:
+- 5
+sentiment-hash: 6adb1a5f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 I want [[Artificial intelligence|AI]] to control [[browser]].
@@ -29,6 +37,3 @@ close chrome, and run chrome with  --remote-debugging-port=9222`
 restarted claude, it works and claude can access my [[Chrome]]
 
 debug does launch a different [[Chrome|chrome]] profile.
-
-
-

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2483b01a
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- finance
+---
 
 when spread betting, you bet an amount of money per point on whether a market will go up or down. 
 For instance, you might bet £5 per point that the price of the FTSE 100 will fall. 

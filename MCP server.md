@@ -1,9 +1,17 @@
 ---
 aliases:
-  - MCP server
-  - Model Context Protocol server
-  - MCP
+- MCP server
+- Model Context Protocol server
+- MCP
+sentiment:
+- 5
+sentiment-hash: e65fc2f4
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 A Model Context Protocol (MCP) server acts as a bridge between your [[AI agent]] and an external service. 
 
 Instead of switching between tools and copy-pasting information, your agent can search, read, and write directly to these services on your behalf - using your own account and permissions.

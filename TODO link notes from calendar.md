@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 3f0d0e66
+sentiment-label:
+- reflective
+tags:
+- journal
+- planning
+- self-reflection
+- work
+- health
+---
+
 14-10-2025
 ## Google calendar
 [[Google calendar]] to visualize what I did on days. It's a great way to see quickly where my time went. Good for reviewing.

@@ -1,5 +1,18 @@
+---
+energy: 5
+sentiment:
+- 3
+sentiment-hash: '95671068'
+sentiment-label:
+- annoyed
+tags:
+- technical
+- journal
+- planning
+- work
+---
 
-  that takes info from the package, downloads it.
+that takes info from the package, downloads it.
   and installs dependencies and script to a local editor folder.
   
   CONS

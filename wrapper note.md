@@ -1,8 +1,15 @@
 ---
 aliases:
-  - wrapping note
-  - in between note
-  - middleman note
+- wrapping note
+- in between note
+- middleman note
+sentiment:
+- 5
+sentiment-hash: 5a3e4896
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 An [[Obsidian note]] between 2 things.

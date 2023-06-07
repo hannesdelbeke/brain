@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ec6e49ca
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon AppFlow
 Amazon AppFlow is a fully managed integration service that enables you to securely transfer data
 between Software-as-a-Service (SaaS) applications like Salesforce, Zendesk, Slack, and ServiceNow, and

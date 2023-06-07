@@ -1,7 +1,15 @@
 ---
 aliases:
-  - vendor
+- vendor
+sentiment:
+- 5
+sentiment-hash: e09f534f
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 Vendoring means copying the source code of another project into your project
 It's in contrast to using [[dependencies]], adding another project's name to your package.
 

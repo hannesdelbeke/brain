@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e529ef3c
+sentiment-label:
+- factual
+tags:
+- planning
+- travel
+---
+
 The hours of [[parking]] restriction within the central [[controlled parking zone]] are 
 	8:30am to 6:30pm Monday to Saturday 
 	12.30pm – 6.30pm on Sunday. 

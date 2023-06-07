@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9faa93d8
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 If 2 packages in your project use different versions of the same dependency, you can't use both packages simultaneously.
 
 package A -> import package C v1

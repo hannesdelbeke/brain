@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2213a13e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To check if a Python package has been installed, you can use several methods that go beyond just checking if it is importable. Here are some reliable ways to do this:
 
 ### Method 1: Using `pip show`

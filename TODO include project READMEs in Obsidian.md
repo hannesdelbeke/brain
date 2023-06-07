@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 3ea622f6
+sentiment-label:
+- curious
+tags:
+- technical
+- planning
+- work
+- hobby
+---
+
 Many of my projects have their own README files, formatted to show on [[GitHub]].
 And I create mirror pages in Obsidian.
 
@@ -16,4 +30,3 @@ It could run on startup, or trigger manually.
 CON: 
 - How to handle editing README in Obsidian, and uploading back to git?
 	- consider read-only?
-

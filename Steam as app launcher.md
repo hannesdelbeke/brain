@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: eb8ee8dd
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- hobby
+---
+
 Valve's [Steam](https://store.steampowered.com/) is an [[app launcher]] for Steam apps (mostly games)
 You can also add custom apps, which allows you to make lists of apps.
 

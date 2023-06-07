@@ -1,7 +1,17 @@
 ---
 aliases:
-  - pip for unreal UI
+- pip for unreal UI
+sentiment:
+- 5
+sentiment-hash: 88d02f61
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
+
 A UI to see installed python packages in [[Unreal]], and search, uninstall & install packages.
 repo: https://github.com/hannesdelbeke/pip-qt-unreal
 

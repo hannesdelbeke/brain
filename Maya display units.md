@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 21feca57
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 If you change working units from cm to e.g. meter.
 One issue you’ll face is that this is only display units.
 

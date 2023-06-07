@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 74af7b12
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 https://paulrosen.github.io/abcjs/
 music note api for [[JavaScript]]
 ## sample

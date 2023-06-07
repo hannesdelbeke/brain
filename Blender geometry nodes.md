@@ -1,7 +1,16 @@
 ---
 aliases:
-  - geometry nodes
+- geometry nodes
+sentiment:
+- 5
+sentiment-hash: a1ca9fd1
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 The Geometry nodes system is a [[node editor]] for [[Blender]] to modify the geometry of an object with node-based operations.
 
 ![](https://docs.blender.org/manual/en/latest/_images/modeling_geometry-nodes_introduction_properties.png)

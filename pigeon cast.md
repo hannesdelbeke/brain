@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6db201f8
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 https://apps.microsoft.com/detail/9p8fwckn5s3p?hl=en-US&gl=GB
 
 [[Chromecast]] to [[Windows]] pc

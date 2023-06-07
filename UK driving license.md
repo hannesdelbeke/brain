@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 91964aa2
+sentiment-label:
+- factual
+tags:
+- technical
+- travel
+---
+
 [source](https://www.gov.uk/driving-licence-categories)
 
 [[moped]]

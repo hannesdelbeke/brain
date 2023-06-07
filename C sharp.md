@@ -1,7 +1,17 @@
 ---
 aliases:
-  - C#
+- C#
+sentiment:
+- 5
+sentiment-hash: 5e0e2216
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
 ---
+
 ## `C#`
 compiles source code to [[Common intermediate Language|CIL]] during **compile time**
 the C Sharp Compiler `csc.exe`lives in the [[dot NET|.NET]] Framework install folder.

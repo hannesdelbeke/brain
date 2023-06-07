@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0fed9803
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 to check if the ssh connection on your pc is setup correctly, run in cmd
 ```bash
 ssh -vT git@github.com

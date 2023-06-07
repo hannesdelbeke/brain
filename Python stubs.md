@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 705f6956
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 stubs are `pyi` files, to enable code completion
 
 https://github.com/LumaPictures/cg-stubs

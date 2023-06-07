@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 36fc336e
+sentiment-label:
+- satisfied
+tags:
+- journal
+- technical
+- planning
+- work
+- home
+---
+
 my modern work pc gets [[wifi]] speeds of 500mb/s
 my old [[razor blade 15 rz09-02705w76 2018|personal laptop]] is only 70mb/s
 the dongle on the [[HAOS]] server is only 30mbps (ancient dongle)

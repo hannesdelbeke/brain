@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c4d00852
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[AI article]]
 feedback on main branch. which was outdated
 

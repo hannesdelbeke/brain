@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7477559d
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
+
 > [!warning]
 > this is from `amex platinum`, don't confuse with `amex platinum cashback`, with almost the same name.
 
@@ -10,4 +21,3 @@ my AMEX You are covered for:
 - Refund Protection
 - Travel Accident - public transport only
 The above coverages are underwritten by [[AXA]] but your card may also include cover (eg. Car Rental Benefits) that is underwritten by a different insurance company.You should refer to your T&Cs and contact that company directly.
-

@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 400ec0f7
+sentiment-label:
+- analytical
+tags:
+- technical
+- self-reflection
+- hobby
+---
+
 As you say, tied for first place in general-computing pens:
 - Wacom EMR on Samsung tablets and Apple Pencil on iPads.
     

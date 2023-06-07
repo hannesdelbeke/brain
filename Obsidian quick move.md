@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0aa63c36
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To quickly move [[Obsidian]] notes to public or private folders, you can make a custom command with the QuickAdd plugin.
 
 ## Instructions

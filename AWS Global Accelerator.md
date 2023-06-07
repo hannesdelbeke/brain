@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1c729308
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Global Accelerator
 AWS Global Accelerator is a networking service that improves the availability and performance of the
 applications that you offer to your global users.

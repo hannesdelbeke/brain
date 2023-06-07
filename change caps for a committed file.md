@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: fa31ec9e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Change the capitalization of a file that's already commit to the the repository can be tricky.
 
 [[Perforce]] won't let you do this by default it it runs on a Windows server. (see [article](https://portal.perforce.com/s/article/3448))

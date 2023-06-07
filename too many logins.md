@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+sentiment-hash: ec7fefc6
+sentiment-label:
+- frustrated
+tags:
+- journal
+- technical
+- planning
+- procrastination
+- self-reflection
+- work
+- hobby
+---
+
 too many log ins and 2FA slow down the whole log in process.
 often when I log in
 - log in [[password manager]]

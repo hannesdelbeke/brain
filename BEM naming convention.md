@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e7f7205d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[CSS]] & [[HTML]] classes use the BEM convention for their naming convention 
 This blog [1] explains it well
 

@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 585eca1e
+sentiment-label:
+- critical
+tags:
+- journal
+- communication
+- hobby
+---
 
 > [!NOTE]
 > this summary reads like it's been written by chatGPT. it lacks character and examples.

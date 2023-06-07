@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7d5f3ca8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 a brand of [[electric vehicle|EV]]
 
 - All Tesla vehicles before July 20, 2022, will have Standard Connectivity features for lifetime

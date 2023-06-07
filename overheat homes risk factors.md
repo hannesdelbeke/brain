@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 77ce92eb
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 1. site context
    External pollution, noise and excessive noise may prevent occupants from opening their windows. Surrounding hard surfaces will absorb heat and release this during the night.
 2. External temperature

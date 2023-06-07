@@ -1,7 +1,19 @@
 ---
 aliases:
-  - my Razor's fans
+- my Razor's fans
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 5cb8670c
+sentiment-label:
+- annoyed
+tags:
+- journal
+- technical
+- work
+- home
 ---
+
 It's nice and quiet when [[programming|coding]] or [[writing]], but sometimes it fires up like most laptops and the fans are loud, disturbing the surrounding peace and quiet.
 
 [[Razor synapse]] 4 only offers an auto fan-profile (so no change) or minimum fan of 3500, which is still loud. There's no quiet profile.

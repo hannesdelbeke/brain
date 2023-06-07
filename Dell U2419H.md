@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e248f780
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[monitor]][[hardware]]
 [[USB]] turns of when in powersave mode (computer off)
 

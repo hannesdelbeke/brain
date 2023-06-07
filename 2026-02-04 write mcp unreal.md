@@ -1,3 +1,18 @@
+---
+energy: 7
+sentiment:
+- 4
+- 8
+sentiment-hash: 204bf93c
+sentiment-label:
+- challenged
+- accomplished
+tags:
+- journal
+- technical
+- hobby
+- work
+---
 
 ## Challenge
 I want [[OpenCode]] to talk directly with [[unreal]] (through an [[MCP server]]) 

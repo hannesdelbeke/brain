@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b8000347
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 similar to [[Heating, ventilation, and air conditioning|HVAC]] since it controls [[temperature]].
 usually replaces a [[boiler]]
 

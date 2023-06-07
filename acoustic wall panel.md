@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3458ce27
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+- hobby
+---
+
 Acoustic wall panels absorb sound instead of bounce it back, eliminating echos.
 
 ![](https://www.noisestopsystems.co.uk/wp-content/uploads/2019/07/softsound-panels-on-a-wall.jpg)
@@ -29,4 +41,3 @@ similar to  [[slatted acoustic panels]]
 
 [[sound treatment]]
 [[sound absorption]]
-

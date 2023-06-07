@@ -1,1 +1,11 @@
+---
+sentiment:
+- 5
+sentiment-hash: b3c74a6a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 The [[Obsidian Outgoing links]] plugin shows [[backlink|backlinks]] at the bottom of each note.

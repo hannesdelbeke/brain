@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 929d77ee
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [source](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
 ```shell

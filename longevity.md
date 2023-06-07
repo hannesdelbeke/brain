@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 514b0e09
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Longevity has 2 aspects
 ### Lifespan
 - [[Lifespan]] is the **total number of years you live** 

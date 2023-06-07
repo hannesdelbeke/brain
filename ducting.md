@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: bf81172b
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 https://www.blauberg.co.uk/vents-ducts/
 
 

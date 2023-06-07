@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 8
+sentiment-hash: 577a1db0
+sentiment-label:
+- satisfied
+tags:
+- journal
+- planning
+- outdoors
+- hobby
+- travel
+---
+
 Gear used to climb Mera Peak 6.461m
 https://www.youtube.com/watch?v=UhGDKZoD6eA
 

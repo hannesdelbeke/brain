@@ -1,7 +1,16 @@
 ---
 aliases:
-  - IBM
+- IBM
+sentiment:
+- 5
+sentiment-hash: f63b65a4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 The "inverse bind pose" undoes any transformation applied to your model in its bind pose.
 
 Applying the identity matrix to every joint in the model resets the model to the bind pose.

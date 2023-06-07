@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 15faf55b
+sentiment-label:
+- annoyed
+tags:
+- technical
+- work
+---
+
 #### [[Bloatware]] plugins
 - [[Pyblish]] registers some default plugins to get you started, great for starters but annoying after a while since you have to explicitly deregister them every time.
   (which is an [[explicit]] thing to do)

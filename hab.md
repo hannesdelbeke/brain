@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c4ed8120
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 https://github.com/blurstudio/hab
 
 for gui see https://github.com/blurstudio/hab-gui
@@ -5,4 +15,3 @@ for gui see https://github.com/blurstudio/hab-gui
 
 [[environment management]]
 [[app launcher]]
-

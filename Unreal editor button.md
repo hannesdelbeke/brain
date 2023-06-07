@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8fff01ef
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 A [[Unreal Python snippet]] to add a button to the Unreal editor toolbar, which runs a Python command when clicked.  
 ```python
 import unreal

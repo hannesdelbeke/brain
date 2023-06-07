@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3560b591
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 You can [[Python packages editable install|editable install]] to the user's modules folder, but this will fail to import in [[Blender]].
 ## Why this happens
 1. an editable install installs a [[pth|.pth]] in the modules folder.

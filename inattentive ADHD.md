@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 19f74a62
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Inattentive ADHD (often called ADD), a type of ADHD, primarily involves difficulties with focus, organization, and attention. 
 - difficulty paying attention to details, 
 - trouble staying focused on tasks, distractibility

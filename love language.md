@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 21df5818
+sentiment-label:
+- factual
+tags:
+- relationship
+- communication
+---
+
 - Words of affirmation
 - Quality time
 - Acts of services

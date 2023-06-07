@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9c8a6db4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 A lot of my projects are tracked in my GitHub [profile](https://github.com/hannesdelbeke) 
 
 opensource

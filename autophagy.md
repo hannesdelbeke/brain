@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: afe61c54
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Autophagy is the recycling of damaged cells.
 
 Some autophagy can increase [[longevity]] 

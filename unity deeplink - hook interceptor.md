@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 33fc2f8d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 - https://github.com/AdamCarballo/HookInterceptor
 	- uses native unity asset store URI

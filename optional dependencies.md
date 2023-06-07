@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 905aa4ab
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Aim for minimum dependencies, where possible make them optional. Making your tools more robust.
 
 If your qt tool works better with an additional qt-manager like [[BQt]] or [[unreal-qt]], instead of adding it as a dependency, make it an optional dependency.

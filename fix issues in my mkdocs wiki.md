@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c2ab58e9
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
 
 ## review
 - [[premature optimization]] causes bugs

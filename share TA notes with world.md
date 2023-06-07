@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: bddd58bd
+sentiment-label:
+- inspired
+tags:
+- journal
+- planning
+- technical
+- communication
+- self-reflection
+- work
+- hobby
+---
+
 tutorials, wiki, community
 
 I want to create a wiki with answers to TA questions.

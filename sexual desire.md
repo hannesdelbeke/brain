@@ -1,7 +1,18 @@
 ---
 aliases:
-  - arousal
-  - aroused
+- arousal
+- aroused
+energy: 4
+sentiment:
+- 6
+sentiment-hash: d53e5b8c
+sentiment-label:
+- reflective
+tags:
+- journal
+- relationship
+- self-reflection
+- health
 ---
 
 2 modes
@@ -17,4 +28,3 @@ vs you can schedule sex in the calendar, and you'll look forward to it, just lik
 spontaneous sexual desire can feel easy, fun and come out of nowhere. it happens to you
 
 Your [[desire]] and passion don't matter as much, they don't define the success of a sexual relationship. Pleasure does. [article](https://www.theguardian.com/wellness/2024/jan/26/desire-myths-relationships)
-

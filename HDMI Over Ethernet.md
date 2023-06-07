@@ -1,7 +1,15 @@
 ---
 aliases:
-  - HDMI Over IP
+- HDMI Over IP
+sentiment:
+- 5
+sentiment-hash: fc1e5353
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 Send (HD) [[HDMI]] signals over [[Ethernet]] up to 70m.
 
 1. Input device

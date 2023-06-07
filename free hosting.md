@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 59d864ec
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 - [[github pages]]
 - gitbook (free tier)
 https://ipv64.net/

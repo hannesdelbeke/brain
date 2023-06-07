@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 309928c1
+sentiment-label:
+- reflective
+tags:
+- journal
+- communication
+- self-reflection
+- work
+---
+
 Feedback is often known as communication on how to improve.
 But it can also be positive feedback, which helps people know what they are doing well and should keep doing.
 

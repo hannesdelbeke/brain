@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0b26b44e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 chat GPT
 
 ```python

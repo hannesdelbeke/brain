@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 504c0b26
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 The i Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the i style. It is an Everything DiSC® production brought to you by Wiley. 
 Dr. Mark Scullard: All right, so we're going to spend some time talking about the i style, influence. And if you have an i style, I think what you'll find is that, you know, roughly 70, 80 percent of what we're going to talk about is probably going to fit for you. You know, some of it will be spot on or, you know, there's going to be maybe parts that are like, yeah, that's, you know, that's not really me, or even, you know, well, yeah, that sounds like me when I was younger. But I think the value here is more about listening for those insights that really help you make sense of your past experience or, uh, really help you see your thought processes or your habits in a new light. 

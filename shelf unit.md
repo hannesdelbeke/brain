@@ -1,7 +1,17 @@
 ---
 aliases:
-  - storage shelf
+- storage shelf
+sentiment:
+- 5
+sentiment-hash: 5a947d72
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+- home
 ---
+
 shelves
 
 PROS

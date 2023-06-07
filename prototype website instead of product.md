@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8de886c5
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- communication
+- work
+---
+
 use marketing instead of creating a prototype.
 
 game studios create ads for fake games.

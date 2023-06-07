@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: fad6e150
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A data class is a lightweight version of a class, used as a data container.
 
 `__post_init__` runs after the default init, and can be used to add extra attributes

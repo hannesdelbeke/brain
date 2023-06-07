@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c5a80253
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 **legend**
 🔻is used to highlight cons

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 58fc32ef
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 default actions in `package.py` define install instructions
 ```python
 def default_install_actions(self):  

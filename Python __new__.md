@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 57ffd7de
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 `__new__` runs before `__init__` and is responsible for returning a new instance of the class.
 
 can be used to edit strings on init
@@ -32,4 +42,3 @@ if __name__ == '__main__':
 Running this code will output a tuple with lowercase elements:` ('hello', 'medium')`
 
 source https://medium.com/@zackbunch/when-to-use-new-in-python-58632249b9cc
-

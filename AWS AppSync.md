@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ae4892c1
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS AppSync
 AWS AppSync is a serverless back-end for mobile, web, and enterprise applications.
 AWS AppSync makes it easy to build data driven mobile and web applications by handling securely all

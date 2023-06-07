@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d7e75287
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+- home
+---
+
 To start my pc on wake up with [[Home Assistant]]
 
 TRIGGER options

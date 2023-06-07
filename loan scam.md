@@ -1,3 +1,15 @@
+---
+sentiment:
+- 4
+sentiment-hash: d962d799
+sentiment-label:
+- wary
+tags:
+- technical
+- financial
+- finance
+---
+
 1. Find someone's identity info
 2. Use that to apply for a loan in their name, into their [[bank account]]
 3. Phone and ask if they were happy with the loan service from the bank

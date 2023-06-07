@@ -1,3 +1,19 @@
+---
+energy: 4
+sentiment:
+- 8
+sentiment-hash: 7026dce0
+sentiment-label:
+- enchanted
+tags:
+- journal
+- memory
+- creative
+- outdoors
+- self-reflection
+- hobby
+---
+
 amazing line art
 a sense of wonder and mystery, of innocence and discovery.
 

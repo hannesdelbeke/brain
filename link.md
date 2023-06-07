@@ -1,10 +1,20 @@
 ---
 aliases:
-  - linking
-  - connection
-  - relation
-  - links
+- linking
+- connection
+- relation
+- links
+sentiment:
+- 5
+sentiment-hash: 5d4b4948
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+- hobby
 ---
+
 a connection, relation
 
 - Used in [[note taking]] to connect related concepts 

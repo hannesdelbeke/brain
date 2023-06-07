@@ -2,6 +2,14 @@
 aliases:
 - programming pattern
 - pattern
+sentiment:
+- 5
+sentiment-hash: 07e1a68d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Patterns are predesigned solutions to common programming problems.

@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 948f3fc2
+sentiment-label:
+- opinionated
+tags:
+- journal
+- technical
+- creative
+- work
+- hobby
+---
+
 **TouchDesigner** is a node-based [visual programming language](https://en.wikipedia.org/wiki/Visual_programming_language "Visual programming language") for [real-time](https://en.wikipedia.org/wiki/Real-time_rendering "Real-time rendering") interactive [multimedia](https://en.wikipedia.org/wiki/Multimedia "Multimedia") content. e.g. dance lights and lasers.
 
 If you need it. It’s aimed toward realtime, av, and live events, interactive/immersive art etc. If you’re not interested in that, it’s a shitty [[Houdini]].

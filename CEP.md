@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 785bd53f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 some kind of [[HTML]] scripting for [[Adobe]] apps
 
 ## learn

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a2743ecc
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A powerful extension for navigating [[Chrome]] tabs
 
 1. install the [recent tabs](https://chromewebstore.google.com/detail/recent-tabs/ocllfmhjhfmogablefmibmjcodggknml?pli=1) extension

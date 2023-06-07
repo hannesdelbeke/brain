@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: cacc528f
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 When the sun shines (UV light) through the windows, it is either reflected back, or absorbed inside and converted to heat. 
 
 The most [[solar gain]] is on the west side of a [[house]].

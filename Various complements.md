@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: df9a96a3
+sentiment-label:
+- reflective
+tags:
+- journal
+- technical
+- self-reflection
+- hobby
+---
+
 A [[Obsidian plugin]] to add word & note suggestions in a dropdown, that you can accept with tab or space.
 
 The aim is to speed up typing.

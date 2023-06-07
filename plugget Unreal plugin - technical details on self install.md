@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 335a6cf9
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 the [plugget unreal plugin - code at the time](https://github.com/plugget/plugget-unreal-plugin/blob/623971957862f0d810a33c11cc84cca8922b427d/Plugget/Content/Python/init_unreal.py)
 
 it ships with no vendored code

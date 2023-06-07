@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 78a789d8
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 left
  4. HDMI  
  5. Headphone/mic input  

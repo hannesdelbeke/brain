@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: '86656786'
+sentiment-label:
+- analytical
+tags:
+- planning
+- self-reflection
+- work
+---
+
 ### problem
 A [[task]] is mentioned, and you write it down.
 The next day or week, it is mentioned again. You realize it's important, but you are also busy with several other tasks and forget about it the next day.

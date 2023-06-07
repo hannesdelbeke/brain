@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c25712db
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 chat GPT
 ```python
 import sys

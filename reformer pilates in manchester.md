@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0bdf5d77
+sentiment-label:
+- factual
+tags:
+- planning
+- health
+- hobby
+---
+
 [[reformer pilates]] classes in [[Manchester]]
 - [x] re sculpt. intro offer 45£ x 3 classes [prices](https://resculptstudios.co.uk/?utm_source=ConfidentialGuides.com&utm_medium=Gyms&utm_campaign=Re%3ASculpt+Studios&utm_content=WEBSITE#prices)
 - [x] class pass - intro deal 2 weeks free

@@ -1,8 +1,18 @@
 ---
 aliases:
-  - the Goldilocks Principle
-  - Goldilocks
+- the Goldilocks Principle
+- Goldilocks
+sentiment:
+- 5
+sentiment-hash: 1de160be
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- work
 ---
+
 The Goldilocks Effect is the premise that **people are inclined to seek 'just the right amount' of something**. 
 
 In the context of pricing, businesses capitalize on the effect by offering three versions of a product at different price points: one high-end, one middle, and one low-end.

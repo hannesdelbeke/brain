@@ -1,3 +1,18 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 07ff79ee
+sentiment-label:
+- reflective
+tags:
+- technical
+- planning
+- self-reflection
+- hobby
+- work
+---
+
 wrote this 2023-08-26
 An idea to create a python wrapper for the windows package manager, [[winget]].
 

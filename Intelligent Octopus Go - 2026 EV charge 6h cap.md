@@ -1,4 +1,16 @@
-
+---
+sentiment:
+- 5
+sentiment-hash: ad06b9c4
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- planning
+- home
+- finance
+---
 
 > [!warning] 
 > This has been postponed, since some chargers auto slow down to balance the grid. And there was a lot of pushback from costumers.

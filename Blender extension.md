@@ -1,6 +1,15 @@
 ---
 aliases:
-  - Blender extensions
+- Blender extensions
+sentiment:
+- 5
+sentiment-hash: 9dee1243
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
 
 TODO

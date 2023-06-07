@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 35addba9
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Spermidine is a [[calorie restriction mimetics]], it activates [[autophagy]] 
 It doesn't do much else.
 ## food source
@@ -9,4 +20,3 @@ Increased uptake of spermidine has protective effects against cancer, metabolic 
 When eating it, spermidine levels in blood don't increase, but spermine levels do. [study](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10143675/)
 ## chemical
 It's a [[polyamine]] compound
-

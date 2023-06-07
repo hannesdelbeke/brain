@@ -1,4 +1,16 @@
-
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 353dd1f4
+sentiment-label:
+- satisfied
+tags:
+- journal
+- planning
+- self-reflection
+- work
+---
 
 The last few weeks I moved away from categorizing my notes in folders, increasing my [[note taking]] productivity.
 (12-05-2024)

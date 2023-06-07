@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1a9176e5
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 this article talks about AI adoption in companies.
 

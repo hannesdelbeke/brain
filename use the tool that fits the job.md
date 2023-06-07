@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 3a848f03
+sentiment-label:
+- opinionated
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 often there already is a tool that does what you want
 but people want to use their favorite tool for everything, even when it doesn't work that well and there's a lot of friction.
 

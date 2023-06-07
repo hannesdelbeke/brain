@@ -1,3 +1,18 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 1b3648fd
+sentiment-label:
+- underwhelmed
+tags:
+- journal
+- memory
+- creative
+- self-reflection
+- hobby
+---
+
 7 day rogue like [[gamejam]]
 
 Only thing i care about backing up are the sprites.

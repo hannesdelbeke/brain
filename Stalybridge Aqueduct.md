@@ -1,2 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c660a4c0
+sentiment-label:
+- factual
+tags:
+- technical
+- outdoors
+- travel
+---
+
 The Stalybridge Aqueduct in [[Stalybridge]], the [[Huddersfield Narrow Canal]] passes over [[river Tame]].
 It crosses the [Pennines](https://en.wikipedia.org/wiki/Pennines "Pennines") by means of 74 [locks](https://en.wikipedia.org/wiki/Lock_(water_transport) "Lock (water transport)") and the [Standedge Tunnel](https://en.wikipedia.org/wiki/Standedge_Tunnels "Standedge Tunnels").

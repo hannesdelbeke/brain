@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 641b9dc2
+sentiment-label:
+- factual
+tags:
+- medical
+- outdoors
+- health
+---
+
 The risk of getting tick-borne encephalitis (TBE) is low, even in high-risk areas. This is because only a small percentage of ticks carry the [[virus]], and the risk of infection varies by location. 
 
 High-risk areas

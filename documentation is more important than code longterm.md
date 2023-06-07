@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: ffb760f6
+sentiment-label:
+- disillusioned
+- insightful
+tags:
+- journal
+- memory
+- self-reflection
+- procrastination
+- work
+---
+
 In the short term, writing the code is the most important. My boss, or I need a task done.
 I write the code, it does the thing. Move on to the next urgent task. Don't stop to think or review.
 

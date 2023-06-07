@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 08155e44
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 rolling out tools to users.
 
 - use versioning and support rolling back to prevent rolling out a compile error breaking the user's environment

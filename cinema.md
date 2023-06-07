@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0b72ab25
+sentiment-label:
+- factual
+tags:
+- planning
+- hobby
+---
+
 discount on UK cinemas https://cinemasocietyclub.com/
 
 to watch

@@ -1,3 +1,21 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: 905f9491
+sentiment-label:
+- overwhelmed
+- reassuring
+tags:
+- journal
+- planning
+- technical
+- communication
+- self-reflection
+- hobby
+---
+
 I want to start using [[Obsidian]] to manage my notes, but am [[overwhelmed]]. Where do I start?
 
 1. Install Obsidian 

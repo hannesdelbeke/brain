@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 2968f220
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- work
+- hobby
+---
+
 Just like [[TODO include project READMEs in Obsidian]], but with project wikis instead of READMEs.
 
 e.g. bqt and plugget have wikis. 

@@ -1,7 +1,16 @@
 ---
 aliases:
-  - noradrenaline
+- noradrenaline
+sentiment:
+- 5
+sentiment-hash: ae4b5bd9
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Noradrenaline (also called "norepinephrine") is a chemical created in your nerve endings that **helps you stay focused and alert**. 
 
 You want a [[the Goldilocks effect|Goldilocks]] amount that's just enough to keep you going. Too much can cause [[anxiety]] while too little brings on symptoms of [[depression]].

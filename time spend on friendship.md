@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: b84a6a9a
+sentiment-label:
+- factual
+tags:
+- social
+- technical
+- relationship
+---
+
 ### Time milestones
 - **50 Hours:** To move from acquaintance to casual [[friend]].
 - **90 Hours:** To become a standard friend.

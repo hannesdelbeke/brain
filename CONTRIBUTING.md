@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f24174f9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 You can edit any page on GitHub or your favorite text program, but for the best preview use [Obsidian](https://obsidian.md/)
 
 For a quick edit, the easiest is to edit on GitHub.

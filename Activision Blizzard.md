@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 48090d55
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 Activision Blizzard, Inc. business units
 - [[Activision Publishing]]
@@ -5,4 +15,3 @@ Activision Blizzard, Inc. business units
 - [[King]]
 - [[Major League Gaming]]
 - [[Activision Blizzard Studios]]
-

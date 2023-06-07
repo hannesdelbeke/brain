@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d0e845d8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 An exercise to develop a bot that can edit the titles of [[Google Calendar]] events.
 Goal is to auto run it on startup to edit certain google titles.
 ### Prerequisites

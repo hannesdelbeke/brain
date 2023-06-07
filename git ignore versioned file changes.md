@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 04c9f4af
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ### Ignoring versioned files
 
 Some files in a repository change often but are rarely committed. Usually, these are various local configuration files that are edited, but should never be committed upstream. Git lets you ignore those files by assuming they are unchanged.

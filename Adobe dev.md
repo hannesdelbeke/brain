@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f884adb6
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[adobe]] cc extensibilit directory
 
 collection of sripting references etc

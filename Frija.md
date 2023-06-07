@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8c61ea13
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 **Frija** is a tool to download latest [[firmware]] for their [[Samsung]] device which can be flashed with [[Odin Downloader|Odin]].
 Frija downloads firmware directly from Samsung FUS (Firmware Update Server)
 

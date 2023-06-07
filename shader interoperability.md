@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 25bf06bc
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+- hobby
+---
+
 # shader interoperability
 
 Since shaders work different on different platforms, we cant make 1 shader to rule them all.

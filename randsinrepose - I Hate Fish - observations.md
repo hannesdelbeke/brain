@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: 8f70c0a1
+sentiment-label:
+- overwhelmed
+- thoughtful
+tags:
+- journal
+- procrastination
+- self-reflection
+- work
+---
+
 [[randsinrepose - I Hate Fish - mirror]]
 [[AI summary - I Hate Fish]]
 

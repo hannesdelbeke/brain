@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2059e3cb
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 - [source](https://www.psychologytoday.com/gb/blog/animals-and-us/202402/will-getting-a-pet-make-you-live-longer) claims no relation between pet owning and human [[longevity]]
 
 - BROSCIENCE opinion: 

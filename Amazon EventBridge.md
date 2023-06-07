@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5ec4bb39
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon EventBridge
 Amazon EventBridge is a serverless event bus that makes it easier to build event-driven applications
 at scale using events generated from your applications, integrated Software-as-a-Service (SaaS)

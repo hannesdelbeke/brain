@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 49b927cc
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [source](https://wiki.c2.com/?RegistryPattern)
 A registry is a global association from keys to objects, allowing the objects to be reached from anywhere. It involves two methods: 
 - one that takes a key and an object and add objects to the registry 

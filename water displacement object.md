@@ -1,3 +1,21 @@
+---
+energy: 4
+sentiment:
+- 4
+- 6
+sentiment-hash: c5f7ed34
+sentiment-label:
+- dissatisfied
+- creative
+tags:
+- journal
+- creative
+- planning
+- self-reflection
+- home
+- finance
+---
+
 When I take a [[bath]], it feels wasteful. The bath is too big and uses too much water.
 
 If I could put something in the bath I'd save water, and the water would be higher, so I'd feel more cozy.

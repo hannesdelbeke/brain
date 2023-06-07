@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9dfab094
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 ## Preset Manager
 The project settings / preset manager build in unity, is a centralized solution.
 You enter paths, and set presets to apply on assets in those paths.

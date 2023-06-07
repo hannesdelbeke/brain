@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d5bc8405
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- finance
+---
+
 https://www.artstash.io/pricing
 
 AI integrated with your google drive, git, unity, ...

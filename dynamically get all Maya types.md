@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6a8788af
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 run this in maya to get a list of all node types  
 ```python

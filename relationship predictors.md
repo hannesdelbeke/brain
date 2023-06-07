@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: e37808eb
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- relationship
+- self-reflection
+---
+
 personal traits don't tend to matter much for predicting relationship satisfaction. 
 - browsing the apps reading profiles wont tell you much
 - instead only trying the relation, seeing how they make you feel will

@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: fd7a4804
+sentiment-label:
+- concerned
+tags:
+- journal
+- technical
+- hobby
+---
+
 it seems [[Obsidian plugin - Git]] is not running on startup anymore, or committing files regularly.
 - [[obsidian git backup can fail]]
 

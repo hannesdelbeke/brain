@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: be501873
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Airtable is extremely successful, thanks to their simple [[onboarding]].
 [source](https://www.linkedin.com/posts/maximpoulsen_5-onboarding-lessons-from-an-11b-company-ugcPost-7148296667191013376-ZD2i/?utm_source=tldrmarketing)
 
@@ -32,4 +42,4 @@ C-->A
    free users can try pro for 14 days
    revert to free at end. not cut off
    remind users what features are in pro
-   build complex workflow for free, users don't want to loose it so they upgrade [[sunk cost]] 
+   build complex workflow for free, users don't want to loose it so they upgrade [[sunk cost]]

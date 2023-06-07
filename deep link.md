@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: d7bcca86
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 similar to [[app URI]]
 
 ## Key Differences:

@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3c713741
+sentiment-label:
+- factual
+tags:
+- social
+- communication
+- relationship
+- work
+---
+
 [[feedback]] implies something is wrong with us. We want to be loved and respected.
 
 Seeking feedback is better than being given feedback
@@ -54,5 +67,3 @@ Feedback page private notion shared
 - Better feedback
 	- Separate feedback type
 	- Question purpose behind feedback
-
-

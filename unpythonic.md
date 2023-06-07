@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 914f79bb
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Something unpythonic, is something that goes against the standards used by [[Python]] devs. It's the opposite of something [[pythonic]]
 
 e.g. The standard name for the first arg of a method is `self`

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: ed90ab99
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 screenshots are by default [[raster image]] with a [[large filesize]], not [[vector image]]
 ## Existing solutions
 - Web SVG screenshots: [[SVG screenshot]] 

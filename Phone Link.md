@@ -1,8 +1,16 @@
 ---
 aliases:
-  - Your Phone
-  - Link to Windows
+- Your Phone
+- Link to Windows
+sentiment:
+- 5
+sentiment-hash: fec3e78a
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 connect your phone to your pc
 - see & reply messages
 - access media

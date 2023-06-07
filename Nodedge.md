@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 051c2246
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 https://github.com/nodedge/nodedge
 MIT licence
 

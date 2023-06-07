@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 715d8ba0
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 often taken by athletes to improve performance.
 Beta-alanine aids in the production of [[carnosine]]
 ## source

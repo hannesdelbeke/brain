@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 14dbb81a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS App Runner
 AWS App Runner is a fully managed service that makes it easy for developers to quickly deploy
 containerized web applications and APIs, at scale and with no prior infrastructure experience required.

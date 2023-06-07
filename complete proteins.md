@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f87e8708
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 [[protein|proteins]] that contain all [[essential amino acids|9 amino acids that your body can't produce on its own]]. )see 
 
 Plant protein can be sources of complete proteins by combining multiple plant protein sources.

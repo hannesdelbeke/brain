@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b139a840
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 [[Autodesk Maya]] has [[maya module|maya modules]], that contain scripts and plugins and icons, handling all paths from a config `.mod` file. Does [[Autodesk 3ds Max|3dsmax]] has something similar?
 

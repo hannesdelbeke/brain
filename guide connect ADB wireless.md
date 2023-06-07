@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 321b8d2f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To make scrcpy work over your network, you need to manually connect adb to your phone's wireless debugging port.
 Follow these steps:
 
@@ -43,4 +53,3 @@ WLAN Partition) is disabled. If enabled, it blocks wireless devices (your phone)
 devices (your PC) even on the same router.
 • Firewall: Make sure your PC's network profile is set to Private and Windows Defender Firewall is not blocking adb.
 exe or scrcpy.exe.
-

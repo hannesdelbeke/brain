@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 37613c9f
+sentiment-label:
+- critical
+tags:
+- journal
+- self-reflection
+- creative
+- work
+---
+
 A lot of (art) schools have high portfolio standards for getting in, and then they don’t actually teach you anything. Graduates are more likely to get a job, and the school can claim a high hiring rate and the credits of producing great talent.
 e.g. Future Games
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dc9bae8a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 To [[public/link]] your [[Obsidian]] [[note taking|notes]] to [[Unity]]:
 - no native support, got working prototype here [[Unity deeplink RnD]]
 	- [[Unity extend right click context menu|right-click]] an asset to generate & copy the [[Uniform Resource Identifier|URI]] link to select the asset.

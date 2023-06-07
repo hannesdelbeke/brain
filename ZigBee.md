@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: cdba5556
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 ZigBee is like [[WiFi]] but uses less power, so it's better for many [[Internet of things|IoT]] devices.
 It transfers less data, so needs less power
 - so not great for fast or heavy connections like streaming video. 
@@ -5,4 +16,4 @@ It transfers less data, so needs less power
 
 It requires a Zigbee hub. 
 - This can either then connect to a server on the internet [[Smart Life]], 
-- or a [[public/self hosted|self hosted server]] like [[Home Assistant]] or [[zigbee2mqtt]]. 
+- or a [[public/self hosted|self hosted server]] like [[Home Assistant]] or [[zigbee2mqtt]].
