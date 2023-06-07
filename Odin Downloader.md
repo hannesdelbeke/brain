@@ -1,6 +1,13 @@
 ---
 aliases:
-  - Odin
+- Odin
+sentiment:
+- 5
+sentiment-hash: 254f2aa9
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Odin Downloader is a product developed by [[Samsung]] Electronics Co., Ltd. This tool assists in flashing or installing stock [[firmware]] on Samsung devices.

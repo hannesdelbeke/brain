@@ -1,3 +1,21 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: e325242a
+sentiment-label:
+- frustrated
+- pragmatic
+tags:
+- journal
+- planning
+- procrastination
+- communication
+- self-reflection
+- hobby
+---
+
 Some of my contacts are only on [[Instagram]].
 When I open the app to chat and check my messages, I often get distracted by reels.
 [[social media is distracting]]

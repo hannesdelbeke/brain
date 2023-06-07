@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: f4194522
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- technical
+- planning
+- communication
+- self-reflection
+- work
+- hobby
+---
+
 When updating a code project, I try to write a note to my future self about what I did, and why, capturing the [[context]] of the moment. 
 Then in the future, when I forget why I did something, and perhaps consider undoing it, I can reference my notes to help my decisions.
 

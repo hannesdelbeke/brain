@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 412616b5
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 https://weather-in-calendar.com/
 FREE - get the weather in your google calendar
 

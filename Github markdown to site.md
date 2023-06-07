@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1b2f1c5c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 ## Goal
 create a github action (1 file) that when added to a repo auto builds a whole site.
 ## Dev

@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 0c815922
+sentiment-label:
+- interested
+tags:
+- planning
+- health
+- hobby
+- outdoors
+---
+
 - 11m cycle
 - parking
 - small cozy studio

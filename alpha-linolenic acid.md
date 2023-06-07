@@ -1,7 +1,16 @@
 ---
 aliases:
-  - ALA
+- ALA
+sentiment:
+- 5
+sentiment-hash: cc3170fa
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Plant sources of [[omega-3]] fatty acids, an [[essential fatty acid]]
 ### sources
 mostly nuts, seeds and beans

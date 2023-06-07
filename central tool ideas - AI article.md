@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 15706bff
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- work
+---
+
 Building a robust internal toolset is one of the best investments a game studio can make. When you reduce the "click-tax" on repetitive tasks, your team stays in the creative flow longer.
 
 Since you are using [[Unity]], here are several central tool ideas categorized by how they remove friction from the development pipeline.

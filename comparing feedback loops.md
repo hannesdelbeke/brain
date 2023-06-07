@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 96eed832
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+---
 
 - Every time you re-read something your [[brain]] gets [[feedback]]
 - [[Evergreen notes]] are reread more than traditional notes. Since they are atomic, they are easier to reuse in other notes.

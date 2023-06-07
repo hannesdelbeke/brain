@@ -1,5 +1,13 @@
 ---
 alias: AWS Console
+sentiment:
+- 5
+sentiment-hash: 4fd0d949
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Everything you need to access and manage the AWS Cloud — in one web interface

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 13f53feb
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon QuickSight
 Amazon QuickSight is a fast, cloud-powered business intelligence (BI) service that makes it easy for you
 to deliver insights to everyone in your organization. QuickSight lets you create and publish interactive

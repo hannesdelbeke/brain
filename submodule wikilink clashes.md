@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: acf759b7
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 - submodule 1
 	- note A
 	- note B
@@ -15,4 +26,3 @@ e.g. `Home.md` in git-wikis, prevents us from importing several wikis in 1 vault
 [[github wikis in obsidian & interwikilinks]]
 
 [[git submodule]]
-

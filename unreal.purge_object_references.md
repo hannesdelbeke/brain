@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6123e894
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ```python
 ...
 for mesh_asset_data in meshes:

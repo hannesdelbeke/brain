@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: c06bf890
+sentiment-label:
+- frustrated
+- hopeful
+tags:
+- journal
+- planning
+- technical
+- self-reflection
+- work
+---
+
 when wanting to do small changes, on many repos, my current clone process is slow and inconvenient.
 - current process:
 	- copy link manually in GitHub

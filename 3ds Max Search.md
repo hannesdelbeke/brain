@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2beeea33
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 To open the [[Search bar]] in [[Autodesk 3ds Max|3dsmax]]
 - Press `X` while no menus are open
 

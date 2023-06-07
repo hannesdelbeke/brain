@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f000c52d
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 publish [[note taking|notes]] from [[Obsidian]] to [[GitHub pages]]
 use [[MkDocs]] to convert [[Markdown]] notes to [[HTML]]
 

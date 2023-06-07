@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7e1b4080
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+---
+
 ### What if I keep using Google Sheets?
 
 #### Pros & Cons

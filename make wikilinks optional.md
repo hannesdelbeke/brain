@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 0a663ae4
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- communication
+- work
+- hobby
+---
 
 make wikilinks optional for human users
 

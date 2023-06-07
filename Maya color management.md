@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2c678338
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Autodesk Maya]] saves the Color Management setting on a scene by scene basis instead of saving it in the window or user prefs.
 
 MEL command to disable it

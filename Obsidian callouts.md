@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1e1ad2e9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 test page with all callouts
 
 > [!quote]

@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: b5424f49
+sentiment-label:
+- focused
+tags:
+- planning
+- journal
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 new notes
 - [x] [[wikilink GDrive files]]
 	- [ ] [[link spreadsheets in Obsidian]]

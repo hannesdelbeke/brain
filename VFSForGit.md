@@ -1,8 +1,15 @@
 ---
 aliases:
-  - Virtual File System for Git
-  - VFSForGit
-  - VFS For Git
+- Virtual File System for Git
+- VFSForGit
+- VFS For Git
+sentiment:
+- 5
+sentiment-hash: 3aebd658
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 > [!warning]

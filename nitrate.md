@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 229fc1bf
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 [[nitrogen]]
 
 nitrates are created by the body in saliva, as anti microbials

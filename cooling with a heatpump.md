@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b867c6a2
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 [[underfloor cooling]]
 
 [[air to water heat pump]] (and other X to water heatpumps) can't just cool down because of condensation on the radiators. 

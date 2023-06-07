@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3a571b96
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 There's no repo size limit on [[GitHub]]
 
 But if your repo size hits 5gb you may get an email from github support querying what exactly you’re doing that is taking up so much space.

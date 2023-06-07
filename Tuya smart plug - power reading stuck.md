@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: bd7b9e6a
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 ## problem
 When a Tuya [[smart socket]] stops reporting energy use data, [[Home Assistant]] reports incorrect energy usage. (Remotely toggling the plug on/off still works.)
 ## context

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8efacebe
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 https://www.amazon.co.uk/sendtokindle
 
 usb micro

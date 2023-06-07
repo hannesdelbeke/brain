@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9857ba19
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+---
+
 What if [[Bitwarden]] server goes down?
 
 if already logged in:

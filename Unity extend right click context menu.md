@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 93d233e9
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 ```c#
 internal class MyClass

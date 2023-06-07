@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 930f159e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Lake Formation
 AWS Lake Formation is a service that makes it easy to set up a secure [[data lake]] in days. A data lake is a centralized, curated, and secured repository that stores all your data, both in its original form and prepared for analysis. A data lake enables you to break down data silos and combine different types of analytics to gain insights and guide better business decisions.
 However, setting up and managing data lakes today involves a lot of manual, complicated, and timeconsuming tasks. This work includes loading data from diverse sources, monitoring those data flows,

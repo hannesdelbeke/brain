@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 032f7b71
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 Most low-budget depth sensors on the market use Structured Light technology which is what Kinect for Xbox 360 was known for. If you remember that very noisy depth images with big flickering parts on the edges - it’s that. This list includes:
 
 - [[Kinect]] for Xbox 360

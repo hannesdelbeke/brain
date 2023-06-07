@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 08524b14
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 drinking alcohol has more cons than pros, don't start or limit intake.
 
 CONS

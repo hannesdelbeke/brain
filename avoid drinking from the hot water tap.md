@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 130e81c8
+sentiment-label:
+- factual
+tags:
+- technical
+- medical
+- home
+- health
+---
+
 advised to not drink water from a [[hot water cylinder]], since it's likely stale.
 With a modern [[combination boiler|combi boiler]] this should be fine, but stale water could still be present in the pipework.
 

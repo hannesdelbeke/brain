@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 331b7b80
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 In [[unimenu]], I ran into an issue with pyside6 ( [[Qt]]), actions are moved from `QtWidgets` to `QtGui`, so pyside6 apps didn't work.
 fixed this
 https://www.pythonguis.com/faq/pyqt5-vs-pyqt6/

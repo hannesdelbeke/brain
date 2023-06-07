@@ -1,4 +1,18 @@
- [ComfyUI](https://github.com/comfyanonymous/ComfyUI/tree/master).
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: b56863a2
+sentiment-label:
+- impressed
+tags:
+- technical
+- creative
+- hobby
+- work
+---
+
+[ComfyUI](https://github.com/comfyanonymous/ComfyUI/tree/master).
  This editor is the only comfortable way to keep up to date with all the recent updates. Previous UIs just can't keep up with this and look scary.  
 The tool offers cool advantages:  
 

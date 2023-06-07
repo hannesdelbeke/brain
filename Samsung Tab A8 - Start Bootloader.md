@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7f989eea
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 you can start the bootloader, even if you don't have the bootloader "unlocked"
 when you are in the bootloader, you ll see OEM LOCK ON, which means it's locked
@@ -32,4 +41,3 @@ run in cmd
 ```
 adb reboot bootloader
 ```
-

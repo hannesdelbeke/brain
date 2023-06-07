@@ -1,3 +1,22 @@
+---
+energy: 4
+sentiment:
+- 3
+- 4
+sentiment-hash: b75cbcf8
+sentiment-label:
+- disappointed
+- disillusioned
+tags:
+- journal
+- memory
+- procrastination
+- outdoors
+- self-reflection
+- home
+- hobby
+---
+
 i made 2 shelves for the [[boiler]] [[cupboard]].
 
 i cut them too short by about .5 cm

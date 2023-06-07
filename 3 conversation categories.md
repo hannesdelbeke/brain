@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: '46685268'
+sentiment-label:
+- reflective
+tags:
+- social
+- journal
+- communication
+- relationship
+- self-reflection
+- work
+- home
+---
+
 From the book [[Supercommunicators - How to Unlock the Secret Language of Connection]]
 
 - **How do we feel?** 

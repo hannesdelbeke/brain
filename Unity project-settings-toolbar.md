@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 477053ed
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 repo https://github.com/baba-s/project-settings-toolbar
 

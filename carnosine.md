@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 34c5a64f
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 TLDR: take [[beta-alanine]] to decrease muscle fatigue.
 ## sport enhancement
 Carnosine acts as a buffer to prevent muscle cells from becoming acidic, decreasing muscle fatigue during exercise.This is why [[beta-alanine]] is a aid in sports performance. [study](https://pubmed.ncbi.nlm.nih.gov/30431532/)

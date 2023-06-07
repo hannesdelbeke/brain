@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: da43c6e7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 my maintained [[Python pip|pip]] packages:
 - [[Pyblish simple]] 15
 - [[pyblish-config]]

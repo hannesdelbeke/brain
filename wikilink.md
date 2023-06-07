@@ -1,8 +1,15 @@
 ---
 aliases:
-  - wikilinks
-  - wiki link
-  - wiki links
+- wikilinks
+- wiki link
+- wiki links
+sentiment:
+- 5
+sentiment-hash: 8a9dbc3a
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 - not compatible with GitHub md preview / default markdown [[public/link]]s

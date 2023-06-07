@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 856f59ed
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 - Morphs and bones can be combined, it's not just 1 or the other. E.g. bones for body, morphs for face
 - If no further customization & deformation is needed, the deformation can be baked to the mesh.
 - deciding when to use morphs or bones depends on the needed flexibility, performance, and quality. It can be different for movies, different games, or NPCs vs hero characters.
@@ -37,4 +47,4 @@ Lighter on the CPU
 Deformation watch out for
 - Doesn't always work nicely with LODs
 
-- discussion [thread](https://forums.unrealengine.com/t/morphs-v-s-bones-for-facial-rigging/111257/8) 
+- discussion [thread](https://forums.unrealengine.com/t/morphs-v-s-bones-for-facial-rigging/111257/8)

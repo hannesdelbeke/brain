@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2b8ba9de
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 https://odininspector.com/odin-validator-beta
 
 ![](https://odininspector.com/files/pages/odin-project-validator/validator1.png)

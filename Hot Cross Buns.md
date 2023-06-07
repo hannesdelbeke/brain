@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: cdc9444d
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- hobby
+---
 
 ```abc
 X: 5

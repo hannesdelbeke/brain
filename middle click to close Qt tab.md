@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 6fa95e47
+sentiment-label:
+- inspired
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 Mouse middle click closes tabs in Chrome & Obsidian
 let's add this to Qt!
 
@@ -56,4 +70,3 @@ if __name__ == "__main__":
 [[Qt]]
 [[Maya tool]]
 [[tab]]
-

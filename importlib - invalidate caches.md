@@ -1,7 +1,16 @@
 ---
 aliases:
-  - invalidate caches
+- invalidate caches
+sentiment:
+- 5
+sentiment-hash: 162d559b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 Sometimes when you install a [[Python module]] while running [[Python]], it won't be importable until a session restart.
 
 To fix this, if any modules are created/installed while your program is running,

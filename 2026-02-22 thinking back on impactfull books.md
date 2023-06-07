@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: f022ca23
+sentiment-label:
+- introspective
+tags:
+- journal
+- memory
+- self-reflection
+- communication
+- relationship
+- hobby
+---
+
 There are a few books I think of as very impactful or memorable. Let's see what I remembered after the years. (likely the core message of the book)
 
 ---

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4d930b43
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 © by John Wiley & Sons, Inc. All rights reserved. 1
 The SC Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the SC style. It is an 
@@ -692,4 +702,4 @@ statement that's more accurate, more fitting for the circumstances. And it defin
 some time and deliberate effort. But ultimately I end up having more control over how I 
 see the world and really, how I interact with it. 
 All right, well, thank you, everyone, for your time. 
-Narrator: This podcast is a copyrighted production of John Wiley and Sons. 
+Narrator: This podcast is a copyrighted production of John Wiley and Sons.

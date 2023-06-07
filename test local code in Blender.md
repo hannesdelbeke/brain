@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: bcc714b3
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 To make your python module importable in Blender, it needs to be included in the python path. You can just place a script in your scripts folder, however any good tooldev will create their script in a separate repo. So how can you sync it and test it in Blender?
 
 options

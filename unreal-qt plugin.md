@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5bee6cdf
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 > [!WARNING]
 > Archived this, since I didn't use it.  
 > Not sure if you can set the order of plugins in unreal, so this might run after another plugin tries to launch qt code

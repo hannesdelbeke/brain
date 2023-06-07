@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c54b5d4b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 overwrite your widget's method  `contextMenuEvent` 
 
 make a [[menu]] in init of the main widget

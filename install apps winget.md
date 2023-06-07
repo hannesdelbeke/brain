@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: e5a7bc58
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- home
+---
+
 personal [[winget]] app install list
 
 ```batch

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e8cc2477
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ladder cable tray systems are one of the most widely used cable tray solutions in industrial and commercial applications today.
 
 [![](https://cpimg.tistatic.com/04498358/b/4/Ladder-type-Cable-Tray.jpg)]

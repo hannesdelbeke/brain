@@ -1,7 +1,15 @@
 ---
 aliases:
-  - contract
+- contract
+sentiment:
+- 5
+sentiment-hash: de488a6f
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 a contract defines what to expect. 
 so you don't have to read all the underlying code to know what it will do.
 this reduces [[cognitive load]]

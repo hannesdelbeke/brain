@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2be0727e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 [[Markdown]] on [[GitHub]] supports embeds
 
 See advanced formatting in the [official docs](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) for more info and samples

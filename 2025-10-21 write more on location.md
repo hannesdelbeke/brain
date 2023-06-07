@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 941ab1a3
+sentiment-label:
+- motivated
+tags:
+- journal
+- planning
+- procrastination
+- self-reflection
+- travel
+- hobby
+---
+
 I want to [[write more]] [[note taking|notes]] while on location: on holiday, commuting, waiting.
 I rather write notes & stories than watch [[reels]], but reels are more accessible.
 

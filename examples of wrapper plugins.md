@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c8a6ca87
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 I made many [[plugin|plugins]] that are just light wrappers around a [[Python package]].
 Often all they do is add themselves to the menu, and include a launch command
 

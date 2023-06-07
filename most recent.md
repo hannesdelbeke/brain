@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c683992a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 the most recent files you used, are likely the most relevant files you will use again.
 so a good UX to navigate recent files is important.
 

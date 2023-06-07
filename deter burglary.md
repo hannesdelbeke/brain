@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 38763b02
+sentiment-label:
+- practical
+tags:
+- planning
+- home
+---
+
 - prevent burglars from looking in
 	- [ ] get curtains or blinds that prevent people from looking in
 	- [ ] install (thorny) bushes under the windows so it's harder to look in.

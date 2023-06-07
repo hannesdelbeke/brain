@@ -1,3 +1,14 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: e015e5bb
+sentiment-label:
+- curious
+tags:
+- technical
+- creative
+---
 
 Sliding panes allow you to view digital pages side by side.
 Whereas traditional tabs and apps only show the current page.
@@ -30,4 +41,4 @@ sliding panes, are also known as `vertical jQuery accordion`
 Andy Matuschak uses sliding panes (JavaScript) for [his evergreen notes](https://notes.andymatuschak.org/z4SDCZQeRo4xFEQ8H4qrSqd68ucpgE6LU155C)
 
 
- [[UX]] #tabs #windows #browser  #navigation 
+ [[UX]] #tabs #windows #browser  #navigation

@@ -1,3 +1,19 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 3dd905e0
+sentiment-label:
+- inspired
+tags:
+- creative
+- technical
+- planning
+- communication
+- work
+- hobby
+---
+
 you browse a public [[website]], e.g. a documentation page, and come across a term you don't understand. If only the site used [[wikilink]] !
 
 Imagine a chrome extension similar to [[URL textlink]], that let's you:

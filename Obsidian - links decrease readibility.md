@@ -1,4 +1,19 @@
-
+---
+energy: 6
+sentiment:
+- 4
+- 8
+sentiment-hash: 68d33c8c
+sentiment-label:
+- dissatisfied
+- satisfied
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- hobby
+---
 
 > [!success] solved
 > solved with custom css
@@ -44,4 +59,3 @@ looks a lot better, now that underline is removed, i increased color slightly ag
 ## tags
 [[Obsidian css]]
 [[Obsidian improvements]]
-

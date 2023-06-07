@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b473b7c6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Okta is a [[2 factor authentication|2FA]] service that confirms all logins on your mobile device
 ## Okta verify
 Let's you login okta without a mobile phone, very convenient e.g. combined with windows hello fingerprint

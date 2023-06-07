@@ -1,7 +1,16 @@
 ---
 aliases:
-  - EPA
+- EPA
+sentiment:
+- 5
+sentiment-hash: d7920111
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 an [[essential fatty acid]]
 
 ### sources

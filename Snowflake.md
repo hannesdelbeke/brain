@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 790bc97d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [Snowflake](https://www.snowflake.com/en/) is a cloud-native data platform used to store, clean, and analyze massive amounts of company data. It handles everything a traditional relational database does, but scales infinitely across public clouds like AWS, Azure, and Google Cloud. [1, 2, 3] 
 
 ## The Core Architecture

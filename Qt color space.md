@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4f69b51f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A simple widget to show basic [[color space]] conversion in [[Qt]].
 Converting between [[sRGB]] and [[linear color space]].
 ![[Qt color space-1721323691725.jpeg]]

@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 8b4c3aa7
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- self-reflection
+- work
+---
+
 Do max plugins handle their own python [[dependencies]]?
 
 [[Autodesk 3ds Max]] itself does not provide a universal dependency manager for plugins; each plugin/package decides how to manage dependencies. 

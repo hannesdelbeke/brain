@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 5485a54e
+sentiment-label:
+- enthusiastic
+tags:
+- planning
+- creative
+- hobby
+---
+
 - [x] [[twinkle twinkle little star]],  [Twinkle, Twinkle, Little Star - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/twinkle-twinkle-little-star-soprano-recorder.pdf),  [[ABC song]]
 - [x] [[Mary Had a Little Lamb]]
 - [x] [Au Clair De La Lune - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/au-clair-de-la-lune-soprano-recorder.pdf)

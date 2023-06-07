@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7e05e150
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 1. On your computer, go to your [Search settings](https://www.google.com/preferences).
 2. enable [[dark mode]]

@@ -1,6 +1,14 @@
 ---
 aliases:
-  - chatGPT
+- chatGPT
+sentiment:
+- 5
+sentiment-hash: 5858a5a8
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
 ---
 
 try model 4 on free

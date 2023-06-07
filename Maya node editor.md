@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 662ada80
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 The [[Autodesk Maya|Maya]] node editor is a [[node editor]] that presents an editable schematic of the [[Maya dependency graph]], displaying nodes and the connections between their attributes.
 

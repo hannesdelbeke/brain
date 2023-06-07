@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c213a4ea
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 https://examregistration.github.com/overview
 
 ### foundations

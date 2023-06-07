@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: dc0b2928
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 MultiMarkdown, or MMD, is a tool to help turn minimally marked-up plain text into well formatted documents, including HTML.
 

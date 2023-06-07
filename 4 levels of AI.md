@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: daa53bb6
+sentiment-label:
+- curious
+tags:
+- journal
+- planning
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 came across a youtube vid that suggested to learn AI in this order, and spend at least a few months in each phase to learn about the limitations of AI.
 
 1. chat in browser - [[chat]]

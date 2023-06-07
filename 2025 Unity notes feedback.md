@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: af95c235
+sentiment-label:
+- receptive
+tags:
+- technical
+- social
+- communication
+- self-reflection
+- work
+- hobby
+---
+
 feedback on my forumpost: [[link Unity to Obsidian]] and [[link Obsidian to Unity]]
 source: https://forum.obsidian.md/t/obsidian-unity-bi-directional-links/98835/3
 ### The feedback

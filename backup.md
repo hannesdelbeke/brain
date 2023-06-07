@@ -1,7 +1,18 @@
 ---
 aliases:
-  - backed up
-  - backups
+- backed up
+- backups
+energy: 5
+sentiment:
+- 6
+sentiment-hash: db4fd5c0
+sentiment-label:
+- organized
+tags:
+- planning
+- technical
+- procrastination
+- home
 ---
 
 A way to recover something you lost, or handle a situation when something goes wrong.

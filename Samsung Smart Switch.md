@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 004caea6
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 install windows
 ```

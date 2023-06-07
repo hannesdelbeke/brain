@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: bf5d8e77
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 modular auto rigger tool. not maintained atm.
 
 https://github.com/leixingyu/autoRigger

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9a8e28c1
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
+
 - [[Market-neutral funds]] have delivered very low or even slightly negative average annual returns since the early 2000s (around –0.4% per year), 
 - while the S&P 500 has averaged about +7–8% annually since 2001 (≈6% inflation-adjusted)
 

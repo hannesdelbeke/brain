@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: fda86f73
+sentiment-label:
+- inspired
+tags:
+- creative
+- technical
+- self-reflection
+- hobby
+---
+
 It'd be great if links could age, resulting in some kind of dynamic [[Link strength]].
 - Often clicked links grow stronger.
 - Rarely clicked [[public/link|links]] and unread [[note taking|notes]] grow weaker

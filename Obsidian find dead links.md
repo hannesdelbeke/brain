@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: ae936c27
+sentiment-label:
+- hopeful
+tags:
+- technical
+- planning
+- hobby
+---
+
 something i d like is 
 
 a way to find all dead links for all notes in a folder.

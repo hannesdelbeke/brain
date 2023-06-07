@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: b7bb2c1c
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+- work
+---
+
 A [[Blender]] addon to generate UCX meshes for [[Unreal]] convex collision
 get it here: [repo](https://github.com/hannesdelbeke/collision-creator-addon) 
 

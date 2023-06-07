@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 0ffa4a96
+sentiment-label:
+- creative
+tags:
+- technical
+- planning
+- creative
+- communication
+- hobby
+---
 
 > [!warning]
 > When we link to a contact
@@ -32,5 +46,3 @@ if we do have the option to use backlinks from our browser.
 e.g. a youtube video links to Jack. we click the jack link in our browser.
 - We need our own app to show the link tree hub page.
 - Or we open Obsidian, and load the link tree note.
-
-

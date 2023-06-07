@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6b055295
+sentiment-label:
+- factual
+tags:
+- planning
+- home
+---
+
 [[Altrincham]] is one of those places where the _micro‑geography_ matters far more than the town label. The difference between “good” and “exceptional” can literally be one street. Since you’re tuned into acoustic serenity, infrastructure, and overall quality of life, I’ll frame this around **quietness**, **housing stock**, **walkability**, and **general feel** — the things that actually matter day‑to‑day.
 
 # 🌿 **1. Bowdon — the undisputed premium zone**

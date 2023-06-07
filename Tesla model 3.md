@@ -1,4 +1,12 @@
-
+---
+sentiment:
+- 5
+sentiment-hash: 92bf108d
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 > [!NOTE]- Power outlet
 > The power outlet is suitable for accessories requiring up to 12A continuous draw (16A peak)

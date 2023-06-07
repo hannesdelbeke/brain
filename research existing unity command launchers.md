@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 38caedf2
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 ## research existing unity command launchers
 ### keystroke launchers / command pallettes
 [[keystroke launcher]]
@@ -19,4 +30,3 @@ samples:
 - 6y sample toolbar, not generic [[Unity project-settings-toolbar]]
 - 2y custom toolbar in unity. could use this to add a search bar for tools, assets, ... https://github.com/marijnz/unity-toolbar-extender
 	- sample repo using this https://github.com/smkplus/CustomToolbar
-

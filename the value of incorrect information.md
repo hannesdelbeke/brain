@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: a0c53f02
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- work
+---
+
 If you explain why something is incorrect, others can learn from it.
 
 Sometimes, it's better to not remove old or outdated info.

@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 733f30ed
+sentiment-label:
+- organized
+tags:
+- planning
+- technical
+- work
+- hobby
+---
+
 [[Autodesk 3ds Max]]
 
 create a github template for max plugins.

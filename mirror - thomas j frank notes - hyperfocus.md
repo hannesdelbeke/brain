@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 57fec5e3
+sentiment-label:
+- engaged
+tags:
+- journal
+- planning
+- procrastination
+- self-reflection
+- work
+- health
+---
+
 notes by thomasjfrank, [source](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/)
 
 ## Overall Thoughts

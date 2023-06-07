@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 11beae19
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [source](https://getweeklyupdate.com/blog/how-do-you-know-if-an-employee-is-an-a-b-or-c-player/)
 
 Everyone wants as many A Players as possible on the team. But what does an [[A Player]] actually look like?

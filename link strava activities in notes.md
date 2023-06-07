@@ -1,4 +1,17 @@
-
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: cb4e9702
+sentiment-label:
+- motivated
+tags:
+- planning
+- technical
+- outdoors
+- hobby
+- health
+---
 
 link [[Strava]] in [[Obsidian]]
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 846c2cc6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Blender]] preferences contains settings for Blender
 e.g. which addons are enabled, your script paths, ...
 
@@ -11,4 +21,4 @@ you can print the config folder
 bpy.utils.user_resource('CONFIG')
 ```
 
-- see [stackexchange](https://blender.stackexchange.com/questions/78/how-would-i-import-export-blenders-preferences) 
+- see [stackexchange](https://blender.stackexchange.com/questions/78/how-would-i-import-export-blenders-preferences)

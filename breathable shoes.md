@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 4b774db4
+sentiment-label:
+- frustrated
+tags:
+- journal
+- planning
+- outdoors
+- self-reflection
+- hobby
+---
+
 bought shitty yellow trail runners, very breathy
 	- cold when wind gets in them, toes freeze
 	- dry quick

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 109e8c04
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Data Exchange
 AWS Data Exchange makes it easy to find, subscribe to, and use third-party data in the cloud. Qualified
 data providers include category-leading brands such as Reuters, who curate data from over 2.2 million

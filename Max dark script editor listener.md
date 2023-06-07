@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '88436691'
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 https://github.com/hannesdelbeke/dark-listener-max
 

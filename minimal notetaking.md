@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 21dc31e4
+sentiment-label:
+- reflective
+tags:
+- journal
+- planning
+- procrastination
+- self-reflection
+---
+
 - don't [[gearhead|focus on the tech]] (e.g. plugins and apps)
 	- keep your setup simple, to not waste brainpower on the [[meta]] of [[note taking]], e.g. [[reducing note folders]]
 - just start writing: [[don't overthink note taking]]
@@ -13,4 +27,3 @@ Some people advocate for a minimal setup for PKM, after all [[Zettelkasten]] onl
 
 ## add more structure to notes
 This [article](https://www.proofofconcept.pub/p/how-i-write-with-obsidian) talks about not using Obsidian as a scratchpad etc. And instead use it in a more [[organizing|organized]] way.
-

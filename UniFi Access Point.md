@@ -1,8 +1,17 @@
 ---
 aliases:
-  - UAP
-  - UAPs
+- UAP
+- UAPs
+sentiment:
+- 5
+sentiment-hash: 4b051af6
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
+
 UniFi Access Point is a router from UBNT.
 The signal is donut shaped, so should be ceiling mounted.
 

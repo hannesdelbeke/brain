@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 472a281e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Pandoc title block is a metadata type for Pandoc
 
 only supports 3 types of data

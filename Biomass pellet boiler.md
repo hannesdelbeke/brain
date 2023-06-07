@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: a0c2f343
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 A [[boiler]] that burns [[wood]] pellets. 
 
 life. well over 20 years.

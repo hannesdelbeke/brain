@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 953729d6
+sentiment-label:
+- encouraging
+tags:
+- planning
+- technical
+- communication
+- self-reflection
+- work
+---
+
 # Intro tech art
 ## What is technical art
 - Brief intro on what is [Technical Art at Ubisoft](https://www.youtube.com/watch?v=mJCkPqpn_Zk) (3 min)

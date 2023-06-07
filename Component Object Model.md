@@ -1,5 +1,12 @@
 ---
 alias: COM
+sentiment:
+- 5
+sentiment-hash: 6dfb2fe6
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 see windows [COM docs](https://learn.microsoft.com/en-us/windows/win32/com/component-object-model--com--portal)

@@ -1,7 +1,14 @@
 ---
 aliases:
-  - command line
-  - CLI
+- command line
+- CLI
+sentiment:
+- 5
+sentiment-hash: cfc1b3d6
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 The method of exchanging input and output via a text-window

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: afc6161d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 A [[Maya plugin]] to add [[pip qt]] to the menu.  
 ![image](https://github.com/hannesdelbeke/maya-pip-qt/assets/3758308/26dd3524-9589-4cab-9ff6-3745577ea262)
 ## Features

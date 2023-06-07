@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 68cd7fcf
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Holm Oak (Quercus ilex) can survive in hardiness zones H3 to H5
 	H3: Hardy in coastal and relatively mild parts of the UK
 	H4: Hardy through most of the UK

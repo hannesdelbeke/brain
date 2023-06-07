@@ -1,3 +1,19 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 18b95ff3
+sentiment-label:
+- disappointed
+tags:
+- journal
+- social
+- relationship
+- communication
+- self-reflection
+- hobby
+---
+
 Lately, I've been doing more collaboration posts on [[Instagram]]. (2025-04)
 Collab posts have more exposure, leading to more [[liking|likes]].
 

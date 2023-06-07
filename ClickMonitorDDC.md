@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0ed3027d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ClickMonitorDDC is a Windows app to control your monitor(s) brightness.
 
 - Reduce eye strain at night

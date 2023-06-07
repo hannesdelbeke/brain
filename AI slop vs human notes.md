@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 3be8737d
+sentiment-label:
+- contemplative
+tags:
+- journal
+- technical
+- self-reflection
+---
+
 recently (2025-04) I read an article that said
 
 > i m much more interested in the question asked to chat GPT, than the answer. 

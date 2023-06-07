@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0f863414
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ### pip README emoji bug
 [[BQt]] bug
 emoji in README.md crashes the [[Python pip|pip]] install with git+

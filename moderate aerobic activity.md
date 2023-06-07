@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0ac192f0
+sentiment-label:
+- factual
+tags:
+- medical
+- outdoors
+- health
+---
+
 Moderate aerobic activities increase your heart rate and breathing to a level where you can still talk, but not sing. 
 
 More extreme see [[vigorous aerobic activity]]

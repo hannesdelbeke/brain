@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: b4889dc9
+sentiment-label:
+- frustrated
+tags:
+- journal
+- technical
+- home
+---
+
 When you want to use your pc as a speaker, e.g. for your phone
 
 > [!warning] 

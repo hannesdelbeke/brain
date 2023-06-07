@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: aba7f363
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 test for [[Excalidraw]]
 
 ```

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 73d4c9c2
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Artificial intelligence|AI]]
 
 | technique           | prompt template                                                                                                            | description                                                       |

@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 7719cbb0
+sentiment-label:
+- reflective
+tags:
+- journal
+- self-reflection
+- loneliness
+- outdoors
+- work
+- travel
+---
+
 ## Chase money & a structured routine
 Most people without children work a desk job, and take a few weeks of [[holiday]] a year. e.g. a trip to Europe, and 2 weeks international trip, + some weekends away.
 They build up pension, buy a nice house, etc. But don't always feel fulfilled. 

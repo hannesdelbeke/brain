@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 14292adc
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 cholesterol-rich sources
 - Eggs
 - cheese  (100 g has 105 mg of cholesterol)

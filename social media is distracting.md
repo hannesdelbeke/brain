@@ -1,4 +1,17 @@
- The constant influx of [[notification|notifications]] and the allure of engaging content can pull attention away from primary tasks, leading to decreased focus and productivity.
+---
+sentiment:
+- 5
+sentiment-hash: 26e486d1
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+- communication
+- health
+---
+
+The constant influx of [[notification|notifications]] and the allure of engaging content can pull attention away from primary tasks, leading to decreased focus and productivity.
 
 [[cognitive load]]
 - think about unread messages

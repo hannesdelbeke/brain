@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 49b7bf78
+sentiment-label:
+- reflective
+tags:
+- journal
+- procrastination
+- self-reflection
+- hobby
+---
+
 What do you call someone who's more interested in things than using them?
 - A musician collecting lots of music gear but doesn't make much music.
 - A developer who buys the latest GPU & tech, but doesn't develop much.

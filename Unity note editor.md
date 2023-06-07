@@ -1,3 +1,17 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7bf87229
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- planning
+- work
+- hobby
+---
+
 A [[Unity tool|Unity editor tool]] to add [[note taking|notes]] to assets
 
 https://github.com/hannesdelbeke/unity-note-editor

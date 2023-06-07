@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c8acd79d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 class: unreal.AssetData
 ```python
 unreal.AssetData(object_path='None', package_name='None', package_path='None', asset_name='None', asset_class_path='None')

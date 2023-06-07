@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: da87563e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 written by [Ruud van Asseldonk](https://ruudvanasseldonk.com/)  
 [published](<[published](https://ruudvanasseldonk.com/2022/03/20/please-put-units-in-names)>) 20 March, 2022
 # Please put units in names

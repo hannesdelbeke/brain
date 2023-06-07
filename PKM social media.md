@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 8f303be1
+sentiment-label:
+- inspired
+tags:
+- creative
+- planning
+- communication
+- hobby
+---
+
 Imagine you can subscribe to other [[personal knowledge management|PKM]] [[wiki|wikis]] and [[digital garden|digital gardens]], add them to your [[favorite|favorites]] or resources.
 
 - see when your friend has released a new note 😮

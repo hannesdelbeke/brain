@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 84b30999
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- home
+---
+
 - https://en.wikipedia.org/wiki/Radiator_reflector
 	- Well-insulated building heat losses can be reduced by about 1.6%.
 	- Plain aluminum foil is only "marginally" less effective than a proprietary-shaped foil.

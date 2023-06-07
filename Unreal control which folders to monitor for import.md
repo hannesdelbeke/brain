@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 25991a8f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 By default, [[Unreal]] watches all files in `/Game/` for changes to import.
 To exclude a subfolder:
 - Go to Editor Preferences: In the Unreal menu, open `Edit > Editor Preferences.`

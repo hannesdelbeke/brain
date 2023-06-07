@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9dd31eeb
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 The npm config command list various settings from a npm [[config]].
 These can then be overriden by other configs. - [[configuration overriding]]
 A good example of command line config interaction, might be a nice example for my tools.

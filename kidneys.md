@@ -1,7 +1,16 @@
 ---
 aliases:
-  - kidney
+- kidney
+sentiment:
+- 5
+sentiment-hash: 9cddb581
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Kidneys 
 - remove waste products from the [[blood]] and produce [[urine]]. 
 - control the levels of many substances in the blood. 

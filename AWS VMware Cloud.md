@@ -1,7 +1,15 @@
 ---
-alias: 
+alias:
 - VMware Cloud on AWS
+sentiment:
+- 5
+sentiment-hash: 1c33dd99
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 # VMware Cloud on AWS
 VMware Cloud on AWS is an integrated cloud offering jointly developed by [[AWS]] and VMware delivering a highly scalable, secure and innovative service that allows organizations to seamlessly migrate and extend their on-premises VMware vSphere-based environments to the AWS Cloud running on next-generation Amazon Elastic Compute Cloud ([[Amazon EC2]]) bare metal infrastructure.
 

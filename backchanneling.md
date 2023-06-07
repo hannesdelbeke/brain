@@ -1,1 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: '85351160'
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+---
+
 subtle and informal responses a listener gives during a speaker's turn, indicating their engagement and understanding. These responses can be verbal (e.g., "uh-huh," "yeah") or non-verbal (e.g., head nods), and they primarily serve to show the listener's attention rather than conveying significant information.

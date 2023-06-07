@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: f27c607d
+sentiment-label:
+- factual
+tags:
+- journal
+- relationship
+- self-reflection
+- finance
+---
+
 not illegal, but unethical
 
 some examples:

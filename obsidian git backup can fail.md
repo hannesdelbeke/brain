@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 3
+sentiment-hash: dc5eb297
+sentiment-label:
+- alarmed
+tags:
+- technical
+- journal
+- hobby
+---
+
 If you use [[Obsidian plugin - Git]] to auto back up your notes, this can fail when you are not on a branch, e.g. after a failed resolve.
 Obsidian will keep committing, but fail to push. 
 I discovered no notes were pushed to the server for 4 months.

@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 758cabf3
+sentiment-label:
+- encouraging
+tags:
+- planning
+- technical
+- self-reflection
+- work
+---
+
 ### visualize your progress
 
 Visualizing your progress helps you to **stay motivated**. You can look back on past results, and see your improvements. It creates a sense of accomplishment.

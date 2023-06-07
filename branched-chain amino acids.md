@@ -1,7 +1,16 @@
 ---
 aliases:
-  - BCCA
+- BCCA
+sentiment:
+- 5
+sentiment-hash: 656464d0
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 The three BCAAs are a special subcategory of the essential amino acids, that serves as nitrogen carriers, which assist muscles in creating other amino acids required for [[anabolism]].
 
 - [[valine]]

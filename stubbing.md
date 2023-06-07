@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9b05b428
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 in code stubs are empty code files that only contain all variables.
 e.g. 
 ```python

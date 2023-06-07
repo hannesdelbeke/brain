@@ -1,8 +1,15 @@
 ---
 aliases:
-  - texture pixex
-  - texture element
-  - texture pixel
+- texture pixex
+- texture element
+- texture pixel
+sentiment:
+- 5
+sentiment-hash: ab00f5d8
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Texel stands for **TEX**ture pix**EX** or texture element. 
@@ -14,4 +21,3 @@ just as other images are represented by arrays of pixels.
 A [[graphics processing unit|GPU]] takes these texels and projects them onto the pixels on your screen through texture mapping _(This is why we have [[UV]]’s)_
 
 - [wikipedia Texel](<https://en.wikipedia.org/wiki/Texel_(graphics)>)
-

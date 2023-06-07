@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: fc1c62d6
+sentiment-label:
+- satisfied
+tags:
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 ## 2024 Obsidian - Inline suggestions
 
 > [!Success]

@@ -1,3 +1,14 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 88d3e65a
+sentiment-label:
+- relieved
+tags:
+- technical
+- journal
+---
 
 ### unlock developer options
 2. unlock developer options

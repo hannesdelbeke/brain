@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: d55b6b33
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- relationship
+- communication
+- self-reflection
+---
 
 1. The behavior is actually related to something about [[commitment]].
 	1. e,g, someone says i want to raise a child with you, instead of i want you to have my baby

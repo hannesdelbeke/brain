@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: 006c6c12
+sentiment-label:
+- regretful
+- analytical
+tags:
+- journal
+- memory
+- procrastination
+- self-reflection
+- work
+---
+
 preview of the first pipeline as code i wrote (now named pac2 oddly enough)
 [[pipeline as code]]
 ## Summary

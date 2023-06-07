@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: aa53bd05
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Commands to run unreal tasks, e.g. run a server, package a plugin, ...
 
 Unreal engine has 222 comandlets, 83 commands and more than 1237 command line parameters hidden inside its code, very few are documented.

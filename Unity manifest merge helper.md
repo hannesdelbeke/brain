@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 66b7140c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 ### Manual tool assisted merge
 A solution tried in the past is a merge option in Unity.
 1. press "ready to merge", a backup of the local package settings is saved, and the project manifest is rolled back

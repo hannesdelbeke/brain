@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: 82fd4fbe
+sentiment-label:
+- annoyed
+- constructive
+tags:
+- technical
+- planning
+- journal
+- self-reflection
+- work
+---
+
 every unity project I worked on, has a messy [[menu]] setup.
 ## The main menu
 - multiple teams add their tools to Unity, in different menus.

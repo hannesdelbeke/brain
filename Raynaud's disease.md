@@ -1,10 +1,19 @@
 ---
 aliases:
-  - Raynaud's phenomenon
-  - Raynaud's
-  - Raynauds
-  - Raynaud's syndrome
+- Raynaud's phenomenon
+- Raynaud's
+- Raynauds
+- Raynaud's syndrome
+sentiment:
+- 5
+sentiment-hash: ae526347
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 cold fingers, reduced bloodflow
 
 ## Primary

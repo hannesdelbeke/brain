@@ -1,7 +1,16 @@
 ---
 aliases:
-  - PDG
+- PDG
+sentiment:
+- 5
+sentiment-hash: f2fd8ddc
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 a [[Houdini]] file format that can be used in unreal
 
 ---
@@ -22,4 +31,3 @@ PDG can describe large parts of your pipeline to ensure that assets are being lo
 The fine-grained dependencies can ensure a minimum of compute upon a given change. The [[Houdini Task Operators|TOP node]]s can play a number of different roles that will replace manual work and scripts that can bog down a complex studio pipeline. You can even set up TOP networks that fetch other TOP networks to create multiple levels of [[abstraction]] within your pipeline.
 
 [[node editor]]
-

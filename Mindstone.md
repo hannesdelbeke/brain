@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 3455cba7
+sentiment-label:
+- curious
+tags:
+- technical
+- planning
+- hobby
+---
+
 an alternative to [[Obsidian Publish]]
 
 ![](https://github.com/TuanManhCao/digital-garden/raw/main/public/images/CleanShot%202022-04-20%20at%2008.34.17@2x.png)

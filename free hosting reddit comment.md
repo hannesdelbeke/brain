@@ -1,3 +1,15 @@
+---
+energy: 6
+sentiment:
+- 8
+sentiment-hash: 88a99909
+sentiment-label:
+- enthusiastic
+tags:
+- technical
+- social
+- hobby
+---
 
 https://desec.io is excellent.
 

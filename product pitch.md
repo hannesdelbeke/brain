@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 645b8616
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- creative
+- communication
+- work
+---
 
 [source](https://creatoreconomy.so/p/five-steps-to-craft-the-perfect-product-pitch?utm_source=tldrproduct)
 ### Bring the customer problem to life

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6bb44387
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
 
 [[sport]]
 [[health]]

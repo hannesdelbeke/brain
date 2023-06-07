@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 67f9dd61
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 if the Project tab is in 2 panel view mode, the [[Unity inspector|inspector]] wont update when selecting a folder.
 the last selected [[GameObject]] stays active in the inspector.
 this also means that on selection changed code wont run.

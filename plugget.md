@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 80a3cca8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 Plugget is a [[package management|package manager]] to easily install tools in your apps.
 It aims to dummy proof tool distribution, and is designed to assist artists in the games & VFX industry.
 

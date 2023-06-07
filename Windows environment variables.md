@@ -1,8 +1,16 @@
 ---
 aliases:
-  - windows folders
-  - windows env variables
+- windows folders
+- windows env variables
+sentiment:
+- 5
+sentiment-hash: 1431bd17
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 useful [[environment variable]]s for [[Windows]]
 
 | Environment Variable  | Example Value                         |

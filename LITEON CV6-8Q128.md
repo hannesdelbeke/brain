@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ab4f7ae4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 |              |                      |
 | ------------ | -------------------- |
 | Manufacturer | Lite On              |

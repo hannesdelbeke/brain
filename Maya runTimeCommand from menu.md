@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: bf9d741e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 new in 2022
 shows up in [[Maya search]]
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5929642b
+sentiment-label:
+- factual
+tags:
+- medical
+---
+
 Creatine is a compound that comes from three [[amino acid|amino acids]]
 Creatine is found mostly in your body's [[muscle|muscles]] as well as in the [[brain]]
 Most people get creatine through seafood and red meat.

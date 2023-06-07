@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: c756a4a0
+sentiment-label:
+- overwhelmed
+- determined
+tags:
+- journal
+- technical
+- planning
+- creative
+- self-reflection
+- work
+---
 
 > [!WARNING] 
 > This can now be achieved by [[Unity search]].

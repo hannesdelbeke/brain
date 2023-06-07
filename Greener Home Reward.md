@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: ef3f7e1b
+sentiment-label:
+- factual
+tags:
+- financial
+- planning
+- finance
+- home
+---
+
 [[Barclays]] provides a green [[grant]] if you have a [[mortgage]] with them.
 https://www.barclays.co.uk/mortgages/greener-home-reward/
 For the max grant value, install a heat pump or solar panel/battery.

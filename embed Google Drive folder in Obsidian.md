@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 50f10761
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 If I download my [[Google Drive]] folder in my vault, i can [[wikilink GDrive files]] in my notes.
 
 ## challenges

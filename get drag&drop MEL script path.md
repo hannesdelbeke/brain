@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 79d17194
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Save this [[Maya MEL|MEL]] code as a `.mel` file.
 Drag & drop it in [[Autodesk Maya|Maya]] to print the path of the script.
 ```c#
@@ -20,4 +30,3 @@ print($melScriptDir + "\n");
 ```
 
 [[MEL snippet]]
-

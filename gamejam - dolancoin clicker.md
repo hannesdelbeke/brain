@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 6c7780d9
+sentiment-label:
+- amused
+tags:
+- memory
+- creative
+- hobby
+---
+
 https://github.com/hannesdelbeke/dolan-coin
 
 a silly meme miner game made with Ivan over newyear 2014-01-01

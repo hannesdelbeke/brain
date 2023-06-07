@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: e113cffc
+sentiment-label:
+- annoyed
+- hopeful
+tags:
+- technical
+- planning
+- procrastination
+- self-reflection
+- hobby
+---
+
 i tried [[Obsidian-keepsidian]]
 it works but 
 - you can't delete notes and sync the deletion back

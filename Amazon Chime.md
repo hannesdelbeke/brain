@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4ad403dd
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon Chime
 Amazon Chime is a communications service that transforms online meetings with a secure, easy-to-use
 application that you can trust. Amazon Chime works seamlessly across your devices so that you can stay

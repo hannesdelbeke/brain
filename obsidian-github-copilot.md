@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2bbcb1dc
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 > [!warning] 
 > Don't confuse [[obsidian-copilot]] with [[obsidian-github-copilot]]

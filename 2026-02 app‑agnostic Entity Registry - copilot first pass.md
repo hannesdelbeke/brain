@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f2fbfbfd
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
 
 [[AI article]] created from [[2026-02-19 Obsidian auto complete app URI]]
 

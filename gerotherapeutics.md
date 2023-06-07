@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: a07792d7
+sentiment-label:
+- factual
+tags:
+- medical
+- technical
+- health
+---
+
 drugs that can target certain biological hallmarks of aging. 
 
 [paper](https://esmed.org/MRA/mra/article/view/5138/99193547794) - results in order of most to less effective :

@@ -1,3 +1,21 @@
+---
+energy: 6
+sentiment:
+- 7
+- 4
+sentiment-hash: c8e56617
+sentiment-label:
+- appreciative
+- restricted
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 ## I love Pyblish
 I have a love hate relation with [[Pyblish]]. I've learned a lot working with it. Gave back several contributions to the various projects, and actively contributed to the forum.
 The longer I worked with it, the more I found myself reaching the limits, and feeling limited in attempts to fix and expand it.

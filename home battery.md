@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0ccf5a27
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 often charged by a [[solar panel]] setup
 but can also be charged with e.g. overnight tariff.
 

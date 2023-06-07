@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 083a225a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 a UI for the user to easily launch apps.
 
 can be used to assist the user

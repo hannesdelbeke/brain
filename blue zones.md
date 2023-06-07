@@ -1,7 +1,17 @@
 ---
 aliases:
-  - blue zone
+- blue zone
+sentiment:
+- 5
+sentiment-hash: c0f91f31
+sentiment-label:
+- factual
+tags:
+- technical
+- loneliness
+- health
 ---
+
 Blue Zones are [five specific areas](https://www.bluezones.com/exploration/#section-1) of the world where people consistently live over 100 years of age. 
 - [Sardinia, Italy](https://sardinia.nia.nih.gov/)
 - [Ikaria, Greece](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8296328/)

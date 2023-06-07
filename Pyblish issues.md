@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: 658b05ad
+sentiment-label:
+- critical
+- determined
+tags:
+- journal
+- planning
+- technical
+- self-reflection
+- work
+---
+
 Don't only focus on the cons, there are a lot of pros too: [[Pyblish pros]]
 
 #### Main issues

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 992f5e01
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+- work
+---
+
 [[MVP example]]
 [[MVC python example]]
 [[MVP python example]]

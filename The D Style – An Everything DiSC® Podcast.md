@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 486272cf
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- self-reflection
+---
+
 The D Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the D style. It is an Everything DiSC® production brought to you by Wiley. 
 Dr. Mark Scullard: All right, so we're going to be spending some time talking about the D style, dominance, and if you have a D style, I think what you'll find is that, you know, roughly 70, 80 percent of what we're going to talk about is probably going to fit for you. Some of it will be spot on. There's going to be a little bit that feels like, "yeah, that's not really me" or, you know, maybe, "yeah, that sounds like me when I was a lot younger." 

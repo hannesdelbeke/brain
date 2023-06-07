@@ -1,7 +1,14 @@
 ---
 aliases:
-  - Copilot for Obsidian
-  - Obsidian Copilot
+- Copilot for Obsidian
+- Obsidian Copilot
+sentiment:
+- 5
+sentiment-hash: 75d08a4e
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 > [!warning] 

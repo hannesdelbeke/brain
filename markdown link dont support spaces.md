@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: deb12a9f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Markdown links don't support spaces in Obsidian.
 
 ## Example

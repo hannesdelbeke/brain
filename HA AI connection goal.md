@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 4
+sentiment-hash: 944fc954
+sentiment-label:
+- frustrated
+tags:
+- planning
+- technical
+- hobby
+- home
+---
+
 i alrdy have a [[Home Assistant]] [[MCP server|MCP]]
 but i often have to set it up again when using a [[large language model|LLM]] like [[OpenAI Codex]] today
 i have it setup with [[gemini]], but am out of rates, and [[2026-07-03 Gemini stopped working|gemini isnt supported anymore]].

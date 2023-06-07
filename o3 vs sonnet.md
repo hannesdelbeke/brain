@@ -1,3 +1,18 @@
+---
+energy: 7
+sentiment:
+- 3
+- 8
+sentiment-hash: c53d878a
+sentiment-label:
+- frustrated
+- impressed
+tags:
+- journal
+- technical
+- work
+- hobby
+---
 
 https://www.reddit.com/r/ClaudeAI/comments/1lht75v/comment/mz6ur4b
 

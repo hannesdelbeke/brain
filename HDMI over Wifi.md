@@ -1,6 +1,13 @@
 ---
 aliases:
-  - Wireless HDMI Extender
+- Wireless HDMI Extender
+sentiment:
+- 5
+sentiment-hash: 613c6363
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 [[HDMI]] over [[WiFi]] uses separate wifi network, not your home network.

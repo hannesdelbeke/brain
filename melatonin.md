@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3dcd442b
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 melatonin is a [[hormone]] that helps with [[sleep]].
 recommended for adults over age 55, or adults with sleeping issues.
 

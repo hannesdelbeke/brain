@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: fb58895b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 This note discusses some kind of template for a frameless window in Qt.
 likely centered around a frameless [[window (computing)|window]]
 

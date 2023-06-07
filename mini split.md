@@ -1,7 +1,16 @@
 ---
 aliases:
-  - ductless HVAC system
+- ductless HVAC system
+sentiment:
+- 5
+sentiment-hash: f1e067e2
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
+
 A mini-split is a single-zone [[ductless]] [[heat pump]] system that consists of 1 indoor unit and 1 outdoor unit. 
 Either unit can act as a _condenser_ or _evaporator_ to draw heat energy from ambient air.
 
@@ -13,4 +22,4 @@ Economic to handle 1 room, if 2 rooms need [[Heating, ventilation, and air condi
 this [article](https://kaspars.net/blog/mini-split-space-hot-water-heating) talks about using minisplits in a [[passive house]] for heating.
 
 ## how it works
-It works by moving heat from one place to another. By transporting only that thermal energy, and not air, it provides heating and cooling throughout the house without ductwork. The refrigerant travels through the system via narrow piping to transport the heat. 
+It works by moving heat from one place to another. By transporting only that thermal energy, and not air, it provides heating and cooling throughout the house without ductwork. The refrigerant travels through the system via narrow piping to transport the heat.

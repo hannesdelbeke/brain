@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: e198f20d
+sentiment-label:
+- focused
+tags:
+- journal
+- planning
+- self-reflection
+- work
+- home
+- hobby
+---
+
 my [[task management]] systems need to work cross project
 - one project might store tasks in its repo
 - another stores tasks in [[github issue|github issues]]

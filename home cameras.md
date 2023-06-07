@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 78d60bcc
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 - cctv
 - ring doorbell
 - https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks

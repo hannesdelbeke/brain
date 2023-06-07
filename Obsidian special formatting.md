@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6dec58bb
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Obsidian]] uses 
 - industry-standard Commonmark ([[Markdown]] )
 - GFM

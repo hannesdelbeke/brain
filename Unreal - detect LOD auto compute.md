@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7bf7a42e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 load all assets, then check if the first asset has auto compute LOD
 ```python
 import unreal

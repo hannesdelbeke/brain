@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 82a89d82
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 [[R&D Blender validation pipeline with pytest]]
 ## best practices
 avoid changing node code to make nodes more reusable

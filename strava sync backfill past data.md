@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 591ad238
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- hobby
+---
+
 There’s a second limiter too:
 
   - after each import, obsidian-strava-sync-fork/src/StravaSync.ts updates settings.sync.lastActivityTimestamp

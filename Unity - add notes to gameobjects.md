@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 67c176c0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 a [tutorial](https://www.codeproject.com/Tips/1208852/How-to-Add-Comments-Notes-to-a-GameObject-in-Unity) on adding [[note taking|notes]] to [[GameObject|GameObjects]] in the [[Unity inspector]]
 great for [[documentation]]
 
@@ -28,4 +39,4 @@ public class Comment : MonoBehaviour
 - in [[Unity search]] you can search `t:comment`
 
 
-A Unity [thread](https://discussions.unity.com/t/add-info-text-notes-into-the-inspector/548736) describing different approaches. The latest discussed approach is similar to the above. 
+A Unity [thread](https://discussions.unity.com/t/add-info-text-notes-into-the-inspector/548736) describing different approaches. The latest discussed approach is similar to the above.

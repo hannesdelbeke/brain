@@ -1,3 +1,18 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 7b4d05d8
+sentiment-label:
+- annoyed
+tags:
+- technical
+- journal
+- self-reflection
+- work
+- hobby
+---
+
 in [[Python]] you can make an ini config with [configparser](https://docs.python.org/3/library/configparser.html)
 
 ```python

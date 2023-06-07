@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2e6ffa2d
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+- hobby
+---
+
 - [[acoustic wall panel]] 
 - accoustic ceiling panel
 - foam panels 
@@ -19,4 +31,3 @@ good materials for soundproofing ([source](https://blog.burtonacoustix.com/sound
 - Mass Loaded Vinyl (MLV) Barriers
 - Double Drywall with Green Glue
 - Rockwool Insulation
-

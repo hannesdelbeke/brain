@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: e3ec597d
+sentiment-label:
+- critical
+tags:
+- technical
+- work
+---
+
 ### Pyblish action and plugin have no direct link
 Pyblish action & plugin have no direct link , instead they find each other through the context.
 You can run an action on failed instances, but to get the instance you need to do a bit of hacky code. 

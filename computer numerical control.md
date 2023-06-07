@@ -1,7 +1,17 @@
 ---
 aliases:
-  - CNC
+- CNC
+sentiment:
+- 5
+sentiment-hash: 35d62802
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
 ---
+
 - **CNC milling machine**
   A popular machine used for milling, drilling, and cutting. 
     

@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 4f3d8460
+sentiment-label:
+- focused
+tags:
+- planning
+- technical
+- financial
+- finance
+---
+
 ### Goal
 I want to [[link]] my [[spreadsheets]] in [[my vault]]. e.g. A finance review note in [[my vault]] links to my bank statements sheets in [[Google Drive]].
 

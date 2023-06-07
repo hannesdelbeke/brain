@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 27ae755f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # No silver bullet 1987
 ## Summary
 "No silver bullet" talks about why software is difficult, past discoveries that improved productivity, what could improve it, and what people think would but likely won't. 

@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 4c63ade6
+sentiment-label:
+- analytical
+tags:
+- journal
+- technical
+- planning
+- hobby
+---
+
 I wrote about autocomplete and linking to my data (e.g. Strava activities):
 - [[2026-02-19 Obsidian auto complete app URI]]
  - [[Turning Obsidian into a data lake]]

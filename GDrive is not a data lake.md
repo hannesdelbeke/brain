@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5811552a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Data lakes 
 - are bigger than [[Google Drive]]
 - meant to run [[SQL]] on top

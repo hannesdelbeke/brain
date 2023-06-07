@@ -1,5 +1,13 @@
 ---
 alias: Amplify Studio
+sentiment:
+- 5
+sentiment-hash: b77c7e31
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 > AWS Amplify Studio is a visual development environment for building fullstack web and mobile apps. 

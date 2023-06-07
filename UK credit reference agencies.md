@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d4375de2
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
+
 The 3 [[credit reference agency|credit reference agencies]] in the UK are [[Experian]], [[Equifax]], & [[TransUnion]]. 
 They collect financial info from banks, utility companies, and public records, to create credit reports and [[credit score|scores]] that lenders use to assess creditworthiness.
 

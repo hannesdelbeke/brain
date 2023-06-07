@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4d51b9eb
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 effects
 - improves blood circulation by opening up blood vessels and making blood less sticky
 - [[antioxidant]]

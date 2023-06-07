@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 40e25fa2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Sumerian
 Amazon Sumerian lets you create and run virtual reality (VR), augmented reality (AR), and 3D
 applications quickly and easily without requiring any specialized programming or 3D graphics expertise.

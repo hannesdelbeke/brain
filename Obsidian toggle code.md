@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7de3a66a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Instead of toggle, we can use callouts in [[Obsidian]].
 also see [[embed code in Markdown]]
 

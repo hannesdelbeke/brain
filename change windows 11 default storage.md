@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f68eff91
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 1. search `storage settings` in windows start menu.
 2. advanced storage settings
 3. change drive 

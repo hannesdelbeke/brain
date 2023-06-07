@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: df4fbb72
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Full Self-Driving Capability includes:
 
 - **Traffic Light & Stop Sign Control**: Maintains your speed, keeps a following distance, and keeps Model 3 in its lane while also slowing down and stopping for traffic lights and stop signs (see [Traffic Light and Stop Sign Control](https://www.tesla.com/ownersmanual/model3/en_eu/GUID-A701F7DC-875C-4491-BC84-605A77EA152C.html)).

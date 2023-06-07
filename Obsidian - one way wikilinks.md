@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 6
+- 4
+sentiment-hash: ecdd877d
+sentiment-label:
+- thoughtful
+- discouraged
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- hobby
+---
+
 Standard [[wikilink|wikilinks]] are of the format `[[note title]]`.
 In Obsidian, they show up in the [[Obsidian backlinks]] panel.
 

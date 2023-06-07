@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f81eb0eb
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS PrivateLink
 AWS PrivateLink simplifies the security of data shared with cloud-based applications by eliminating
 the exposure of data to the public Internet. AWS PrivateLink provides private connectivity between

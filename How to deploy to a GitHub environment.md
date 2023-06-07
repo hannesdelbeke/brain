@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a01378a0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## How to deploy to a GitHub environment
 Which adds a big green `environment` button on the front page of your [[GitHub]] repo. Example [repo](https://github.com/plugget/plugget-qt)
 

@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 1f56722a
+sentiment-label:
+- satisfied
+tags:
+- journal
+- planning
+- self-reflection
+---
+
 My [[daily notes]] used to be named year-month-day, e.g. `2005-12-23`.
 But when reading links to these [[note taking|notes]], it would just mention a date, showing no [[context]] to the reader.
 

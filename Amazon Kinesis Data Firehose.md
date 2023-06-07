@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b6736da9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Kinesis Data Firehose
 Amazon Kinesis Data Firehose is the easiest way to reliably load streaming data into data stores
 and analytics tools. It can capture, transform, and load streaming data into Amazon S3, Amazon

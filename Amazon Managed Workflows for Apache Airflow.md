@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '76457325'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Managed Workflows for Apache Airflow
 (MWAA)
 Amazon Managed Workflows for Apache Airflow (MWAA) is a managed orchestration service for Apache

@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: b87b722a
+sentiment-label:
+- annoyed
+tags:
+- technical
+- communication
+---
+
 an app that connects all message apps
 [[WhatsApp]], [[Facebook messenger]], [[Instagram]], [[Telegram]], [[SMS]], [[Discord]], [[Slack]], ...
 

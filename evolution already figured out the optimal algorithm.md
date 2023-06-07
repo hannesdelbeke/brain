@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 35f3d222
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Often, problems are already optimally solved by millions of years of evolution.
 Some examples below:
 ### Optimal caching prediction

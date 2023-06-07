@@ -1,3 +1,14 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: cb894d51
+sentiment-label:
+- analytical
+tags:
+- technical
+- self-reflection
+---
 
 Something complex is like mental [[clutter]], it takes more [[cognitive load]] to understand the whole picture.
 There are more parts to the whole, so more things that can go wrong.

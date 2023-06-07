@@ -1,4 +1,15 @@
-
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: ba6ffb71
+sentiment-label:
+- expectant
+tags:
+- planning
+- outdoors
+- travel
+---
 
 - Oceanário de Lisboa, coupon `TAPODL15`
 

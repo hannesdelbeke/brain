@@ -1,7 +1,15 @@
 ---
 aliases:
-  - my site
-  - my digital garden
+- my site
+- my digital garden
+sentiment:
+- 5
+sentiment-hash: e5038581
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
 ---
 
 **Structure**

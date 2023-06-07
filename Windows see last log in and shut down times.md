@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3aa6f7d6
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ```powershell
 # Get user login time

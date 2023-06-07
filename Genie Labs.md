@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: e825acca
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- work
+---
+
 https://www.genielabs.tech/
 ### AI-UGC
 Easy create [[Artificial intelligence|AI]] [[3d model|3d models]] & [[texture|textures]].

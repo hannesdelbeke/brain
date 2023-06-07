@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: e7201654
+sentiment-label:
+- concerned
+- optimistic
+tags:
+- technical
+- planning
+- hobby
+---
+
 Now that my [[Obsidian vault]] has grown big (5k notes), I start to notice that finding backlinks is becoming slower. Often when I click show backlinks it shows a loading bar, and half a minute later it starts populating a list.
 
 1. Reverse lookup cost scales with vault size
@@ -21,4 +36,3 @@ Every time you:
 …it recomputes.
 
 2026-02-22 gonna try the plugin [[obsidian plugin - backlinks cache]]
-

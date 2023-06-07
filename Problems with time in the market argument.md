@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a9c2e6e2
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
 
 > [!warning] 
 > This is a random internet article. It might be wrong.

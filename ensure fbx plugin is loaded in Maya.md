@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: af5f1d11
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 If you try export FBX while the fbx plugin is not active in Maya, you'll get the Error:
 
 > [!ERROR] 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '42224572'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ```js
 // ==UserScript==
 // @name         Remove AutoTrader Ads

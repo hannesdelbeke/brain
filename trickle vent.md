@@ -1,6 +1,14 @@
 ---
 aliases:
-  - trickle vents
+- trickle vents
+sentiment:
+- 5
+sentiment-hash: 61cafaf9
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
 
 [[ventilation]]

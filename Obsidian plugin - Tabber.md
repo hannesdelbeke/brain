@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: c6d8b35d
+sentiment-label:
+- constructive
+tags:
+- technical
+- creative
+- planning
+---
+
 Tabbers are great for e.g. showing the same code in different languages.
 The user clicks the [[tab]] of their coding language
 

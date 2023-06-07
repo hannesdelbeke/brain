@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7b5b1383
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+- hobby
+---
+
 features
 - wireless
 - USB-C receiver 

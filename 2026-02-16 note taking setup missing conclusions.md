@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 3fd6b486
+sentiment-label:
+- reflective
+tags:
+- journal
+- self-reflection
+- planning
+- hobby
+---
+
 I asked [[OpenAI Codex]] to analyse my note on [[note taking]] and it's links/backlinks.
 
 > read the note `c:\pkm\note taking` and all links & backlinks 1 level deep, and read those files for themes I may have missed about improving my setup.

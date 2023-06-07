@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1d374a3c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
 
 > [!warning] archived
 > **update**: Maya now has this build in with CTRL+F [[Maya search]]

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: dc0758f5
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 by default you can't pin a BAT file to the [[Windows task bar]]
 A workaround
 - create a shortcut

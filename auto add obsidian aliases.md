@@ -1,3 +1,21 @@
+---
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: 1c78ea2d
+sentiment-label:
+- annoyed
+- inventive
+tags:
+- journal
+- technical
+- planning
+- creative
+- work
+- hobby
+---
+
 right now. I am manually add aliases in Obsidian notes.
 i waste a few seconds on typing the alias.
 

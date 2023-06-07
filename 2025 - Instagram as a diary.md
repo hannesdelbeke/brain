@@ -1,3 +1,23 @@
+---
+energy: 5
+sentiment:
+- 6
+- 4
+sentiment-hash: a42b9c73
+sentiment-label:
+- reflective
+- conflicted
+tags:
+- journal
+- memory
+- social
+- relationship
+- communication
+- self-reflection
+- travel
+- hobby
+---
+
 I use [[Instagram]] for [[memory post]]. Each picture is a memory, then I can scroll through my wall to remember when I was doing what. 
 e.g. How long has it been since I went back to Belgium and ran into this friend.
 Where did I meet this person, etc.

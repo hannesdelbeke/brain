@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 088ce8d8
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 ## TA brings value to the team
 The goal is to create & release a product.

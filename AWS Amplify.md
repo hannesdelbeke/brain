@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ce1039ff
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 #  AWS Amplify
 > AWS Amplify is a set of purpose-built tools and features that enables frontend web and mobile developers to quickly and easily build full-stack applications on AWS. 
 > Amplify provides two services: Amplify Hosting and [[AWS Amplify Studio|Amplify Studio]].

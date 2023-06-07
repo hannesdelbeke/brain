@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 64149f23
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 [[Chromecast]]
 [[speakers]]
 

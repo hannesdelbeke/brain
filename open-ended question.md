@@ -1,12 +1,21 @@
 ---
 aliases:
-  - open ended question
-  - open ended questions
-  - openended questions
-  - openended question
-  - open-ended question
-  - open-ended questions
+- open ended question
+- open ended questions
+- openended questions
+- openended question
+- open-ended question
+- open-ended questions
+sentiment:
+- 5
+sentiment-hash: 90c5195a
+sentiment-label:
+- factual
+tags:
+- social
+- communication
 ---
+
 Open-ended questions force the listener to think and reflect, rather than just giving a simple yes or no answer. They encourage deeper conversation and drive the [[conversation]] forward.
 
 Open-ended questions can be emotional or practical, 

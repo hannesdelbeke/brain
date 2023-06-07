@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c2742145
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 chat GPT convo
 
 ### how does winget search the packages in the package repo on GitHub?

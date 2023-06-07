@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2ceb0537
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 |Maya uses [[PySide]] ([[Qt]]). The main window is `<PySide2.QtWidgets.QMainWindow(0x2a185b32800, name="MayaWindow")`
 
 print top widgets with no parent

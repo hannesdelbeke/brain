@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: dad10bc3
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- planning
+---
+
 an interesting [article](https://www.deemjournal.com/stories/digital-gardens) on [[digital garden]]s
 
 A mix of my thoughts, interpretation and summary below.
@@ -8,5 +20,4 @@ A mix of my thoughts, interpretation and summary below.
 			- [[reducing note folders]]
 - The internet is a place where we spent time. Let's learn from places. [article](https://frankchimero.com/blog/2018/the-good-room/)
 	- [[todo]] read the article, it's good [[blog to read]]
-- 
-
+-

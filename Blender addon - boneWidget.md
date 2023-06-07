@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0dfce29e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 A tool to create custom bone shapes
 
 https://github.com/waylow/boneWidget

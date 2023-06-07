@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 777d7f74
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Scalable Vector Graphics|SVG]] screenshot let's you create a SVG from a web page
 
 - chrome [extension](https://chromewebstore.google.com/detail/svg-screenshot/nfakpcpmhhilkdpphcjgnokknpbpdllg?pli=1) to take a web page SVG screenshot

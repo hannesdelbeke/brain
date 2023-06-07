@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1fae36f3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 minimum specs compared between [[Thunderbolt]] versions
 
 | thunderbolt 3          | thunderbolt 4                                                                                                  |

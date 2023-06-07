@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 45486ac7
+sentiment-label:
+- factual
+tags:
+- memory
+- creative
+- hobby
+---
+
 created for the climax game jam
 
 https://keywarn.itch.io/daisy-chain

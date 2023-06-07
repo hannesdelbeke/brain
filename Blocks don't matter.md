@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9a9f0da3
+sentiment-label:
+- factual
+tags:
+- technical
+- memory
+- creative
+- hobby
+---
+
 source https://github.com/hannesdelbeke/2013-blocks-dont-matter/tree/main
 
 blog [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkVsmIsM6gF153o6JLrbHXIYMHCz8hioiOsm0FGk7AACyOZSOO1sD4-oG46_-ucbftzSzSZFxG5n9Y8pEE0hBo48QFGW_z8yeBF9_SnpKRuM_C2D9kGqWYIb-d8rJtDQ1pV-kWjnoTaMjg/s64/icon.PNG)](http://hannesdelbeke.blogspot.be/2013/06/blocks-dont-matter.html) 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2fc263fc
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Enabling [[deep link]] in [[unity]], allows you to open specific assets directly from external applications, which can significantly improve workflow efficiency. 
 
 > [!info]

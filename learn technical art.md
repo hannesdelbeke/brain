@@ -1,3 +1,17 @@
+---
+sentiment:
+- 5
+sentiment-hash: 98ef7c1f
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- creative
+- communication
+- work
+---
+
 so you want to be a [[technical artist]]
 # What to learn
 - how artists work and how to do their work

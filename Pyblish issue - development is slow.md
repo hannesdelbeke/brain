@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 3
+sentiment-hash: c19cdd93
+sentiment-label:
+- resigned
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
 
 Any major refactoring takes a lot of effort to get implemented.
 

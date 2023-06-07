@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7f85c656
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon VPC
 Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS
 Cloud where you can launch AWS resources in a virtual network that you define. You have complete

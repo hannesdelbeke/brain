@@ -1,8 +1,17 @@
 ---
 aliases:
-  - engineer's square
-  - machinist's square
+- engineer's square
+- machinist's square
+sentiment:
+- 5
+sentiment-hash: dbb49284
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
 ---
+
 a tool to check if an angle is 90 degrees
 it's entirely made out of steel, and is more accurate than a [[try square]]
 

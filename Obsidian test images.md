@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4716ea95
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Test images for [[Obsidian]] formatting reference
 [[embed images in Markdown]]
 ## local wikilink
@@ -11,4 +21,3 @@ Test images for [[Obsidian]] formatting reference
 [![obsidian|200](https://forum.obsidian.md/uploads/default/original/1X/bf119bd48f748f4fd2d65f2d1bb05d3c806883b5.png)
 ```
 [![obsidian|200](https://forum.obsidian.md/uploads/default/original/1X/bf119bd48f748f4fd2d65f2d1bb05d3c806883b5.png)
-

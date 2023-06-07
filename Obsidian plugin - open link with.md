@@ -1,7 +1,15 @@
 ---
 aliases:
-  - open link with
+- open link with
+sentiment:
+- 5
+sentiment-hash: e4cfabce
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 customize keys to open a [[URL]] in Obsidian or in the browser
 
 I have left click open the URL in an Obsidian tab

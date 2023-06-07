@@ -1,7 +1,15 @@
 ---
 aliases:
-  - NXT
+- NXT
+sentiment:
+- 5
+sentiment-hash: f859a528
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 NXT, is a layered code compositing application. Enabling visualization of complex scripts and easy cross discipline collaboration. 
 
 _It’s code with layers with a nice way to see and change data._

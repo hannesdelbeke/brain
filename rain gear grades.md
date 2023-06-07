@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f384dac2
+sentiment-label:
+- factual
+tags:
+- technical
+- outdoors
+- hobby
+---
 
 | Term                | Protection Level                        | Typical Use                            | Limitations                                   |
 | ------------------- | --------------------------------------- | -------------------------------------- | --------------------------------------------- |

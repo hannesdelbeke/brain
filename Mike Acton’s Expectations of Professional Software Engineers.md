@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5281c8c7
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- self-reflection
+- work
+---
+
 [source](https://adamj.eu/tech/2022/06/17/mike-actons-expectations-of-professional-software-engineers/)
 
 1. **I can articulate precisely what problem I am trying to solve.**

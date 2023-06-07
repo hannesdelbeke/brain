@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4c509519
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Air can contain more water the hotter it is.
 So when you heat air, the relative humidity (percentage of water in air) becomes lower.
 ## Example

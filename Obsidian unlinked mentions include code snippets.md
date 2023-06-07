@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: fb210a1d
+sentiment-label:
+- factual
+tags:
+- technical
+- journal
+- self-reflection
+- hobby
+---
+
 It'd be nicer to be able to exclude code snippets from unlinked mentions.
 You'd never want to add `[[]]` brackets to words in code snippets, since it'd break the code.
 

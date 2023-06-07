@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: acdce3ad
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 Ultra [[high dynamic range|HDR]] is supported on [[Android]] 14+.
 It saves extra light data in the [[metadata]] of a [[JPEG]]
 

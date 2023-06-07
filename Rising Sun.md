@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 77a25c3c
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 ```abc
 X:1
 T: Rising Sun

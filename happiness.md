@@ -1,7 +1,18 @@
 ---
 aliases:
-  - happy
+- happy
+energy: 4
+sentiment:
+- 7
+sentiment-hash: ca127089
+sentiment-label:
+- inspired
+tags:
+- journal
+- self-reflection
+- health
 ---
+
 happiness is a sense of purpose and [[well-being]]
 
 According to some [research](http://www.huffingtonpost.com/richard-j-davidson/well-being-skill-learned_b_7102636.html), well-being can be learned by practicing the following:
@@ -11,4 +22,3 @@ According to some [research](http://www.huffingtonpost.com/richard-j-davidson/w
 - Generosity equals a sense of well-being. Acts of kindness make others and yourself happy.
 
 [[the paradox of happiness]]
-

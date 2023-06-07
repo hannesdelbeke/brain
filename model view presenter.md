@@ -1,6 +1,14 @@
 ---
 aliases:
 - MVP
+sentiment:
+- 5
+sentiment-hash: 2aa48e47
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 A [[programming patterns|programming pattern]] that separates logic from UI.

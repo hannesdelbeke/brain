@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8ba3f671
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 a free competitor to [[Autodesk 3ds Max|Max]] and [[Autodesk Maya|Maya]]
 
 [pipeline wiki](https://github.com/paulgolter/blender-pipeline-integration#community)

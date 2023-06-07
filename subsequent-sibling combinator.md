@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: bdd9267c
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 The `~` tilde symbol is a [combinator](https://w3c.github.io/csswg-drafts/selectors/#selector-combinator)  
 
 `h1 ~ pre`

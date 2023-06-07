@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 62dd9759
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 Windows: `C:\Users\USER\AppData\Local\UnrealEngine\Editor\ProjectEditorRecords.json`
 contains data on where Unreal projects live, and when they were last accessed.

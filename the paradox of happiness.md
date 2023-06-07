@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 285297aa
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+---
+
 Nietzsche. 
 > People want [[meaning]] instead of [[happiness]]. Pursuing happiness is stupid.
 

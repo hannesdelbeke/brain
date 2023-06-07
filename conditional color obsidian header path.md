@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 10fcf002
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- hobby
+---
+
 If I open a note, the header at the top of the tab contains the path, e.g.
 `Public/my note`
 `Private/my personal note`

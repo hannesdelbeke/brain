@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b7987dcf
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 ![](https://img.itch.zone/aW1hZ2UvOTQyNDAvNjY4ODI5LmdpZg==/original/nsDj9Y.gif)
 *example of a 2D implementation*
 

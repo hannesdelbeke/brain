@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: cc683494
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 Evergreen notes are notes that are meant to be updated over time.
 Notes you reread regularly, update with new info, or correct outdated info.
 

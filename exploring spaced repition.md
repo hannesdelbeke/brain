@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 6adcdec1
+sentiment-label:
+- inspired
+tags:
+- journal
+- creative
+- technical
+- self-reflection
+- hobby
+---
+
 [[Andy Matuschak]] mentions [[spaced repetition]] is mostly used for [[learning]] facts & vocabulary.
 But then [suggests](https://notes.andymatuschak.org/z4KxfCZPkVEf2R8nayLJZBG) it could also be used to stimulate creative tasks.
 A flashcard that is vague. e.g. create a short melody

@@ -1,3 +1,17 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9cee5591
+sentiment-label:
+- factual
+tags:
+- journal
+- technical
+- relationship
+- self-reflection
+- health
+---
+
 ## effort
 - Men devote more resources to mate retention when
 	- their partner is younger than them

@@ -1,5 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3bf3d145
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
 
- [google docs](https://docs.google.com/) & google sheets now supports [google keep](https://www.google.com/keep/)
+[google docs](https://docs.google.com/) & google sheets now supports [google keep](https://www.google.com/keep/)
  this lets you take private notes in a document. it stores a link to the doc in the note, and when viewing notes in keep from the document, it shows related notes at the top, in a related category.
 
  Disadvantage: 

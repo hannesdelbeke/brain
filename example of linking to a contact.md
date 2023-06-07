@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 8bebe827
+sentiment-label:
+- nostalgic
+tags:
+- memory
+- journal
+- technical
+- relationship
+- outdoors
+- self-reflection
+- hobby
+---
+
 I browse through my memories, and see a picture of my [[friend]] Jack.
 I click on the link to my friend, and he shows up in my contact list.
 I can click his [[Instagram]] handle to go to his page, or his [[WhatsApp]] to call him.

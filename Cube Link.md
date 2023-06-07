@@ -1,3 +1,19 @@
+---
+energy: 7
+sentiment:
+- 8
+sentiment-hash: 1d2ba79d
+sentiment-label:
+- proud
+tags:
+- memory
+- creative
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 source https://github.com/hannesdelbeke/game-cubelink
 
 ![[cubelink-1726957723174.jpeg]]

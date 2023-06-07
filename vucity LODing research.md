@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e11cab57
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## LODing remeshing imposters
 
 LODing is the act of removing (and sometimes subtly moving) existing verts from a mesh. attempting to retain all original mesh features such as the uv, normals, shape...

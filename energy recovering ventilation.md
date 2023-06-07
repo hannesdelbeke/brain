@@ -1,6 +1,14 @@
 ---
 aliases:
-  - ERV
+- ERV
+sentiment:
+- 5
+sentiment-hash: c2ad9675
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
 
 An ERV provides whole-home ventilation. 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 585ac6fa
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Obsidian]] supports aliases for notes
 ```YAML
 ---

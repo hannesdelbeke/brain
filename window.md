@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: c7606a06
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+- memory
+---
+
 A piece of glass in the wall of a [[house]] or a [[car]]
 
 - A typical window has an R-value ranging from 0.9 to 3.0. Double-pane: 2–3 on average.

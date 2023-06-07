@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: a4538092
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+- travel
+---
+
 [[electric socket]]
 
 the gauge of a cord defines the use. using the wrong gauge can melt your cord.

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 113fcd7c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 Setting up [[backlog.md task mngr]] inside an [[Obsidian vault]] is straightforward because both tools are built around local [[Markdown]] files.
 
 ---

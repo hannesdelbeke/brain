@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 0e0617ad
+sentiment-label:
+- satisfied
+tags:
+- journal
+- planning
+- technical
+- work
+---
+
 I like this app because it's simple and default included in [[Windows]].
 
 Pros

@@ -1,3 +1,18 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 6e01a956
+sentiment-label:
+- disillusioned
+tags:
+- journal
+- procrastination
+- self-reflection
+- work
+- hobby
+---
+
 Note writing is fun, but not efficient.
 - feelings of [[fake productivity]]
 - I think many of my notes are never reread. 

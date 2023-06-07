@@ -1,7 +1,16 @@
 ---
 aliases:
-  - DHEA
+- DHEA
+sentiment:
+- 5
+sentiment-hash: 26e45f72
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Dehydroepiandrosterone (DHEA) is **a hormone that your body naturally produces in the adrenal gland**. DHEA helps produce other hormones, including [[testosterone]] and [[estrogen]].
 ### sources
 Healthy [[fat]] sources include **coconut products, avocados, olive oil, nuts, seeds, & purified omega-3 fish oil supplements**. 

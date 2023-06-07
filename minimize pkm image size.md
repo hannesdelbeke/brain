@@ -1,3 +1,19 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: edafa33e
+sentiment-label:
+- reflective
+tags:
+- journal
+- planning
+- communication
+- self-reflection
+- work
+- hobby
+---
+
 I try avoid using images in my notes due to their [[large filesize]]. 
 	I don't want to end up with a repo that's several Gbs. Ideally it's pure text & [[vector image]]  and is just a few Mbs big.
 ## current

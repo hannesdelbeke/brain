@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7db701ec
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 A control creator for Maya (written in Mel)  
 ![image](https://github.com/user-attachments/assets/082ca02a-e1a5-454c-b615-537646f9bd4a)
 

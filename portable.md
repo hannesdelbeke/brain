@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: dbf81de4
+sentiment-label:
+- factual
+tags:
+- technical
+- memory
+- hobby
+---
+
 easy to take with you.
 
 e.g. 

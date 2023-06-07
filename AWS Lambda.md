@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: '32106270'
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Lambda
 https://aws.amazon.com/lambda
 

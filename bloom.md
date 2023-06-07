@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6f52cd73
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Bloom is a post-processing effect to make things glow, usually combined with [[high dynamic range|HDR]].
 
 

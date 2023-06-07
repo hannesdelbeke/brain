@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3321f06a
+sentiment-label:
+- factual
+tags:
+- financial
+- technical
+- home
+- finance
+---
+
 Economy 10 offers three [[off-peak]] hours:
 - 3 h between midday-3 pm
 - 2 h between 5 pm-7 pm

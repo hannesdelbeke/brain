@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: b82f5059
+sentiment-label:
+- resourceful
+tags:
+- planning
+- technical
+- home
+---
+
 2025-07-01
 
 I was thinking of getting a [[PIR sensor]] in my office

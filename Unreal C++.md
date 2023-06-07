@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0cdfc6f9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[C++]]
 [[Unreal]]
 

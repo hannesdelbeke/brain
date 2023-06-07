@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: c00d6929
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+- hobby
+---
 
 ### Documentation
 We write about our game, brainstorm, documentation, ...

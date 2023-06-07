@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 50a38893
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 in case of issue with spanish business (e.g. car rental)
 

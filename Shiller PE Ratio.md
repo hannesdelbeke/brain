@@ -1,9 +1,19 @@
 ---
 aliases:
-  - CAPE
-  - Cyclically Adjusted price earnings
-  - Shiller PE
+- CAPE
+- Cyclically Adjusted price earnings
+- Shiller PE
+sentiment:
+- 5
+sentiment-hash: 52f67c04
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- finance
 ---
+
 The **Shiller PE Ratio** (or **CAPE**) is a valuation metric for the stock market that adjusts for inflation and smooths out earnings over a 10-year period. 
 
 $$

@@ -1,7 +1,22 @@
 ---
 aliases:
-  - digital garden core
+- digital garden core
+energy: 5
+sentiment:
+- 4
+- 7
+sentiment-hash: dc444d83
+sentiment-label:
+- frustrated
+- constructive
+tags:
+- journal
+- creative
+- self-reflection
+- hobby
+- work
 ---
+
 ## Problem
 You walk around in a maze in a [[digital garden]]. Behind every corner you take you find a note, but none of them resonate. The author crafted a garden so big, you don't know where to start. Leaving you lost.
 

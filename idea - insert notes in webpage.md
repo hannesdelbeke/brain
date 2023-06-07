@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 5faa275c
+sentiment-label:
+- inspired
+tags:
+- creative
+- planning
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 When I read a complex web article, e.g. https://www.bvp.com/atlas/the-rule-of-x?utm_source=tldrproduct, it would be easier to understand if there were notes inserted to hover over.
 
 Any time a note is detected, auto insert it in the text.

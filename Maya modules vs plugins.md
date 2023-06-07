@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d1b39c5b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## Maya modules vs plugins
 **IMO, If you only have a few files, use a plugin for a simpler installation & distribution.**
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c6d8bef3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[data binding python example]]
 
 Data binding is a technique used in software development, particularly in user interface (UI) frameworks, to establish a connection between data and UI elements. It allows for automatic synchronization and propagation of data changes between the data source (often referred to as the model) and the UI components (such as controls, views, or widgets).

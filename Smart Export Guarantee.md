@@ -1,7 +1,18 @@
 ---
 aliases:
-  - SEG
+- SEG
+sentiment:
+- 5
+sentiment-hash: 438dcbd4
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- home
+- finance
 ---
+
 https://www.ofgem.gov.uk/environmental-and-social-schemes/smart-export-guarantee-seg
 
 The ability to export excess energy, e.g. from [[solar panel]] to the [[electrical grid]]

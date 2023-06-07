@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: 14eae710
+sentiment-label:
+- puzzled
+- philosophical
+tags:
+- journal
+- self-reflection
+- hobby
+---
+
 why people finish books they don't enjoy
 
 - feelings

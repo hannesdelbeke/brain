@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: fd304e60
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
 
 most of these, including hypothesis, are closed source, paid products.
 Some used to have a free tier which was removed.
