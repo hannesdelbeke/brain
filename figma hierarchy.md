@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2427266f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## Dev notes figmapy
 
 file

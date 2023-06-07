@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 85f25b84
+sentiment-label:
+- reflective
+tags:
+- journal
+- self-reflection
+- procrastination
+- hobby
+---
+
 It's always addicting to [[categorize|categorize]]/[[organizing|organize]] everything
 to write notes for everything
 
@@ -16,4 +30,3 @@ examples
 - making a note for everything, i do this often, even for mundane things
 
 [[psychology]]
-

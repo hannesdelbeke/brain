@@ -1,7 +1,14 @@
 ---
 aliases:
-  - hotlinked
-  - hotlink
+- hotlinked
+- hotlink
+sentiment:
+- 5
+sentiment-hash: 7bc9b408
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 when you [[public/link]] directly to [[image|images]] on a website, instead of copying them on your own website.

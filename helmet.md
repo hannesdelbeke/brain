@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4f81c1ee
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[MIPS]] helmets reduce rotational forces on head impact.
 
 
@@ -9,9 +19,3 @@ mouth piece is attached to teeth -> skull
 
 a cheaper alternative is listening to your body
 but adrenaline can make you feel fine, but you can have a concussion and not feel it until later.
-
-
-
-
-
-

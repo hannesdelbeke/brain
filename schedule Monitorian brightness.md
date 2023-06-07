@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 8ebe3001
+sentiment-label:
+- determined
+tags:
+- technical
+- planning
+- health
+- home
+---
+
 ## goal
 Auto dim monitor in the evening, and brighten in the [[morning]], to help with [[sleep]] and [[concentration|focus]].
 

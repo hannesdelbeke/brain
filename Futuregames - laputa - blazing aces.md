@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 8
+sentiment-hash: c794ad4b
+sentiment-label:
+- proud
+tags:
+- creative
+- technical
+- work
+- hobby
+---
+
 Created some [[handpainted]] shaders for the water and energy shield.
 ![[Futuregames - laputa - blazing aces-1727018979070.jpeg]]
 

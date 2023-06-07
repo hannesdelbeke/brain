@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2ee7232e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Userdata is a custom string stored in the asset's metadata.
 
 https://docs.unity3d.com/6000.0/Documentation/ScriptReference/AssetImporter-userData.html

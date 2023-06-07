@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e0532195
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 https://www.eastgate.com/people/Bernstein.html
 
 - Kinda invented the term [[digital garden]].

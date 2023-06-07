@@ -1,6 +1,13 @@
 ---
 aliases:
-  - configuration
+- configuration
+sentiment:
+- 5
+sentiment-hash: af278cf3
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 [article](https://ruudvanasseldonk.com/2024/a-reasonable-configuration-language) discusses config language issues

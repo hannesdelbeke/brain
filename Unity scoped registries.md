@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 831f05b9
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Scoped registries in [[Unity]] let you add your own package repo.
 [official docs](https://docs.unity3d.com/Manual/upm-scoped.html)
 

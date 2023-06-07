@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: cc9026b3
+sentiment-label:
+- inspired
+tags:
+- journal
+- planning
+- self-reflection
+- social
+- work
+- travel
+---
+
 A friend did a life audit:
 
 Do step 1 without looking at the next steps!

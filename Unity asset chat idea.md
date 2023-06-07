@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 5dfab3d2
+sentiment-label:
+- creative
+tags:
+- creative
+- planning
+- technical
+- communication
+- work
+---
+
 similar to [[Unity note editor]]
 but aimed at a team
 

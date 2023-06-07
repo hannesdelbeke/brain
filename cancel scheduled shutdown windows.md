@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 56e85205
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 cancel a scheduled shutdown [[Windows]] 
 `shutdown /a`
 

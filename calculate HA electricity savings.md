@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: bb8d7941
+sentiment-label:
+- satisfied
+tags:
+- financial
+- technical
+- planning
+- home
+- finance
+---
+
 **Summary** 
 Using [[Home Assistant]] to control [[Home energy storage|home battery]] charging to maximize off peak usage, saves about 300-400£ per year on electricity bills.
 

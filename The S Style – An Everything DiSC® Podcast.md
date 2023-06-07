@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 51c8fa7e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 The S Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the S style. It is an Everything DiSC® production brought to you by Wiley.
 Dr. Mark Scullard: All right, so we're going to spend some time talking about the S style, steadiness, and if you have an S style, I think what you'll find is that, you know, roughly 70, 80 percent of what we're going to be talking about, this is going to fit you. Some of it will be spot on, there'll be a little bit that feels like, yeah, that's not really me or that was me when I was a little younger. But I think the value here is more about listening for those insights that really help you make sense of your past experiences or help you see your thought processes or your habits in a new light. 

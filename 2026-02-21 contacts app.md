@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 0d292864
+sentiment-label:
+- analytical
+tags:
+- journal
+- technical
+- planning
+- hobby
+---
+
 [[Why I want to link to contacts]]
 
 ### Local contacts app

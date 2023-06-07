@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9d511a94
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 reddit [comments](https://www.reddit.com/r/Piracy/comments/1cx3l71/upgrading_from_home_to_pro/)
 

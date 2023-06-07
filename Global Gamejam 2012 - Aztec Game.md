@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 51e0aa0d
+sentiment-label:
+- factual
+tags:
+- memory
+- creative
+- hobby
+---
+
 # Ani Balls
 source https://github.com/hannesdelbeke/2012-GlobalGamejam-aztec
 blog http://hannesdelbeke.blogspot.com/2012/10/global-gamejam-2012.html

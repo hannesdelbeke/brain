@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 087e9afb
+sentiment-label:
+- intrigued
+tags:
+- technical
+- journal
+- self-reflection
+- work
+- hobby
+---
+
 Today I tested out Gemini 2.0 Flash in [[Obsidian]], with the [[obsidian-copilot|Copilot plugin]]
 
 

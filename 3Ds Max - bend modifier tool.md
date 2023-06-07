@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 89c4d3eb
+sentiment-label:
+- satisfied
+tags:
+- technical
+- creative
+- self-reflection
+- work
+---
+
 Often, when [[modular]] assets are created, they are made to fit on a power of 2 grid size, so they are easy to snap together in the [[game engine]].  
 But when creating curved pieces, it's not easy to bend it to fit [[exact|exactly]] on the grid. It's a manual tweak process, requiring the manual snapping of [[vertex|vertices]] on the grid.
 

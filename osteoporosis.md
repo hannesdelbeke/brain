@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dddeef3b
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Osteoporosis is a health condition that weakens bones
 
 The stage before osteoporosis is called [[osteopenia]]

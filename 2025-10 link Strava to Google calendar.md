@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 6c1cdfcb
+sentiment-label:
+- organized
+tags:
+- planning
+- technical
+- journal
+- self-reflection
+- health
+- hobby
+---
+
 When I log an activity in Strava, it auto adds a matching event in my calendar.
 This is helpfull to [[visualize time spent]] in my [[Google calendar]].
 

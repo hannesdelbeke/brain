@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 44e62b01
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 > [!warning]
 > i think this module might be archivable, since [[pip Qt Unreal plugin]] now exposes pip-qt in [[Unreal]], and all pip related code is in [[py-pip]], a dependency of pip-qt.

@@ -1,8 +1,16 @@
 ---
 aliases:
-  - content browser
-  - asset browser
-  - asset manager
+- content browser
+- asset browser
+- asset manager
+sentiment:
+- 5
+sentiment-hash: 7cb3a732
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
 ---
 
 An asset manager is a tool to visually browse [[asset|assets]].

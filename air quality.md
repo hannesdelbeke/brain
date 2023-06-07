@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1590f057
+sentiment-label:
+- factual
+tags:
+- technical
+- health
+- home
+---
 
 To get good air quality, you should monitor 
 - small particles PM2.5&PM10 (cars, brakes)

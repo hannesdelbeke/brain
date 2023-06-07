@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8b0a2466
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon Athena
 Amazon Athena is an interactive query service that makes it easy to analyze data in [[Amazon S3]] using
 standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay only for the

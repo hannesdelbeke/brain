@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 85d7b23e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 central ways to launch multiple Blender tools
 ### Default ways to launch tools
 Each add-on needs to add support for these methods, which isn't great for supporting consistency between third party tools. But if you only use your own tools this can be an option.
@@ -11,4 +22,4 @@ Create a central place to launch tools from with a third party solution.
 - [[unimenu addon]], extend Blender's menu to launch tools 
 - [ ] TODO create an [[app launcher]] for Blender
 
-[[app launcher]] 
+[[app launcher]]

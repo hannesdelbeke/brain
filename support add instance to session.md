@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 541e58d3
+sentiment-label:
+- satisfied
+tags:
+- technical
+- work
+---
+
 take this sample node
 ```python
 from datafix.core.collector import Collector  

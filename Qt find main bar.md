@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: fe28dfc2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Autodesk 3ds Max]] and [[Autodesk Maya|Maya]] don't expose their native qt widgets. But you can get them.
 
 ```python

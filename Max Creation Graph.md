@@ -1,7 +1,17 @@
 ---
 aliases:
-  - MCG
+- MCG
+sentiment:
+- 5
+sentiment-hash: b86d01cf
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
+
 Max Creation Graph (MCG) is a visual programming language that enables you to automate your own tools in [[Autodesk 3ds Max]], to use with geometry creation, modifiers, and utilities.
 
 [[node editor]]

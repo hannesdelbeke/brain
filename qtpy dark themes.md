@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 13cfb0b7
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 good
 - PySide6 ships with a default dark style `fusion`
 - 💀[PyOneDark_Qt_Widgets_Modern_GUI](https://github.com/Wanderson-Magalhaes/PyOneDark_Qt_Widgets_Modern_GUI) 1k ⭐ PySide6, blue-grey darkmode  (Dead)

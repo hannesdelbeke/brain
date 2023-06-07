@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c6999858
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Yes, a local HTTP server inside Unity **could** cause issues, depending on the setup and environment. Here are potential problems and ways to mitigate them:
 
 ---

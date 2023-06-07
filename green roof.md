@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 69ce1557
+sentiment-label:
+- factual
+tags:
+- planning
+- outdoors
+- home
+- hobby
+---
+
 ## green roof
 3 options
 - soil is heavy, A sedum roof however, made with sedum matting, is reasonably light weight

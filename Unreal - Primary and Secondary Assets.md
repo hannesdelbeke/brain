@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 581d8428
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 The Asset management system in Unreal breaks all Assets into two types, 
 - Primary Assets and 
 - Secondary Assets. 

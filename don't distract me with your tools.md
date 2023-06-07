@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 3
+sentiment-hash: ccb6b6e2
+sentiment-label:
+- irritated
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 People have opinions on what should be on the single [[toolbar|shelve]] shared with everyone.
 E.g. By default in Unreal you only have a single shelve [[Unreal toolbar]], not multiple like with [[Maya shelf|Maya shelves]].
 

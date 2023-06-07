@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 8
+- 4
+sentiment-hash: f9a7f595
+sentiment-label:
+- impressed
+- frustrated
+tags:
+- technical
+- planning
+- creative
+- work
+- hobby
+---
+
 Annotate any website (or pdf)
 
 **features**:

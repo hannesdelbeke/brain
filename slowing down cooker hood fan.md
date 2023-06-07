@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 298656b6
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 slow down a [[fan]] in a [[cooker hood]] to reduce noise. 
 
 an [[induction motor]] speed can only be changed by altering the frequency.

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d5456bc9
+sentiment-label:
+- factual
+tags:
+- medical
+- technical
+- health
+---
+
 | name                 | mg  |
 | -------------------- | --- |
 | decaf coffee cup     | 3   |

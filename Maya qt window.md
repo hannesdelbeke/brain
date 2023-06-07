@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 661e7a2e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 to correctly parent your widget to Autodesk Maya
 - keeping the widget in front when clicking on other Maya windows
 - hide the widget from alt tab apps,

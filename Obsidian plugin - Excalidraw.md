@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0f601edd
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ### Edit SVG saving
 to edit [[Scalable Vector Graphics|SVG]] save data, go to [[Excalidraw]] plugin settings:
 - embedding excalidraw n your notes and exporting

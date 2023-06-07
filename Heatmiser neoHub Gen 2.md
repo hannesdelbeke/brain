@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 30adc1a9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 The Heatmiser neoHub enables you to control up to 32 Neo devices from our smartphone applications. The neoHub is the gateway to the neoStat system, there’s no need for port forwarding or dynamic DNS, simple plug and play, no fuss. NeoHub is compatible with all Neo series models, neoStat, neoStat-e, neoStat-hw, neoAir and neoPlug. Compatible with Apple Homekit allowing full integration with your other Homekit accessories. 
 
 **Local Control**- Should the internet connection fail, the heating system can still be operated within the home by using the thermostat keypad. As soon as the internet connection is restored, your neoHub will automatically logon to the Cloud Server re-enabling app control. 

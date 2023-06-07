@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: a622ccf1
+sentiment-label:
+- inspired
+tags:
+- creative
+- technical
+- planning
+- communication
+- work
+---
+
 ### Idea
 It'd be great if you can leave private comments in a note & store the comment in another file.
 Currently when sharing [[Obsidian]] notes, all note content (including comments) is shared. Sometimes you want to share a note, and also make some private annotations.

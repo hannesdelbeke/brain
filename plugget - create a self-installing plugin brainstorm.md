@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b2ed3187
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## Question
 i want to vendor a python module "[[plugget]]" with a plugin, plugget can install other python modules
 

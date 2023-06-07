@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: db5fbf54
+sentiment-label:
+- factual
+tags:
+- technical
+- social
+- travel
+- home
+---
+
 Code of Conduct
 
 At [[Trusted House sitters]], we're proud to provide a platform with trust and respect at its core. So that we can keep our community the safe and respectful place it is, all members are asked when joining to agree to our Code of Conduct.

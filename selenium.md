@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8a23f364
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 ### sources
 1. **Brazil nuts**: 68-91 mcg per nut
 2. **Pasta**, enriched or unenriched (1 cup): 30 mcg 

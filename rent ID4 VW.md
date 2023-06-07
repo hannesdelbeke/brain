@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: ad4adb15
+sentiment-label:
+- factual
+tags:
+- planning
+- finance
+- travel
+---
+
 [[Volkswagen]]
 
 Rent-a-Car Huddersfield

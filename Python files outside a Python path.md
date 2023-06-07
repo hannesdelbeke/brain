@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 4
+sentiment-hash: bf576600
+sentiment-label:
+- annoyed
+tags:
+- journal
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 Using Python outside Python's PATH, leads to annoying issues:
 - the single `.py` file is not importable (without manually adding the path)
 - since import logic doesn't work, there's no support for Python packages (a folder with multiple python files inside), only support for a single `.py` file.

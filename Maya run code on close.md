@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 324515ee
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ```python
 import maya.utils
 from PySide2.QtWidgets import QApplication

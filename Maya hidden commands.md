@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 29ff3040
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 https://help.autodesk.com/cloudhelp/2022/ENU/Maya-Tech-Docs/CommandsPython/ doesn't list all [[command|commands]].
 `cmds` is dynamic so there's no definitive list.
 Any plugin can add new `cmds`. So doing `dir` on the module is the best way to get a list.

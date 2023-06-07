@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: c43ac415
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 [[winget|Winget]] was created to solve the lack of [[package management|package manager]] in [[Windows]], but vendor‑supplied one‑line installers make installs just as simple — like:
 ```powershell
 # this installs grok CLI

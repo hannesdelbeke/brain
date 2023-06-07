@@ -1,9 +1,17 @@
 ---
 aliases:
-  - USBCPD
-  - USB-C PD
-  - Power Delivery
+- USBCPD
+- USB-C PD
+- Power Delivery
+sentiment:
+- 5
+sentiment-hash: 5691900c
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 USB-C PD is a new standard that can deliver up to 240 watts of power.
 
 USB-C ports without Power Delivery are capable of delivering 5V at 3A for a total of 15 watts. This is sufficient to charge a smartphone in about 30 minutes and a tablet in 2.5 hours.

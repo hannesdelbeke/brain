@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8ae1a555
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To transfer ownership of a file in [[Google Drive]]. This can be used to free up storage space.
 
 - go to share file

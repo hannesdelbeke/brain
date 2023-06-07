@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 09b0b60e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 MAYA_PLUG_IN_PATH 
 MAYA_MODULE_PATH 
 MAYA_SCRIPT_PATH 

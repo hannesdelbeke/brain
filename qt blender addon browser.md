@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e97fa1e9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A add-on browser widget, to quickly open [[Blender]] add-on folders in explorer.
 To help speed up add-on development.
 https://github.com/hannesdelbeke/qt-addon-browser

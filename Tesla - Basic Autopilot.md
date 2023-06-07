@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 12ac61a2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Tesla autopilot]]
 
 Basic Autopilot includes Traffic-Aware Cruise Control and Autosteer.

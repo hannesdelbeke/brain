@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6de7f32e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[AI article]]
 
 While **mise** and **asdf-vm** are powerful package managers, they solve a fundamentally different problem than [[Plugget]].

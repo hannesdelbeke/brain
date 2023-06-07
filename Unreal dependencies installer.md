@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 776191fd
+sentiment-label:
+- critical
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 Auto install [[Python module]] [[dependencies]] in [[Unreal]], using [[py-pip]].
 This script currently doesn't has it's own repo, it lives in the [[Unreal python plugin template]]
 ## cons

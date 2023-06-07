@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 36a08844
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 In code, package is the Outer of an [[unreal asset]]
 packages types contain only one asset, which has the same name as the package
 

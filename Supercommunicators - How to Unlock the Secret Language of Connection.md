@@ -1,7 +1,16 @@
 ---
 aliases:
-  - Supercommunicators
+- Supercommunicators
+sentiment:
+- 5
+sentiment-hash: 946e3300
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
 ---
+
 A [[book]] about the traits of good communicators. It uses stories of people overcoming difficult situations with the use of great [[communication]] skills.
 ## Summary
 3 key insights from the book

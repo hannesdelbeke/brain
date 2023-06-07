@@ -1,3 +1,22 @@
+---
+energy: 7
+sentiment:
+- 4
+- 7
+- 5
+sentiment-hash: 25df9089
+sentiment-label:
+- frustrated
+- motivated
+- analytical
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+---
+
 Currently, I always wrap a tool in a [[wrapper plugin]], publishing it in its own GitHub [[repository|repo]].
 However, for a lot of tools, this feels like a waste. Many tools are just [[Python package]]s, that can be imported and installed as [[dependencies]]. And all the plugin usually contain only some code to add a launch command to the menu. It feels silly to make an almost empty repo.
 

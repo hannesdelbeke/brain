@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 88e71dbd
+sentiment-label:
+- frustrated
+tags:
+- technical
+- work
+---
+
 #### [[Pyblish]] dependency injection
 Some functions require their args to be named in certain ways. 
 Changing the name of the arg will result in a different value being passed to it. e.g. `context` vs `plugin`.

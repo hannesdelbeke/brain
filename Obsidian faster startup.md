@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: b276decf
+sentiment-label:
+- satisfied
+tags:
+- technical
+- journal
+- hobby
+---
+
 ## optimize plugins
 I increased startup from 2.2 sec to 0.3 sec by disabling and delaying plugins
 - in community plugins, enable debug startup time to see startup time

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: bc5ee2b2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Kinesis Data Analytics
 Amazon Kinesis Data Analytics is the easiest way to analyze streaming data, gain actionable insights,
 and respond to your business and customer needs in real time. Amazon Kinesis Data Analytics reduces

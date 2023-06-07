@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9aa078c4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## Problem
 Maya doesn't detect [[Python packages editable install|editable packages]] installed in `Documents\Maya\scripts`
 because the site-packages in your documents folder are not a Python site dir.
@@ -99,5 +109,3 @@ i edit installed plugget to
 - `C:/Users/H/Documents/maya/2026/scripts/site-packages`
 they default show up in sys.paths, but they'r not a sitedir.
 [[plugget]] is only importable after adding it with `sys.addsitedir`
-
-

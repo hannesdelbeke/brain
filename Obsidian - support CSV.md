@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 0adb9105
+sentiment-label:
+- hopeful
+tags:
+- technical
+- planning
+- hobby
+---
 
 > [!success] solved
 > Use an external csv editor, add your file to your vault, and [[Obsidian link non-supported files|link non-supported files in Obsidian]] like this `[[my_document.pdf]]`.

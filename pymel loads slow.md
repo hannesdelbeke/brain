@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: fa8eec66
+sentiment-label:
+- disappointed
+tags:
+- journal
+- technical
+- work
+- hobby
+---
+
 both sugestions made no time diff for me in maya
 # forum suggestions
 The bulk of the work is happening when [[PyMel]] is initializing a bunch of [[Maya MEL|mel]] scripts.  
@@ -38,5 +52,3 @@ If you want, I can help you:
 - Dump this to a `.prof` file
 - Visualize the full call stack
 - Patch PyMEL’s import to isolate just the expensive bits
-
-

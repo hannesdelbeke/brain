@@ -1,6 +1,14 @@
 ---
 aliases:
-  - now page
+- now page
+sentiment:
+- 5
+sentiment-hash: 15e7ea41
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
 ---
 
 now note is a note that explains what you're involved with right now.

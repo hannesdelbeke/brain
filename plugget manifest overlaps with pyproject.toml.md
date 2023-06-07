@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 92e6c32e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 a [[plugget manifest]] has a lot of overlap with a [[pyproject.toml]]
 - pip dependencies
 - package name

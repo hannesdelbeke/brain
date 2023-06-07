@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9d866985
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 With HA I've managed to expose my router to it, as well as both my PlayStations, my Roku TV and my 3 Google Home Minis.
 ## detect who is home
 With my Router exposed I can monitor what devices are connected to my WiFi and use that information for automation purposes (for presence detection). That, coupled with information from the HA app and the Life360 app means my presence detection is perfect for my wife's iPhone and my Android phone (Life360 has better [[Global Positioning System|GPS]] monitoring on my wife's iPhone, or at least it did when I set it up 6 months ago).

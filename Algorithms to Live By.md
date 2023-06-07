@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2823ca90
+sentiment-label:
+- factual
+tags:
+- technical
+- memory
+- hobby
+---
+
 # Algorithms to Live By: The Computer Science of Human Decisions
 
 recap [source](https://jsilva.blog/2019/02/05/algorithms-book-summary/)

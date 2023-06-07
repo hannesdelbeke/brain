@@ -1,6 +1,13 @@
 ---
 aliases:
-  - Assimp-lib
+- Assimp-lib
+sentiment:
+- 5
+sentiment-hash: d1db4774
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 # The Open Asset Importer Library

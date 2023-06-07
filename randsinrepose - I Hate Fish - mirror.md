@@ -1,3 +1,21 @@
+---
+energy: 7
+sentiment:
+- 3
+- 7
+sentiment-hash: c4ddf1a5
+sentiment-label:
+- frustrated
+- resolute
+tags:
+- journal
+- planning
+- procrastination
+- communication
+- self-reflection
+- work
+---
+
 **A shockingly short half-life**
 # I Hate Fish
 [original article](https://randsinrepose.com/archives/i-hate-fish/?utm_source=tldrproduct)

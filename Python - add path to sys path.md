@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 843752f4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 When you want to test a [[python package]] or [[Python module|module]] that's not importable, you can manually add it to the [[Python sys path|sys path]].
 
 1. add to path

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: adf747e2
+sentiment-label:
+- factual
+tags:
+- memory
+- creative
+- hobby
+---
+
 ![](https://img.itch.zone/aW1nLzMwMTM1OTIuanBn/original/w%2BNT%2Fl.jpg)
 Wargaming [[gamejam]]
 

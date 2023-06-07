@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: d0fe2b3d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 An element takes up space (width & height)
 The [display](https://www.w3schools.com/cssref/pr_class_display.php) decides if the next element is shown on the same line, or a new one.
 e.g. to draw an element next to another without taking up any space
@@ -21,4 +31,4 @@ e.g. to draw an element next to another without taking up any space
 ```
 
 [[web development]]
-[[HTML]] [[CSS]] 
+[[HTML]] [[CSS]]

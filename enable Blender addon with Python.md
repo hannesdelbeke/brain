@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 87f845fa
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+- work
+---
+
 To enable a [[Blender addon|Blender add-on]] with [[Python]], use
 ```python
 import addon_utils

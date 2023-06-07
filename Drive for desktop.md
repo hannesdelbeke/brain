@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 535fb9b2
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 You can [[file sync|sync]] or [[virtual file system|mirror]] files from [[Google Drive]] to your [[Windows]] pc.
 When [[backup|backing up]] a folder, you're given the option to store on Drive or [[Google Photos]].
 - drive. local edits or deletes are synced to drive
@@ -12,5 +23,3 @@ When [[backup|backing up]] a folder, you're given the option to store on Drive o
 > - The Google Photos API has quite a few limitations
 > 	- https://rclone.org/googlephotos/#limitations
 > 	- seems the API is designed for compressed quality, aimed at online view, not raw source files.
-
-

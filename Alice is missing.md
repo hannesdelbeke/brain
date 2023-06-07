@@ -1,3 +1,19 @@
+---
+energy: 4
+sentiment:
+- 7
+- 4
+sentiment-hash: 4a3875f4
+sentiment-label:
+- engaged
+- bored
+tags:
+- journal
+- creative
+- communication
+- hobby
+---
+
 - [digital rulebook](https://online.anyflip.com/oipiv/mqjc/mobile/index.html)
 - print & play
 	- [base game](https://online.anyflip.com/oipiv/wfid/mobile/index.html)

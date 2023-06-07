@@ -1,7 +1,17 @@
 ---
 aliases:
-  - solar panels
+- solar panels
+sentiment:
+- 5
+sentiment-hash: 7706cd93
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
 ---
+
 add a [[Home energy storage|solar battery]] 
 
 solar panel use can smooth out energy peaks in morning and evening

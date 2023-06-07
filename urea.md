@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 40391ff5
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Urea is a waste product produced by the breakdown of proteins by
 the [[liver]]. Once produced, urea is filtered from the blood by the
 kidneys and removed from the body in the [[urine]]. Measuring the urea

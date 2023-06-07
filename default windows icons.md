@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 07af8391
+sentiment-label:
+- focused
+tags:
+- technical
+- planning
+---
+
 [site](https://www.digitalcitizen.life/where-find-most-windows-10s-native-icons/) listing various DLLs containing default icons. 
 
 apps can't have a custom icon.

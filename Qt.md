@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b6706e36
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 QT is a UI framework with a python implementation.
 this means it works in all apps that support Python.
 

@@ -1,7 +1,15 @@
 ---
 aliases:
-  - plugget packages
+- plugget packages
+sentiment:
+- 5
+sentiment-hash: 70aa7c1a
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 A [[package]] for [[plugget]]
 
 A plugget package is basically a [[plugget manifest]].

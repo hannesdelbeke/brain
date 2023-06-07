@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d1f9a3fb
+sentiment-label:
+- factual
+tags:
+- financial
+- technical
+- finance
+---
+
 [source](https://hbr.org/1996/01/a-country-is-not-a-company)
 ## ## Exports and Jobs
 

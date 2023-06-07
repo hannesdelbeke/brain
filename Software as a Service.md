@@ -1,5 +1,13 @@
 ---
 alias: SaaS
+sentiment:
+- 5
+sentiment-hash: 4d931326
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Software as a Service provides you with a completed product that is run and managed by the service provider. In most cases, people referring to Software as a Service are referring to end-user applications. 

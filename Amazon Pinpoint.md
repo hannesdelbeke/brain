@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c3092b77
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Pinpoint
 Amazon Pinpoint makes it easy to send targeted messages to your customers through multiple
 engagement channels. Examples of targeted campaigns are promotional alerts and customer retention

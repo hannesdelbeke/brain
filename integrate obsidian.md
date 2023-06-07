@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 6
+- 4
+sentiment-hash: dc2cdb16
+sentiment-label:
+- appreciative
+- dissatisfied
+tags:
+- journal
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 obsidian is nice, use it for all kinds of notes
 but it lacks the integration google has.
 gdrive -> text / sheet / drawing / ...

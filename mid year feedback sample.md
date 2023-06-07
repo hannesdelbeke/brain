@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 129c5446
+sentiment-label:
+- factual
+tags:
+- planning
+- communication
+- self-reflection
+- work
+---
+
 A set of four standard questions that will help you gain valuable insights and reports about your employees' Performance, Engagement, Value, and Work. 
 
 ## ME

@@ -1,7 +1,16 @@
 ---
 aliases:
-  - amino acids
+- amino acids
+sentiment:
+- 5
+sentiment-hash: 5aeb2b08
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 20 (or 21) amino acids function as the building blocks of [[protein]] and are classified as standard amino acids.
 
 - your body can't create 9 [[essential amino acids]], you can get them all at once by eating [[complete proteins]].

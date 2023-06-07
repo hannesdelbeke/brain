@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: ddb8c821
+sentiment-label:
+- contemplative
+tags:
+- journal
+- self-reflection
+- communication
+- work
+---
+
 Putting vague ideas on paper after watching the show `Severance`
 Not leading to anything concrete
 ## A ruthless company

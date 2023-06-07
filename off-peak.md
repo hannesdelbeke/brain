@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b57fdb28
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 during non popular times.
 opposite of peak times / rush hour
 

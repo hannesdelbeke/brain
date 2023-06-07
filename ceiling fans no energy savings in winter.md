@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 76f81357
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+- home
+---
+
 ### Heat over winter
 Unclear how effective their use is over winter in reverse, blowing back hot air at near ceiling.
 Likely no energy savings

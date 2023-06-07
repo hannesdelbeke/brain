@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 5a09c96b
+sentiment-label:
+- focused
+tags:
+- planning
+- technical
+- work
+---
+
 ## Context
 Many plugins are just light [[wrapper plugin|wrapper plugins]] around a [[Python package]]: some [[examples of wrapper plugins|examples]]
 ## Goal

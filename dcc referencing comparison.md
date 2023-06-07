@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 252f968f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 reference a mesh, and modify the UV.
 #### Supported
 Only Maya supports editing UVs on a reference
@@ -37,4 +48,4 @@ Unreal
 > 	- Use a Proxy Object (older) or [Overrides](https://docs.blender.org/manual/en/latest/files/linked_libraries/library_overrides.html) (Blender 3+).
 > 	- You can override materials, transforms, and certain properties — but not geometry/UVs.
 > 	- To modify UVs, you must make it local, which duplicates the data — defeating your purpose.
-> 
+>

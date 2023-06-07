@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: ae7f0bfd
+sentiment-label:
+- factual
+tags:
+- memory
+- creative
+- hobby
+---
+
 https://hannesd.itch.io/discoordination
 http://hannesdelbeke.blogspot.se/2014/01/global-gamejam-2014.html
 

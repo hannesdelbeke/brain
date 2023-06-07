@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: ba42bbc0
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Convert something non visual to a visual representation, so your brain can instantly understand a concept.
 
 e.g. financial data to a graph

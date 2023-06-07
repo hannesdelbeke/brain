@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: a11d2ffd
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 https://github.com/hannesdelbeke/plugget-unreal
 bring [[plugget]] to [[Unreal]]
 
@@ -29,4 +41,3 @@ AFAIK if version changes need to reinstall?
 
 other option: edit PATH
 this let's you swap without uninstalling
-

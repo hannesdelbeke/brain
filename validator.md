@@ -1,7 +1,16 @@
 ---
 aliases:
-  - validation tool
+- validation tool
+sentiment:
+- 5
+sentiment-hash: ab92294c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 ## What is a validator?
 A tool that helps artists ensure that their work meets the project's standards and requirements. It can check for various issues such as [[naming convention|naming conventions]], file formats, and other project-specific guidelines.
 ## Why use a validator?

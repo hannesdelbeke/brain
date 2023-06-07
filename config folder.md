@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3a8db088
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 What's the difference between `unrealProject/saved/config` &  `unrealProject/config` in [[Unreal]] ?
 
 ## Project/Config

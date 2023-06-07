@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 771e97ba
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
 
 ```abc
 X: 2
@@ -8,4 +18,3 @@ K: C
 E D C D | E E E2 | D D D2 | E G G2 |
 E D C D | E E E E | D D E D | C2 C2 |
 ```
-

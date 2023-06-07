@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: eb67da11
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A [[command line interface|CLI]] for [[Github copilot]] 
 
 https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli

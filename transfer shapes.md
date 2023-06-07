@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1f0cf7f0
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+- work
+---
+
 transfer shapes in [[Blender]]
 
 addons

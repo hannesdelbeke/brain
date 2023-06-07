@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b7ef2270
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Outposts
 AWS Outposts bring native AWS services, infrastructure, and operating models to virtually any data
 center, co-location space, or on-premises facility. You can use the same APIs, the same tools, the same

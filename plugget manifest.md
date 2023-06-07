@@ -1,4 +1,12 @@
-
+---
+sentiment:
+- 5
+sentiment-hash: 6cf98680
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ## notes
 

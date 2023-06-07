@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 9a431be6
+sentiment-label:
+- curious
+tags:
+- technical
+- planning
+- communication
+- hobby
+---
+
 What if [[wikilink]] to other websites just worked?
 Currently it's only local vault files.
 

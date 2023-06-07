@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: ea2ea38a
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 [[Obsidian plugin]]
 

@@ -1,12 +1,22 @@
 ---
-tags:
-  - productivity
-  - systems
-  - habits
-  - philosophy
-source: "https://randsinrepose.com/archives/i-hate-fish/"
 author: Rands (Michael Lopp)
+sentiment:
+- 5
+sentiment-hash: 5bba19a2
+sentiment-label:
+- factual
+source: https://randsinrepose.com/archives/i-hate-fish/
+tags:
+- productivity
+- systems
+- habits
+- philosophy
+- planning
+- technical
+- procrastination
+- work
 ---
+
 TLDR:
 Avoid fancy complex task tracking systems.
 Instead, use simple lists that you regularly triage with ruthless deletion of irrelevant tasks. Any task pushed to later must have a specific date.

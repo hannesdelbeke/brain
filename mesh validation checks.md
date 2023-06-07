@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e1303c7f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 - what scale is this, cm mm, m
 - what axis is up in export
 - alpha overdraw

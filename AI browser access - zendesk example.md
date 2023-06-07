@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: '82956566'
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 ### Use case example
 if AI can access browser, it can go to zendesk, and check my tickets.
 

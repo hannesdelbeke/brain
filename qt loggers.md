@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4393e76f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A collection of [[Qt]] loggers in [[Python]]
 [[console window]]
 

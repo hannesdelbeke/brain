@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 6286d6f3
+sentiment-label:
+- satisfied
+tags:
+- journal
+- self-reflection
+- health
+- home
+---
+
 I noticed I slept better after working on a laptop, because I could easily reduce screen brightness in the evening with 1 button. 
 
 Now I use [[Monitorian]] on my pc for this. And it has improved my sleep.

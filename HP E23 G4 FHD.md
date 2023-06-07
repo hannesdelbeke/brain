@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 261a9549
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[monitor]]
 [[hardware]]
 [[Hewlett-Packard|HP]]

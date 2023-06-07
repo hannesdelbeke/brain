@@ -1,5 +1,13 @@
 ---
 alias: unreal ProgressBar
+sentiment:
+- 5
+sentiment-hash: 26cb8d5f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Create an [[Unreal]] loading bar with pure [[Python]] code

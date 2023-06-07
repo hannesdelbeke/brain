@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 13074ee9
+sentiment-label:
+- factual
+tags:
+- medical
+---
+
 Vigorous aerobic activities are those that significantly increase your heart rate and breathing. 
 ### Examples
 1. **Running or Jogging**: A pace that makes conversation difficult.

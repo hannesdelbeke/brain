@@ -1,6 +1,14 @@
 ---
 aliases:
-  - L-carnitine
+- L-carnitine
+sentiment:
+- 5
+sentiment-hash: 05c1a4bd
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
 
 Carnitine is a substance that helps the body turn fat into energy. 

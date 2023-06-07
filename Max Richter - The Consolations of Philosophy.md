@@ -1,3 +1,14 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 7bb8e416
+sentiment-label:
+- amused
+tags:
+- journal
+- hobby
+---
 
 good [[yoga music]]
 a soft [[emotional]] track. [[piano]] and [[violin]]

@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 4c559979
+sentiment-label:
+- reflective
+tags:
+- planning
+- journal
+- technical
+- self-reflection
+- work
+---
+
 ## generalist vs specialist in Indie vs AAA
 - smaller studios usually need more [[generalist|generalists]].
 - bigger AAA studios tend to need more [[specialist|specialists]].

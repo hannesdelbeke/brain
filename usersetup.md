@@ -1,7 +1,15 @@
 ---
 aliases:
-  - usersetup
-  - usersetup.py
+- usersetup
+- usersetup.py
+sentiment:
+- 5
+sentiment-hash: 8e1735c2
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 > [!warning]
@@ -28,4 +36,3 @@ E.g. an outsource studio who works for 2 clients installs your tools, which over
 ### Security risk flagging
 Since Maya 2022+, running `userSetup.py` on startup can be disabled. Or you might get a popup asking for confirmation if you want to run it. 
 - [ ] AFAIK plugins do not have this issue. confirm this.
-

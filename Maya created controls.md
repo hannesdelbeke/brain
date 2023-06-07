@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 85a8601c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 https://github.com/hannesdelbeke/maya-created-controls
 a control creator for Maya (written in Mel)  
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f9d9f0a3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 By default, the [[Autodesk Maya|Maya]] script editor doesn't print in colors.
 To quickly spot errors, the console should show:
 - <font color="red">Red</font> for errors, <font color="yellow">Yellow</font> for warnings.

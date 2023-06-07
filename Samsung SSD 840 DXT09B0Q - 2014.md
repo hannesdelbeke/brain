@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 11f545e4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Parameters of Samsung SSD 840 Series with Firmware DXT09B0Q
 
 | General information                                                                                                                    |                                                            |

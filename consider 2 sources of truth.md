@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5b6d77fa
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- self-reflection
+- work
+---
+
 Often a [[single source of truth]] is seen as the perfect case.
 But what if we have 2 sources of truth, and a manager?
 

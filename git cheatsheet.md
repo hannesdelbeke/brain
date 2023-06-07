@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: ed0dc080
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[git]]
 
 change date

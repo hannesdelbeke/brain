@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4b5b419a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 - light takes the path of least time.  
 - Light bends at an interface so that it takes the quickest path
 

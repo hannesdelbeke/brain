@@ -1,8 +1,14 @@
 ---
 aliases:
-  - cast
+- cast
+sentiment:
+- 5
+sentiment-hash: c5a24772
+sentiment-label:
+- factual
+tags:
+- technical
 ---
-
 
 casting vs bluetooth
 - if you stream music over bluetooth to a speaker. any sound on your device will transfer

@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: 38b0e784
+sentiment-label:
+- frustrated
+- reflective
+tags:
+- journal
+- self-reflection
+- work
+---
+
 Datafix used to use [[Python namespace packages]].
 During development, I kept running in to issues
 - [[integrated development environment|IDE]] doesn't support and is confused

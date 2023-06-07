@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 635b844d
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
+
 The scammer phones you up and says "I'm sorry, I accidentally sent you £2000, please could you send it back to me? I can't pay rent otherwise!" or some other sob story and give you a sort code and account number to send it to.
 
 You send the money, that money is now theirs and clean, you sent it deliberately, it's an authorised transaction.

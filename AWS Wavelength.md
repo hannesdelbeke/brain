@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 813a21e5
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # AWS Wavelength
 AWS Wavelength is an AWS Infrastructure offering optimized for mobile edge computing applications.
 Wavelength Zones are AWS infrastructure deployments that embed AWS compute and storage

@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 2a989069
+sentiment-label:
+- pragmatic
+tags:
+- planning
+- creative
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 Collect all work you ever did, including school/uni assignments.
 Spare time passion projects are great!
 Then filter and keep only the best.

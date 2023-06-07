@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: f1151341
+sentiment-label:
+- reflective
+tags:
+- planning
+- journal
+- procrastination
+- self-reflection
+- work
+---
 
 > [!NOTE] 
 > unresolved

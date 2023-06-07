@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: e9e2c52e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- health
+- home
+---
+
 [[CO2]] in the air can be reduced with a [[Mechanical Ventilation with Heat Recovery|MVHR]]
 
 use a sensor to test, recommended NDIR sensor

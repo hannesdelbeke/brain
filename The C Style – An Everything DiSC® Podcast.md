@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: c77fa707
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- self-reflection
+---
+
 The C Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the C style. It is an Everything DiSC® production brought to you by Wiley. 
 Dr. Mark Scullard: All right, so we're going to be spending some time talking about the C style, Conscientiousness. And if you have a C style, I think what you'll find is that, you know, roughly 70, 80 percent of what we're going to talk about will fit you. Some of it will be spot-on. There will be a, you know, a little bit that feels like, yeah, that's not really me. Maybe some that, you know, that was me when I was younger. But I think the value here is more about listening for those insights that really help you make sense of your past experience or really help you see your thought processes or your habits in a new light. 

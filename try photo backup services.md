@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 0f157141
+sentiment-label:
+- annoyed
+tags:
+- technical
+- planning
+---
+
 amazon photos uploads from a folder (sync)
 CONS
 - but doesn't delete images on the cloud, if deleted locally.

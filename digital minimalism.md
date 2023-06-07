@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 32e68036
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 Companies want to control your attention for profit.
 - Control what you pay attention to, 
 	- by disabling [[ads]]

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 56e5fa5f
+sentiment-label:
+- factual
+tags:
+- technical
+- health
+---
+
 | not processed | processed ingredients | processed   | ultra processed   |
 | ------------- | --------------------- | ----------- | ----------------- |
 | fruit & veg   | oil                   | cured meats | plastic bag bread |

@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: e02dcd6f
+sentiment-label:
+- satisfied
+tags:
+- journal
+- self-reflection
+- communication
+- hobby
+---
 
 > [!tip] 
 > Always explain why you [[public/link]] a note, never just link a note.

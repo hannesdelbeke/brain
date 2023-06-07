@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 12475f77
+sentiment-label:
+- contemplative
+tags:
+- journal
+- self-reflection
+---
+
 If all atoms stopped for "an hour", and then continued. I would not notice.
 like a movie character is not aware when I pause, continue the movie.
 

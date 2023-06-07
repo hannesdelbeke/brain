@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 28a2ac3e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Article [source](https://becca.ooo/blog/vertical-integration)  - 2025-11-10
 
 On the subject of developer tooling, or perhaps computer programs more broadly, I have become increasingly convinced that vertical integration is the only thing that matters. I also think that the inability of developer productivity startups to vertically integrate their offerings has hindered their adoption and utility. I’d like to talk about what I mean by “vertical integration” and why we don’t have it today.

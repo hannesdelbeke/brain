@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 19fa5927
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- hobby
+---
+
 An [article](https://maggieappleton.com/interoperable-libraries) on the disadvantages of using [[Goodreads]] for long term data storage.
 It suggests creating interoperable systems where users can publish their book collections in common formats, facilitating data exchange and fostering connections based on shared reading interests. (reading groups)
 

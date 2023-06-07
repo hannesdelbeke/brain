@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5b0300af
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 a reference list when making a tool
 
 - [ ] [[restore last session]]

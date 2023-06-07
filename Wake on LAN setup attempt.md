@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 5
+- 3
+sentiment-hash: 8542e074
+sentiment-label:
+- focused
+- frustrated
+tags:
+- technical
+- journal
+- home
+---
 
 - go to bios, search for `Power On By PCI-E` and enable it.
 - disable `ErP` in bios. already disabled

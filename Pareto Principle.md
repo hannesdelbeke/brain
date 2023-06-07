@@ -15,7 +15,17 @@ aliases:
 - The Principle of Imbalance
 - The Principle of Least Effort
 - The Rule of the Vital Few
+sentiment:
+- 5
+sentiment-hash: e30139c7
+sentiment-label:
+- factual
+tags:
+- planning
+- self-reflection
+- work
 ---
+
 2 ways to interpret this
 - focus on what matters, invest more in the 20% that produces the most results.
 - or bring stability by making the 80% more productive

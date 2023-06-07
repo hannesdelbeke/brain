@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0df1d71a
+sentiment-label:
+- factual
+tags:
+- technical
+- outdoors
+- health
+- hobby
+---
 
 Clover is edible, but not a choice food.
 It has a lot of protein and vitamines. But doesn't taste great to most people.

@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 979b0f37
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- work
+---
+
 If we [[file distribution|distribute]] unreal plugins separately from the main project, it would
 - faster build speed
 - faster [[Unreal game sync|UGS]] sync speed

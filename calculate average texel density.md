@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: ac516be3
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 The average [[texel density]] is a single value representing the model's overall texel  density.
 
 To calculate it:
@@ -11,4 +23,4 @@ To calculate it:
   the ratio of the texture resolution (in pixels) to the surface area (in square units).
 
 - **Average texel density:** 
-Take the mean of all the texel densities for all surfaces in the model. 
+Take the mean of all the texel densities for all surfaces in the model.

@@ -1,8 +1,16 @@
 ---
 aliases:
-  - ECS
-  - Entity-Component-System
-  - Entity-Component System
+- ECS
+- Entity-Component-System
+- Entity-Component System
+sentiment:
+- 5
+sentiment-hash: 945dcb39
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 [[OOP vs ECS]]
@@ -35,4 +43,3 @@ not for gfx
 
 complex to implement
 mostly gains if you use same stuff
-

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 80d57c70
+sentiment-label:
+- factual
+tags:
+- medical
+---
+
 **Key Findings:**
 - Athletes in athletics, basketball, boxing, equestrian sports, and wrestling had significantly shorter lives, [according to the NIH](https://pubmed.ncbi.nlm.nih.gov/38180004/). 
 - Olympic achievement was more strongly linked to length of life in individual sports than in team sports, [according to the NIH](https://pubmed.ncbi.nlm.nih.gov/38180004/). 

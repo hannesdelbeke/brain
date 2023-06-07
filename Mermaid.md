@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 13283a9d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Mermaid is a language for simple flow charts.
 It's supported by [[Obsidian]], [[MkDocs]], [[GitHub]]
 

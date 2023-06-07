@@ -1,6 +1,14 @@
 ---
 aliases:
-  - editable install
+- editable install
+sentiment:
+- 5
+sentiment-hash: af32ec9e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 An editable install, creates a [[symbolic link|symlink]] between the source code of a Python package and the Python environment, allowing you to modify the source code without needing to reinstall the package.
@@ -19,4 +27,3 @@ You'll need a target to chose where to install it. And `SomeProject` is the pack
 ```
 python -m pip install -e path/to/SomeProject --target "C:\Users\H\AppData\Local\UnrealEngine\5.4\Intermediate\PipInstall\Lib\site-packages"
 ```
-

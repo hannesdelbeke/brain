@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: a3d345de
+sentiment-label:
+- focused
+tags:
+- planning
+- technical
+- work
+- hobby
+---
+
 ## Problem
 i often find myself in need of opening certain folders in apps. e.g. 
 - appdata/addons in blender

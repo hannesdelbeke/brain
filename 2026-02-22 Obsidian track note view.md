@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+- 4
+sentiment-hash: 261daae1
+sentiment-label:
+- pleased
+- annoyed
+tags:
+- journal
+- technical
+- self-reflection
+- hobby
+---
 
 > [!warning]
 > i moved away from storing view in frontmatter, so this note is now outdated. see [[2026-07-22 follow up Obsidian viewcount]]
@@ -56,4 +71,3 @@ TABLE views
 SORT views DESC
 LIMIT 20
 ```
-

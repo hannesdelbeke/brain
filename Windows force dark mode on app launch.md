@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 283268a3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Works on [[Windows 11]] & [[Windows 10]]
 1. right click the app icon 
 2. open properties 

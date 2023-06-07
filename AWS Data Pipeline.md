@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1aef0b4b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Data Pipeline
 AWS Data Pipeline is a web service that helps you reliably process and move data between different
 AWS compute and storage services, as well as on-premises data sources, at specified intervals. With AWS

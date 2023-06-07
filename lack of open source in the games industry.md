@@ -1,3 +1,21 @@
+---
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: b608ca5a
+sentiment-label:
+- frustrated
+- analytical
+tags:
+- journal
+- technical
+- planning
+- communication
+- self-reflection
+- work
+---
+
 I've joined several game dev studios. And re created the same-ish pipelines from scratch at each job.
 
 Why is there no open-source system to solve these problems?

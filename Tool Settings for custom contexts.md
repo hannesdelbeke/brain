@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: daaf89af
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 > I'm implementing some custom manipulators and contexts, and I was wondering how to implement the `Tool Settings` UI for my custom context. I've noticed that if you implement `MPxContext::setTitleString`, the text will show up at the top of `Tool Settings`, but I couldn't find any resources for displaying UI elements or attributes there. Does anybody know how to do this?
 > ![](https://groups.google.com/group/python_inside_maya/attach/613d3dad2c85b/Capture.PNG?part=0.1&view=1)
 

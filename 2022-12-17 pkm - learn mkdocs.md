@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: ce6dffe6
+sentiment-label:
+- productive
+tags:
+- technical
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 more work on public notes, [[Obsidian web integration]] 
 - learned basics of [[mkdocs]] 
 - setup local project based on [obsidian-mkdocs-publisher-template](https://github.com/ObsidianPublisher/obsidian-mkdocs-publisher-template)
@@ -10,4 +25,4 @@ more work on public notes, [[Obsidian web integration]]
 todo
 - [ ] pull submodule
 - [ ] push submodule
-- [ ] populate public notes submodule 
+- [ ] populate public notes submodule

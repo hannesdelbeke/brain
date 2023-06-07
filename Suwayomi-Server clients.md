@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b252243e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 list from 2025-06
 ##### Actively Developed Clients
 - [Suwayomi-WebUI](https://github.com/Suwayomi/Suwayomi-WebUI): The web front-end that Suwayomi-Server ships with by default.

@@ -1,3 +1,18 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 4f5f1b3e
+sentiment-label:
+- inspired
+tags:
+- planning
+- creative
+- technical
+- work
+- hobby
+---
+
 Favorite your scenes in [[Blender]]
 - user picks any blend file
 - creates button to import it

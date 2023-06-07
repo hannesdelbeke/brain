@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: f4f6005c
+sentiment-label:
+- reflective
+tags:
+- journal
+- relationship
+- self-reflection
+- health
+---
 
 The quality of our [[relationship|relationships]] is the strongest predictor for [[mental health|mental]] and [[physical health]]:  
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3c9fbba7
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## get_asset() -> [[unreal.Object]]
 returns the actual asset referenced in the assetData, e.g. the mesh
 if it is loaded or loads the asset if it is unloaded then returns the result

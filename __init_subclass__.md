@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4e67128f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 In [[Python]] 3.6 classes now have a init method
 this makes implementing the [[registry pattern]] easier.
 

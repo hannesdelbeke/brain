@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 140a4d0e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 explain PR https://github.com/pyblish/pyblish-unreal/pull/6
 [[Unreal Python]]
 This is not [[pure Python]], since it's C++

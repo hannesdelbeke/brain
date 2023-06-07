@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a97db70a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
 
 https://digitalrune.github.io/DigitalRune-Documentation/html/3f4d959e-9c98-4a97-8d85-7a73c26145d7.htm
 

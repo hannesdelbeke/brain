@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: efa3e1b1
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 [[Jupyter Notebook]] and [[Blender]]
 
 2 options
@@ -20,4 +33,4 @@ somehow load notebooks directly in Blender.
 - a UI shows the notebook inside of Blender
 - they can run cells etc, just like usual.
 
-A user can follow along with an interactive tutorial. 
+A user can follow along with an interactive tutorial.

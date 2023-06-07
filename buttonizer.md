@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: e3b3a7bd
+sentiment-label:
+- focused
+tags:
+- technical
+- planning
+- creative
+- work
+- hobby
+---
+
 Buttonizer is a [[tool launcher]] where users can easily add their own commands and easily run them by clicking a [[button]].
 ![](https://github.com/hannesdelbeke/py-commander/raw/main/docs/screen_demo.jpg)
 

@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: efa38d63
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 | Cable Type      | Data Transfer? | Typical Use                  |
 | --------------- | -------------- | ---------------------------- |

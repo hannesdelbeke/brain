@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d54f0776
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 https://github.com/jobindjohn/obsidian-publish-mkdocs
 ## cons
 - requires you to edit your vault folder structure.

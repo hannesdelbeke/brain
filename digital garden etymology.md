@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f557ea1e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 In her article [A Brief History & Ethos of the Digital Garden](https://maggieappleton.com/garden-history), Maggie Appleton retrace the birth of the digital garden term in Mark Bernstein's 1998 manifestos [Hypertext Gardens](http://www.eastgate.com/garden/Enter.html). He expose his vision about how web navigation problems and structure's limits can be solved by what he called Hypertext Gardening. 
 - [source](https://anthonyamar.fr/Digital+garden/Digital+garden)
 

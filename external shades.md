@@ -1,9 +1,18 @@
 ---
 aliases:
-  - passive shades
-  - solar shades
-  - external blinds
+- passive shades
+- solar shades
+- external blinds
+sentiment:
+- 5
+sentiment-hash: 8455507a
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
+
 external blinds are more effective than [[internal shades]].
 they prevent heat from entering the building, and prevent the glass from warming up.
 

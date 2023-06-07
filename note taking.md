@@ -1,9 +1,19 @@
 ---
 aliases:
-  - note
-  - notes
-  - note-taking
-  - notetaking
+- note
+- notes
+- note-taking
+- notetaking
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 50fb482d
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- self-reflection
+- work
 ---
 
 - Summarize knowledge

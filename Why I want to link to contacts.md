@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 8f0bdb54
+sentiment-label:
+- analytical
+tags:
+- planning
+- technical
+- self-reflection
+---
+
 ### Why do I want to link to contacts?
 I almost only use [[Google contacts]] to look up
 - address

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e62c11b3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 > [!warning]
 > depricated
 

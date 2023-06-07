@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 20615b59
+sentiment-label:
+- motivated
+tags:
+- journal
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 ## Goal driven learning
 It often is easier to set a goal, and then break down what you need to learn.
 

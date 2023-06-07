@@ -1,7 +1,15 @@
 ---
 aliases:
-  - V2G
+- V2G
+sentiment:
+- 5
+sentiment-hash: 127fd326
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 V2G attaches the car's battery to the [[electrical grid]]. You then sell the surplus energy back to the grid, during load spikes.
 For connecting it to your home see [[vehicle to home]]
 

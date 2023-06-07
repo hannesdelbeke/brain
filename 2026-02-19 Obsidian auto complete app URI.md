@@ -1,3 +1,18 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 880d32d9
+sentiment-label:
+- creative
+tags:
+- journal
+- planning
+- technical
+- creative
+- hobby
+---
+
 Think of an Obsidian plugin where you can 
 1. subscribe to external data lists in settings (activities, memories, photos, ...)
 2. these lists add entries to the [[Obsidian autocomplete]] suggestions list.

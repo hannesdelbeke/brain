@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5bcb88e1
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Unity]] compiles and initializes code in stages. see [docs](https://docs.unity3d.com/Manual/ScriptCompileOrderFolders.html)
 
 | **Phase** | **Assembly name**                | **Script files**                                                                                                                            |

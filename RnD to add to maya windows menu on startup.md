@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: 896fc0a1
+sentiment-label:
+- frustrated
+- satisfied
+tags:
+- technical
+- journal
+- work
+- hobby
+---
 
 ```c#
 global proc rebuildMenusList()

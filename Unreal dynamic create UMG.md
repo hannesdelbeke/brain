@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: be2bc703
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- work
+---
+
 ### Context
 this was my reply to this [tool](https://forums.unrealengine.com/t/figma-import-pipeline/574592)  
 ### Reply

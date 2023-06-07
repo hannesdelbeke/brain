@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 56389cfa
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- work
+---
+
 Autodesk Maya supports both [[Qt]] & build-in functions to make [[menu|menus]].
 the build-in functions are simpler, [see](https://groups.google.com/g/python_inside_maya/c/IcMpXXmDnSM/m/5Z7tKEaCCwAJ) 
 

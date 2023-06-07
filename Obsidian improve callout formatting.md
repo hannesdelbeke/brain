@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: af73f2e4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 the default formatting is inconsistent in Obsidian
 This note won't look the same in the WebView, inspect it in Obsidian !
 

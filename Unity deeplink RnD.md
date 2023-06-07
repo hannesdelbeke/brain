@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 241d3e39
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 GPT research, setup a http server in [[Unity]]: 
 - [[setup deeplink support for unity - GPT]]
 - [[potential issues and named pipe alternative - GPT]]

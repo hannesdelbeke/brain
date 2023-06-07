@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5595da14
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 - import [[file browser|asset manager]]
 - export [[exporter]]

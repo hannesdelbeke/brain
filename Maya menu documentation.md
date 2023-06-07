@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8e20a95a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 The [[Autodesk Maya|Maya]] menu supports  shift click to run a secondary function.
 Often used to open a dialog box with settings to tweak a command before running it.
 Any menu item that has one has a box icon on the right.

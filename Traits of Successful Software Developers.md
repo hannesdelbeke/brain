@@ -1,3 +1,17 @@
+---
+sentiment:
+- 5
+sentiment-hash: f6ccd34b
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- communication
+- self-reflection
+- work
+---
+
 ## Working in a team
 - Don’t [[malign]] bad code
 - Don’t malign yourself

@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: e2e77340
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 My (public) chat dashboard
 

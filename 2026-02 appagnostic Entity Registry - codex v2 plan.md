@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2615e644
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 # App-Agnostic Entity Registry (Codex v2 Plan)
 
 ## Purpose

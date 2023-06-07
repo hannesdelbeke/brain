@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '86417828'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Kinesis
 Amazon Kinesis makes it easy to collect, process, and analyze real-time, streaming data so you can get
 timely insights and react quickly to new information. Amazon Kinesis offers key capabilities to costeffectively process streaming data at any scale, along with the flexibility to choose the tools that best

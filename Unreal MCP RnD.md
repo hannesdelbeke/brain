@@ -1,3 +1,16 @@
+---
+energy: 7
+sentiment:
+- 8
+sentiment-hash: 33d32e10
+sentiment-label:
+- accomplished
+tags:
+- technical
+- planning
+- creative
+- work
+---
 
 > [!success] 
 > I made my own MCP server in Unreal, see [[2026-02-04 write mcp unreal]]
@@ -55,4 +68,3 @@ Receive `["Actor1", "Actor2", "Actor3"]` or exception log
 	- [ ] 2 assets named camera are found, ask user for more info
 	- [ ] user confirms the first one
 	- [ ] duplicate the first asset
-

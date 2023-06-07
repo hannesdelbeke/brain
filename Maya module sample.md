@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 28ccbfa8
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 a demo [[Maya module]] definition file
 
 > [!WARNING] 

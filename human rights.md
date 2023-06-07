@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 846498db
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 see https://www.un.org/en/about-us/universal-declaration-of-human-rights
 
 summary of rights to 

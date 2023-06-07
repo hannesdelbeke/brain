@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 24d7250e
+sentiment-label:
+- analytical
+tags:
+- technical
+- work
+---
+
 Let's explore [[Unreal Python]] paths for importing Python modules in Unreal
 ## site paths
 ```

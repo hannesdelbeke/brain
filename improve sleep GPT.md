@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: f0d881e0
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+- self-reflection
+---
+
 since humans have busy schedules and struggle to focus on multiple things, what would be the best thing to focus on for longetivity? eat healthier, sleep better, more socialising, more exercise. What is the most impactfull for a vegetarian with desk job who is healthy and has healthy habits and weight and hobbies.
 
 ChatGPT

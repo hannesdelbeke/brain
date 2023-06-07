@@ -1,6 +1,14 @@
 ---
 aliases:
-  - Blender search
+- Blender search
+sentiment:
+- 5
+sentiment-hash: 5e42ceeb
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Open by pressing `F3`

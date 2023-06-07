@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 84ff8646
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Download a single file using git archive
 
 Using git archive to download a single file involves accessing a remote repository and piping the output to tar to extract a specific file.

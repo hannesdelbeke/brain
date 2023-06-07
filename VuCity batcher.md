@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 8
+sentiment-hash: 69aba692
+sentiment-label:
+- accomplished
+tags:
+- technical
+- memory
+- self-reflection
+- work
+---
+
 A [[batcher]] [[3ds max tool]] to run scripts on multiple max files for [[VuCity]] tiles
 
 It mostly was used to run the [[VuCity validator]] overnight on 100s of scenes, auto fix any issues it finds, log the fixes it did, and log the scenes it couldn't fix.
@@ -45,6 +59,3 @@ It mostly was used to run the [[VuCity validator]] overnight on 100s of scenes, 
 > 
 > spit out a batch report, which scenes failed to process.
 > allow a report of reports, e.g. for validation, we can create a list of all validation reports, 1 for each scene, which is read into the log reader tool as a "master report"
-
-
-

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c4cd5d8d
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 > [!NOTE] conclusion
 > As long as interwiki-links aren't supported for obsidian (and GitHub)
 > I'll use separate vaults and normal [[wikilink]]

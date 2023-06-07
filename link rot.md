@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 12e0a840
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Link rot is when a URL leads to a non exiting page, since over time the website has closed.
 
 everything on the [[internet]] is forever

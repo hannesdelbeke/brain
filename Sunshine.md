@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e6b61262
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 Self-hosted game stream host for [[Moonlight]].
 https://github.com/LizardByte/Sunshine
 
@@ -7,4 +18,3 @@ https://github.com/LizardByte/Sunshine
 
 
 [[streaming]]
-

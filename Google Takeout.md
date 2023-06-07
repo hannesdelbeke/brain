@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f58f4602
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Google]]
 [[backup]]
 

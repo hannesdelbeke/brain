@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 086e8400
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 [[Autodesk Maya]] represents your scene in 2 ways:
 - **The dependency graph**

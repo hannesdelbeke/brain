@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7e5eb7ad
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 a great [[Obsidian plugin]] to run code in Obsidian
 
 ```

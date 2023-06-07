@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e0986ff8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 ### alternatives to [[Obsidian]]
 - noteshub (paid) [[noteshub whiteboard]]
 	- kanban

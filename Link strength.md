@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 6a101b1e
+sentiment-label:
+- analytical
+tags:
+- technical
+- journal
+- self-reflection
+- work
+- hobby
+---
+
 some links are loose, others are close.
 
 ## close relation

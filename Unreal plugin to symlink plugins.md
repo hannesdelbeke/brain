@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: b4c9cc75
+sentiment-label:
+- inventive
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 can be a simple tool 
 
 - symlink

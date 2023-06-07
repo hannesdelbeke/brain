@@ -1,3 +1,23 @@
+---
+energy: 5
+sentiment:
+- 4
+- 8
+- 7
+sentiment-hash: 823c5d84
+sentiment-label:
+- annoyed
+- fulfilled
+- content
+tags:
+- journal
+- memory
+- creative
+- self-reflection
+- hobby
+- home
+---
+
 Anyone spending time around me eventually finds out I like crafting & dislike waste.
 
 Recently I was annoyed at my messy cables on my desk. I already repurposed a Velcro wrap to contain the cables of my keyboard, but it wasn't pleasing to the eye.

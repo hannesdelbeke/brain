@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 58040cb8
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 if [[Windows Hello]] is disabled on a pc
 
 

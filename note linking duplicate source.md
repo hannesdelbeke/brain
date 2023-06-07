@@ -1,6 +1,14 @@
 ---
 aliases:
-  - wrap in iframe
+- wrap in iframe
+sentiment:
+- 5
+sentiment-hash: ef9f9fdb
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
 ---
 
 notes in obsidian rely on [[public/link|links]] between notes.

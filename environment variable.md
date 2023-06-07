@@ -1,8 +1,17 @@
 ---
 aliases:
-  - env var
-  - env vars
+- env var
+- env vars
+sentiment:
+- 5
+sentiment-hash: a0fc3171
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 An environment variable is a variable that's accessible to your whole environment.
 It is often used to control software. 
 

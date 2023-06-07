@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 156b553c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## TA background
 Usually a tech artist comes from an art background, sometimes from [[programming]].
 They first learned 1 field of game-dev, e.g. animation.

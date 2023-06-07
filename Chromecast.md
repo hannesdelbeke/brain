@@ -1,7 +1,19 @@
 ---
 aliases:
-  - Google cast
-  - Chrome cast
+- Google cast
+- Chrome cast
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 5ef12acf
+sentiment-label:
+- cautious
+tags:
+- technical
+- planning
+- financial
+- home
+- finance
 ---
 
 [[casting|Casts]] over the internet

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e47843e5
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 sometimes meshes in unreal have more materials than they use
 this code detects affected assets. It's not cleaned up so read it before you run it.
 it also doesn't unload assets so you'll run out of ram and unreal will crash

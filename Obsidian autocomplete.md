@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 8
+sentiment-hash: 9c9d1c23
+sentiment-label:
+- enthusiastic
+tags:
+- technical
+- creative
+- planning
+- hobby
+---
+
 When I type a word, predict what I want to write. And let me complete it with tab.
 
 There's 2 types of autocomplete

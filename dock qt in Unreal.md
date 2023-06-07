@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: abdf4a72
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- work
+---
+
 docking a [[Qt]] widget in unreal is not possible by default.
 parenting is.
 

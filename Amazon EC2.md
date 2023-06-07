@@ -1,6 +1,15 @@
 ---
 alias: Amazon Elastic Compute Cloud
+sentiment:
+- 5
+sentiment-hash: 5dddbbeb
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 # Amazon EC2
 Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud. It is designed to make web-scale computing easier for developers.
 The simple web interface of Amazon EC2 allows you to obtain and configure capacity with minimal friction. It provides you with complete control of your computing resources and lets you run on Amazon’s proven computing environment. 

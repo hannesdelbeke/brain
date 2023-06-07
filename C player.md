@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 3
+sentiment-hash: e0f1ef62
+sentiment-label:
+- critical
+tags:
+- journal
+- self-reflection
+- communication
+- work
+---
+
 underperformer at [[work]]
 
 - Lack of preparation 

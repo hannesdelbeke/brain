@@ -1,3 +1,14 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: be0d9dd0
+sentiment-label:
+- annoyed
+tags:
+- technical
+- work
+---
 
 atm [[Unity]] doesn't support the go back button on the mouse to navigate selection
 

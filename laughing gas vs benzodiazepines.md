@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f7f6ca9f
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 [[Entonox|laughing gas]] (nitrous oxide) and [[benzodiazepines]] are both substances that can affect the [[central nervous system]], but they work in very different ways and serve distinct purposes:
 
 1. **Mechanism of Action**:

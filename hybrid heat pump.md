@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 52304f91
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 A hybrid [[heat pump]] consists of a combination of 
 - an air/water heat pump 
 - a high-efficiency boiler.

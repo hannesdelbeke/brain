@@ -1,7 +1,15 @@
 ---
 aliases:
-  - dependency
+- dependency
+sentiment:
+- 5
+sentiment-hash: 38351a43
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 If software has dependencies, it means it depends on other software. 
 
 Often there's a distribution system to install these dependencies. e.g. [[Python pip|pip]]

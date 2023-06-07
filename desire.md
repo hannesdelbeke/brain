@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 5116fc82
+sentiment-label:
+- analytical
+tags:
+- journal
+- self-reflection
+---
+
 Desire is motivation toward a goal
 
 e.g. [[sexual desire]], the [[motivation]] to have sex

@@ -1,8 +1,17 @@
 ---
 aliases:
-  - the Forgetting Curve
-  - the Ebbinghaus Curve of Forgetting
+- the Forgetting Curve
+- the Ebbinghaus Curve of Forgetting
+sentiment:
+- 5
+sentiment-hash: 0044560a
+sentiment-label:
+- factual
+tags:
+- memory
+- self-reflection
 ---
+
 - Memories weaken over time
 - The biggest drop in retention happens soon after learning
 - It's easier to remember things that have meaning

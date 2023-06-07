@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: f5b07675
+sentiment-label:
+- factual
+tags:
+- financial
+- technical
+- finance
+- home
+---
+
 it's like an ISA, but meant for buying a house.
 or access money when 60 years old.
 

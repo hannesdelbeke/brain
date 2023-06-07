@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 8
+sentiment-hash: ae9e45c3
+sentiment-label:
+- excited
+tags:
+- planning
+- social
+- hobby
+- home
+---
+
 send invites
 - date saturday eve
 dress up
@@ -48,4 +62,3 @@ snacks
 - crisps
 - cookies
 - crackers n cheese, olives n salmon n mozarella
-

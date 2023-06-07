@@ -1,8 +1,16 @@
 ---
 aliases:
-  - frictional bass trap
-  - broadband bass trap
+- frictional bass trap
+- broadband bass trap
+sentiment:
+- 5
+sentiment-hash: a09b56f2
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 velocity absorber work by turning the movement energy of a sound into heat.
 it let's the sound through, but scatters it.
 

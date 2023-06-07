@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: c1d6fa8a
+sentiment-label:
+- regretful
+tags:
+- journal
+- self-reflection
+- procrastination
+- hobby
+- work
+---
 
 > [!warning] problem
 > I made a [[custom Unity Hub]] and am not using it

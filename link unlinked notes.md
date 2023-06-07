@@ -1,3 +1,21 @@
+---
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: 3d690872
+sentiment-label:
+- frustrated
+- inventive
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 Sometimes I discover [[orphan note|unlinked notes]] by browsing a folder, or the Obsidian Graph, but mostly they're lost in the undiscoverable void.
 
 Since I'm an advocate of: [[don't overthink note taking]], many of my notes have no links. 

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: b854606e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 ## Goal
 - single file to add to repo
 - no settings or tweaking needed afterwards

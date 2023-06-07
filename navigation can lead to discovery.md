@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8585b82a
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+---
+
 Efficient navigating through links, doesn't let the user discover new concepts.
 Use navigation in a way where it can lead to [[fun discoveries]].
 
@@ -7,4 +18,3 @@ With organic [[public/link|linking]] the user discover things they didn't knew t
 
 [source](https://www.eastgate.com/garden/The_Limits_of_Structure.html)
 [[Mark Bernstein]]
-

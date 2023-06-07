@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 3e16b520
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- self-reflection
+- hobby
+---
 
 > [!warning]
 > I moved away from using hashtags for my site, so this is now less relevant.

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 850ecf53
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ```python
 # convert to grayscale ( also removes alpha channel)
 image_gray = image_colored.convertToFormat(QtGui.QImage.Format_Grayscale8)

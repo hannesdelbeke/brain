@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3f6fc9fe
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 you can [[visualize]] soundwaves
 
 some [[broscience]]:
@@ -12,4 +22,3 @@ some [[broscience]]:
 visualize sound with raycasts
 [source](https://www.payette.com/research-innovation/the-geometry-of-sound-diffusion/)
 ![](https://www.payette.com/wp-content/uploads/2018/05/2_pleated_axon.gif)
-

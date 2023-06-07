@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 92be05bf
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 Blender stores data in collections, see [bpy_prop_collection](https://docs.blender.org/api/current/bpy.types.bpy_prop_collection.html)
 
 to get all meshes, returns a collection

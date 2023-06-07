@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 295ccf37
+sentiment-label:
+- nostalgic
+tags:
+- memory
+- creative
+- hobby
+---
+
 2016 solo gameproject
 https://github.com/hannesdelbeke/bejewelde-game
 

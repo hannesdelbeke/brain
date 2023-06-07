@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 611349fb
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+- work
+---
 
 - [[intrinsic motivation]]
 - **Extrinsic Motivation** involves external rewards, such as [[money]], praise, or prizes. Good for simple, straightforward tasks, but financial incentives can hinder performance on complex problems requiring creative solutions. 

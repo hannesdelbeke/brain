@@ -1,3 +1,19 @@
+---
+energy: 7
+sentiment:
+- 8
+sentiment-hash: 39e328b7
+sentiment-label:
+- inspired
+tags:
+- creative
+- planning
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 an idea for a #obsidian #plugin
 
 1. select text

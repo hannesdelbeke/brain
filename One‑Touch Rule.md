@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9f7f46b7
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Handle things once.
 If you touch a task, finish it instead of putting it down and picking it up again later.
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 32bdf663
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 The cause depends on the type of arthritis.
 
 - Osteoarthritis is caused by the wear and tear of the joint over time or because of overuse. 

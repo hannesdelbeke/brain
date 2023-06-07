@@ -1,8 +1,18 @@
 ---
-aliases: 
+aliases:
 - pip
 - pip.exe
+sentiment:
+- 5
+sentiment-hash: 5c5b3e92
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
+
 Used for [[package management]] in [[Python]], to install packages from [[Python Package Index]]
 ## references
 [official docs](https://pip.pypa.io/en/stable/)
@@ -21,4 +31,3 @@ Used for [[package management]] in [[Python]], to install packages from [[Python
 
 local install
 `python -m pip install -e path/to/SomeProject`
-

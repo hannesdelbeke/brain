@@ -1,4 +1,14 @@
-  
+---
+sentiment:
+- 5
+sentiment-hash: e52789b0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Unreal]] [[color model]]
 
 In Unreal Engine, the hue value in the color adjustment property is clamped between 0 and 359 rather than 0 and 255 due to the representation of colors in the HSV (Hue, Saturation, Value) color model. 

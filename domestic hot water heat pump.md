@@ -1,7 +1,16 @@
 ---
 aliases:
-  - DHW heat pump
+- DHW heat pump
+sentiment:
+- 5
+sentiment-hash: c5c9b994
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
+
 ## DHW heat pumps
 
 DHW heat pumps, or domestic hot water heat pumps, use the thermal energy already present in the environment to generate domestic hot water. They are also suitable for optimal consumption of self-generated power from photovoltaic systems and can be coupled to an existing air distribution system.

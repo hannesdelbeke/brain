@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 63b2ba06
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 To have local [[Unity tool]]s in your project, it needs to be an editor tool in your assets folder.
 Packages are not supported because it creates [[Unity local manifest issue|a conflict in the project's package manifest]]
 
@@ -15,5 +26,3 @@ This setup assumes you use [[git]], and creates a local folder that is ignored b
 	1. add a textfile named `.gitignore` with content `*`
 	2. create a `editor` folder inside
 3. place your editor tools in the `editor` folder
-
-

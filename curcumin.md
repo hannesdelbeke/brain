@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3894283f
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 PROS
 Curcumin helps with
 - oxidative & inflammatory conditions 

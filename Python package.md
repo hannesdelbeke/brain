@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4eb19a9a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 A collection of [[Python]] modules.
 Often distributed through [[Python Package Index|PyPI]] and installable with [[Python pip|pip]].
 

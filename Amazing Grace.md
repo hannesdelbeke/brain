@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ce89f14c
+sentiment-label:
+- factual
+tags:
+- creative
+- hobby
+---
+
 ## simple
 - [ ] [Amazing Grace - soprano recorder](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/amazing-grace-soprano-recorder.pdf)
 ## advanced

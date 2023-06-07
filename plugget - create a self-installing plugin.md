@@ -1,7 +1,17 @@
 ---
 aliases:
-  - portable plugget
+- portable plugget
+sentiment:
+- 5
+sentiment-hash: ea42e7a4
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
+
 ### Main goal
 Create an easy solution to create plugins that auto self-install dependencies.
 So devs can create self installing plugins and addons, without asking the user to install plugget first, or manually install dependencies.
@@ -37,4 +47,3 @@ Add self installer to
 - [[Unreal texture browser plugin]]
 - [[plugget Unreal plugin]]
 - ~~[[unreal-qt plugin]]~~
-

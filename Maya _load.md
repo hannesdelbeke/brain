@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: c091dc2d
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 a [[Maya MEL|mel]] script named `someName_load.mel` runs on startup if placed in a path in `MAYA_SCRIPT_PATH`
 
 ## TODO

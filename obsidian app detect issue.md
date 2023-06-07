@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0d110828
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Obsidian]] doesn't show up in the expected paths in the [[Windows registry]]
 ```
 HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*

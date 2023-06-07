@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 7e2272b8
+sentiment-label:
+- satisfied
+tags:
+- technical
+- planning
+- home
+---
+
 unlock your pc with your phone's [[fingerprint reader]]. (on the same network, no VPN)
 similar to [[PC Bio Unlock]]
 

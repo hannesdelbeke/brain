@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 00c8692a
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 - thinning of my bucal fat pads. I was 27 and had really chubby cheeks. I never imagined that at 50 I’d really want all that fat back. [post](https://www.reddit.com/r/30PlusSkinCare/comments/17q4xne/comment/k8amwxq)
 - filler
 	- (tear trough) Filler, migrates down the face or turns into scar tissue.

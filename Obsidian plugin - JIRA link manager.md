@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b557ec78
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 JIRA link manager
 link with a [[wikilink]] with to JIRA IDs, like the ticket ID `[[AB12345]]`. 
 

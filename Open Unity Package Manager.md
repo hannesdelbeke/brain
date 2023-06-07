@@ -1,7 +1,16 @@
 ---
 aliases:
-  - OpenUPM
+- OpenUPM
+sentiment:
+- 5
+sentiment-hash: e214aec0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
+
 https://openupm.com/
 
 uses [[JavaScript]], runs outside of [[Unity]]

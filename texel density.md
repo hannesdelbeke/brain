@@ -1,8 +1,16 @@
 ---
 aliases:
-  - pixel density
-  - texture density
+- pixel density
+- texture density
+sentiment:
+- 5
+sentiment-hash: 7b6b360a
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 Texel density is used to measure the density of the [[texel]]s on your mesh.
 It's measured in **pixels per centimeter** _(2.56px/cm)_ or **pixels per meter** _(256px/m)_.
 

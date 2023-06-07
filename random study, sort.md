@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: fd0927d1
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Concentrations of methionine, tryptophan and [[tyrosine]] were highest in fish-eaters and vegetarians, followed by meat-eaters, and lowest in vegans.
 A broadly similar pattern was seen for [[lysine]], 
 

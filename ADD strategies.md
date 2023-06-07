@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: '74414754'
+sentiment-label:
+- constructive
+tags:
+- journal
+- health
+- self-reflection
+---
+
 Task Management & Organization
 - **Break Tasks Down:** Divide large projects into smaller, 15-20 minute chunks with short breaks.
 - **Use Planners/Apps:** Employ digital or paper planners for tracking, reminders, and lists.

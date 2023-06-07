@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 43e8780a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 ## inheritance
 [[inheritance]]
 

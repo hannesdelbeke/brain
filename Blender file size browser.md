@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: e00813d8
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- planning
+- work
+---
+
 it'd be great if you could see why a blend file is so big in [[Blender]]
 e.g. a single large texture or mesh, and which one.
 a hidden animation

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 852db061
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 this code has a small issue with the eventtrap. 
 it's deleted from memory before trying to access it sometimes.
 feels a bit hacky but doesnt work without this

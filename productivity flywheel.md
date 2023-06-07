@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 23cec3bd
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[productivity]] flywheel
 something that once is going, it keeps feeding back on its own productivity boost, like a flywheel.
 

@@ -1,3 +1,14 @@
+---
+energy: 3
+sentiment:
+- 4
+sentiment-hash: 5d6d286e
+sentiment-label:
+- tired
+tags:
+- technical
+- work
+---
 
 this runs on [[Maya run on startup]]
 [[Maya Python|Maya Python snippet]]

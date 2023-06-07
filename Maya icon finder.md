@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a72efbc0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 example of a icon finder.
 
 > [!warning] 

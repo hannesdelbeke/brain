@@ -1,3 +1,18 @@
+---
+energy: 3
+sentiment:
+- 4
+sentiment-hash: '17763853'
+sentiment-label:
+- disillusioned
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+---
+
 extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-overview.pdf)
 [[Amazon]]
 
@@ -139,4 +154,3 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 
 - [ ] #todo extract more services from 
 https://d0.awsstatic.com/whitepapers/aws-overview.pdf
-

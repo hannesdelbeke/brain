@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: a8ee55d3
+sentiment-label:
+- focused
+tags:
+- planning
+- technical
+- work
+- hobby
+---
+
 I want to easily [[link]] [[calendar entry|calendar events]] in my [[note taking|notes]]
 And when I click them, it shows me the calendar week overview, so I see what's happening that day/week, and how it fits into the bigger planning picture.
 

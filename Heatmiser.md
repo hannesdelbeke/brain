@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 61fd0756
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[central heating]] controller, aimed at underfloor heating.
 
 ## models

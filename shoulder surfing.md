@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f4345497
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 1. the thief watches for a pin being entered on your [[phone|phone]] (over your shoulder) 
 2. once they have a pin they steal the phone.
 3. They use the [[personal identification number|PIN]] to unlock the phone and then try the same PIN to access banking apps

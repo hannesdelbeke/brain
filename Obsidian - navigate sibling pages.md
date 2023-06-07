@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 443b8225
+sentiment-label:
+- pleased
+tags:
+- journal
+- technical
+- planning
+- hobby
+---
 
 ## Obsidian plugin ✅
 add [[navigate sibling page]] support to [[Obsidian]]

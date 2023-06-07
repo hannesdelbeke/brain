@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '62899916'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 © by John Wiley & Sons, Inc. All rights reserved. 1
 The Si Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the Si style. It is an 

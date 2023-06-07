@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 56afaf87
+sentiment-label:
+- ambitious
+tags:
+- planning
+- technical
+- creative
+- work
+---
+
 how would you make a marketplace for [[Pyblish]]
 
 - a python module that manages plugin detection, and installation/discovery

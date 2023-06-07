@@ -1,6 +1,15 @@
 ---
 aliases:
-  - Maya plugins
+- Maya plugins
+sentiment:
+- 5
+sentiment-hash: dfa3f97e
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
 
 [[Autodesk Maya|Maya]] [[plugin]]s are quite [[modular]], and my favorite way of packaging [[Maya tool]]s.
@@ -48,4 +57,3 @@ ideally a plugin is self contained
 
 
 [[Maya - how to enable-disable plugins]]
-

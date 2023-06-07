@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: d7d09bbc
+sentiment-label:
+- curious
+tags:
+- journal
+- technical
+- self-reflection
+---
+
 i just searched for this note: [[2026-07-03 Gemini stopped working]]
 I remember it was about gemini, typed it in, and it showed up 10 notes down on the auto suggest in [[Obsidian]] [[search bar]]
 

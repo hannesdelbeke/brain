@@ -1,6 +1,16 @@
 ---
 aliases:
-  - Entrepreneurs’ Relief
+- Entrepreneurs’ Relief
+sentiment:
+- 5
+sentiment-hash: 0b996690
+sentiment-label:
+- factual
+tags:
+- financial
+- planning
+- finance
+- work
 ---
 
 Pay less [[UK capital gains tax]] when selling (part of) your business or [[personal company]].

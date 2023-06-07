@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a8522904
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 I often find myself writing the same helper functions
 
 ```python    

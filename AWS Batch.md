@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 33a35194
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Batch
 AWS Batch enables developers, scientists, and engineers to easily and efficiently run hundreds of
 thousands of batch computing jobs on AWS. AWS Batch dynamically provisions the optimal quantity

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: d8e0b617
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 You can also use CSS to always hide the collapsable part of linked mentions.
 cons:  
 - you can’t expand backlinks anymore

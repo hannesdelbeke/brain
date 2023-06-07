@@ -1,7 +1,14 @@
 ---
 aliases:
-  - Curve Linear Color
-  - CurveLinearColor
+- Curve Linear Color
+- CurveLinearColor
+sentiment:
+- 5
+sentiment-hash: 5cb78a7c
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 [[Unreal]]
