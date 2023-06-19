@@ -1,4 +1,5 @@
 read it [[No_Silver_Bullet_Essence_and_Accidents_of_Software.pdf]]
+discuss https://wiki.c2.com/?NoSilverBullet
 
 ### software is difficult
 - **complexity** leads to difficult communication, bugs, etc. this also is a big topic in [[A Philosophy of Software Design]]
