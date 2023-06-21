@@ -1,0 +1,907 @@
+notes by thomasjfrank, [source](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/)
+
+## Overall Thoughts
+
+For me, this was one of those books that contained a lot of information I already knew, but served to bolster that information with additional studies and examples. Most importantly, reading it served as a catalyst for reviewing my routines and habits, and then improving them.
+
+I recommend this book if you want a deep dive into the science of focus along with a lot of practical advice for how to cultivate it.
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#main-takeaways)
+
+## Main Takeaways
+
+Deliberately setting intentions before sitting down to work is hugely effective for staying on task and being resistant to distractions.
+
+Hyperfocus vs. Scatterfocus: Both are crucial. Hyperfocus allows you to stay focused on one problem and execute; Scatterfocus (i.e. the “diffuse mode” from _A Mind for Numbers_) allows for creativity and new insights. It is worthwhile to learn how to deliberately enter both modes multiple times a day.
+
+Chris’ writing on creating a distraction-free ritual was probably the most actionable thing for me in this book.
+
+Now, onto the notes.
+
+_Italicized text indicates my own thoughts and observations._
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-why-focus-matters)
+
+## Chapter 0: Why Focus Matters
+
+- In any given moment, we are always focusing on something.
+- Chris leaves his phone at home even when going to the diner to write, in order to do so distraction-free
+    - _Get the phone out of your immediate vicinity for most of the day. This is a theme that I think will crop up more and more in this book, and something I’m become more convicted about._
+- No wi-fi at the diner.
+- “Constant connectivity is one of the worst disruptions to our focus and productivity.”
+- One of the best ways to foster creativity and additional productivity is learning to unfocus – to step back and gain some space, uninterrupted by something vying for your attention.
+    - Pay attention to nothing and let the mind wander.
+- Studies show we go an average of **40 seconds** when working on a computer before becoming distracted or interrupted
+    - _Difference: Interruptions happen to us. Distractions are caused by us._
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-how-to-better-focus-on-this-book)
+
+## Chapter 0.5: How to Better Focus on This Book
+
+- Put your phone out of sight
+    - “When your brain is even _slightly_ resisting a task, it will look for more novel things to focus on.”
+    - Phones provide a constant stream of tiny dopamine hits and novelty. They’re a great way to escape from the task providing resistance.
+    - Experiment: Pay attention to when, and the number of times, you pull out your phone in a day. Why do you do it?
+        - _I’ve noticed a pattern – when I wake up, I go through my morning routine and make breakfast. Then I eat it while watching YT videos, and tend to keep watching them long after. I waste so much time this way. I think my brain uses breakfast as an excuse to seek novelty, and to avoid my tough work._
+- Mind your environment
+- Make a distractions list
+    - _I started this while reading this chapter, using my green moleskine. I ended up with a lot of great ideas for videos, along with other listed distractions._
+- Question whether the book is worth consuming at all
+- Have some Caffeine before reading
+    - If early enough in the day – Caffeine can take 8-14 hours to metabolize out of your system
+    - Trade-off – you have to pay for this gained energy imbalance later in the day, but it’s often worth it.
+- Grab a pen and highlighter. Mark up the book.
+- When you notice your focus wavering, step back and do something mindless. Get a reset.
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-switching-off-autopilot-mode)
+
+## Chapter 1: Switching Off Autopilot Mode
+
+- As many as 40% of our actions are habits. They don’t require conscious thought or heavy deliberation.
+- While reading, it’s worth periodically asking: What percentage of my attention am I devoting to this book?
+    - _I marked 85% – I was working hard to pay attention, but my mind kept drifting to new tidbits I’d like to add to videos. Reading books like this keeps stimulating new ideas all the time._
+- Research shows the eyes scan the page more slowly when the mind is wandering – e.g. the mind and eyes are “tightly coupled.”
+- Four types of tasks
+    - Quadrant formed by two axis
+        - Unattractive/attractive work
+        - Productive/unproductive work
+    - Necessary Work
+        - Productive/Unattractive
+        - Things you have to do. Team meetings, budget balancing
+    - Purposeful Work
+        - Productive/Attractive
+        - The “tasks you’re put on earth to do” – things that are challenging, that provide a lot of satisfaction to you and value to the world.
+    - Unnecessary Work
+        - Unattractive/Unproductive
+        - Rearranging papers on your desk. Things you really don’t do unless your brain is resisting a more challenging task.
+            - _“Procrastiworking”_
+    - Distracting Work
+        - Attractive/Unproductive
+        - Stimulating, yet unproductive “tasks” – social media, checking email and Slack, etc.
+- Each day, all four quadrants (task types) compete for our attention. The more we’re on autopilot, the more time we’ll spend in the wrong quadrants.
+    - _Takeaway: Be more intentional about where you place your focus. Take more reset breaks in order to gain this ability back (recharge it) when needed throughout the day._
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-the-limits-of-your-attention)
+
+## Chapter 2: The Limits of Your Attention
+
+- “There’s a finite limit to how many things we can focus on.”
+- Brain receives 11 million “bits” of info every second, according to Timothy Wilson, psych prof at University of Virginia
+- Mind can only consciously process 40 of those.
+- Csikszentmihalyi: The simple act of decoding a conversation (parsing the language so we understand it) consumes about half our attentional resources.
+- Working memory: After focusing on something, we can only hold so much of it in working memory. The average is **four bits**.
+    - Some people can naturally hold more – often up to 7 without other aids
+    - **Chunking** can aide working memory by bundling bits together through meaning – e.g. names in a list could be bundled if some of them are your friends or people you talk to often, or if some start with the same letter.
+- Popular culture has tons of examples of groups of information ranging from 2-7 bits.
+    - Pairs – Calvin and Hobbes
+    - Three – Third time’s the charm
+    - Seven – 7 Wonders of the world
+- It’s harder to find lots of examples that involve more discrete bits
+- Attentional space and working memory are like a computer’s RAM.
+- RAM capacity scales with power usage – with more active RAM, a computer uses more power.
+    - This is why Apple resisted upping the RAM capacity of the iPhone – lower battery time would result.
+- Some scientists say that additional working memory or attentional space in the brain would be more “biologically expensive”.
+- The brain already consumes 20% of calories ingested, even though it accounts for only 2-3% of body mass.
+- Sentence structure matters for attention and comprehension. One study found that the period at the end of a sentence marks the point at which the brain stops loading things into attentional space and summarizes what has been loaded to that point so that it fits better into working memory and can be synthesized.
+- **Meta-awareness**: Becoming aware of what you are thinking about.
+    - Useful skill for managing your attention and thoughts.
+    - Better you get at this, the better you become at bringing your attention back to your intended area of focus when it wanders.
+    - Noticing what is in the attentional space makes you a better thinker and problem-solver.
+        - Study found that people asked to solve a mystery while reading a detective novel – those whose minds wandered consciously solved it more successfully then those who did not pay attention to where their minds wandered.
+- **Mindfulness:** Not judging what you’re thinking about.
+- Memory of the attentional space lasts on average 10 seconds. Very ephemeral.
+- Tasks that pair well
+    - Some tasks do not fill the entire attentional space. Typically, these are habitual tasks.
+- Habits only require attention when **initiated**, or when you need to make a course correction during one.
+- We can multitask really well if the tasks are habit-based, or if only one task is mildly complex.
+- Multitasking with habit-based tasks is helped by the brain – it directs blood toward the basil ganglia (which is concerned with habits) and away from the prefrontal cortex (the logic center).
+- Assess: If you can do your most productive tasks out of habit, then you’re probably not challenging yourself enough. It’s time to delegate those tasks to someone else, or automate them.
+- Multi-tasking does not work when the tasks being juggle exceed the capacity of attentional space. Two complex tasks will do this.
+- 3 combinations of tasks that can fit within attentional space
+    - A few small, habit-based tasks
+        - Initiating the habit requires attention, but after that, it’s on autopilot.
+    - One task that requires _most_ of our focus, along with a habit-based task
+    - One complex task
+- Good to leave a bit of attentional space to spare when doing a complex task. It:
+    - Leaves room to reflect on the best way to finish the task
+    - Greater awareness of where you should be directing your attention. Increased ability to redirect attention when it wanders.
+- **Intention**: “Intention enables us to prioritize so we don’t overload our attentional space.”
+- Noticing that you’re feeling overwhelmed is a good cue for checking in on what’s occupying your attentional space.
+- Brain’s novelty bias – when you switch tasks, you’re rewarded with a dopamine hit. Managing your time and motivation
+    - “Continually seeking novel stimuli makes us _feel_ more productive – after all, we’re doing more in the moment. But again, just because we’re busier doesn’t mean we’re getting more accomplished.”
+    - Early ancestors were well-served by this, because it allowed them to keep constant tabs on a changing, dangerous environment.
+- **Productivity: Chris’ definition of productivity: Productivity means accomplishing what we intend to.**
+    - Bailey: “Productivity is not about cramming more into our days but about doing _the right thing_ in each moment.”
+- Letting your attentional space overflow negatively affects your memory.
+- Bailey: “Technology speeds up time by tempting us in each moment to fill our attention to the brim.”
+- Multitasking relies more on basil ganglia. When we focus on one thing, the brain engages the hippocampus more, which works to store the details of what we learn and allow us to recall them.
+    - _While multi-tasking may feel productive in the moment, it’s highly unproductive from a learning standpoint. If you can’t remember what you learn, then you have to go learn it again. “Do it right, or do it again,” as my dad likes to say._
+- When we fill our attentional space up to the brim:
+    - It takes us longer to switch smoothly between tasks
+    - We’re less able to filter out irrelevant information in the environment
+    - The worse we get at suppressing the urge to switch to irrelevant things in the first place
+- On average, we work for only 40 seconds when working on a computer before either being interrupted or distracted.
+    - **Distraction is when we interrupt ourselves.**
+    - _How apt are you to do that? Observe your behavior._
+    - Best work happens well beyond that 40-second mark.
+- **Attentional residue**: Coined by Sophie Leroy, prof of organizational behavior at University of Washington
+    - When we switch tasks, it usually doesn’t happen perfectly. We have lingering thoughts about the previous task, which gunk up the attention space that should be devoted to the task at hand.
+- Switching is easier and more effective (less attentional residue) when:
+    - We finish a task – especially if there was time pressure or a deadline that forced us to “turn it in”, which prevents us from wondering if we could have done more or done it differently.
+        - “Time pressure narrows our focus on the task, restricting us from considering a number of more creative ways to complete it.”
+            - _This is both good and bad_
+    - We disengage and reset between tasks – take a break, take a walk, meditate.
+        - Best time to take a break is after finishing a big task. So combine the two.
+- Bailey: “Intention is the bouncer of your attentional space – it lets in the productive objects of attention and keeps the distractions out.”
+- To put the concepts from this chapter into practice:
+    - Set intentions more often.
+    - Modify environment to be less distracting.
+    - Overcome mental resistance to doing tough tasks
+    - Eliminate distractions before they derail you
+    - Clear the distractions inside your own head
+- Following these tenants will provide a lot of benefits. This one stood out to me:
+    - Bailey: “Develop deeper relationships and friendships as you **spend more attention, not just time, with people.”**
+- Pay attention to:
+    - How much of your time you spend intentionally
+    - How long you can hold your focus in one sitting
+    - How long your mind wanders before you catch it.
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-the-power-of-hyperfocus)
+
+## Chapter 3: The Power of Hyperfocus
+
+- _Getting started on a difficult task often includes a hurdle that must be overcome at the beginning; but after that is cleared, it is easy to keep going for some time._
+- **Hyperfocus**
+    - Chris gives several different definitions of his term “hyperfocus” in this book
+    - Originally this term comes from ADHD literature and research. People with ADHD do not lack the ability to focus – in fact, many times they are able to focus more intensely than others. They lack control over **when to focus.**
+    - First meaning – **Hyperfocus is intense focus paired with deliberate attention.**
+        - Which is, itself, set through **intention**.
+    - Deliberate, undistracted, and quick to refocus
+    - Leads you to be completely immersed in your work
+    - Most important aspect: **“…that only one productive or meaningful task consumes your attentional space.”**
+- The more demands there are on your time, the more critical it is to hyperfocus
+    - Counterintuitive, as when we’re super-busy and overburdened, it feels like we should be juggling lots of tasks.
+- Hyperfocus is for complex tasks, not habits. Two reasons why:
+    - Requires willpower and mental energy to activate. We have a limited store of this each day, so it’s best to use it on the complex things. Habit-based tasks are easy to initiate on an almost automatic basis.
+    - Performance on complex tasks increases through conscious focus. However, performance on habit-based tasks _decreases_ through this focus.
+        - _When you try to exert conscious control over something that has become unconscious or governed by muscle memory or instinct, you become worse at it. Your conscious mind is actually a lot weaker than your subconscious for these types of tasks. It’s slow, clumsy, and can only focus on one element – which is usually not enough. You clamp down on your subconscious mind’s ability to handle things._
+        - _Example: When I was figure skating, I’d often try to consciously think about a specific move I was practicing. Sometimes, I’d end up performing worse than when I first tried it that day. I remember this particularly well for two-foot spins. I’d do a couple at the start of practice decently well, but then they’d get worse as I tried to consciously think about each step. Of course, in sports and skills like this, this is a necessary step to getting better. But it does take a lot of mental energy and makes you worse overall in the moment._
+            - _This concept is also mentioned in_ [[Range - Why Generalists Triumph in a Specialized World]]
+    - **Spotlight Effect**: Phenomenon where you become self-conscious and believe everyone is watching you, which causes you to change your behavior – often in an unnatural way. In reality, people could not care less.
+        - _I’ve read that men will change the way they walk when they believe a woman is watching. More swagger, shoulders back more._
+- Benefits of hyperfocusing on complex tasks:
+    - Since you’re focused on one task, you’ll have some attentional space to spare. This will allow you to keep your original intention in mind, which makes you less likely to be derailed by distractions.
+        - _Intention = awareness = greater resistance to distractions_
+    - There’s enough attention to think deeply about the way that you’re working, and about the task itself.
+    - Bailey: “One of the best ways to get more done – and done faster – is by preventing yourself from focusing on the things that aren’t important.” #Quotes
+- Four stages of Hyperfocus
+    - Hyperfocus is what happens when you engage both with your thoughts and with your external environment, and direct these types of engagements towards one singular thing, with intentionality.
+        - Hyperfocus precedes the Flow State, coined by Csikszentmihalyi.
+        - The odds of experiencing flow increase when fewer things are competing for our attention. Therefore, hyperfocus is the state that precedes flow.
+    - We pass through four states when we begin to focus
+        - We are focused (getting things done)
+        - Mind begins to wander (assuming we are not distracted or interrupted first)
+        - We make a note of this wandering
+        - We shift focus back to the original area of attention
+    - Hyperfocus stages are based on this framework.
+        - Choose an object of attention – something that will help you accomplish something meaningful
+        - Eliminate distractions – both external and internal
+        - Focus on the chosen object of attention
+        - Keep bringing your focus back to that object when the mind wanders
+    - **Most important step:** Setting an intention. You have to be intentional about what you’re going to focus on.
+        - **Intention must precede attention.**
+    - Reason we fall victim to distractions: **In the moment**, they are more attractive than our original object of focus.
+        - Due to novelty bias, and the resistance to doing the hard task
+        - _In other words, System 1 loves these distractions, and System 2 is too weak to reign in System 1 without a strong, previously-set intention._
+    - Distractions are much, much easier to deal with in advance than when they pop up.
+        - This includes internal distractions – mental wanderings and cringe-inducing thoughts, resistance to tough tasks
+        - _Reminds me of this observation: In school, before I pull out gum, no one in the class wanted any gum. They weren’t thinking about it. But the MOMENT I pull out that pack of Juicy Fruit to get a piece, anyone who sees it come out of my pocket instantly starts to mooch. “Ooh can I have a piece? Pleeeeeeease I really want one!” A desperate, almost fervent desire for the gum blossoms in the mind of my classmates, who would sooner throw me off a cliff than calmly accept that the gum is mine and that they, in fact, don’t need a piece._ Managing your time and motivation
+    - Hyperfocus works better when we set an intention to focus for a predetermined amount of time. Need to choose an amount that is comfortable and feasible.
+    - Mind-wandering
+        - Research shows that the mind wanders for 47% of the day, on average.
+        - It takes, on average, 22 minutes to resume working after an external distraction or interruption.
+        - For internal distractions, that number goes up to 29 minutes.
+    - Summation of the concept of hyperfocus: **“Keep on important, complex object of attention in your awareness as you work.”**
+- Bailey: “Attention without intention is wasted energy.”
+- How to choose what to focus on
+    - Use the quadrants – aim to focus primarily on Purposeful Work or Necessary Work
+    - The Rule of 3
+        - Each day, choose three things that you intend to get done before the day is over. These three tasks should be complex and meaningful.
+            - _How to deal with small tasks that also need to get done? Couple of ideas I have: First, have a batch day or admin day. Once per week, aim to batch all the small tasks into one block of time. You probably won’t be able to knock out everything, but you’ll get a lot of them done. Second, an idea for my whiteboard – maybe have a Rule of 3 section. Small tasks can go in a different section. Then, either all three need to be done before small tasks can be worked on, or the small tasks can be used as palette-cleansers between the big tasks. They become a way to take a break: E.g. I need to do a 45-minute writing session, or film my video’s A-roll, before checking email for 15 minutes._ Managing your time and motivation
+        - Can also be useful to set 3 weekly intentions when doing week planning, and to set personal intentions as well (non-work-related)
+        - During busy days, reframe your intentions to be more active – e.g. “Attend conference” could become “Connect with 5 new people”.
+    - Look to the most consequential tasks
+        - Most important tasks – hence the ones that should be what you focus on – are the ones that have the greatest positive consequences.
+        - Look for second and third-order consequences as well, not just immediate ones.
+            - _If I film my video now, then my editor can get a jump-start on it, and he’ll have more time for complex edits before it’s due. It’ll probably do better as a result._
+    - Hourly awareness chime
+        - Use a timer or some other cue to remind yourself to check your attention at regular intervals throughout the day.
+        - Can ask yourself things like:
+            - Was my mind wandering?
+            - Am I working on autopilot, or am I focusing on something that was set with intention?
+            - What’s the most consequential thing I could be doing right now, and am I doing it?
+            - Are there distractions around right now that are preventing me from hyperfocusing?
+        - We are more likely to catch our minds wandering if we reward ourselves for doing so
+        - Chris doesn’t use a timer or chime anymore. Instead he uses cues – when he gets up to use the bathroom, when he leaves his desk to get tea, when his phone rings.
+- How to set stronger intentions
+    - Peter Gollwitzer is one of the foremost researchers in the field of intention
+    - Specific intentions are much more powerful than vague ones, and greatly increase chances of success.
+        - Gollwitzer and Brandstatter study with participants who went home over Christmas break
+            - They were asked to set an intention to achieve a difficult goal during this time
+            - 62% of students who set a specific intention – an “implementation intention”, in Gollwitzer’s words, achieved their goal.
+            - Only 22% of the students with vague intentions did.
+            - Bailey: “Setting specific intentions can double or triple your odds of success.”
+        - However, even vague intentions increase changes of success by 20-30% vs. no intention
+    - Vague intentions and specific rewrites:
+        - “Go to the gym” -> “Schedule and go to the gym on my lunch break.”
+        - “Quit working when I get home” -> “Put my phone on airplane and my work laptop in another room, and stay disconnected for the evening.”
+        - “Go to bed at a reasonable time” -> “Set a bedtime alarm for 10pm. When it goes off, start winding down.”
+    - Specificity – depends on the person and the task.
+        - Tennis player set intentions that did not seem specific to the researchers (e.g. “When I feel nervous…”) but they were still effective because the players themselves knew the situations that would cause these feelings.
+        - “Specific means the person can identify the critical situation.”
+    - Caveats about intentions
+        - You have to care about the intention
+        - Easy-to-accomplish intentions don’t need to be as specific
+- Starting a hyperfocus ritual
+    - Start by “feeling out” how long you want to hyperfocus
+        - Query your brain by suggesting times and seeing what kind of resistance you have to those times. Maybe working for an hour seems too hard. How about 15 minutes?
+        - Over time, you’ll have less resistance and will be able to work for longer.
+    - Anticipate obstacles ahead of time
+        - Schedule your hyperfocus chunks at the beginning of the week so they can be places around meetings and other scheduled obligations.
+    - Set a timer
+        - _External commitment device is powerful_
+    - Hyperfocus
+        - When you notice your mind wandering, bring it back to your intended area of focus.
+        - Don’t beat yourself up about this – it’s the way the mind was intended to work.
+        - If the timer rings but you’re on a roll, don’t stop. Keep going until fatigue hits and you’re at the limits of your attention.
+    - When to focus
+        - Whenever you can
+        - Around the constraints of your work
+            - Bailey: “Productivity is often a process of understanding our constraints.”
+        - When you need to work on a complex task
+        - Based on how much resistance to the task you’re feeling
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-taming-distractions)
+
+## Chapter 4: Taming Distractions
+
+- Many observations about distractions in this book came from research done by Gloria Mark and Mary Czerwinski
+    - Both specialize in _in situ_ research, which is research done in actual conditions and situations, rather than laboratory conditions
+- IM/Skype open – we interrupt ourselves on average every 35 seconds, down from the normal average of 40
+- One study found that we switch between computer applications on average 566 times a day
+    - For Facebook alone, the average is 21 checks a day. That average includes people who didn’t use FB – for those that checked at least once, the average went up to 38
+    - _Who are the people at the top end of that range and what are they doing???_
+- Costs of interruptions
+    - An “unrelated” interruption (not having to do with the current task) causes us to take on average 25 minutes to get back on task
+    - Before resuming, we tend to work on 2.26 other tasks on average
+    - Bailey: “We don’t simply attend to the distraction or interruption and then return to the original task – we become distracted a second time before doing so.”
+- Age and distractibility
+    - As we age, our attentional space shrinks. This makes it more difficult to get back on task; however, the flip side is that the mind wanders less often.
+- Sex and distractability
+    - Women experience fewer interruptions and generally distract themselves less often. This is despite the fact that they work on more projects at once. They are also reportedly happier and more engaged in the workplace.
+        - _Perhaps men have adapted less successfully to a life of not stalking around a forest trying to kill things…_
+- Why we love distractions
+    - In the moment, a distraction is more enticing than the current task we’re supposed to be working on.
+    - When the brain is resisting a task – even slightly – it begins actively hunting for some other thing to pay attention to.
+    - Novelty bias compounds this – you get a dopamine hit when focusing on something new.
+    - Social media and other things provide small hits of validation throughout the day.
+        - _The ego becomes another cause of distractions._
+        - Bailey mentioned that one source of distraction for him was checking the Amazon page for his first book to look at sales rank or new reviews.
+            - _I’m also guilty of this; sometimes, when my brain is resisting a task, I’ll bounce around the public living spaces for the works I’ve already completed – comments sections, reviews for my book on Amazon and Goodreads, analytics for my site and videos. I’ll eventually run out, and it will feel hollow – like there’s not enough validation. Ironically, I could get more by simply getting to work and creating something new that’s meaningful!_
+    - Bailey: “If I don’t disable computer distractions ahead of time, I might as well wave good-bye to my productivity.”
+        - Bailey makes the point that he does not have super-human self-control, even though he’s a “productivity expert”. His experiment turning off his website blocker proves that.
+        - Rather, he is better than most people at managing his impulses ahead of time.
+    - Distractions will differ based on the type of work you’re doing.
+        - Rote work – more likely to go to Facebook/social media or talk to co-workers
+        - Complex work – checking email
+        - _I wonder how close to the truth that is for me? I could probably find out by using RescueTime or doing some kind of active time tracking (probably a combo)_
+- The four types of distractions
+    - **Distraction:** Anything that directs us away from our intentions.
+    - Two places of origination: Ourselves and others
+        - Research shows that we interrupt ourselves just as often as we are interrupted by other people.
+            - Exception: Team leaders and managers are interrupted by other people at least 60% of the time
+                - _Reminds me of when I interviewed Linus Sebastian, who spends his day dealing with a near-constant stream of interruptions and requests from his team._
+    - Distractions form their own grid, with four types:
+        - No Control/Annoying
+            - Office visitors
+            - Team members pinging me to ask about things they should already know how to do
+            - Loud colleagues (in the case of an open office)
+            - Construction noises outside
+            - **Action:** Deal with it, then get back on track.
+                - Keep your original intention in mind when they happen, and bring your attention back to it as soon as the interruption is done.
+        - No Control/Fun
+            - Fiance sharing a meme with me
+            - Call from my mom
+            - **Action:** Enjoy it!
+        - Control/Annoying
+            - Emails
+            - Phone alerts
+            - Text messages
+            - **Action:** Prevent in advance (especially when needing to do deep work. During other times, perhaps allow in limited quantities in order to be available to others)
+        - Control/Fun
+            - Social media
+            - Tiny Snek comics
+            - **Action:** Prevent in advance
+- Distraction-Free Mode
+    - Most distractions happen in the categories that we can control. The best way to deal with these is to take care of them in advance.
+    - Two modes of working
+        - Distraction-free mode – intended for getting into hyperfocus
+            - Useful for **focus work**
+        - Reduced-distraction mode – work with manageable number of distractions, but allow yourself to be available
+            - Useful for **collaborative work** – you can’t spend all your time in focused mode if you work with others.
+    - Creating a distraction-free mode: **“By removing every object of attention that’s potentially more stimulating and attractive than what you intend to do, you give your brain no choice but to work on that task.”**
+    - Chris’ ritual for entering this mode:
+        - Launch a distraction-blocker on his computer
+        - Put computer into do-not-disturb mode
+        - Put phone into do-not-disturb mode or put in another room
+        - Grab a coffee (as long as it’s not too close to bedtime, since Caffeine takes time to work its way out of your system
+        - Put on noise-cancelling headphones if in a loud environment, like a coffee shop or plane
+    - When you are interrupted, reflect on what caused the interruption. Make an observation so you can tweak your distraction-free ritual to account for it in the future.
+    - Creating your own distraction-free mode
+        - Website and app blockers – Cold Turkey, Freedom, RescueTime
+        - Shut off the internet altogether – disable wi-fi or unplug the ethernet cord
+        - Get out of the office – find a more suitable place to work
+        - Be thoughtful. Don’t under- or over-estimate the **social costs** of distraction free mode.
+            - Sometimes you need to be available to team members or family.
+            - It’s also worth observing if you respond to interruptions from others gracefully, or in a grumpy way.
+            - On the flip side, you may overestimate the value of your own prompt responses. Team members can often deal with waiting.
+                - _In fact, I find that it’s useful to observe the expectations that your behavior has ingrained in others. If you typically respond right away to a Slack message, then your team becomes conditioned to expect a quick response, and may bristle if made to wait. But, if you’ve trained them to expect to wait a few hours, that will feel normal to them. So, if their expectations are currently set where you don’t want them, start re-training them by behaving differently. You might encounter some pushback at first, to which you can offer an explanation – “I’m trying to remain more focused on my work.” – People are very receptive to explanations (See_ The Mindlessness of Ostensibly Thoughtful Action: The Role of “Placebic” Information in Interpersonal Interaction, _where explanations are used to placate others when cutting in line). Over time, your new response time becomes the new normal._
+        - Treat yourself
+            - After a distraction-free session, let yourself indulge in some distractions during a break, or go get a snack or coffee.
+            - Bailey: “Research shows that the more impulsive you are, the more stress you become by blocking yourself from distractions.”
+        - Create a distraction-free mode for your team
+            - Dale Partridge had custom desk lamps made for his team. When one was on, that team member could not be interrupted.
+    - The components and intensity of the distraction-free mode you build will depend on your work environment.
+    - Bailey: “Productivity is a process of understanding and adapting to your constraints.”
+- Working with reduced distractions
+    - Working with notifications enabled allows your coworkers to interrupt you and break your focus on a whim.
+    - Better to set a specific time to check email, have meetings, etc.
+    - Bailey: “Technology should exist for our convenience, not for the convenience of anyone who wants to interrupt us.” #Quotes
+- Notifications
+    - Limit apps so that they can only get your attention on one device. There’s no need to have email on computer, phone, and tablet, and have them all squawking at you.
+    - Notifications are deceptive – they take only a second to check, but can easily suck you into a “digital vortex” from which it’ll take many minutes or hours to escape.
+    - Bailey says phone calls are worth getting notified about 100% of the time
+        - _There are so many spam calls these days that I think this is no longer the case. I almost always have my phone on DnD, I silence unknown callers, and I let Favorites get through._
+    - Set up email so that a VIP senders list can send notifications; all other emails can be checked at a specific time of day.
+    - It’s also possible to change the hours during which notifications are allowed to disturb you (using Do Not Disturb mode).
+- Your smartphone
+    - Phones are now “more powerful, annoying computers”
+        - Given this perspective, Bailey has started keeping it in his bag, rather than his pocket.
+    - Ways to reduce smartphone impact on your attention
+        - Mind the gaps – resist pulling out your phone while waiting for little things, such as waiting in line at the grocery store, or takin’ a poop.
+        - Do a phone swap – at dinner, swap phones with the person you’re eating with.
+        - Strategically use airplane mode – use it when having coffee with someone or trying to hyperfocus
+        - Buy a second “distractions” device – Bailey has a tablet specifically set up to have all his distracting apps. His phone does not have an email app installed.
+        - Create a “mindless” folder on your phone – keep all distracting apps in it. The folder’s name should help you regain focus instead of mindlessly jumping from app to app.
+        - Prune your list of apps – ask yourself what apps are currently duplicating functionality on your phone that you already get on another device. Do they need to be there?
+    - Clayton Christensen, professor at Harvard Business School:
+        - Ask yourself what “jobs” you are “hiring” these devices to do. Have you already hired for a specific job, such as taking care of your email?
+- Email
+    - 64% of people use notifications with audible or visual signals for new emails
+    - Ways to reduce email impact on attention
+        - Check for new messages only when you actually have time and energy to deal with them. Otherwise, leave the email app closed.
+        - Keep a record of how often you check for new messages.
+            - Average knowledge worker checks email 11 times per hour – 88 times a day – according to one study. Same study found that employees spend on average 35 minutes a day actually working on email.
+            - This means email consumes more attention than time, and that it contributes heavily to task interruptions.
+        - Pre-decide when you’ll check email.
+            - 70% of emails are opened within the first 6 seconds of receipt
+                - _This seems insane to me, and I wonder about the methodology used in testing for this_
+            - Bailey checks emails (at least public ones) once a day at 3pm.
+            - He has an autoresponder that tells people as much
+                - _He makes a good point about this autoresponder creating some accountability for actually checking at that time and responding promptly. His other point – that the autoresponder is necessary for making other people ok with this practice – is something I’m not so sure I agree with. People’s expectations can be trained._
+        - Hyperfocus on email.
+            - Set a timer for 20 minutes and try to AMRAP those emails.
+        - Limit points of contact.
+            - Delete the email app on your phone. Only deal with emails on your computer, or tablet.
+        - Keep an external to-do list.
+            - The email inbox is constantly receiving new messages, so treating it like a task list isn’t a good idea. It’ll be hard to prioritize things.
+        - Sign up for two email accounts.
+            - One for closer relationships (which can be checked more often) and one that’s public-facing (which is only checked once a day, or even more infrequently).
+                - _I think a third email account should be made as well – one specifically for website logins, not for correspondence. The fewer people who know your login email, the better. If a hacker knows what email you use for a service, they know what email to try to crack so they can send password reset requests for your other accounts. Your email is 1/2 the key to each online account – don’t give that half away, even if it is the fundamentally less secure half._
+        - Take an “email holiday”.
+            - If you have a huge project to work on, set your autoresponder to let people know that you won’t be checking email for a while.
+        - Use the five-sentence rule.
+            - Replies should be five sentences or less. Any more means you should pick up the phone instead.
+        - Wait before sending important messages, especially if you’re feeling emotionally charged while composing the reply.
+    - One study found that participants who went one week without email had changes in heart-rate variability and were less stressed.
+- Meetings
+    - One study found that knowledge workers spend 37% of their time in meetings
+        - _If all these studies are correct, when are knowledge workers doing any actual work? 88 email checks per day, 29 minutes to get back on task after an interruption, 37% of the workday in meetings…_
+    - Ways to reduce impact of meetings on attention and productivity
+        - Never attend a meeting without an agenda
+            - If there isn’t one, ask about the objective. The requester may realize that everything could be taken care of through email or a phone call.
+        - Question all recurring meetings on your calendar.
+        - Challenge the attendee list. Does everyone on the list really need to be there? Should they be **required** to attend, or could they have the option of using that time for other work?
+        - Hyperfocus on meetings.
+            - Leave the phone or computer behind (unless you’re taking typed notes) and engage as much as possible.
+    - “Common sense isn’t always common action.” – _who said?_
+- The internet
+    - Often worth simply disconnecting from the internet entirely.
+        - Try disconnecting for a full 24 hours on a Sunday and see what happens.
+        - Don’t buy internet access on your next flight – work on an offline project instead, or read a book.
+- Simplifying your environment
+    - Bailey does not have super-human self-discipline. Rather, he tries to deal with environmental distractions ahead of time, just as he does with digital ones.
+    - We are highly influenced by our external environment.
+        - Keep cut-up vegetables in the fridge so they become a healthy go-to snack
+    - One study found coffee shop patrons with phones on the table in front of them checked those phones every 3-5 minutes, even if it wasn’t buzzing.
+        - Another study: “…mere presence of a cell phone placed innocuously in the visual field of participants was found to interfere with closeness, connection, and relationship quality.”
+    - Keeping the phone/tablet in another room:
+        - Derails us less often
+        - We become more accustomed to working in a less stimulating environment
+        - We ensure the environment around us is not more attractive than the task we should be working on.
+    - Getting outside, going for a nature walk:
+        - Walking (even at a treadmill desk) has been shown to decrease cognitive performance. However, performance increases after the fact.
+            - _I believe this is discussed in_ Spark: The Revolutionary New Science of Exercise and the Brain
+    - Creating lag time
+        - One study found that keeping distractions about 20 seconds away from us (meaning it takes 20 seconds to get into the distraction) creates enough “temporal distance” to keep us away from the distraction altogether. Creates a “space between impulse and action”.
+            - _Sounds a lot like the 20-Second Rule from Shawn Achor’s book_ The Happiness Advantage
+    - How to modify your environment
+        - Make a list of the potential distractions around you. Ask yourself: Which of these is more attractive than the work I need to do?
+        - Distance yourself – figure out how to remove any of those attractive distractions.
+        - Add productive cues to your environment:
+            - Whiteboard, which can contain daily intentions
+            - Fidget cube
+            - Plants – which have been shown to increase calmness
+            - Book on a nightstand, instead of your phone.
+        - Cleanliness is also important. Clean workspace at the end of the day, close computer windows, and tidy up the desktop if needed.
+        - Temperature
+            - One study found that the optimal range is 70-72F. Lower temperatures lead to more errors; higher temperatures decrease overall productivity.
+                - _What is the measure for that?_
+- Music
+    - Music that is ideal for productivity has two qualities
+        - Sounds familiar
+        - Relatively simple
+    - Bailey likes to listen to the same song on repeat while working.
+    - Research also suggests that silence is still better than all music, as any much will require some amount of attention.
+        - “Music is no competition for a quiet environment.”
+        - _I don’t know if I agree with this for all tasks. I find that I read best in silence now, but when writing, I feel much more creative with the right music. I get lost in it._
+    - Use noise-cancelling headphones and music to drown out loud coworkers or a noisy environment.
+        - One study found that hearing one side of a phone conversation is much more distracting than overhearing the whole thing; in the former case, the brain tries to fill in the gaps, which requires even more attention.
+    - Music “impairs the performance of introverts more than extroverts”
+        - _Another finding that I’m a bit skeptical of – might need to look at the research methodology later_
+- Clearing your mind
+    - Try to clear your head of “open loops” so they don’t distract you.
+    - David Allen: “Our brains are for having ideas, not holding them.”
+    - How to clear out the mind
+        - Calendar for all events
+        - Task list for all to-do’s
+        - Distraction list for things that pop into your head or distract you while working
+        - Worry list for things you’re worried about
+    - Externalizing these things allows you to work without worries, guilt, or doubts.
+    - Everyone is different: Some can use the bare minimum (calendar and simple task list), while others will benefit from more externalization.
+- Working with purpose
+    - Bailey: “Here is a fundamental truth about focus: your brain will invariably resist more complex tasks, especially when you’re first starting them – and when it does, you’ll look around for more novel and stimulating things to do instead.”
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-making-hyperfocus-a-habit)
+
+## Chapter 5: Making Hyperfocus a Habit
+
+- The mind wanders more often when we’re:
+    - Feeling stressed
+        - Stress comes when the demands of the situation exceed our ability to cope with them. Fix this by breaking the task down, or working in a less chaotic environment.
+    - Feeling bored
+        - Enable distraction-free mode and practice hyperfocus more often. The more we do, the more we become accustomed to working without as much stimulation.
+    - Dealing with and thinking about personal concerns
+        - Clear the open loops – use calendars, distraction lists, worry lists, etc
+    - Questioning whether or not we’re working on the most meaningful task right now
+        - Work with intention to fix this
+    - Have unused attentional space
+        - Use hyperfocus to work on more complex tasks.
+- The power of making your work harder
+    - Smaller tasks that take up less attentional space will cause the mind to wander more. Meditation is a good example – focusing only on your breath will cause your mind to wander a lot.
+    - Working to make your tasks more complex can be a way to enter into a hyperfocused state.
+    - In _Flow: The Psychology of Optimal Experience_, Csikszentmihalyi notes that we’re most likely to enter a state of flow when the challenge of completing a task is matched to our ability to do so, and when we’re fully immersed in that task.
+    - If it’s difficult to get immersed, question whether or not your tasks are difficult or complex enough.
+    - Parkinson’s Law: Work tends to fill the time allotted for it.
+        - But when you disable distractions in advance and hyperfocus, this may no longer be the case. You might find that your work now gets done much more quickly.
+        - Chris’ response to this, at first, was to get lax on his distraction-free mode, which resulted in more context switches and busywork.
+        - Later, he started taking on more complex tasks to fill that time – working on a new book, doing more speaking gigs, taking more coaching clients.
+    - Why busywork gets set aside when you’re on a deadline: “There’s no time available to contain its expansion.”
+    - How to know if you have enough meaningful work on your plate
+        - Track how much of your day is spent on busywork. If a high proportion of the day is busywork, it means you’re probably not challenging yourself with enough meaningful work.
+    - Rote tasks
+        - Microsoft research dept staff repeatedly mentioned that rote tasks make people happier.
+        - There’s immediate feedback, and these tasks are less aversive
+        - They also give an immediate sense of accomplishment when completed
+        - No need to attempt to eliminate all rote tasks from your life if they bring enjoyment
+- Increasing the size of your attentional space
+    - Higher working memory reduces the wandering of the mind when we’re working on complex tasks
+    - Brain training apps: Research has shown that these offer little benefit.
+        - When you stop training, you lose the gains. And those gains typically only show up in the specific task you’re training.
+    - Meditation has been shown, through research, to increase working memory capacity.
+    - Most common form: Breathing meditation – sit quietly and focus on your breath
+        - This doesn’t consume your full attention, so the mind will continually wander.
+        - Bailey: “Each time you return your wandering mind to the details of your breath, you heighten your executive functioning: how much control you have over your attention.”
+    - Over time, meditation makes you better at bringing your attention back to your intention. Hyperfocus does the same thing. Both of these practices compound.
+    - One study found that participants in a meditation routine became able to focus longer before their minds wandered, and that their minds wandered less often overall.
+        - Study focused on students studying for GRE
+        - Meditators had a 16% increase in test scores
+    - Meditation also shown to prevent “the deterioration of working memory capacity during periods of high stress”
+    - It is “the most validated technique for minimizing the disruptive effects of mind wandering.”
+    - Another study found that participants’ working memory capacity increased by **30%** on average after a few weeks of bi-weekly 45-minute guided meditations.
+    - Meditation method:
+        - Determine your resistance level, which will help you choose an amount of time to meditate
+        - Sit in a chair, in a comfortable, upright posture
+        - Notice the qualities of your breath. When the mind wanders, notice that, then bring it back to those qualities.
+        - Start by using an app like Headspace or Insight Timer, which can guide you
+    - Chris’ meditation rule: **It doesn’t matter how long he meditates, just that he does it every day.**
+        - Started with 5-minute sessions, now does about 30-minute sessions.
+    - Mindfulness – another practice that can increase working memory capacity and attention
+        - Be conscious of what is filling your mind, and of the circumstances surrounding what you are currently doing.
+        - Note whatever you’re thinking or feeling
+        - Different from hyperfocus: “It’s about focusing on the circumstances of the present, rather than becoming immersed in them.”
+    - A mindful shower
+        - Involves paying attention to the circumstances of the shower – how the water feels, its temperature, and the actions you take.
+        - Most showers are not mindful; our minds are elsewhere, thinking about other things
+    - Bailey: “Here’s the key: The smaller the object of attention, the more your mind will wander, but the more you’ll expand the size of your attentional space as you focus on it.”
+    - Meditation and mindfulness are so useful because they force you to hold a single object of attention (usually a very small one) in your mind for an extended amount of time.
+        - They also help you step back from your thoughts, which helps you keep a clearer head and lets you keep your intentions in mind.
+    - Buddhist monk at a monastery Chris visits spent several weeks focusing solely on the sensation of his breath on the tip of his nose. Chris tried this, and then found that he was much more productive the next week than he normally would have been.
+- Hyperfocus at home
+    - Bailey notes that hyperfocus is actually a relaxed state (unless you’re on a tight deadline). Your mind isn’t constantly seeking out other environmental stimuli.
+    - Try to hyperfocus at home by setting personal intentions, like having more meaningful conversations with family or friends.
+    - Powerful, but underutilized: Wait until the other person is finished speaking before thinking about what you’ll say in response.
+        - If you’re formulating your response while they’re talking, then you aren’t truly listening.
+    - Bailey: “It’s a remarkable thing when you spend not just quality time with someone but quality attention as well.”
+    - David Augsburger: “Being heard is so close to being loved that for the average person, they are almost indistinguishable.”
+    - Bailey: “The quality of your attention determines the quality of your life.”
+- Four (more) ways to battle your resistance to hyperfocus
+    - Resistance to doing a complex task is almost always concentrated at the beginning of that task.
+    - Bailey: “Starting provides enough momentum to carry out our intentions.”
+    - Battling this resistance:
+        - Shrink the time period in which you’ll hyperfocus until you don’t feel resistance to it.
+        - Notice when you “don’t have time” for something. If you’re saying this, do a “task swap” mental exercise. Ask yourself if you would have the time for another task, like taking a surprise meeting with your boss or checking Facebook (be honest with yourself about how often and how long you spend each day on Facebook/social media)
+        - Keep practicing hyperfocus. Overtime, you strengthen your ability to do it. It’s like a muscle.
+        - Recharge – Take breaks when needed.
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-your-brains-hidden-creative-mode)
+
+## Chapter 6: Your Brain’s Hidden Creative Mode
+
+- Introducing Scatterfocus
+    - This marks the second half of the book, which is dedicated to how to direct your attention inward, as well as to the benefits of the wandering mind.
+- Daydreaming gets a bad rap, but when your intention is to solve problems or be more creative, a wandering mind is exactly what you want. It’s difficult to be creative or think about the future when you’re intently focused on something external.
+- Dot: any idea or piece of information that you rememember
+- Hyperfocus is the brain’s most productive mode; scatterfocus is its most creative mode.
+- Scatterfocus enables you to do three things:
+    - Set intentions and plan for the future
+    - Recharge
+    - Enables more creativity
+        - The more creativity your job or project needs, the more you should be deliberately trying to get into scatterfocus mode.
+- Why we’re averse to scatterfocus
+    - People do not like to be alone with their thoughts
+    - Study found that people who were shocked – and who indicated that they would pay to not be shocked again – were likely to self-induce a second shock rather than be left alone with their thoughts for 15 minutes
+        - 71% of the men took the second shock
+        - Only 26% of the women did
+    - What we focus on
+        - Things that are novel
+        - Things that are pleasurable
+        - Things that are threatening
+    - Our environment is crafted to enable us to constantly focus on these types of things. News and media all focus on novelty, pleasure, or things of a threatening nature.
+    - These all enabled us to survive in the past, but we now over-indulge – especially with the first two.
+        - We over-indulge in sweet foods and porn. Fat storage and sex enabled us to survive in the past (fat for lean times and sex for procreation), but now the impulses that lead us to want those things have too many outlets.
+        - We also over-indulge in novelty through media and devices
+    - We also fall prey to novel/pleasurable/threatening things in our own heads.
+        - Bailey: “Our greatest threats, worries, and fears no longer reside in our external environment but within the depths of our own consciousness.”
+    - Fortunately, we don’t dwell on the negative all that often. Negative thoughts are primarily brought up when we think of the past, which only happens 12% of the time.
+        - We are more likely to remember these types of thought episodes, compared to thinking about present and future
+        - Mind is wired to replay these things in order to help us avoid the same mistakes in the future
+    - Our ability to think about things not immediately in front of us is “fairly unique”
+        - Studies show some other species have this ability in a rudimentary fashion: western scrub jay will store caches of food based on previous experience having food stolen, for example.
+    - Mind wanders to the present 28% of the time
+        - Thinking about the present enables us to consider alternative ways of doing things
+        - Bailey: “Neurologically speaking, it’s impossible to both focus on something and reflect on that thing at the same time.”
+    - Mind wanders to the future 48% of the time
+        - Remaining 16% is concerned with connecting ideas, or it’s time when the mind is simply blank
+        - Mind’s propensity to wander to thoughts of the future is called our “prospective bias”.
+            - This bias leads us to spend most of our scatterfocus time planning. By contrast, we spend almost none of our hyperfocused time planning or thinking about the future.
+            - _This means that we need time spent in mind-wandering mode in order to effectively plan for the future. We need planning mode and robot mode equally._
+        - Bailey: “Scatterfocus lets us work with greater intention because our mind **automatically contrasts the future we desire against the present we need to change to make that future a reality.**
+    - Scatterfocus has other benefits, such as:
+        - More self-awareness
+        - More reflection on the meaning of experiences
+        - More empathy and compassion
+- The three styles of scatterfocus
+    - Scatterfocus is different from normal mind-wandering because it is intentional.
+    - Three styles – capture mode, problem crunching mode, habitual mode.
+    - Capture Mode
+        - Letting the mind roam freely and capturing the thoughts that come up
+        - Best for identifying what’s on your mind
+        - Chris schedules 1-2 15-minute blocks of time each week to sit with coffee and a notepad – this is deliberate Capture Mode time
+            - By the end of this time, his notebook is full of thoughts – names of people he wants to connect with, things he’s been waiting to do, etc.
+        - Initially, Capture Mode is the most aversive. It involves thinking about nothing at first – essentially, it is induced boredom.
+    - Problem-Crunching Mode
+        - Holding a single problem in the mind and letting your mind wander around it, connecting dots
+        - Best for mulling over a specific problem or idea (not focusing intensely on it)
+        - Enables you to come up with nonlinear solutions and ideas for tackling problems from a new angle
+        - Habitual Mode will also provide solutions to problems, so use Problem-Solving mode sparingly, and on only the biggest problems.
+        - Mode was used a lot for the writing of _Hyperfocus_ – Chris would write down thoughts while canoeing or walking around town.
+            - _If doing this while canoeing, wouldn’t that be Habitual Mode? The lines between these two seem blurry to me, as it pertains to the activities done._
+            - He also printed out his research notes in order to review them and identify problems before entering this mode.
+    - Habitual Mode
+        - Doing a simple, habit-based tasks that doesn’t take up nearly all your attentional space, and allowing the mind to wander during that time
+        - Best both for recharging and for connecting the greatest number of ideas or “dots”
+        - This is the most powerful mode – mainly because the habitual task puts you in a positive mood, which encourages you to remain in this mode longer and increases your attentional capacity.
+        - Bailey: “Habitual tasks have been shown to yield the greatest number of insights, when compared to another demanding task, resting, or taking no break whatsoever.”
+        - To practice, pick a simple thing you enjoy doing. The simpler, the better.
+            - Bailey: “Good ideas will rise to the surface as long as you have attention to spare.”
+        - Main difference between Problem-Crunching Mode and this mode: in Problem-Crunching Mode, you continually bring your thoughts back to the problem, while in Habitual Mode, you let your mind wander freely.
+    - Bailey: “Stimulating devices… like water, they seep into the gaps in our schedule, stealing the valuable time and attention we would normally spend planning for the future and connecting ideas.”
+    - One big reason that we often feel burned out is that we never give our attention a rest. We’re always fixated on something.
+    - Key to practicing scatterfocus (rather than mind wandering) is to frequently check what thoughts and ideas are currently filling your attentional space.
+        - Jonathan Schooler found in one study that we noticed our mind has wandered only 5.4 times an hour on average.
+        - Another study put it this way: When the mind wanders, its doing so “can hijack the very brain regions that are necessary for recognizing its occurrence.”
+        - Useful to keep a note-pad nearby everything you’re doing this.
+- How hyperfocus helps you scatterfocus
+    - In practice, these two modes are _anticorrelated_
+    - Different neural networks are engaged for each.
+        - Brain’s “task-positive” network is engaged for hyperfocus. For scatterfocus and mind-wandering, the “task-negative” or “default” mode is engaged.
+        - Task-positive network is used when focusing on external things
+        - Default network is used when focusing internally
+    - However, these modes reinforce each other
+    - Hyperfocus expands attentional space, improves memory, and improves self-awareness. All of these things improve the experience of scatterfocus.
+- Rethinking boredom
+    - When was the last time you were bored? For most of us, it doesn’t happen very often.
+        - _I see this in many productivity books and articles, and agree with it for most of us (myself included). However, I don’t see much mention of the boredom experienced still by people in jobs that mandate it – security guards, cashiers, etc. Just an observation._
+    - Distracting devices have all but eliminated boredom from our lives. While positive in some ways, its drawback is that we are no longer used to dealing with transitions to lower levels of stimulation.
+        - As a result, we constantly crave that higher stimulation, and avoid being alone with our thoughts.
+        - Every time we avoid boredom and seek stimulation, we deprive ourselves of a chance to plan for the future, unearth new ideas that have been “incubated” in the mind, and recharge.
+    - Bailey: “Boredom is really just unwanted scatterfocus.”
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-recharging-your-attention)
+
+## Chapter 7: Recharging Your Attention
+
+- “Rest is not idleness, and to lie sometimes on the grass under the trees on a summer’s day, listening to the murmur of water, or watching the clouds float across the blue sky, is by no means a waste of time.” – John Lubbock, in _The Use of Life_
+- When You Should Recharge
+    - Scatterfocus helps you to recharge, in addition to improving creativity and ability to set intentions.
+    - Three measures of the quality of your attention
+        - Length of focus
+        - Likelihood of being sidetracked by distractions
+        - Propensity to work on auto-pilot, without intention
+    - Lack of rest, sleep, or work breaks hurts all three of these measures
+    - More often we scatterfocus, the more often we replenish mental energy, and the more attentional space and focus we have for important tasks.
+    - Sleep
+        - Getting enough sleep can increase size of attentional space by up to 58%. Frequent work breaks have a similar effect.
+    - Signs that you need to recharge
+        - Switching tasks often, and being unable to focus on one thing for any significant length of time
+        - Working reactively, rather than intentionally
+        - Working more slowly than normal (example: having to read over things multiple times to comprehend them)
+        - Choosing more mindless work, like emails and social media
+        - Slipping into scatterfocus unintentionally
+- Taking More Refreshing Breaks
+    - “The more you care, the more mileage you’ll get out of your attention”
+        - _Point doesn’t seem especially related to this section, but is a good reminder nonetheless._
+    - Refreshing work breaks need to be:
+        - Low-effort and habit-based
+        - Something you actually want to do
+        - Something that isn’t a chore, unless you enjoy certain chores
+    - Breaks should involve things that are “pleasurably effortless.”
+    - Most people don’t take very refreshing work breaks
+        - Breaks consisting of email/social media/news checks just force the brain to focus on something else, rather than stepping back into scatterfocus
+    - Break activity ideas:
+        - Nature walks
+            - Footnote about the value of being in nature (e.g. Forest Bathing or 森林浴)
+                - Spending time in nature helps you feel more recharged
+                - People who spend time in nature:
+                    - Can be up to 50% better at creative problem-solving tasks
+                    - Lower stress hormone levels (by about 16%)
+                    - Calmer
+                    - Elevated mood
+                - One study concluded that people who live on blocks with more trees had improvements to heart and metabolic health equivalent to a $20,000 increase in income
+        - Running outside
+        - Going to the gym
+        - Reading something fun
+        - Listening to music/audiobooks/podcasts
+        - Doing a creative, fun hobby – painting, photography, guitar
+- Timing
+    - Two rules for breaks, based on research
+        - Take one at least every 90 minutes
+        - For each hour of work, break for 15 minutes
+    - Why: Mental energy tends to ebb and flow in roughly 90-minute cycles. This is governed by the sleep cycle, and continues when we are awake.
+    - Take breaks also when you notice your focus waning, or after finishing a large task
+    - Pay attention to daily energy cycles, especially in the morning when dips are more regularly spaced out. When these happen, step back into scatterfocus by taking a break.
+        - Energy levels in afternoon tend to stabilize and dip less predictably
+    - Reasoning for 15 minutes for each hour rule
+        - App Desktime used the data about apps being used on people’s computers, and found that their most productive 10% of users took a 17-minute break for every 52 minutes of work, on average.
+            - _This seems to be where the 52/17 Rule came from. Like many things, it’s a rule with roots in a mere average figure gleaned from a study. It’d be interesting to see the range of numbers within that sample – 52/17 could include people who worked for far, far longer. Averages can be deceiving._
+    - Bailey: “The best time to take a break is before you need to.”
+        - _He makes what I believe is an inaccurate comparison to hydration, stating the oft-quoted saying that feeling thirsty means you’re already dehydrated. See:_ [How to Stay Hydrated](https://collegeinfogeek.com/stay-hydrated/)
+- Sleep
+    - Chris’ pseudoscientific rule: For every hour of sleep lost, you lose two hours of productivity.
+    - Size of attentional space is reduced by up to 60% when we’re sleep deprived
+    - People who claim they can “get by” on less sleep than others likely:
+        - Do work that doesn’t require a large attentional space
+        - Are not working to their full potential
+    - Sleep deficit makes us perceive our productivity as higher than it really is.
+        - _Reminds me of Mike Tyson’s claim of being in the best shape of his life at 53. It’s highly unlikely that he’s in better shape than he was in his boxing prime. My thinking on this is that when we have a recent low point with which to contrast our current state, we’ll falsely believe this current state is our all-time peak – due to recency bias and its effect on how we perceive that contrast, as well as pride. In my recent training, I’ve started to falsely believe that I’m getting in my best shape ever, when it’s clear that I’ve been in better shape at other times. During my ninja training, I could do 15 chins in one set – I’m still not back to that level. And during college, I bench pressed 300lbs at one point. Currently, I don’t even have access to a gym where I could test my bench._
+    - Dreaming and daydreaming are very similar – brain scans show activity in same regions of the brain (though it is higher when actually dreaming)
+        - Bailey: “…dreaming is scatterfocus on steroids.”
+        - Minds wander to many of the same places – regrets, fantasies, anxieties about future
+        - Mind defragments thoughts
+        - Mind consolidates information into long-term memory
+        - Mind fires randomly, which can lead to breakthroughs
+    - Research shows that when we get less sleep, we:
+        - Feel more work pressure
+        - Focus for even shorter amounts of time (less than the avg. 40 seconds)
+        - Visit social media more
+        - Have more negative moods
+        - Seek less demanding tasks
+        - Spend more time online
+    - These detriments are more pronounced for people aged 19-29, who tend to go to bed the latest (around midnight on average)
+    - Nighttime ritual – great way to get better sleep. Wind down at a certain point in the evening with herbal tea, reading, cleanup, etc.
+- Rest is Not Idleness
+    - Taking a break _feels_ like you’re getting less work done – causes guilt.
+    - However, breaks are needed for productivity.
+    - Bailey: “Whenever we rest, we exchange our time for energy.” #Quotes
+        - _Reminds me of the tent in Don’t Starve – it is a mechanism in the game for exchanging hunger for sanity and health. The whole game is about keeping all three of these meters from depleting too much. Also reminds me of Reigns, where managing several connected metrics is even more important, since they can get too high as well as too low._
+    - Bailey, main idea of chapter: “Scatterfocus lets us recharge our ability to hyperfocus, in addition to letting us plan for the future and become more creative.”
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-connecting-dots)
+
+## Chapter 8: Connecting Dots
+
+- Becoming More Creative
+    - Scatterfocus allows you to be more creative, in two ways:
+        - Connecting more “dots”
+        - Collecting more valuable dots
+    - **Dot:** Any piece of information you hold in your mind.
+    - Scatterfocus engages the brain’s default network, which engages all kinds of different, interconnected parts of the brain in a seemingly random way.
+        - This helps us to gain creative insights by connecting disparate dots we’ve gathered.
+    - Footnote: Default network itself was discovered nearly at random. Earlier, it was seen as background noise (and dismissed as such) in brain experiments.
+- Insight Triggers
+    - Our brains are designed to fixate on and remember things we’re in the middle of more than things we’ve completed. This is often called the Zeigarnik Effect.
+    - For hyperfocus, this can be annoying, but it’s great for scatterfocus. If we leave something open and switch to something else (like habit-based scatterfocus), our brains will fixate on it more thoroughly and connect more dots to it, yielding insights.
+    - Potential insight triggers can come from
+        - Wandering minds
+        - External environment
+    - Example
+        - “Why is 8,549,176,320 one of the most unique 10-digit numbers in the world?”
+            - _Funnily enough, my hubris got the best of me on this. As I read this sentence, I immediately realized that the number contained each digit from 0-9, and figured that was the answer. That is only partly true, and I moved on too quickly before I could ponder the real answer…_
+        - Stuck on the problem, you go do other things. Then, when alphabetizing your bookshelf (a mostly mindless task that leaves attentional space open), you put _The 80/20 Principle_ on the shelf, alphabetizing it by the word “Eight” (skipping “The”). Then it hits you – the digits are arranged alphabetically. Dots provided by an unrelated task became the insight trigger.
+    - Famous thinkers, external cues, and insights
+        - Archimedes’ overflowing bath gave him the insight for calculating the volume of irregular objects
+        - Newton saw a falling apple, which helped him develop his theory of gravity
+        - Feynman would sit at topless bars, writing down insights about equations and theories as his mind wandered around more – ahem – primal areas of light focus
+- Connecting Even More Dots
+    - Scatter your attention in a richer environment
+        - Practice scatterfocus by walking through bookstores or people-watching at a diner. The richer the environment, the more potential dots you can collect.
+        - Working with a mix can be helpful – sometimes using richer environments to collect lots of new dots, then more sparse ones to encourage more introspective mind-wandering, which helps collected dots become connected.
+    - Write out the problems you’re trying to crack
+        - When you write down the details of a problem, your mind has an easier time processing them in the background.
+        - One way to do this: Write out any problems you’re stuck on at the end of the day alongside your Rule of 3 intentions for the next day.
+    - Sleep on a problem
+        - Thomas Edison and Salvador Dali would both take naps while holding things (marbles for Edison, keys above a metal plate for Dali). When they drifted off sufficiently, the items would drop and wake them, often with new insights about problems.
+        - Edison (maybe): “Never go to sleep without a request to your subconscious.”
+        - REM sleep is especially good at forming deep connections between ideas
+        - Sleep also helps you remember more:
+            - It consolidates dots and experiences into long-term memories
+            - Disposes of unneeded dots – the “noise” taken in throughout the day.
+                - _Could Roam Research be improved using this insight? Would there be a benefit to a feature that collected unused pages and marked them for potential disposal? Perhaps a feature that color-codes pages based on amount and recency of unliked/linked references_
+    - Step back
+        - Building a greater attentional space for hyperfocus means you’ll likely spend more time hammering away at problems. The more you build your attentional space, the more important it becomes to intentionally step back.
+        - Purposely delay creative decisions if you can. With time spend in scatterfocus mode, you’ll come up with ways to improve them.
+    - Intentionally leave tasks unfinished
+        - Take advantage of the Zeigarnik Effect – leave tasks as an open loop so you’ll come back to them more during scatterfocus.
+    - Consume more valuable dots
+        - Bailey: “We are what we consume.”
+        - By being more deliberate about the information we take in, we give our default networks better dots to connect to.
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-collecting-dots)
+
+## Chapter 9: Collecting Dots
+
+- Clustering
+    - Collecting more valuable dots gives us more to connect
+    - Focus is always filtered through what we already know – hence why the quality of the information (dots) we intake is so important
+    - Subjects that we’re more knowledgeable about take up less attentional space
+        - We are better at chunking the information in these areas
+        - Example: Expert pianist can easily see groups of notes (perhaps as the notes inside a chord), and break down a piece by elements like melody, harmony, tempo, etc.
+            - _Interesting connection to_ [[Range - Why Generalists Triumph in a Specialized World|Range]] – _that book, in talking about musical savants, mentioned that a savant who could recreate a piece of music from memory after hearing it only once could not do the same when they heard atonal music. It’s not that the musician had a perfectly photographic memory; it’s that they had a gargantuan amount of connect dots and chunks in their memory, and a powerful ability to consult them. You can see this in “normal” people as well – for instance, memorizing, “This is a sentence that contains eight words.” is much easier than memorizing, “Is contains eight sentence a that words this.” Anyone fluent in a language has a huge library of chunks that help them group words together in logical ways._
+    - More dots also allows for more intuitive decisions, as we can subconsciously call up on pre-existing knowledge
+    - Bailey: “This is how intuition works: It’s the process of acting on information we remember but don’t consciously retrieve.”
+- The Value of a Dot
+    - Brain has near limitless storage space; however, attention is a much more limited resource
+        - As a result, we need to be deliberate in how we consume dots (and about which dots we consume)
+    - Bailey: “No two pieces of information are created equal.”
+        - Reading books or having in-depth conversations yields more valuable dots than watching reality TV
+    - How to measure the value of a dot
+        - Most valuable dots are both useful and entertaining
+            - Useful – relevant long-term, practical/actionable, and helps you work towards your goals
+            - Entertaining – you stay engaged with them effortlessly
+            - TED Talks are a great example
+    - Consuming information that is related to something you already know about lets you create a “constellation of dots” around a single idea
+    - Consuming information completely _unrelated_ to what you know is also helpful; it can provide insight triggers, and help you to expand your worldview and make sure you’re not only consuming information that confirms your existing beliefs
+    - When in doubt about consuming a particular “dot”, ask yourself how your life will be different after doing so.
+- Collecting more valuable dots
+    - In many cases, practicality of information is inversely correlated to its entertainment value
+        - _I’d say the exception is when you’re obsessed with a topic; in that stage, even the most detailed, mundane-seeming info could be riveting. But other than that, this rule seems to hold._
+    - Four types of information
+        - Useful
+            - Dense
+            - Actionable – helps you reach your long-term goals
+            - Accurate
+            - Examples: Academic journals, non-fiction books
+        - Balanced
+            - Useful and entertaining
+            - Probably not as dense
+            - Examples: novels, podcasts, documentaries, TED talks, shorter online tutorials
+        - Entertaining
+            - Essentially “junk food” information
+            - Examples: TV shows without much substance, social media, gossip magazines
+        - Trashy
+            - Worst of the worst in entertainment category
+    - Consumption rules:
+        - When you have energy and high ability to focus, consume more useful information
+        - When you’re low on energy but still want to be productive, consume balanced information
+        - Consume entertaining information with intention, not mindlessly
+            - _Much like my “harm yourself deliberately” rule with junk food. I don’t mindlessly buy Skittles from the gas station; if I’m going to eat junk food, it’s going to be the good stuff – homemade cookies, good whiskey, etc._
+        - Cut down on consumption of trashy information
+    - Do an audit on everything you consume over a period of days (maybe carry a notebook and record consumption in the moment), then start working to deliberately improve the quality of information/dots consumed going forward.
+    - _The book lists 9 rules for improving the quality of dots consumed. I’m not going to record them all here because many of them have been briefly covered already._
+    - Re-evaluate what you’re consuming as you’re consuming it.
+        - _Don’t fall victim to the sunk cost fallacy._
+- Like Magic
+    - Complex constellations of dots can connect together in unfathomably complex ways, and yield insights that we label as “genius”.
+    - Arthur C. Clarke: “Any sufficiently advanced technology is indistinguishable from magic.”
+    - Malcom Gladwell: “Practice isn’t the thing you do once you’re good. It’s the thing you do that makes you good.”
+    - Practice and constant curiosity are the ingredients that will yield the complex constellation of dots required to be a “genius”.
+    - Mozart back-of-the-napkin math:
+        - Wrote his first symphony at 8 years old
+        - In _This is Your Brain on Music_, Daniel Levitin estimates that Mozart may have started at age 2 and worked 32 hours a week on average. At that rate, he’d have already hit the 10k hours of the eponymous 10,000 Hour Rule in order to become an expert.
+            - _Note: A main argument of_ [[Range - Why Generalists Triumph in a Specialized World|Range]] _is that the 10k hour rule is not necessarily applicable to everything. Narrow practice in a defined area of discipline yields expertise only when the rules of that discipline are in play. When they are taken away, the expertise can melt away because the practitioner has not build skill in adapting to changing circumstances (example: atonal music)._
+
+[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-working-together)
+
+## Chapter 10: Working Together
+
+- Invest in Your Happiness
+    - Investing in being truly happy and merely thinking positively are very different. In fact, thinking positively can be harmful; forced positive thinking can cause you to work less hard at actually achieving your goals.
+        - _This is related to the findings in my “Don’t Talk About Your Goals” video:_ [Why You Shouldn’t Tell People About Your Goals](https://www.youtube.com/watch?v=mKdm5xSZiOA)
+    - Letting your mind wander intentionally can boost happiness, allowing you to get into scatterfocus without the guilt and worrying associated with involuntary mind-wandering.
+    - When you’re in a negative mood, write down your worries and the problems you’re dealing with. The Zeigarnik Effect will cause you to dwell on the open loops, which can keep you in a negative mood longer.
+    - Shawn Achor, in his book _The Happiness Advantage:_
+        - Happy people are 31% more productive than people in a neutral or negative mood
+        - Strategies to improve average-day happiness levels:
+            - Practice gratitude – write down things you’re grateful for at the end of the day
+            - Journaling
+            - Meditation
+            - Random acts of kindness
+- Work Around Your Energy Levels
+    - Biological Prime Time – each of us has a “chronotype”; our bodies are programmed to have different high and low-energy times, as well as a propensity to sleep at certain times.
+    - Track your energy levels to figure out when you should do your highest-energy tasks.
+    - Energy levels fluctuate during the week – people are least engaged on Mondays and most engaged on Fridays
+        - _Really though? For most of my life, I’ve been the least engaged on Fridays – it’s the weekly version of senioritis. I’m also quite engaged on Mondays. Currently, Fridays are my most engaged day, but that’s only because of a Friday Beeminder deadline for uploading videos._
+        - _Chris cites this paper:_ [Bored mondays and focused afternoons: The rhythm of attention and online activity in the workplace](https://www.researchgate.net/publication/266655565_Bored_mondays_and_focused_afternoons_The_rhythm_of_attention_and_online_activity_in_the_workplace) – _the summary states, “On Mondays people are most bored but also most focused.” I think Chris’ further summarization of this point in the book doesn’t accurately convey its meaning._
+- Drink Alcohol and Caffeine Strategically
+    - Alcohol can boost creativity, but decreases focus
+    - Caffeine does the opposite; it increases focus, but decreases creativity and ability to scatterfocus.
+        - Also boosts physical performance
+        - Only effective until about 200mg consumed (single cup of coffee = ~125mg – _roast type and brew method will change this_)
+        - Caffeine consumption in excess of 400mg causes anxiety and decreased performance
+    - Bailey: “As with most productivity advice, implementing individual tactics with an awareness of how well they actually work for you is key.”
+- Open Offices
+    - Open environments cause people to interrupt us more often, and cause us to distract ourselves 64% more often too
+    - Interesting point: In open offices, people are typically more considerate about _when_ they interrupt.
+    - Open offices also promote collaborative work
+    - However, highly focused, individual work often suffers in an open environment.
