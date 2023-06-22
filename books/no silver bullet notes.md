@@ -1,11 +1,20 @@
+# No silver bullet 1987
+## Summary
+"No silver bullet" talks about why software is difficult, past discoveries that improved productivity, what could improve it, and what people think would but likely won't. 
+A silver bullet refers to magic solution for all your problems.
+
 read it [[No_Silver_Bullet_Essence_and_Accidents_of_Software.pdf]]
 discuss https://wiki.c2.com/?NoSilverBullet
 
+## Notes
 ### software is difficult
 - **complexity** leads to difficult communication, bugs, etc. this also is a big topic in [[A Philosophy of Software Design]]
 - **conform**: all software is different, different interfaces etc.
 - **changeable**: easy to change unlike real life buildings, cars, … so it's more tempting to introduce changes mid production.
-- **invisible**. you can't see software, you can't easily draw a representation. 2 minds struggle to communicate. In project planning, [[The DevOps Handbook]] solves this by visualizing your work (e.g. on a task board)  [^1]
+- **invisible**. you can't see software, you can't easily draw a representation. 2 minds struggle to communicate. [^1]
+
+> [!NOTE]
+>   In project planning, [[The DevOps Handbook]] recommends to visualise invisible work (e.g. on a task board)  
 
 ## past breakthroughs
 - **high level languages** make devs more productive. Removing some complexity.
@@ -17,15 +26,16 @@ I'd add sharing code and libraries to this, e.g. open source, package repos, ..
 ### hopes for future breakthroughs
 - Ada and other **high-level language advances**: a specific language, seems outdated. Described as likely not a breakthrough
 - **Object-oriented programming**. removes some complexity but not enough. [^2]
-- **Artificial intelligence** Author did not expect AI to have a big impact but was wrong. [^3] [^4]
+- **Artificial intelligence** Author did not expect AI to have a big impact [^3] [^4] 
+  `but was wrong, 35 year later AI is taking over` 
 - **Expert systems**: A rule based manual written "AI" system. [^3][^5]
 *The most powerful contribution by expert systems will surely be to put at the service of the inexperienced programmer the experience and accumulated wisdom of the best programmers.*
-This basicly describes chat GPT.
+`This basicly describes chat GPT.`
 - **Automatic programming**:  dated, chatGPT now can help here. [^5]
 - **Graphical programming** [^6][^7]
 	- argues flow chart is a bad representation [^8], devs draw flowcharts after, not before
-	- screens are to small. dated, now you can zoom easily e.g. on Miro
-	- difficult to visualise
+	- screens are to small. `dated, now you can zoom easily e.g. on Miro`
+	- difficult to visualize
 	These days node-based programming has it's place, e.g. Unreal's material editor & blueprints. It does often result in messy spaghetti though.
 - **Program verification**: testing & bug fixing. Unit testing doesn't save much labor, since you need to write & maintain the tests.
 - **Environments and tools** expect marginal improvements.
@@ -52,7 +62,7 @@ construct it at all. Proposes marketplace for modules [^9]
 - it's impossible to set final specs before trying a version of the product
 - rapid prototyping tools promise big productivity gains
 - prototype the important interfaces, and perform the main functions. without worrying about performance or hardware limits. main purpose is so client can test it.
-- present day development (TODO INSERT DATE ) relies on final specs before starting development, which is flawed. Instead you should build (not write) incrementally.
+- present day development (1987) relies on final specs before starting development, which is flawed. Instead you should build (not write) incrementally.
 - building is now dated, living things grow instead. [^10]
 	- first make it run
 	- bit by bit flesh it out, with calls to empty stubs.
@@ -72,7 +82,7 @@ construct it at all. Proposes marketplace for modules [^9]
 	• Devise and maintain a career development plan for each prospect, including carefully selected apprenticeships with top designers, episodes of advanced formal education, and short courses, all interspersed with solo-design and technical leadership assignments.
 	• Provide opportunities for growing designers to interact with and stimulate each other.
 
-> [!Notes]- 
+> [!Issues ]- 
 > This argument has 2 flaws. 
 > - It assumes we can identify a top designer.
 > - It rejects anyone who is not a top designer.
@@ -81,7 +91,7 @@ construct it at all. Proposes marketplace for modules [^9]
 > Google found that dev interview scores had no correlation with performance, of devs who got hired. [source](https://www.forbes.com/sites/forbeswealthteam/2023/06/15/the-richest-person-in-every-state-2023/?sh=57e1f4d25567)
 > Anecdotes:
 > - Albert Einstein was seen as lazy when young.
-> - Michael Jordan was to short when he was young
+> - Michael Jordan was rejected cause he was to short when he was young
 > - Stephen King was rejected by 30 publishers before becoming famous.
 > 
 > #### improve average designers:
