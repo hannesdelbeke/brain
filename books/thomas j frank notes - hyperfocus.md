@@ -767,7 +767,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Famous thinkers, external cues, and insights
         - Archimedes’ overflowing bath gave him the insight for calculating the volume of irregular objects
         - Newton saw a falling apple, which helped him develop his theory of gravity
-        - Feynman would sit at topless bars, writing down insights about equations and theories as his mind wandered around more – ahem – primal areas of light focus
+        - Feynman would sit at topless bars, writing down insights about equations and theories as his mind wandered at the dancers
 - Connecting Even More Dots
     - Scatter your attention in a richer environment
         - Practice scatterfocus by walking through bookstores or people-watching at a diner. The richer the environment, the more potential dots you can collect.
