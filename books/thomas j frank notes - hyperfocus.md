@@ -18,9 +18,7 @@ Chris’ writing on creating a distraction-free ritual was probably the most act
 
 Now, onto the notes.
 
-_Italicized text indicates my own thoughts and observations._
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-why-focus-matters)
+_Italicized text indicates Thomas j frank's own thoughts and observations._
 
 ## Chapter 0: Why Focus Matters
 
@@ -33,8 +31,6 @@ _Italicized text indicates my own thoughts and observations._
     - Pay attention to nothing and let the mind wander.
 - Studies show we go an average of **40 seconds** when working on a computer before becoming distracted or interrupted
     - _Difference: Interruptions happen to us. Distractions are caused by us._
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-how-to-better-focus-on-this-book)
 
 ## Chapter 0.5: How to Better Focus on This Book
 
@@ -52,8 +48,6 @@ _Italicized text indicates my own thoughts and observations._
     - Trade-off – you have to pay for this gained energy imbalance later in the day, but it’s often worth it.
 - Grab a pen and highlighter. Mark up the book.
 - When you notice your focus wavering, step back and do something mindless. Get a reset.
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-switching-off-autopilot-mode)
 
 ## Chapter 1: Switching Off Autopilot Mode
 
@@ -80,8 +74,6 @@ _Italicized text indicates my own thoughts and observations._
         - Stimulating, yet unproductive “tasks” – social media, checking email and Slack, etc.
 - Each day, all four quadrants (task types) compete for our attention. The more we’re on autopilot, the more time we’ll spend in the wrong quadrants.
     - _Takeaway: Be more intentional about where you place your focus. Take more reset breaks in order to gain this ability back (recharge it) when needed throughout the day._
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-the-limits-of-your-attention)
 
 ## Chapter 2: The Limits of Your Attention
 
@@ -166,7 +158,6 @@ _Italicized text indicates my own thoughts and observations._
     - How long you can hold your focus in one sitting
     - How long your mind wanders before you catch it.
 
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-the-power-of-hyperfocus)
 
 ## Chapter 3: The Power of Hyperfocus
 
@@ -280,8 +271,6 @@ _Italicized text indicates my own thoughts and observations._
             - Bailey: “Productivity is often a process of understanding our constraints.”
         - When you need to work on a complex task
         - Based on how much resistance to the task you’re feeling
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-taming-distractions)
 
 ## Chapter 4: Taming Distractions
 
@@ -492,8 +481,6 @@ _Italicized text indicates my own thoughts and observations._
 - Working with purpose
     - Bailey: “Here is a fundamental truth about focus: your brain will invariably resist more complex tasks, especially when you’re first starting them – and when it does, you’ll look around for more novel and stimulating things to do instead.”
 
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-making-hyperfocus-a-habit)
-
 ## Chapter 5: Making Hyperfocus a Habit
 
 - The mind wanders more often when we’re:
@@ -573,8 +560,6 @@ _Italicized text indicates my own thoughts and observations._
         - Notice when you “don’t have time” for something. If you’re saying this, do a “task swap” mental exercise. Ask yourself if you would have the time for another task, like taking a surprise meeting with your boss or checking Facebook (be honest with yourself about how often and how long you spend each day on Facebook/social media)
         - Keep practicing hyperfocus. Overtime, you strengthen your ability to do it. It’s like a muscle.
         - Recharge – Take breaks when needed.
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-your-brains-hidden-creative-mode)
 
 ## Chapter 6: Your Brain’s Hidden Creative Mode
 
@@ -668,8 +653,6 @@ _Italicized text indicates my own thoughts and observations._
         - Every time we avoid boredom and seek stimulation, we deprive ourselves of a chance to plan for the future, unearth new ideas that have been “incubated” in the mind, and recharge.
     - Bailey: “Boredom is really just unwanted scatterfocus.”
 
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-recharging-your-attention)
-
 ## Chapter 7: Recharging Your Attention
 
 - “Rest is not idleness, and to lie sometimes on the grass under the trees on a summer’s day, listening to the murmur of water, or watching the clouds float across the blue sky, is by no means a waste of time.” – John Lubbock, in _The Use of Life_
@@ -734,7 +717,9 @@ _Italicized text indicates my own thoughts and observations._
         - Do work that doesn’t require a large attentional space
         - Are not working to their full potential
     - Sleep deficit makes us perceive our productivity as higher than it really is.
-        - _Reminds me of Mike Tyson’s claim of being in the best shape of his life at 53. It’s highly unlikely that he’s in better shape than he was in his boxing prime. My thinking on this is that when we have a recent low point with which to contrast our current state, we’ll falsely believe this current state is our all-time peak – due to recency bias and its effect on how we perceive that contrast, as well as pride. In my recent training, I’ve started to falsely believe that I’m getting in my best shape ever, when it’s clear that I’ve been in better shape at other times. During my ninja training, I could do 15 chins in one set – I’m still not back to that level. And during college, I bench pressed 300lbs at one point. Currently, I don’t even have access to a gym where I could test my bench._
+> [!NOTE]-
+> _Reminds me of Mike Tyson’s claim of being in the best shape of his life at 53. It’s highly unlikely that he’s in better shape than he was in his boxing prime. My thinking on this is that when we have a recent low point with which to contrast our current state, we’ll falsely believe this current state is our all-time peak – due to recency bias and its effect on how we perceive that contrast, as well as pride. In my recent training, I’ve started to falsely believe that I’m getting in my best shape ever, when it’s clear that I’ve been in better shape at other times. During my ninja training, I could do 15 chins in one set – I’m still not back to that level. And during college, I bench pressed 300lbs at one point. Currently, I don’t even have access to a gym where I could test my bench._
+- sleep continued:
     - Dreaming and daydreaming are very similar – brain scans show activity in same regions of the brain (though it is higher when actually dreaming)
         - Bailey: “…dreaming is scatterfocus on steroids.”
         - Minds wander to many of the same places – regrets, fantasies, anxieties about future
@@ -754,10 +739,10 @@ _Italicized text indicates my own thoughts and observations._
     - Taking a break _feels_ like you’re getting less work done – causes guilt.
     - However, breaks are needed for productivity.
     - Bailey: “Whenever we rest, we exchange our time for energy.” #Quotes
-        - _Reminds me of the tent in Don’t Starve – it is a mechanism in the game for exchanging hunger for sanity and health. The whole game is about keeping all three of these meters from depleting too much. Also reminds me of Reigns, where managing several connected metrics is even more important, since they can get too high as well as too low._
+> [!NOTE]-
+>         - _Reminds me of the tent in Don’t Starve – it is a mechanism in the game for exchanging hunger for sanity and health. The whole game is about keeping all three of these meters from depleting too much. Also reminds me of Reigns, where managing several connected metrics is even more important, since they can get too high as well as too low._
+- continue rest idleness :
     - Bailey, main idea of chapter: “Scatterfocus lets us recharge our ability to hyperfocus, in addition to letting us plan for the future and become more creative.”
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-connecting-dots)
 
 ## Chapter 8: Connecting Dots
 
@@ -778,7 +763,7 @@ _Italicized text indicates my own thoughts and observations._
     - Example
         - “Why is 8,549,176,320 one of the most unique 10-digit numbers in the world?”
             - _Funnily enough, my hubris got the best of me on this. As I read this sentence, I immediately realized that the number contained each digit from 0-9, and figured that was the answer. That is only partly true, and I moved on too quickly before I could ponder the real answer…_
-        - Stuck on the problem, you go do other things. Then, when alphabetizing your bookshelf (a mostly mindless task that leaves attentional space open), you put _The 80/20 Principle_ on the shelf, alphabetizing it by the word “Eight” (skipping “The”). Then it hits you – the digits are arranged alphabetically. Dots provided by an unrelated task became the insight trigger.
+        - Stuck on the problem, you go do other things. Then, when alphabetizing your bookshelf (a mostly mindless task that leaves attentional space open), you put  The [[Pareto Principle|80/20 Principle]] on the shelf, alphabetizing it by the word “Eight” (skipping “The”). Then it hits you – the digits are arranged alphabetically. Dots provided by an unrelated task became the insight trigger.
     - Famous thinkers, external cues, and insights
         - Archimedes’ overflowing bath gave him the insight for calculating the volume of irregular objects
         - Newton saw a falling apple, which helped him develop his theory of gravity
@@ -806,8 +791,6 @@ _Italicized text indicates my own thoughts and observations._
     - Consume more valuable dots
         - Bailey: “We are what we consume.”
         - By being more deliberate about the information we take in, we give our default networks better dots to connect to.
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-collecting-dots)
 
 ## Chapter 9: Collecting Dots
 
@@ -870,8 +853,6 @@ _Italicized text indicates my own thoughts and observations._
         - Wrote his first symphony at 8 years old
         - In _This is Your Brain on Music_, Daniel Levitin estimates that Mozart may have started at age 2 and worked 32 hours a week on average. At that rate, he’d have already hit the 10k hours of the eponymous 10,000 Hour Rule in order to become an expert.
             - _Note: A main argument of_ [[Range - Why Generalists Triumph in a Specialized World|Range]] _is that the 10k hour rule is not necessarily applicable to everything. Narrow practice in a defined area of discipline yields expertise only when the rules of that discipline are in play. When they are taken away, the expertise can melt away because the practitioner has not build skill in adapting to changing circumstances (example: atonal music)._
-
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#chapter-working-together)
 
 ## Chapter 10: Working Together
 
