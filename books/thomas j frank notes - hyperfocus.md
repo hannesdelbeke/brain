@@ -760,10 +760,12 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Potential insight triggers can come from
         - Wandering minds
         - External environment
-    - Example
-        - “Why is 8,549,176,320 one of the most unique 10-digit numbers in the world?”
-            - _Funnily enough, my hubris got the best of me on this. As I read this sentence, I immediately realized that the number contained each digit from 0-9, and figured that was the answer. That is only partly true, and I moved on too quickly before I could ponder the real answer…_
-        - Stuck on the problem, you go do other things. Then, when alphabetizing your bookshelf (a mostly mindless task that leaves attentional space open), you put  The [[Pareto Principle|80/20 Principle]] on the shelf, alphabetizing it by the word “Eight” (skipping “The”). Then it hits you – the digits are arranged alphabetically. Dots provided by an unrelated task became the insight trigger.
+> [!example]-
+> - “Why is 8,549,176,320 one of the most unique 10-digit numbers in the world?”
+> 	- _Funnily enough, my hubris got the best of me on this. As I read this sentence, I immediately realized that the number contained each digit from 0-9, and figured that was the answer. That is only partly true, and I moved on too quickly before I could ponder the real answer…_
+> - Stuck on the problem, you go do other things. Then, when alphabetizing your bookshelf (a mostly mindless task that leaves attentional space open), you put  The [[Pareto Principle|80/20 Principle]] on the shelf, alphabetizing it by the word “Eight” (skipping “The”). Then it hits you – the digits are arranged alphabetically. Dots provided by an unrelated task became the insight trigger.
+
+- - Insight Triggers continue :
     - Famous thinkers, external cues, and insights
         - Archimedes’ overflowing bath gave him the insight for calculating the volume of irregular objects
         - Newton saw a falling apple, which helped him develop his theory of gravity
@@ -800,7 +802,9 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Subjects that we’re more knowledgeable about take up less attentional space
         - We are better at chunking the information in these areas
         - Example: Expert pianist can easily see groups of notes (perhaps as the notes inside a chord), and break down a piece by elements like melody, harmony, tempo, etc.
-            - _Interesting connection to_ [[Range - Why Generalists Triumph in a Specialized World|Range]] – _that book, in talking about musical savants, mentioned that a savant who could recreate a piece of music from memory after hearing it only once could not do the same when they heard atonal music. It’s not that the musician had a perfectly photographic memory; it’s that they had a gargantuan amount of connect dots and chunks in their memory, and a powerful ability to consult them. You can see this in “normal” people as well – for instance, memorizing, “This is a sentence that contains eight words.” is much easier than memorizing, “Is contains eight sentence a that words this.” Anyone fluent in a language has a huge library of chunks that help them group words together in logical ways._
+> [!NOTE]-
+>             - _Interesting connection to_ [[Range - Why Generalists Triumph in a Specialized World|Range]] – _that book, in talking about musical savants, mentioned that a savant who could recreate a piece of music from memory after hearing it only once could not do the same when they heard atonal music. It’s not that the musician had a perfectly photographic memory; it’s that they had a gargantuan amount of connect dots and chunks in their memory, and a powerful ability to consult them. You can see this in “normal” people as well – for instance, memorizing, “This is a sentence that contains eight words.” is much easier than memorizing, “Is contains eight sentence a that words this.” Anyone fluent in a language has a huge library of chunks that help them group words together in logical ways._
+- Clustering continued
     - More dots also allows for more intuitive decisions, as we can subconsciously call up on pre-existing knowledge
     - Bailey: “This is how intuition works: It’s the process of acting on information we remember but don’t consciously retrieve.”
 - The Value of a Dot
@@ -852,7 +856,8 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Mozart back-of-the-napkin math:
         - Wrote his first symphony at 8 years old
         - In _This is Your Brain on Music_, Daniel Levitin estimates that Mozart may have started at age 2 and worked 32 hours a week on average. At that rate, he’d have already hit the 10k hours of the eponymous 10,000 Hour Rule in order to become an expert.
-            - _Note: A main argument of_ [[Range - Why Generalists Triumph in a Specialized World|Range]] _is that the 10k hour rule is not necessarily applicable to everything. Narrow practice in a defined area of discipline yields expertise only when the rules of that discipline are in play. When they are taken away, the expertise can melt away because the practitioner has not build skill in adapting to changing circumstances (example: atonal music)._
+> [!NOTE]-
+>A main argument of [[Range - Why Generalists Triumph in a Specialized World|Range]] is that the 10k hour rule is not necessarily applicable to everything. Narrow practice in a defined area of discipline yields expertise only when the rules of that discipline are in play. When they are taken away, the expertise can melt away because the practitioner has not build skill in adapting to changing circumstances (example: atonal music).
 
 ## Chapter 10: Working Together
 
@@ -872,8 +877,10 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Biological Prime Time – each of us has a “chronotype”; our bodies are programmed to have different high and low-energy times, as well as a propensity to sleep at certain times.
     - Track your energy levels to figure out when you should do your highest-energy tasks.
     - Energy levels fluctuate during the week – people are least engaged on Mondays and most engaged on Fridays
-        - _Really though? For most of my life, I’ve been the least engaged on Fridays – it’s the weekly version of senioritis. I’m also quite engaged on Mondays. Currently, Fridays are my most engaged day, but that’s only because of a Friday Beeminder deadline for uploading videos._
-        - _Chris cites this paper:_ [Bored mondays and focused afternoons: The rhythm of attention and online activity in the workplace](https://www.researchgate.net/publication/266655565_Bored_mondays_and_focused_afternoons_The_rhythm_of_attention_and_online_activity_in_the_workplace) – _the summary states, “On Mondays people are most bored but also most focused.” I think Chris’ further summarization of this point in the book doesn’t accurately convey its meaning._
+> [!NOTE]-
+> - _Really though? For most of my life, I’ve been the least engaged on Fridays – it’s the weekly version of senioritis. I’m also quite engaged on Mondays. Currently, Fridays are my most engaged day, but that’s only because of a Friday Beeminder deadline for uploading videos._
+> - _Chris cites this paper:_ [Bored mondays and focused afternoons: The rhythm of attention and online activity in the workplace](https://www.researchgate.net/publication/266655565_Bored_mondays_and_focused_afternoons_The_rhythm_of_attention_and_online_activity_in_the_workplace) – _the summary states, “On Mondays people are most bored but also most focused.” I think Chris’ further summarization of this point in the book doesn’t accurately convey its meaning._
+
 - Drink Alcohol and Caffeine Strategically
     - Alcohol can boost creativity, but decreases focus
     - Caffeine does the opposite; it increases focus, but decreases creativity and ability to scatterfocus.
