@@ -96,7 +96,7 @@ construct it at all. Proposes marketplace for modules [^9]
 > 
 > #### improve average designers:
 > - higher teacher wages likely lead to better students, [article](https://www.educationnext.org/do-smarter-teachers-make-smarter-students-international-evidence-cognitive-skills-performance/)
-> - the [[social how our brains work]] book recommends to focus on the social aspect, try teaching and explaining your program to others. To help with this shared vocabulary is extremely helpful, such as [[Connascence]].
+> - the [[social how our brains work]] book recommends to focus on the social aspect, try teaching and explaining your program to others. To help with this shared vocabulary is extremely helpful, such as [[connascence]].
 > - find out how to motivate people so they want to learn more. e.g. I personally enjoy programming, it's fun.
 
 ## REFERENCES
