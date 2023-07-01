@@ -8,7 +8,7 @@ For someone who is already maintaining a healthy lifestyle with good habits, a v
 
 **Impact of Sleep on Longevity**:
 
-1. **Comprehensive Health Benefits**: Quality sleep is crucial for overall health, impacting almost every bodily function. It plays a key role in cognitive function, emotional regulation, immune system performance, and recovery from illness and stress.
+1. **Comprehensive Health Benefits**: Quality sleep is crucial for overall health, impacting almost every bodily function. It plays a key role in cognitive function, emotional regulation, [[immune system]] performance, and recovery from [[illness]] and [[stress]].
 2. **Disease Prevention**: Poor sleep is linked to an increased risk of numerous chronic conditions, including heart disease, diabetes, obesity, and even some cancers.
 3. **Mental Health**: Adequate sleep supports mental health, reducing the risk of depression, anxiety, and other mood disorders.
 4. **Cellular Repair and Hormone Regulation**: Sleep is a time for the body to repair and regenerate cells, balance hormones, and remove toxins from the brain.
@@ -19,7 +19,7 @@ For someone who is already maintaining a healthy lifestyle with good habits, a v
 2. **Sleep Environment**: Ensure your bedroom is dark, cool, and quiet. Consider using blackout curtains, white noise machines, or earplugs if needed.
 3. **Limit Screen Time**: Avoid screens (phones, tablets, TVs) at least an hour before bedtime to reduce blue light exposure that can interfere with melatonin production.
 4. **Relaxation Techniques**: Engage in calming activities before bed, such as reading, [[meditation]], or a warm bath.
-5. **Avoid Stimulants**: Limit caffeine and heavy meals close to bedtime.
+5. **Avoid Stimulants**: Limit [[caffeine]] and heavy meals close to bedtime.
 
 ### Why Sleep Over Other Factors?
 
@@ -28,11 +28,11 @@ For someone who is already maintaining a healthy lifestyle with good habits, a v
 
 ### Other Considerations
 
-While sleep might be the most impactful area to focus on given your existing healthy habits, it is also beneficial to maintain balance across all aspects of health:
+While [[sleep]] might be the most impactful area to focus on given your existing healthy habits, it is also beneficial to maintain balance across all aspects of health:
 
 - **Diet**: Continue to eat a well-balanced vegetarian diet rich in whole foods, ensuring you get all necessary nutrients.
-- **Exercise**: Maintain regular physical activity, incorporating both aerobic and resistance exercises.
-- **Social Connections**: Keep nurturing your social relationships, as strong social ties are associated with longer life expectancy.
+- **Exercise**: Maintain regular [[physical activity]], incorporating both [[aerobic activity|aerobic]] and resistance exercises.
+- **Social Connections**: Keep nurturing your [[social]] relationships, as strong social ties are associated with [[longevity|longer life expectancy]].
 
 ### Conclusion
 

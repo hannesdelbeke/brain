@@ -1,2 +1,6 @@
+---
+aliases:
+  - vegetarians
+---
 
 [[diet]]

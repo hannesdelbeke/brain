@@ -15,7 +15,7 @@
 - Needing constant contact and support from others
 - A constant need for reassurance that you are good enough
 - Hypersensitivity to rejection and abandonment
-- Using physical closeness, like hugging or holding, as a tool to gain reassurance or reduce anxiety
+- Using physical closeness, like hugging or holding, as a tool to gain reassurance or reduce [[anxiety]]
 ### Fear of abandonment 
 - Worried your partner might leave you (even in the absence of actual signs of relationship problems)
 - High emotional reactivity when someone isn’t available

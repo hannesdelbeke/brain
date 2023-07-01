@@ -6,4 +6,4 @@ hot water
 - reduce oxygen
 - increase [[nitrite]] levels
 - can have bacteria, e.g. [[Legionella]]
-- accelerates corrosion. It dissolves more easily certain substances: copper, iron, nickel, zinc
+- accelerates corrosion. It dissolves more easily certain substances: copper, [[iron]], nickel, [[zinc]]
