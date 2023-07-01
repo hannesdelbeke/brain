@@ -1,0 +1,4 @@
+---
+aliases:
+  - nerve cell
+---
