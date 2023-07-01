@@ -1,6 +1,6 @@
 ## question
 
-how does used by work in GitHub for Python packages?
+how does used by work in [[GitHub]] for Python packages?
 e.g. https://github.com/yjg30737/pyqt-frameless-window
 I understand it reads from requirements.txt
 ```
