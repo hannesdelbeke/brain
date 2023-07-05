@@ -1,4 +1,4 @@
-the [[unreal]] template adds our tool to the toolbar.
+the [[Unreal]] template adds our tool to the toolbar.
 to modify the icon, find an icon in this [repo](https://github.com/EpicKiwi/unreal-engine-editor-icons) and update this line
 ```python
 entry.set_icon('EditorStyle', 'DebugConsole.Icon')
