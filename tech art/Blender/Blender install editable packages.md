@@ -13,7 +13,8 @@ By default, an editable install to the user's modules folder will fail to import
 > [!blender pip addon (recommended)]-
 > ### blender pip addon (recommended)
 > 1. install [[blender pip]] addon
-> 2. in Blender PIP, enter `-e "c:/repos/myrepo"` and click install
+> 2. in Blender PIP, enter `-e c:/repos/myrepo` and click install 
+>    (don't use `"` for the path, not sure how to handle spaces in path)
 > 3. done!
 > 
 > blender pip auto adds the startup script if not there yet.
