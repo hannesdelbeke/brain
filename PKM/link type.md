@@ -6,4 +6,4 @@ e.g. `[[Bob]] is [[Lucy]]'s dad'`
 
 there's a great forum discussion on this [add support for link types](https://forum.obsidian.md/t/add-support-for-link-types/6994/38)
 
-#link
+also see [[Link strength]]
