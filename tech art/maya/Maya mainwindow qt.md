@@ -1,4 +1,4 @@
-Maya uses PySide. The main window is `<PySide2.QtWidgets.QMainWindow(0x2a185b32800, name="MayaWindow")`
+[[Autodesk Maya|Maya]] uses [[PySide]] ([[Qt]]). The main window is `<PySide2.QtWidgets.QMainWindow(0x2a185b32800, name="MayaWindow")`
 
 print top widgets with no parent
 ```python

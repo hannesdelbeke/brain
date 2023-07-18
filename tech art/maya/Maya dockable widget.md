@@ -15,7 +15,7 @@ from shiboken2 import wrapInstance
 
 
 def Dock(Widget, width=300, show=True):
-    """Dock `Widget` into Maya
+    """Dock `Widget` into [[Autodesk Maya|Maya]]
     Arguments:
         Widget (QWidget): Class
         show (bool, optional): Whether to show the resulting dock once created
@@ -59,3 +59,4 @@ def Dock(Widget, width=300, show=True):
 ```
 
 [[Qt]]
+[[Autodesk Maya|Maya]]

@@ -1,4 +1,4 @@
-Max and Maya don't expose their native qt widgets. But you can get them.
+[[Autodesk 3ds Max]] and [[Autodesk Maya|Maya]] don't expose their native qt widgets. But you can get them.
 
 ```python
 
@@ -13,7 +13,7 @@ for widget in QtWidgets.QApplication.topLevelWidgets():
 menu_bar = main_window.findChild(QtWidgets.QMenuBar)
 ```
 
-set tooltips visible in maya
+set tooltips visible in [[Autodesk Maya|Maya]]
 
 TODO this needs updating to get action->menu->child actions... recursive
 

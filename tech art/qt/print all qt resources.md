@@ -1,5 +1,5 @@
 ![[print all qt resources-1676464679534.jpeg]]
-tested in Maya
+tested in [[Autodesk Maya|Maya]]
 Todo: swap to list to support rendering all icons
 ```python
 from PySide2.QtCore import QDirIterator

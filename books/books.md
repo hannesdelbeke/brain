@@ -1,0 +1,7 @@
+[[thomas j frank notes - The Power of Habit]]
+[[thomas j frank notes - hyperfocus]]
+[[The DevOps Handbook]]
+[[Range - Why Generalists Triumph in a Specialized World]]
+[[no silver bullet notes]]
+[[Art of giving feedback]]
+[[A Philosophy of Software Design]]

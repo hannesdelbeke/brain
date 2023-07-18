@@ -1,6 +1,6 @@
 #feedback implies something is wrong with us. We want to be loved and respected.
 
-Seeking feedback better than being given feedback
+Seeking [[feedback]] is better than being given feedback
 
 Feels unhelpful because (p25)
 - Content

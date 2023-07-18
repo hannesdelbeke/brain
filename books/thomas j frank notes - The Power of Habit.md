@@ -317,3 +317,5 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - Have a plan
         - Re-engineer the habit loop so that you’re making choices again.
         - Take the data you have a write down a deliberate choice that you’ll make when the craving strikes
+
+[[books]]

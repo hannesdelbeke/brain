@@ -1,3 +1,5 @@
+[[git]]
+
 change date
 ```bash
 git commit --amend --date="3 day ago"

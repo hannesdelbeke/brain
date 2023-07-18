@@ -1,4 +1,4 @@
-To run a maxscript file
+To run a maxscript file in [[Autodesk 3ds Max]]
 
 Maxscript, Paths need to be double `\\` in maxscript.
 ```

@@ -24,5 +24,5 @@ Markdown [[wikilinks]] aren't supported by GitHub preview, but are heavily used 
 ## Writing content
 keep it short!
 e.g. Compare the following:
-> When I was working on a plugin in maya, I saw that adding ABC to the path did X. 
-> In maya, adding ABC to the path does X.
+> When I was working on a plugin in [[Autodesk Maya|Maya]], I saw that adding ABC to the path did X. 
+> In [[Autodesk Maya|Maya]], adding ABC to the path does X.

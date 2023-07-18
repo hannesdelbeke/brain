@@ -1,4 +1,4 @@
-By default, 3ds Max has a very bright script editor and listener.
+By default, [[Autodesk 3ds Max|3ds Max]] has a very bright script editor and listener.
 
 ## MAXScript System Globals
 You can set some colors with system globals, see [docs](https://help.autodesk.com/view/3DSMAX/2020/ENU/?guid=GUID-D5E7028F-51A9-4B64-B71E-C8C694136089)

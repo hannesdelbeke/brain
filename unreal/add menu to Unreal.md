@@ -6,7 +6,7 @@ If your command launches a window, avoid making a new menu group and place it un
 `Tools` or `Windows`.  If you have a collection of tools, consider making a submenu group instead of a new Menu in the main menu bar. e.g. `Tools/My Collection/The Tool
 
 Extracted these functions from [[unimenu]], see [source](https://github.com/hannesdelbeke/unimenu/blob/main/unimenu/apps/unreal.py)
-You can just copy paste these in your tool to keep it small and contained, for more advanced menus you can use unimenu 
+You can just copy paste these in your tool to keep it small and contained, for more advanced menus you can use [[unimenu]] 
 ```python
 
 def default_root_parent():
