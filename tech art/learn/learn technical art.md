@@ -48,7 +48,7 @@ the goal of a TA is to [[bring value ASAP]]
 	- unreal
 - dcc's
 	- maya
-	- max
+	- [[Autodesk 3ds Max|max]]
 	- blender
 	- houdini
 	- substance painter/designer

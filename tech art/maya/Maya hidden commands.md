@@ -11,3 +11,5 @@ To output a list of functions (without description)
 from maya import cmds
 print(dir(cmds))
 ```
+
+[[Autodesk Maya|Maya]]

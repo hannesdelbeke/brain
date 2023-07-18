@@ -16,8 +16,8 @@ there are also modules to handle compatibility between the qt modules.
 try not to mix and match multiple qt libs. not sure how it would handle a shared QApplication instance. or if you can run 2.
 
 Several apps use QT for their UI
-- 3ds max
-- maya
+- 3ds [[Autodesk 3ds Max|max]]
+- [[Autodesk Maya|Maya]]
 - Krita
 
 #ui

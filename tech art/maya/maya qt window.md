@@ -1,4 +1,4 @@
-to correctly parent your widget to maya
+to correctly parent your widget to [[Autodesk Maya|Maya]]
 - keeping the widget in front when clicking on other maya windows
 - hide the widget from alt tab apps,
 You only need to pass the window flag 
@@ -21,4 +21,4 @@ you might want to make your window dockable in maya: [[Maya dockable widget]]
 
 [[Qt]]
 
-#maya #ui #widget
+ #ui #widget
