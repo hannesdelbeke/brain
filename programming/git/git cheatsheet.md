@@ -2,7 +2,8 @@
 
 change date
 ```bash
-git commit --amend --date="3 day ago"
+git commit --amend --date="3 day ago" --no-edit
+git commit --amend --date="20 July 16:00" --no-edit
 ```
 
 - `:q!` to finish the commit in console
