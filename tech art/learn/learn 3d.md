@@ -5,7 +5,7 @@ It's better to be a good modeler in 1 app, than to know all the 3d packages.
 The most common 3d packages for modelling:
 | app     | cost |
 | ------- | ---- |
-| Blender | Free |
+| [[Blender]] | Free |
 | Maya    | Paid |
 | [[Autodesk 3ds Max|Max]]     | Paid |
 *Most paid 3d software has trails or educational versions you can use to learn.
@@ -13,7 +13,7 @@ The most common 3d packages for modelling:
 Sculpting tends to be more relevant for artists and less for technical artists.
 | app      | cost |
 | -------- | ---- |
-| Blender  | Free |
+| [[Blender]]  | Free |
 | ZBrush   | paid |
 | Mudbox   | paid |
 | Sculptris | Free |
