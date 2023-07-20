@@ -1,5 +1,5 @@
 ## COM scripting
-[[Component Object Model|COM]] allows Python to control Photoshop indirectly.
+[[Component Object Model|COM]] allows Python to control [[Photoshop]] indirectly.
 It's slower than JavaScript, and has a bad reputation for difficult to work with. (From hearsay)
 
 - [COM python tutorial](https://martechwithme.com/photoshop-scripting-with-python-on-windows/) 
