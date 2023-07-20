@@ -44,11 +44,11 @@ the goal of a TA is to [[bring value ASAP]]
 		- understand the dcc's
 - documentation & workflows
 - game engine
-	- unity
-	- unreal
+	- [[unity]]
+	- [[unreal]]
 - dcc's
 	- maya
 	- [[Autodesk 3ds Max|max]]
-	- blender
+	- [[blender]]
 	- houdini
 	- substance painter/designer

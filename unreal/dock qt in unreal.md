@@ -2,7 +2,7 @@ docking a [[Qt]] widget in unreal is not possible by default.
 parenting is.
 
 ## possible workaround
-unreal supports dockable slate widgets.
+[[unreal]] supports dockable slate widgets.
 can we make a slate widget that passes it's coords to QT
 and QT draws a window on top in the same coordinates?
 when we move it, it moves with it.
@@ -16,4 +16,4 @@ when we move it, it moves with it.
 - c++ ref http://www.kehomsforge.com/tutorials/multi/uColumns/part14
 - py https://discourse.techart.online/t/editor-utilitty-widget-menus-in-unreal/12923
 	
-#unreal #slate #widget #ui #toolidea
+#[[unreal]] #slate #widget #ui #toolidea

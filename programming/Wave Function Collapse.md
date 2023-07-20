@@ -11,4 +11,4 @@ The Wave Function Collapse is an algorithm similar to sudoku, can be used in 2D 
 ## references
 - complex 2D GitHub [repo](https://github.com/mxgmn/WaveFunctionCollapse)  an [essay](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/) by Robert Heaton
 - simple how to [video](https://www.youtube.com/watch?v=2SuvO4Gi7uY) by Martin Donald 
-- a `unity wave function collapse` [implementation](https://selfsame.itch.io/unitywfc) on itch.io with lots of GIFs
+- a [[unity]] `wave function collapse` [implementation](https://selfsame.itch.io/unitywfc) on itch.io with lots of GIFs
