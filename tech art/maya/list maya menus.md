@@ -1,8 +1,8 @@
-maya supports both [[Qt]] & build-in functions to make menus.
+[[Autodesk Maya|maya]] supports both [[Qt]] & build-in functions to make menus.
 the build-in functions are simpler, [see](https://groups.google.com/g/python_inside_maya/c/IcMpXXmDnSM/m/5Z7tKEaCCwAJ) 
 
 [[unimenu]] uses the build-in methods
-code to list maya menus.
+code to list [[Autodesk Maya|maya]] menus.
 ```python
 def find_menu(name):
     gMainWindow = maya.mel.eval('$temp=$gMainWindow')
@@ -38,7 +38,7 @@ def find_menu(name):
 > 
 > **Bob White** 
 > Children don't exist yet, at least not until you've opened them once.  
-> Maya's startup would be all the slower if it didn't defer some of those
+> [[Autodesk Maya|Maya]]'s startup would be all the slower if it didn't defer some of those
 > 
 > **Bob White**
 > Plus plugins loading etc...
