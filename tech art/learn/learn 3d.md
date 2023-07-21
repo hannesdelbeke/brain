@@ -6,7 +6,7 @@ The most common 3d packages for modelling:
 | app     | cost |
 | ------- | ---- |
 | [[Blender]] | Free |
-| Maya    | Paid |
+| [[Autodesk Maya|Maya]]    | Paid |
 | [[Autodesk 3ds Max|Max]]     | Paid |
 *Most paid 3d software has trails or educational versions you can use to learn.
 

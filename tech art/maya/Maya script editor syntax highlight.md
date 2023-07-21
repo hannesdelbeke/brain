@@ -1,4 +1,4 @@
-By default, the Maya script editor doesn't print in colors.
+By default, the [[Autodesk Maya|Maya]] script editor doesn't print in colors.
 To quickly spot errors, the console should show:
 - red for errors, yellow for warnings.
 - Bonus: color variable names & functions.

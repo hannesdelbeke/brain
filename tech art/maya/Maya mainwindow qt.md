@@ -10,5 +10,5 @@ for widget in QtWidgets.QApplication.topLevelWidgets():
 ```
 
 widgets need to be parented to the main window 
-- so they don't lose focus and disappear behind maya when using maya. 
+- so they don't lose focus and disappear behind [[Autodesk Maya|maya]] when using [[Autodesk Maya|maya]]. 
 - and aren’t garbage collected.
