@@ -8,9 +8,9 @@ Find some nice references and break down what makes them stand out compared to o
 #reference
    
 ## Everything needs to have a purpose.
-A good Maya script on your folio shows the viewer that you know 
-- Maya
-- Python in Maya
+A good [[Autodesk Maya|Maya]] script on your folio shows the viewer that you know 
+- [[Autodesk Maya|Maya]]
+- Python in [[Autodesk Maya|Maya]]
 - solving a particular problem
 - understanding UX, a nice workflow for artists with simple UI
 
