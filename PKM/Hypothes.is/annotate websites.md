@@ -9,7 +9,7 @@ And an easy to install chrome extension
 - https://nimbusweb.me (free unlimited tier up to 20 members) 16k ⭐ on chrome, appears to be mainly oriented around screenshots and filming
 - https://memex.garden/ 90⭐ free (for now), chrome extension, [open source](https://github.com/WorldBrain/Memex)
 	- [template](https://www.reddit.com/r/ObsidianMD/comments/ohfow6/memex_export_to_obsidian_template/) to manual copy notes to [[Obsidian]] 
-	- there's a backup .js tool, [repo](https://github.com/WorldBrain/local-backup-server/blob/master/HTTPKoaServer.js)
+	- there's a [[backup]] .js tool, [repo](https://github.com/WorldBrain/local-backup-server/blob/master/HTTPKoaServer.js)
 - context-note, a bad [chrome extension](https://chrome.google.com/webstore/detail/context-note/enmeffcefbiehghanidhebgiccljmncl), local, export notes to json
 
 ### Premium (or limited features on free)
