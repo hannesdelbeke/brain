@@ -10,7 +10,7 @@ There's a git extension for [[Obsidian]], see [[setup Obsidian Git]]
 ## Dropbox & OneDrive
 not yet tested with Obsidian, should be pretty smooth and support mobile.
 
-#backup #cloud #redundancy
+#[[backup]] #cloud #redundancy
 
 %%
 Currently I've only got 1 backup in the cloud, and 1 on device. 
