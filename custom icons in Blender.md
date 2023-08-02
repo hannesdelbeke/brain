@@ -23,4 +23,11 @@ icon = preview_collection.load(
 icon_ID = icon.icon_id
 icon = preview_collection["icon_name"]  # icon can be loaded by name
 ```
+the preview needs to be deleted, else we get a warning
+```
+ResourceWarning: <ImagePreviewCollection id=0x26e32cb6de0[1], <super: <class 'ImagePreviewCollection'>, <ImagePreviewCollection object>>>: left open, remove with 'bpy.utils.previews.remove()'
+```
 
+```python
+bpy.utils.previews.remove(preview)
+```
