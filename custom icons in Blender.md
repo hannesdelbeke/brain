@@ -1,6 +1,6 @@
-by default Blender only supports icons in the [icon items](https://docs.blender.org/api/current/bpy_types_enum_items/icon_items.html) enum 
+By default Blender only supports icons in the [icon items](https://docs.blender.org/api/current/bpy_types_enum_items/icon_items.html) enum 
 
-Operator takes 2 kwargs (e.g. see [the UILayout docs](https://docs.blender.org/api/current/bpy.types.UILayout.html))
+Creating an operator takes 2 kwargs (e.g. see [the UILayout docs](https://docs.blender.org/api/current/bpy.types.UILayout.html))
 - `icon_value` is the icon ID
 - `icon` is the icon name from the default icon items enum
 
@@ -10,6 +10,8 @@ self.layout.operator(id_name, icon_value=icon_name)  # icon ID (int)
 self.layout.operator(id_name, icon=icon_name)  # icon enum name (string)
 ```
 
+This creates a `preview` with an `icon_id`, not an `icon` with an `icon_name`.
+The `icon_id` can be passed to `icon_value` to be used as custom icon.
 ```python
 from bpy.utils import previews
 
@@ -22,12 +24,8 @@ icon = preview_collection.load(
 
 icon_ID = icon.icon_id
 icon = preview_collection["icon_name"]  # icon can be loaded by name
-```
-the preview needs to be deleted, else we get a warning
-```
-ResourceWarning: <ImagePreviewCollection id=0x26e32cb6de0[1], <super: <class 'ImagePreviewCollection'>, <ImagePreviewCollection object>>>: left open, remove with 'bpy.utils.previews.remove()'
+
+bpy.utils.previews.remove(preview_collection)  # delete preview to avoid warning
 ```
 
-```python
-bpy.utils.previews.remove(preview)
-```
+Custom icon names are not included when we [[print blender icon names]].
