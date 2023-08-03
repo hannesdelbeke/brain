@@ -1,8 +1,16 @@
+---
+alias: print all qt icons
+---
+
 ![[print all qt resources-1676464679534.jpeg]]
-tested in [[Autodesk Maya|Maya]]
+tested in [[Autodesk Maya|Maya]] & pycharm
+
 Todo: swap to list to support rendering all icons
 ```python
 from PySide2.QtCore import QDirIterator
+from PySide2.QtWidgets import QApplication, QGridLayout, QPushButton, QStyle, QWidget
+import PySide2.QtGui  # QtGui needs to be imported before we iter all resources, alse resources is empty (sometimes?)
+
 
 it = QDirIterator(":", QDirIterator.Subdirectories)
 
@@ -13,11 +21,7 @@ while it.hasNext():
         all_resource_paths.append(value)
 
 
-
-import sys
-
-from PySide2.QtWidgets import QApplication, QGridLayout, QPushButton, QStyle, QWidget
-import PySide2.QtGui
+app = QApplication()
 
 class Window(QWidget):
     def __init__(self):
@@ -38,6 +42,8 @@ class Window(QWidget):
 
 w = Window()
 w.show()
+
+app.exec_()
 ```
 
 [[Qt]]
