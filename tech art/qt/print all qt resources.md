@@ -46,6 +46,12 @@ w.show()
 app.exec_()
 ```
 
+this displays the resource path when you hover over the icon.
+however you can also access these paths through QStyle
+```python
+my_button.setIcon(QApplication.style().standardIcon(QStyle.SP_DirIcon))
+        
+```
 [[Qt]]
 
 #icons
