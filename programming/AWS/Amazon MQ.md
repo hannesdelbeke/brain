@@ -1,0 +1,11 @@
+# Amazon MQ
+Amazon MQ is a managed message broker service for Apache ActiveMQ and RabbitMQ that makes it
+easy to set up and operate message brokers in the cloud. Message brokers allow different software
+systems–often using different programming languages, and on different platforms–to communicate
+and exchange information. Amazon MQ reduces your operational load by managing the provisioning,
+setup, and maintenance of ActiveMQ and RabbitMQ, popular open-source message brokers. Connecting
+your current applications to Amazon MQ is easy because it uses industry-standard APIs and protocols for
+messaging, including JMS, NMS, AMQP, STOMP, MQTT, and WebSocket. Using standards means that in
+most cases, there’s no need to rewrite any messaging code when you migrate to AWS.
+
+[[AWS Application Integration]]
