@@ -60,6 +60,18 @@ https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
     - list item b
 ```
 
+> [!mkdocs tabber format in Obsidian]-
+> === "Tab 1"
+>     Markdown **content**.
+> 
+>     Multiple paragraphs.
+> 
+> === "Tab 2"
+>     More Markdown **content**.
+> 
+>     - list item a
+>     - list item b
+
 ### tabber CSS hack in Obsidian
 - someone made a hacky tabber solution for Obsidian
   mixing HTML in the text, and using CSS to render the tabs.
