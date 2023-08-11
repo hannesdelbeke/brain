@@ -4,6 +4,6 @@
 [[flowmap]]
 [[git]]
 [[MultiMarkdown]]
-[[Universal Scene Description]]
+[[public-brain/gamedev/Universal Scene Description]]
 [[CSS all]]
 [[Quill.js]]
