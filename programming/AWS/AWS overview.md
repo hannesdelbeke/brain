@@ -34,7 +34,7 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 ### AWS Command Line Interface
 [[AWS Command Line Interface]]
 ### Software Development Kits
-[[Software Development Kits]]
+[[AWS Software Development Kits]]
 ### Analytics
 [[Amazon Athena]]
 [[Amazon CloudSearch]]
@@ -77,8 +77,8 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[AWS Application Cost Profiler]]
 [[AWS Cost Explorer]]
 [[AWS Budgets]]
-[[Reserved Instance (RI) Reporting]]
-[[Savings Plans]]
+[[AWS Reserved Instance (RI) Reporting]]
+[[AWS Savings Plans]]
 ## compute services
 [[Amazon EC2]]
 [[Amazon Lightsail]]
@@ -89,7 +89,7 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[AWS Lambda]]
 [[AWS Outposts]]
 [[AWS Wavelength]]
-[[VMware Cloud on AWS]]
+[[AWS VMware Cloud]]
 # other
 ...
 
