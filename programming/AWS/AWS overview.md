@@ -29,16 +29,12 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 • Satellite
 • Security, Identity, and Compliance
 • Storage
-
 ### AWS Management Console
 [[AWS Management Console]]
-
 ### AWS Command Line Interface
 [[AWS Command Line Interface]]
-
 ### Software Development Kits
 [[Software Development Kits]]
-
 ### Analytics
 [[Amazon Athena]]
 [[Amazon CloudSearch]]
@@ -57,7 +53,6 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[AWS Glue]]
 [[AWS Lake Formation]]
 [[Amazon Managed Streaming for Apache Kafka]]
-
 ### Application Integration
 [[AWS Step Functions]]
 [[Amazon AppFlow]]
@@ -67,13 +62,35 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[Amazon Simple Notification Service]]
 [[Amazon Simple Queue Service]]
 [[Amazon Simple Workflow Service]]
-
 ### AR and VR
 [[Amazon Sumerian]]
-
 ### Blockchain
 [[Amazon Managed Blockchain]]
+## Business Applications
 
+[[Alexa for Business]]
+[[Amazon Chime]]
+[[Amazon SES]]
+[[Amazon WorkDocs]]
+[[Aazon WorkMail]]
+## Cloud Financial Management
+[[AWS Application Cost Profiler]]
+[[AWS Cost Explorer]]
+[[AWS Budgets]]
+[[Reserved Instance (RI) Reporting]]
+[[Savings Plans]]
+## compute services
+[[Amazon EC2]]
+[[Amazon Lightsail]]
+[[AWS App Runner]]
+[[AWS Batch]]
+[[AWS Elastic Beanstalk]]
+[[AWS Fargate]]
+[[AWS Lambda]]
+[[AWS Outposts]]
+[[AWS Wavelength]]
+[[VMware Cloud on AWS]]
+# other
 ...
 
 ### Front-End Web & Mobile Services
@@ -82,8 +99,9 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[public-brain/programming/AWS/AWS Amplify]]
 [[AWS Device Farm]]
 [[AWS AppSync]]
-
 # other
+...
 
 - [ ] #todo extract more services from 
 https://d0.awsstatic.com/whitepapers/aws-overview.pdf
+

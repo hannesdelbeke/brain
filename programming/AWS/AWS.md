@@ -1,5 +1,7 @@
 ---
-alias: Amazon Web Services
+aliases: 
+- Amazon web services
+- AWS services
 ---
 
 Amazon Web Services (AWS) is the world’s most comprehensive and broadly adopted cloud
