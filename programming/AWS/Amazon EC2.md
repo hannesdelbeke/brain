@@ -1,14 +1,7 @@
 # Amazon EC2
-Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute
-capacity in the cloud. It is designed to make web-scale computing easier for developers.
+Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides secure, resizable compute capacity in the cloud. It is designed to make web-scale computing easier for developers.
 The simple web interface of Amazon EC2 allows you to obtain and configure capacity with minimal
-friction. It provides you with complete control of your computing resources and lets you run on Amazon’s
-proven computing environment. Amazon EC2 reduces the time required to obtain and boot new server
-instances (called Amazon EC2 instances) to minutes, allowing you to quickly scale capacity, both up and
-down, as your computing requirements change. Amazon EC2 changes the economics of computing by
-allowing you to pay only for capacity that you actually use. Amazon EC2 provides developers and system
-administrators the tools to build failure resilient applications and isolate themselves from common
-failure scenarios.
+friction. It provides you with complete control of your computing resources and lets you run on Amazon’s proven computing environment. Amazon EC2 reduces the time required to obtain and boot new server instances (called Amazon EC2 instances) to minutes, allowing you to quickly scale capacity, both up and down, as your computing requirements change. Amazon EC2 changes the economics of computing by allowing you to pay only for capacity that you actually use. Amazon EC2 provides developers and system administrators the tools to build failure resilient applications and isolate themselves from common failure scenarios.
 
 [source](https://d0.awsstatic.com/whitepapers/aws-overview.pdf)
 

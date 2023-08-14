@@ -1,7 +1,0 @@
-# Reserved Instance (RI) Reporting
-AWS provides a number of RI-specific cost management solutions out-of-the-box to help you better
-understand and manage your RIs. Using the RI Utilization and Coverage reports available in AWS Cost
-Explorer, you can visualize your RI data at an aggregate level or inspect a particular RI subscription. To
-access the most detailed RI information available, you can leverage the AWS Cost & Usage Report. You
-can also set a custom RI utilization target via AWS Budgets and receive alerts when your utilization drops
-below the threshold you define.
