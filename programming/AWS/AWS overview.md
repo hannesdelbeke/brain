@@ -76,5 +76,14 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 
 ...
 
+### Front-End Web & Mobile Services
+[[Amazon Location Service]]
+[[Amazon Pinpoint]]
+[[public-brain/programming/AWS/AWS Amplify]]
+[[AWS Device Farm]]
+[[AWS AppSync]]
+
+# other
+
 - [ ] #todo extract more services from 
 https://d0.awsstatic.com/whitepapers/aws-overview.pdf
