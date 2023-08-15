@@ -1,0 +1,1 @@
+(A "server" is software or a hardware device that accepts and responds to requests made over a network.)

@@ -1,0 +1,2 @@
+## CORS
+**CORS** – The CORS browser security feature uses HTTP headers to tell a browser to allow a given web application running at one origin (domain) to access selected resources from a server at a different origin.
