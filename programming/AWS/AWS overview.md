@@ -30,7 +30,7 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 • Security, Identity, and Compliance
 • Storage
 ### AWS Management Console
-[[AWS Management Console]]
+[[public-brain/programming/AWS/AWS Management Console]]
 ### AWS Command Line Interface
 [[AWS Command Line Interface]]
 ### Software Development Kits
@@ -101,6 +101,28 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[AWS AppSync]]
 # other
 ...
+
+# Networking and Content Delivery
+[[Amazon API Gateway]]
+[[Amazon CloudFront]]
+[[Amazon Route 53]]
+[[Amazon VPC]]
+[[AWS App Mesh]]
+[[AWS Cloud Map]]
+[[AWS Direct Connect]]
+[[AWS Global Accelerator]]
+[[AWS PrivateLink]]
+[[AWS Transit Gateway]]
+[[AWS VPN]]
+[[Elastic Load Balancing]]
+
+# other
+...
+
+
+
+
+
 
 - [ ] #todo extract more services from 
 https://d0.awsstatic.com/whitepapers/aws-overview.pdf
