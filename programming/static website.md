@@ -1,0 +1,1 @@
+**Static website –** A static website has fixed content, unlike dynamic websites. Static websites are the most basic type of website and are the easiest to create. All that is required is creating a few HTML pages and publishing them to a web server.

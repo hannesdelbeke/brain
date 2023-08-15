@@ -1,0 +1,1 @@
+**Web hosting** **–** Provides the technologies/services needed for the website to be viewed on the internet.

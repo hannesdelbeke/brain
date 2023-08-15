@@ -1,0 +1,1 @@
+**Serverless function –** Piece of code that will be executed by a compute service, on demand.
