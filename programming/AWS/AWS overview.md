@@ -119,9 +119,15 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 # other
 ...
 
-
-
-
+# Storage
+[[Amazon Elastic Block Store]]
+[[Amazon Elastic File System]]
+[[Amazon FSx for Lustre]]
+[[Amazon FSx for Windows File Server]]
+[[Amazon Simple Storage Service]]
+[[Amazon S3 Glacier]]
+[[AWS Backup]]
+[[AWS Storage Gateway]]
 
 
 - [ ] #todo extract more services from 
