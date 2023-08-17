@@ -1,4 +1,4 @@
-CSS & HTML classes use the BEM convention for their naming convention 
+[[CSS]] & [[HTML]] classes use the BEM convention for their naming convention 
 This blog [1] explains it well
 
 ## BEM convention
@@ -30,7 +30,7 @@ These are all class names for an HTML element
 
 ## Renaming breaks JavaScript 
 
-To prevent the site breaking when renaming classes without knowing you have to rename in JavaScript , explicitly start class names with `js-*` if referenced in JavaScript.
+To prevent the site breaking when renaming classes without knowing you have to rename in JavaScript , explicitly start class names with `js-*` if referenced in [[JavaScript]].
 
 [[A Philosophy of Software Design]]: Non explicit references can lead to complex code
 
@@ -47,7 +47,6 @@ const nav = document.querySelector('.js-site-navigation')
 ## Spaces in class name
 A class name **can’t** have spaces. A space-separated string in your `class` attribute, gives your element _several_ classes.
 
-
-#CSS #naming-convention #HTML
+ #naming-convention
 
 [1]: https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849
