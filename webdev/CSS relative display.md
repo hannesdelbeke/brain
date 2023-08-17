@@ -20,4 +20,4 @@ e.g. to draw an element next to another without taking up any space
 <body>
 ```
 
-#HTML  #CSS
+[[HTML]] [[CSS]]

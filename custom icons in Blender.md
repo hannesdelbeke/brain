@@ -1,4 +1,4 @@
-By default Blender only supports icons in the [icon items](https://docs.blender.org/api/current/bpy_types_enum_items/icon_items.html) enum 
+By default [[Blender]] only supports icons in the [icon items](https://docs.blender.org/api/current/bpy_types_enum_items/icon_items.html) enum 
 
 Creating an operator takes 2 kwargs (e.g. see [the UILayout docs](https://docs.blender.org/api/current/bpy.types.UILayout.html))
 - `icon_value` is the icon ID

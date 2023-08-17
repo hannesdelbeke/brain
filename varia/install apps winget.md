@@ -1,3 +1,5 @@
+personal [[winget]] app install list
+
 ```batch
 winget install SlackTechnologies.Slack
 winget install DebaucheeOpenSourceGroup.Barrier
@@ -25,3 +27,5 @@ winget install Microsoft.dotnetRuntime.3-x64
 winget install rocksdanister.LivelyWallpaper
 ```
 #winget
+
+[[package management]]

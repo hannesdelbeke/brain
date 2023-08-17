@@ -11,7 +11,7 @@
 	- documentation
 	- planning
 	- meetings
-	- 1 on 1 assistance
+	- [[1 on 1]] assistance
 	- community
 	- educating your team
 
@@ -52,3 +52,5 @@ the goal of a TA is to [[bring value ASAP]]
 	- [[blender]]
 	- houdini
 	- substance painter/designer
+
+- [[thumbnails scroll window]]
