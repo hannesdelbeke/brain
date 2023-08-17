@@ -1,4 +1,4 @@
-To enable a [[Blender addons|Blender add-on]] with [[Python]], use
+To enable a [[Blender addon|Blender add-on]] with [[Python]], use
 ```python
 import addon_utils
 addon_utils.enable(addon_name)
