@@ -1,3 +1,7 @@
+---
+alias: package manager
+---
+
 package management is about everything related to managing your packages.
 - How are they distributed to people's computer?
 - how are dependencies installed
@@ -5,5 +9,6 @@ package management is about everything related to managing your packages.
 - is it a technical process through commandline, or does it has a nice simple UI?
 
 
-windows has winget
-Fusion studios has reactor
+windows has [[winget]]
+Fusion studios has [[reactor]]
+mac brew

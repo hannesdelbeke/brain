@@ -25,7 +25,7 @@ start ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1
 ### Other
 [official docs](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
 
-it's a relatively new (2020) package manager for windows and likely will replace chocolatey & scoop. Atm chocolatey is still more capable IMO
+it's a relatively new (2020) [[package manager]] for windows and likely will replace chocolatey & scoop. Atm chocolatey is still more capable IMO
 
 ### Create new distributions
 quickly create installation scripts for public software on
