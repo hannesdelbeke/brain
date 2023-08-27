@@ -1,5 +1,5 @@
 ---
-alias: print all qt icons
+alias: print all default native qt icons
 ---
 
 ![[print all qt resources-1676464679534.jpeg]]
@@ -47,7 +47,9 @@ app.exec_()
 ```
 
 this displays the resource path when you hover over the icon.
-however you can also access these paths through QStyle
+however you can also access these paths through `QStyle` 
+
+code for a folder 📁 icon
 ```python
 my_button.setIcon(QApplication.style().standardIcon(QStyle.SP_DirIcon))
         
