@@ -23,4 +23,6 @@ def load_config(p:str) -> dict
         return {}
 ```
 
-#python #config #json #YAML
+[[Python]] #config [[json]] [[YAML]]
+
+Almost identical with this Python module [config-manager](https://github.com/afxentios/config-manager/blob/master/config_manager/config_manager.py)
