@@ -14,6 +14,8 @@ Pros
 ## My issues with Pyblish
 Main issues
 - [[Pyblish plugins are hardcoded to the project or studio]] preventing easy plugin reuse
+- Pyblish imports plugins but doesn't add their folder to the env
+	- this means plugins that import anything not setup in your env wont work
 - [[Pyblish has no explicit plugin control]]
 - [[Pyblish action and plugin have no direct link]]
 - UI/UX is not art friendly (created [[pyblish simple]])
