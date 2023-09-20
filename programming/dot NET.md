@@ -2,8 +2,7 @@
 aliases:
   - .NET
 ---
-
-3 flavors:
+.NET is a collection of assemblies (usually libraries) and comes in 3 flavors:
 - .NET Framework
 - .NET Core
 - Xamarin (Mono.Net) 
@@ -29,7 +28,8 @@ apps build require .NET Framework to be preinstalled.
 
 ## `c#`
 compiles source code to [[Common intermediate Language|CIL]] during **compile time**
-CIL can be found in the .exe and .dll binaries.
+the C Sharp Compiler `csc.exe`lives in the .NET Framework install folder.
+CIL can be found in the .exe and .dll binaries. [[assembly]]
 each machine gets the same assembly (.exe file).
 but machines and CPUs are different, so on execution the [[Common Language Runtime|CLR]] translates the CIL to instructions for the machine it runs on. This execution is called **runtime**.
 
@@ -49,7 +49,7 @@ b3
 end
 
 b1(c# code)--> |c# compiler|b2(CIL code)-->|CLR|b3(native code)
-c1(compile time)-->c2(runtime)
+c1(design time)-->c2(compile time)-->c3(runtime)
 ```
 
 #### terms
