@@ -4,7 +4,7 @@ aliases:
 ---
 ## `C#`
 compiles source code to [[Common intermediate Language|CIL]] during **compile time**
-the C Sharp Compiler `csc.exe`lives in the .NET Framework install folder.
+the C Sharp Compiler `csc.exe`lives in the [[dot NET|.NET]] Framework install folder.
 CIL can be found in the .exe and .dll binaries. [[assembly]]
 each machine gets the same assembly (.exe file).
 but machines and CPUs are different, so on execution the [[Common Language Runtime|CLR]] translates the CIL to instructions for the machine it runs on. This execution is called **runtime**.

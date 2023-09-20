@@ -1,6 +1,7 @@
 ---
 aliases:
   - .NET
+  - .NET Framework
 ---
  . NET is the framework and runtime that [[C sharp|C#]] programs are built with and run on
  .NET is a collection of [[assembly|assemblies]] (usually libraries) and comes in 3 flavors:
