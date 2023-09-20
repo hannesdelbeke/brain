@@ -1,3 +1,7 @@
+---
+aliases:
+  - assemblies
+---
 
 
 in [[dot NET|.NET]]:
