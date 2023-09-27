@@ -36,7 +36,7 @@ I'd add sharing code and libraries to this, e.g. open source, package repos, ..
 	- argues flow chart is a bad representation [^8], devs draw flowcharts after, not before
 	- screens are to small. `dated, now you can zoom easily e.g. on Miro`
 	- difficult to visualize
-	These days node-based programming has it's place, e.g. [[Unreal]]'s material editor & blueprints. It does often result in messy spaghetti though.
+	These days node-based programming has it's place, e.g. [[Unreal]]'s material editor & [[Blueprints Visual Scripting|blueprints]]. It does often result in messy spaghetti though.
 - **Program verification**: testing & bug fixing. Unit testing doesn't save much labor, since you need to write & maintain the tests.
 - **Environments and tools** expect marginal improvements.
 - **Workstations** Better GPU, CPU Ram won't reduce think-time for a dev. Slightly dated since GPU advancements lead to AI, which significantly sped up dev process. Increase of hardware also enabled cloud.
