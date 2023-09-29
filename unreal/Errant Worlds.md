@@ -1,4 +1,4 @@
-Errant Worlds is a set of Unreal Engine plugins that leverage procedural generation in order to facilitate creation of large and beautiful worlds.
+Errant Worlds is a set of [[Unreal Engine plugins]] that leverage procedural generation in order to facilitate creation of large and beautiful worlds.
 
 ## Biomes
 Procedural placement of foliage and gameplay elements
