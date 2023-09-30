@@ -5,6 +5,7 @@ aliases:
 ---
 a package installer / manager for [[Python]]
 the public package repo is https://pypi.org/
+[official docs](https://pip.pypa.io/en/stable/)
 
 usually ships with Python, sometimes not.
 - [ ] #TODO instructions how to install
@@ -18,3 +19,6 @@ usually ships with Python, sometimes not.
 > [!example]-
 > e.g. if `pip.exe` and your packages live in a [[Autodesk Maya|Maya]] or [[Blender]] folder, you might assume pip install from within that app would install to the same site-packages folder. But instead it installs to `%appdata%/Python/...` 
 > - [ ] #todo fix path example
+
+local install
+`python -m pip install -e path/to/SomeProject`
