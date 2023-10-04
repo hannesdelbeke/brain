@@ -20,4 +20,14 @@ Several apps use QT for their UI
 - [[Autodesk Maya|Maya]]
 - Krita
 
+if QScroll area has layout issues with content, ensure it is `setWidgetResizable`
+```python
+scroll_area = QScrollArea(self)  
+scroll_area.setWidgetResizable(True)
+```
+min size of child widgets also matters
+
+
+
+
 #ui
