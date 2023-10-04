@@ -35,4 +35,4 @@ but qt returns 56 height. likely the title bar height
 measure with powertoys returns 28 pixels height
 windows, 150% scale on `3840 x 2160px`
 
-[[Blender]]
+[[Blender Python]]
