@@ -18,6 +18,7 @@ Main issues
 	- this means plugins that import anything not setup in your env wont work
 - [[Pyblish has no explicit plugin control]]
 - [[Pyblish action and plugin have no direct link]]
+- [[Pyblish UI is not artist friendly]]
 - UI/UX is not art friendly (created [[pyblish simple]])
 	- Pyblish UI confuses artists
 	- show what went wrong, filter by instance type e.g. mesh, or textures
