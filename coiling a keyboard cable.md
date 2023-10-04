@@ -14,7 +14,6 @@ I like things with a story. Only a few things, so I remember where they came fro
 
 #repurpose #functionality #minimalism #mechanicalkeyboard
 
-[[materialism]] because I desire something materialistic
 [[minimalism]] because it reduces cable clutter, making it more visually pleasing
 [[cable management]]
 
