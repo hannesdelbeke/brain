@@ -34,6 +34,18 @@ e.g. the `appdata/roaming/.../addons` path is not exposed to [[python pip|pip]],
 > ```
 > 
 
+### ✅ pass env vars 
+we can't pass the env, but we can pass PYTHONPATH or PATH
+this worked. see [PR](https://github.com/hannesdelbeke/blender_pip/pull/2/)
+```python
+joined_paths = os.pathsep.join(sys.path)
+env_var = os.environ.get("PYTHONPATH")
+if env_var:
+	os.environ["PYTHONPATH"] = f"{env_var}{os.pathsep}{joined_paths}"
+else:
+	os.environ["PYTHONPATH"] = joined_paths
+```
+The env var is auto passed to `subprocess.run`
 
 ### ❌ pass the env containing `sys.paths`
 [pass the ENV](https://stackoverflow.com/questions/2231227/python-subprocess-popen-with-a-modified-environment) to the subprocess
@@ -46,12 +58,8 @@ untested
 - also will fix other issues e.g. with `pip install upgrade`
 #### cons
 - adding a `.pth` file  in `program files/blender` might need admin privilege
-- we have to manually reecreate the env, instead of not worry about it and rely on blender for this
+- we have to manually recreate the env, instead of not worry about it and rely on blender for this
 - unsure if blender uses sitedir by default. 
-
-### ✅ pass env vars 
-we can't pass the env, but we can pass PYTHONPATH or PATH
-this worked. see [PR](https://github.com/hannesdelbeke/blender_pip/pull/2/)
 
 ### manually parsing env vars
 #### CON
