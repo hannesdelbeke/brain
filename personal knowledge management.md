@@ -2,3 +2,5 @@
 aliases:
   - PKM
 ---
+
+[[second brain]]

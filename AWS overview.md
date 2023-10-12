@@ -68,11 +68,11 @@ extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-o
 [[Amazon Managed Blockchain]]
 ## Business Applications
 
-[[Alexa for Business]]
+[[Amazon Alexa for Business]]
 [[Amazon Chime]]
 [[Amazon SES]]
 [[Amazon WorkDocs]]
-[[Aazon WorkMail]]
+[[Amazon WorkMail]]
 ## Cloud Financial Management
 [[AWS Application Cost Profiler]]
 [[AWS Cost Explorer]]

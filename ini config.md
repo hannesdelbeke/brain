@@ -1,4 +1,4 @@
-in Python you can make an ini config with [configparser](https://docs.python.org/3/library/configparser.html)
+in [[Python]] you can make an ini config with [configparser](https://docs.python.org/3/library/configparser.html)
 
 ```python
 import configparser
