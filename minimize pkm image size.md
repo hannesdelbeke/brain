@@ -11,8 +11,9 @@ I try avoid using images in my notes. Mainly because of their size. I don't want
 ## next
 The quality of my notes could be better if I added a quick sketch.
 - [ ] how to add lots of image, without introducing issues with reposize on git
-- [ ] figure out a way to sketch vector art
+- [x] figure out a way to sketch vector art
       vectors tend to be smaller than pixels.
+      [[Excelidraw]] does this well, see [[Excalidraw test embed]]. image is only a few kb.
 - how to handle images in the git submodules
 - It would be great to control my own data instead of hosting it on [[social media]]. store my photography on a server, instead of on [[Instagram]]. This would let me link to my own personal images to write a diary connected with my pictures.
 	- requires a significant time investment figuring out the logistics and infrastructure
