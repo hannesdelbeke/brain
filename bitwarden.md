@@ -1,5 +1,7 @@
-bitwarden is a free password manager.
+bitwarden is a free [[password manager]].
 
 share passwords
 
 [[bitwarden free company strategy]]
+[[password]]
+[[security]]

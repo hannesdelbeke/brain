@@ -18,8 +18,10 @@ I discovered this nice PKM, but I don't know where to find the authors core inte
 *The author has a [changelog](https://anthonyamar.fr/%CE%A9+Changelog/~+Changelog), which wasn't easy to find. But it's manually updated, and therefor outdated.*
 
 Example done well: A blog with both a [popular](https://nesslabs.com/popular), [best articles](https://nesslabs.com/best), and [latest](https://nesslabs.com/articles) page 
+see [[most popular]]
 
 ---
 PS: this is less about note taking and more about publishing said notes.
 
 [[UX]]
+[[discovery]]
