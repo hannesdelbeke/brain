@@ -1,4 +1,5 @@
 see [Dock.py](https://gist.github.com/mottosso/c853b6fd9fb963e6f3e7c7a4f53b649d)
+also see [maya-dockable_window.py](https://gist.github.com/Kif11/cdd4a68a2133aa42a582)
 %% would be nice of gists were embeddable, iframe? %%
 
 use like this
