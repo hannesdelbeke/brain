@@ -9,3 +9,6 @@ Plugget is not an [[environment management|environment manager]]
 Private notes
 - [[plugget changelog]]
 - [[plugget RAW dev notes]]
+- [GITHUB PROJECT](https://github.com/users/hannesdelbeke/projects/5) PLANNING
+- plugget package [manifest repo](https://github.com/hannesdelbeke/plugget-pkgs) 
+- plugget repo: [plugget](https://github.com/hannesdelbeke/plugget) 
