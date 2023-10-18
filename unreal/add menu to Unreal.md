@@ -39,4 +39,4 @@ def add_cmd_to_menu(label=None, command=None, tooltip=None, icon=None):
 
 this is similar to [[add button to unreal toolbar]]
 
-used in [[unreal]] python template [[unreal python plugin template]]
+used in [[Unreal]] python template [[Unreal python plugin template]]

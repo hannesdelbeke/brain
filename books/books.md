@@ -5,3 +5,4 @@
 [[no silver bullet notes]]
 [[Art of giving feedback]]
 [[A Philosophy of Software Design]]
+[[Algorithms to Live By]]

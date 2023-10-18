@@ -2,7 +2,7 @@
 - [ ] these are research notes that could use a cleanup #todo
 
 when using `python -m pip` , certain paths that are added dynamically on blender startup, are ignored.
-e.g. the `appdata/roaming/.../addons` path is not exposed to [[python pip|pip]], since it's dynamically added on Blender startup.
+e.g. the `appdata/roaming/.../addons` path is not exposed to [[Python pip|pip]], since it's dynamically added on Blender startup.
 
 > [!print paths in blender]-
 > ```python

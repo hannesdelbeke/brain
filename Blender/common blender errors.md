@@ -8,7 +8,7 @@ crash when click menu
 no QApplication
 	make one if not exists
 	https://github.com/readyplayerme/blender-deform-test/issues/1
-	#todo move this to its own note, and link in [[blender]] deform test so its private 1way link
+	#todo move this to its own note, and link in [[Blender]] deform test so its private 1way link
 	https://github.com/plugget/plugget-qt/blob/main/plugget_qt/__init__.py
 
 [[Blender Python]]

@@ -8,5 +8,5 @@ notes on how to edit blueprints in [[Unreal]] with [[Python]]
 - [Get root widget of UMG in blueprints?](https://forums.unrealengine.com/t/get-root-widget-of-umg-in-blueprints/364290)
 - [Get parent UserWidget of Widget](https://forums.unrealengine.com/t/get-parent-userwidget-of-widget/476221)
 - [Change component variables on Blueprint class via Python](https://forums.unrealengine.com/t/change-component-variables-on-blueprint-class-via-python/152584)
-- 3rd party [[unreal]] slate UI Python API https://github.com/cgerchenhp/UE_TAPython_Plugin_Release
+- 3rd party [[Unreal]] slate UI Python API https://github.com/cgerchenhp/UE_TAPython_Plugin_Release
 
