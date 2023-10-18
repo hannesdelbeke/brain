@@ -37,6 +37,7 @@ Don't spend more time on notes than work.
 - [ ] [[STYLE improve callout formatting]]
 - [ ] [[Obsidian Tabber]] 
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
+- [ ] [[Obsidian auto complete]]
 
 related to improvements:
 plugin development
