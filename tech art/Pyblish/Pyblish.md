@@ -1,5 +1,5 @@
 Pyblish let's you create content pipelines, and is aimed at VFX & games.
-It's a plugin based system, that's dcc independent, so you can use the same pipeline in different apps, such as [[Autodesk 3ds Max|max]], ,maya, [[blender]], substance, …
+It's a plugin based system, that's dcc independent, so you can use the same pipeline in different apps, such as [[Autodesk 3ds Max|max]], ,maya, [[Blender]], substance, …
 
 It's great especially for validation, so artists can run the tool and it will tell them what's wrong with their file.
 

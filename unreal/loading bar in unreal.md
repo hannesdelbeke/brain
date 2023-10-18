@@ -15,5 +15,5 @@ with unreal.ScopedSlowTask(nr_of_steps, "DESCRIPTION") as slow_task:
 ```
 
 ### references
-- [[unreal]] [ProgressBar docs](https://docs.unrealengine.com/5.0/en-US/PythonAPI/class/ProgressBar.html) 
+- [[Unreal]] [ProgressBar docs](https://docs.unrealengine.com/5.0/en-US/PythonAPI/class/ProgressBar.html) 
 - [source](https://blog.csdn.net/Jingsongmaru/article/details/104583654) code
