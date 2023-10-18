@@ -3,7 +3,7 @@ By default, an editable install to the user's modules folder will fail to import
 ## Why this happens
 1. an editable install installs a `.pth` in the modules folder.
 2. The modules folder is not in the sitedir path, so `.pth` files are not processed.
-3. The solution is to add the modules folder to the sitedir on [[blender]] startup
+3. The solution is to add the modules folder to the sitedir on [[Blender]] startup
    
 ## How to editable install a repo 
 1. git clone to a folder, e.g. `c:/repos/myrepo`  
@@ -12,7 +12,7 @@ By default, an editable install to the user's modules folder will fail to import
 
 > [!blender pip addon (recommended)]-
 > ### blender pip addon (recommended)
-> 1. install [[blender pip]] addon
+> 1. install [[Blender pip addon]] addon
 > 2. in Blender PIP, enter `-e c:/repos/myrepo` and click install 
 >    (don't use `"` for the path, not sure how to handle spaces in path)
 > 3. done!
@@ -44,4 +44,4 @@ By default, an editable install to the user's modules folder will fail to import
 
 ## references
 - [[Python]]'s [site docs](https://docs.python.org/3/library/site.html) explain when `.pth` files are processed
-- [[pass custom sys.paths to subprocess]] discovered that [[blender]] doesn't use site packages much
+- [[pass custom sys.paths to subprocess]] discovered that [[Blender]] doesn't use site packages much

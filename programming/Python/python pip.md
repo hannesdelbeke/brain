@@ -3,16 +3,18 @@ aliases:
 - pip
 - pip.exe
 ---
-a package installer / manager for [[Python]]
-the public package repo is https://pypi.org/
+Used for [[package management]] in [[Python]], to install packages from [[Python Package Index]]
+
+## references
 [official docs](https://pip.pypa.io/en/stable/)
 
-usually ships with Python, sometimes not.
+## todo
 - [ ] #TODO instructions how to install
 - [ ] article how to package
 - [ ] article how to automatically package on GitHub w action
 
 ### gotchas
+- usually ships with Python, but sometimes not. or sometimes pip is outdated
 - If you modified the path dynamically, pip won't pick up on this unless you [[pass custom sys.paths to subprocess]]. So pip list might not show all installed packages.
 - Don't assume pip is installed on a pc when distributing your scripts to others.
 - pip install might install to a different location than you assume. 
@@ -22,3 +24,4 @@ usually ships with Python, sometimes not.
 
 local install
 `python -m pip install -e path/to/SomeProject`
+

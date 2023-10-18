@@ -1,6 +1,6 @@
 see [docs](https://docs.unrealengine.com/4.27/en-US/PythonAPI/class/_ObjectBase.html#unreal._ObjectBase)
 
-get all [[unreal]] actors in scene
+get all [[Unreal]] actors in scene
 ```python
 import unreal
 actorSub = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
