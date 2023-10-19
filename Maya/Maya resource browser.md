@@ -40,9 +40,9 @@ w.show()
 
 find icons in registered maya icon paths
 ```python
-def get_icon_path(name, default_name="cube.png") -> Optional[str]:
-    if not name:
-        return
+def get_icon_path(name) -> Optional[str]:
+    default_name = "cube.png"
+    name = name or default_name
     for icon_dir in os.environ.get('XBMLANGPATH', '').split(os.pathsep):
         icon_path = os.path.join(icon_dir, name)
         if os.path.exists(icon_path):
