@@ -17,3 +17,4 @@ other
 - qt image browser https://github.com/leocov-dev/maya-qt-img-resource-browser
 - [[print all qt resources|print all default native qt icons]]
 - https://charactersetup.com/?p=335 Icon Browser , gist [mirror](https://gist.github.com/hannesdelbeke/5d1a9c9b1d70ffbced64893e8d2c0156)
+
