@@ -19,7 +19,7 @@ other
 - [[print all qt resources|print all default native qt icons]]
 - https://charactersetup.com/?p=335 Icon Browser , gist [mirror](https://gist.github.com/hannesdelbeke/5d1a9c9b1d70ffbced64893e8d2c0156)
 
-```
+```python
 from PySide2 import QtWidgets, QtGui
 
 class IconWidget(QtWidgets.QWidget):
@@ -36,4 +36,14 @@ class IconWidget(QtWidgets.QWidget):
         self.setLayout(layout)
 w = IconWidget()
 w.show()
+```
+
+```python
+def get_icon_path(name):
+    import os
+    for icon_dir in os.environ.get('XBMLANGPATH', '').split(os.pathsep):
+        icon_path = os.path.join(icon_dir, name)
+        if os.path.exists(icon_path):
+            return icon_path
+    return get_icon_path("cube.png")
 ```
