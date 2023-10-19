@@ -38,12 +38,15 @@ w = IconWidget()
 w.show()
 ```
 
+find icons in registered maya icon paths
 ```python
-def get_icon_path(name):
-    import os
+def get_icon_path(name, default_name="cube.png") -> Optional[str]:
+    if not name:
+        return
     for icon_dir in os.environ.get('XBMLANGPATH', '').split(os.pathsep):
         icon_path = os.path.join(icon_dir, name)
         if os.path.exists(icon_path):
             return icon_path
-    return get_icon_path("cube.png")
+    if name != default_name:
+        return get_icon_path(default_name)
 ```
