@@ -10,7 +10,11 @@ Photoshop alternative
 3d
 - [[Blender]]
 
-games
+game engines
 - [[Unity]]
 - [[Unreal]]
 - GoDot https://godotengine.org/
+
+texture library
+- https://www.textures.com/free good quality free samples, limited options
+- Material Maker has a [material library](https://www.materialmaker.org/materials?type=material), but art quality is a bit hit & miss
