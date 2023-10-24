@@ -2,6 +2,7 @@ free apps to make games
 
 material maker
 - https://www.materialmaker.org/ material [[node editor]], similar to Substance
+- [QuiltiX](https://github.com/PrismPipeline/QuiltiX) is a [[node editor]] to edit, and author [[MaterialX]]  materials of 3D assets
 
 Photoshop alternative
 - https://www.photopea.com/ Photoshop but in your browser
