@@ -15,7 +15,7 @@ Once you import your mesh in a game engine, or render it in a scene next to othe
 Even if the texel density was consistent within the mesh, it still can clash with other meshes.
 
 ## TODO automatic calculate texel density score
-
+[[calculate average texel density]]
 
 
 ## tools
