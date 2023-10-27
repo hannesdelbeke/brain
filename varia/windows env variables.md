@@ -8,6 +8,7 @@ useful [[environment variable]]s for Windows
 | `%AppData%`           | `C:\Users\<Username>\AppData\Roaming` |
 | `%UserProfile%`       | `C:\Users\<Username>`                 |
 | `%LocalAppData%`      | `C:\Users\<Username>\AppData\Local`   |
+| `%SystemRoot%`        | `C:\Windows`                          |
 
 ```python
 import os
