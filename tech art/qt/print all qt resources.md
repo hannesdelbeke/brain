@@ -74,7 +74,8 @@ this displays the resource path when you hover over the icon.
 however you can also access these paths through `QStyle` 
 
 code for a folder 📁 icon
-```python
+```python  
+from PySide6.QtGui import QStyle
 my_button.setIcon(QApplication.style().standardIcon(QStyle.SP_DirIcon))
         
 ```
