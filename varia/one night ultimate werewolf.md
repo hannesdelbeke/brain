@@ -7,3 +7,4 @@ The game can be played with piece of paper or custom roles printed in a card sle
 - custom roles [spreadsheet](https://docs.google.com/spreadsheets/d/1QnXWW7lmt2pwLBoJOOxq_HucEweVyqmeNjaUHtaajqk/pubhtml)
 - [list](https://boardgamegeek.com/thread/2111933/all-roles-tile-images) of Art for all roles
 
+- https://one-night.fandom.com/wiki/One_Night_Ultimate_Werewolf
