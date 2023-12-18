@@ -1,6 +1,7 @@
 ---
 aliases:
   - console
+  - terminal
 ---
 - console window is usually an app window with [[command line interface|CLI]]
 - sometimes no input, e.g. Unity's console window displays script logs only.
