@@ -1,0 +1,4 @@
+---
+aliases:
+  - plugget install actions
+---
