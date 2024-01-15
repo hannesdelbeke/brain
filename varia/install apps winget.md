@@ -8,6 +8,7 @@ winget install github.cli
 winget install BlenderFoundation.Blender
 winget install Google.Chrome
 winget install asana.asana
+winget install jetbrains.pycharm.community
 
 REM copy snippets
 winget install Greenshot.Greenshot
@@ -19,7 +20,6 @@ winget install NickeManarin.ScreenToGif
 winget install valve.steam
 
 winget install "get oculus ready"
-winget install jetbrains.pycharm.community
 ```
 
 ```batch
