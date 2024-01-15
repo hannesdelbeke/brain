@@ -33,7 +33,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
 ## Chapter 0.5: How to Better Focus on This Book
 
 - Put your phone out of sight
-    - “When your brain is even _slightly_ resisting a task, it will look for more novel things to focus on.”
+    - “When your brain is even _slightly_ resisting a task, it will look for more novel things to focus on.” [[cognitive load]]
     - Phones provide a constant stream of tiny dopamine hits and novelty. They’re a great way to escape from the task providing resistance.
     - Experiment: Pay attention to when, and the number of times, you pull out your phone in a day. Why do you do it?
         - _I’ve noticed a pattern – when I wake up, I go through my morning routine and make breakfast. Then I eat it while watching YT videos, and tend to keep watching them long after. I waste so much time this way. I think my brain uses breakfast as an excuse to seek novelty, and to avoid my tough work._
