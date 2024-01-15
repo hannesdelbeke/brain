@@ -5,4 +5,4 @@ ad the related Obsidian forum [Discussion](https://forum.obsidian.md/t/setting-u
 
 SSH is not supported on Windows, clone with https!
 
-#[[backup]] #git #obsidian 
+[[backup]] #git #obsidian 
