@@ -1,0 +1,7 @@
+---
+aliases:
+  - ICP
+---
+
+[[marketing]]
+[[sales]]
