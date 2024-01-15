@@ -1,7 +1,7 @@
 ---
 aliases:
   - windows folders
-  - windows environment variables
+  - windows env variables
 ---
 
 useful [[environment variable]]s for [[Windows]]
