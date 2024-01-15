@@ -12,4 +12,4 @@ from maya import cmds
 print(dir(cmds))
 ```
 
-[[Maya Python-]]
+[[Maya Python]]

@@ -2,7 +2,7 @@ Autodesk Maya supports both [[Qt]] & build-in functions to make [[menu|menus]].
 the build-in functions are simpler, [see](https://groups.google.com/g/python_inside_maya/c/IcMpXXmDnSM/m/5Z7tKEaCCwAJ) 
 
 [[unimenu]] uses the build-in methods
-[[Maya Python-]] code to list maya menus.
+[[Maya Python]] code to list maya menus.
 ```python
 def find_menu(name):
     gMainWindow = maya.mel.eval('$temp=$gMainWindow')
