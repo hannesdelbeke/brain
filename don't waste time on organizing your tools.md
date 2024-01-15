@@ -1,12 +1,11 @@
-Don't waste time on organizing your tools.
+Don't [[waste of time|waste time]] on organizing your tools.
 I'm not saying, don't organize your tools.
 I'm also not saying you should not spend time on organizing.
 But don't waste any time on it. Do it efficiently.
 
 if you often have to spend time and effort on organizing your tools,
 you probably have a setup that's too complex.
-
-[[keep it simple]]. focus on creating tools, 
+[[keep it simple]]. focus on [[tooldev|creating tools]], 
 not a on spending time searching for what you need 
 
 And [[the drawbacks of categorizing|don't waste time on deciding where it should go]].
@@ -15,3 +14,6 @@ And [[the drawbacks of categorizing|don't waste time on deciding where it should
   You'll waste time, and will encounter tools that don't fit a single category.
 - Put all your Python packages in a single folder. Just like how Python does it.
   (You can have multiple folders for multiple apps/environments, but try [[keep it simple]] )
+
+[[organisation]]
+similar to [[don't waste time on naming]]
