@@ -1,4 +1,4 @@
-When using [[Python in Unreal]], you can add a python command to the [[menu]]. 
+When using [[Unreal Python|Python in Unreal]], you can add a python command to the [[menu]]. 
 
 It's a good practice to let the user launch your tool from  the Menu.
 If your command launches a [[window (computing)|window]], avoid making a new menu group and place it under
@@ -43,6 +43,6 @@ parent_path = menus.find_menu("LevelEditor.MainMenu.Edit")
 
 this is similar to [[add button to unreal toolbar]]
 
-used in [[Unreal]] python template [[Unreal python plugin template]]
+used in [[Unreal python plugin template]]
 [[Unreal menu]]
 [[Unreal Python snippet]]
