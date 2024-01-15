@@ -6,3 +6,4 @@ more effective than e.g. sorting by category.
 
 [[UX]]
 [[cache]]
+[[sorting]]
