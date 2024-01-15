@@ -22,5 +22,5 @@
 - https://pypi.org/project/maya-stubs/ claims better cmds stubsthan devkit, minimal openmaya support similar to devkit
 - maya 2024 stubs [gitlab](https://gitlab.com/maya-stub-files-release/mayastubfiles_public_release/-/releases/v1.0.0)
 
-[[python stubs]]
+[[Python stubs-]]
 [[console]]
