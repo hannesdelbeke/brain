@@ -5,7 +5,7 @@ file names
 	  plugget uses `import plugget`, and `pip install plugget`. We never use Plugget with capitals. So IMO it makes more sense to brand it with lower case.
 - spaces between words, instead of dash or underscore (makes things more readable)
 - start related notes with the same word if possible, e.g.
-	- [[Obsidian Tabber]]
+	- [[Obsidian plugin - Tabber]]
 	- [[Obsidian neurons]]
 	- [[Obsidian test images]]
 - use the full word as note title, and alias the [[abbreviation]] (except where the abbreviation is so common the full word is never used, e.g. `URL`)
