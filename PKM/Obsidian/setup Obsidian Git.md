@@ -1,8 +1,6 @@
-To automatically backup your notes, you can use Git. [[Obsidian backup]]
+To automatically [[backup]] your [[Obsidian]] notes, you can use [obsidian-git](https://github.com/denolehov/obsidian-git) which uses [[Git]].
 
 Here's a [tutorial](https://github.com/gitobsidiantutorial/obsidian-git-tut-windows/blob/main/README.md) with images on setting up Git with Obsidian for non-tech people.
-ad the related Obsidian forum [Discussion](https://forum.obsidian.md/t/setting-up-obsidian-git-on-windows-for-the-tech-uninitiated-with-images/15297)
+and the related Obsidian forum [Discussion](https://forum.obsidian.md/t/setting-up-obsidian-git-on-windows-for-the-tech-uninitiated-with-images/15297)
 
-SSH is not supported on Windows, clone with https! 
-
-[[backup]] #git #obsidian 
+In case of public key error on git push, see [[check ssh github connection]]
