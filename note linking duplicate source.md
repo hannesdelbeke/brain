@@ -7,8 +7,10 @@ notes in obsidian rely on [[public/link|links]] between notes.
 When you talk about something external, e.g. a github repo, you can't link to it.
 
 So to create connections between notes, you make a note that duplicates the github repo, and just paste the URL in there. Maybe a screenshot and small description.
+Example: the note [[Chocolatey Python API]] contains some [[wikilink|wikilinks]] and the [[URL]]
 
-But it often feels just being able to [[TODO include project READMEs in Obsidian|link to the README directly]] would be nicer. It already has an img and description.
+- If only I could link directly to a URL, and also able to add tags and wiki links.
+- [[TODO include project READMEs in Obsidian|Linking directly to the README of a repo]] would be nicer. It already has an image and description.
 
 see [[link unlinked websites]]
 
