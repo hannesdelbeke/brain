@@ -1,0 +1,1 @@
+[[install apps winget]]
