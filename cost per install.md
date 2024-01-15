@@ -1,0 +1,7 @@
+---
+aliases:
+  - CPI
+---
+
+[[mobile]]
+[[analytics]]

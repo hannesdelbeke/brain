@@ -8,3 +8,5 @@ The game can be played with piece of paper or custom roles printed in a card sle
 - [list](https://boardgamegeek.com/thread/2111933/all-roles-tile-images) of Art for all roles
 
 - https://one-night.fandom.com/wiki/One_Night_Ultimate_Werewolf
+
+[[party game]]
