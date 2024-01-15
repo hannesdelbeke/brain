@@ -44,3 +44,5 @@ parent_path = menus.find_menu("LevelEditor.MainMenu.Edit")
 this is similar to [[add button to unreal toolbar]]
 
 used in [[Unreal]] python template [[Unreal python plugin template]]
+[[Unreal menu]]
+[[Unreal Python snippet]]

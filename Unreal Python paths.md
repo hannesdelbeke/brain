@@ -1,4 +1,4 @@
-Let's explore [[Python]] paths for importing Python modules in [[Unreal]].
+Let's explore [[Unreal Python]] paths for importing Python modules in Unreal
 ## site paths
 ```
 site.getsitepackages()
