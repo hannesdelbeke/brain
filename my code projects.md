@@ -1,24 +1,33 @@
+A lot of my projects are tracked in my GitHub [profile](https://github.com/hannesdelbeke) 
+
 opensource
 - [launcher](https://github.com/hannesdelbeke/launcher) PRIVATE launch apps / tools / env manager
 
 Done
-- [unimenu](https://github.com/hannesdelbeke/unimenu) + wiki standardized menu creation across in dcc apps
-- [unreal_pip](https://github.com/hannesdelbeke/unreal_pip)
-- [unreal_qt](https://github.com/hannesdelbeke/unreal_qt)  [[Qt]]
-- [FigmaPy](https://github.com/Amatobahn/FigmaPy) done, need more work on async and simplify UX downloading 
-- [[BQt]] [bqt](https://github.com/techartorg/bqt) wrap blender in bqt [[Qt]]
-- [note-link-janitor](https://github.com/hannesdelbeke/note-link-janitor) (JavaScript) GitHub action to add backlinks to .md files
-- [[3Ds Max - bend modifier tool]]
+-  [[unimenu]] wiki standardized menu creation across in dcc apps
+	- [[unimenu addon]] demo addon for blender to easy setup unimenu
+- [[unreal-pip]]
+- [[unreal-qt]]
+- [[figmapy]] done, need more work on async and simplify UX downloading 
+- [[BQt]] wrap blender in bqt
+- [[note-link-janitor]](JavaScript) GitHub action to add backlinks to .md files
+- [[3Ds Max - bend modifier tool]] create bend modular meshes that fit exactly on a grid
 - [[detect-app]]
 - [[py-pip]]
+- [[pip qt]]
+	- [[pip Qt Unreal plugin]]
+	- [[Maya Pip Qt plugin]]
+	- [[Blender pip Qt addon]]
+- [[unreal-qt]]
+	- [[unreal-qt plugin]]
+- [[Blender pip addon]] small fork
 
 WIP
 - [wiki template](https://github.com/hannesdelbeke/wiki_template)
-- [pac](https://github.com/hannesdelbeke/pac) WIP **IMPORTANT** [[pipeline as code|pac]]
-- [blender_pip](https://github.com/hannesdelbeke/blender_pip) small fork
+- [[pipeline as code|pac]]
 - [pyside2-kit](https://github.com/DanieleBerna/pyside2-kit) small fork [[Qt]]
 - [qt-custom-window](https://github.com/hannesdelbeke/qt-custom-window) [[Qt]]
-- [[Maya site package manager]]
+- [[Maya site package manager]] todo
 - [[datafix]]
 
 Abandoned
@@ -40,3 +49,4 @@ maxscripts
 - [Advanced Bend Modifier 1.1](https://www.scriptspot.com/3ds-max/scripts/advanced-bend-modifier) 4
 
 [[my Maya projects]]
+[[my unreal plugins]]
