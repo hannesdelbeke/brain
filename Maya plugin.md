@@ -19,4 +19,4 @@ ideally a plugin is self contained
 - and avoids dependencies that don't ship with Maya.
   but if we write more complex python code this is not reasonable, e.g. pymel, numpy, ...
 
-[[Maya Python-]]
+[[Maya Python]]

@@ -53,6 +53,6 @@ w.show()
 ```
 [[Qt]]
 [[icon]]
-[[Maya Python-]]
+[[Maya Python]]
 
 relates to [[print all Qt resources]]
