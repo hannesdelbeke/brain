@@ -2,7 +2,7 @@
 writing a custom class takes time
 using a dict is too primitive, and has no autocomplete.
 
-sample config, can be loaded with [[python config loader utils]]
+sample config, can be loaded with [[Python config loader utils-]]
 ```YAML
 my_settings:
   - key1: value1
