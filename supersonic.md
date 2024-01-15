@@ -1,0 +1,1 @@
+Supersonic speed is the speed of an object that exceeds the speed of sound
