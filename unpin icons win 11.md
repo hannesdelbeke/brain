@@ -1,4 +1,4 @@
-To unpin all icons from the [[Windows task bar]] (⚠️ not the [[Windows start menu]]) in [[Windows 11]]:
+To unpin all icons from the [[Windows task bar]] (⚠️ not the [[Windows start menu]]) in [[Windows 11-]]:
 ```batch
 DEL /F /S /Q /A "%AppData%\Microsoft\Internet Explorer\Quick Launch\User Pinned\TaskBar\*"
 
