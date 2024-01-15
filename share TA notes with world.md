@@ -6,6 +6,6 @@ But only through  coincidence.
 
 some issues mentioned [[issues with a shared TA database]]
 
-19 dec 22: created [[Obsidian web integration -]] to handle this.
+19 dec 22: created [[Obsidian web integration]] to handle this.
 
 [[technical artist]]

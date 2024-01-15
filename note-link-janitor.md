@@ -1,6 +1,6 @@
 `note-link-janitor` is a batch script to add [[backlink]] at the bottom for all [[wikilink]] in a file of markdown files. 
 
-The [original version](<[original repo](https://github.com/andymatuschak/note-link-janitor)>) from [[Andy Matuschak]] dropped support, so I made a [fork](https://github.com/hannesdelbeke/note-link-janitor) with some fixes.
+The [original version](https://github.com/andymatuschak/note-link-janitor) from [[Andy Matuschak]] dropped support, so I made a [fork](https://github.com/hannesdelbeke/note-link-janitor) with some fixes.
 
 ## Github action
 `note-link-janitor` can automatically run in a CI pipeline such as GitHub actions.
@@ -35,4 +35,4 @@ This enables me to use [[MkDocs]] to create a site with backlinks from my notes.
 
 In case of updates ensure we don't break dependencies
 - used in [Obsidian Publisher template](https://github.com/ObsidianPublisher/obsidian-mkdocs-publisher-template/pull/12#event-8149371371)
-- used by my wiki / public brain [[Obsidian web integration -]]
+- used by my wiki / public brain [[Obsidian web integration]]
