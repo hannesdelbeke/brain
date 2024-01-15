@@ -1,3 +1,8 @@
+---
+aliases:
+  - more accessible
+---
+
 #todo #accessibility 
 
 make following easier to use, simpler docs, video tutorial 
