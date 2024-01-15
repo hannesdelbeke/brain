@@ -2,7 +2,11 @@
 aliases:
   - usersetup
 ---
-Any file named `usersetup.py` will be run by [[Maya Python]] interpreter on Maya startup.
+
+> [!warning]
+> I recommend to use [[Maya plugin]] to run startup code, and not use usersetup.
+
+Any file named `usersetup.py` will be run by [[Maya Python]] interpreter on [[Maya run on startup|Maya startup]].
 ## How it works
 It loops over all the paths and calls `exec` on any `usersetup.py` files it finds.
 
@@ -22,6 +26,5 @@ E.g. an outsource studio who works for 2 clients installs your tools, which over
 
 ### Security risk flagging
 Since Maya 2022+, running `userSetup.py` on startup can be disabled. Or you might get a popup asking for confirmation if you want to run it. 
-AFAIK plugins do not have this issue.
+- [ ] AFAIK plugins do not have this issue. confirm this.
 
-[[Maya run on startup]]

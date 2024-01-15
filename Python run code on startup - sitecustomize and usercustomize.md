@@ -1,7 +1,7 @@
 
 sitecustomize.py and - usercustomize.py
 
-a [[pythonic]] way to run code on startup, just place them in site‑packages.
+a [[pythonic]] way to run code on startup, just place them in [[site-packages]].
 
 any `sitecustomize.py` at the root of your repository will be evaluated before any application code runs
 

@@ -3,20 +3,22 @@ aliases:
   - Maya plugins
 ---
 
-[[Autodesk Maya|Maya]] [[plugin]]s are quite modular
+[[Autodesk Maya|Maya]] [[plugin]]s are quite [[modular]], and my favorite way of packaging [[Maya tool]]s.
 ## Pros
 - Plugins manage their own startup code, allowing you to avoid using `userSetup.py`, which always runs on startup.
 - Plugins can be enabled or disabled per user, letting you toggle the startup code more easily compared to [[Maya module]]s.
 ## Cons
 Maya plugins don't support:
-- plugins can only be 1 `.py` file, because the plugin folder is [[Python files outside a Python path|not in the Python path]]
-	- no modules or zip files
-- [[dependencies]] on:
-	- other Maya plugins
-	- [[Python package]]
+- A plugin can only be a single `.py` file, because the plugin folder is [[Python files outside a Python path|not in the Python path]].
+  It can't be a [[Python package]], or a zip file.
+  If you want to include additional files, I recommend to distribute them as a [[Python module]] in the `scripts` folder, and import them from the plugin. You can also set them as a dependency, see [[Maya plugin template]].
+- There is no native support for [[dependencies]] on:
+	- other Maya plugins. (However using [[plugget]] this is possible)
+	- [[Python package]]s (a custom solution can be seen in [[Maya plugin template]])
 	You can depend on another package, e.g. `import numpy`, but installing the plugin won't auto install the `numpy` dependency.
 
-You could instead use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.
+Instead, you can use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.
+However, I recommend to not use more than 1 Maya module per project, and package your tools in plugins instead.
 
 ## Notes
 - Since plugins are not importable, they live in their own [[namespace]], and can have the same name as a importable Python module
@@ -36,21 +38,14 @@ ideally a plugin is self contained
 - since a plugin is a single file, it aims to avoids dependencies that don't ship with Maya for easy manual install.
   but if we write more complex python code this is not reasonable, e.g. pymel, numpy, ...
 ## Extend ideas
-- [ ] how to handle plugin dependencies?
-  - best way so far is to avoid dependencies
-	  - [ ] TODO sample
-  - and use run_after_load / deferred load approach
+- [x] how to handle plugin dependencies?
+	- see [[Plugins are more modular than modules]]
+	- [[plugget - create a self-installing plugin]]
+  - if you depend on other plugins, you can use run_after_load / deferred load to ensure they are available?
 	  - [ ] TODO sample
 ### Low prio
 - [ ] how to control startup load order of plugins
 
-## How to enable/disable a plugin
-- use [[Maya plugin manager]] to enable a plugin
-- or enable a plugin with code: [loadPlugin](https://download.autodesk.com/us/maya/2009help/commandspython/loadplugin.html) 
-```python
-import maya.cmds
-maya.cmds.loadPlugin("my_plugin.py")
-```
 
-[[Maya Python]]
-[[Maya tool]]
+[[Maya - how to enable-disable plugins]]
+
