@@ -5,7 +5,7 @@ aliases:
 ## Problem
 You walk around in a maze in a [[digital garden]]. Behind every corner you take you find a note, but none of them resonate. The author crafted a garden so big, you don't know where to start. Leaving you lost.
 
-Digital gardens often are a collection of random notes. It's great if you know what subject you are looking for, but what if you just discover a garden that looks interesting, but you don't know where to find content you want?
+Digital gardens often are a collection of [[random]] notes. It's great if you know what subject you are looking for, but what if you just discover a garden that looks interesting, but you don't know where to find content you want?
 
 ## Solutions
 The [[now note]] is a good concept to tackle this, showing the most active interests of the author.

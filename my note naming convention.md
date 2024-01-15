@@ -8,7 +8,7 @@ file names
 	- [[Obsidian Tabber]]
 	- [[Obsidian neurons]]
 	- [[Obsidian test images]]
-- use the full word as note title, and alias the abbreviation (except where the abbreviation is so common the full word is never used, e.g. `URL`)
+- use the full word as note title, and alias the [[abbreviation]] (except where the abbreviation is so common the full word is never used, e.g. `URL`)
 - everything in 1 folder, (read why i decided on  [[reducing note folders]])
 
 note content
