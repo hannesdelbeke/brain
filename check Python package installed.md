@@ -106,4 +106,5 @@ else:
 
 Each of these methods has its own advantages, and you can choose the one that best fits your specific needs. For a more robust solution, combining a couple of these methods can provide additional assurance.
 
-[[python stubs]]
+[[Python stubs-]]
+[[Python snippet]]
