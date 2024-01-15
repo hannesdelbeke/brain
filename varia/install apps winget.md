@@ -4,6 +4,7 @@ personal [[winget]] app install list
 winget install SlackTechnologies.Slack
 winget install DebaucheeOpenSourceGroup.Barrier
 winget install git.git
+winget install github.cli
 winget install BlenderFoundation.Blender
 winget install Google.Chrome
 winget install asana.asana
