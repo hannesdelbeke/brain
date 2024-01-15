@@ -276,7 +276,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - They learn more about themselves, where the cues actually lie, and what new habits provide good rewards
         - For Eric, that habit was [[meditation]]
         - “That’s why failure is so valuable. It forces us to learn, even if we don’t want to.”
-- Procrastination studies – people’s willpower often fails after a while, and then they’re back to Facebook
+- [[Procrastination]] studies – people’s willpower often fails after a while, and then they’re back to Facebook
     - The key is to pay attention to _how_ resolve eventually fades
         - Don’t ignore it
     - Learn when you feel the urge to check Facebook or another website

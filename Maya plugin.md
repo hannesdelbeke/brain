@@ -9,7 +9,7 @@ aliases:
 - Plugins can be enabled or disabled per user, letting you toggle the startup code more easily compared to [[Maya module]]s.
 ## Cons
 Maya plugins don't support:
-- plugins can only be 1 `.py` file, because the plugin folder is [[Python outside Python path|not in the Python path]]
+- plugins can only be 1 `.py` file, because the plugin folder is [[Python files outside a Python path|not in the Python path]]
 	- no modules or zip files
 - [[dependencies]] on:
 	- other Maya plugins
