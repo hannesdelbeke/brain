@@ -10,12 +10,13 @@ Commercial studio games & projects are excluded.
 2016-03 spaceshooter
 2016-02-09 [[gamejam - 2016 - Tiles of Doom]] ❤
 2016-09-20 [[gamejam - 2016 - AI]]
+2015-03 [[game-lemmings]]
 2014-02-02 [[gamejam - 2014 - Discoordination]] ❤
 setijam game  (sweden)
-FG GameProject 3 - blazing aces  
+FG GameProject 3 - blazing aces
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr3Ja-p1dFIaFGEzKozMAgiVTUBHwxhUzg4_vKOJgzNxw0bqImIjOfZg9F_bmi19rkqnyJmiHteKgej0BumV9uRVAnSDqgc7aKJTgq1F0_U21yzn6nNFuldnNku6Opua0thLygZLY0_j4O/s64/icon.PNG|)](http://hannesdelbeke.blogspot.be/2014/02/hovercraft.html) 13/02/2014 FG GameProject 2 - Hovercraft  
-[Battleships](http://hannesdelbeke.blogspot.se/2013/11/battleships.html) 20/11/2013 FG Gameproject 1 - Battleships  
-[![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_gb1KrN90Pbum7LlP-RDrQLFdRPdmOEooTa78p1w4VNRuo7BAGiYP5RnlOhDp4JYNFb1eWH2f7ZxoMI-vxXh2ZQLimeq1iGxygn-L_QHXFnKTxTI8xcUQarOA1iQgWJSWm6HMd3WHjG2w/s64/icon3_1024.PNG)](http://hannesdelbeke.blogspot.be/2013/07/cube-link.html) 20/07/2013 solo project - Cube Link  [[cubelink]]
+[blogpost](http://hannesdelbeke.blogspot.se/2013/11/battleships.html) 20/11/2013 FG Gameproject 1 - Battleships  
+[![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_gb1KrN90Pbum7LlP-RDrQLFdRPdmOEooTa78p1w4VNRuo7BAGiYP5RnlOhDp4JYNFb1eWH2f7ZxoMI-vxXh2ZQLimeq1iGxygn-L_QHXFnKTxTI8xcUQarOA1iQgWJSWm6HMd3WHjG2w/s64/icon3_1024.PNG)](http://hannesdelbeke.blogspot.be/2013/07/cube-link.html) 20/07/2013 solo project -  [[Cube Link]] ❤
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkVsmIsM6gF153o6JLrbHXIYMHCz8hioiOsm0FGk7AACyOZSOO1sD4-oG46_-ucbftzSzSZFxG5n9Y8pEE0hBo48QFGW_z8yeBF9_SnpKRuM_C2D9kGqWYIb-d8rJtDQ1pV-kWjnoTaMjg/s64/icon.PNG)](http://hannesdelbeke.blogspot.be/2013/06/blocks-dont-matter.html) 20/06/2013 solo jam - Blocks don't matter  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjL7WKoePnR3K04qXVV8w16TnOjuVAmTemnCkMiUQIWH1i-qBpl7OE-TaEBByjgqes_t9JphHIsVOzj_jzD67ulifWAJUj-xzImaqueDovFIWnWYEOZZTYRk-Cr_Ug1l7mu7S4cI5V3nKQT/s320/icon.PNG)](http://hannesdelbeke.blogspot.fr/2013/05/mini-ludum-dare.html) 26/05/2013 Mini Ludum Dare - HitchHiker  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjN8qybAni4or6yrRSPgG84-d9XPCJFOMFxXSNNkiOo3Smf4lisMd0KKo6HBFCIWOq_iCUY8skmnVQta4s1ikd6r93vi5AtagmaaRPZfS1SbVFnf5gPBjjsTnQgXVLREwMkK7S5hfwr1VgX/s320/icon.png)](http://hannesdelbeke.blogspot.fr/2013/04/ludum-dare-26.html) 28/04/2013 Ludum Dare 26 - Atom that matter  
