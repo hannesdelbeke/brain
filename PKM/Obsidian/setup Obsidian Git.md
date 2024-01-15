@@ -4,3 +4,9 @@ Here's a [tutorial](https://github.com/gitobsidiantutorial/obsidian-git-tut-wind
 and the related Obsidian forum [Discussion](https://forum.obsidian.md/t/setting-up-obsidian-git-on-windows-for-the-tech-uninitiated-with-images/15297)
 
 In case of public key error on git push, see [[check ssh github connection]]
+
+might have to run this the first time
+```
+git submodule init
+git submodule update --recursive --remote --merge
+```
