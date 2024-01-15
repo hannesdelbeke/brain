@@ -48,4 +48,4 @@ maya.cmds.loadPlugin("my_plugin.py")
 ```
 
 [[Maya Python]]
-[[Maya tools]]
+[[Maya tool]]
