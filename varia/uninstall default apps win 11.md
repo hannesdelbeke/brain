@@ -1,10 +1,7 @@
 uninstall preinstalled apps on win 11 pc from scan
-ensure winget is installed, then copy paste this in an elevated command prompt
 
-```batch
-REM TODO check if winget installed, otherwise open it
-start ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1
-```
+1. ensure [[winget]] is installed, 
+2. copy paste the uninstall code in an elevated command prompt
 
 uninstall default Microsoft apps
 ```
@@ -22,8 +19,6 @@ winget uninstall Microsoft.Windows.Photos_8wekyb3d8bbwe
 winget uninstall Microsoft.MixedReality.Portal_8wekyb3d8bbwe
 winget uninstall Microsoft.Getstarted_8wekyb3d8bbwe
 winget uninstall Microsoft.MSPaint_8wekyb3d8bbwe
-
-echo FINISHED
 ```
 
 uninstall laptop bloatware
