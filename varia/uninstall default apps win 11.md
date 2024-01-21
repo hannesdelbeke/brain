@@ -4,7 +4,30 @@ ensure winget is installed, then copy paste this in an elevated command prompt
 ```batch
 REM TODO check if winget installed, otherwise open it
 start ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1
+```
 
+uninstall default Microsoft apps
+```
+winget uninstall Microsoft.BingNews_8wekyb3d8bbwe
+winget uninstall Microsoft.BingWeather_8wekyb3d8bbwe
+winget uninstall Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe
+winget uninstall Microsoft.ZuneMusic_8wekyb3d8bbwe
+winget uninstall Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe
+winget uninstall Microsoft.GetHelp_8wekyb3d8bbwe
+winget uninstall MicrosoftTeams_8wekyb3d8bbwe
+winget uninstall Microsoft.ZuneVideo_8wekyb3d8bbwe
+winget uninstall Microsoft.WindowsMaps_8wekyb3d8bbwe
+winget uninstall Microsoft.Print3D_8wekyb3d8bbwe
+winget uninstall Microsoft.Windows.Photos_8wekyb3d8bbwe
+winget uninstall Microsoft.MixedReality.Portal_8wekyb3d8bbwe
+winget uninstall Microsoft.Getstarted_8wekyb3d8bbwe
+winget uninstall Microsoft.MSPaint_8wekyb3d8bbwe
+
+echo FINISHED
+```
+
+uninstall laptop bloatware
+```
 winget uninstall Burnintest_is1
 winget uninstall CrystalDewWorld.CrystalDiskMark
 winget uninstall FinalWire.AIDA64.Extreme
@@ -19,17 +42,6 @@ winget uninstall {2397CAD4-2263-4CD0-96BE-E43A980B9C9A}_is1
 
 REM Futuremark SystemInfo
 winget uninstall {63C33A87-484C-4D23-BAA4-5658DD908D8E}
-
-winget uninstall Microsoft.BingNews_8wekyb3d8bbwe
-winget uninstall Microsoft.BingWeather_8wekyb3d8bbwe
-winget uninstall Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe
-winget uninstall Microsoft.ZuneMusic_8wekyb3d8bbwe
-winget uninstall Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe
-winget uninstall Microsoft.GetHelp_8wekyb3d8bbwe
-winget uninstall MicrosoftTeams_8wekyb3d8bbwe
-winget uninstall Microsoft.ZuneVideo_8wekyb3d8bbwe
-
-echo FINISHED
 ```
 
 #winget
