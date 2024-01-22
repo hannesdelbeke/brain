@@ -3,7 +3,7 @@
 - [ ] [[check ssh github connection]]
 - [ ] [[Barrier]]
 - [ ] [[Windows 11 - unpin start menu icons]]
-- [ ] [[windows dark theme]]
+- [ ] [[Windows dark theme]]
 - [ ] right click on start menu. edit.  show most used apps
 - [ ] windows update all
 - [ ] [[schedule Monitorian brightness]]
