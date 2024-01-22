@@ -1,2 +1,7 @@
-[[install apps winget]]
-[[check ssh github connection]]
+- [ ] [[install apps winget]]
+- [ ] [[check ssh github connection]]
+- [ ] [[Barrier]]
+- [ ] [[unpin start menu icons win 11]]
+- [ ] [[windows dark theme]]
+- [ ] Windows/Personalization/start: show most used apps
+- [ ] windows update all
