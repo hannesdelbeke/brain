@@ -3,9 +3,8 @@ https://www.trustedsec.com/blog/obsidian-taming-a-collective-consciousness/ talk
 - perfectionism leads to not sharing incomplete documentation
 - categories are limiting, at some point you have duplicate data across categories
 
-
-
-
 #todo reread
 
 TechArt.org has a similar issue with their wiki(s) #techart
+
+[[technical artist]]
