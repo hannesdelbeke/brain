@@ -27,6 +27,14 @@ start ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1
 
 it's a relatively new (2020) [[package manager]] for windows and likely will replace chocolatey & scoop. Atm chocolatey is still more capable IMO
 
+it's by default included in windows 11.
+- it won't work in cmd until after a few windows updates.
+- the installed version is old and has issues. update `app installer` in the Microsoft store. (this eventually will auto update in the background.)
+
+update all Microsoft Store apps
+```powershell
+ Get-AppxPackage -AllUsers | foreach { Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml" }
+```
 ### Create new distributions
 quickly create installation scripts for public software on
 -   https://winstall.app/

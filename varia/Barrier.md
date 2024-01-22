@@ -12,8 +12,20 @@ When moving your cursor of the side of 1 screen, it appears on other computer's 
 ## Bugs
 ### ssl certificate doesn't exist
 if you get the error `# is:openERROR: ssl certificate doesn't exist:`
-run this: (requires [[bash on windows]])
-```shell
+```Powershell
+Set-Alias openssl "C:\Program Files\Git\usr\bin\openssl.exe"
+cd ~\AppData\Local\Barrier\SSL\
 openssl req -x509 -nodes -days 365 -subj /CN=Barrier -newkey rsa:4096 -keyout Barrier.pem -out Barrier.pem
 ```
-source fix: git [issues](https://github.com/debauchee/barrier/issues/231)
+[source](https://github.com/debauchee/barrier/issues/231#issuecomment-1143791895) 
+## log says failed to start server
+install older version
+```
+winget uninstall barrier
+winget install barrier --version 2.3.3-release
+```
+run barrier, log should show success. 
+quit barrier and update
+```
+winget upgrade barrier
+```
