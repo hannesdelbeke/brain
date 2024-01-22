@@ -1,4 +1,5 @@
 - [ ] [[install apps winget]]
+	- [ ] [[Monitorian]]
 - [ ] [[check ssh github connection]]
 - [ ] [[Barrier]]
 - [ ] [[unpin start menu icons win 11]]
