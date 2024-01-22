@@ -7,7 +7,7 @@ if not successful
 - if no ssh
 	- [[generate SSH key]]
 	- add ssh to github 
-- if the [[ssh]] key has already been setup, check if the key in `C:\Users\USER\.ssh` is named `id_rsa`
+- if the [[Secure File Transfer Protocol|SSH]] key has already been setup, check if the key in `C:\Users\USER\.ssh` is named `id_rsa`
 command to browse to the folder:
 ```cmd
 explorer %USERPROFILE%\.ssh
