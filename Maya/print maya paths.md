@@ -1,5 +1,5 @@
 env vars see [docs](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-925EB3B5-1839-45ED-AA2E-3184E3A45AC7)
-- MAYA_PLUG_IN_PATH
+- MAYA_PLUG_IN_PATH [[maya plugin path]]
 - MAYA_MODULE_PATH
 
 e.g. print all maya plugin paths
