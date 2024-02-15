@@ -19,9 +19,17 @@ winget uninstall Microsoft.Windows.Photos_8wekyb3d8bbwe
 winget uninstall Microsoft.MixedReality.Portal_8wekyb3d8bbwe
 winget uninstall Microsoft.Getstarted_8wekyb3d8bbwe
 winget uninstall Microsoft.MSPaint_8wekyb3d8bbwe
+winget unisntall Microsoft.BingSearch_8wekyb3d8bbwe 
+winget uninstall Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe 
+winget uninstall Microsoft.Office.Desktop_8wekyb3d8bbwe 
+winget uninstall Microsoft.OutlookForWindows_8wekyb3d8bbwe 
+winget uninstall Microsoft.PowerAutomateDesktop_8wekyb3d8bbwe 
+winget uninstall Microsoft.WindowsCamera_8wekyb3d8bbwe 
+winget uninstall Microsoft.WindowsSoundRecorder_8wekyb3d8bbwe 
+winget uninstall Microsoft.YourPhone_8wekyb3d8bbwe
 ```
 
-uninstall laptop bloatware
+uninstall MT 2022 laptop bloatware
 ```
 winget uninstall Burnintest_is1
 winget uninstall CrystalDewWorld.CrystalDiskMark
