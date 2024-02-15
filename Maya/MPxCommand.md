@@ -1,4 +1,5 @@
-In [[Autodesk Maya|Maya]] Python scripting, `MPxCommand` is a base class for creating custom commands. Below is a simple example of creating a custom command using `MPxCommand`. This example demonstrates a command that creates a cube.
+`MPxCommand` is a base class for creating custom commands, that can be run from `maya.cmds`. 
+Sample [[Autodesk Maya|Maya]] Python code for a custom `MPxCommand` command that creates a cube. 
 
 ```python
 import maya.api.OpenMaya as om
