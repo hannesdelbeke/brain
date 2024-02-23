@@ -8,3 +8,5 @@ Features
 
 forum https://forums.pyblish.com/t/pyblish-simple-a-new-ui-aimed-at-artists/701
 Github https://github.com/hannesdelbeke/pyblish-simple
+
+[[pyblish simple review]]
