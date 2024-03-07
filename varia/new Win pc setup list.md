@@ -6,3 +6,5 @@
 - [ ] [[windows dark theme]]
 - [ ] Windows/Personalization/start: show most used apps
 - [ ] windows update all
+
+see [[new Mac setup]]
