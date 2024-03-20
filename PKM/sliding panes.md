@@ -9,7 +9,7 @@ This means you cant easily compare info between multiple files.
 > [!QUESTION] sliding panes Chrome extension
 > Imagine an extension that adds sliding panes to your browser. 
 > 
-> Obsidian uses `iframes` & `divs` for this. But with Chrome we have tabs to worry about.
+> Obsidian uses `iframes` & `divs` for this. But with [[Chrome]] we have tabs to worry about.
 > Curious how hard it would be to change the whole tab logic. And maintain compatibility with all existing chrome plugins.
 > #extensionidea
 

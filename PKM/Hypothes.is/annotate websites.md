@@ -2,7 +2,7 @@
 most of these, including hypothesis, are closed source, paid products.
 Some used to have a free tier which was removed.
 The benefits are often the social side, replying on notes online.
-And an easy to install chrome extension 
+And an easy to install [[Chrome]] extension 
 
 ### Free
 - one of the top ones so far, no limitations on free [[Hypothesis review]] and has a basic Obsidian plugin
