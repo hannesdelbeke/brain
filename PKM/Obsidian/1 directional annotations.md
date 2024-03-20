@@ -37,7 +37,7 @@ Slack supports URL links to threads. We could have a database that gets the thre
 
 > [!TODO] fleeting notes
 > look at [fleeting notes](https://www.fleetingnotes.app/), it has both a [chrome extension](https://chrome.google.com/webstore/detail/fleeting-notes/gcplhmogdjioeaenmehmapbdonklmdnc) & Obsidian plugin.
-> sync notes from the web (chrome) to obsidian, and maintain a link
+> sync notes from the web ([[Chrome]]) to obsidian, and maintain a link
 
 ### challenges
 If linking to a specific line, what happens if the line changes?
