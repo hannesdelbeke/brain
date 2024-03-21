@@ -1,3 +1,3 @@
-[[general dentist]]
-[[orthodontist]] brace specialist
+- [[general dentist]]
+- [[orthodontist]] brace specialist
 
