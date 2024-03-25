@@ -2,7 +2,7 @@
 aliases:
   - MVHR
 ---
-ventilate house without loosing heat
+A MVHR ventilates a house while reducing heatloss.
 
 recommend for buildings with good air tightness levels, e.g. air permeability of the thermal envelope is at or below` 3 m3.hr/m2 @50Pa`.
 
