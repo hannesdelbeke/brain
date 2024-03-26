@@ -2,7 +2,8 @@
 aliases:
   - MVHR
 ---
-A MVHR ventilates a house while reducing heat-loss, using [[countercurrent heat exchange]]
+A MVHR ventilates a house while reducing heat-loss, using [[countercurrent heat exchange]].
+It's a centralized unit that ventilates the whole house. For decentralized units see [[Decentralised Mechanical Ventilation with Heat Recovery|dMVHR]]
 
 It's recommend for buildings with good air tightness levels, e.g. air permeability of the thermal envelope at or below` 3 m3.hr/m2 @50Pa`.
 
