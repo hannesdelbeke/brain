@@ -23,3 +23,4 @@ providers
 - https://www.bpcventilation.com/ UK service, claims lowest price
 - https://www.heatspaceandlight.com/contact-me/ UK service
 - https://www.weare21degrees.co.uk/mvhr/components/
+- https://www.blauberg.co.uk/homeowner great reputation
