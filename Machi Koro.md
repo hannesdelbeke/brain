@@ -1,4 +1,6 @@
 [[boardgame]]
+[[engine builder]]
+[[dice rolling]]
 
 Base games
 - Machi Koro 1
@@ -7,8 +9,8 @@ Base games
 - Machi Koro 2
 
 Machi Koro 1 expansions:
-	- Harbor
-	- Millionaire's Row
+- Harbor
+- Millionaire's Row
 
 [list of cards](https://machi-koro.fandom.com/wiki/List_of_cards) (& pictures)
 
