@@ -8,16 +8,20 @@ Base games
 
 Machi Koro 1 expansions:
 - Harbor
-- Millionaire's Row
+- Millionaire's Row (Sharp)
+
+### resources
+- Machi Koro 1 [rules](https://boardgamegeek.com/filepage/93097/english-rule-of-machi-koro) (user translation)
+- Machi Koro 1 expansions (Harbor & Sharp) [rulebook](https://boardgame.bg/machi%20koro%20expansions%20-rulebook.pdf)  (official)
+- Machi Koro Legacy [rulebook](https://cdn.1j1ju.com/medias/2b/01/3c-machi-koro-legacy-rulebook.pdf) (official)
+- various community [resources](https://boardgamegeek.com/files/thing/143884?sort=hot&languageid=2184) on boardgamegeek
 
 No good print and plays online, there are some rough & ugly versions.
 Images for base-game & Harbor can be found on the wiki:
 - [list of cards](https://machi-koro.fandom.com/wiki/List_of_cards) (& pictures)
 
-resources
-- Machi Koro Legacy [rulebook pdf](https://cdn.1j1ju.com/medias/2b/01/3c-machi-koro-legacy-rulebook.pdf)
-
-[[Machi Koro review]]
+### review
+my [[Machi Koro review]]
 
 
 
