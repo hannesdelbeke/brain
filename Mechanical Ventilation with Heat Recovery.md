@@ -1,6 +1,9 @@
 ---
 aliases:
   - MVHR
+  - HRV
+  - Heat recovery ventilation
+  - mechanical ventilation heat recovery
 ---
 A MVHR ventilates a house while reducing heat-loss, using [[countercurrent heat exchange]].
 It's a centralized unit that ventilates the whole house. (For decentralized units see [[Decentralised Mechanical Ventilation with Heat Recovery|dMVHR]]) using [[ducting]]
