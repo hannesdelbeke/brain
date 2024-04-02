@@ -9,3 +9,4 @@ recommended devices
 - [uk products](https://www.enviromonitors.co.uk/elements/co2)
 - Technoline Monitor WL1025 
 - Technoline WL1030 (claims NDIR sensor) [70](https://www.batterylogic.co.uk/technoline-wl1030-co2-air-quality-monitor.asp), [90](https://www.amazon.co.uk/Technoline-WL1030-Meter-Quality-Monitor/dp/B08LVVK3NQ?th=1), 
+- Temtop P1000 [60](https://www.temtop.co.uk/collections/pm2-5-air-quality-monitor/products/p1000?variant=43848504082687)
