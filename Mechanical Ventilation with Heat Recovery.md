@@ -20,3 +20,13 @@ providers
 - https://www.heatspaceandlight.com/contact-me/ UK service
 - https://www.weare21degrees.co.uk/mvhr/components/
 - https://www.blauberg.co.uk/homeowner great reputation
+
+source: reddit
+- Vent axia typical extract fans are good but their MVHR units aren't, 
+- Nuaire also not great
+- good: s&p energisave 250 (envirovent)
+
+> [!TIP] Tip
+> calculate the m/3 size of your accommodation and ask the supplier what m/3 size accommodation that model is designed for. You want to oversize your mvhr unit so you can have the fans running on a low setting this not only reduces the noise of the fans but also prolongs the life of the moving parts inside so less maintenance costs. Eg, for a 150 m/3 property u would specify a unit that can provide ventilation for a property at 180m/3 minimum.
+
+Improves [[air quality]], the ventilation reduces humidity, and the intake filter reduces pollen & dust. 
