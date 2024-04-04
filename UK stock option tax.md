@@ -15,16 +15,20 @@ So you made $31,254.2 profit, even though you can't sell the shares until IPO.
 
 You pay 45% income tax on $31,254.2 = $14k
 
-spent so far $17,7k + 14k tax = 31,7k
+spent so far $17,7k + 14k tax = $31,7k
 ## no IPO
-loss $31,700
+loss $31,700 = £25k
 ## IPO
 let's say no increase in value
-spent  31,7k
+spent  $31,7k = £25k
+### capital gains
 capital gains allowance first £6,000
-when you sell the stock, 20% capital gain tax on $43k = 8,600
-spent total  $40,300
-profit $9000
+ $49 = £38.7k 
+ £38.7k - £6k = £32.7k
+when you sell the stock, 20% capital gain tax on £38.7k=£7,740
+
+spent total £32,740
+profit £38,710 - £32,740 = £6k
 
 let's say increase value, then it's all profit with 20% tax
 
