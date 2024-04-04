@@ -16,6 +16,9 @@ So you made $31,254.2 profit, even though you can't sell the shares until IPO.
 You pay 45% income tax on $31,254.2 = $14k
 
 spent so far $17,7k + 14k tax = $31,7k
+you also pay National Insurance on this. 2%
+
+
 ## no IPO
 loss $31,700 = £25k
 ## IPO
