@@ -45,9 +45,9 @@ Creating a Dance Dance game in Unity with 2D images is certainly achievable and 
 
 ## controls
 - arrows: ⬆️➡️⬇️⬅️
+- hold arrows for hold poses or specials
 - can add diagonal to add extra moves
 - can add e.g. 2 opposites to add extra moves
-
 ## build target
 pc (web), later phone. portrait screen format
 
