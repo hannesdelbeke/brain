@@ -6,10 +6,11 @@ Commercial studio games & projects are excluded.
 2020-02-02 [[Game Jam - Paddle or Die]]
 
 2017-10-11 [[gamejam temple of xiala]] ❤
+2016-04-27 [[Planet gamejam]]
 2016-04-08 [[2016-04-08 CA gamejam]]
 2016-02-09 [[Tiles of Doom]] ❤
 2014-02-02 [[gamejam discoordination]] ❤
-
+[[2016-9-20 gamejam-AI]]
 setijam game  (sweden)
 FG GameProject 3 - blazing aces  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr3Ja-p1dFIaFGEzKozMAgiVTUBHwxhUzg4_vKOJgzNxw0bqImIjOfZg9F_bmi19rkqnyJmiHteKgej0BumV9uRVAnSDqgc7aKJTgq1F0_U21yzn6nNFuldnNku6Opua0thLygZLY0_j4O/s64/icon.PNG|)](http://hannesdelbeke.blogspot.be/2014/02/hovercraft.html) 13/02/2014 FG GameProject 2 - Hovercraft  
