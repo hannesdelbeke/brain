@@ -2,8 +2,9 @@
 2024-04-08 [[dance dance duck]] 
 2022-03-22 [[gamejam daisy chain]]
 2020-02-02 [[Game Jam - Paddle or Die]]
-#### ... missing games
+
 2017-10-11 [[gamejam temple of xiala]]
+2016-04-08 [[08-04-2016 CA gamejam]]
 2014-02-02 [[gamejam discoordination]]
 
 setijam game  (sweden)
