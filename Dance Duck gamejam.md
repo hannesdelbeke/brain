@@ -51,3 +51,9 @@ Creating a Dance Dance game in Unity with 2D images is certainly achievable and 
 ## build target
 pc (web), later phone. portrait screen format
 
+# final
+https://hannesd.itch.io/duck-duck-dance
+https://github.com/hannesdelbeke/duck-duck-dance
+
+[[unity]]
+[[game jam]]
