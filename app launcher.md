@@ -19,3 +19,6 @@ Windows launchers
 - https://github.com/Apollo199999999/LauncherX 
 	- seems the same as a normal  folder with app & url shortcuts, but with a nice UI, might as well use Windows folders instead
 	- edit and launch view are the same (always displays add app button)
+
+Often work supplies a web launcher to employees. E.g. [[okta]]
+Or a software installer like [[Software Center]]
