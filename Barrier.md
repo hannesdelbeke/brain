@@ -29,3 +29,7 @@ quit barrier and update
 ```
 winget upgrade barrier
 ```
+
+### VPN support
+If you use a pc with VPN, barrier won't work.
+But you can connect first to barrier, and then the VPN. And your barrier connection should stay active without the VPN.
