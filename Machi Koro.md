@@ -1,4 +1,4 @@
-Machi Koro is a simple [[dice rolling]] [[boardgame]] where you gain money by rolling a dice, and buy houses to generate more money.
+Machi Koro is a simple [[dice rolling]] [[boardgame]] where you gain money by rolling a dice, and buy houses to generate more money. 
 
 Base games
 - Machi Koro 1
@@ -42,7 +42,6 @@ extra card ideas
 - coffee bean field, blue 3
 - roastery, green 9
 - [events](https://boardgamegeek.com/filepage/122031/machi-koro-event-expansion)
-
 
 [[engine builder]]
 
