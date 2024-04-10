@@ -17,6 +17,10 @@ new pc
 - [[Slack dark mode]]
 - P4V settings/Display/Dark
 
+Force dark mode on windows apps
+- https://darkmodeanyapp.com/
+- [[WindowTop]]
+
 new online accounts
 - [[gmail dark theme]]
 - google extension [dark reader](https://chromewebstore.google.com/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh)
