@@ -1,0 +1,8 @@
+- UK [requirements](https://check-mark.co.uk/info/plan/planning-permission/) to avoid the need for [[planning permission]]:
+	- The relevant legislation is [Part 14 G of The Town and Country Planning (General Permitted Development) (England) Order 2015 ![Opens in a new window](https://check-mark.co.uk/images/external-link.svg "Opens in a new window")](https://www.legislation.gov.uk/uksi/2015/596/schedule/2/part/14/crossheading/class-g-installation-or-alteration-etc-of-air-source-heat-pumps-on-domestic-premises/paragraph/G)  (use the /previous/next paragraph buttons).
+	- summary:
+		- It must comply with MCS planning standards - see [Noise and neighbours](https://check-mark.co.uk/info/plan/planning-permission/noise-neighbours/ "Noise and neighbours").
+		- Only one air source heat pump for the property. A block of flats usually counts as one property.
+		- Must be more than 1 m from property boundaries.
+		- Must be more than 1 m from the edge of a flat roof. Not on a pitched roof.
+	- terraced homeowners may need planning permission for heat pumps (because of the 1 m rule)
