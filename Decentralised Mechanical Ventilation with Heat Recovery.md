@@ -3,9 +3,9 @@ aliases:
   - dMVHR
   - spot HRV
 ---
-a [[Mechanical Ventilation with Heat Recovery|MVHR]] for 1 room. Unlike the MVHR that has 1 motor and heat exchane unit for the whole house, a dMVHR has these built in every unit.
+a [[Mechanical Ventilation with Heat Recovery|MVHR]] for 1 room. Unlike the MVHR that has 1 motor and heat exchane unit for the whole house, a dMVHR has these built in every unit. ([[decentralized]])
 
-It can be easier to install afterwards in a single room, e.g. bathroom.
+It can be easier to install afterwards in a single room, e.g. bathroom since it's [[ductless]]
 
 - study at home https://www.neighbourhoodconstruction.org/vents/mvhr/
 	- provider https://ecostream.org.uk/
@@ -28,6 +28,9 @@ units compared
 
 [reviews](https://forum.buildhub.org.uk/topic/34146-dmvhr-suppliers-list-not-complete/)  UK
 - dmev is loud
+- [video](https://www.youtube.com/watch?v=TChYcSSNXrI) doesn't recommend dMVHR because they need to be in pairs, are expensive.
 
 
 similarly decentralized & ductless, like a [[mini split]]
+
+[[heat recovery]]
