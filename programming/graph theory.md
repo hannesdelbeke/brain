@@ -15,3 +15,4 @@ Graph, tree, collection
 each vert holds info like XYZ position, UV position, vertex color
 
 - [Wikipedia entry](https://en.wikipedia.org/wiki/Graph_theory)
+- sample python graph lib [dgpy](https://github.com/csaez/dgpy) (no development)
