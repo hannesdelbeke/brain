@@ -1,0 +1,2 @@
+- [review](https://kaspars.net/blog/nilan-compact-p2-geo3-polar)
+It is a single unit for ventilation with [[heat recovery]] and a [[heat pump]] against the exhaust air for heating or cooling the incoming air and producing domestic hot water, and another heat pump against ground loop for additional heating or cooling. ([[underfloor heating]])
