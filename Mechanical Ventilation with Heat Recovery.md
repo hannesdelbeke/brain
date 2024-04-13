@@ -6,7 +6,9 @@ aliases:
   - mechanical ventilation heat recovery
 ---
 A MVHR ventilates a house while reducing heat-loss, using [[countercurrent heat exchange]].
-It's a [[centralized]] unit that ventilates the whole house. (For decentralized units see [[Decentralised Mechanical Ventilation with Heat Recovery|dMVHR]]) using [[ducting]]
+It's a [[centralized]] unit that ventilates the whole house using [[ducting]].
+(For decentralized units see [[Decentralised Mechanical Ventilation with Heat Recovery|dMVHR]]) 
+For energy (air humidity ) recovering, see [[ERV]], ERVs are better.
 
 It's recommend for buildings with good air tightness levels, e.g. air permeability of the thermal envelope at or below` 3 m3.hr/m2 @50Pa`.
 
@@ -14,6 +16,7 @@ It's recommend for buildings with good air tightness levels, e.g. air permeabili
 - an [article](https://www.earth.org.uk/MHRV-mechanical-heat-recovery-ventilation.html) about a single room MVHR (Vent-Axia HR25H)
 - [article](https://www.heatspaceandlight.com/what-puts-people-off-mvhr-duct-cleaning-airborne-viruses-maintenance/) that talks about ducting maintenance and filters
 - [article](https://www.ventilation-alnor.co.uk/index/support/alnor-knowledge-base/heat-recovery/mvhr-system-mistakes.html) top 12 mistakes on installing
+- [video](https://www.youtube.com/watch?v=TChYcSSNXrI) doesn't recommend [[Decentralised Mechanical Ventilation with Heat Recovery|dMVHR]] because they need to be in pairs, are expensive.
 
 providers
 - https://www.bpcventilation.com/ UK service, claims lowest price

@@ -1,3 +1,9 @@
+---
+aliases:
+  - energy recovering ventilation
+---
+
+
 An ERV is like a whole-home fan with two extra steps. Not only does it control heat like an HRV system does, but it also controls humidity. The difference between an HRV and ERV is simply that: **an ERV also takes the humidity out of the outgoing air and puts it into the incoming air**.
 
 from wiki:
