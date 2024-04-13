@@ -1,10 +1,10 @@
 ---
 aliases:
-  - energy recovering ventilation
+  - ERV
 ---
 
 An ERV provides whole-home ventilation. 
-- heat recovery, just like an HRV system,
+- [[heat recovery]], just like an HRV system,
 - controls humidity. 
 The difference with an HRV: **an ERV also takes the humidity out of the outgoing air and puts it into the incoming air**. ERVs tend to hold on the moisture in the air.
 
