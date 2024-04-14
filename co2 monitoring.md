@@ -1,4 +1,4 @@
-CO2 in the air can be reduced with a [[Mechanical Ventilation with Heat Recovery|MVHR]]
+[[CO2]] in the air can be reduced with a [[Mechanical Ventilation with Heat Recovery|MVHR]]
 
 use a sensor to test, recommended NDIR sensor
 
@@ -16,5 +16,7 @@ recommended devices
 emailed 
 - technolinestore
 - blauberg (monitor kit)
+
+[data](https://medium.com/@joeljean/im-living-in-a-carbon-bubble-literally-b7c391e8ab6) of someone who monitored the CO2 in their home for years
 
 [[air quality]]
