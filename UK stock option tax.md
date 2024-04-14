@@ -3,13 +3,13 @@ You pay income tax and national insurance contributions (NICs) on the difference
 
 # example
 
-| shares  | share price | total   |      |
-| ------- | ----------- | ------- | ---- |
-| 153,125 | $0.115891   | $17,745 | paid |
-| 153,125 | $0.35       | $49,000 |      |
-|         | profit      | $31,255 |      |
-|         | income tax  | $14,000 | paid |
-|         | total paid  | $31,700 | paid |
+| shares  | share price | total   |            |
+| ------- | ----------- | ------- | ---------- |
+| 153,125 | $0.115891   | $17,745 | paid       |
+| 153,125 | $0.35       | $49,000 |            |
+|         | profit      | $31,255 |            |
+|         | income tax  | $14,000 | paid       |
+|         | total paid  | $31,700 | paid total |
 
 You're granted 153,125 shares at $0.115891 per share. Total $17,745
 The stock increases in value to 0.35/share (total $49k)
