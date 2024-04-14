@@ -1,0 +1,1 @@
+eligible deposits held by a UK establishment of Lloyds Bank plc are protected up to a total of £85,000 by the Financial Services Compensation Scheme,
