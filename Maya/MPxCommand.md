@@ -1,4 +1,7 @@
 `MPxCommand` is a base class for creating custom commands, that can be run from `maya.cmds`. 
+
+[[quick launcher]] can read all the commands in a nice GUI.
+
 Sample [[Autodesk Maya|Maya]] Python code for a custom `MPxCommand` command that creates a cube. 
 
 ```python
@@ -63,3 +66,5 @@ def uninitializePlugin(plugin):
 #    cmds.createCube()
 #    ```
 ```
+
+[[maya python]]
