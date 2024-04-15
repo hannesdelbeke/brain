@@ -1,5 +1,5 @@
 user friendly ways to run [[Autodesk Maya|Maya]] scripts: 
-- [[quick launcher]]
+- [[Maya quick launcher]]
 - [[buttonizer]]
 - [[unimenu]]
 

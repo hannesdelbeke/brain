@@ -1,4 +1,4 @@
 https://github.com/csaez
 
-- [[quick launcher]]
+- [[Maya quick launcher]]
 - [[Maya hard reload]]
