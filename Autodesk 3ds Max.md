@@ -5,3 +5,5 @@ aliases:
 - 3ds Max
 ---
 similar to [[Autodesk Maya]]
+
+an app to make [[3D]] models

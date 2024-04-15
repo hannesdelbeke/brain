@@ -13,7 +13,7 @@ blog [getting_started_with_python_in_ue4](https://sondreutheim.com/post/getting_
 - Enabling the plugin
 - Python in the editor
 - Adding your own scripts
-- Autocomplete in VS Code
+- [[Autocomplete]] in VS Code
 - Importing assets
 - Managing [[Unreal Blueprints Visual Scripting|blueprints]]
 
