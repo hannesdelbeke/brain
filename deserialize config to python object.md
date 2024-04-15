@@ -1,6 +1,6 @@
 ## Challenges
 writing a custom class takes time
-using a dict is too primitive, and has no autocomplete.
+using a dict is too primitive, and has no [[autocomplete|autocomplete]].
 
 sample config, can be loaded with [[Python config loader utils-]]
 ```YAML
