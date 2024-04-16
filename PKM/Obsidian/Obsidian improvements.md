@@ -14,6 +14,7 @@ Don't spend more time on notes than work.
 - [ ] ability edit obsidian vault online, in the browser
 	- [ ] action to auto sync from gitwiki to repo
 - [ ] right click and button hover show short keys, [thread](https://forum.obsidian.md/t/adding-shortcuts-to-the-right-click-context-menu/46160) 
+- [ ] note linking duplicate source
 
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
