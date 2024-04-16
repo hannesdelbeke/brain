@@ -8,63 +8,50 @@ Sample [[Autodesk Maya|Maya]] Python code for a custom `MPxCommand` command that
 import maya.api.OpenMaya as om
 import maya.cmds as cmds
 
-class CreateCubeCommand(om.MPxCommand):
-    commandName = "createCube"
+def maya_useNewAPI():
+    """Tell Maya this plugin uses the Python API 2.0."""
+    pass
+
+def initializePlugin(plugin):
+    vendor = "Dev"
+    version = "1.0.0"
+    om.MFnPlugin(plugin, vendor, version)
+
+def uninitializePlugin(plugin):
+    pass
+
+class HelloWorldCmd(om.MPxCommand):
+    COMMAND_NAME = "HelloWorld"
 
     def __init__(self):
-        super(CreateCubeCommand, self).__init__()
+        super(HelloWorldCmd, self).__init__()
 
     def doIt(self, args):
-        # Parse the arguments if needed (not used in this example)
+        """Called when the command is executed in script"""
+        print("My First MPxCommand, Hello World!")
 
-        # Create a cube
-        cube = cmds.polyCube()[0]
+    @classmethod
+    def creator(cls):
+        """Returns an instance of the HelloWorldCmd"""
+        return HelloWorldCmd()
 
-        # Set the result to the name of the created cube
-        self.setResult(cube)
-
-# Creator function
-def createCubeCommand():
-    return om.asMPxPtr(CreateCubeCommand())
-
-# Initialize the plugin
 def initializePlugin(plugin):
-    pluginFn = om.MFnPlugin(plugin)
+    """Entry point for a plugin"""
+    vendor = "Dev"
+    version = "1.0.0"
+    plugin_fn = om.MFnPlugin(plugin, vendor, version)
     try:
-        pluginFn.registerCommand(
-            CreateCubeCommand.commandName,
-            createCubeCommand
-        )
+        plugin_fn.registerCommand(HelloWorldCmd.COMMAND_NAME, HelloWorldCmd.creator)
     except:
-        om.MGlobal.displayError(
-            "Failed to register command: {}".format(
-                CreateCubeCommand.commandName
-            )
-        )
+        om.MGlobal.displayError("Failed to register command: {0}".format(HelloWorldCmd))
 
-# Uninitialize the plugin
 def uninitializePlugin(plugin):
-    pluginFn = om.MFnPlugin(plugin)
+    """Exit point for a plugin"""
+    plugin_fn = om.MFnPlugin(plugin)
     try:
-        pluginFn.deregisterCommand(CreateCubeCommand.commandName)
+        plugin_fn.deregisterCommand(HelloWorldCmd.COMMAND_NAME)
     except:
-        om.MGlobal.displayError(
-            "Failed to unregister command: {}".format(
-                CreateCubeCommand.commandName
-            )
-        )
-
-# Usage:
-# 1. Save this script as "createCubeCmd.py"
-# 2. Load the script in Maya using the following commands:
-#    ```
-#    import maya.cmds as cmds
-#    cmds.loadPlugin("path/to/createCubeCmd.py")
-#    ```
-# 3. Run the custom command:
-#    ```
-#    cmds.createCube()
-#    ```
+        om.MGlobal.displayError("Failed to deregister command: {0}".format(HelloWorldCmd))
 ```
 
 [[maya python]]
