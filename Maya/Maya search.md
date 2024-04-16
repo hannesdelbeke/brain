@@ -7,8 +7,6 @@ or go to the menu Help > Search bar
 no favorite
 no custom command support 
 
-see cosmos
-
 similar to
 - [[Maya quick launcher]]
-- cosmos
+- [[Maya Cosmos]]
