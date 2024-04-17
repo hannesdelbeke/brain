@@ -39,6 +39,7 @@ Don't spend more time on notes than work.
 - [ ] [[Obsidian Tabber]] 
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
 - [ ] [[Obsidian auto complete]]
+- [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)
 
 related to improvements:
 plugin development
