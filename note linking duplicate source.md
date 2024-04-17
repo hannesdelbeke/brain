@@ -6,3 +6,11 @@ So to create connections between notes, you make a note that duplicates the gith
 But it often feels just being able to link to the readme directly would be nicer. it already has an img and description.
 
 see [[link unlinked websites]]
+
+## Solution
+Embed the URL in an iframe.
+Note in [[Obsidian]], first define height, then width. Else height won't work.  
+```HTML
+<iframe src="https://github.com/martinlanton" height="800" width="800" ></iframe>
+```
+<iframe src="https://github.com/martinlanton" height="800" width="800" ></iframe>
