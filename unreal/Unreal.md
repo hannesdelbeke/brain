@@ -6,3 +6,4 @@ aliases:
 - unreal 4
 ---
 
+[[unreal python cheatsheet]]
