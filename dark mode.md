@@ -18,8 +18,9 @@ new pc
 - P4V settings/Display/Dark
 
 Force dark mode on windows apps
-- https://darkmodeanyapp.com/
-- [[WindowTop]]
+- dark mode any app https://darkmodeanyapp.com/ (free)
+- [[WindowTop]] (free & paid)
+- untested https://github.com/ChGen/DarkEnforcer (free)
 
 new online accounts
 - [[gmail dark theme]]
