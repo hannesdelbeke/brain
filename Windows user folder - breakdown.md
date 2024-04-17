@@ -16,4 +16,4 @@
 - .cache
 	- pre-commit
 
-[[Windows 11-]]
+[[Windows 11]]
