@@ -1,2 +1,3 @@
 - [[acoustic wall panel]] 
-- [[]]
+- accoustic ceiling panel
+- foam panels 
