@@ -13,7 +13,11 @@ there's a great forum discussion on this [add support for link types](https://fo
 
 also see [[Link strength]]
 
+In [[JIRA]], you can define type of link. e.g. related, blocking, duplicate, ...
+
+## Don't confuse with
 link types could also be confused with, what type of link is it. e.g. :
 - [[backlink]]
 - [[wikilink]]
 - hyperlink / [[URL]]
+
