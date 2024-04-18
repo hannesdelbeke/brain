@@ -5,5 +5,7 @@ aliases:
 - unreal 5
 - unreal 4
 ---
+unreal navigation: RMB + WASD (QE) , scroll up or down to change fly speed
+
 
 [[unreal python cheatsheet]]
