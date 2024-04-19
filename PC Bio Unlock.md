@@ -1,4 +1,4 @@
-unlock your pc with your phone fingerprint
+unlock your pc with your phone [[fingerprint reader]]
 
 requires 
 - java
