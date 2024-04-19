@@ -1,7 +1,7 @@
 left
  4. HDMI  
  5. Headphone/mic input  
- 6. (2) Thunderbolt 4  
+ 6. (2) [[Thunderbolt]] 4  USB-C [[USB-C Power Delivery]]
  7. Optional smart card reader
 
 right 
@@ -10,5 +10,6 @@ right
 3. Lock slot
 
 2 x microphone
-IR camera (win hello)
+[[infrared camera]] ([[windows hello]])
 camera
+[[fingerprint reader]]
