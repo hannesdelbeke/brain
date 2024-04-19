@@ -1,4 +1,4 @@
-unlock your pc with your phone fingerprint. (on the same network, no VPN)
+unlock your pc with your phone's [[fingerprint reader]]. (on the same network, no VPN)
 similar to [[PC Bio Unlock]]
 
 [source](https://www.xda-developers.com/unlock-windows-pc-fingerprint-scanner-android/)

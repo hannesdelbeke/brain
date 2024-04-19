@@ -1,4 +1,4 @@
-minimum specs compared
+minimum specs compared between [[Thunderbolt]] versions
 
 | thunderbolt 3          | thunderbolt 4                                                                                                  |
 | ---------- | -------------------------------------------------------------------------------------------------- |
