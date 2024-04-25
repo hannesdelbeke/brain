@@ -6,4 +6,4 @@ If I want both my data, and goodreads, the list needs to stay [[synced]]
 - one-time CSV export 
 - automated RSS export (You can also use the Goodsidian plugin for [[Obsidian]] , but it's limited to 100 books / shelf )
 
-[[TODO fortis]]
+[[TODO]]
