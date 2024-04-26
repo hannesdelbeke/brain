@@ -21,6 +21,7 @@ Force dark mode on windows apps
 - dark mode any app https://darkmodeanyapp.com/ (free)
 - [[WindowTop]] (free & paid)
 - untested https://github.com/ChGen/DarkEnforcer (free)
+- [discussion](https://superuser.com/questions/1725756/is-there-a-way-to-force-regedit-and-task-manager-to-use-dark-theme-in-w10) regarding this
 
 new online accounts
 - [[gmail dark theme]]
