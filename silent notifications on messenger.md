@@ -8,3 +8,5 @@ Or you can do a work around.
 3. Change the notification sound to `1 second of silence`
 
 Vibrate is still enabled, but no more sound
+
+[[digital minimalism]]
