@@ -12,6 +12,7 @@ legend:
 - [x] [[Obsidian plugin - Plugin Groups]] for delayed startup
 - [x] Homepage for [[_|my homepage]]
  - [ ] Obsidian Git - to important to delay startup. in case it fails silently.
+ - [x] [[Obsidian plugin - paste URL in selection]]
 ## delayed startup
 - [ ] [[Excalidraw]] for drawing [[vector image]]
 - [ ] advanced tables
