@@ -8,14 +8,14 @@ Don't spend more time on notes than work.
 	ideally even exclude from the git repo, to avoid any accidental leaking of data.
 	You could use another vault, but then you can't link in your master vault on your own pc.
 	- [ ] proposal: [[interwikilinks plugin]]
-- [x] support for submodules, workaround to [[Obsidian submodule]]
 - [ ] [[Obsidian private comments]], allowing private local comments that don't live in the note
-- [x] improve [[navigate sibling page]], next & previous button
 - [ ] ability edit obsidian vault online, in the browser
 	- [ ] action to auto sync from gitwiki to repo
 - [ ] right click and button hover show short keys, [thread](https://forum.obsidian.md/t/adding-shortcuts-to-the-right-click-context-menu/46160) 
-- [ ] note linking duplicate source
-- [ ] [[auto collapse linked mentions in Obsidian]]
+- [ ] note linking duplicate source (what does this mean?)
+- [x] improve [[navigate sibling page]], next & previous button
+- [x] support for submodules, workaround to [[Obsidian submodule]]
+- [x] [[auto collapse linked mentions in Obsidian]]
 
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
@@ -25,7 +25,6 @@ Don't spend more time on notes than work.
 	- [x] can we have it without pressing ctrl?
 	      instructions to enable [[automatic preview on hover URL]]
 	- [ ] preview external URLs [forum post](https://forum.obsidian.md/t/show-preview-on-hover-over-external-link-e-g-to-a-webpage/9104)
-- [x] open web URLs in obsidian tab.  https://github.com/MamoruDS/obsidian-open-link-with
 - [ ] quickly see the date when a note was edited in Obsidian 
 	- [x] from file created metadata, see [file info panel](https://github.com/CattailNu/obsidian-file-info-panel-plugin) plugin, not quickly though
 	- [ ] from git
@@ -34,13 +33,14 @@ Don't spend more time on notes than work.
 	if you store the repo on git, then enable a shortcut in [[Obsidian]] to go to the note in the repo in the browser. hide button if no git detected
 - [ ] spaces on tab in code blocks option (for Python)
 - [ ] no spellcheck in links, see [bug report](https://forum.obsidian.md/t/disable-spellcheck-in-urls-and-links/50118) 
-- [x] support code in dropdown, workaround: [[toggle code in Obsidian]]
 - [ ] add shortcut for adding to callout . select text, insert call out
 - [ ] [[STYLE improve callout formatting]]
 - [ ] [[Obsidian Tabber]] 
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
 - [ ] [[Obsidian auto complete]]
 - [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)
+- [x] support code in dropdown, workaround: [[toggle code in Obsidian]]
+- [x] open web URLs in obsidian tab.  https://github.com/MamoruDS/obsidian-open-link-with
 
 related to improvements:
 plugin development
