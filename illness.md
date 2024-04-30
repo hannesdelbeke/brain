@@ -4,3 +4,4 @@ aliases:
 ---
 
 [[medical condition]]
+bad [[health]]

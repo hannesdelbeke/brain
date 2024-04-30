@@ -3,6 +3,7 @@ aliases:
   - tool browser
   - command launcher
   - command browser
+  - toolbox
 ---
 #### Features
 Some recommended features for a [[command]] launcher:
