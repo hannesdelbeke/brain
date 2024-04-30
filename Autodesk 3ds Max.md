@@ -7,3 +7,5 @@ aliases:
 similar to [[Autodesk Maya]]
 
 an app to make [[3D]] models
+
+[[software]]

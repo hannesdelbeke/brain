@@ -34,5 +34,6 @@ missing features
 
 
 [[file browser]]
+[[dcc search bar]]
 
 similar to [Unity quick search](https://docs.unity3d.com/Packages/com.unity.quicksearch@1.1/manual/index.html#api)
