@@ -9,7 +9,7 @@
 - dead 7y https://github.com/appetizermonster/Unity3D-QuickSearch
 	- Search Assets
 	- Search GameObjects on Active Scenes
-	- Execute Menu
+	- 💖Execute Menu
 	- Support Asset Dragging
 
 ### toolbars in unity
