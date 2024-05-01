@@ -1,6 +1,21 @@
 [[unity]] 
  [[tool launcher]]
 
+unity menu's tend to contain a lot of files.
+create a command browser that can search and run a command
+plugin infrastructure
+
+mode 1: pure commands
+- recreate all default unity menu commands. e.g. open project settings
+- custom commands. e.g. launch my editor tool (this can also be a menu command)
+
+mode 2: right click commands in asset browser
+right click shows a lot of commands in the project browser, to the point where it's overwhelming and fills the whole screen.
+instead show an option that says "browse commands"
+this opens a command browser with commands that run on that directory
+
+option to add custom commands
+
 
 - asset searcher, updated 3y ago https://github.com/Team-on/unity-editor-spotlight
 	- browse assets & scenes
