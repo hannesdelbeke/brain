@@ -1,2 +1,3 @@
 [[swimming]]
 [[gym]]
+[[pilates]]
