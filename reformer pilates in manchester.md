@@ -5,3 +5,6 @@ reformer [[pilates]] classes in [[Manchester]]
 - Sculpt in Haus - 20/session [insta](https://www.instagram.com/sculptinhauspilates/?hl=en)
 - Poise Reformer Pilates - fully booked
 - The Green Lab [intro offers](https://www.thehealthlabnq.com/pricingoptions)
+- Chorlton - https://www.energyflowfitness.co.uk/ 
+	- normal pilates - pay cash 12£/session
+	- private reformer classes, no info online
