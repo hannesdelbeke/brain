@@ -1,8 +1,9 @@
-[[Unreal]] doesn't yet has a Python script editor
-You can download the script editor as an unreal plugin https://github.com/hannesdelbeke/unrealScriptEditor-plugin
-Since it's pure python it likely will work in all Unreal versions.
+[[Unreal]] doesn't has a native [[Python]] script editor.
 
-![](https://camo.githubusercontent.com/043f1b6edea7f5e80a6f55f139d623047ed75c12765e25c891a9d387570933f8/68747470733a2f2f692e696d6775722e636f6d2f4b736369786c552e706e67)
+You can download the script editor as an [[unreal plugin]] here: https://github.com/hannesdelbeke/unrealScriptEditor-plugin
+Since it's pure Python it should work in all Unreal versions.
+
+![](https://i.imgur.com/KscixlU.png)
 
 > [!Planning]-
 > planning notes from before contributing to the tool 
