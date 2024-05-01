@@ -2,6 +2,7 @@ Remember plugin minimalism, less is more.
 Don't spend more time on notes than work.
 
 ### I want this!
+- [ ] [[obsidian git backup can fail]]
 - [ ] [[obsidian web integration]] would allow for community growth
 - [ ] use obsidian with separated streams of notes / submodules (submodule have issues)
 	exclude download of some folders to your pc. e.g. personal / work

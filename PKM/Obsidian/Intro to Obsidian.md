@@ -13,7 +13,7 @@ That's it!
 Once you get more familiar with Obsidian, install some plugins, tweak the settings, etc. I worked a long time without any plugins.
 
 most plugins are optional, these days I use:
-- [[setup Obsidian Git]] to [[backup]] your notes on git
+- [[Obsidian Git]] to [[backup]] your notes on git
 - `paste URL into selection`, to select a word and paste a URL
 - `paste image png to jpg`, to easy paste images from the internet in jpg
 - [execute code](https://github.com/twibiral/obsidian-execute-code)`

@@ -1,5 +1,6 @@
 #public #git #submodule #obsidian
-
+[[git submodule]]
+[[obsidian]]
 # update submodules in vault
 ~~The [git plugin](https://github.com/denolehov/obsidian-git) doesn't support submodules.~~ It now does on PC! 
 but not on Android (due to limitations of the git library it uses.)
