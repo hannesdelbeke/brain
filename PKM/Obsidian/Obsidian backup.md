@@ -3,7 +3,7 @@ To avoid losing notes when the hard drive crashes or gets stolen, we need backup
 
 ## Git
 Git is a backup system popular with programmers. It's a bit more technical.
-There's a git extension for [[Obsidian]], see [[setup Obsidian Git]]
+There's a git extension for [[Obsidian]], see [[Obsidian Git]]
 - on Windows PC, the git plugin works well and supports submodules.
 - on Android, it doesn't work as smoothly, with occasional merge issues. And it doesn't support submodules on Android.
 
