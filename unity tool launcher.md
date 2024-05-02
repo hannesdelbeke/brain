@@ -20,6 +20,9 @@ option to add custom commands
 - asset searcher, updated 3y ago https://github.com/Team-on/unity-editor-spotlight
 	- browse assets & scenes
 - dead 7y  [project](https://github.com/DarrenTsung/DTCommandPalette), good example of toolbrowser
+	- Open Scenes
+	- Select GameObjects in the Scene
+	- Open Prefabs into a sandbox scene (requires [PrefabSandbox](https://github.com/DarrenTsung/DTPrefabSandbox))
 	- 💖Run commands (any method with `[MethodCommand]` attribute can be run)
 - dead 7y https://github.com/appetizermonster/Unity3D-QuickSearch
 	- Search Assets
