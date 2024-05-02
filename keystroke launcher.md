@@ -8,4 +8,4 @@ a search box for launching apps.
 [[search bar]]
 
 sample 
-- [[Unity editor spotlight]]
+- [[ARCHIVED - Unity editor spotlight]]
