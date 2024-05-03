@@ -1,0 +1,6 @@
+---
+aliases:
+  - shelve
+  - shelves
+  - toolbar
+---
