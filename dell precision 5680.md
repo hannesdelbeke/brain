@@ -9,7 +9,10 @@ right
 2. USB-C port  
 3. Lock slot
 
+[[laptop]]
 2 x microphone
 [[infrared camera]] ([[windows hello]])
 camera
 [[fingerprint reader]]
+[[OLED]]
+4K
