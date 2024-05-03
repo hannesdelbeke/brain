@@ -1,4 +1,4 @@
-
+[[monitor]]
 USB
 - USB Type-A ,  4 x USB Type-A 5Gbps 
 - Usb-B (hub enablement)

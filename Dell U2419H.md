@@ -1,3 +1,4 @@
+[[monitor]]
 USB turns of when in powersave mode (computer off)
 
 
