@@ -1,7 +1,7 @@
 
 > [!warning] ARCHIVED
 > There's no more need for this [[Unity tool]].
-> This is replaced by the native [[Unity asset searcher]]
+> This is replaced by the native [[Unity search]]
 
 ![gif](https://i.giphy.com/media/3ohs4lLUapZ9D19poA/source.gif)
 
