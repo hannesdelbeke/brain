@@ -1,7 +1,7 @@
 ---
 aliases:
   - note
-  - nots
+  - notes
 ---
 
 - summarise knowledge
