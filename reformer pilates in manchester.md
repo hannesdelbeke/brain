@@ -3,8 +3,9 @@ reformer [[pilates]] classes in [[Manchester]]
 - [x] class pass - intro deal 2 weeks free
 - Runway Pilates Manchester [intro deal](https://runwaypilates.com/first-timers/)
 - Sculpt in Haus - 20/session [insta](https://www.instagram.com/sculptinhauspilates/?hl=en)
-- Poise Reformer Pilates - fully booked
+- Poise Reformer Pilates - fully booked - 1on1
 - The Green Lab [intro offers](https://www.thehealthlabnq.com/pricingoptions)
 - Chorlton - https://www.energyflowfitness.co.uk/ 
 	- normal pilates - pay cash 12£/session
 	- private reformer classes, no info online
+- Restart Reformer Pilates [intro offer](https://www.restartpilates.co.uk/group-classes)
