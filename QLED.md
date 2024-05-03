@@ -1,1 +1,0 @@
-monitor with pure black
