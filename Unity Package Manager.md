@@ -18,6 +18,7 @@ cons
 - no easy install multiple packages from a list.
   the closest is installing those packages, and saving the project manifest somewhere.
 
+[[UPM - install a package from git]]
 opensource projects 
 - untested https://github.com/ltmx/Unity.PackageManagerTools
 - various packages https://openupm.com/packages/topics/package-management/?sort=downloads
