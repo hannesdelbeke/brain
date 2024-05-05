@@ -15,8 +15,8 @@ Don't spend more time on notes than work.
 - [ ] right click and button hover show short keys, [thread](https://forum.obsidian.md/t/adding-shortcuts-to-the-right-click-context-menu/46160) 
 - [ ] note linking duplicate source (what does this mean?)
 - [x] improve [[navigate sibling page]], next & previous button
-- [x] support for submodules, workaround to [[Obsidian submodule]]
-- [x] [[auto collapse linked mentions in Obsidian]]
+- [x] automatic support for submodules, workaround for manually pulling and pushing submodules., see [[Obsidian submodule]]
+- [x] [[auto collapse linked mentions in Obsidian]] (Work around)
 
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
