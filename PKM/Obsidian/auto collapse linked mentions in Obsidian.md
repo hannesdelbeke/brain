@@ -19,7 +19,10 @@ Place a CSS file in your vault in  `/.obsidian/snippets`.
   display: none;
 }
 ```
-cons:  you can’t expand anymore
+cons:  
+- you can’t expand backlinks anymore
+- search results are also affected!
+
 source [original forum post](https://forum.obsidian.md/t/retain-remember-status-of-backlinks-in-document/20341/39), my [reply](https://forum.obsidian.md/t/retain-remember-status-of-backlinks-in-document/20341/44)
 ### 3rd party plugin
 untested
