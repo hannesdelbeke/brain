@@ -4,6 +4,7 @@ Scoped registries in [[Unity]] let you add your own package repo.
 When you add your own scoped registry.
 The packages in it will show in the Package Manager.
 You can also use the [[unity asset searcher]] to search and install your custom packages.
+installed packages and custom scopes are both added to the [[Unity project manifest]]
 
 example scoped registry [source](https://gist.github.com/keijiro/f8c7e8ff29bfe63d86b888901b82644c)
 - Name: `Keijiro`
