@@ -1,10 +1,14 @@
 
 created a new plugin & module template https://github.com/hannesdelbeke/maya-plugin-template
+[[maya plugin]]
 
 Since Python modules are usually developed in their own repo, [[vendoring]] Python modules in the scripts folder results in duplicate outdated data.
 - [ ] TODO figure out a nice approach for this with requirements
+	- [x] [[plugget]] handles this
 
 ### existing Maya templates
+🔻is used to highlight cons
+
 - https://github.com/FXTD-ODYSSEY/Maya-UIBot plugin & module template, with .ui loader
 	- module with . (local path)
 	- module installer
