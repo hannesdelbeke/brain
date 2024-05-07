@@ -101,3 +101,5 @@ You are unsure where to start - go here and/or Autodesk Developer Center
 You got plug-ins for year without installer and interested to have one without knowing where to start? I got the scripts and tools on GitHub and willing to share them with individuals. If interested, drop me a line with your GitHub account name. In future, I'll make them in public repository, but at this time, I am still testing couple of more complex scenario.
 
 [[maya plugin]]
+[[package management]]
+[[Autodesk Exchange Store]]
