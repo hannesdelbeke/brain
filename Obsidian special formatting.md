@@ -13,7 +13,7 @@
 ```
 
 > [!BUG]
-> below text breaks with mkdocs when converted to HTML, until that bug is unresolved, see the code sample above. keeping this to repro
+> below text breaks with mkdocs when converted to HTML, until that bug is unresolved, see the code sample above. keeping this to repro [[my digital garden dev]]
 
 -   `%%` for comment blocks
 -   `^blockid` for block identifiers
