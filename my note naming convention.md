@@ -15,6 +15,6 @@ note content
 - use [[wikilink]]s
 - place all images in `image` folder
 
-[[my digital garden]]
+[[my digital garden dev]]
 [[my notes]]
 [[naming convention]]
