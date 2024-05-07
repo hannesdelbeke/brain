@@ -13,3 +13,4 @@ this [site](https://www.payette.com/research-innovation/the-geometry-of-sound-di
 
 
 [[quality of life (game)]]
+[[sound waves]]
