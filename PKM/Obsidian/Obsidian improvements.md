@@ -20,6 +20,8 @@ Don't spend more time on notes than work.
 
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
+- [ ] support folders starting with `.` see forum [post](https://forum.obsidian.md/t/enable-use-of-hidden-files-and-folders-starting-with-a-dot-dotfiles-dotfolders-within-obsidian/26908)
+      some md files, think from azure, use `.attachments` by default. works on github but in Obsidian 
 - [ ] preview on hover URL link improves reading quick summaries
 	- this site does it well [Andy](https://notes.andymatuschak.org/)
 	- obsidian supports [page preview for notes](https://help.obsidian.md/Plugins/Page+preview) when pressing ctrl and hover the link
