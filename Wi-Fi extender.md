@@ -2,7 +2,7 @@
 aliases:
   - Wi-Fi extenders
 ---
-Repeat the Wi-Fi signal to extend the range. Speed will reduce since the signal needs to be repeated.
+Repeat the [[WiFi]] signal to extend the range. Speed will reduce since the signal needs to be repeated.
 
 - Wireless Repeaters
 	-  re-broadcast the WiFi signal, latency is increased. limited to 5 devices. oldest method.
@@ -13,4 +13,4 @@ Repeat the Wi-Fi signal to extend the range. Speed will reduce since the signal 
 see https://www.screenbeam.com/wifihelp/wifibooster/differences-wifi-booster-wifi-extender-wifi-repeater/
 
 
-[[Wi-Fi]]
+[[WiFi]]

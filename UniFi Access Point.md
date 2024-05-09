@@ -10,4 +10,4 @@ reddit recommends Aruba InstantON over UBNT
 aruba instant on AP11
 or aruba instant on AP22 for wifi 6
 
-[[Wi-Fi]]
+[[WiFi]]
