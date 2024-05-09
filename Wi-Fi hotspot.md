@@ -1,1 +1,1 @@
-A place to connect to [[Wi-Fi]].
+A place to connect to [[WiFi]].
