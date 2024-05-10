@@ -1,7 +1,7 @@
 `MPxCommand` is a base class for creating custom [[command|commands]], that can be run from `maya.cmds`
 
 > [!warning] see runtime commands
-> [[maya runTimeCommand]]
+> [[Maya runTimeCommand from menu]]
 
 [[Maya quick launcher]] can read all the commands in a nice GUI.
 
