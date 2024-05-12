@@ -22,7 +22,7 @@ Don't spend more time on notes than work.
 
 my own workflow improvements, not related to obsidian
 - [ ] [[minimize pkm image size]]
-- [ ] [[link unlinked noted]]
+- [ ] [[link unlinked notes]]
 - [ ] [[discover a garden's essence]]
 ### low priority 
 - [ ] [[drag drop extract to new note]] would speed up breaking up long notes
