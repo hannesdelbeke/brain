@@ -19,5 +19,5 @@ written by [[csaez]]
 
 [[auto complete]]
 [[maya python]]
-- [[qt]]
+- [[Qt]]
 - [[python]]

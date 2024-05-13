@@ -1,7 +1,7 @@
 Tabbers are great for e.g. showing the same code in different languages.
 ![[Obsidian Tabber-1674600128447.jpeg|150]]
 
-Proposal for Obsidian #pluginidea 
+Proposal for a [[Obsidian plugin]] #pluginidea 
 > [!info]+ Tabber proposal
 > - markdown friendly
 > - still renders nicely when plugin not installed
@@ -45,7 +45,7 @@ Proposal for Obsidian #pluginidea
 
 ### MkDocs content tabs
 https://squidfunk.github.io/mkdocs-material/reference/content-tabs/
-mkdocs already supports a tabber! it looks bad in [[Obsidian]] though
+mkdocs already supports a tabber! it looks bad in Obsidian though
 https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
 ```
 === "Tab 1"
