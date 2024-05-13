@@ -6,3 +6,4 @@
 [source](https://peternixey.com/post/146210478753/what-todays-magic-pony-acquisition-means-for)
 
 [[finance]]
+[[investing]]

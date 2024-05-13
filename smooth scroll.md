@@ -9,3 +9,5 @@ When you press page down in [[Chrome]], a small scroll down animation plays befo
 When disabled, scroll down is instant. 
 - go to chrome://flags/
 - search smooth scroll & disable it
+
+[[scrolling]]

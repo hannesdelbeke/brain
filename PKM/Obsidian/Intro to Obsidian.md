@@ -3,7 +3,7 @@ I want to start using [[Obsidian]] to manage my notes, but am overwhelmed. Where
 1. Install Obsidian 
 2. Start writing notes in markdown files without organizing them.
    don't worry about the structure or if you do it right.
-2. Learn [[wikilinks]]
+2. Learn [[wikilink]]
    Simply type `[[` and the name of a note, to link that note
    This is the key to getting good at note taking in Obsidian.
 3. Use hashtags to create trends across your notes. It'll help you with noticing patterns across your notes.
@@ -19,3 +19,4 @@ most plugins are optional, these days I use:
 - [execute code](https://github.com/twibiral/obsidian-execute-code)`
 
 #tutorial
+[[note taking]]

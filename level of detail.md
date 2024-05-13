@@ -1,0 +1,6 @@
+---
+aliases:
+  - LOD
+  - LODs
+  - meshLOD
+---

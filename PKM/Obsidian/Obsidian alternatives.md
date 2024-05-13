@@ -54,10 +54,11 @@
 - https://nota.md/
 	- mac only
 	- not released
-	- [[wikilinks]]
+	- [[wikilink]]
 - [typora](https://support.typora.io/Links/)
 	- no wiki links, see [doc](https://support.typora.io/Links/)
 
 this [article](https://elizabethbutlermd.com/5-reasons-why-markdown-could-be-your-secret-weapon-for-effortless-personal-knowledge-management/) talks about advantage of markdown, and several apps
 
 great discussion https://news.ycombinator.com/item?id=29996714
+see https://toolfinder.co/lists/best-pkm-apps

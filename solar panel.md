@@ -1,5 +1,6 @@
 ---
-solar panels:
+aliases:
+  - solar panels
 ---
 add a [[battery]] 
 

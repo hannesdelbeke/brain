@@ -1,0 +1,1 @@
+the origin of a word

@@ -1,0 +1,1 @@
+a better version of [[Wi-Fi extenders]] but slower than [[Powerline]]

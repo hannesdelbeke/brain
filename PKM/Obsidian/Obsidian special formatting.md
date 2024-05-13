@@ -1,4 +1,4 @@
-[[Obsidian]] uses industry-standard Commonmark, GFM, Github [[wikilinks]], and [[YAML front matter]]. The only Obsidian-specific extensions it adds are:
+[[Obsidian]] uses industry-standard Commonmark, GFM, Github [[wikilink]], and [[YAML front matter]]. The only Obsidian-specific extensions it adds are:
 
 ```txt
 `%%` for comment blocks

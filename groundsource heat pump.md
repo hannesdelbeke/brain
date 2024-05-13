@@ -1,5 +1,6 @@
 ---
-GSHP:
+aliases:
+  - GSHP
 ---
 extract energy from underground
 

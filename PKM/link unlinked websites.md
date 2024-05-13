@@ -1,4 +1,4 @@
-you browse a public website, e.g. a documentation page, and come across a term you don't understand. If only the site used [[wikilinks]]!
+you browse a public website, e.g. a documentation page, and come across a term you don't understand. If only the site used [[wikilink]]!
 
 Imagine a chrome extension similar to [[URL textlink]], that let's you:
 1. select a word

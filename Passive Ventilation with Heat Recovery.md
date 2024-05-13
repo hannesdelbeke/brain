@@ -1,5 +1,6 @@
 ---
-PVHR:
+aliases:
+  - PVHR
 ---
 It's like a [[Mechanical Ventilation with Heat Recovery|MVHR]], but without any moving parts or energy cost.
 

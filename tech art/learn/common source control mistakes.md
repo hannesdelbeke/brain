@@ -1,6 +1,6 @@
 common source control mistakes
 - not using source control
-- versioning inside source control. e.g.  uploading a v1, v2, v3 to a [[git]] or [[perforce]] repo
+- versioning inside source control. e.g.  uploading a v1, v2, v3 to a [[git]] or [[Perforce]] repo
 - not uploading source files but release or compressed files, e.g. [this](https://github.com/CydoniaValley/ue_collider_tool/issues/1)
 - not locking a file
   when several people work on a project simultaneously , you will at points have conflicts. Code can often be merged, but you can't merge raw data like textures, meshes, game-files.

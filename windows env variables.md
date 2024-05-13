@@ -4,7 +4,7 @@ aliases:
   - windows environment variables
 ---
 
-useful [[environment variable]]s for Windows
+useful [[environment variable]]s for [[Windows]]
 
 | Environment Variable  | Example Value                         |
 | --------------------- | ------------------------------------- |

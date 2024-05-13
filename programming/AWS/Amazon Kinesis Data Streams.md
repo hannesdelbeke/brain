@@ -5,5 +5,4 @@ website clickstreams, database event streams, financial transactions, social med
 location-tracking events. The data collected is available in milliseconds to enable real-time analytics use
 cases such as real-time dashboards, real-time anomaly detection, dynamic pricing, and more.
 
-
 [[AWS analytics]]

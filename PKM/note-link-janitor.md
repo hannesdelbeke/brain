@@ -1,4 +1,4 @@
-note-link-janitor is a batch script to add backlinks at the bottom for all [[wikilinks]] in a file of markdown files. The [original version](<[original repo](https://github.com/andymatuschak/note-link-janitor)>) dropped support, see my [fork](https://github.com/hannesdelbeke/note-link-janitor) with some fixes.
+note-link-janitor is a batch script to add [[backlink]] at the bottom for all [[wikilink]] in a file of markdown files. The [original version](<[original repo](https://github.com/andymatuschak/note-link-janitor)>) from [[Andy Matuschak]] dropped support, see my [fork](https://github.com/hannesdelbeke/note-link-janitor) with some fixes.
 
 note-link-janitor can automatically run in a CI pipeline such as GitHub actions.
 > [!Github CI instructions]-
