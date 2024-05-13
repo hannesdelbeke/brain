@@ -12,9 +12,9 @@ Since it's pure Python it should work in all Unreal versions.
 > 
 > ### plugin
 > setup the script editor as a unreal plugin
-> - auto install dependencies through [[Python pip|pip]]. 
+> - auto install dependencies through [[python pip|pip]]. 
 > 	- installing dependencies can be done inside the plugin, similar to the [plugget blender addon](https://github.com/plugget/plugget-blender-addon)
-> 	- Or we can use [[plugget|plugget]] or [[Python pip|pip]] to handle the deps
+> 	- Or we can use [[plugget|plugget]] or [[python pip|pip]] to handle the deps
 > 
 > ### tkinter
 > - we could use `tkinter`, which ships with in unreal.
