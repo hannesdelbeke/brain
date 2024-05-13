@@ -24,4 +24,5 @@ They established the patterns term AFAIK.
 - [[Wave Function Collapse]]
 - A-star pathfinding
 
-#programming #patterns
+#patterns
+[[programming]]

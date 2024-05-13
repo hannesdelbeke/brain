@@ -9,4 +9,5 @@ The main purpose seems to be for other people to see what you work on, however I
 ## Example
 - https://mister-chad.com/now 
 - a latest page is not a now note but follows the same concept, [example](https://nesslabs.com/articles)
-- 
+
+[[discovery]]

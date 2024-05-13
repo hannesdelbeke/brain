@@ -81,4 +81,6 @@ but you can
 	- works in [[Obsidian]] 
 	[![](https://user-images.githubusercontent.com/9102856/131702952-1aa76baa-a279-474c-978d-cec95a683485.gif)]
 
-[[WindowTop]]
+a plugin that can do this [[WindowTop]]
+
+[[note taking]]

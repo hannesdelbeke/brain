@@ -1,4 +1,4 @@
-Today I wrote a lot of notes. But I expect I wont read most of them again unlike my usual productivity notes, e.g. on [[programming]].
+Today I wrote a lot of notes. But I expect I wont read most of them again unlike my usual productivity notes, e.g. on `programming`.
 Today I am quite tired because of a hang over, and I've noticed that being tired often leads to fake productivity. Being busy but not getting much done
 
 I think perfectionism, the same reason discussed in  [[not finishing books]], is why I want to write down all my thoughts and discoveries. And why I struggle to stop writing a half written note, and just drop it.
