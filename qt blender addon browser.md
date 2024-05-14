@@ -307,4 +307,4 @@ see space_userprefs.py
 reference [repo](https://github.com/urorwell/AddonPreferences-Minimal-UI) that edits the add-on UI
 
 [[qt blender addon browser]]
-[[Blender addons]]
+[[Blender addon]]

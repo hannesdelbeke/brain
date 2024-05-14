@@ -20,5 +20,5 @@ https://www.unrealengine.com/marketplace/en-US/store official
 
 #techart #script
 
-[[Blender addons]]
+[[Blender addon]]
 [[plugin]]

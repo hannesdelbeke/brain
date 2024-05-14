@@ -2,7 +2,7 @@
 aliases:
   - Blender add-on
   - Blender add-ons
-  - Blender addon
+  - Blender addons
 ---
 [[Blender]] addons can be enabled in File/Preferences, add-ons tab.
 
