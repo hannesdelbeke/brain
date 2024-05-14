@@ -14,6 +14,8 @@ for more info see the [official docs](https://help.obsidian.md/Obsidian/Index)
 
 Obsidian let's you type [[Markdown]] and uses [[WYSIWYG]] to instantly show you a formatted version. 
 
+Obsidian is an [[Electron]] app which basically provides a [[Chromium]] window as the application UI
+
 [[personal knowledge management|PKM]]
 #obsidian
 [[own your data]]
