@@ -20,6 +20,6 @@ you might want to make your window dockable in Maya: [[Maya dockable widget]]
 [outdated stackoverflow](https://stackoverflow.com/questions/22331337/how-to-get-maya-main-window-pointer-using-pyside/75249025#75249025)
 
 [[Qt]]
-[[Maya python]]
+[[Maya Python-]]
 
  #ui #widget

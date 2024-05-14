@@ -2,7 +2,7 @@
 
 [[Maya quick launcher]] can read all the commands in a nice GUI.
 
-Sample [[Maya python|Maya Python]] code for a custom `MPxCommand` command that creates a cube. 
+Sample [[Maya Python-|Maya Python]] code for a custom `MPxCommand` command that creates a cube. 
 
 ```python
 import maya.api.OpenMaya as om

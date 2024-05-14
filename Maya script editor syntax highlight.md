@@ -20,4 +20,4 @@ You can avoid scripting in the [[Autodesk Maya|Maya]] editor with an external ID
 
 
 #terminal #scripteditor #syntax_highlight #color #UX
-[[Maya python]]
+[[Maya Python-]]

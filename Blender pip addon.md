@@ -1,9 +1,9 @@
-A [[Python]] module manager for [[Blender]], using [[python pip|pip]]
+A [[Python]] module manager for [[Blender]], using [[Python pip-|pip]]
 Get it from the [GitHub repo](https://github.com/hannesdelbeke/blender_pip)
 
 ### new repo
 https://github.com/hannesdelbeke/blender_pip
-- [x] pass paths to [[python pip|pip]]
+- [x] pass paths to [[Python pip-|pip]]
 - [x] install to user modules folder unique for each blender version
 - [x] support editable install for local repos by auto adding a script that handles `site dir` in startup folder (which likely doesn't exist)
       [[Blender install editable packages]]

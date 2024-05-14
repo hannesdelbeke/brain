@@ -8,4 +8,4 @@ hard_reload is a neat little widget, to delete python module from memory, so the
 - you have to manually reload every module. this might be a pain if you have complex packages with multiple modules.  A workaround: reload all modules containing a unique word that identifies your modules.
 
 [[python reload]]
-[[Maya python]]
+[[Maya Python-]]

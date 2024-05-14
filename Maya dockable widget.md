@@ -60,4 +60,4 @@ def Dock(Widget, width=300, show=True):
 ```
 
 [[Qt]]
-[[Maya python]]
+[[Maya Python-]]

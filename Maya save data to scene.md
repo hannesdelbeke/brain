@@ -5,4 +5,4 @@ Otherwise you're looking at doing something hacky like hiding an attribute on th
 
 source: Bob White
 
-[[Maya python]]
+[[Maya Python-]]
