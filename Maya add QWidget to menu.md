@@ -1,5 +1,5 @@
 # WIP
-[[Maya python]]
+[[Maya Python-]]
 [[Qt]]
 
 - [x] adds a widget under the file menu.
