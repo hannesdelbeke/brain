@@ -1,4 +1,4 @@
-A performant realtime rendering of [[vector images]] & fonts without rasterizing.
+A performant realtime rendering of [[vector image]] & fonts without rasterizing.
 
 slides on [slug](https://sluglibrary.com/): 
 [GPU-Centered Font Rendering
