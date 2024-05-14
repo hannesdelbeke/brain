@@ -8,4 +8,4 @@ import os
 [print(x) for x in os.environ.get('MAYA_PLUG_IN_PATH', []).split(";") if x]
 ```
 
-[[Maya python]]
+[[Maya Python-]]

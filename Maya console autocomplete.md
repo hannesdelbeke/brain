@@ -1,4 +1,4 @@
-[[Maya python]]
+[[Maya Python-]]
 
 ## native auto-completion
 - disabled by default
