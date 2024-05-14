@@ -2,3 +2,5 @@
 aliases:
   - game jam
 ---
+
+[[prototyping]]
