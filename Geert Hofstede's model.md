@@ -52,3 +52,5 @@ restraint, regulated
 	- strict
 	- don't smile
 	- more importance on work time
+
+[[communication]]

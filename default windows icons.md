@@ -56,3 +56,5 @@ however a shortcut to notepad results in 2 notepad icons once launched, since no
 
 
 - good [resource](https://www.makeuseof.com/tag/customize-icon-windows/) with some icon modify tips 
+
+[[Windows]]
