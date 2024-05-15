@@ -4,3 +4,4 @@ When it was finished, they dropped a wooden bomb on it.
 
 Unclear if true or [[urban legend]]
 [[funny]]
+[[story]]

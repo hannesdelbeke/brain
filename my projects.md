@@ -35,3 +35,5 @@ maxscripts
 - [Explode Baker 1.0](https://www.scriptspot.com/3ds-max/scripts/explode-baker) 0
 - [Reference Manager 1.00](https://www.scriptspot.com/3ds-max/scripts/reference-manager) 1
 - [Advanced Bend Modifier 1.1](https://www.scriptspot.com/3ds-max/scripts/advanced-bend-modifier) 4
+
+[[my Maya projects]]

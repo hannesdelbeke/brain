@@ -40,3 +40,4 @@ profit £38,710 - £32,740 = £6k
 
 let's say increase value, then it's all profit with 20% tax
 
+[[tax]]
