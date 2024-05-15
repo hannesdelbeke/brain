@@ -1,0 +1,3 @@
+A small [pilot study](http://www.thelancet.com/journals/lanonc/article/PIIS1470-2045%2813%2970366-8/fulltext) by the University of California, San Francisco, showed for the first time that lifestyle changes lead to longer telomeres. Individuals on a vegetarian diet, who took moderate exercise and reduced stress by meeting regularly with a social support group, were found to have longer telomeres.
+
+[[aging]]
