@@ -9,5 +9,5 @@ No scripted solution in 2023
 not sure what this dir is for #todo
 `C:\Users\user\AppData\Roaming\Microsoft\Internet Explorer\Quick Launch`
 
-[[windows 11]]
+[[Windows 11-]]
 [[Windows start menu]]

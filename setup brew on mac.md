@@ -11,3 +11,5 @@ export PATH=$PATH:/opt/homebrew/bin
 ```
 brew install blender
 ```
+
+[[Mac]]
