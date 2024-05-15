@@ -1,0 +1,6 @@
+---
+aliases:
+  - Shotgun
+  - ShotGrid
+---
+[[Autodesk]]
