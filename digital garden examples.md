@@ -12,3 +12,5 @@ online [[digital garden]]s:
 - https://stephanango.com/ minimal theme
 - https://github.com/data-engineering-community/data-engineering-wiki  professional looking wiki made with Obsidian
 - collection of digital gardens https://github.com/lyz-code/best-of-digital-gardens
+- collection https://github.com/RichardLitt/meta-knowledge
+- 
