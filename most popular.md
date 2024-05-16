@@ -1,4 +1,6 @@
-A collection of the most popular things, saves you time. Since often they are most popular because they are good 
+A collection of the most popular things, 
+Saves you time looking between projects, they are most popular because they are the best. 
 
 [[UX]]
 [[discovery]]
+[[rising star]]
