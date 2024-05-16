@@ -1,0 +1,3 @@
+reducing [[cognitive load]]
+
+[[psychology]]
