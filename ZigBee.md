@@ -1,0 +1,1 @@
+ZigBee is like [[WiFi]] but uses less power. so it's better for [[Internet of things|IoT]] devices
