@@ -1,4 +1,4 @@
-a icon scroll [[window]] has a lot in common with a [[keystroke launcher]].
+a icon scroll [[window (computing)|window]] has a lot in common with a [[keystroke launcher]].
 They both launch apps, and both show icons.
 e.g. https://ueli.app/#/
 

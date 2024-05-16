@@ -1,5 +1,5 @@
 This note discusses some kind of template for a frameless window in Qt.
-likely centered around a frameless [[window]]
+likely centered around a frameless [[window (computing)|window]]
 
 
 ## Brainstorm
