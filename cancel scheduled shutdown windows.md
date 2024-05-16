@@ -1,4 +1,4 @@
-cancel a scheduled shutdown [[windows]] 
+cancel a scheduled shutdown [[Windows]] 
 `shutdown /a`
 
 (e.g. a forced restart from updates)
