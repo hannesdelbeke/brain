@@ -19,7 +19,7 @@ My private setup:
 - get the obsidian git plugin, and in options: enable update submodules
 
 ### Links
-Markdown [[wikilink]] aren't supported by GitHub preview, but are heavily used in Obsidian & other wiki apps. The site theme supports conversion, so please use wikilinks in all files, except files meant to be read on GitHub like the [[public-brain/### Public notes about game dev & anything else]]
+Markdown [[wikilink]] aren't supported by GitHub preview, but are heavily used in Obsidian & other wiki apps. The site theme supports conversion, so please use wikilinks in all files, except files meant to be read on GitHub like the `[[public-brain/### Public notes about game dev & anything else]]`
 
 ## Writing content
 keep it short!
