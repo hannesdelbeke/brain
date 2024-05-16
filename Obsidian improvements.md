@@ -57,4 +57,4 @@ related to improvements:
 plugin development
 - great resource https://marcus.se.net/obsidian-plugin-docs/
 
-[[obsidian]] 
+[[Obsidian]] 

@@ -1,2 +1,2 @@
-create a site from [[markdown]] files 
+create a site from [[Markdown]] files 
 https://www.mkdocs.org/

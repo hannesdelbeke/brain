@@ -10,4 +10,4 @@ Resulting in the image note showing in logseq
 see Obsidian [forum post](https://forum.obsidian.md/t/image-embed-syntax-logseq-vs-obsidian/27213)
 - more on [[Obsidian alternatives]]
 
-[[markdown]]
+[[Markdown]]
