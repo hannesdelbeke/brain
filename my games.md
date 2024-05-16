@@ -1,7 +1,7 @@
 A collection of my game jams, solo projects, and uni projects.
 Commercial studio games & projects are excluded.
 
-2024-04-08 [[Dance Dance Duck]] ❤
+2024-04-08 [[dance dance duck]] ❤
 2022-03-22 [[gamejam daisy chain]]
 2020-02-02 [[Game Jam - Paddle or Die]]
 2017-10-11 [[gamejam temple of xiala]] ❤

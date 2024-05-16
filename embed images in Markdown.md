@@ -1,4 +1,4 @@
-embed images in [[markdown]]
+embed images in [[Markdown]]
 
 ```
 ![screenshot](screenshot.png)

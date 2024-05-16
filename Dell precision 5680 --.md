@@ -11,7 +11,7 @@ right
 
 [[laptop]]
 2 x microphone
-[[infrared camera]] ([[windows hello]])
+[[infrared camera]] ([[Windows Hello]])
 camera
 [[fingerprint reader]]
 [[OLED]]

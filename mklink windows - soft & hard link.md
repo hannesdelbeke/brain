@@ -69,4 +69,4 @@ Get-ChildItem -Path "C:\Windows\","c:\","$env:USERPROFILE" -Force |
 ```
 
 
-[[windows]] [[link]] [[file distribution]]
+[[Windows]] [[link]] [[file distribution]]

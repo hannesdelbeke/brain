@@ -1,4 +1,4 @@
-### alternatives to [[obsidian]]
+### alternatives to [[Obsidian]]
 - noteshub (paid) [[noteshub whiteboard]]
 	- kanban
 	- whiteboard

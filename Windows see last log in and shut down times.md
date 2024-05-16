@@ -22,4 +22,4 @@ powershell.exe -ExecutionPolicy Bypass -File "%~dp0login_shutdown_info.ps1"
 pause
 ```
 
-[[windows]]
+[[Windows]]
