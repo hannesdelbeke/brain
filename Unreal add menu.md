@@ -37,6 +37,11 @@ def add_cmd_to_menu(label=None, command=None, tooltip=None, icon=None):
 	default_root_parent().add_menu_entry("Scripts", entry)
 ```
 
+to add to the edit menu
+```python
+parent_path = menus.find_menu("LevelEditor.MainMenu.Edit")
+```
+
 this is similar to [[add button to unreal toolbar]]
 
 used in [[Unreal]] python template [[Unreal python plugin template]]
