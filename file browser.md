@@ -17,6 +17,9 @@ suggested features
 - [[search bar]]
 - [[favorite]]
 - easy load / import / open file
+- [[categorize]]
+- [[thumbnail]]
+- add content root paths, or add single asset path
 ## Blender
 - [[Blender]] has a [file browser](https://docs.blender.org/manual/en/latest/editors/file_browser.html), which is basic and similar to the experience in explorer.
 - Blender has an [asset browser](https://docs.blender.org/manual/en/latest/editors/asset_browser.html), which is slow. It needs to load all the `.blend` files to generate the thumbnails. And it requires assets to be marked as an asset in the blend file.
@@ -24,3 +27,7 @@ suggested features
 
 - The perfect asset manager would 
 	- support thumbnails for a huge amount of files, near instant.
+
+Maya sample 
+- https://github.com/leixingyu/assetManager
+- ![](https://camo.githubusercontent.com/006e0040774a22ec0f66a59adadde3a47d6bbf801b1249b9ab9a004e9cc463d6/68747470733a2f2f692e696d6775722e636f6d2f473455644479342e706e67)
