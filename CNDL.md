@@ -1,7 +1,6 @@
 http://CNDL.io
 
-
-IES lighting creation tool
+[[Illuminating Engineering Society|IES]] lighting creation tool
 
 [[rendering]]
 [[lighting]]
