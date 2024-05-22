@@ -1,4 +1,5 @@
 extracted from the [AWS overview pdf](https://d0.awsstatic.com/whitepapers/aws-overview.pdf)
+[[Amazon]]
 
 > [!INFO]
 > i started making these notes as part of a AWS course, thinking it'd be great if I could link to a note for any AWS concept. I quickly realized this was a waste of my time, and stopped working on this.
