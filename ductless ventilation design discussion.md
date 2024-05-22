@@ -12,6 +12,7 @@ bathroom is now pressurized.
 transfer fan in all rooms
 
 - no allergy & carbon filter on ductless systems
-- more equipment needed, multiple fans, heatpumps, [[ERV]]s
+- more equipment needed, multiple fans, heatpumps, [[energy recovering ventilation|ERVs]]
 
-
+[[ductless]]
+[[ventilation]]

@@ -1,0 +1,1 @@
+ductless is the lack of [[ducting]], avoiding ducting can make it easier to [[retrofit]] a system

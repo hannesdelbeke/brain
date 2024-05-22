@@ -1,6 +1,8 @@
 ---
 aliases:
   - linking
+  - connection
+  - relation
 ---
 a connection, relation
 
