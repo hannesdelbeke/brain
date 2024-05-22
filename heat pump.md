@@ -22,3 +22,6 @@ Because cold air bounces back from the wall and go behind the unit reducing the 
 	- heat battery
 	- [[Instantaneous water heater]]
 	- high-temperature heat pump (expensive)
+
+heat pumps can be more than 100% efficient. 
+e.g. 300% means for every 1kW you put in, you get 3kW of cooling. (since you don't cool, you just move energy)
