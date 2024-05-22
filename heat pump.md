@@ -15,3 +15,10 @@ placement
 avoid placing near the corners of a building.
 Because cold air bounces back from the wall and go behind the unit reducing the average temperature of the air that heat is being extracted from (making the heat pump less efficient).
 
+[article](https://nef.org.uk/can-i-get-my-hot-water-from-an-air-source-heat-pump/) on using heat pump not only for heating water, but for hot water e.g. shower, bath,  
+- to avoid [[Legionella]] need to heat water to 60
+	- electric immersion heater in [[hot water cylinder]] (simplest solution)
+	- hybrid system
+	- heat battery
+	- [[Instantaneous water heater]]
+	- high-temperature heat pump (expensive)
