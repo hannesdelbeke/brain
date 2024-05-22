@@ -13,7 +13,7 @@ Because cold air bounces back from the wall and go behind the unit reducing the 
 	- electric immersion heater in [[hot water cylinder]] (simplest solution)
 	- hybrid system
 	- heat battery
-	- [[instantaneous water heater-]]
+	- [[instantaneous water heater]]
 	- high-temperature heat pump (expensive)
 
 heat pumps can be more than 100% efficient. 
