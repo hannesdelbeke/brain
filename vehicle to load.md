@@ -1,4 +1,4 @@
-Charge 3 pin devices from your [[electric car]].
+Charge 3 pin devices from your [[electric vehicle]].
 
 cars
 - MG ZS EV
