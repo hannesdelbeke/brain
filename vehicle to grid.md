@@ -13,3 +13,5 @@ The main challenge is to leave enough electricity so the car can be driven.
 UK provider https://www.indra.co.uk
 
 seems it replaces your home car charger
+
+[article](https://www.electrifying.com/blog/article/octopus-offers-free-home-charging-with-new-v2g-tariff) breaking down the only providers in UK so far in 2024
