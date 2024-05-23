@@ -553,7 +553,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - David Augsburger: “Being heard is so close to being loved that for the average person, they are almost indistinguishable.”
     - Bailey: “The quality of your attention determines the quality of your life.”
 - Four (more) ways to battle your resistance to hyperfocus
-    - Resistance to doing a complex task is almost always concentrated at the beginning of that task.
+    - Resistance to doing a complex task is almost always [[concentration|concentrated]] at the beginning of that task.
     - Bailey: “Starting provides enough momentum to carry out our intentions.”
     - Battling this resistance:
         - Shrink the time period in which you’ll hyperfocus until you don’t feel resistance to it.
