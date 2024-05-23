@@ -5,5 +5,7 @@ Acoustic wall panels absorb sound instead of bounce it back, eliminating echos.
 amateur [video](https://www.youtube.com/watch?v=pABvTWSxOes&t=1s) on creating your own panels with wood & towels
 better [video](https://www.youtube.com/watch?v=HO7aeraKLsM) on DIY panels. denim. rockwool, ...
 
+rule of thumb, cover 15-25% of the wall
+
 [[sound treatment]]
 
