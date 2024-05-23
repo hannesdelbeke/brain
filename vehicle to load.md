@@ -27,3 +27,5 @@ Battery-->|DC|inverter
 
 ## DIY
 > You can pull about 1500W off your EV car's small battery using a cheap $150 inverter to power a computer, router, cell phone, etc [source](https://diysolarforum.com/threads/system-to-connect-ev-to-home-power-and-use-ev-battery-to-power-home.34473/post-612168)
+
+sample [product](https://www.ukev.shop/product-page/v2l-vehicle-to-load) with list of supported cars
