@@ -1,15 +1,15 @@
 user friendly ways to run [[Autodesk Maya|Maya]] scripts: 
-- [[Maya quick launcher]]
+- [[Maya quick launcher]] - ARCHIVED
 - [[buttonizer]]
 - [[unimenu]]
 
 Native UI
-- [[Maya search]]
+- [[Maya search]] - **RECOMMENDED**
 - maya shelf
 - maya menu
 - maya shortkey
 - for devs:
 	- maya console
-	- console shortcut at bottom of screen
+	- command textfield at bottom of screen
 
 [[tool launcher]]
