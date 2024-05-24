@@ -22,10 +22,10 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
 
 - In any given moment, we are always focusing on something.
 - Chris leaves his phone at home even when going to the diner to write, in order to do so distraction-free
-    - _Get the phone out of your immediate vicinity for most of the day. This is a theme that I think will crop up more and more in this book, and something I’m become more convicted about._
+    - _Get the phone out of your immediate vicinity for most of the day._
 - No wi-fi at the diner.
 - “Constant connectivity is one of the worst disruptions to our focus and productivity.”
-- One of the best ways to foster creativity and additional productivity is learning to unfocus – to step back and gain some space, uninterrupted by something vying for your attention.
+- One of the best ways to foster [[creativity]] and additional productivity is learning to unfocus – to step back and gain some space, uninterrupted by something vying for your attention.
     - Pay attention to nothing and let the mind wander.
 - Studies show we go an average of **40 seconds** when working on a computer before becoming distracted or interrupted
     - _Difference: Interruptions happen to us. Distractions are caused by us._
@@ -863,7 +863,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Investing in being truly happy and merely thinking positively are very different. In fact, thinking positively can be harmful; forced positive thinking can cause you to work less hard at actually achieving your goals.
         - _This is related to the findings in my “Don’t Talk About Your Goals” video:_ [Why You Shouldn’t Tell People About Your Goals](https://www.youtube.com/watch?v=mKdm5xSZiOA)
     - Letting your mind wander intentionally can boost happiness, allowing you to get into scatterfocus without the guilt and worrying associated with involuntary mind-wandering.
-    - When you’re in a negative mood, write down your worries and the problems you’re dealing with. The Zeigarnik Effect will cause you to dwell on the open loops, which can keep you in a negative mood longer.
+    - When you’re in a negative mood, write down your worries and the problems you’re dealing with. The [[Zeigarnik effect]] will cause you to dwell on the open loops, which can keep you in a negative mood longer.
     - Shawn Achor, in his book _The Happiness Advantage:_
         - Happy people are 31% more productive than people in a neutral or negative mood
         - Strategies to improve average-day happiness levels:
@@ -879,15 +879,16 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
 > - _Really though? For most of my life, I’ve been the least engaged on Fridays – it’s the weekly version of senioritis. I’m also quite engaged on Mondays. Currently, Fridays are my most engaged day, but that’s only because of a Friday Beeminder deadline for uploading videos._
 > - _Chris cites this paper:_ [Bored mondays and focused afternoons: The rhythm of attention and online activity in the workplace](https://www.researchgate.net/publication/266655565_Bored_mondays_and_focused_afternoons_The_rhythm_of_attention_and_online_activity_in_the_workplace) – _the summary states, “On Mondays people are most bored but also most focused.” I think Chris’ further summarization of this point in the book doesn’t accurately convey its meaning._
 
-- Drink Alcohol and Caffeine Strategically
-    - Alcohol can boost creativity, but decreases focus
-    - Caffeine does the opposite; it increases focus, but decreases creativity and ability to scatterfocus.
-        - Also boosts physical performance
-        - Only effective until about 200mg consumed (single cup of coffee = ~125mg – _roast type and brew method will change this_)
-        - Caffeine consumption in excess of 400mg causes anxiety and decreased performance
-    - Bailey: “As with most productivity advice, implementing individual tactics with an awareness of how well they actually work for you is key.”
+> [!NOTE]- Drink Alcohol and Caffeine Strategically
+>     - Alcohol can boost creativity, but decreases focus
+>     - Caffeine does the opposite; it increases focus, but decreases creativity and ability to scatterfocus.
+>         - Also boosts physical performance
+>         - Only effective until about 200mg consumed (single cup of coffee = ~125mg – _roast type and brew method will change this_)
+>         - Caffeine consumption in excess of 400mg causes anxiety and decreased performance
+>     - Bailey: “As with most productivity advice, implementing individual tactics with an awareness of how well they actually work for you is key.”
+
 - Open Offices
-    - Open environments cause people to interrupt us more often, and cause us to distract ourselves 64% more often too
+    - Open environments cause people to [[interrupt|interrupt]] us more often, and cause us to distract ourselves 64% more often too
     - Interesting point: In open offices, people are typically more considerate about _when_ they interrupt.
     - Open offices also promote collaborative work
     - However, highly focused, individual work often suffers in an open environment.
