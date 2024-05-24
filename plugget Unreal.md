@@ -1,8 +1,9 @@
 https://github.com/hannesdelbeke/plugget-unreal
 bring [[plugget]] to [[Unreal]]
 
-- [ ] slow on [[Unreal]] startup.
-- [ ] pip freezes [[Unreal]]
+# dev notes
+- [ ] slow on Unreal startup.
+- [ ] pip freezes Unreal
 `LogPython: Successfully installed PySide2-5.15.2.1 detect-app-0.0.2 plugget-0.0.12 plugget-qt-0.0.1 shiboken2-5.15.2.1`
 - [ ] if we do keep the upgrade, document that this freezes the app.
 
