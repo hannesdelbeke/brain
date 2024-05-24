@@ -3,7 +3,7 @@
 recap [source](https://jsilva.blog/2019/02/05/algorithms-book-summary/)
 ### Introduction
 
-Algorithms and topics covered
+[[Algorithm|Algorithms]] and topics covered
 
 - Optimal stopping
 - Explore/exploit

@@ -39,4 +39,7 @@ FG GameProject 3 - blazing aces
 04/05/2009 [Vergil Skin](http://hannesdelbeke.blogspot.fr/2009/05/dmc4-skin.html)  
 25/06/2007 [Armadillo Run Maps](http://www.armadillorun.com/levels/index.php?show_sets=1&show_spectator=0)
 
-A lot of gamejams suffered from dropbox for version control, see [[unity projects on dropbox]].
+## version control review
+1. A lot of gamejams suffered from dropbox for version control, see [[avoid developing Unity projects on Dropbox]]. 
+2. Later projects used git, but people (including myself) didn't knew how to resolve merges, and were to busy hacking the game together, So we often ended parsing files with a USB stick or over email.
+3. Now I'm more experienced I use git, and help the team if they need tech support.

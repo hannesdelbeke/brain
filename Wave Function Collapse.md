@@ -6,7 +6,7 @@ The Wave Function Collapse is an algorithm similar to sudoku, can be used in 2D 
 - If only 1 state is possible, fill in that state.
 - For remaining cells with multiple possible states (superpositions), 
 	- either manually pick a state
-	- or auto-fill by randomly picking a state.
+	- or auto-fill by [[random|randomly]] picking a state.
 
 ## references
 - complex 2D GitHub [repo](https://github.com/mxgmn/WaveFunctionCollapse)  an [essay](https://robertheaton.com/2018/12/17/wavefunction-collapse-algorithm/) by Robert Heaton
