@@ -11,6 +11,10 @@ file names
 - use the full word as note title, and alias the abbreviation (except where the abbreviation is so common the full word is never used, e.g. `URL`)
 - everything in 1 folder, (read why i decided on  [[reducing note folders]])
 
+note content
+- use [[wikilink]]s
+- place all images in `image` folder
+
 [[my digital garden]]
 [[my notes]]
 [[naming convention]]
