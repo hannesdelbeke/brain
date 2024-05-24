@@ -14,4 +14,5 @@ Credits: 
 
 Local party games are always a good choice for a gamejam.
 
-[[Unity]] [[gamejam]]
+[[gamejam]]
+[[Unity project]]
