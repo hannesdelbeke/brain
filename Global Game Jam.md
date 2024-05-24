@@ -2,3 +2,4 @@
 aliases:
   - GGJ
 ---
+[[gamejam]]
