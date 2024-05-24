@@ -1,3 +1,8 @@
+---
+aliases:
+  - V2L
+---
+
 Charge 3 pin devices from your [[electric vehicle]].
 
 cars
