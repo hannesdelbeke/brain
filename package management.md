@@ -14,3 +14,5 @@ Fusion studios has [[reactor]]
 mac brew
 
 [[file distribution]]
+
+[meta-package-manager](https://github.com/kdeldycke/meta-package-manager) : the one package manager to control them all 
