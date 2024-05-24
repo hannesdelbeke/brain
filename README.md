@@ -15,3 +15,5 @@ Read these notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
 **Manage**
 - Hosted on GitHub pages, see [hannesdelbeke/wiki](https://github.com/hannesdelbeke/wiki) 
 - For managing this wiki, I use [Obsidian](https://obsidian.md/)
+
+[[my digital garden]]
