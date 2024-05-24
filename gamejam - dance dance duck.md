@@ -3,6 +3,8 @@
 - itch [release page](https://hannesd.itch.io/duck-duck-dance) 
 - [source code](https://github.com/hannesdelbeke/duck-duck-dance) on github 
 - [[Dance Duck dev]]
+
+created for the climax game jam
 ### tags
-[[Unity]]
-[[game jam]]
+[[gamejam]]
+[[Unity project]]
