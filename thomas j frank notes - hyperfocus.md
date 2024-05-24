@@ -6,8 +6,6 @@ For me, this was one of those books that contained a lot of information I alread
 
 I recommend this book if you want a deep dive into the science of focus along with a lot of practical advice for how to cultivate it.
 
-[](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/#main-takeaways)
-
 ## Main Takeaways
 
 Deliberately setting intentions before sitting down to work is hugely effective for staying on task and being resistant to distractions.
