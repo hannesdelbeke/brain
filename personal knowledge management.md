@@ -4,3 +4,4 @@ aliases:
 ---
 
 [[second brain]]
+[[knowledge]]

@@ -1,19 +1,9 @@
-%%this is the front page of the wiki%%
-Read these notes on the [wiki](https://hannesdelbeke.github.io/wiki/)
+%%This is the front page of the [wiki](https://hannesdelbeke.github.io/wiki/)%%
+This site is mostly a collection of technical [[knowledge]].
+There will be code samples, unfinished notes, empty notes with only links.
 
-**Structure**
-- notes are atomic (one thought per note)
-- notes explain their links to other notes, this creates new knowledge
+To [[navigation|navigate]] this [[static website|site]] 
+1. Search for something you are interested in, e.g. [[Blender]], [[Unreal]], [[Autodesk Maya|Maya]], [[Python]], [[gamejam]], [[tool launcher|tool browser]]
+2. Explore more by clicking [[URL|links]] in the note you read. Use the [[backlink|backlinks]] at the bottom to find [[link|related]] notes. 
 
-**Goal**
-- Share learnings to help others  
-- Automated build & deploy site, publish notes without wasting time
-- Tightly link posts, and split knowledge in small atomic chunks where possible.
-- Allow unfinished notes to prevent writer's block
-- compatible with [Obsidian](https://obsidian.md/)
-
-**Manage**
-- Hosted on GitHub pages, see [hannesdelbeke/wiki](https://github.com/hannesdelbeke/wiki) 
-- For managing this wiki, I use [Obsidian](https://obsidian.md/)
-
-[[my digital garden]]
+Or checkout [[my wiki|the tech behind this site]].
