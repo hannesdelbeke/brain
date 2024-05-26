@@ -102,4 +102,4 @@ tabber in HTML [source](https://www.w3schools.com/howto/howto_js_tabs.asp)
 also option for pure CSS with radio-buttons
 
 
-
+for example of a tabber see https://docs.readthedocs.io/en/stable/config-file/v2.html#id27
