@@ -1,3 +1,8 @@
+---
+aliases:
+  - my site
+---
+
 **Structure**
 - notes are atomic (one thought per note)
 - notes explain their links to other notes, this creates new knowledge
