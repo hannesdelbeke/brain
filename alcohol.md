@@ -1,0 +1,1 @@
+Alcohol causes changes in the function of the [[kidneys]] and makes them less able to filter the blood
