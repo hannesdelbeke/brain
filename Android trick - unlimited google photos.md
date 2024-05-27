@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 4
 ---
 I've not tested this yet
 

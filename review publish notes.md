@@ -4,4 +4,4 @@ I wasted hours on this and it still needs more work.
 - inline code looks bad and cant figure out easy fix, e.g. [My note naming convention](https://hannesdelbeke.github.io/wiki/my%20note%20naming%20convention/) 
 
 - revert to light theme and accept the limits of `read the docs`
-- revert to [[MkDocs materials]]
+- revert to [[MkDocs material]]
