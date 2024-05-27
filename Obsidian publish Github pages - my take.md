@@ -17,4 +17,4 @@ move notes to `doc`
 move images to `iamges`
 build site
 
-see [[Obsidian web integration -]] for my notes
+see [[Obsidian web integration]] for my notes

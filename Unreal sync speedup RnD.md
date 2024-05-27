@@ -1,6 +1,6 @@
 If we [[file distribution|distribute]] unreal plugins separately from the main project, it would
 - faster build speed
-- faster [[unreal game sync|UGS]] sync speed
+- faster [[Unreal game sync-|UGS]] sync speed
 - not block builds on tool fail, leading to faster tool iteration & empowering non devs
 
 potential drawbacks
@@ -13,4 +13,4 @@ questions
 - is it worth the dev time?
 - are we saving significant time?
 - How much does this improve build speed.
-- How much of a AAA project are optional [[Unreal plugin-]], vs project code & assets.
+- How much of a AAA project are optional [[Unreal plugin]], vs project code & assets.

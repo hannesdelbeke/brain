@@ -1,5 +1,5 @@
 # WIP
-[[Maya Python-]]
+[[Maya Python]]
 [[Qt]]
 [[menu]]
 

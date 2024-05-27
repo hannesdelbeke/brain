@@ -13,4 +13,4 @@ widgets need to be parented to the main window
 - so they don't lose focus and disappear behind |maya when using maya. 
 - and aren’t garbage collected.
 
-[[Maya Python-]]
+[[Maya Python]]

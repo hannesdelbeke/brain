@@ -1,2 +1,2 @@
 created the hit game [[Fall Guys]]
-bought by [[Epic Games-]]
+bought by [[Epic Games]]
