@@ -1,3 +1,7 @@
+---
+aliases:
+  - mental friction
+---
 
 
 [[cognitive load]]

@@ -11,7 +11,7 @@ extend
 - instantly launch your tools by name (includes all default menu items)
 ### Cons
 - no [[favorite|favoriting]] ⭐
-- no auto include of all menu items like [[Unity search]]. Custom [[Maya menu|menu]] items aren't included in the search result, affecting menu commands added by plugins. This is unintuitive for the user.
+- no auto include of all menu items like [[Unity search]]. Custom [[Maya menu|menu]] items aren't included in the search result, affecting menu commands added by plugins. This is [[unintuitive]] for the user.
 
 > [!note]
 > After trying to use Maya search in production, it still feels department lists (environment, characters, animation, ...) and favoriting is an important missing feature. There still is a need for a [[tool launcher]]. (2025)

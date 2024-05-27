@@ -1,8 +1,9 @@
 To make your python module importable in Blender, it needs to be included in the python path. You can just place a script in your scripts folder, however any good tooldev will create their script in a separate repo. So how can you sync it and test it in Blender?
 
 options
-- manually add to env
-- symlink into env
+- [[Python - add path to sys path|manually add paths to Blender's env]]
+	- disappears between Blender sessions
+- symlink into env - [[Blender - Symlink]]
 - editable install + custom script to load [[pth|.pth]] files 
 - install local addon/extension
 	- the most stable and reliable way, only works if you packaged an addon
@@ -12,25 +13,8 @@ options
 I often end up using symlink since it's the least effort, and I know what issues I can expect that are caused by git deleting symlinks.
 
 ## Append path
-to test a python package
-1. add to path
-```python
-import sys
-sys.path.append('/path/to/directory')
-```
-2. import and test
 
-notes
-- disappears between Blender sessions
 
-## Symlink
-Create a symbolic link to your blender scripts folder. ([[mklink windows - soft & hard link|Instructions for Windows]])
-
-notes
-- least effort, just run 1 line of code in the terminal once
-- stays in your environment between Blender sessions
-- works with any python module
-- creates issues with [[git]], if git tries to delete the link e.g. when changing branch
 
 ## Editable install
 [[Python packages editable install|editable install]] is the [[Pythonic]] way to symlink.
