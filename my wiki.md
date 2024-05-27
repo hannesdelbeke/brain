@@ -18,4 +18,7 @@ aliases:
 - Hosted on GitHub pages, see [hannesdelbeke/wiki](https://github.com/hannesdelbeke/wiki) 
 - For managing this wiki, I use [Obsidian](https://obsidian.md/)
 
+test content
+- [[Obsidian callouts]]
+
 [[my digital garden]]
