@@ -30,7 +30,7 @@ The [original version](https://github.com/andymatuschak/note-link-janitor) from 
 > ```
 
 ## Sample use cases
-I use this to auto create backlinks from my markdown files in Obsidian.
+I use note-link-janitor to auto create backlinks from my markdown files in Obsidian.
 This enables me to use [[MkDocs]] to create a site with backlinks from my notes.
 
 In case of updates ensure we don't break dependencies
