@@ -1,13 +1,16 @@
-## TLDR
-The nearly maximum association with lower mortality was achieved by performing 
-- 150 to 300 min/week of long-term leisure-time [[vigorous aerobic activity]] 
-- 300 to 600 min/week of long-term leisure-time [[moderate aerobic activity]]
-- or an equivalent combination of both. e.g. 300 min moderate AND 150 min vigorous
-	- moderate: 6 days x 1h 
-	- vigorous: 2.5 hours
+## super TLDR
+Optimal weekly exercise is 6 hours [[moderate aerobic activity|moderate]] AND 2.5 hours [[vigorous aerobic activity|vigorous]]
 ## Notes
 This is in contrast with "move naturally" in [[blue zones]]
 This is approximately 22.5 to 40 [[metabolic equivalent of task|MET]]-h/week.
+
+> [!NOTE]- TLDR
+> The nearly maximum association with lower mortality was achieved by performing 
+> - 150 to 300 min/week of long-term leisure-time [[vigorous aerobic activity]] 
+> - 300 to 600 min/week of long-term leisure-time [[moderate aerobic activity]]
+> - or an equivalent combination of both. e.g. 300 min moderate AND 150 min vigorous
+> 	- moderate: 6 days x 1h 
+> 	- vigorous: 2.5 hours
 
 > [!NOTE]- The details
 > This [study](https://www.ahajournals.org/doi/full/10.1161/CIRCULATIONAHA.121.058162) 
