@@ -1,3 +1,6 @@
+---
+views: 1
+---
 https://odininspector.com/odin-validator-beta
 
 ![](https://odininspector.com/files/pages/odin-project-validator/validator1.png)

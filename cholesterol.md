@@ -1,5 +1,5 @@
 ---
-views: 3
+views: 5
 ---
 cholesterol-rich sources
 - Eggs
