@@ -1,4 +1,12 @@
-some very messy notes
+---
+aliases:
+  - Obsidian - publishing
+---
+
+R&D notes on how I can make some of my obsidian notes public, and keep them in sync with my personal notes. How to automate the publishing step, what tech to use, where to host, etc.
+
+
+very messy notes, not formatted or cleaned up, little value for others.
 
 
 ## Goal
