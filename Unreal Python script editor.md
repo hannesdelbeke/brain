@@ -30,3 +30,5 @@ Since it's pure Python it should work in all Unreal versions.
 > 
 > ### other
 > The script editor could be dcc independent. E.g. a generic qt widget
+
+The [startup code](https://github.com/leixingyu/unrealScriptEditor/blob/master/unreal_script_editor/startup.py) creates a [[Unreal editor button]]
