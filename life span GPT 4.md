@@ -1,4 +1,4 @@
-Increasing human lifespan involves a multifaceted approach combining diet, lifestyle, and potentially supplements. Here are some research-supported strategies for extending lifespan:
+Increasing human lifespan involves a multifaceted approach combining diet, lifestyle, and potentially [[supplement|supplements]]. Here are some research-supported strategies for extending lifespan:
 
 ### Supplements
 
@@ -43,3 +43,4 @@ Combining these strategies can help promote a longer and healthier life. It's im
 [[aging]]
 [[health]]
 [[chat GPT health advice]]
+[[longevity]]
