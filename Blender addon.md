@@ -6,6 +6,8 @@ aliases:
 ---
 [[Blender]] addons can be enabled in File/Preferences, add-ons tab.
 
+see [[Blender extensions]]
+
 
 some helper functions regarding addons
 ```python

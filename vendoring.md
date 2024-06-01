@@ -1,5 +1,9 @@
+---
+aliases:
+  - vendor
+---
 Vendoring means copying the source code of another project into your project
-It's in contrast to using dependencies, adding another project's name to your package.
+It's in contrast to using [[dependencies]], adding another project's name to your package.
 
 Pro
 - all dependencies are contained within 1 project, you can easily give the project to someone and it will work as expected
