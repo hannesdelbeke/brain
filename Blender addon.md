@@ -7,8 +7,13 @@ aliases:
 ---
 
 > [!warning]
-> Blender addons are phased out in favor of [[Blender extensions]].
+> Blender addons are phased out in favor of [[Blender extension]].
 > see `Converting legacy add-ons to extensions` in https://docs.blender.org/manual/en/latest/advanced/extensions/addons.html
+> 
+> Main difference seems to be
+> - `bl_info` moved to a manifest
+> - enforces relative imports `from . import module`, test this
+> - extension needs to be built into a zip file, unsure if it's possible to do an editable install
 
 [[Blender]] addons can be enabled in File/Preferences, add-ons tab.
 

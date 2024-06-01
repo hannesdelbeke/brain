@@ -60,4 +60,4 @@ consider:
   This approach doesn't handle any module reload.
 - This could work for unreal plugins, but [[Blender addon|Blender addons]] & [[Maya plugin|Maya plugins]] aren't in the PATH so only support a single python file. This requires a copy paste code solution, or dynamic adding to the pwath. At least maya has a workaround with [[Maya module]]s but it'd be nice to have it for plugins too.
 - the [[Maya plugin template]] already has an installer, so we can use this. (I think the installer already installs dependencies)
-- The new [[Blender extensions]] support vendoring dependencies, so lets ignore [[Blender addon]]
+- The new [[Blender extension]] support vendoring dependencies, so lets ignore [[Blender addon]]

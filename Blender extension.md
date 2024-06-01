@@ -1,3 +1,8 @@
+---
+aliases:
+  - Blender extensions
+---
+
 TODO
 
 ### drag and drop analyse
