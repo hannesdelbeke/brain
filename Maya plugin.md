@@ -9,7 +9,7 @@ Maya plugins don't support:
 	- [[Python package]]
 	You can depend on another package, e.g. `import numpy`, but installing the plugin won't auto install the `numpy` dependency.
 
-You could instead use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.
+You could instead use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.****
 ## Extend ideas
 - [ ] how to control startup load order of plugins
 
