@@ -7,7 +7,7 @@ maintain a database of more than 330 million global business records; and Foursq
 data is derived from 220 million unique consumers and includes more than 60 million global commercial
 venues.
 Once subscribed to a data product, you can use the AWS Data Exchange API to load data directly into
-Amazon S3 and then analyze it with a wide variety of AWS analytics and machine learning services.
+[[Amazon S3]] and then analyze it with a wide variety of AWS analytics and machine learning services.
 For example, property insurers can subscribe to data to analyze historical weather patterns to calibrate
 insurance coverage requirements in different geographies; restaurants can subscribe to population and
 location data to identify optimal regions for expansion; academic researchers can conduct studies on

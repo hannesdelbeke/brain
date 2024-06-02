@@ -4,7 +4,7 @@ is designed to give developers and businesses an extremely reliable and cost-eff
 numeric IP addresses, such as 192.0.2.1, that computers use to connect to each other. Amazon Route 53
 is fully compliant with IPv6 as well.
 Amazon Route 53 effectively connects user requests to infrastructure running in AWS—such as EC2
-instances, Elastic Load Balancing load balancers, or Amazon S3 buckets—and can also be used to route
+instances, Elastic Load Balancing load balancers, or [[Amazon S3]] buckets—and can also be used to route
 users to infrastructure outside of AWS. You can use Amazon Route 53 to configure DNS health checks
 to route traffic to healthy endpoints or to independently monitor the health of your application and
 its endpoints. Amazon Route 53 traffic flow makes it easy for you to manage traffic globally through
