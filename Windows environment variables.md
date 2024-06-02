@@ -3,7 +3,6 @@ aliases:
   - windows folders
   - windows env variables
 ---
-
 useful [[environment variable]]s for [[Windows]]
 
 | Environment Variable  | Example Value                         |
