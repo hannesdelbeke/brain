@@ -1,4 +1,4 @@
 - [[general dentist]]
-- [[orthodontist]] brace specialist
+- [[orthodontist]] brace [[specialist]]
 
 [[dentist]]
