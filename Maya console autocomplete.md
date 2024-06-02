@@ -21,4 +21,4 @@
 
 [[Maya Python]]
 [[Python stubs]]
-[[console]]
+[[console window]]

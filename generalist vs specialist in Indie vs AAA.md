@@ -1,6 +1,6 @@
 ## generalist vs specialist in Indie vs AAA
-- smaller studios usually need more generalists.
-- bigger AAA studios tend to need more specialists.
+- smaller studios usually need more [[generalist|generalists]].
+- bigger AAA studios tend to need more [[specialist|specialists]].
 Knowing this, you can choose the studio that best matches your career path. 
 
 e.g. 
