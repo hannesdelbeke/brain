@@ -5,7 +5,7 @@ aliases:
   - command browser
 ---
 #### Features
-Some recommended features for a command launcher:
+Some recommended features for a [[command]] launcher:
 - [[search bar]] to quickly find a tool.
 - run the command when you click a button.
 - [[thumbnail]] for visual feedback

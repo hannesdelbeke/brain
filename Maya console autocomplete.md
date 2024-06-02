@@ -23,3 +23,4 @@
 - maya 2024 stubs [gitlab](https://gitlab.com/maya-stub-files-release/mayastubfiles_public_release/-/releases/v1.0.0)
 
 [[python stubs]]
+[[console]]
