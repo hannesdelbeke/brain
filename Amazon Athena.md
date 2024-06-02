@@ -1,5 +1,5 @@
 # Amazon Athena
-Amazon Athena is an interactive query service that makes it easy to analyze data in Amazon S3 using
+Amazon Athena is an interactive query service that makes it easy to analyze data in [[Amazon S3]] using
 standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay only for the
 queries that you run.
 Athena is easy to use. Simply point to your data in Amazon S3, define the schema, and start querying
