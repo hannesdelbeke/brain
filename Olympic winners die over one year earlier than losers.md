@@ -3,3 +3,5 @@
 - no evidence consistent with selection or risk-taking
 
 [Dying to win? Olympic Gold medals and longevity](https://www.sciencedirect.com/science/article/abs/pii/S0167629618303370)****
+
+Seems [[specialist]] wins in their sport, but [[generalist]] wins in life.

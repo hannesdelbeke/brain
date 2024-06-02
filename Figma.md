@@ -13,3 +13,5 @@ data can be requested with a REST API
 
 you can make plugins, 
 	unless publicly published as community plugins, plugins only run in the desktop version, not the web version 
+
+[[graphic design]]
