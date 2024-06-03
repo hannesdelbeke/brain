@@ -1,3 +1,9 @@
+---
+aliases:
+  - Maya scanner
+  - MayaScanner
+---
+
 > [!warning]
 > MayaScanner.py and MayaScannerCB.py are not loaded by default. You will need to load them from the Plug-in Manager.
 
