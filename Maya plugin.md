@@ -1,5 +1,6 @@
 [[Autodesk Maya|Maya]] plugins are quite modular
-- They manage their own startup code, allowing you to avoid using `userSetup.py`, which always runs on startup.
+## Pros
+- Plugins manage their own startup code, allowing you to avoid using `userSetup.py`, which always runs on startup.
 - Plugins can be enabled or disabled per user, letting you toggle the startup code more easily compared to [[Maya module]]s.
 ## Cons
 Maya plugins don't support:
