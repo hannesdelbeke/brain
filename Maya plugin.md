@@ -3,13 +3,16 @@
 - Plugins can be enabled or disabled per user, letting you toggle the startup code more easily compared to [[Maya module]]s.
 ## Cons
 Maya plugins don't support:
-
+- plugins can only be 1 `.py` file, because the plugin folder is [[Python outside Python path|not in the Python path]]
 - [[dependencies]] on:
 	- other Maya plugins
 	- [[Python package]]
 	You can depend on another package, e.g. `import numpy`, but installing the plugin won't auto install the `numpy` dependency.
 
-You could instead use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.****
+You could instead use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.
+
+## other
+- Maya plugin path is not added to sys.path
 ## Extend ideas
 - [ ] how to control startup load order of plugins
 
