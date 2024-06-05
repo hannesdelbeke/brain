@@ -12,7 +12,7 @@
 ## jealous
 - someone who's more easily aroused is more jealous
 - the more committed a person is to a relationship, the greater the threat of loss (more jealousy)
-- someone who perceives their partner to be un-involved or disinterested in the relationship, feels more insecure.  (more jealousy)
+- someone who perceives their partner to be un-involved or disinterested in the relationship, feels more [[insecure]].  (more jealousy)
 - straight men get more sexually jealous than gay men. [study](https://www.tandfonline.com/doi/abs/10.1300/J082v19n03_04)
 - someone who's more fulfilled will be less sexually jealous. [study](https://www.tandfonline.com/doi/abs/10.1300/J082v19n03_04)
 - someone who thinks of jealousy as acceptable or natural, will be more jealous [study](https://www.tandfonline.com/doi/abs/10.1300/J082v19n03_04)
