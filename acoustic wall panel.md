@@ -4,6 +4,11 @@ Acoustic wall panels absorb sound instead of bounce it back, eliminating echos.
 
 amateur [video](https://www.youtube.com/watch?v=pABvTWSxOes&t=1s) on creating your own panels with wood & towels
 better [video](https://www.youtube.com/watch?v=HO7aeraKLsM) on DIY panels. denim. rockwool, ...
+	20kg / m³ - okay
+	30kg better
+
+cardboard is  689 kg/m³
+paper 800 kg/m³ 
 
 rule of thumb, cover 15-25% of the wall
 
