@@ -9,6 +9,9 @@ They can:
 	- [[Maya plugin]]s
 	- [[Python package]]s
 	- [[icon]]s
+
+If you have a maya module, it can have its own [[usersetup]] file (mel or python) that should excute after the main ones
+
 ## Maya modules vs plugins
 **IMO, If you only have a few files, use a plugin for a simpler installation & distribution.**
 
