@@ -7,10 +7,12 @@ better [video](https://www.youtube.com/watch?v=HO7aeraKLsM) on DIY panels. denim
 	20kg / m³ - okay
 	30kg better
 
+Rockwool 60kg/m3
 cotton bale 448-770 kg/m3
 cardboard is  689 kg/m³
 paper 800 kg/m³
 concrete 2400 kg /m3
+Fiberglass
 
 rule of thumb, cover 15-25% of the wall
 
