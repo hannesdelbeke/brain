@@ -31,4 +31,4 @@ bottom, from left to right (lying screen flat on table)
 8. ~~Stand lock button~~
    
    side:
-9. 2 x USB (-OUT) downstream Ports (x1 with [[fast charge|Power Charging]])
+	1. 2 x USB (-OUT) downstream Ports (x1 with [[fast charge|Power Charging]])
