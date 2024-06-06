@@ -20,5 +20,6 @@ it bypasses checksum on startup.
 you can also run a `_unload` ? how is this hooked up.
 
 This was added to support the Autodesk exchange store, see [[Distributing plug-ins & files on Maya (and 3ds Max) - 2013]]
-
 - [thread on `_load`](https://discourse.techart.online/t/alternative-to-usersetup-mel-in-maya-modules/14375/9)
+## Disable modules
+This [module manager](https://github.com/robertjoosten/maya-module-manager) let's you disable modules. A restart is needed, and files on your disk will be modified, which might be an issue for source controls on team projects.
