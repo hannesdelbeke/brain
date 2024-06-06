@@ -1,14 +1,14 @@
 A collection of my game jams, solo projects, and uni projects.
 Commercial studio games & projects are excluded.
 
-2024-04-08 [[gamejam - dance dance duck]] ❤
-2022-03-22 [[gamejam - daisy chain]]
-2020-02-02 [[gamejam - Paddle or Die]]
-2017-10-11 [[gamejam - Temple of Xiala]] ❤
-2016-04-27 [[gamejam - planet]]
+2024-04-08 [[gamejam - 2024- Dance Dance Duck]] ❤
+2022-03-22 [[gamejam - 2022 - Daisy chain]]
+2020-02-02 [[gamejam - 2020 - Paddle or Die]]
+2017-10-11 [[gamejam - 2017 - Temple of Xiala]] ❤
+2016-04-27 [[gamejam - 2016 - planet]]
 2016-04-08 [[gamejam - 2016-04-08 CA]]
-2016-02-09 [[gamejam - Tiles of Doom]] ❤
-2014-02-02 [[gamejam - Discoordination]] ❤
+2016-02-09 [[gamejam - 2016 - Tiles of Doom]] ❤
+2014-02-02 [[gamejam - 2014 - Discoordination]] ❤
 2016-09-20 [[gamejam - 2016-9-20 - AI]]
 setijam game  (sweden)
 FG GameProject 3 - blazing aces  

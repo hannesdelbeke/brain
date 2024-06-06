@@ -16,7 +16,7 @@ WIP
 - [blender_pip](https://github.com/hannesdelbeke/blender_pip) small fork
 - [pyside2-kit](https://github.com/DanieleBerna/pyside2-kit) small fork [[Qt]]
 - [qt-custom-window](https://github.com/hannesdelbeke/qt-custom-window) [[Qt]]
-- [[Maya site package manager-]]
+- [[Maya site package manager]]
 
 Abandoned
 - [mkdocs-collapsable-headers](https://github.com/hannesdelbeke/mkdocs-collapsable-headers)  
