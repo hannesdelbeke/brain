@@ -7,17 +7,18 @@ They can:
 	- ...
 - [[vendoring]] assets:
 	- [[Maya plugin]]s
-	- [[Python package]]s
+	- [[Python package]]s,  [[Maya Python]]
 	- [[icon]]s
-
+## Startup
+### usersetup
 If you have a maya module, it can have its own [[usersetup]] file (mel or python) that should excute after the main ones
+### load / unload
+An undocumented feature
+`MODULENAME_load.py` runs on startup.
+it bypasses checksum on startup.
 
-## Maya modules vs plugins
-**IMO, If you only have a few files, use a plugin for a simpler installation & distribution.**
+you can also run a `_unload` ? how is this hooked up.
 
-Compared to plugins, modules let you ship more advanced solutions, containing scripts, icons, plugins, textures, ... and modify your environment without a need to write any code. 
-A module is a pre-made folder structure mirroring the Maya project folder structure, enabling you to extend Maya without having to manually code more complex parts such as extending the path, modifying the environment, or load different settings based on the version of Maya, etc. Instead the user can just drag and drop their files in a folder, and hook it up in the module config.
+This was added to support the Autodesk exchange store, see [[Distributing plug-ins & files on Maya (and 3ds Max) - 2013]]
 
-The advantage of plugins is they can be disabled or enabled per user. A module is always fully enabled by default unless you modify the config.
-
- [[Maya Python]]
+- [thread on `_load`](https://discourse.techart.online/t/alternative-to-usersetup-mel-in-maya-modules/14375/9)

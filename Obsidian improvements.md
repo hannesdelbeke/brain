@@ -14,6 +14,7 @@ Don't spend more time on notes than work.
 	- [ ] action to auto sync from gitwiki to repo
 - [ ] right click and button hover show short keys, [thread](https://forum.obsidian.md/t/adding-shortcuts-to-the-right-click-context-menu/46160) 
 - [ ] [[note linking duplicate source]]
+- [ ] color a orange border around a note, if the note is unlinked
 - [x] improve [[navigate sibling page]], next & previous button
 - [x] automatic support for submodules, workaround for manually pulling and pushing submodules., see [[Obsidian submodule]]
 - [x] [[Obsidian auto collapse linked mentions]] (Work around)

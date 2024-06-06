@@ -10,7 +10,7 @@ other:
 (great scripts but not packaged up nicely/easy to install)
 [maya_script_editor_highlighter](https://github.com/martinlanton/maya_script_editor_highlighter) recent, but uses usersetup.py
 [ColorOut](https://github.com/sowwic/ColorOut) 2y old, simple, customizable, usersetup.py
-[[Joe]]'s [script editor](https://github.com/martinlanton/maya_script_editor_highlighter/blob/main/src/userSetup.py) WIP, 6y old
+[script editor](https://github.com/martinlanton/maya_script_editor_highlighter/blob/main/src/userSetup.py) WIP, 6y old
 [logCatMaya](https://github.com/oglops/logcatMaya) 7y old, looks great though
 
 ### Paid
