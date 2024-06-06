@@ -1,0 +1,1 @@
+upregulation is making the cells more sensitive to a hormone or another agent

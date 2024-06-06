@@ -22,4 +22,4 @@ test content
 - [[Obsidian callouts]]
 - check if backlinks work in a file with no content [3d](https://hannesdelbeke.github.io/wiki/3D/)
 
-[[my digital garden]]
+[[my digital garden dev]]
