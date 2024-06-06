@@ -36,3 +36,9 @@ This enables me to use [[MkDocs]] to create a site with backlinks from my notes.
 In case of updates ensure we don't break dependencies
 - used in [Obsidian Publisher template](https://github.com/ObsidianPublisher/obsidian-mkdocs-publisher-template/pull/12#event-8149371371)
 - used by my wiki / public brain [[Obsidian web integration]]
+
+## Bug
+- No backlink detected for this [note](https://hannesdelbeke.github.io/wiki/fast%20charge/), but it's on [this page](https://hannesdelbeke.github.io/wiki/Dell%20U2419H/) but with a different name. [[todo]]
+
+## alternatives
+https://pypi.org/project/mkdocs-backlinks/ this might replace janitor
