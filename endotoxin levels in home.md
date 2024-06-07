@@ -11,7 +11,7 @@ Endotoxin concentrations increased with
 - stuffed animals in bed
 - an [[impermeable]] mattress cover
 ## Unrelated factors
-In contrast to indoor molds and mite allergens, endotoxin was not associated with the following:
+In contrast to indoor [[mold|molds]] and [[dust mites|mite]] allergens, endotoxin was not associated with the following:
 factors that don't influence endotoxin levels in a home
 - [[Heating, ventilation, and air conditioning|air conditioning]]
 - dehumidifier use
