@@ -1,1 +1,1 @@
-- no [[tax]] benefits if you leave within 12 months
+- no [[UK tax]] benefits if you leave within 12 months
