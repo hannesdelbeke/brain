@@ -6,9 +6,12 @@
 - Sculpt in Haus - 20/session [insta](https://www.instagram.com/sculptinhauspilates/?hl=en)
 - The Green Lab [intro offers](https://www.thehealthlabnq.com/pricingoptions)
 - Chorlton
-	- https://www.energyflowfitness.co.uk/ 
-		- normal pilates - pay cash 12-15£/session
-		- private reformer classes, no info online
-	- Poise Reformer Pilates - Chorlton fully booked - 1on1
-	- [[pragma pilates]] normal pilates 8-10£
+	- reformer
+		- https://www.energyflowfitness.co.uk/ 
+			- normal pilates - pay cash 12-15£/session
+			- private reformer classes, no info online
+		- Poise Reformer Pilates - Chorlton fully booked - 1on1
+	- mat pilates
+		- [[pragma pilates]] 8-10£
+		- [eventbrite](https://www.eventbrite.com/e/pilates-in-chorlton-tuesdays-thursdays-tickets-862138859537?aff=ebdssbdestsearch) 11£
 - Restart Reformer Pilates [intro offer](https://www.restartpilates.co.uk/group-classes)
