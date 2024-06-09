@@ -6,7 +6,7 @@ aliases:
 
 https://moonlight-stream.org/
 
-Recommended by someone who installed various streaming setups for schools.
+Recommended by someone who installed various [[streaming]] setups for schools.
 Claims better than [[Steam Link]] and [[NVIDIA Shield]]
 
 [guide](https://evanw.com/how-to-stream-games-from-your-gaming-pc-to-any-device-in-your-home/) that walks through setting up a stream with 2 pcs.
