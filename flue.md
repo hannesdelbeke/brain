@@ -1,0 +1,1 @@
+The flue is a piece of pipework or [[ducting|duct]] that moves gases and hot air from the combustion chamber of the [[boiler]] to outside.

@@ -1,5 +1,5 @@
 similar to [[Heating, ventilation, and air conditioning|HVAC]] since it controls temperature.
-usually replaces a boiler
+usually replaces a [[boiler]]
 
 X to water heatpump can't cool down because of condensation on the radiators.
 air to air heatpump = aircon
