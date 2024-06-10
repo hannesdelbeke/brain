@@ -3,7 +3,7 @@
 - [x] class pass - intro deal 2 weeks free
 - Runway Pilates Manchester [intro deal](https://runwaypilates.com/first-timers/)
 	- [x] 10 £ trainee classes [book](https://momence.com/u/runway-pilates-ltd-B64tMb)
-- Sculpt in Haus - 20/session [insta](https://www.instagram.com/sculptinhauspilates/?hl=en)
+- Sculpt in Haus - 20/session [insta](https://www.instagram.com/sculptinhauspilates/?hl=en
 - The Green Lab [intro offers](https://www.thehealthlabnq.com/pricingoptions)
 - Chorlton
 	- reformer
