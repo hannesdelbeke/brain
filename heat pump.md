@@ -1,6 +1,8 @@
 similar to [[Heating, ventilation, and air conditioning|HVAC]] since it controls temperature.
 usually replaces a boiler
 
+X to water heatpump can't cool down because of condensation on the radiators.
+air to air heatpump = aircon
 
 - UK [requirements](https://check-mark.co.uk/info/plan/planning-permission/) to avoid the need for planning permission:
 	- The relevant legislation is [Part 14 G of The Town and Country Planning (General Permitted Development) (England) Order 2015 ![Opens in a new window](https://check-mark.co.uk/images/external-link.svg "Opens in a new window")](https://www.legislation.gov.uk/uksi/2015/596/schedule/2/part/14/crossheading/class-g-installation-or-alteration-etc-of-air-source-heat-pumps-on-domestic-premises/paragraph/G)  (use the /previous/next paragraph buttons).
