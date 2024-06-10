@@ -6,3 +6,4 @@ Unvented cylinders are most popular in UK.
 Vented cylinders are known as the traditional option.
 	located higher, e.g. in loft, and use gravity for water pressure
 
+Heat loss in a gas water heater goes up the flue. So [[insulation|insulating]] your tank doesn't do much.
