@@ -1,0 +1,10 @@
+MAYA_PLUG_IN_PATH 
+MAYA_MODULE_PATH 
+MAYA_SCRIPT_PATH 
+XBMLANGPATH (icons)
+
+
+
+
+
+[[environment variable]]
