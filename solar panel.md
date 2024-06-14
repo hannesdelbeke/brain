@@ -2,7 +2,7 @@
 aliases:
   - solar panels
 ---
-add a [[battery]] 
+add a [[Home energy storage|solar battery]] 
 
 solar panel use can smooth out energy peaks in morning and evening
 ```mermaid
