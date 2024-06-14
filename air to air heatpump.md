@@ -2,12 +2,13 @@
 aliases:
   - A2A
 ---
+most air to air heatpumps are reversible [[air conditioning]] systems
+
 the manufacturer makes both the heat source, the controls and the heat sink (the emitter of heat).
 
 But with an air-to-water heat pump system a manufacturer is only involved with manufacturing the heat source and not the heat sink e.g. they don’t make the radiators.
 
 [[heat pump]]
-
 ## Tips
 [source](https://forum.buildhub.org.uk/topic/32724-sizing-a2a-heating/?do=findComment&comment=481850)
 - You don't need an internal unit in every room or where you currently have a radiator - A2A blows warm air through the house, especially useful if you have corridor or open plan layouts.  
