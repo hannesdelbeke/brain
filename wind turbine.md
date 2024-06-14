@@ -23,3 +23,5 @@ AFAIK better, more modern design
 - visual & noise impact
 - horizontal-axis turbine blades kill birds
 - doesn't work on windless day
+
+[[wind energy]]
