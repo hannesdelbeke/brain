@@ -1,0 +1,1 @@
+water from [[hot water cylinder]] or a electric instant boiler 
