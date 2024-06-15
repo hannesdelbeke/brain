@@ -1,3 +1,16 @@
+---
+aliases:
+  - DHW cylinder
+  - domestic hot water cylinder
+  - hot water storage tank
+  - hot water tank
+  - thermal storage tank
+  - hot water thermal storage unit
+  - heat storage tank
+  - hot water cylinder
+---
+
+
 
 Unvented cylinders are most popular in UK.
 -  [direct unvented cylinder](https://www.gledhill.net/products/unvented-cylinders/stainlesslite-direct/) utilises electricity to heat
