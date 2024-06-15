@@ -6,3 +6,4 @@ A louver or louvre is a window blind or shutter with horizontal slats that are a
 
 [[ventilation]]
 [[house]]
+[[passive cooling]]

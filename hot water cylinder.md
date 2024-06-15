@@ -9,9 +9,6 @@ aliases:
   - heat storage tank
   - hot water cylinder
 ---
-
-
-
 Unvented cylinders are most popular in UK.
 -  [direct unvented cylinder](https://www.gledhill.net/products/unvented-cylinders/stainlesslite-direct/) utilises electricity to heat
 - an [indirect unvented cylinder](https://www.gledhill.net/products/unvented-cylinders/stainlesslite-indirect/) utilises gas from a [[boiler]] to heat the water
