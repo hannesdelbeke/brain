@@ -8,3 +8,6 @@ bugs (pages that don't render correct)
 - broken external image on this [page](https://hannesdelbeke.github.io/wiki/loading%20bar%20in%20unreal/) [[loading bar in unreal]]
 
 [[digital garden]]
+
+ideas
+- [[age links]]

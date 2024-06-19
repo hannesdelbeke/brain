@@ -12,8 +12,7 @@ But I'd be less fulfilled.
 
 I like things with a story. Only a few things, so I remember where they came from, or when I made or found them.
 
-#repurpose #functionality #minimalism #mechanicalkeyboard
-
+---
 [[minimalism]] because it reduces cable clutter, making it more visually pleasing
 [[cable management]]
 

@@ -3,6 +3,7 @@ aliases:
   - linking
   - connection
   - relation
+  - links
 ---
 a connection, relation
 

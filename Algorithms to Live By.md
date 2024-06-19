@@ -204,8 +204,7 @@ Multi-level memory hierarchy.
 Self-organizing lists. Research paper.  
 Always put an item back at the front of the list, this utilizes the LRU principle.
 
-The Forgetting Curve  
-Ebbinghaus study.  
+[[Ebbinghaus's Forgetting Curve]]
 A big book is a big nuisance.  
 Forgetting things and taking longer to process is largely a result of knowing more and having more memories to process as we age and get older.
 
