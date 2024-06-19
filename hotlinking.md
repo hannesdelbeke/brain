@@ -1,4 +1,4 @@
-when you [[link]] directly to images on a website, instead of copying them on your own website.
+when you [[link]] directly to [[image|images]] on a website, instead of copying them on your own website.
 
 ### Practical disadvantage
 - you have no control over the displayed content on your website.
