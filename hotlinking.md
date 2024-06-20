@@ -6,7 +6,7 @@ when you [[link]] directly to [[image|images]] on a website, instead of copying 
 	- the original image can go offline = [[link rot]]
 
 ### Moral disadvantage
-- the original owner is paying for the  bandwidth used to display the image on your site. Because of that It's morally frowned on.
+- the original owner is paying for the  bandwidth used to display the image on your site. Because of that It's morally frowned on. It's [[legal but unethical]]
 	- sometimes hotlinking is called bandwidth theft
 		- hotlinking isn't illegal and not actual theft
 
