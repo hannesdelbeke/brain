@@ -9,7 +9,7 @@ legend:
  - [ ] tags
 
 ## community
-- [x] [[Obsidian plugin - Plugin Groups]] for delayed startup
+- [x] [[obsidian-plugin-groups]] for delayed startup
 - [x] Homepage that auto opens every day with links to active projects and work notes
  - [ ] Obsidian Git - too important to delay startup. in case it fails silently.
  - [x] [[Obsidian plugin - paste URL in selection]]
