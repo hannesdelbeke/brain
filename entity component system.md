@@ -2,7 +2,6 @@
 aliases:
   - ECS
 ---
-
 see unity DOTS
 ## WIP notes
 ecs is used for simulation
