@@ -1,6 +1,17 @@
 [[Obsidian]]
 
-- [[Obsidian plugin - Plugin Groups]] for faster startup
-- [[Excalidraw]] for drawing [[vector image]]
-- Homepage for [[_|my homepage]]
-- 
+legend:
+- [x] enabled plugins
+- [ ] disabled plugins
+	- i mention disabled plugins since they are either disabled core plugins, or disabled & delayed loaded on startup
+- if not mentioned, i don't have it installed or not yet added it
+## core
+ - [ ] tags
+ - [ ] 
+
+## community
+- [x] [[Obsidian plugin - Plugin Groups]] for delayed startup
+- [x] Homepage for [[_|my homepage]]
+
+## delayed startup
+- [ ] [[Excalidraw]] for drawing [[vector image]]
