@@ -1,9 +1,10 @@
-[[Obsidian plugin]] to add [[Github Copilot]] support
 
-1. get nodejs
-```
-winget install nodejs
-```
+> [!warning] 
+> Don't confuse [[obsidian-copilot]] with [[obsidian-github-copilot]]
+
+An [[Obsidian plugin]] that adds [[Github Copilot]] support
+
+1. get [[node.js]]
 2. in settings, test the nodejs path
 3. wait for the "sign in to github copilot" popup in Obsidian. (I restarted Obsidian)
 
