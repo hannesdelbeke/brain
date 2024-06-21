@@ -20,7 +20,7 @@ Increasing human lifespan involves a multifaceted approach combining diet, lifes
     - **Low in Processed Foods**: Minimize intake of refined sugars, trans fats, and highly processed snacks.
 3. **Caloric Restriction**: Reducing caloric intake without malnutrition has been shown to extend lifespan in various organisms. Intermittent fasting can also mimic the effects of caloric restriction.
 4. **Adequate Sleep**: Aim for 7-9 hours of quality sleep per night. Good sleep hygiene includes maintaining a regular sleep schedule and creating a restful sleep environment.
-5. **Stress Management**: Chronic stress negatively impacts health. Practices such as mindfulness, meditation, yoga, and deep breathing exercises can help manage stress levels.
+5. **Stress Management**: Chronic stress negatively impacts health. Practices such as mindfulness, [[meditation]], yoga, and deep breathing exercises can help manage stress levels.
 6. **Regular Social Interaction**: Maintaining a small but regular social circle can improve mental health and longevity. Social connections are linked to lower risks of chronic diseases and improved overall well-being.
 7. **Avoiding Harmful Habits**: Eliminate smoking and limit alcohol intake.
 

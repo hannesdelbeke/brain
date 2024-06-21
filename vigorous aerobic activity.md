@@ -12,3 +12,4 @@ Vigorous aerobic activities are those that significantly increase your heart rat
 [[exercise]]
 [[sport]]
 [[chat GPT health advice]]
+[[aerobic activity]]
