@@ -140,7 +140,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - We finish a task – especially if there was time pressure or a deadline that forced us to “turn it in”, which prevents us from wondering if we could have done more or done it differently.
         - “Time pressure narrows our focus on the task, restricting us from considering a number of more creative ways to complete it.”
             - _This is both good and bad_
-    - We disengage and reset between tasks – take a break, take a walk, meditate.
+    - We disengage and reset between tasks – take a break, take a walk, [[meditation|meditate]].
         - Best time to take a break is after finishing a big task. So combine the two.
 - Bailey: “Intention is the bouncer of your attentional space – it lets in the productive objects of attention and keeps the distractions out.”
 - To put the concepts from this chapter into practice:
@@ -493,7 +493,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Have unused attentional space
         - Use hyperfocus to work on more complex tasks.
 - The power of making your work harder
-    - Smaller tasks that take up less attentional space will cause the mind to wander more. Meditation is a good example – focusing only on your breath will cause your mind to wander a lot.
+    - Smaller tasks that take up less attentional space will cause the mind to wander more. [[Meditation]] is a good example – focusing only on your breath will cause your mind to wander a lot.
     - Working to make your tasks more complex can be a way to enter into a hyperfocused state.
     - In _Flow: The Psychology of Optimal Experience_, Csikszentmihalyi notes that we’re most likely to enter a state of flow when the challenge of completing a task is matched to our ability to do so, and when we’re fully immersed in that task.
     - If it’s difficult to get immersed, question whether or not your tasks are difficult or complex enough.

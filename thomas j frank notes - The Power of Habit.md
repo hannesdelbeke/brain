@@ -274,7 +274,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 - Smokers often fail 7 times or more before finally quitting for good
     - This isn’t really failure – it’s experimentation.
     - They learn more about themselves, where the cues actually lie, and what new habits provide good rewards
-        - For Eric, that habit was meditation
+        - For Eric, that habit was [[meditation]]
         - “That’s why failure is so valuable. It forces us to learn, even if we don’t want to.”
 - Procrastination studies – people’s willpower often fails after a while, and then they’re back to Facebook
     - The key is to pay attention to _how_ resolve eventually fades
