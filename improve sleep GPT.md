@@ -18,7 +18,7 @@ For someone who is already maintaining a healthy lifestyle with good habits, a v
 1. **Consistent Sleep Schedule**: Go to bed and wake up at the same time every day, even on weekends.
 2. **Sleep Environment**: Ensure your bedroom is dark, cool, and quiet. Consider using blackout curtains, white noise machines, or earplugs if needed.
 3. **Limit Screen Time**: Avoid screens (phones, tablets, TVs) at least an hour before bedtime to reduce blue light exposure that can interfere with melatonin production.
-4. **Relaxation Techniques**: Engage in calming activities before bed, such as reading, meditation, or a warm bath.
+4. **Relaxation Techniques**: Engage in calming activities before bed, such as reading, [[meditation]], or a warm bath.
 5. **Avoid Stimulants**: Limit caffeine and heavy meals close to bedtime.
 
 ### Why Sleep Over Other Factors?
