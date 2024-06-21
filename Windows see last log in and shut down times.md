@@ -13,7 +13,7 @@ $ShutdownTimes | ForEach-Object { Write-Host $_ }
 pause
 ```
 
-and a cmd launcher for the [[powershell]] script, needs to be run as admin
+and a cmd launcher for the [[powershell]] script, needs to be run [[as admin]]
 ```batch
 echo off
 :: cd current folder

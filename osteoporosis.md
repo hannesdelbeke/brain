@@ -11,5 +11,4 @@ higher risk if
 - taking high-dose [steroid tablets](https://www.nhs.uk/conditions/steroid-tablets/) for more than 3 months
 
 ## Prevention
-Lifetime high calcium intake increases osteoporotic fracture risk in old age - [study](https://pubmed.ncbi.nlm.nih.gov/15949902/)
-> [[calorie restriction|caloric restriction]] prolongs life span. Calcium restriction may preserve bone health.
+Lifetime high [[calcium]] intake increases osteoporotic fracture risk in old age - [study](https://pubmed.ncbi.nlm.nih.gov/15949902/)
