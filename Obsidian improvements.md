@@ -42,7 +42,7 @@ my own workflow improvements, not related to obsidian
 - [ ] spaces on tab in code blocks option (for Python)
 - [ ] no spellcheck in links, see [bug report](https://forum.obsidian.md/t/disable-spellcheck-in-urls-and-links/50118) 
 - [ ] add shortcut for adding to callout . select text, insert call out
-- [ ] [[Obsidian Tabber]] 
+- [ ] [[Obsidian plugin - Tabber]] 
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
 - [ ] [[Obsidian auto complete]]
 - [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)

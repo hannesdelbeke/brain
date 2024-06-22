@@ -1,5 +1,5 @@
 here are some [[Obsidian plugin]] ideas
-- [[Obsidian Tabber]]
+- [[Obsidian plugin - Tabber]]
 - [[Obsidian private comments]]
 - [[add notes to explorer]]
 - [[1 directional annotations]]
