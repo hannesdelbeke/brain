@@ -4,7 +4,7 @@ Increasing human lifespan involves a multifaceted approach combining diet, lifes
 
 1. **Vitamin D**: Adequate levels of vitamin D are associated with reduced mortality rates. Supplementation is particularly important for those with limited sun exposure.
 2. **Omega-3 Fatty Acids**: Found in fish oil, omega-3s can reduce inflammation and improve cardiovascular health.
-3. **Coenzyme Q10 (CoQ10)**: Supports mitochondrial function and has antioxidant properties, potentially improving heart health and reducing oxidative stress.
+3. **Coenzyme Q10 (CoQ10)**: Supports mitochondrial function and has [[antioxidant]] properties, potentially improving heart health and reducing oxidative stress.
 4. **Resveratrol**: Found in red wine and grapes, resveratrol has been shown to activate certain genes associated with longevity.
 5. **Nicotinamide Riboside (NR)**: A form of vitamin B3, NR can increase levels of NAD+ in the body, which is involved in cellular repair and [[metabolism]].
 6. **Curcumin**: The active compound in turmeric, curcumin has anti-inflammatory and antioxidant properties.
