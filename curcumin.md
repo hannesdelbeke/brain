@@ -18,7 +18,7 @@ CONS
 - might lower blood sugar levels
 - might decrease how much [[talinolol]] the body absorbs
 - Turmeric might increase how much [[sulfasalazine]] the body absorbs
-- Turmeric is an antioxidant. There's concern antioxidants might decrease the effects of some cancer medications.
+- Turmeric is an [[antioxidant]]. There's concern antioxidants might decrease the effects of some cancer medications.
 - Turmeric might increase how much [[amlodipine]] the body absorbs
 
 dosing
