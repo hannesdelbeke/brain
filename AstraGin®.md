@@ -1,0 +1,1 @@
+helps with food absorption (in the [[gut]])
