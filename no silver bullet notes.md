@@ -26,7 +26,7 @@ I'd add sharing code and libraries to this, e.g. open source, package repos, ..
 ### hopes for future breakthroughs
 - Ada and other **high-level language advances**: a specific language, seems outdated. Described as likely not a breakthrough
 - **Object-oriented programming**. removes some complexity but not enough. [^2]
-- **Artificial intelligence** Author did not expect AI to have a big impact [^3] [^4] 
+- **[[Artificial intelligence]]** Author did not expect AI to have a big impact [^3] [^4] 
   `but was wrong, 35 year later AI is taking over` 
 - **Expert systems**: A rule based manual written "AI" system. [^3][^5]
 *The most powerful contribution by expert systems will surely be to put at the service of the inexperienced programmer the experience and accumulated wisdom of the best programmers.*

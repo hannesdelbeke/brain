@@ -1,6 +1,6 @@
 https://www.genielabs.tech/
 ### AI-UGC
-Easy create AI [[3d model|3d models]] & [[texture|textures]].
+Easy create [[Artificial intelligence|AI]] [[3d model|3d models]] & [[texture|textures]].
 
 • [[user generated content|UGC]] tool for mid-size live studios 
 	• API to enable AI-UGC directly in your game 
