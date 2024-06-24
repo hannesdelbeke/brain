@@ -6,7 +6,7 @@ Windows now has this build in.
 2. choose your mode : select `Dark` from the drop-down 
 3. Choose a black accent color 
 4. Toggle show accent color on Title bars.
-all your toolbars are now darkmode.
+all your toolbars are now dark mode. ⚠️ `seems to only apply to the active toolbar`
 ## Single app
 Works on [[Windows 11-]] & [[Windows 10-]]
 1. right click the app icon 
