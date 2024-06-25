@@ -10,6 +10,7 @@ Extend your [[Ethernet]] at home through your electric wall sockets
 Cons 
 - Powerline adapters need to plug directly into AC wall sockets and nothing in-between.
 - Phone chargers & microwaves interfere with signals over electrical current
+- unreliable speed, use wifi or [[Multimedia over Coax]] instead
 
 Pros
 - excellent option for hard-to-cable structures or too costly installations
