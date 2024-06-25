@@ -15,3 +15,10 @@ legend:
 
 ## delayed startup
 - [ ] [[Excalidraw]] for drawing [[vector image]]
+- [ ] advanced tables
+
+### rarely used plugins
+- [ ] Obsidian plugin - Global Search and Replace
+
+### discarded plugins
+- auto reveal active file. made navigator hard to use sometimes
