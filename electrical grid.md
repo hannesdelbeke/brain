@@ -4,3 +4,4 @@ aliases:
   - National Grid
   - power grid
 ---
+provide [[electricity]] to [[house|houses]]
