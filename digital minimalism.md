@@ -1,4 +1,4 @@
-reduce notifications on phone.
+reduce [[notification|notifications]] on phone.
 
 example:
 Don't let companies control when you pay attention to your device (and see [[ads]]), instead you disable notifications, and decide when to check your email.
