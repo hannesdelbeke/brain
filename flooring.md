@@ -3,7 +3,7 @@ Vinyl is more durable than laminate flooring
 planks
 - vinyl
 - laminate
-- wood
+- [[wood]]
 
 sheet
 - vinyl
