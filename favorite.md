@@ -1,3 +1,9 @@
+---
+aliases:
+  - bookmark
+  - favoriting
+  - bookmarking
+---
 ## favorite ⭐
 
 easily access tools you often use. 

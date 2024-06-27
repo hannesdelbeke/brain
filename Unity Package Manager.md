@@ -13,7 +13,9 @@ cons
   Packages are always installed to the project.
   The installed packages are saved to the [[Unity project manifest]].
   Local installs to the project will result in merge conflicts with the project manifest.
-- no option to favorite packages, and easy install multiple packages from a list.
+	- [ ]   could considered creating a [[Unity - local UPM package installer]]
+- no [[favorite|bookmarking]] packages, 
+- no easy install multiple packages from a list.
   the closest is installing those packages, and saving the project manifest somewhere.
 
 opensource projects 
