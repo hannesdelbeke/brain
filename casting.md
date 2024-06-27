@@ -1,7 +1,7 @@
 
 casting vs bluetooth
 - if you stream music over bluetooth to a speaker. any sound on your device will transfer
-- if you cast the sound to a speaker, you can use your device with other sound meanwhile. e.g. message notification pings wont play on the speaker.
+- if you cast the sound to a speaker, you can use your device with other sound meanwhile. e.g. message [[notification]] pings wont play on the speaker.
 
 casting technology:
 - [[AirPlay]]
