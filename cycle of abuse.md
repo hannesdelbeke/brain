@@ -4,3 +4,5 @@ cycle of abuse mostly focusses on relations where [[women]] experienced [[abuse]
 2. an incident of abuse
 3. reconciliation
 4. calm
+
+[[psychology]]

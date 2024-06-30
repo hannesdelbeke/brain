@@ -170,8 +170,8 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Most important aspect: **“…that only one productive or meaningful task consumes your attentional space.”**
 - The more demands there are on your time, the more critical it is to hyperfocus
     - Counterintuitive, as when we’re super-busy and overburdened, it feels like we should be juggling lots of tasks.
-- Hyperfocus is for complex tasks, not habits. Two reasons why:
-    - Requires willpower and mental energy to activate. We have a limited store of this each day, so it’s best to use it on the complex things. Habit-based tasks are easy to initiate on an almost automatic basis.
+- Hyperfocus is for complex tasks, not [[habit|habits]]. Two reasons why:
+    - Requires [[willpower]] and mental energy to activate. We have a limited store of this each day, so it’s best to use it on the complex things. Habit-based tasks are easy to initiate on an almost automatic basis.
     - Performance on complex tasks increases through conscious focus. However, performance on habit-based tasks _decreases_ through this focus.
         - _When you try to exert conscious control over something that has become unconscious or governed by muscle memory or instinct, you become worse at it. Your conscious mind is actually a lot weaker than your subconscious for these types of tasks. It’s slow, clumsy, and can only focus on one element – which is usually not enough. You clamp down on your subconscious mind’s ability to handle things._
         - _Example: When I was figure skating, I’d often try to consciously think about a specific move I was practicing. Sometimes, I’d end up performing worse than when I first tried it that day. I remember this particularly well for two-foot spins. I’d do a couple at the start of practice decently well, but then they’d get worse as I tried to consciously think about each step. Of course, in sports and skills like this, this is a necessary step to getting better. But it does take a lot of mental energy and makes you worse overall in the moment._
