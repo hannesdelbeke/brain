@@ -19,3 +19,4 @@ painter.end()
 
 [[Python snippet]] for [[Qt]]
 [[Python stubs]]
+[[snippet]]
