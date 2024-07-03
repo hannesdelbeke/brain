@@ -21,7 +21,11 @@ while it.hasNext():
     if value.endswith(".png"):
         all_resource_paths.append(value)
 
-app = QApplication.instance() or QApplication()
+new_app = False
+app = QApplication.instance()
+if not app:
+    new_app = True
+    app = QApplication([])
 
 class Window(QWidget):
     def __init__(self):
@@ -35,6 +39,7 @@ class Window(QWidget):
             pixmap = PySide2.QtGui.QPixmap(name)
             icon = PySide2.QtGui.QIcon(pixmap)
             btn.setIcon(icon)
+            btn.clicked.connect(lambda _=None, path=name: self.show_icon_path(path))
             self.layout.addWidget(btn, n / 25, n % 25)
 
         self.create_search_bar()
@@ -53,6 +58,12 @@ class Window(QWidget):
         main_layout.addWidget(self.search_bar, 0, 0)
         main_layout.addWidget(scroll_area, 1, 0)
 
+        self.icon_path_label = QLineEdit()
+        main_layout.addWidget(self.icon_path_label, 2, 0)
+
+    def show_icon_path(self, path):
+        self.icon_path_label.setText(path)
+
     def create_search_bar(self):
         self.search_bar = QLineEdit(self)
         self.search_bar.setPlaceholderText("Search...")
@@ -64,10 +75,12 @@ class Window(QWidget):
             if item.widget():
                 item.widget().setVisible(text.lower() in item.widget().toolTip().lower())
 
+
 w = Window()
 w.show()
 
-app.exec_()
+if new_app:
+    app.exec_()
 ```
 
 this displays the resource path when you hover over the icon.

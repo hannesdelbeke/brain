@@ -18,3 +18,4 @@ painter.end()
 ```
 
 [[Qt]]
+[[python stubs]]
