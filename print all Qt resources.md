@@ -7,7 +7,6 @@ tested in [[Autodesk Maya|Maya]] & pycharm
 
 (a lot of overlap with https://github.com/hannesdelbeke/texture-browser-unreal-plugin)
 
-Todo: swap to list to support rendering all icons
 ```python
 from PySide2.QtCore import QDirIterator, Qt
 from PySide2.QtWidgets import QApplication, QGridLayout, QLineEdit, QPushButton, QScrollArea, QWidget
