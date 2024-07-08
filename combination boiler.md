@@ -3,4 +3,5 @@ aliases:
   - combi boiler
 ---
 
-A combination or 'combi' boiler is both a high efficiency water heater and a central heating boiler in a single compact unit
+A combination boiler heats both [[drinking water]] & water for the [[central heating]].
+It heats it straight from the mains, so no need for a [[hot water cylinder]].
