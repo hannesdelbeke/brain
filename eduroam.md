@@ -1,0 +1,1 @@
+worldwide public [[Wi-Fi]] for students. Hosted by universities
