@@ -1,4 +1,4 @@
-a loan against your [[equity]]
+a [[loan]] against your [[equity]]
 similar to how a mortgage is a loan against your house
 interest changes time to time
 
