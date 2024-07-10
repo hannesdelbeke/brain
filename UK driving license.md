@@ -5,7 +5,7 @@ Mopeds
 - Category P - 45-50 km/h, 50cc
 - Category Q - 50cc, 25 km/h - includes trial e-scooters
 
-Motorcycles
+[[motorcycle]]
 - Category A1 - 125cc
 - Category A2
 - Category A
@@ -13,7 +13,7 @@ Motorcycles
 Light vehicles and quad bikes
 - Category B1
 
-Cars
+[[car]]
 - Category B 
 	- vehicle up to 3,500kg & 8 seats
 	- trailer up to 3,500kg
@@ -30,4 +30,3 @@ Minibuses
 Buses
 
 [[transport]]
-[[car]]

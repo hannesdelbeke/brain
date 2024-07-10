@@ -1,3 +1,7 @@
+---
+aliases:
+  - show filetype in Unity
+---
 [[Unity]] hides the [[file extension]], which makes it hard to know if we have a mesh or prefab.
 
 To show extensions in the [[Unity Project window]] 
