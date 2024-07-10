@@ -23,5 +23,5 @@ finance options:
 - cash
 - EVs qualify for salary sacrifice benefit in the UK
 - car finance
-- bank loan
+- bank [[loan]]
 - buy on credit card
