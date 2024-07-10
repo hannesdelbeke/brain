@@ -1,16 +1,17 @@
 Extend your [[Ethernet]] at home through your electric wall sockets
 
+TLDR: Usually not reliable, only use when no [[Wi-Fi]] or [[Ethernet port]] are available.
 ### Tips
 - [[Powerline]] supports distances up to 300m.
 - Try buy one with a pass-through outlet (also cuts out data noise)
 - Look out for Gigabit Ethernet ports for the fastest transfers. Most quality Powerline adapters go for this standard, but entry-level 500Mbs adapters often have the slower 10/100 Ethernet ports.
-- some have a Wi-Fi hotspot, which is superior to Wi-Fi extenders
+- some have a [[Wi-Fi hotspot]], which is superior to [[Wi-Fi extender]]
 
 ### Pros & Cons
 Cons 
 - Powerline adapters need to plug directly into AC wall sockets and nothing in-between.
 - Phone chargers & microwaves interfere with signals over electrical current
-- unreliable speed, use wifi or [[Multimedia over Coax]] instead
+- unreliable speed, use [[Wi-Fi]] or [[Multimedia over Coax]] instead
 
 Pros
 - excellent option for hard-to-cable structures or too costly installations
