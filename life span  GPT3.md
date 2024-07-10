@@ -18,7 +18,7 @@ Increasing human lifespan is a multifaceted goal that can be influenced by vario
     - **[[Vitamin B12]]:** Since the individual is vegetarian, ensuring sufficient intake of vitamin B12 through fortified foods or supplements is crucial for overall health.
     - **Multivitamin or Mineral [[supplement|Supplements]]:** In some cases, a multivitamin or mineral supplement may be beneficial to fill any potential nutrient gaps in the diet. However, it's important to prioritize nutrient-rich whole foods whenever possible.
 5. **Regular Health Check-ups:**
-    - Schedule regular check-ups with healthcare professionals for preventive screenings, vaccinations, and monitoring of health parameters such as blood pressure, cholesterol levels, and blood sugar levels.
+    - Schedule regular check-ups with healthcare professionals for preventive screenings, vaccinations, and monitoring of health parameters such as blood pressure, [[cholesterol]] levels, and blood sugar levels.
 6. **Social Connections:**
     - Maintaining strong social connections and a supportive social network has been linked to improved mental health, emotional well-being, and longevity. Invest time in nurturing relationships with friends, family, and community members.
 7. **Mind-Body Practices:**
