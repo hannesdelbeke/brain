@@ -1,0 +1,2 @@
+- allowed to park on pavement in UK, except in London.
+- ensure you do not obstruct pavement, e.g. pram & wheelchair can get through
