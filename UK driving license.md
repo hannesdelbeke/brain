@@ -14,7 +14,10 @@ Light vehicles and quad bikes
 - Category B1
 
 Cars
-- Category B - 3,500kg
+- Category B 
+	- vehicle up to 3,500kg & 8 seats
+	- trailer up to 3,500kg
+	- motor tricycles with 15kW+ if over 21y old.
 - Category B auto - automatic gear only
 - Category BE - 3,500kg with a trailer.
 
