@@ -1,0 +1,6 @@
+---
+aliases:
+  - physio
+  - physiotherapist
+---
+[[medical]]

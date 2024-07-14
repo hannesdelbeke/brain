@@ -18,4 +18,4 @@ Risk factors for secondary Raynaud's include:
 - Having had frostbite.
 - Repetitive motion -- for example, typing or playing the piano.
 - Carpal tunnel syndrome.
-- Other medical conditions, such as rheumatoid arthritis, scleroderma, systemic lupus erythematosus (SLE or lupus), and carpal tunnel syndrome. If you have Raynaud's because of these conditions, it is called secondary Raynaud's and is often more severe.
+- Other [[medical]] conditions, such as [[rheumatoid arthritis]], scleroderma, systemic lupus erythematosus (SLE or lupus), and carpal tunnel syndrome. If you have Raynaud's because of these conditions, it is called secondary Raynaud's and is often more severe.
