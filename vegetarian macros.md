@@ -1,28 +1,28 @@
-most common missing ones
-vitamin B-12, [[vitamin D]], [[iron]], omega-3 fatty acids, and [[calcium]].
+there's a difference between low levels, and a deficiency.
+e.g. You don't need to take creatine as a veggie, but will do better if you do.
 
 vegetarians have lower levels of
 - [[creatine]]
-	- veggies have less in their muscles than meateaters, it also enhances concentration in veggies.
+	- veggies have less in their muscles than omnivores, it also enhances concentration in veggies.
 - [[taurine]]
-	- veggies have less in their muscles than meateaters
+	- veggies have less in their muscles than omnivores
 	- Taurine is only found in animal products such as seafood, poultry, and dairy products [65](https://www.ncbi.nlm.nih.gov/pubmed/2352336)
 - [[cholesterol]]
 	- cholesterol is needed to make sex hormones such as [[pregnenolone]], DHEA, and [[testosterone]].
 - [[carnosine]]
 	- Carnosine is only found in meat and dairy products but can be formed in the body from the amino acids histidine and beta-alanine. Vegetarians have less carnosine in their muscles than meat eaters
+- [[carnitine]] 
+	- Since carnitine is primarily found in meats and dairy products, vegans are at risk for carnitine deficiency [50](http://ajcn.nutrition.org/content/50/2/301.abstract)
+	- Carnitine supplementation increased skeletal [[muscle]] carnitine stores  by approximately 13% in [[vegetarian|vegatarians]], but not in omnivores, ([study](https://ods.od.nih.gov/factsheets/Carnitine-HealthProfessional/))
 
 possible low levels
-- Protein
+- Protein, [[essential amino acids]]
 - [[essential fatty acid]] Pre-formed Omega-3 Fatty Acids [[docosahexaenoic acid|DHA]] and [[eicosapentaenoic acid|EPA]] 
 	- These are in nuts and seeds, and mainly in [[fish]].
 	- ALA found in flax/chia/walnuts does not convert well into DHA [74](https://www.ncbi.nlm.nih.gov/m/pubmed/19269799/)]
-- [[carnitine]]
-	- Since carnitine is primarily found in meats and dairy products, vegans are at risk for carnitine deficiency [50](http://ajcn.nutrition.org/content/50/2/301.abstract)
 - [[Zinc]]
 	- Many plant foods that contain zinc also contain [[phytate]], which inhibits [zinc](https://selfhacked.com/blog/literally-everything-wanted-know-zinc-backed-science/) absorption [24](https://www.ncbi.nlm.nih.gov/pubmed/25439135). **Vegetarian diets tend to reduce**zinc absorption by about 35% compared to an omnivorous diet [23](http://ajcn.nutrition.org/content/78/3/633S.long)
-- [[Iron]]
-	- Heme iron is only found in meat and is more easily absorbed than the iron found in plant foods [31](https://www.ncbi.nlm.nih.gov/pubmed/21462105), [32](https://www.ncbi.nlm.nih.gov/pubmed/19475341), [33](https://www.ncbi.nlm.nih.gov/pubmed/22951158)]. Plant-based non-heme iron needs to be converted into a soluble form before they can be absorbed. This requires sufficient amount of stomach acid [34](https://www.ncbi.nlm.nih.gov/books/NBK448204/)
+- [[iron-]]
 - [[Vitamin D]]
 	- [[vitamin D3]]
 	- **Vegans’ dietary intake of** [**vitamin D**](https://selfhacked.com/blog/natural-ways-to-increase-calcitrol-and-vitamin-d-receptor-gene-expression/) **is below the recommended range**. Inadequate intake can decrease bone mineral density and cause bone abnormalities. In a prospective longitudinal study of 181 Asian women, 73% of vegans compared to 46% of omnivores had vitamin D deficiency. However, veganism was not associated with bone loss or fracture [13](https://www.ncbi.nlm.nih.gov/pubmed/21811293), [14](https://www.ncbi.nlm.nih.gov/pubmed/21092700), [15](https://www.ncbi.nlm.nih.gov/pubmed/21872800)
@@ -40,7 +40,7 @@ possible low levels
 	- [[choline]] / vitamin b4
 		- Vegans may be at risk for choline deficiency since most food sources are either meat, dairy, or seafood products [26](https://www.ars.usda.gov/ARSUserFiles/80400525/Data/Choline/Choln02.pdf).
 	- [[vitamin B6]]
-		- 30-60% of veggies are defficient [69](https://www.ncbi.nlm.nih.gov/pubmed/1797957) [68](https://www.ncbi.nlm.nih.gov/pubmed/26502280)
+		- 30-60% of veggies are deficient [69](https://www.ncbi.nlm.nih.gov/pubmed/1797957) [68](https://www.ncbi.nlm.nih.gov/pubmed/26502280)
 	- [[vitamin B12]]
 		- Because natural sources are only found in meat, **vegans are frequently vitamin B12 deficient** [5](https://www.ncbi.nlm.nih.gov/pubmed/12816782)
 - [[selenium]]
@@ -48,6 +48,12 @@ possible low levels
 - [[Glycine]]
 	- Vegans don’t ingest as much glycine from the diet as meat eaters (even though their blood levels are higher) [56](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4705437/)
 
+> [!NOTE]- most common missing ones
+> - vitamin B-12
+> - [[vitamin D]]
+> - [[iron-]]
+> - omega-3 fatty acid
+> - [[calcium]]
 
 
 
