@@ -1,0 +1,4 @@
+---
+aliases:
+  - blood sugar level
+---

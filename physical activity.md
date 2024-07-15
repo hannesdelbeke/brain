@@ -1,0 +1,1 @@
+physical activity is referred to “any bodily movement produced by [[skeletal muscles]] that results in energy expenditure” [23] and its components are occupational, transport, domestic, and leisure time, which consists of exercise, sport, and unstructured recreation. From this perspective, most sports contribute to overall physical activity [24]. 

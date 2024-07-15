@@ -1,10 +1,10 @@
-[[protein|proteins]] that contain all 9 [[amino acid|amino acids]] that your body can't produce on its own.
+[[protein|proteins]] that contain all [[essential amino acids|9 amino acids that your body can't produce on its own]]. )see 
 
 Plant protein can be sources of complete proteins by combining multiple plant protein sources.
 ### Vegetarian Complete Protein Recipes
-- Rice + Beans
+- [[rice]] + [[beans]]
 - Rice + Lentils
-- Oats + Beans
+- [[oats]] + Beans
 - Rice + Chickpeas
 - Wheat + Chickpeas
 - Corn + Beans

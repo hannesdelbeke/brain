@@ -76,7 +76,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 - O’Neill used habits to encourage change at all levels
     - Managers were required to report any and all safety issues. The only way to get promoted was to be a person that did this.
     - This created a success-driven habit loop that improved safety
-- Keystone habits work in weight loss as well
+- Keystone habits work in [[weight loss]] as well
     - Old way was to try enacting radical change to help obese people lose weight – but it fails
     - What ended up working? Asking people to keep a food diary once a week
     - Some people kept daily journals, then started noticing patterns they didn’t know existed.
@@ -191,7 +191,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - In other words, they were familiar
 - People didn’t like “Hey Ya” because it was so unfamiliar
     - To fix this, DJ’s would sandwich “Hey Ya” in between two familiar, sticky hits. It worked.
-- U.S. government did this too – because so much meat was going overseas in WWII, Americans needed to eat organ meats. But they didn’t want to
+- U.S. government did this too – because so much meat was going overseas in WWII, Americans needed to eat [[organ]] meats. But they didn’t want to
     - The government launched a campaign to educate housewives on how to disguise these meats as familiar dishes. By the 1950’s, offal food was a staple.
 - This is why Target made their ads look random. People were familiar with that type of advertising
 - YMCA learned the same thing – people were actually looking for things explained by familiar human drives, such as friendship. So instead of focusing too much on new gym equipment, they focused on group fitness and trained employees to learn customers’ names.

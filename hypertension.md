@@ -1,1 +1,3 @@
-hypertension = high blood pressure
+hypertension = high [[blood pressure]]
+
+[[medical condition]]

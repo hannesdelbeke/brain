@@ -1,0 +1,6 @@
+---
+aliases:
+  - disease
+---
+
+[[medical condition]]

@@ -1,4 +1,4 @@
-The brain learns by inforcing neuron connections that are often used.
+The brain learns by enforcing [[neuron]] connections that are often used.
 We can see a graph in [[Obsidian]] visualizing connections, but we can't see connection strength. 
 The [[Obsidian plugin - recent files]] plugin helps with this for your current session.
 

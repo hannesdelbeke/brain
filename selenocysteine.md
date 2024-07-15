@@ -1,0 +1,1 @@
+- Some authorities recognize a 21st [[amino acid]], selenocysteine, which is derived from serine during protein biosynthesis.
