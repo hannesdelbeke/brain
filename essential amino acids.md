@@ -8,3 +8,4 @@ There are 9 essential [[amino acid|amino acids]]
 7. [[isoleucine]]
 8. [[lysine]]
 9. [[histidine]]
+
