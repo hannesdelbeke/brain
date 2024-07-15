@@ -1,6 +1,5 @@
 ---
 aliases:
-  - riboflavin
+  - Niacin
 ---
-
 [[vitamin B]]

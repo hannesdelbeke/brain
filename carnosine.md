@@ -1,0 +1,1 @@
+Carnosine benefits bone and joint health through its [[anti-glycation]] action. Carnosine can also stimulate bone growth which contributes to overall skeletal integrity.
