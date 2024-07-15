@@ -6,6 +6,8 @@ taurine
 Protein
 Omega-3 fatty acids
 	- fish
+[[carnitine-|carnitine-]]
+
 
 multivitamin
 	- B12
