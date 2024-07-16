@@ -1,0 +1,13 @@
+- prevent burglars from looking in
+	- [ ] get curtains or blinds that prevent people from looking in
+	- [ ] install (thorny) bushes under the windows so it's harder to look in.
+	- [ ] or add gravel under the windows so it makes noise.
+- [ ] if you have a sliding door, add a stick on the inside when closed to prevent it from sliding open.
+- [ ] add a flood light with motion detection to the front porch, and the back garden. This makes people near your house more visible.
+- add a little bell to a garden / back door.
+- your house is only as strong as your weakest door.
+	- ensure people can't enter your garage
+- show that you have a dog (even if you don't)
+	- [ ] please close the gate so the dog wont get out sign feels less fake than beware of the dog signs
+	- dog bowl in garden visible from street
+- keep radio, tv and light on when away. e.g. with timer.
