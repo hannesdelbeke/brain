@@ -22,7 +22,7 @@ possible low levels
 	- ALA found in flax/chia/walnuts does not convert well into DHA [74](https://www.ncbi.nlm.nih.gov/m/pubmed/19269799/)]
 - [[Zinc]]
 	- Many plant foods that contain zinc also contain [[phytate]], which inhibits [zinc](https://selfhacked.com/blog/literally-everything-wanted-know-zinc-backed-science/) absorption [24](https://www.ncbi.nlm.nih.gov/pubmed/25439135). **Vegetarian diets tend to reduce**zinc absorption by about 35% compared to an omnivorous diet [23](http://ajcn.nutrition.org/content/78/3/633S.long)
-- [[iron-]]
+- [[iron]]
 - [[Vitamin D]]
 	- [[vitamin D3]]
 	- **Vegans’ dietary intake of** [**vitamin D**](https://selfhacked.com/blog/natural-ways-to-increase-calcitrol-and-vitamin-d-receptor-gene-expression/) **is below the recommended range**. Inadequate intake can decrease bone mineral density and cause bone abnormalities. In a prospective longitudinal study of 181 Asian women, 73% of vegans compared to 46% of omnivores had vitamin D deficiency. However, veganism was not associated with bone loss or fracture [13](https://www.ncbi.nlm.nih.gov/pubmed/21811293), [14](https://www.ncbi.nlm.nih.gov/pubmed/21092700), [15](https://www.ncbi.nlm.nih.gov/pubmed/21872800)
@@ -51,7 +51,7 @@ possible low levels
 > [!NOTE]- most common missing ones
 > - vitamin B-12
 > - [[vitamin D]]
-> - [[iron-]]
+> - [[iron]]
 > - omega-3 fatty acid
 > - [[calcium]]
 
