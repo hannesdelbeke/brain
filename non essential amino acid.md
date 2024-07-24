@@ -1,4 +1,5 @@
-11 [[amino acid]]
+11 [[amino acid]]s
+
 - [[Alanine]]
 - [[Arginine]]
 - [[Asparagine]]

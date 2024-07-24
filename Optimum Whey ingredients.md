@@ -1,4 +1,4 @@
-The following is the amino acids profile of [**Optimum Nutrition Gold Standard 100% Whey Vanilla** **flavour**](https://www.optimumnutrition.com/en-gb/Products/Protein/Shakes-%26-Powders/Gold-Standard-100%25-Whey-Protein/p/gold-standard-100-whey-protein).  This may vary slightly due to seasonality of milk. 
+The following is the [[amino acid]] profile of [**Optimum Nutrition Gold Standard 100% Whey Vanilla** **flavour**](https://www.optimumnutrition.com/en-gb/Products/Protein/Shakes-%26-Powders/Gold-Standard-100%25-Whey-Protein/p/gold-standard-100-whey-protein).  This may vary slightly due to seasonality of milk. 
 
 | Amino Acids       | g/100g | per 29.4 serve |
 | ----------------- | ------ | -------------- |
