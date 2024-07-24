@@ -12,3 +12,4 @@ Only matters if you are a higher rate tax payer. You would pay 10% instead of 20
 
 [[UK tax]]
 [[tax rate]]
+[[entrepeneur]]
