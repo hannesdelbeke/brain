@@ -9,7 +9,8 @@ Your body makes it in the [[liver]] and [[kidneys]] and stores it in the [[skele
 
 Carnitine is a quaternary ammonium compound involved in [[metabolism]]
 
-Though more research is needed, **L-carnitine may help increase [[weight loss]] and fat burning**. Studies also support its use for health, [[brain]] function, and disease prevention. Supplements may also benefit those with lower levels, such as older adults, vegans, and vegetarians.
+L-carnitine may help increase [[weight loss]] and fat burning. Studies also support its use for health, [[brain]] function, and disease prevention.  (weight loss [study](https://pubmed.ncbi.nlm.nih.gov/32359762/))
+Supplements may also benefit those with lower levels, such as older adults, vegans, and vegetarians. ([[vegetarian macros]])
 
 
 > [!NOTE]- L vs D carnitine
