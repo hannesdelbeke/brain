@@ -43,3 +43,5 @@ FG GameProject 3 - blazing aces
 1. A lot of gamejams suffered from dropbox for version control, see [[avoid developing Unity projects on Dropbox]]. 
 2. Later projects used git, but people (including myself) didn't knew how to resolve merges, and were to busy hacking the game together, So we often ended parsing files with a USB stick or over email.
 3. Now I'm more experienced I use git, and help the team if they need tech support.
+
+[[games]]
