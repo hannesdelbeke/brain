@@ -4,4 +4,4 @@ epic free games
 ## other
 epic market place monthly
 
-[[games]]
+[[videogame]]
