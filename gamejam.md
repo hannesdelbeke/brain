@@ -5,4 +5,4 @@ aliases:
 [[prototyping]]
 [[gamedev]]
 [[hackathon]]
-[[games]]
+[[videogame]]

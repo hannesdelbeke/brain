@@ -49,4 +49,4 @@ a collection of [[gamejam]] games, uni and solo projects
 2007-06-25 [Armadillo Run Maps](http://www.armadillorun.com/levels/index.php?show_sets=1&show_spectator=0)
 
 
-[[games]]
+[[videogame]]

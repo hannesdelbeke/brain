@@ -4,22 +4,21 @@ opensource
 - [launcher](https://github.com/hannesdelbeke/launcher) PRIVATE launch apps / tools / env manager
 
 Done
--  [[unimenu]] wiki standardized menu creation across in dcc apps
+- [[unimenu]] wiki standardized menu creation across in dcc apps
 	- [[unimenu addon]] demo addon for blender to easy setup unimenu
-- [[unreal-pip]]
-- [[unreal-qt]]
 - [[figmapy]] done, need more work on async and simplify UX downloading 
 - [[BQt]] wrap blender in bqt
 - [[note-link-janitor]](JavaScript) GitHub action to add backlinks to .md files
 - [[3Ds Max - bend modifier tool]] create bend modular meshes that fit exactly on a grid
 - [[detect-app]]
-- [[py-pip]]
-- [[pip qt]]
-	- [[pip Qt Unreal plugin]]
-	- [[Maya Pip Qt plugin]]
-	- [[Blender pip Qt addon]]
 - [[unreal-qt]]
 	- [[unreal-qt plugin]]
+- [[unreal-pip]]
+- [[py-pip]]
+	- [[pip qt]]
+		- [[pip Qt Unreal plugin]]
+		- [[Maya Pip Qt plugin]]
+		- [[Blender pip Qt addon]]
 - [[Blender pip addon]] small fork
 
 WIP
