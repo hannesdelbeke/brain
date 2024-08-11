@@ -4,8 +4,10 @@
 - [x] [[ABC song]]
 - [x] [[Ode to Joy (Beethoven)]]
 
-soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
-https://recordersongs.net/category/easy/
+- unsure if soprano https://recordersongs.net/category/easy/
+- beginner soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
+- advanced pop soprana recorder sheets [collection](https://www.8notes.com/recorder/rock_and_pop/sheet_music/)
+
 
 ```abc
 
