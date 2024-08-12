@@ -6,12 +6,16 @@
 
 - unsure if soprano https://recordersongs.net/category/easy/
 - beginner soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
+	- [ ] [Twinkle, Twinkle, Little Star - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/twinkle-twinkle-little-star-soprano-recorder.pdf)
+	- [x] [Au Clair De La Lune - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/au-clair-de-la-lune-soprano-recorder.pdf)
+	- [x] [Ode To Joy - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/ode-to-joy-soprano-recorder.pdf)
+
+
 	- [ ] - [Abide With Me - soprano recorder](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/abide-with-me-soprano-recorder.pdf)
 	- [ ] [Alouette - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/alouette-soprano-recorder.pdf)
 	- [ ] [Amazing Grace - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/amazing-grace-soprano-recorder.pdf)
 	- [ ] [America The Beautiful - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/america-the-beautiful-soprano-recorder.pdf)
 	- [ ]  [American Patrol - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/american-patrol-soprano-recorder.pdf)
-	- [x] [Au Clair De La Lune - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/au-clair-de-la-lune-soprano-recorder.pdf)
 	- [ ] [Auld Lang Syne - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/auld-lang-syne-soprano-recorder.pdf)
 	- [ ] [Baa, Baa Black Sheep - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/baa-baa-black-sheep-soprano-recorder.pdf) ([video](https://youtu.be/11agN7kOD20))
 	- [ ] [Banana Man - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/banana-man-soprano-recorder.pdf)
@@ -51,7 +55,6 @@
 	- [ ] [Menuet / Bach - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/menuet-bach-soprano-recorder.pdf)
 	- [ ] [Michael Row The Boat Ashore - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/michael-row-the-boat-ashore-soprano-recorder.pdf)
 	- [ ] [My Bonnie - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/my-bonnie-soprano-recorder.pdf)
-	- [ ] [Ode To Joy - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/ode-to-joy-soprano-recorder.pdf)
 	- [ ] [Old Black Joe - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/old-black-joe-soprano-recorder.pdf)
 	- [ ] [Old MacDonald Had a Farm - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/old-mac-donald-had-a-farm-soprano-recorder.pdf)
 	- [ ] [On Top Of Old Smoky - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/on-top-of-old-smoky-soprano-recorder.pdf)
@@ -74,7 +77,6 @@
 	- [ ] [Toreador's Song - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/toreador's-song-soprano-recorder.pdf) ([video](https://youtu.be/ecXdKHRYZQk))
 	- [ ] [Trumpet Voluntary - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/trumpet-voluntary-soprano-recorder.pdf) [(video)](https://youtu.be/8KGrdsfNkms)
 	- [ ] [Tumbalalaika - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/tumbalalaika-soprano-recorder.pdf)
-	- [ ] [Twinkle, Twinkle, Little Star - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/twinkle-twinkle-little-star-soprano-recorder.pdf)
 	- [ ] [Waltzing Matilda - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/waltzing-matilda-soprano-recorder.pdf) ([mp3](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/waltzing-matilda-soprano-recorder.mp3))
 	- [ ] [We Shall Overcome - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/we-shall-overcome-soprano-recorder.pdf)
 	- [ ] [When Johnny Comes Marching Home - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/when-johnny-comes-marching-home-soprano-recorder.pdf)
