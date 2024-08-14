@@ -1,0 +1,1 @@
+convert between [[alternating current]] & [[direct current]]. e.g. used with [[solar panel]]
