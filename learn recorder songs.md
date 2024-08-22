@@ -88,7 +88,13 @@
 advanced
 - [ ] [[Rising Sun]]
 
-
+medieval
+- salterello [sheet](https://musescore.com/user/34631/scores/74505)
+- trotto
+- l autrier m en aloie
+- la rotta
+- la rotta della manfredina
+- stella splenders
 
 advanced
 https://musescore.com/sheetmusic/recorder/pop
