@@ -16,6 +16,8 @@
 - [ ] [Country Gardens - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/country-gardens-soprano-recorder.pdf)
 - [ ] [Beautiful Dreamer - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/beautiful-dreamer-soprano-recorder.pdf)
 
+recorder methods [book](https://docs.google.com/file/d/0B6uQG36SDTgjZlpqakNHd0N1Vkk/view?resourcekey=0-DbTqttoHq17EzaEErWP9pQ)
+
 - unsure if soprano https://recordersongs.net/category/easy/
 - beginner soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
 
@@ -96,7 +98,6 @@ medieval
 - la rotta della manfredina
 - stella splenders
 
-recorder methods [book](https://docs.google.com/file/d/0B6uQG36SDTgjZlpqakNHd0N1Vkk/view?resourcekey=0-DbTqttoHq17EzaEErWP9pQ)
 
 
 advanced
