@@ -96,6 +96,9 @@ medieval
 - la rotta della manfredina
 - stella splenders
 
+recorder methods [book](https://docs.google.com/file/d/0B6uQG36SDTgjZlpqakNHd0N1Vkk/view?resourcekey=0-DbTqttoHq17EzaEErWP9pQ)
+
+
 advanced
 https://musescore.com/sheetmusic/recorder/pop
 what a wonderfull worls (trio) [sheet](https://musescore.com/user/68052/scores/7679429)
