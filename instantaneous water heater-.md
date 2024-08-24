@@ -13,3 +13,5 @@ boiling water dispensers
 there are also countertop units, [sample](https://www.waterdropfilter.co.uk/products/countertop-instant-hot-ro-system-corero-system-c1h?srsltid=AfmBOopdc5VDIfsJ54kx9MapUM9P5ltYqAVrWN_EkXbpR2AYA60jlN5D) 
 more [samples](https://electricaldealsdirect.co.uk/boiling-water-dispensers/counter-top-boiling-water-dispensers.html?exit_trigger=true)
 Stiebel seems like a good german brand. 200-400£
+
+a instantaneous water heater under the sink can have a similar use as a [[circulating pump]]
