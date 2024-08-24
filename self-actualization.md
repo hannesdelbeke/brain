@@ -1,0 +1,1 @@
+self-actualization, in [[psychology]], a concept regarding the process by which an individual reaches his or her full potential
