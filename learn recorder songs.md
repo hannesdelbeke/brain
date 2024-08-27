@@ -16,7 +16,6 @@
 - [ ] [Country Gardens - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/country-gardens-soprano-recorder.pdf)
 - [ ] [Beautiful Dreamer - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/beautiful-dreamer-soprano-recorder.pdf)
 
-- [ ] elfen lied [sheet](https://musescore.com/user/34631/scores/85201)
 
 recorder methods [book](https://docs.google.com/file/d/0B6uQG36SDTgjZlpqakNHd0N1Vkk/view?resourcekey=0-DbTqttoHq17EzaEErWP9pQ)
 
@@ -103,6 +102,8 @@ medieval
 
 
 advanced
+- [ ] elfen lied [sheet](https://musescore.com/user/34631/scores/85201)
+
 https://musescore.com/sheetmusic/recorder/pop
 what a wonderfull worls (trio) [sheet](https://musescore.com/user/68052/scores/7679429)
 brandenburg concert no 4
