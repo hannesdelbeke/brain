@@ -1,4 +1,3 @@
-- [x] [[Hot Cross Buns]]
 - [x] [[twinkle twinkle little star]],  [Twinkle, Twinkle, Little Star - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/twinkle-twinkle-little-star-soprano-recorder.pdf),  [[ABC song]]
 - [x] [[Mary Had a Little Lamb]]
 - [x] [[Ode to Joy (Beethoven)]]
@@ -15,8 +14,57 @@
 - [ ] [Cielito Lindo - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/cielito-lindo-soprano-recorder.pdf) high notes practice
 - [ ] [Country Gardens - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/country-gardens-soprano-recorder.pdf)
 
-
 recorder methods [book](https://docs.google.com/file/d/0B6uQG36SDTgjZlpqakNHd0N1Vkk/view?resourcekey=0-DbTqttoHq17EzaEErWP9pQ)
+1. G A B
+```abc
+GAB
+```
+- [x] [[Hot Cross Buns]]
+
+2. high C
+```abc
+C'
+```
+3. high D
+```abc
+D'
+```
+4. F#
+```abc
+F#
+```
+5. low E
+```abc
+e,
+```
+6. high E
+```abc
+E'
+```
+7. low D
+```abc
+d,
+```
+8. high C#
+```abc
+^C'
+```
+9. low C
+```abc
+C
+```
+10. F
+```abc
+F
+```
+11. Bb
+```abc
+_B
+```
+12. G#
+```abc
+^G
+```
 
 - unsure if soprano https://recordersongs.net/category/easy/
 - beginner soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
