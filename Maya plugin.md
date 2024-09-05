@@ -39,7 +39,6 @@ ideally a plugin is self contained
 ### Low prio
 - [ ] how to control startup load order of plugins
 
-
 ## How to enable/disable a plugin
 - use [[Maya plugin manager]] to enable a plugin
 - or enable a plugin with code: [loadPlugin](https://download.autodesk.com/us/maya/2009help/commandspython/loadplugin.html) 
@@ -49,3 +48,4 @@ maya.cmds.loadPlugin("my_plugin.py")
 ```
 
 [[Maya Python]]
+[[Maya tools]]
