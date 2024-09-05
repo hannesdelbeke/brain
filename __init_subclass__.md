@@ -8,5 +8,5 @@ class PluginBase:
         super().__init_subclass__(**kwargs)
         cls.subclasses.append(cls)
 ```
-
+this makes implementing the [[registry pattern]] easier
 [source](https://stackoverflow.com/questions/5189232/how-to-auto-register-a-class-when-its-defined/50099920#50099920)
