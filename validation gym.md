@@ -1,4 +1,4 @@
-[[validation pipeline with pytest]]
+[[R&D Blender validation pipeline with pytest]]
 ## best practices
 avoid changing node code to make nodes more reusable
 nodes are like imports, you use them but you don't change the imported code
