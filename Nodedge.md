@@ -8,7 +8,7 @@ CON
   [[PyFlow]] seems more active
 ## PRO
 - has a [getting started](https://nodedge.io/#/resources) docs page
-- supports [[PySide 6]] & Python 3
+- supports [[PySide6]] & Python 3
 - tested in Blender
 
 TODO
