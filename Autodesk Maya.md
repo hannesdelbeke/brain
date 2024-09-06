@@ -7,3 +7,6 @@ similar to [[Autodesk 3ds Max]]
 
 [[maya plugin path]]
 
+## versions
+Maya 2025 [[Pyside6]] Python 3
+Maya 2024 [[Pyside2]] Python 3
