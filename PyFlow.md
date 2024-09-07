@@ -3,9 +3,10 @@ Apache-2.0 license
 
 a [[node editor]] for [[Python]] and [[Qt]] using [[QtPy]]
 
-> [!WARNING] There are multiple pyflow projects
-> Don't confuse PyFlow with the [pyflow](https://pyflow-workflow-generator.readthedocs.io/en/latest/content/introduction.html) on read-the-docs that wraps `ecflow`, 
-> or the [pyflow](https://pypi.org/project/pyflow/)  Python package on pip for dependency management
+> [!WARNING] Don't confuse this PyFlow with
+> - the [pyflow](https://pyflow-workflow-generator.readthedocs.io/en/latest/content/introduction.html) on read-the-docs that wraps `ecflow`, 
+> - or the [pyflow](https://pypi.org/project/pyflow/)  Python package on pip for dependency management
+> - or another [pyflow](https://github.com/Bycelium/PyFlow) on github that's also a node editor
 
 
 ![](https://raw.githubusercontent.com/wonderworks-software/PyFlow/master/PyFlow/UI/resources/PyFlow.png)
