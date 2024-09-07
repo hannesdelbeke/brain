@@ -22,12 +22,9 @@ pip install nodedge
 ### demo
 code to launch the node editor (based on the calculator example)
 ```python
-import os
 import sys
-from PySide6.QtGui import QColor, QPalette
 from PySide6.QtWidgets import QApplication
 from nodedge.mdi_window import MdiWindow
-from nodedge.scene_coder import SceneCoder
 
 app: QApplication = QApplication.instance() or QApplication(sys.argv)
 window = MdiWindow()

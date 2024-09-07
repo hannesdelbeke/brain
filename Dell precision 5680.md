@@ -16,3 +16,5 @@ camera
 [[fingerprint reader]]
 [[OLED]]
 4K
+
+[[hardware]]
