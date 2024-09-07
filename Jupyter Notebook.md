@@ -2,7 +2,9 @@
 aliases:
   - IPython Notebook
 ---
+Kernels are programming language specific processes that run independently and interact with the Jupyter Applications and their user interfaces
 
+[[setup Blender as a Jupyter  kernel]]
 # alternatives
 Jupyter notebooks are the most popular, but here are some other ones:
 
