@@ -7,3 +7,4 @@
 - Hikvision
 
 almost any good camera needs [[network video recorder]]
+[[camera]]
