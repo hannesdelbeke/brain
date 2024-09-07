@@ -43,3 +43,6 @@ PRO
 CON
 - no good [docs](https://wonderworks-software.github.io/PyFlow/). missing get started page. had to read source code
 - doesn't work in PySide2 anymore
+
+## todo 
+load a pipeline in "view/run mode"
