@@ -7,7 +7,8 @@ i want to add [[PyFlow]] support as a Blender addon
 
 > [!WARNING] on hold
 >   Since I don't have a strong answer for this I'll put this R&D on hold.
-  I think mainly so that in combination with [[plugget]], a user can download some nodes. and e.g. run validation node on a mesh. set up a quick and simple pipeline.
+>   
+>   in combination with [[plugget]], a user can download some nodes. and e.g. run validation node on a mesh. set up a quick and simple pipeline.
   The idea of a universal node graph is cool. But what really matters is [[environment management]] and [[validation]]
 
 ### workflow
