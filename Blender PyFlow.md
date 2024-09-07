@@ -31,14 +31,26 @@ include demos with the project to show off features:
 	select the `timer` node and the `properties` panel will show execute buttons. Click start to start the timer, and stop to stop it. it prints `None` every second in Blender's console.
 	the `doOnce` node is similar, and executes once when clicking the button.
 	![[Blender PyFlow-1725710300844.jpeg]]
-- [ ] learn how to make custom node
+	
+> [!NOTE] delta time issue
+> Delta time seems to not work well. e.g. when set to 0.1, it doesn't print every 0.1 sec. Timing is also irregular. sometimes slow, sometimes fast. 
+> likely a Qt / Blender timer hookup issue. running without bqt atm.
+
+- [x] learn how to make custom node
+	made a custom node [createBlenderCube](https://github.com/hannesdelbeke/blender-pyflow/blob/main/createBlenderCube.py) that creates a cube in Blender
+	couldn't figure out how to easily do multi input slots for e.g. positions (int, int, int)
+	default nodes are manually hooked up in `PyFlow\Packages\PyFlowBase\__init__.py`
+	- [x] node to create cube
+	- [ ] node to set position
+
+overall i m not super impressed.
+- The UI is great, but learning how to make a node is complex.
+- the UI UX flow is also quite rough. e.g. creating a new node is not as fluent as in Unreal.
+- the menu feels a bit poorly designed
 
 
-- [ ] node to create cube
-- [ ] node to set position
-
-create a plugget package
-dependencies 
-- pyflow
-- bqt
-
+- [ ] create a plugget package
+	dependencies 
+	- pyflow
+	- bqt
+	
