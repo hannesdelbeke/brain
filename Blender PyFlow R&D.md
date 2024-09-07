@@ -43,14 +43,11 @@ include demos with the project to show off features:
 	- [x] node to create cube
 	- [ ] node to set position
 
-overall i m not super impressed.
+> [!NOTE] divide by 0 issue
+>  when dividing by 0, there is no visual feedback. only an exception in the console. and output of a divide by 0 node is 0, which is wrong.
+
+overall i m not as impressed as I expected I'd be.
 - The UI is great, but learning how to make a node is complex.
+- documentation is rough
 - the UI UX flow is also quite rough. e.g. creating a new node is not as fluent as in Unreal.
-- the menu feels a bit poorly designed
-
-
-- [ ] create a plugget package
-	dependencies 
-	- pyflow
-	- bqt
-	
+- CLI is not a first class citizen. user is expected to create nodegraphs in the editor.
