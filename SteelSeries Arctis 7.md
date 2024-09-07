@@ -14,3 +14,5 @@ band needs replacing
 leather on ear pads needs replacing
 - leather + sewing
 - buy new earpads
+
+[[hardware]]
