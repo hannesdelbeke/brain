@@ -47,3 +47,4 @@ thermal devices compared
 Each camera has unique strengths, but for **high sensitivity and resolution**, the **Milc** and **Ti 256I** stand out, while **Udi 120M** and **Infray P2 Pro** excel in **portability and Android compatibility**.
 
 [[thermal imager]]
+[[infrared camera|IR camera]]
