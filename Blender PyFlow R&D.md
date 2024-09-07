@@ -1,4 +1,15 @@
-i want to add [[PyFlow]] support as a [[Blender addon]]
+repo https://github.com/hannesdelbeke/blender-pyflow
+mentioned this on blender artists node [thread](https://blenderartists.org/t/unreal-blueprints-houdini-nodes-in-blender/1484937/3)
+
+# Goal
+i want to add [[PyFlow]] support as a Blender addon
+- Why do i want node base editor in Blender?
+
+> [!WARNING] on hold
+>   Since I don't have a strong answer for this I'll put this R&D on hold.
+  I think mainly so that in combination with [[plugget]], a user can download some nodes. and e.g. run validation node on a mesh. set up a quick and simple pipeline.
+  The idea of a universal node graph is cool. But what really matters is [[environment management]] and [[validation]]
+
 ### workflow
 how i imagine users would use this.
 1. open the node editor from the menu `window/pyflow node editor`
@@ -7,7 +18,7 @@ how i imagine users would use this.
 ### features
 - open editor
 - run node network
-- run nodenetwork from CLI
+- run node network from CLI
 - see output of node network on fail
 	- create a sphere with position
 	  8/3 8/2 8/1 8/0->error  8/-1 8/-2 
@@ -20,9 +31,7 @@ include demos with the project to show off features:
 - create a circle with a timer, that creates spheres in a circle in x seconds.
 - run a custom piece of code/addon
 
----
-1. repo https://github.com/hannesdelbeke/blender-pyflow
-2. planning project https://github.com/users/hannesdelbeke/projects/7/views/1
+# Progress
 - [x] launch pyflow in blender
 - [x] add nodes
 	right click in the canvas, a node context menu pops up. drag and drop nodes in the canvas to place them.
@@ -51,3 +60,6 @@ overall i m not as impressed as I expected I'd be.
 - documentation is rough
 - the UI UX flow is also quite rough. e.g. creating a new node is not as fluent as in Unreal.
 - CLI is not a first class citizen. user is expected to create nodegraphs in the editor.
+
+# Notes
+- [Serpens](https://blendermarket.com/products/serpens?ref=94) is a paid addon that does this already
