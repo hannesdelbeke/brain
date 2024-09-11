@@ -56,6 +56,8 @@ F
 ```
 - [ ] [Country Gardens - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/country-gardens-soprano-recorder.pdf)
 - [ ] [Alouette - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/alouette-soprano-recorder.pdf)
+- [ ] [Auld Lang Syne - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/auld-lang-syne-soprano-recorder.pdf)
+- [ ] 
 1. Bb
 ```abc
 _B
@@ -67,16 +69,18 @@ _B
 
 higher note
 - [ ] [Cielito Lindo - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/cielito-lindo-soprano-recorder.pdf) high notes practice
+- [ ] [Banana Man - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/banana-man-soprano-recorder.pdf)
 
 other sharp note
 	- [ ]  [American Patrol - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/american-patrol-soprano-recorder.pdf)
 
+low sharp
+	- [ ] - [Abide With Me - soprano recorder](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/abide-with-me-soprano-recorder.pdf)
+
+
 - unsure if soprano https://recordersongs.net/category/easy/
 - beginner soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
 
-	- [ ] - [Abide With Me - soprano recorder](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/abide-with-me-soprano-recorder.pdf)
-	- [ ] [Auld Lang Syne - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/auld-lang-syne-soprano-recorder.pdf)
-	- [ ] [Banana Man - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/banana-man-soprano-recorder.pdf)
 	- [ ] [Battle Hymn Of The Republic - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/battle-hymn-of-the-republic-soprano-recorder.pdf)
 	- [ ] [Blow The Man Down - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/blow-the-man-down-soprano-recorder.pdf)
 	- [ ] [Camptown Races - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/camptown-races-soprano-recorder.pdf)
