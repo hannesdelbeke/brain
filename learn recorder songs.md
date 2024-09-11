@@ -1,6 +1,5 @@
 - [x] [[twinkle twinkle little star]],  [Twinkle, Twinkle, Little Star - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/twinkle-twinkle-little-star-soprano-recorder.pdf),  [[ABC song]]
 - [x] [[Mary Had a Little Lamb]]
-- [x] [[Ode to Joy (Beethoven)]]
 - [x] [Au Clair De La Lune - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/au-clair-de-la-lune-soprano-recorder.pdf)
 - [x] [Ode To Joy - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/ode-to-joy-soprano-recorder.pdf)
 - [x] [[Amazing Grace]]
@@ -10,9 +9,6 @@
 - [x] [For He's A Jolly Good Fellow - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/for-hes-a-jolly-good-fellow-soprano-recorder.pdf)
 - [x] [Michael Row The Boat Ashore - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/michael-row-the-boat-ashore-soprano-recorder.pdf)
 - [x] [Can Can - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/can-can-soprano-recorder.pdf)
-- [ ] [America The Beautiful - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/america-the-beautiful-soprano-recorder.pdf)
-- [ ] [Cielito Lindo - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/cielito-lindo-soprano-recorder.pdf) high notes practice
-- [ ] [Country Gardens - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/country-gardens-soprano-recorder.pdf)
 
 recorder methods [book](https://docs.google.com/file/d/0B6uQG36SDTgjZlpqakNHd0N1Vkk/view?resourcekey=0-DbTqttoHq17EzaEErWP9pQ)
 1. G A B
@@ -49,6 +45,7 @@ d,
 ```abc
 ^C'
 ```
+- [ ] [America The Beautiful - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/america-the-beautiful-soprano-recorder.pdf)
 9. low C
 ```abc
 C
@@ -57,7 +54,9 @@ C
 ```abc
 F
 ```
-11. Bb
+- [ ] [Country Gardens - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/country-gardens-soprano-recorder.pdf)
+- [ ] [Alouette - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/alouette-soprano-recorder.pdf)
+1. Bb
 ```abc
 _B
 ```
@@ -66,13 +65,16 @@ _B
 ^G
 ```
 
+higher note
+- [ ] [Cielito Lindo - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/cielito-lindo-soprano-recorder.pdf) high notes practice
+
+other sharp note
+	- [ ]  [American Patrol - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/american-patrol-soprano-recorder.pdf)
+
 - unsure if soprano https://recordersongs.net/category/easy/
 - beginner soprano recorder sheets [collection](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy.htm) 💖
 
-
 	- [ ] - [Abide With Me - soprano recorder](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/abide-with-me-soprano-recorder.pdf)
-	- [ ] [Alouette - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/alouette-soprano-recorder.pdf)
-	- [ ]  [American Patrol - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/american-patrol-soprano-recorder.pdf)
 	- [ ] [Auld Lang Syne - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/auld-lang-syne-soprano-recorder.pdf)
 	- [ ] [Banana Man - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/banana-man-soprano-recorder.pdf)
 	- [ ] [Battle Hymn Of The Republic - srec](https://www.capotastomusic.com/soprano-recorder-sheet-music/easy/battle-hymn-of-the-republic-soprano-recorder.pdf)
