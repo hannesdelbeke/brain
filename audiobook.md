@@ -1,0 +1,6 @@
+---
+aliases:
+  - audiobooks
+---
+
+[[book]]
