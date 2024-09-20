@@ -1,4 +1,4 @@
-to share files between phone & computer
+to share files between [[Android]] phone & [[Windows]] computer
 
 just send files
 - USB cable
