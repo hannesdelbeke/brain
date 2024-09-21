@@ -14,7 +14,6 @@ Commercial studio games & projects are excluded.
 setijam game  (sweden)
 FG GameProject 3 - blazing aces  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr3Ja-p1dFIaFGEzKozMAgiVTUBHwxhUzg4_vKOJgzNxw0bqImIjOfZg9F_bmi19rkqnyJmiHteKgej0BumV9uRVAnSDqgc7aKJTgq1F0_U21yzn6nNFuldnNku6Opua0thLygZLY0_j4O/s64/icon.PNG|)](http://hannesdelbeke.blogspot.be/2014/02/hovercraft.html) 13/02/2014 FG GameProject 2 - Hovercraft  
-[here](http://hannesdelbeke.blogspot.se/2014/01/global-gamejam-2014.html) 28/01/2014 Global Gamejam 2014 - discoordination  
 [Battleships](http://hannesdelbeke.blogspot.se/2013/11/battleships.html) 20/11/2013 FG Gameproject 1 - Battleships  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj_gb1KrN90Pbum7LlP-RDrQLFdRPdmOEooTa78p1w4VNRuo7BAGiYP5RnlOhDp4JYNFb1eWH2f7ZxoMI-vxXh2ZQLimeq1iGxygn-L_QHXFnKTxTI8xcUQarOA1iQgWJSWm6HMd3WHjG2w/s64/icon3_1024.PNG)](http://hannesdelbeke.blogspot.be/2013/07/cube-link.html) 20/07/2013 solo project - Cube Link  [[cubelink]]
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkVsmIsM6gF153o6JLrbHXIYMHCz8hioiOsm0FGk7AACyOZSOO1sD4-oG46_-ucbftzSzSZFxG5n9Y8pEE0hBo48QFGW_z8yeBF9_SnpKRuM_C2D9kGqWYIb-d8rJtDQ1pV-kWjnoTaMjg/s64/icon.PNG)](http://hannesdelbeke.blogspot.be/2013/06/blocks-dont-matter.html) 20/06/2013 solo jam - Blocks don't matter  
