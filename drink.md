@@ -1,2 +1,2 @@
-- [[coffee]]
+- [[public/coffee]]
 - [[tea]]
