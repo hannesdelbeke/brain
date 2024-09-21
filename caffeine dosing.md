@@ -8,5 +8,5 @@
 | cola can             | 40  |
 | black tea            | 45  |
 | red bull             | 80  |
-| instant coffee       | 82  |
+| instant [[coffee]]   | 82  |
 | brewed coffee        | 92  |
