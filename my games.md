@@ -6,10 +6,11 @@ Commercial studio games & projects are excluded.
 2020-02-02 [[gamejam - 2020 - Paddle or Die]]
 2017-10-11 [[gamejam - 2017 - Temple of Xiala]] ❤
 2016-04-27 [[gamejam - 2016 - planet]]
-2016-04-08 [[gamejam - 2016-04-08 CA]]
+2016-04-08 [[gamejam - 2016 Creative Assembly jam]]
+2016-03 spaceshooter
 2016-02-09 [[gamejam - 2016 - Tiles of Doom]] ❤
+2016-09-20 [[gamejam - 2016 - AI]]
 2014-02-02 [[gamejam - 2014 - Discoordination]] ❤
-2016-09-20 [[gamejam - 2016-9-20 - AI]]
 setijam game  (sweden)
 FG GameProject 3 - blazing aces  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr3Ja-p1dFIaFGEzKozMAgiVTUBHwxhUzg4_vKOJgzNxw0bqImIjOfZg9F_bmi19rkqnyJmiHteKgej0BumV9uRVAnSDqgc7aKJTgq1F0_U21yzn6nNFuldnNku6Opua0thLygZLY0_j4O/s64/icon.PNG|)](http://hannesdelbeke.blogspot.be/2014/02/hovercraft.html) 13/02/2014 FG GameProject 2 - Hovercraft  
@@ -23,7 +24,7 @@ FG GameProject 3 - blazing aces
  [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRQaMh71JjagWvvPvmHbXJyp5UjNhRbcuQIwwPs5ppbeuOTHC2M5D6ANk_-unuqpSwR4soiB8UpMRi8RgSX8BTF6X1UYAqv9zuIdPZZAUy7rgk4s-Oz1fYY_ZVig-I8oBNf0o_CPJkOqTP/s28/idle1.PNG) ![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjrnXBfQD055OTYAb8bqg_fKNFriJmtxbiWbm1Z8sBMrAOqa8d952nxHuK3RvpQRxxmw1xD0WQ-y0PSDe2piJDqu892nFrPEOZBm8NrwrAIEwbHpUjf-Fx6gVJGAS3B1gfa_8-A4MQoFWNg/s28/char.gif)](http://hannesdelbeke.blogspot.fr/2013/03/roguelike.html) 18/04/2013 7DRL - Roguelike  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj55JBlTADvVbmqavM6mDhjd7lxEXObbvKTJDriDRHj_W1nFOamThTiMdOCvgIWYMWL3_8To51XwhJZtneh-tAPEyMZcfQfj3fo7_HOmPmj2UTyLHHCs4ltV2sm6-Lt2rf1cSeRAXusgksj/s320/GameThumbnail.png)](http://hannesdelbeke.blogspot.fr/2013/04/imaginecup-2013.html) 11/04/2013 ImagineCup 2013 - Greentower  
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM79yZsFQwK3YI-l8rFRdAGWnRUnV32UuIw4KdJfvDMjASFVJCzV_g__rEXEaloRJ_31xQLwkjCt9jS1T0g-IuZEKoCS6KBkSm9599zvmFzYx2RaP4zKaIv8HU5b6oUE4mRqee35nsKikc/s320/icon.png)](http://hannesdelbeke.blogspot.fr/2013/03/game-dev-party.html) 25/03/2013 GameDevParty - Last Stand  
-[![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnAD82NP0a-cBTWCA71Mq0KfMi_cJEfc8gVgywTOczyIgnVVwEAjlVG6t2GANTHlh2g30T2spy_2AKUFZAjIkiMoA-WWgFYXG1VoLmGyAVAKoIHm_ZDJBCtb5zHMKM_lMaqK5QZn8s2sa_/s64/thumb.PNG)](http://hannesdelbeke.blogspot.fr/2013/03/particle-chaos.html) 05/03/2013 solojam - Particle Chaos  [[gamejam 2013 - Particle Chaos]]
+[![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnAD82NP0a-cBTWCA71Mq0KfMi_cJEfc8gVgywTOczyIgnVVwEAjlVG6t2GANTHlh2g30T2spy_2AKUFZAjIkiMoA-WWgFYXG1VoLmGyAVAKoIHm_ZDJBCtb5zHMKM_lMaqK5QZn8s2sa_/s64/thumb.PNG)](http://hannesdelbeke.blogspot.fr/2013/03/particle-chaos.html) 05/03/2013 solojam - [[gamejam 2013 - Particle Chaos]]
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdLXo87Z0Lv7PM5qgd_a66_P6WWTJqlA2piqTsPf0-m5YnQqkc2QXMKFEPwWmhW3M0bmpWkrg0wqVDfVww_xy5xULnVVKHmrnvuQEW-MtGAh3HMolvti5CPt9MgdkrJ3JRJ-GjXPq8bB40/s320/planet.PNG)](http://hannesdelbeke.blogspot.fr/2013/02/words-from-space.html) 24/02/2013 solojam - [[gamejam 2013 - Words from Space]]  
 28/01/2013 Global Gamejam 2013 - [Flicker](http://hannesdelbeke.blogspot.fr/2013/01/gamejam.html)  
 [Big World](http://hannesdelbeke.blogspot.com/2012/11/artgame.html) 11/12/2012 Artgame Weekend - Big World  
