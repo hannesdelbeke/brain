@@ -5,6 +5,7 @@ Commercial studio games & projects are excluded.
 2022-03-22 [[gamejam - 2022 - Daisy chain]]
 2020-02-02 [[gamejam - 2020 - Paddle or Die]]
 2017-10-11 [[gamejam - 2017 - Temple of Xiala]] ❤
+2016 - 10 [[bejewelde solo game]]
 2016-04-27 [[gamejam - 2016 - planet]]
 2016-04-08 [[gamejam - 2016 Creative Assembly jam]]
 2016-03 spaceshooter
