@@ -1,4 +1,4 @@
-Created the shaders for the water and energy shield.
+Created some [[handpainted]] shaders for the water and energy shield.
 ![[Futuregames - laputa - blazing aces-1727018979070.jpeg]]
 
 trailer
