@@ -53,6 +53,7 @@ my own workflow improvements, not related to obsidian
 - [x] open web URLs in obsidian tab.  https://github.com/MamoruDS/obsidian-open-link-with
 - [x] [[Obsidian quick move]] the current note to a folder
 - [x] [[Obsidian distinguish internal & external links]]
+- [ ] CSV viewer , checkout this https://github.com/zds-dev/csv-obsidian
 
 ### dropped
 dropped notes because not important
