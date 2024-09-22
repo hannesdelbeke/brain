@@ -1,5 +1,8 @@
 A collection of my game jams, solo projects, and uni projects.
 Commercial studio games & projects are excluded.
+
+## solo projects
+2018 [[temple of xiala]]
 ### Jams
 2024-04-08 [[gamejam - 2024- Dance Dance Duck]] ❤
 2022-03-22 [[gamejam - 2022 - Daisy chain]]
@@ -12,23 +15,22 @@ Commercial studio games & projects are excluded.
 2016-02-09 [[gamejam - 2016 - Tiles of Doom]] ❤
 2016-09-20 [[gamejam - 2016 - AI]]
 2015-03 [[game-lemmings]]
-2015 [[gamejam - 2015 - random fighter]]
+2015 [[gamejam - 2015 - random fighter]] TODO ASSETS 🔥
 2014-02-02 [[gamejam - 2014 - Discoordination]] ❤
 2014-01-01 [[gamejam - dolancoin clicker]]
 setijam game  (sweden)
-20/07/2013 solo project -  [[Cube Link]] ❤
+20/07/2013 solo project - [[Cube Link]] ❤
 20/06/2013 solo jam - [[Blocks don't matter]] 
 26/05/2013 Mini Ludum Dare - HitchHiker [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjL7WKoePnR3K04qXVV8w16TnOjuVAmTemnCkMiUQIWH1i-qBpl7OE-TaEBByjgqes_t9JphHIsVOzj_jzD67ulifWAJUj-xzImaqueDovFIWnWYEOZZTYRk-Cr_Ug1l7mu7S4cI5V3nKQT/s320/icon.PNG)](http://hannesdelbeke.blogspot.fr/2013/05/mini-ludum-dare.html) 
 28/04/2013 [[gamejam - ludum dare 26 - Atom that matter]]
 28/04/2013 Ludum Dare 26 - Slap the Fish [blogpost](http://hannesdelbeke.blogspot.fr/2013/04/ludum-dare-26.html) 
-18/04/2013 [[2013 - 7DRL - Roguelike]] 
-- [ ] **TODO ASSETS**
+18/04/2013 [[2013 - 7DRL - Roguelike]]  TODO ASSETS 🔥
 11/04/2013 [[ImagineCup 2013 - Greentower]]  ❤ 
 25/03/2013 GameDevParty - Last Stand   [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhM79yZsFQwK3YI-l8rFRdAGWnRUnV32UuIw4KdJfvDMjASFVJCzV_g__rEXEaloRJ_31xQLwkjCt9jS1T0g-IuZEKoCS6KBkSm9599zvmFzYx2RaP4zKaIv8HU5b6oUE4mRqee35nsKikc/s320/icon.png)](http://hannesdelbeke.blogspot.fr/2013/03/game-dev-party.html) 
 05/03/2013 solojam - [[gamejam 2013 - Particle Chaos]]
 24/02/2013 solojam - [[gamejam 2013 - Words from Space]]  
 28/01/2013 [[Global Gamejam 2013 - Flicker]] 
-[Big World](http://hannesdelbeke.blogspot.com/2012/11/artgame.html) 11/12/2012 Artgame Weekend - Big World  
+11/12/2012 Artgame Weekend - Big World   [Big World](http://hannesdelbeke.blogspot.com/2012/11/artgame.html) 
 01/10/2012 solo project - Hack and Slash   [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg43WCPUyLuKfh3eBMP3A8rT0Msvtmizccm8L-FROpCIvMSFtOMZD_N5r-uf7rV1x5s6DtEsrD6EHMn-M4Q5twf6LeE-UcRgdvwm78CctUu1xLn6i2-H9yZKEu2NAj1vbk4UrkSWtIxV9r9/s320/hackslash.PNG)](http://hannesdelbeke.blogspot.fr/2012/10/hack-and-slash.html)
 28/01/2012 [[Global Gamejam 2012 - Aztec Game]]  
 08/05/2011 first GameJam [Whistle Game](http://hannesdelbeke.blogspot.com/2012/10/gamejame-c-mine.html)  

@@ -1,4 +1,4 @@
-I was quite happy with my concept art and how the handpainted assets turned out. The art style was consistent.
+I was quite happy with my concept art and how the [[handpainted]] assets turned out. The art style was consistent.
 We had decent animations and UI. 
 The VFX needed more love.
 
