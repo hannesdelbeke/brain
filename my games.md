@@ -4,6 +4,8 @@ Commercial studio games & projects are excluded.
 ## solo projects
 2018 [[temple of xiala]]
 ### Jams
+a collection of [[gamejam]] games
+
 2024-04-08 [[gamejam - 2024- Dance Dance Duck]] ❤
 2022-03-22 [[gamejam - 2022 - Daisy chain]]
 2020-02-02 [[gamejam - 2020 - Paddle or Die]]
@@ -35,7 +37,6 @@ setijam game  (sweden)
 28/01/2012 [[Global Gamejam 2012 - Aztec Game]]  
 08/05/2011 first GameJam [Whistle Game](http://hannesdelbeke.blogspot.com/2012/10/gamejame-c-mine.html)  
 
-also see [[Global Game Jam]]
 ### Futuregames (uni)
 [[Futuregames - laputa - blazing aces]]
 13/02/2014 FG GameProject 2 - Hovercraft  [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr3Ja-p1dFIaFGEzKozMAgiVTUBHwxhUzg4_vKOJgzNxw0bqImIjOfZg9F_bmi19rkqnyJmiHteKgej0BumV9uRVAnSDqgc7aKJTgq1F0_U21yzn6nNFuldnNku6Opua0thLygZLY0_j4O/s64/icon.PNG|)](http://hannesdelbeke.blogspot.be/2014/02/hovercraft.html) 
