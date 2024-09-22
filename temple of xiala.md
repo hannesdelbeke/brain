@@ -5,3 +5,4 @@ steam release https://store.steampowered.com/app/774411/Temple_of_Xiala/
 2018 kickstarter https://www.kickstarter.com/projects/160011698/temple-of-xiala-a-gravity-puzzle-game-on-steam
 
 [[puzzle]] [[pyxel]]
+[[pixel art]]
