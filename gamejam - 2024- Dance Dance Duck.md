@@ -4,7 +4,7 @@
 - [source code](https://github.com/hannesdelbeke/duck-duck-dance) on github 
 - [[Dance Dance Duck dev]]
 
-created for the climax game jam
+This game was created during the Climax [[gamejam]].
 ### tags
-[[gamejam]]
+
 [[Unity project]]
