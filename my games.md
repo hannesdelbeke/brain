@@ -13,6 +13,7 @@ Commercial studio games & projects are excluded.
 2016-09-20 [[gamejam - 2016 - AI]]
 2015-03 [[game-lemmings]]
 2014-02-02 [[gamejam - 2014 - Discoordination]] ❤
+2014-01-01 [[gamejam - dolancoin clicker]]
 setijam game  (sweden)
 FG GameProject 3 - blazing aces
 [![icon|25](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr3Ja-p1dFIaFGEzKozMAgiVTUBHwxhUzg4_vKOJgzNxw0bqImIjOfZg9F_bmi19rkqnyJmiHteKgej0BumV9uRVAnSDqgc7aKJTgq1F0_U21yzn6nNFuldnNku6Opua0thLygZLY0_j4O/s64/icon.PNG|)](http://hannesdelbeke.blogspot.be/2014/02/hovercraft.html) 13/02/2014 FG GameProject 2 - Hovercraft  
