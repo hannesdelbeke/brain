@@ -5,5 +5,7 @@ source code zip https://v3.globalgamejam.org/2014/games/discoordination
 
 ![](https://img.itch.zone/aW1hZ2UvNTc0NTEyLzMwMjI2ODEucG5n/347x500/okp%2BWh.png)
 
+## tags
 [[gamejam]]
 [[Unity project]]
+[[Global Game Jam]]
