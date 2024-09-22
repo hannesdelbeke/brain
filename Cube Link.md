@@ -1,4 +1,4 @@
-https://github.com/hannesdelbeke/game-cubelink
+source https://github.com/hannesdelbeke/game-cubelink
 
 ![[cubelink-1726957723174.jpeg]]
 
