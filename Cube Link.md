@@ -24,3 +24,5 @@ A puzzle game I developed on my own. I did all code, art, leveldesign and sounde
 - [ ] port to [[Unreal]] (prob never happen)
 - [ ] make cubelink2, a 3d world with puzzles where you walk around.
 - could use [[Wave Function Collapse]] to auto generate levels
+
+blog post http://hannesdelbeke.blogspot.be/2013/07/cube-link.html
