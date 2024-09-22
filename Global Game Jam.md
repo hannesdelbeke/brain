@@ -2,4 +2,5 @@
 aliases:
   - GGJ
 ---
-[[gamejam]]
+archived [[gamejam]] games https://v3.globalgamejam.org/users/hannesdelbeke
+
