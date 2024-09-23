@@ -1,5 +1,5 @@
 [[reformer pilates]] classes in [[Manchester]]
-- re sculpt. intro offer 45£ x 3 classes [prices](https://resculptstudios.co.uk/?utm_source=ConfidentialGuides.com&utm_medium=Gyms&utm_campaign=Re%3ASculpt+Studios&utm_content=WEBSITE#prices)
+- [x] re sculpt. intro offer 45£ x 3 classes [prices](https://resculptstudios.co.uk/?utm_source=ConfidentialGuides.com&utm_medium=Gyms&utm_campaign=Re%3ASculpt+Studios&utm_content=WEBSITE#prices)
 - [x] class pass - intro deal 2 weeks free
 - Runway Pilates Manchester [intro deal](https://runwaypilates.com/first-timers/)
 	- [x] 10 £ trainee classes [book](https://momence.com/u/runway-pilates-ltd-B64tMb)
@@ -15,3 +15,5 @@
 		- [[pragma pilates]] 8-10£
 		- [eventbrite](https://www.eventbrite.com/e/pilates-in-chorlton-tuesdays-thursdays-tickets-862138859537?aff=ebdssbdestsearch) 11£
 - Restart Reformer Pilates [intro offer](https://www.restartpilates.co.uk/group-classes)
+- embrace-wellness-studio
+	- new studio, between [[Chorlton]] & Deansgate
