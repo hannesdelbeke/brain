@@ -42,3 +42,4 @@ Everyone needs to be aligned on what the objectives are, and how success is bein
 
 A very quick way to expose A, B, C players is truly holding everyone accountable for delivering results. Part of why I built [Weekly Update](https://www.getweeklyupdate.com/) (a tool for teams to share status updates each week) is because I saw the value of getting objectives and progress in writing. It is the only way people can be truly held accountable. A players will be eager to participate, highlight their wins and comment on losses. B players will as well, but may be more reserved in how they share. C players will want to avoid this at all costs, because it exposes their failure to deliver.
 
+[[employment]]
