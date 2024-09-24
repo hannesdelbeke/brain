@@ -3,6 +3,8 @@
 	- [ ] add sample
 - [[Maya module]]
 - [[Maya modules vs plugins]]
+- [[Maya ApplicationPackage startup code]]
+- [[pth]]
 ### code
 - `maya.utils.executeDeferred` defer running startup code
 ### tags
