@@ -11,4 +11,4 @@ summaries:
  - [ ] check out [books and binders](https://anthonyamar.fr/Projects/Books+and+Binders), a plugin for obsidian to track books
  - [ ] moves these books to a nicer list
  - [ ] import goodreads list
- - [ ] import manga list
+ - [ ] import [[manga]] list
