@@ -5,6 +5,10 @@
 - [[Maya modules vs plugins]]
 - [[Maya ApplicationPackage startup code]]
 - [[pth]]
+- [[Maya _load]]
+
+
+
 ### code
 - `maya.utils.executeDeferred` defer running startup code
 ### tags
