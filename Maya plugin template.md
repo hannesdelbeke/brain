@@ -14,7 +14,7 @@ Since Python modules are usually developed in their own repo, [[vendoring]] Pyth
 	- module installer
 	- plugin
 	- parsers in [config](https://github.com/FXTD-ODYSSEY/Maya-UIBot/tree/main/UIBot/config):
-		- tool entry
+		- tool entry (toolbox /Viewport tool)
 		- shelf entry
 		- menu entry
 		- status entry? (think not yet implemented)
