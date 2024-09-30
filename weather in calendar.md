@@ -3,5 +3,5 @@ FREE - get the weather in your google calendar
 
 it's very accessible, and doesn't require any installation from the user.
 
-[[Google calendar-]]
+[[Google calendar]]
 [[web app]]
