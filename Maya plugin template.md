@@ -2,6 +2,9 @@
 created a new plugin & module template https://github.com/hannesdelbeke/maya-plugin-template
 [[Maya plugin]]
 
+issue with updating maya template
+https://github.com/hannesdelbeke/maya-module-template
+
 Since Python modules are usually developed in their own repo, [[vendoring]] Python modules in the scripts folder results in duplicate outdated data.
 - [ ] TODO figure out a nice approach for this with requirements
 	- [x] [[plugget]] handles this
