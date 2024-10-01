@@ -24,3 +24,4 @@ written by [[csaez]]
 
 [[Maya plugin]]
 [[dcc dependent]]
+[[Maya tool]]
