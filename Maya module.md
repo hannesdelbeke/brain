@@ -1,5 +1,7 @@
 Maya modules are self contained Maya environments. Enable easy [[file distribution|distribution]] with relative paths in the module config.
 
+create a module definition file https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=Maya_SDK_Distributing_Maya_Plug_ins_DistributingUsingModules_ModuleDescriptionFiles_html
+
 They can:
 - modify [[environment variable]]s:
 	- custom [[maya plugin path]]s
