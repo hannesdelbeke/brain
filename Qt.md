@@ -27,4 +27,9 @@ scroll_area.setWidgetResizable(True)
 ```
 min size of child widgets also matters
 
+modern themes
+- https://github.com/Wanderson-Magalhaes/Modern_GUI_PyDracula_PySide6_or_PyQt6
+- https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/PySide6
+
 [[UI]]
+[[Python UI]]
