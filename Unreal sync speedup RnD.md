@@ -1,6 +1,6 @@
 If we [[file distribution|distribute]] unreal plugins separately from the main project, it would
 - faster build speed
-- faster [[Unreal game sync-|UGS]] sync speed
+- faster [[Unreal game sync|UGS]] sync speed
 - not block builds on tool fail, leading to faster tool iteration & empowering non devs
 
 potential drawbacks

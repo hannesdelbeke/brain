@@ -1,7 +1,6 @@
 ---
 alias: UGS
 ---
-
 ## unreal game sync
 
 Unreal game sync pulls a [[Perforce]] repo, which contains both the [[Unreal]] project & editor.
