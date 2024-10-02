@@ -3,6 +3,7 @@ aliases:
   - bookmark
   - favoriting
   - bookmarking
+  - star
 ---
 ## favorite ⭐
 
