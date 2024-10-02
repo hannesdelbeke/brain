@@ -1,5 +1,6 @@
-imagine a unreal tool that let's the user browse for console commands.
-customize a command, and save it. similar to the [[buttonizer]]
+imagine a [[Unreal tool]] to browse for console commands.
+customize a command, and save it. (similar to the [[buttonizer]])
+it can be used as a [[tool launcher]], it can be used to run commonly used commands
 
 commands
 - menu commands
@@ -11,6 +12,7 @@ features
 - [[categorize]] commands, e.g. by team or feature
 - a [[cache]] with the most recently run commands
 - a [[search bar]] to search commands
+- support distributing a (preset) list of commands to your team or colleague
 
 ## console commands
 this python code prints all commands in the output log
@@ -50,5 +52,5 @@ then read all commands up until you find `Cmd: *`
 i think some of these commands can contain input arguments
 so maybe we save them as a customizable string.
 
-[[tool launcher]]
-[[Unreal tool]]
+
+

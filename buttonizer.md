@@ -1,9 +1,9 @@
-Buttonizer is a [[tool launcher]] where users can easily add their own commands.
+Buttonizer is a [[tool launcher]] where users can easily add their own commands and easily run them by clicking a [[button]].
 
-It's very similar to a [[Maya shelf]]
-
-similar to [[Maya quick launcher]] but with buttons, not a search box
-similar to a toolbox, but commands
+## inspiration
+- It's very similar to a [[Maya shelf]]
+- Buttonizer is similar to [[Maya quick launcher]]. But Buttonizer has buttons instead of a search box. And it supports creating lists, and editing commands.
+- similar to a toolbox, but commands
 
 ## Dev
 [github](https://github.com/hannesdelbeke/buttonizer)

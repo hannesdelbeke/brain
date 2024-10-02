@@ -1,4 +1,11 @@
+---
+aliases:
+  - command palette
+---
+
 a search box for launching apps.
 
+[[search bar]]
+
 sample 
-- [[unity-editor-spotlight]]
+- [[Unity editor spotlight]]
