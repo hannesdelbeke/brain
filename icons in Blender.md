@@ -6,3 +6,5 @@ python
 
 build blender
 - [icon info](https://wiki.blender.org/wiki/Source/Interface/Icons) 
+
+[[icon]]
