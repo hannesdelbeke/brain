@@ -48,3 +48,5 @@ By default, an editable install to the user's modules folder will fail to import
 These addons I wrote auto add the modules folder to the site packages path on startup: 
 - [[Blender pip addon]]
 - [[Blender pip Qt addon]]
+
+[[Python packages editable install]]
