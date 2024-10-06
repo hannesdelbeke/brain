@@ -51,15 +51,15 @@ The env var is auto passed to `subprocess.run`
 [pass the ENV](https://stackoverflow.com/questions/2231227/python-subprocess-popen-with-a-modified-environment) to the subprocess
 passing the current env doesn't work `subprocess.run(command, env=os.environ.copy())`
 
-### ❔ `.pth` file
-untested [[pth]]
+### ❌ `.pth` file
+ [[pth]]
 #### pros
 - should fix the pip list issue not showing packages installed with `--target`
 - also will fix other issues e.g. with `pip install upgrade`
 #### cons
 - adding a `.pth` file  in `program files/blender` might need admin privilege
 - we have to manually recreate the env, instead of not worry about it and rely on blender for this
-- unsure if blender uses sitedir by default. 
+- blender doesn't use sitedir by default, see [[Blender doesn't support editable Python packages]]
 
 ### manually parsing env vars
 #### CON
