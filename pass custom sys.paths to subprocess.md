@@ -52,7 +52,7 @@ The env var is auto passed to `subprocess.run`
 passing the current env doesn't work `subprocess.run(command, env=os.environ.copy())`
 
 ### ❔ `.pth` file
-untested
+untested [[pth]]
 #### pros
 - should fix the pip list issue not showing packages installed with `--target`
 - also will fix other issues e.g. with `pip install upgrade`
