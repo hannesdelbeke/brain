@@ -1,6 +1,5 @@
 When using [[Python in Unreal]], you can add a python command to the [[menu]]. 
 
-
 It's a good practice to let the user launch your tool from  the Menu.
 If your command launches a window, avoid making a new menu group and place it under
 `Tools` or `Windows`.  If you have a collection of tools, consider making a submenu group instead of a new Menu in the main menu bar. e.g. `Tools/My Collection/The Tool
