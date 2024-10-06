@@ -18,4 +18,4 @@ painter.end()
 ```
 
 [[Python snippet]] for [[Qt]]
-[[Python stubs-]]
+[[Python stubs]]

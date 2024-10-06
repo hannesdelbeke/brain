@@ -12,4 +12,4 @@ pip install types-PySide2
 pip install types-substance_painter
 ```
 
-for maya see [[Maya console autocomplete]]
+for Maya see [[Maya console autocomplete]]
