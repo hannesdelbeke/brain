@@ -1,6 +1,6 @@
-By default, an editable install to the user's modules folder will fail to import in [[Blender]].
+You can [[Python packages editable install|editable install]] to the user's modules folder, but this will fail to import in [[Blender]].
 ## Why this happens
-1. an editable install installs a `.pth` in the modules folder.
+1. an editable install installs a [[pth|.pth]] in the modules folder.
 2. The modules folder is not in the sitedir path, so `.pth` files are not processed.
 3. The solution is to add the modules folder to the sitedir on Blender startup
    
