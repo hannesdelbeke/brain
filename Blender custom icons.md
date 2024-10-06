@@ -29,3 +29,5 @@ bpy.utils.previews.remove(preview_collection)  # delete preview to avoid warning
 ```
 
 Custom icon names are not included when we [[Blender print icon names]].
+
+[[Blender snippet]]

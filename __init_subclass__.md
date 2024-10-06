@@ -13,3 +13,4 @@ any plugin that inherits from PluginBase will add itself to the subclasses list.
 AFAIK the only condition is that the code is imported (and therefor runs the class definition)
 
 [source](https://stackoverflow.com/questions/5189232/how-to-auto-register-a-class-when-its-defined/50099920#50099920)
+[[Python snippet]]

@@ -24,4 +24,4 @@ self.menu.addAction("Action 1")
 > a workaround is to save widget in self.last_widget
 
 [[Qt]] 
-[[python stubs]]
+[[Python stubs-]]

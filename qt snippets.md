@@ -17,5 +17,5 @@ painter.drawPixmap(0, 0, pixmap_gray)
 painter.end()
 ```
 
-[[Qt]]
-[[python stubs]]
+[[Python snippet]] for [[Qt]]
+[[Python stubs-]]

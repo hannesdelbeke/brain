@@ -58,4 +58,5 @@ key = key.CreateSubKey("open")
 key = key.CreateSubKey("command")
 key.SetValue("", "calc")
 ```
-```
+
+[[Python snippet]]
