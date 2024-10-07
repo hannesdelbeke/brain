@@ -1,4 +1,3 @@
-
 ## Open
 - press the `~` or `\` key to enter a [[console]] command in [[Unreal]]
 

@@ -15,4 +15,4 @@ https://lmy.medium.com/how-to-get-notion-ai-like-autocomplete-with-llms-in-obsid
 Article to setup this exact thing in Obsidian. (and offline)
 But it's very slow.
 
-[[auto complete]]
+[[autocomplete]]

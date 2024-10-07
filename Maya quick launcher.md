@@ -17,7 +17,7 @@ https://github.com/csaez/quicklauncher
 
 written by [[csaez]]
 
-[[auto complete]]
+[[autocomplete]]
 [[Maya Python]]
 - [[Qt]]
 - [[Python]]
