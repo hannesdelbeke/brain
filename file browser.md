@@ -23,7 +23,7 @@ suggested features
 ## Blender
 - [[Blender]] has a [file browser](https://docs.blender.org/manual/en/latest/editors/file_browser.html), which is basic and similar to the experience in explorer.
 - Blender has an [asset browser](https://docs.blender.org/manual/en/latest/editors/asset_browser.html), which is slow. It needs to load all the `.blend` files to generate the thumbnails. And it requires assets to be marked as an asset in the blend file.
-- Various 3rd party asset browser addons exist, mostly as N-Panel feeling a bit clunky.
+- Various 3rd party asset browser addons exist, mostly as [[Blender  N-Panel|N-panel]] feeling a bit clunky.
 
 - The perfect asset manager would 
 	- support thumbnails for a huge amount of files, near instant.
