@@ -15,7 +15,7 @@ A puzzle game I developed on my own. I did all code, art, leveldesign and sounde
 - integration with the Kongregate API (achievements)
 - Tutorial system that can be easily set up per level
 - Recursively check adjacent tiles to detect connected colors ([[A-star search]]) 
-- Localized (translated) with the help of several people online
+- [[localization|Localized]] (translated) with the help of several people online
 - Positive reviews on Steam and Google Play
 - Dynamic UI changes with resolution (supports mobile, web and PC)
 ## next
