@@ -10,7 +10,7 @@ MVVM differs from MVP and MVC in the following ways:
 
 - Data Binding: MVVM heavily relies on [[data binding]], which establishes a connection between the View and ViewModel. This enables automatic synchronization of data changes between the two components.
 - Testability: MVVM allows for easier unit testing of the ViewModel, as it can be tested independently of the View by providing test data.
-- Dependency Injection: MVVM often incorporates dependency injection to provide loose coupling between components.
+- [[Dependency Injection]]: MVVM often incorporates dependency injection to provide loose coupling between components.
 - Separation of Concerns: MVVM emphasizes the separation of the UI logic (ViewModel) from the View, similar to MVP. However, MVVM takes it a step further by introducing data binding and promoting a more declarative approach to UI development.
 
 2. MVP (Model-View-Presenter): MVP divides an application into three main components:

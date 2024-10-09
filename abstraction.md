@@ -1,0 +1,7 @@
+---
+aliases:
+  - abstracting
+  - abstracted
+---
+
+[[programming]]

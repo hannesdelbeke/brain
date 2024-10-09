@@ -1,0 +1,4 @@
+---
+aliases:
+  - Amazon ECS
+---

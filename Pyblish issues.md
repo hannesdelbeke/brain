@@ -19,10 +19,15 @@ When you want to do more advanced stuff, it starts to feel limiting
 - [[Pyblish issue - inconsistent logic]]
 - [[Pyblish default plugins]]
 - [[Pyblish issue - warning vs error]]
-
+- a high [[cognitive load]] due to the complexity of the code. mix in support for old style plugins, and new style plugins resulting in nearly double code. Since both are still supported and used.
 ## Conclusion
+[[my progamming review]]
 The current issues make it hard to expand on Pyblish without hard forking it.
-And if you hard fork, you might as well start from scratch again. see [[pipeline as code]]
+And if you hard fork, you might as well start from scratch again. 
+
+Use Pyblish as is. Don't try to fix it, it's too complex.
+
+see [[pipeline as code]] for a hard fork.
 Some goals:
 - community plugins repo
 - explicit workflows / pipelines.
