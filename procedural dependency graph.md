@@ -15,7 +15,7 @@ PDG is designed to describe these dependencies visually using nodes that generat
 ## Pipeline Dependencies
 PDG can describe large parts of your pipeline to ensure that assets are being loaded, processed and saved out efficiently. 
 
-The fine-grained dependencies can ensure a minimum of compute upon a given change. The [[Houdini Task Operators|TOP node]]s can play a number of different roles that will replace manual work and scripts that can bog down a complex studio pipeline. You can even set up TOP networks that fetch other TOP networks to create multiple levels of abstraction within your pipeline.
+The fine-grained dependencies can ensure a minimum of compute upon a given change. The [[Houdini Task Operators|TOP node]]s can play a number of different roles that will replace manual work and scripts that can bog down a complex studio pipeline. You can even set up TOP networks that fetch other TOP networks to create multiple levels of [[abstraction]] within your pipeline.
 
 [[node editor]]
 
