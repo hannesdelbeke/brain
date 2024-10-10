@@ -7,7 +7,7 @@ Glasp seems great for taking notes, but not for importing in Obsidian.
 - no support to export notes
 	- No option to edit highlights in Obsidian, then export them back to Glasp to see them in the web.
 ## suggested
-The perfect workflow would have a plugin in Obsidian to auto sync notes. And support note editing in Obsidian.
+The [[perfection|perfect]] workflow would have a plugin in Obsidian to auto sync notes. And support note editing in Obsidian.
 
 PS: Glasp has daily Notion sync / export. Daily is too slow, and it's not clear if sync includes edits in Notion.
 

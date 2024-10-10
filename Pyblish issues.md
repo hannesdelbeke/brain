@@ -1,6 +1,6 @@
 Don't only focus on the cons, there are a lot of pros too: [[Pyblish pros]]
 
-Main issues
+#### Main issues
 - [[Pyblish issue - plugins are hardcoded to the project or studio]] preventing easy plugin reuse
 - Pyblish imports plugins but doesn't add their folder to the env
 	- this means plugins that import anything not setup in your env wont work
