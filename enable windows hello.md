@@ -1,4 +1,8 @@
-if [[Windows Hello]] is disabled on a work pc
+if [[Windows Hello]] is disabled on a pc
+
+
+> [!warning] 
+> missing instructions
 
 1. enable pin [source](https://superuser.com/questions/1113638/cant-enable-windows-hello-some-settings-are-managed-by-your-organization)
 	restart PC
