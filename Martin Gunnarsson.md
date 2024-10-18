@@ -1,5 +1,5 @@
 A freelance Rigging TD
-Located in Portugal
+Located in [[Portugal]]
 
 created 
 - [[Maya Cosmos]]
