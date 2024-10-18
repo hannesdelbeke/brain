@@ -15,5 +15,4 @@ Most decent shoes I owned didn't had this issue.
 	- but it looks on first sight to be made out of 2 different sole materials. On closer look it looks the same but painted.
 	- these are very well threaded, yet are still slippy.
 
-
 mentions of Vibram Arctic Grip being good, but not lasting long?
