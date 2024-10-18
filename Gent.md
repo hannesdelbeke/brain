@@ -2,4 +2,4 @@
 aliases:
   - Ghent
 ---
-[[Belgium-]]
+[[Belgium]]
