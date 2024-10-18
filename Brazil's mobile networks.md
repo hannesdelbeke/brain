@@ -1,0 +1,1 @@
+[[Brazil]]'s mobile networks use cellular technology, such as [[Global System for Mobile Communications|GSM]], [[Code-Division Multiple Access|CDMA]], and [[Advanced Mobile Phone System|AMPS]] (analog)

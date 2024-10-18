@@ -7,5 +7,5 @@ De verschillende vaccins worden wel op verschillende plaatsen op het lichaam toe
 
 https://www.vaxinfopro.be/spip.php?rubrique44&lang=nl
 
-[[Belgium-]]
+[[Belgium]]
 [[vaccinations]]
