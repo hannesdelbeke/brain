@@ -1,3 +1,8 @@
+---
+aliases:
+  - Maya plugins
+---
+
 [[Autodesk Maya|Maya]] plugins are quite modular
 ## Pros
 - Plugins manage their own startup code, allowing you to avoid using `userSetup.py`, which always runs on startup.
