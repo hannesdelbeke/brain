@@ -13,9 +13,8 @@
 	- Search GameObjects on Active Scenes
 	- 💖Execute Menu
 	- Support Asset Dragging
-
 ### toolbars in unity
-toolbars are more limited, since limited space, and require customization per user
+toolbars are more limited, since there's limited space on the screen and require customization per user
 samples:
 - 6y sample toolbar, not generic [[Unity project-settings-toolbar]]
 - 2y custom toolbar in unity. could use this to add a search bar for tools, assets, ... https://github.com/marijnz/unity-toolbar-extender

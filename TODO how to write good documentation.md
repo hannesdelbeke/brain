@@ -1,4 +1,4 @@
-- keep it short and simple 
+- [[keep it simple]] 
 	  TODO link to writing tips 
 - assume the user knows nothing
 - provide API/code documentation for developers if relevant

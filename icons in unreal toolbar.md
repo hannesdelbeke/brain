@@ -33,3 +33,5 @@ def create_script_editor_button():
 
 ### references
 code: [unreal python plugin template](https://github.com/hannesdelbeke/unreal-python-plugin-template/blob/main/MyPlugin/Content/Python/init_unreal.py)
+
+[[Unreal toolbar]]
