@@ -1,5 +1,5 @@
 great at keeping the heat out in summer
-often used for shop fronts, rare use for residential in the UK.
+often used for a [[shopfront]], rarely used for residential in the UK.
 
 [[planning permission]] is required for the installation of external grilles or shutters.
 Permission is not needed for internal shutters
