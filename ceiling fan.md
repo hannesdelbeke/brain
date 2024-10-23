@@ -1,4 +1,3 @@
-
 ### Pros
 - A ceiling fan is **quieter** than a portable fan. The bigger blades move the same amount of air with a slower rotation.
 - A cleaner look, integrated in the room
