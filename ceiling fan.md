@@ -9,7 +9,6 @@
 
 required an electrical box to house the motor.
 if you replace a light and no electrical box exist, you can use a saf-t brace, or a fan rated pancake box.
-
 ### Energy usage
 DC fans use less power than AC fans.
 AC fans use less power than [[air conditioning]], resulting in energy savings over summer.
