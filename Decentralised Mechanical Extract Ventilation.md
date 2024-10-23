@@ -12,3 +12,4 @@ It's [[decentralized]], each room with a dMEV has it's own fan & motor.
 
 [[ductless]]
 [[ventilation]]
+[[fan]]
