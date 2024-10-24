@@ -68,3 +68,5 @@ for menu in cmds.window(mel.eval('$temp1=$gMainWindow'), q=True, ma=True):
     for item in cmds.menu(menu, q=True, ia=True) or []:
         menu_items_and_their_commands[menu][item] = cmds.menuItem(item, q=True, c=True)
 ```
+
+[[Maya menu]]
