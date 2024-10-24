@@ -18,3 +18,4 @@ camera
 4K
 
 [[hardware]]
+[[Dell Technologies|Dell]]

@@ -22,3 +22,5 @@ if exist %path%\* (
 )
 pause
 ```
+
+[[Amazon]]

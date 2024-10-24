@@ -16,3 +16,4 @@ leather on ear pads needs replacing
 - buy new earpads
 
 [[hardware]]
+[[SteelSeries]]

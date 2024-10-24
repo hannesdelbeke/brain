@@ -1,0 +1,5 @@
+---
+aliases:
+  - HP
+---
+[[consumer electronics]]

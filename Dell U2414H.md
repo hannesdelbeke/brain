@@ -1,4 +1,4 @@
-[[monitor]], [[hardware]]
+[[monitor]], [[hardware]] [[Dell Technologies]]
 
 back
 - 2 x [[USB]] (-OUT) downstream port
