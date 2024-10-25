@@ -8,9 +8,9 @@ Solar gain is great in the winter, heating up your house for free.
 ## Prevention
 Once the heat is in, it won't easily leave the house. So the best prevention is to stop it outside with [[external shades]]. Or with the shade of a [[tree]].
 
-Research on London flats by the BBSA:
-Rooms with internal blinds reduced operative temperatures by 8-13ºC 
-Rooms with external blinds reduced operative temperatures by 12-18ºC
+Research on London flats by the [[BBSA]]: (BIASED)
+- Rooms with internal blinds reduced operative temperatures by 8-13ºC 
+- Rooms with external blinds reduced operative temperatures by 12-18ºC
 
 [[window]]
 [[heating]]
