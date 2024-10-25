@@ -5,6 +5,8 @@ It's recommended to have a [[Mechanical Ventilation with Heat Recovery|MVHR]]
 
 
 ## Overheating
+[[solar gain through windows]]
+
 Keep heat out, instead of cooling down your house.
 
 [[external shades]] for any room with direct sunlight.
