@@ -1,2 +1,2 @@
-- Passive House does have some strict criteria for performance whereas Passive Solar has only principles
+- [[Passive House]] has strict criteria for performance, Passive Solar has only principles
 - In contrast to Passive Solar buildings, a Passive House building considers the sun to be just one source of heating. Heat is also conserved from internal appliances (e.g. TV, refrigerator, hot water, etc.), and any warmth in stale air is also recovered.
