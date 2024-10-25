@@ -4,7 +4,7 @@ aliases:
 ---
 side tracks ensure your [[roller shutters|roller blinds]] don't let air or light through.
 - better blackout for sleep
-- better insulation
+- better [[insulation]]
 
 DIY with PVC L-shaped or U shaped.
 or buy it
