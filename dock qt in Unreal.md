@@ -4,7 +4,7 @@ parenting is.
 ## possible workaround
 [[Unreal]] supports dockable slate widgets.
 can we make a slate widget that passes it's coords to QT
-and QT draws a window on top in the same coordinates?
+and QT draws a [[window]] on top in the same coordinates?
 when we move it, it moves with it.
 - challenge would be to avoid a move loop. e.g. only move & resize if different. but in both directions
 
