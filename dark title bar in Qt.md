@@ -1,6 +1,6 @@
 Get [[dark mode]] on your title bars, e.g. in [[Autodesk Maya|Maya]]
 ## All apps
-Works on [[Windows 11]] & [[Windows 10-]]
+Works on [[Windows 11]] & [[Windows 10]]
 Windows now has this build in.
 1. Personalization > Colors 
 2. choose your mode : select `Dark` from the drop-down 
@@ -8,7 +8,7 @@ Windows now has this build in.
 4. Toggle show accent color on Title bars.
 all your toolbars are now dark mode. ⚠️ `seems to only apply to the active toolbar`
 ## Single app
-Works on [[Windows 11]] & [[Windows 10-]]
+Works on [[Windows 11]] & [[Windows 10]]
 1. right click the app icon 
 2. open properties 
 3. in the target, add ` -platform windows:darkmode=1`
