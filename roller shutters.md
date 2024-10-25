@@ -18,3 +18,4 @@ UK dealers
 - https://rollershutter.co.uk/ Manchester manufacturer & installer
 
 [[external shades]]
+[[blinds]]
