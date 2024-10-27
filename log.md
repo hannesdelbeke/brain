@@ -1,0 +1,5 @@
+---
+aliases:
+  - log file
+  - logs
+---
