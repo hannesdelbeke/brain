@@ -3,3 +3,5 @@ the last selected [[GameObject]] stays active in the inspector.
 this also means that on selection changed code wont run.
 
 if the project tab is in 1 panel mode the inspector does update.
+
+[[Unity inspector notes for folders]]
