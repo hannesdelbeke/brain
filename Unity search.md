@@ -5,7 +5,7 @@ aliases:
 ---
 [[Unity]] ships with a default search tool.  
 in the project Tab, next to the search bar there's an expand icon.
-You can search assets, gameobjects in your open scene,  menu commands, and settings.
+You can search assets, [[GameObject|gameobjects]] in your open scene,  menu commands, and settings.
 
 ![](https://docs.unity3d.com/uploads/Main/search-profile-package.png)
 

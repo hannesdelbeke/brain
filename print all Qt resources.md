@@ -82,7 +82,7 @@ if new_app:
     app.exec_()
 ```
 
-this displays the resource path when you hover over the icon.
+this displays the resource path when you hover over the icon in a [[tooltip]]
 however you can also access these paths through `QStyle` 
 
 code for a folder 📁 icon

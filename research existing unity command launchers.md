@@ -5,7 +5,7 @@
 	- browse assets & scenes
 - dead 7y  [project](https://github.com/DarrenTsung/DTCommandPalette), good example of tool browser
 	- Open Scenes
-	- Select GameObjects in the Scene
+	- Select [[GameObject|gameobjects]] in the Scene
 	- Open Prefabs into a sandbox scene (requires [PrefabSandbox](https://github.com/DarrenTsung/DTPrefabSandbox))
 	- 💖Run commands (any method with `[MethodCommand]` attribute can be run)
 - dead 7y https://github.com/appetizermonster/Unity3D-QuickSearch
