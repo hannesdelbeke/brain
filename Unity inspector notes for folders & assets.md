@@ -1,11 +1,9 @@
-I wrote a tool to add notes to folders in the [[Unity inspector]].
+I wrote a tool to add notes to folders & assets in the [[Unity inspector]].
 https://github.com/hannesdelbeke/unity-folder-notes
 
 The notes live in the folder's [[metadata]].
 This seems like a clean solution, but it will clash with any tools using [[Unity userdata]]
 I'm not sure how common that is.
-
-
 
 # todo
 - [ ] support [[Unity search]].  
