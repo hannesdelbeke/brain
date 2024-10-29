@@ -4,15 +4,16 @@ might be useful to link [[Obsidian]] to unity.
 create some kind of living documentation during gamedev
 
 explore this project 
-- [[Unity inspector notes for folders]]
+- [[Unity inspector notes for folders & assets]]
 - [[Unity - add notes to gameobjects]]
 - https://github.com/plyoung/EdNotes better integrated in UI, supports color tags.
+	- recent [fork](https://github.com/mhardy/EdNotes) adds inspector support
 - https://github.com/rstecca/UNotes ugly colors
 - https://github.com/sverdegd/NotepadToolUnity ugly colors
 - https://github.com/wataru-ito/AssetMessenger custom popup, feels clunky
 
 ## features
-- [x] write notes on folders [[Unity inspector notes for folders]]
+- [x] write notes on folders [[Unity inspector notes for folders & assets]]
 - [ ] write notes on assets  [[Unity - add notes to gameobjects]]
 - [ ] support URLs
 	- [ ] optional support wikilinks
