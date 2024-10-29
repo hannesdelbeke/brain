@@ -1,0 +1,6 @@
+---
+aliases:
+  - inspector
+---
+
+[[Unity]]
