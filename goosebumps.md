@@ -1,0 +1,1 @@
+a reaction to intense [[emotional]] feelings, or cold temperature.
