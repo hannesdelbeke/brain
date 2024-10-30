@@ -1,2 +1,3 @@
 [[watersport]]
 [[outdoor sport]]
+[[paddle]]
