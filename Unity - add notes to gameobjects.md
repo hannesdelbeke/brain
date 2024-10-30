@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Attach this script to any gameObject for which you want to put a note.
 /// </summary>
-public class ThisIsComment : MonoBehaviour
+public class Comment : MonoBehaviour
 {
     [TextArea]
     public string Notes = "";
@@ -20,6 +20,8 @@ public class ThisIsComment : MonoBehaviour
 }
 ```
 2. Attach this script to all of the gameObjects to which you want to add note (you can drag this script to the gameObjects or to use "Add Component" button in the corresponding Inspector window). Here is an example:
+
+in [[Unity search]] you can search `t:comment`
 
 great for [[documentation]]
 
