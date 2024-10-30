@@ -5,3 +5,4 @@ aliases:
 ---
 [[watersport]]
 [[outdoor sport]]
+[[paddle]]
