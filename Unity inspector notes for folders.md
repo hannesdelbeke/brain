@@ -1,6 +1,9 @@
 I wrote a tool to add notes to folders in unity.
 https://github.com/hannesdelbeke/unity-folder-notes
 
+> [!warning]
+> only works in 1 panel mode.
+> - [ ] find a fix for 2 panel mode.
 # todo
 support [[URL]], [[wikilink]], [[Markdown]]
 ## alternatives
