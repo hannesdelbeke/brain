@@ -16,5 +16,8 @@ ideal would be
 - github [repo](https://github.com/creativitRy/UnityProjectBrowserHistory) back & forward button 2018, only works in 2 panel mode
 - github [repo](https://github.com/garettbass/UnityExtensions.SelectionHistory) selection back & forward commands (2019)
 	- adds to menu, mouse, and buttons. includes nice documentation
+	- [report](https://github.com/garettbass/UnityExtensions.SelectionHistory/issues/2) of some code issues 
+- github [repo](https://github.com/wappenull/unity-cutcopypaste-nav) for a [[Unity tool]] with navigation: back&  forward, and up & down folder.
+  Tested & works
 
 [[UX]]
