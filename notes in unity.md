@@ -1,4 +1,4 @@
-create [[note taking|notes]] in [[Unity]]
+create [[note taking|notes]] in [[Unity]], e.g. for [[documentation]]
 
 might be useful to link [[Obsidian]] to unity.
 create some kind of living documentation during gamedev
@@ -8,3 +8,7 @@ explore this project
 - https://github.com/sverdegd/NotepadToolUnity
 - https://github.com/wataru-ito/AssetMessenger
 - https://github.com/plyoung/EdNotes
+
+see [[Unity inspector notes for folders]]
+[[Unity - add notes to gameobjects]]
+
