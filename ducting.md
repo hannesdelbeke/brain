@@ -16,7 +16,7 @@ circular ducting
 - tighter seal
 - less friction
 - cheaper & faster to install
-- not efficient for low pressure
+- not efficient for low [[pressure - physics|pressure]]
 
 rectangular ducting
 - less high
