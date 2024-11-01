@@ -2,7 +2,7 @@ Remember plugin minimalism, less is more.
 Don't spend more time on notes than work.
 
 ### I want this!
-- [ ] [[obsidian git backup can fail]]
+- [ ] fix to prevent [[obsidian git backup can fail]]
 - [ ] [[Obsidian web integration]] would allow for community growth
 - [ ] use obsidian with separated streams of notes / submodules (submodule have issues)
 	exclude download of some folders to your pc. e.g. personal / work
@@ -53,7 +53,7 @@ my own workflow improvements, not related to obsidian
 - [x] open web URLs in obsidian tab.  https://github.com/MamoruDS/obsidian-open-link-with
 - [x] [[Obsidian quick move]] the current note to a folder
 - [x] [[Obsidian distinguish internal & external links]]
-- [ ] CSV viewer , checkout this https://github.com/zds-dev/csv-obsidian
+- [ ] [[Obsidian - support CSV]]
 
 ### dropped
 dropped notes because not important
