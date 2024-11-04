@@ -1,4 +1,5 @@
 ---
 aliases:
   - IR
+  - infra red
 ---
