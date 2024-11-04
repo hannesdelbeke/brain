@@ -1,4 +1,20 @@
 schedule [[Monitorian]] to auto set brightness at certain times
+
+this is not working the command has an error
+```
+powershell.exe -Command Start-Process Monitorian.exe -ArgumentList "/set 20"
+Start-Process : A positional parameter cannot be found that accepts argument '20'.
+At line:1 char:1
++ Start-Process Monitorian.exe -ArgumentList /set 20
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Start-Process], ParameterBindingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.StartProcessCommand
+```
+but running this manually works
+```batch
+Monitorian.exe /set 10
+```
+
 ## Windows
 - Save this powershell script, and run it on [[Windows 10]].
 - Run with bypass executionpolicy to avoid the script not running:
