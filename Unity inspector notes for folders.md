@@ -10,3 +10,4 @@ consider adding a custom inspector for this.
 this can also be achieved with a gameobject in each folder. and [[Unity - add notes to gameobjects]]
 
 [[Unity tool]]
+[[my projects]]
