@@ -1,6 +1,9 @@
 
 ## devices
 
+this guide is kept up to date https://www.digitalcameraworld.com/buying-guides/best-thermal-imaging-camera
+
+
 | Title                            | Price Entries                                         | Resolution | Review Links and Notes                                                                                                    |
 | -------------------------------- | ----------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
 | FLIR Lepton-sporting tCam-Mini   | -                                                     | 160 x 120  | [review](https://hackaday.com/2021/07/27/hand-on-review-tcam-mini-wifi-thermal-imager/)                                   |
