@@ -1,1 +1,1 @@
-owned by [[tencent]]
+owned by [[Tencent]]

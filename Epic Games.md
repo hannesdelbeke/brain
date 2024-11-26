@@ -1,3 +1,3 @@
-partially owned by [[tencent]]
+partially owned by [[Tencent]]
 
 epic game store competes with [[Steam]] and Apple's app store
