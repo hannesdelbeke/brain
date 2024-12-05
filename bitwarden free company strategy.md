@@ -8,4 +8,4 @@ But you can make multiple accounts, and invite yourself as a non admin member to
 - invite your private account to the work organisation
 ### result
 - you now can access all your passwords from 1 master account, and  they are organised by organisation.
-- And on your work pc, you can log in with just your work Bitwarden. this ensures any company monitoring, never can access your private passwords.
+- And on your [[work pc]], you can log in with just your work Bitwarden. this ensures any company monitoring, never can access your private passwords.
