@@ -1,3 +1,5 @@
+rented one for lake district trip
+
 pros
 - great driving and auto assist.
 - feels sporty
@@ -9,6 +11,13 @@ cons
 - louder inside than [[Tesla]], quieter than a [[internal combustion engines|ICE]]
 
 Biggest con was how often i had to charge, and charge was slow.
+
+driving in the UK took some getting used too.
+Those national speed limit signs are weird.
+- **Motorways and dual carriageways**: 70 mph
+- **Single carriageways**: 60 mph
+- **Built-up areas**: 30 mph
+blue sign with red cross is no stopping sign
 
 [[car]]
 [[electric vehicle|EV]]
