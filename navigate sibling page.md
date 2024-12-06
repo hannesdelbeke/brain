@@ -49,6 +49,8 @@ The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-materi
 > - popular [thread](https://forum.obsidian.md/t/iterate-through-files-in-the-file-sidebar-with-keyboard/629/60) requesting this
 > - [quick explorer](https://github.com/pjeby/quick-explorer) plugin adds hotkeys for this feature. But no visual preview.
 
-#PKM #UX #browser #navigation
-
 [[Obsidian plugin]]
+[[navigation]]
+[[browser]]
+[[UX]]
+[[personal knowledge management|PKM]]
