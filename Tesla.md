@@ -14,3 +14,5 @@ Cars build from Jan 22- Sep 22 are the unicorn cars. They were the best 3 made, 
 Heat pump. Ryzen Chip, dual pane front glass and kept 
 USS. 21 cars didnt have ryzen and many didnt have dual pane glass. 
 23 cars have no USS.
+
+cars registered in December were the earliest ones to have the heat pump. To be sure, you need the black door handles & window trim and updated interior.
