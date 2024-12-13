@@ -1,4 +1,7 @@
-### Intro
+### TLDR
+Users cant install local UPM packages without being in conflict with source control.
+Forcing all tools (packages) to be installed in the project, instead of a single local install.
+### Context
 [[Unity]] loads the [[UPM project manifest]] to decide which packages to download and install.
 If you use source control for your project (e.g. [[git]]), your manifest will be included, and any local changes show up in git as changes to submit.
 Whenever you pull an update or change branch, and there was a change to the project manifest, a merge conflict will occur.
@@ -11,7 +14,7 @@ A better approach is to only install what you need. This reduces install time, a
 Otherwise non-dev teams won't be allowed to submit their own tools without slow reviews from the dev team, in fear of breaking the project for everyone. 
 
 ### Challenge
-The challenge is to still allow pulling changes in the manifest while maintaining local changes. A basic merge is not sufficient usually, and requires to much technical knowledge, so can't be used by e.g. artists.
+The challenge is to still allow pulling changes in the manifest while maintaining local changes. A basic merge is not sufficient usually, requiring technical knowledge, so can't be used by e.g. artists.
 ### Proposal
 Create a local package that adds other local packages
 https://docs.unity3d.com/Manual/upm-localpath.html
