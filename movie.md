@@ -1,0 +1,8 @@
+---
+aliases:
+  - movies
+---
+
+
+[[hobby]]
+[[entertainment]]

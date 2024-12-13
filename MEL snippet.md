@@ -1,1 +1,2 @@
 [[Maya MEL]]
+[[snippet]]
