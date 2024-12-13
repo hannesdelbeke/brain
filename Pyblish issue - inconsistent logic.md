@@ -1,3 +1,6 @@
+---
+views: 2
+---
 #### Pyblish inconsistent logic
 Some of the core logic is flawed IMO:
  - actions are not directly aware of the plugins/instances they belong too
@@ -12,3 +15,6 @@ Some of the core logic is flawed IMO:
 [[Pyblish issue - warning vs error]]
 warning and error are 2 different types of data. no easy way to swap a task from soft to hard fail.
 warning lives in the log, error is an exception.
+
+[[inconsistent]]
+[[inconsistent UX]]
