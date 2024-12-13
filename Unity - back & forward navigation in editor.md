@@ -25,3 +25,5 @@ forum [thread](https://discussions.unity.com/t/feature-request-history-favorites
 - lists various solutions
 - most solutions don't handle multi selection
 - [official feature request](https://portal.productboard.com/ca1chnbwvzw1eg5yjc5rijnj/c/393-selection-logger) is now marked as released
+
+this feature is a great example of a [[Unity local manifest issue|local tool]]
