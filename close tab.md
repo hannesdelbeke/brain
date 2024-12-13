@@ -1,5 +1,5 @@
 ---
-views: 2
+views: 4
 aliases:
   - close a tab
 ---
