@@ -1,7 +1,7 @@
 ## research existing unity command launchers
 ### keystroke launchers / command pallettes
 [[keystroke launcher]]
-- [[Unity editor spotlight]] ARCHIVED
+- [[ARCHIVED - Unity editor spotlight]] ARCHIVED
 	- browse assets & scenes
 - dead 7y  [project](https://github.com/DarrenTsung/DTCommandPalette), good example of tool browser
 	- Open Scenes

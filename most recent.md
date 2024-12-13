@@ -7,3 +7,4 @@ Apps like [[Chrome]] and [[Obsidian]] have features
 - show the most recent page at the top of autocomplete when linking, or searching.
 
 [[optimized cache sorting]]
+[[UX]]
