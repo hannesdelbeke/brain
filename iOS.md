@@ -1,1 +1,1 @@
-[[mobile phone]]
+[[phone]]
