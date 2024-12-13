@@ -28,7 +28,7 @@ Since a 5kwh battery lasts half a day, mid day off peak time could fully charge 
 > 
 > API needs
 > - tesla control
-> - [[sunsynk]] control
+> - [[SunSynk]] control
 > - octopus read and likely control (enable smart)
 > 	- might be able to stop charger through monta or ev sync app
 
