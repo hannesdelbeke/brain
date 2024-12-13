@@ -3,5 +3,5 @@ aliases:
   - CPI
 ---
 
-[[mobile phone]]
+[[phone]]
 [[analytics]]

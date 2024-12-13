@@ -7,5 +7,5 @@ aliases:
 [[Google]]
 [[social]]
 [[people]]
-[[mobile phone|phone]]
+[[phone|phone]]
 [[email]]
