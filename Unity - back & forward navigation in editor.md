@@ -1,8 +1,9 @@
 
 atm [[Unity]] doesn't support the go back button on the mouse to navigate selection
 
-best workaround [[unity-cutcopypaste-nav]]
-
+current best workaround: 
+https://github.com/BedtimeDigitalGames/Unity-Editor-History
+supports mouse back & forward 
 
 > [!NOTE]- other solutions
 > - [request](https://discussions.unity.com/t/will-unity-editor-ever-have-a-back-button/1522767) on forum for back button (2024)
@@ -12,9 +13,15 @@ best workaround [[unity-cutcopypaste-nav]]
 > - github [repo](https://github.com/garettbass/UnityExtensions.SelectionHistory) selection back & forward commands (2019)
 > 	- adds to menu, mouse, and buttons. includes nice documentation
 > 	- [report](https://github.com/garettbass/UnityExtensions.SelectionHistory/issues/2) of some code issues 
-> third party [repo](https://github.com/acoppes/unity-history-window), no mouse navigation, but a editor window 
-> - select asset (this is added to the selection history tab)
-> - go to the selection history tab and  select the previous asset
+> - third party [repo](https://github.com/acoppes/unity-history-window), no mouse navigation, but a editor window 
+> 	- select asset (this is added to the selection history tab)
+> 	- go to the selection history tab and  select the previous asset
+> -  [[unity-cutcopypaste-nav]]
 
 [[UX]]
 [[most recent]]
+
+forum [thread](https://discussions.unity.com/t/feature-request-history-favorites/883569/2) from ex Unity dev.
+- lists various solutions
+- most solutions don't handle multi selection
+- [official feature request](https://portal.productboard.com/ca1chnbwvzw1eg5yjc5rijnj/c/393-selection-logger) is now marked as released
