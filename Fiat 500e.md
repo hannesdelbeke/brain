@@ -21,3 +21,4 @@ blue sign with red cross is no stopping sign
 
 [[car]]
 [[electric vehicle|EV]]
+[[car model]]
