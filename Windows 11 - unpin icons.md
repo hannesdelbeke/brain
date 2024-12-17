@@ -7,4 +7,4 @@ REG DELETE HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband /F
 taskkill /F /IM explorer.exe & start explorer
 ```
 
-don't confuse with [[unpin start menu icons win 11]]
+don't confuse with [[Windows 11 - unpin start menu icons]]

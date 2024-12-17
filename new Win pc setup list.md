@@ -2,7 +2,7 @@
 	- [ ] [[Monitorian]]
 - [ ] [[check ssh github connection]]
 - [ ] [[Barrier]]
-- [ ] [[unpin start menu icons win 11]]
+- [ ] [[Windows 11 - unpin start menu icons]]
 - [ ] [[windows dark theme]]
 - [ ] Windows/Personalization/start: show most used apps
 - [ ] windows update all
