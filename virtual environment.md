@@ -4,3 +4,5 @@ aliases:
   - virtual env
 ---
 a venv in [[Python]]
+
+[[virtual]]
