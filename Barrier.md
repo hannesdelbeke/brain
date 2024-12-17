@@ -34,4 +34,7 @@ winget upgrade barrier
 If you use a pc with VPN, barrier won't work.
 But you can connect first to barrier, and then the VPN. And your barrier connection should stay active without the VPN
 
+### Barrier stops when asking admin permission
+in Barrier's settings, change elevated from `as needed`(default) to `always`.
+
 [[virtual solution]]
