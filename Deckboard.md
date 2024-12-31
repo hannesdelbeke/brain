@@ -1,4 +1,4 @@
-Deckboard helps you turns your Android/iOS devices into an overpowered [[macro]] pad for your PC
+Deckboard helps you turns your [[Android]]/[[iOS]] devices into an overpowered [[macro]] pad for your PC
 
 [Free Download](https://www.deckboard.app/#download)
 
