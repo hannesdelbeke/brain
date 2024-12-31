@@ -1,4 +1,4 @@
-Deckboard helps you turns your [[Android]]/[[iOS]] devices into an overpowered [[macro]] pad for your PC
+Deckboard: click buttons on your [[mobile]] device to run [[action]] on your PC
 
 [Free Download](https://www.deckboard.app/#download)
 
@@ -27,3 +27,5 @@ Your created macro blocks will be displayed and ready to launched from your devi
 - OBS studio
 - ...
 various plugins
+
+[[macro]]
