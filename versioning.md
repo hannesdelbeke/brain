@@ -1,3 +1,8 @@
+---
+aliases:
+  - version
+---
+
 Handling multiple versions of something, 
 often used in [[software development]] with [[dependencies]].
 
