@@ -21,7 +21,7 @@ Your created macro blocks will be displayed and ready to launched from your devi
 - run program
 - open file/folder
 - open URL
-- [[twitch]]
+- twitch
 - voicemod
 - streamlabs desktop
 - OBS studio
