@@ -2,7 +2,7 @@ some kind of toxic thing. lol
 ## Increasing factors
 Endotoxin concentrations increased with 
 - children or more occupants 
-- dogs
+- [[dog]]
 - lower educational attainment
 - living in poverty
 - observed food debris

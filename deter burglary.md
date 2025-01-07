@@ -7,7 +7,7 @@
 - add a little bell to a garden / back door.
 - your house is only as strong as your weakest door.
 	- ensure people can't enter your garage
-- show that you have a dog (even if you don't)
+- show that you have a [[dog]] (even if you don't)
 	- [ ] please close the gate so the dog wont get out sign feels less fake than beware of the dog signs
 	- dog bowl in garden visible from street
 - keep radio, tv and light on when away. e.g. with timer.
