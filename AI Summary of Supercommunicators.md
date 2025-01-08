@@ -1,6 +1,8 @@
-source https://www.linkedin.com/pulse/useful-concise-summary-supercommunicators-charles-matt-hutson-m-ed-wc2rc/
 
-this summary reads like it's been written by chatGPT. it lacks character and examples.
+> [!NOTE]
+> this summary reads like it's been written by chatGPT. it lacks character and examples.
+> [source](https://www.linkedin.com/pulse/useful-concise-summary-supercommunicators-charles-matt-hutson-m-ed-wc2rc/) 
+
 ### Opening:
 
 In "Supercommunicators," Charles Duhigg sets the stage by illustrating the power of effective communication through the story of Felix, an FBI negotiator. Felix's ability to establish rapport and create a comfortable environment for conversation is highlighted, emphasizing the importance of matching and synchronizing with others during communication. The principle of asking questions, mirroring emotions, and fostering connection forms the foundation of supercommunication.
