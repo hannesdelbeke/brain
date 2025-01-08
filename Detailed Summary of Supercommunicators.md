@@ -1,11 +1,16 @@
 source https://www.linkedin.com/pulse/useful-concise-summary-supercommunicators-charles-matt-hutson-m-ed-wc2rc/
+
+this summary reads like it's been written by chatGPT. it lacks character and examples.
 ### Opening:
 
 In "Supercommunicators," Charles Duhigg sets the stage by illustrating the power of effective communication through the story of Felix, an FBI negotiator. Felix's ability to establish rapport and create a comfortable environment for conversation is highlighted, emphasizing the importance of matching and synchronizing with others during communication. The principle of asking questions, mirroring emotions, and fostering connection forms the foundation of supercommunication.
 
 ### The Matching Principle:
 
-Synchronization with others, including body language, eye contact, and vocal tone, is key to successful communication. Supercommunicators excel in asking questions and matching the emotional tone of others, fostering a sense of connection and chemistry. The art of asking questions, particularly in group settings, enables deeper understanding and engagement.
+Synchronization with others, including body language, eye contact, and vocal tone, is key to successful communication. Supercommunicators excel in 
+- asking questions 
+- matching the emotional tone of others
+fostering a sense of connection and chemistry. The art of asking questions, particularly in group settings, enables deeper understanding and engagement.
 
 ### Every Conversation is a Negotiation:
 
