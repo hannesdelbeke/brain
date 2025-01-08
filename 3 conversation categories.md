@@ -1,4 +1,4 @@
-From the book [[supercommunicators]]
+From the book [[Supercommunicators - How to Unlock the Secret Language of Connection]]
 
 - **How do we feel?** 
   If someone speaks about their feelings, share your feelings instead of giving advice.

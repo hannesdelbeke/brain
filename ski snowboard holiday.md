@@ -1,6 +1,6 @@
 If you want cheap, look at Borovets or Bansko in Bulgaria.
 
-[[snowboard]]
+[[snowboarding]]
 
 Check out UCPA and Snowexpress.
 UCPA is a non profit in France. [https://www.ucpa.co.uk](https://www.ucpa.co.uk/). They don’t offer travel. Hostel style accommodation.
