@@ -1,1 +1,6 @@
+---
+aliases:
+  - batteries
+---
+
 [[electricity]]
