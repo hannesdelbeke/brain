@@ -14,3 +14,4 @@ cons
 [Free Download](https://www.deckboard.app/#download)
 [video](https://www.youtube.com/watch?v=nD3WWfDRfKg) on use
 
+similar to [[WebDeck]] & [[stream deck]]
