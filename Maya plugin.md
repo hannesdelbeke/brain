@@ -19,7 +19,7 @@ Maya plugins don't support:
 You could instead use a [[Maya module]] to [[vendoring|vendor]] multiple Maya plugins or python packages.
 
 ## Notes
-- Since plugins are not importable, they live in their own namespace, and can have the same name as a importable Python module
+- Since plugins are not importable, they live in their own [[namespace]], and can have the same name as a importable Python module
 - Maya plugin path is not added to sys.path
 - invalid plugins without a init plugin method still show up in the plugin manager
 - You could release 1 plugin, and 1 folder to the plugin path. And then edit `sys.path` to import the folder. But you might as well put that folder in `scripts` instead.
