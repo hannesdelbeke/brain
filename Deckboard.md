@@ -5,6 +5,7 @@ Deckboard is not open source, but there is a free version with limited grid.
 pros
 - tested it out it's very straightforward to use, works well. super easy to install
 - runs over WiFi, LAN or USB
+- very smooth and feels instantaneous
 
 cons
 - needs to reconnect when pc shuts down
