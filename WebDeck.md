@@ -1,6 +1,9 @@
 macro buttons to control your pc from a browser, e.g. on a mobile device.
 similar to [[stream deck]]
 
+> [!warning]
+> can't get to work
+
 PROS
 - works in browser
 - open source & free
