@@ -1,0 +1,7 @@
+- [[Odin validator]] has nice UI
+- [OmniShade asset validator](https://assetstore.unity.com/packages/tools/utilities/asset-validator-271338?) - free, but UI not intuitive
+- package validation suite.
+	- older version had a nice validation tab, [see](https://docs.unity3d.com/Packages/com.unity.package-validation-suite@0.20/manual/index.html)
+	- newer version seems console text only, [see](https://docs.unity3d.com/Packages/com.unity.package-validation-suite@0.78/manual/index.html)
+	- only designed for validating packages, not assets. unknown if easy to repurpose.
+- [[Unity asset store validator]] has nice UI
