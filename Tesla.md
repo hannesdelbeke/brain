@@ -16,3 +16,5 @@ USS. 21 cars didnt have ryzen and many didnt have dual pane glass.
 23 cars have no USS.
 
 cars registered in December were the earliest ones to have the heat pump. To be sure, you need the black door handles & window trim and updated interior.
+
+spreadsheet cost research https://docs.google.com/spreadsheets/d/1mAGN_FmzZlpWwOY6Ss5ZM3HpD6lktuqNvE3LQ5YxZeA/edit?gid=0#gid=0
