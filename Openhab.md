@@ -1,0 +1,1 @@
+A central [[smart home]] system, similar to [[Home Assistant]] (most users seem to prefer HA)
