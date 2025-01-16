@@ -1,0 +1,2 @@
+- [guide](https://www.reddit.com/r/homeassistant/comments/fdrcz0/how_to_install_valetudo_re_on_a_xiaomi_robot/)using an android app
+- 
