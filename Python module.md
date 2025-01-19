@@ -1,1 +1,5 @@
+---
+aliases:
+  - Python modules
+---
 [[Python]]
