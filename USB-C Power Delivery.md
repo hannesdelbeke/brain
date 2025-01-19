@@ -2,6 +2,7 @@
 aliases:
   - USBCPD
   - USB-C PD
+  - Power Delivery
 ---
 USB-C PD is a new standard that can deliver up to 240 watts of power.
 
