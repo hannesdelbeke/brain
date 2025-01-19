@@ -9,6 +9,10 @@ You can use either
 - fabric storage that hangs on the door
 
 great for saving space, e.g. in the bathroom.
+it reminds me of Slim Behind-the-Sofa Console tables. (or behind the bed)
+![https://fr.pinterest.com/pin/351912465911988/](https://i.pinimg.com/736x/7f/d0/46/7fd04662567511a13e8d27e9c1f2b3fb.jpg)
+
+
 
 examples
 - behind door bookshelf [£200](https://www.amazon.co.uk/morimoe-Wooden-Bookshelf-Organizer-Space-Saving/dp/B0CFQ7RJPB), [£80](https://www.amazon.co.uk/ABCOOL-Organizer-Adjustable-Standing-Organizers/dp/B0D4RSQ3X3) 
