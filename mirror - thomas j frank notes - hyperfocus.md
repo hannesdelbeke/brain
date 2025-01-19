@@ -89,7 +89,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
 - It’s harder to find lots of examples that involve more discrete bits
 - Attentional space and working memory are like a computer’s RAM.
 - RAM capacity scales with power usage – with more active RAM, a computer uses more power.
-    - This is why Apple resisted upping the RAM capacity of the iPhone – lower battery time would result.
+    - This is why [[Apple]] resisted upping the RAM capacity of the iPhone – lower battery time would result.
 - Some scientists say that additional working memory or attentional space in the brain would be more “biologically expensive”.
 - The brain already consumes 20% of calories ingested, even though it accounts for only 2-3% of body mass.
 - Sentence structure matters for attention and comprehension. One study found that the period at the end of a sentence marks the point at which the brain stops loading things into attentional space and summarizes what has been loaded to that point so that it fits better into working memory and can be synthesized.
