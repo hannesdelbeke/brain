@@ -18,7 +18,7 @@ files
 
 1. install USB drivers on PC
 2. unlock OEM [[Samsung Tab A8 - OEM unlock]]
-3. flash with [[Odin]] - [[Samsung Tab A8 - Start Bootloader]]
+3. flash with [[Odin Downloader|Odin]] - [[Samsung Tab A8 - Start Bootloader]]
 ## access recovery menu
 recovery menu
 start tablet with volume up and power button held down
