@@ -6,3 +6,5 @@
 - unlock windows pc with fingerprint or iris, similar to [[Windows Hello]]
 
 this seems like a better version of [[Phone Link]]
+
+[[Samsung]]
