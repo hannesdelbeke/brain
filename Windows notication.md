@@ -4,7 +4,10 @@ aliases:
   - system tray popup
   - notification popup
 ---
-windows notifications can show on the lock screen
+windows notifications can show on the [[Windows lock screen]]
 
 [[Windows]]
 [[Windows task bar]]
+[[desktop]]
+[[notification]]
+
