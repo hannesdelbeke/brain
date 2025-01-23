@@ -6,4 +6,3 @@ Frija downloads firmware directly from Samsung FUS (Firmware Update Server)
  (successor of now depreciated tool _SamFirm_)
 
 you can download paid firmware here https://samfrew.com/
-similar tool https://github.com/ivanmeler/SamFirm_Reborn
