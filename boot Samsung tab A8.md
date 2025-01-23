@@ -12,6 +12,8 @@ files
 - 10 Mb `BL_X200XXS5DXJ5_X200XXS5DXJ5_MQB87759842_REV00_user_low_ship_MULTI_CERT.tar.md5`
 
 
+- if [[Odin]] says invalid binary for AP .tar.md5, remove the md5 extension [source](https://www.youtube.com/watch?v=5YaNLDJNnk0) confirmed works
+
 
 ### Prepare your Tablet (only necessary for first install on unrooted device)​
 - enable dev mode
