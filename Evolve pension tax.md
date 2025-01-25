@@ -19,9 +19,7 @@ They make pension contributions of 5% and receive an employer contribution of 3%
 | ADD PERSONAL ALLOWANCE BACK         | £1,041.67    |     |
 | ESTIMATED NI                        | - £ 214      |     |
 | NET PAY £                           |  1,894.33    |     |
-In this example, if no pension contribution was made, then the tax on income would have been £291.67. The level of tax
-relief achieved amounts to £25.00 meaning the cost of a £125.00 contribution to the member amounts to £100.00.
-Please note, if your pension contributions are paid via salary sacrifice by your employer, then tax relief on a ‘net pay’
-arrangement does not apply. You will not pay tax or National Insurance on the sacrificed part of your annual salary. 
+In this example, if no pension contribution was made, then the tax on income would have been £291.67. The level of tax relief achieved amounts to £25.00 meaning the cost of a £125.00 contribution to the member amounts to £100.00.
+If your pension contributions are paid via [[salary sacrifice]] by your employer, then tax relief on a ‘net pay’ arrangement does not apply. You won't pay tax or National Insurance on the sacrificed part of your annual salary. 
 
 [[pension]]
