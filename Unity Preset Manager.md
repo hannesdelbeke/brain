@@ -12,6 +12,10 @@ https://docs.unity3d.com/Manual/class-PresetManager.html
 
 The definition where the presets are applied is [[centralized]]. Since the presets don't live where they are applied.
 
+- filter
+	- Apply only on fbxs in the `Art/Buildings` folder: `glob:"Art/Buildings/**.fbx"`
+	- combine filters `glob:("foldername/filename-?.fbx"|"foldername/file-?.fbx")`
+- preset
 ## Decentralized presets
 Instead of the centralized preset manager, you can apply presets in the same, or recursive parent folder.
 This is a decentralized approach. with the presets living in the folder where they apply too.
