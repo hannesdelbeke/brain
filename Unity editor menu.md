@@ -9,8 +9,10 @@ features
 - submenus
 - show context menu under the button, starting at the bottom left corner, not the mouse click position
 
-todo
-- when i clicked a menu, support hovering over to the side to open the menu next to it.
+todo improvements
+- [ ] when i clicked a menu, support hovering over to the side to open the menu next to it.
+- [ ] option to change color of menu bar
+- [ ] option to change color of context menu(s)
 
 demo
 ![[Unity editor menu-1734095279414.jpeg]]
