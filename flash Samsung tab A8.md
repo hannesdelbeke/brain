@@ -12,10 +12,14 @@ files
 - 10 Mb `BL_X200XXS5DXJ5_X200XXS5DXJ5_MQB87759842_REV00_user_low_ship_MULTI_CERT.tar.md5`
 
 
-- if [[Odin]] says invalid binary for AP .tar.md5, remove the md5 extension [source](https://www.youtube.com/watch?v=5YaNLDJNnk0) 
-  I confirmed this works
-  however if the hash couldn't be verified that could mean something in the file is corrupt.
-  it also failed to load in magisk, but that might be because it needed more disk space on my tablet to make a duplicate of the 8gb, with only 7gb left.
+- There's a hack:
+  If [[Odin]] says invalid binary for AP .tar.md5, 
+  You can make force load it in Odin if you remove the md5 extension [source](https://www.youtube.com/watch?v=5YaNLDJNnk0) (confirmed)
+  But if Odin can't verify the hash, the file is probably corrupt.
+  I redownloaded the file (to another hard drive) and then it worked.
+
+
+- it also failed to load in magisk, but that might be because it needed more disk space on my tablet to make a duplicate of the 8gb, with only 7gb left.
   
   
   
@@ -78,4 +82,27 @@ reason is `[fs_mgr_mount_all:M04K00R]`
 	- click poweer off, and confirm
 - power up and hold vol up
 - select start bootloader
-- 
+
+
+## Start Bootloader / download mode
+you can either start it manually from the tablet, or with a adb command
+### manual
+- launch the menu (2 options)
+	- hold volume up volume down, and meanwhile connect the usb cable
+	- or hold power + vol down
+- select restart to bootloader
+- you now see the blue downloader screen
+### command
+[source](https://source.android.com/docs/core/architecture/bootloader/locking_unlocking)
+- install adb
+- enable developer settings & USB debugging
+- connect USB cable to pc. ensure you have samsung USB drivers installed
+- drag down the top menu bar and select USB settings, change to something then back to filetransfer.
+- a popup should appear, click accept to let computer control tablet.
+run in cmd
+```
+adb reboot bootloader
+```
+
+## other
+[comment](https://stackoverflow.com/a/70178103) mentioning that Samsung devices have no fastboot
