@@ -1,0 +1,2 @@
+- hold power to power off. click power off, confirm.
+- hold power and volume up untill menu shows

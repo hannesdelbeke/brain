@@ -71,48 +71,25 @@ reason is `[fs_mgr_mount_all:M04K00R]`
 ```
 
 
-### Prepare your Tablet (only necessary for first install on unrooted device)​
-
-- turn of tablet
-	- hold power and volume down 
-	- click power off, and confirm
-- power up and hold vol up
-- select start bootloader
+### Prepare your Tablet 
+(only necessary for first install on unrooted device)​
 
 1. install USB drivers on PC
 2. unlock OEM
 3. flash with odin
 
-
+[[Samsung Tab A8 - Start recovery menu]]
 [[Samsung Tab A8 - Start Bootloader]]
+[[Samsung Tab A8 - OEM unlock]]
 
-## Samsung Tab A8 - OEM unlock
 
-### unlock developer options
-2. unlock developer options
-3. - enable dev mode
-	- Settings > About Tablet > Software Information > Click Build Number 7 times quickly
+## access recovery menu
+recovery menu
+start tablet with volume up and power button held down
 
-### Allow OEM unlock
-- then in Developer Options (just below About Tablet on the left column)
-	- Turn on USB Debugging
-	- Turn on OEM unlocking (only shows after a software update )
+might error `[PDP] Back-up : fail setup-wizard [ FINISH ]`
 
-This doesn't unlock the OEM. it allows unlocking the OEM in the next step.
-It sets `OEM UNLOCK (L)` to `OEM UNLOCK (U)` t
 
-### Unlock OEM
-The OEM unlock screen, is separate from the download screen. ([this img](https://xdaforums.com/t/oem-unlocking-missing.4603847/page-3))
-Initially I thought it was the same since it has the same blue background.
-
-I finally managed to get in it with these steps
-- [[Samsung Tab A8 - Start Bootloader]]
-- cancel (hold 7 sec), this restarts the tablet
-- hold both volume buttons with USB plugged in.
-	- not sure if it matters, odin is not launched
-- follow OEM unlock instructions on the screen. this resets your device again.
-### other
-- in download mode, you can see the OEM lock state
-- [source](https://xdaforums.com/t/guide-sm-t500-t505-galaxy-tab-a7-10-4-unlock-bootloader-root-with-magisk.4185993/) walks you through OEM unlock on another Samsung tablet
 ## other
 [comment](https://stackoverflow.com/a/70178103) mentioning that Samsung devices have no fastboot
+[RECOVERY UNOFFICIAL TWRP 3.7.0 for 2021 Galaxy Tab A8 10.5 SM-X200](https://xdaforums.com/t/recovery-unofficial-twrp-3-7-0-for-2021-galaxy-tab-a8-10-5-sm-x200.4488691/)

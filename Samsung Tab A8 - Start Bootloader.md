@@ -12,12 +12,17 @@ aliasses:
 
 ## Samsung Tab A8 - Start Bootloader - download mode
 you can either start it manually from the tablet, or with a adb command
-### manual
+### manual 1
 - launch the menu (2 options)
 	- hold volume up volume down, and meanwhile connect the usb cable
 	- or hold power + vol down
 - select restart to bootloader
 - you now see the blue downloader screen
+
+## manual 2
+- no usb plugged in
+- [[Samsung Tab A8 - Start recovery menu]]
+- click restart in bootloader
 ### command
 [source](https://source.android.com/docs/core/architecture/bootloader/locking_unlocking)
 - install adb
