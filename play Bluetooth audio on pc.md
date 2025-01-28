@@ -1,4 +1,8 @@
 When you want to use your pc as a speaker, e.g. for your phone
+
+> [!warning] 
+> Currently would not recommend. It's too hacky to set up, not worth it.
+
 ## Bluetooth Audio Receiver
 
 Instructions:

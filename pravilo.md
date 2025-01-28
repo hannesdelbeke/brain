@@ -1,4 +1,4 @@
-In Pravilo, you hang from ropes for a very deep stretch.
+In Pravilo, you hang from [[rope|ropes]] for a very deep [[stretch]].
 
 claims to be a sport invented by Russian/Slavic warriors
 
