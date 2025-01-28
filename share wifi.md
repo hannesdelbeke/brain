@@ -5,3 +5,4 @@ Even if I have the password on my phone, there's no easy way to transfer it over
 when setting up my Samsung tablet, there was an option to scan a QR code from my phone.
 Which then auto set up the [[WiFi]] on the tablet, and set up my google accounts from my phone on the laptop.
 
+[[new device setup]]
