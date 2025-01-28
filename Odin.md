@@ -3,6 +3,7 @@ Odin Downloader is a product developed by [[Samsung]] Electronics Co., Ltd. This
 https://odindownloader.com/category/download
 
 Careful of the options, some like NAND erase can brick your phone. [source](https://www.scribd.com/document/515749966/Odin-NAND-Erase-Guide-Re-partition-Samsung-Devices-complete#:~:text=It%20explains%20that%20Odin%20can,all%20data%20on%20the%20device.)
+this [source](https://xdaforums.com/t/guide-repair-unbrick-unroot-re-lock-bootloader-and-flash-stock-firmware-in-samsung-devices.4452839/)  walks you through how to use NAND erase (unsure if it works)
 
 - **CSC (Consumer Software Customization)**: It is specific to geographical region and carriers. It contains the software packages specific to that region, carrier branding and APN setting.
 - **PIT (Partition Information Table):** You only need it if you screw up your partition table or if the firmware specifically requires it because of a change in the partition table layout.
