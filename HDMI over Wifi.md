@@ -8,3 +8,4 @@ A wired alternative is [[HDMI Over Ethernet]]
 
 - [ ] do all wireless HDMI extenders use wifi?
 
+[[wireless]]

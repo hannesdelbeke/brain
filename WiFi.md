@@ -4,3 +4,4 @@ aliases:
   - wi-fi
 ---
 [[internet]]
+[[wireless]]
