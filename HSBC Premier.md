@@ -6,3 +6,4 @@
 
 
 [[HSBC]]
+[[premium banking]]
