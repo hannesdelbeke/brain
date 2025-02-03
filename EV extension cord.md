@@ -8,7 +8,7 @@ an [[extension cord]] for a [[electric vehicle|EV]] needs to ensure it's safe, t
 do
 - get a higher duty thicker one so there is less resistance on the cord
 
-
 examples
-- UK lead buy [here](https://toughleads.co.uk/products/ev-extension-lead?variant=19514036027480) (best)
+- UK lead buy [here](https://toughleads.co.uk/products/ev-extension-lead?variant=19514036027480) (best) 25m 80£ inc VAT & delivery
 - also some on amazon, but often the rain proof cover doesn't fit chunky EV charger plugs. e.g. this [review](https://www.amazon.co.uk/gp/customer-reviews/R63ZXN6SGJ8P/ref=cm_cr_dp_d_rvw_ttl?ie=UTF8&ASIN=B09VGZW3X3)
+- consider 35£ [this](https://www.amazon.co.uk/TOUGH-MASTER-Socket-Extension-Thermal/dp/B0CZNWTQ62) no rain cover, or 50£ [this](https://www.amazon.co.uk/Outdoor-Extension-Weatherproof-Splashproof-Protection/dp/B09M7HH941) raincover
