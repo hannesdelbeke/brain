@@ -1,6 +1,5 @@
 Acoustic wall panels absorb sound instead of bounce it back, eliminating echos.
 
-![](https://www.acupanel.co.uk/cdn/shop/files/acupanel-oak-acoustic-wood-wall-panelling-lifestlye.jpg?v=1657008397?crop=center&width=846&height=680)
 ![](https://www.noisestopsystems.co.uk/wp-content/uploads/2019/07/softsound-panels-on-a-wall.jpg)
 
 
@@ -25,6 +24,8 @@ concrete 2400 kg /m3
 Fiberglass
 
 rule of thumb, cover 15-25% of the wall
+
+similar to  [[slatted acoustic panels]]
 
 [[sound treatment]]
 
