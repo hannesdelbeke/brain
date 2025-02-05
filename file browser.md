@@ -5,7 +5,7 @@ aliases:
   - asset manager
 ---
 
-An asset manager is a tool to visually browse assets.
+An asset manager is a tool to visually browse [[asset|assets]].
 Useful when a studio has thousands of assets, and the assets do not have a thumbnail, or are hard to search in explorer.
 
 - a folder with 1000 `.fbx` files, unclear naming, and no thumbnails
