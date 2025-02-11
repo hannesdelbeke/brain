@@ -6,7 +6,7 @@ The last few weeks I moved away from categorizing my notes in folders, increasin
 I practice [[minimal notetaking]], less is more. This change proved yet again this approach works for me.
 
 ## Previous folder workflow
-I used to store daily notes in a daily folder, and categorize notes in folders.
+I used to store daily notes in a daily [[folder]], and categorize notes in folders.
 I manually move New notes to their category folder.
 
 example:
