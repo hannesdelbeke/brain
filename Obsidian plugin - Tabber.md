@@ -1,4 +1,6 @@
 Tabbers are great for e.g. showing the same code in different languages.
+The user clicks the [[tab]] of their coding language
+
 ![[Obsidian Tabber-1674600128447.jpeg|150]]
 
 Proposal for a [[Obsidian plugin]] #pluginidea 
