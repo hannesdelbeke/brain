@@ -37,5 +37,10 @@ in safe mode
 write speed seems broken.
 still broken in safe mode
 
-
 vid on upgrade https://www.youtube.com/watch?v=rYpfUf2nHbM
+
+---
+
+## UPdate
+replaced SSD, faster speeds now.
+used AS-SSD to test write speeds
