@@ -1,4 +1,4 @@
-use [[task scheduler]] to schedule [[Monitorian]] 
+use [[Windows task scheduler]] to schedule [[Monitorian]] 
 - increase brightness in the morning, to help wake up and concentrate
 - decrease brightness in the evening, to help with [[sleep]]
 
