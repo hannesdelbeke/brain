@@ -1,81 +1,81 @@
-schedule [[Monitorian]] to auto set brightness at certain times
+use [[task scheduler]] to schedule [[Monitorian]] 
+- increase brightness in the morning, to help wake up and concentrate
+- decrease brightness in the evening, to help with [[sleep]]
 
-this is not working the command has an error
-```
-powershell.exe -Command Start-Process Monitorian.exe -ArgumentList "/set 20"
-Start-Process : A positional parameter cannot be found that accepts argument '20'.
-At line:1 char:1
-+ Start-Process Monitorian.exe -ArgumentList /set 20
-+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : InvalidArgument: (:) [Start-Process], ParameterBindingException
-    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell.Commands.StartProcessCommand
-```
-but running this manually works
-```batch
-Monitorian.exe /set 10
+this script creates both tasks:
+```powershell
+$taskName = "AutoBrightnessMonitorian"
+$monitorianPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps\Monitorian.exe"
+
+# Define actions
+$actionMorning = New-ScheduledTaskAction -Execute $monitorianPath -Argument "/set 100"
+$actionEvening = New-ScheduledTaskAction -Execute $monitorianPath -Argument "/set 20"
+
+# Define triggers
+$triggerMorning = New-ScheduledTaskTrigger -Daily -At 8:00AM
+$triggerEvening = New-ScheduledTaskTrigger -Daily -At 6:00PM
+
+# Define settings (removing -DontStartIfOnBatteries)
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+
+# Register tasks
+Register-ScheduledTask -TaskName "${taskName}_Morning" -Action $actionMorning -Trigger $triggerMorning -Settings $settings -User "$env:USERNAME" -RunLevel Highest -Force
+Register-ScheduledTask -TaskName "${taskName}_Evening" -Action $actionEvening -Trigger $triggerEvening -Settings $settings -User "$env:USERNAME" -RunLevel Highest -Force
+
+Write-Host "Scheduled tasks for Monitorian brightness adjustment have been set up successfully!"
 ```
 
-## Windows
-- Save this powershell script, and run it on [[Windows 10]].
-- Run with bypass executionpolicy to avoid the script not running:
-  `powershell -ExecutionPolicy Bypass -File "C:\Users\H\Desktop\sunset.ps1"`
+
+got it to work by setting app to `C:\Users\USER\AppData\Local\Microsoft\WindowsApps\Monitorian.exe`
+and arguments to `/set 20` at 6pm
+and set it to 100 at 8am
+
+## Todo 
+advanced script to check time if pc is on after certain hour
+atm this makes script in temp folder which is bad.
 
 ```powershell
-# Variables for location (latitude and longitude of Manchester)
-$latitude = "53.4839"
-$longitude = "-2.2446"
+$taskName = "AutoBrightnessMonitorian"
+$monitorianPath = "$env:LOCALAPPDATA\Microsoft\WindowsApps\Monitorian.exe"
 
-# API URL for Sunrise-Sunset
-$url = "https://api.sunrise-sunset.org/json?lat=$latitude&lng=$longitude&formatted=0"
+# Define actions
+$actionMorning = New-ScheduledTaskAction -Execute $monitorianPath -Argument "/set 100"
+$actionEvening = New-ScheduledTaskAction -Execute $monitorianPath -Argument "/set 20"
 
-# Make the API call
-$response = Invoke-RestMethod -Uri $url -Method Get
-$sunsetUTC = $response.results.sunset
+# Define triggers
+$triggerMorning = New-ScheduledTaskTrigger -Daily -At 8:00AM
+$triggerEvening = New-ScheduledTaskTrigger -Daily -At 6:00PM
 
-# Convert sunset UTC time to local time
-$sunsetLocal = [DateTime]::Parse($sunsetUTC).ToLocalTime()
+# Define settings
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
 
-# Extract hours and minutes for Task Scheduler
-$sunsetHour = $sunsetLocal.Hour
-$sunsetMinute = $sunsetLocal.Minute
+# Register morning and evening tasks
+Register-ScheduledTask -TaskName "${taskName}_Morning" -Action $actionMorning -Trigger $triggerMorning -Settings $settings -User "$env:USERNAME" -RunLevel Highest -Force
+Register-ScheduledTask -TaskName "${taskName}_Evening" -Action $actionEvening -Trigger $triggerEvening -Settings $settings -User "$env:USERNAME" -RunLevel Highest -Force
 
-# Task 1: Sunset Task
-$taskNameSunset = "Adjust Monitorian Brightness at Sunset"
-$brightnessCommandSunset = 'Start-Process "Monitorian.exe" -ArgumentList "/set 20"'
-
-$sunsetTaskExists = Get-ScheduledTask -TaskName $taskNameSunset -ErrorAction SilentlyContinue
-if ($sunsetTaskExists) {
-    Write-Output "The task '$taskNameSunset' already exists."
+# Define a startup action that checks the time and sets the correct brightness
+$startupScript = @"
+`$hour = (Get-Date).Hour
+if (`$hour -ge 8 -and `$hour -lt 18) {
+    Start-Process "$monitorianPath" -ArgumentList "/set 100"
 } else {
-    # Create sunset task
-    $actionSunset = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-Command $brightnessCommandSunset"
-    $triggerSunset = New-ScheduledTaskTrigger -Daily -At ([datetime]::Today.AddHours($sunsetHour).AddMinutes($sunsetMinute))
-    $settingsSunset = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -StartWhenAvailable
-    $taskSunset = New-ScheduledTask -Action $actionSunset -Trigger $triggerSunset -Settings $settingsSunset
-
-    Register-ScheduledTask -TaskName $taskNameSunset -InputObject $taskSunset -Force
-    Write-Output "Task '$taskNameSunset' created successfully."
+    Start-Process "$monitorianPath" -ArgumentList "/set 20"
 }
+"@
 
-# Task 2: Sunrise Task
-$taskNameSunrise = "Adjust Monitorian Brightness at Sunrise"
-$brightnessCommandSunrise = 'Start-Process "Monitorian.exe" -ArgumentList "/set 70"'
-$sunriseHour = 7
-$sunriseMinute = 0
+$startupScriptPath = "$env:LOCALAPPDATA\Temp\SetBrightnessOnStartup.ps1"
+$startupScript | Out-File -Encoding UTF8 $startupScriptPath
 
-$sunriseTaskExists = Get-ScheduledTask -TaskName $taskNameSunrise -ErrorAction SilentlyContinue
-if ($sunriseTaskExists) {
-    Write-Output "The task '$taskNameSunrise' already exists."
-} else {
-    # Create sunrise task
-    $actionSunrise = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-Command $brightnessCommandSunrise"
-    $triggerSunrise = New-ScheduledTaskTrigger -Daily -At ([datetime]::Today.AddHours($sunriseHour).AddMinutes($sunriseMinute))
-    $settingsSunrise = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -StartWhenAvailable
-    $taskSunrise = New-ScheduledTask -Action $actionSunrise -Trigger $triggerSunrise -Settings $settingsSunrise
+# Create the startup task
+$actionStartup = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ExecutionPolicy Bypass -File `"$startupScriptPath`""
+$triggerStartup = New-ScheduledTaskTrigger -AtStartup
 
-    Register-ScheduledTask -TaskName $taskNameSunrise -InputObject $taskSunrise -Force
-    Write-Output "Task '$taskNameSunrise' created successfully."
-}
+Register-ScheduledTask -TaskName "${taskName}_Startup" -Action $actionStartup -Trigger $triggerStartup -Settings $settings -User "$env:USERNAME" -RunLevel Highest -Force
+
+Write-Host "Scheduled tasks for Monitorian brightness adjustment have been set up successfully!"
+
 ```
 
+
 [[automate]]
+relates to [[dark mode]] since both ease your eyes.
