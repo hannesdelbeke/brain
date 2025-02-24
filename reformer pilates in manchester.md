@@ -16,3 +16,6 @@
 		- [eventbrite](https://www.eventbrite.com/e/pilates-in-chorlton-tuesdays-thursdays-tickets-862138859537?aff=ebdssbdestsearch) 11£
 - Restart Reformer Pilates https://www.restartpilates.co.uk
 - [[Embrace Welness studio]] - new studio, between [[Chorlton]] & Deansgate
+
+mat pilate
+- chorlton https://bookwhen.com/pilatesbycordelia#focus=ev-suaa-20250225183000
