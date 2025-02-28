@@ -1,0 +1,3 @@
+- Gemini https://gemini.google.com/
+- copilot
+- [[Chat GPT]]
