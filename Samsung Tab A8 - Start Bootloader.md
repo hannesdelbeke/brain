@@ -8,8 +8,6 @@ aliasses:
 - download mode
 - odin mode
 
-
-
 ## Samsung Tab A8 - Start Bootloader - download mode
 you can either start it manually from the tablet, or with a adb command
 ### manual 1
