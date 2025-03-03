@@ -12,3 +12,4 @@ the one i have has no sound
 reddit recommends Lenovo M10 Plus instead for similar price but better performance.
 
 [[Samsung]]
+[[tablet]]
