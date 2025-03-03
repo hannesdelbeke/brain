@@ -1,7 +1,6 @@
 [[Samsung Galaxy Tab A8]]
 claims that certain version of bootloader doesn't allow flashing [here](https://www.reddit.com/r/LineageOS/comments/119nz5t/bootloader_version_not_compatible_with/)
 
-
 ## prep image
 - download with [[SamFirm]]
 - details
