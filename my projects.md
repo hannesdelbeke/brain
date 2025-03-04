@@ -9,6 +9,7 @@ Done
 - [[BQt]] [bqt](https://github.com/techartorg/bqt) wrap blender in bqt [[Qt]]
 - [note-link-janitor](https://github.com/hannesdelbeke/note-link-janitor) (JavaScript) GitHub action to add backlinks to .md files
 - [[bend modifier]]
+- [[detect-app]]
 
 WIP
 - [wiki template](https://github.com/hannesdelbeke/wiki_template)
