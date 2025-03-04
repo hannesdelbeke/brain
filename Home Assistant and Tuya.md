@@ -1,5 +1,3 @@
-  
-
 to integrate a tuya hub and all devices with [[Home Assistant]]. 
 
 1. using official [tuya integration](https://www.home-assistant.io/integrations/tuya/) which relies on the internet and Tuya's servers to process  your requests. 
