@@ -10,3 +10,4 @@ to integrate a tuya hub and all devices with [[Home Assistant]].
    and MQTT broker processes them for home assistant, and you're good.
    [HACK GUIDE](https://paulbanks.org/projects/lidl-zigbee/ha/)
 3. you can buy a usb stick (e.g. conbee 2 from deconz  advised) and you can install some other integration: [zha](https://www.home-assistant.io/integrations/zha/), or official [deconz](https://www.home-assistant.io/integrations/deconz/) integration) to listen your devices and you can ditch your tuya hub. this works for all zigbee devices, not [[WiFi]]. 
+
