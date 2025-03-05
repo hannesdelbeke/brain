@@ -30,7 +30,7 @@ Use Pyblish as is. Don't try to fix it, it's too complex.
 see [[pipeline as code]] for a hard fork.
 Some goals:
 - community plugins repo
-- explicit workflows / pipelines.
+- [[explicit]] workflows / pipelines.
 	- config to choose which plugins to run
 	- config to override plugin settings, actions, ...
 
