@@ -1,4 +1,6 @@
 ## inheritance
+[[inheritance]]
+
 ```python
 class Image():
 	def __init__(file_path):
@@ -116,7 +118,7 @@ bmp.save()
 
 inheritance looks cleaner because it comes with [[abstraction]], hiding some things. It creates a [[contract (software)|contract]] telling the user what to expect. E.g. every `image` child class has `save` & `load`.
 and the user doesn't has to care about what type of image we have, they can just load & save the image.
-An [[interface|interface]] allows us to do this while using composition.
+An [[interface|interface]] allows us to do this while using [[composition]].
 
 ```python
 class ImageFile()
