@@ -20,7 +20,7 @@ With data binding, changes made to the data source automatically propagate to th
 Benefits of data binding include:
 
 - Simplified UI development: Data binding reduces the amount of code needed to manually update UI elements, resulting in cleaner and more concise code.
-- Automatic synchronization: Changes in the data source are automatically reflected in the UI, and vice versa, eliminating the need for explicit synchronization.
+- Automatic synchronization: Changes in the data source are automatically reflected in the UI, and vice versa, eliminating the need for [[explicit]] synchronization.
 - Maintainability: Data binding promotes separation of concerns, making it easier to maintain and update the UI and data logic independently.
 - Increased productivity: By reducing manual UI updates, data binding allows developers to focus more on application logic and user experience.
 
