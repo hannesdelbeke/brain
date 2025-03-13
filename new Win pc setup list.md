@@ -4,7 +4,7 @@
 - [ ] [[Barrier]]
 - [ ] [[Windows 11 - unpin start menu icons]]
 - [ ] [[windows dark theme]]
-- [ ] Windows/Personalization/start: show most used apps
+- [ ] right click on start menu. edit.  show most used apps
 - [ ] windows update all
 - [ ] [[schedule Monitorian brightness]]
 
@@ -16,3 +16,4 @@ see [[new Mac setup]]
 see [[xd-AntiSpy]]
 [[Windows]]
 [[Windows 11]]
+[[new device setup]]
