@@ -1,2 +1,3 @@
 [[Electron]] app
 [[Google]]
+[[browser]]
