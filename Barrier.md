@@ -18,7 +18,7 @@ cd ~\AppData\Local\Barrier\SSL\
 openssl req -x509 -nodes -days 365 -subj /CN=Barrier -newkey rsa:4096 -keyout Barrier.pem -out Barrier.pem
 ```
 [source](https://github.com/debauchee/barrier/issues/231#issuecomment-1143791895) 
-## log says failed to start server
+### Barrier - log says failed to start server
 install older version
 ```
 winget uninstall barrier
@@ -35,6 +35,7 @@ If you use a pc with VPN, barrier won't work.
 But you can connect first to barrier, and then the VPN. And your barrier connection should stay active without the VPN
 
 ### Barrier stops when asking admin permission
-in Barrier's settings, change elevated from `as needed`(default) to `always`.
+1. open Barrier's settings
+2. change elevated from `as needed`(default) to `always`.
 
 [[virtual solution]]

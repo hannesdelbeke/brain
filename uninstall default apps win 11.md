@@ -1,3 +1,5 @@
+discovered https://privacy.sexy, where you can generate a list of apps & features to uninstall.
+
 uninstall preinstalled apps on win 11 pc from scan
 
 1. ensure [[winget]] is installed, 
@@ -19,7 +21,7 @@ winget uninstall Microsoft.Windows.Photos_8wekyb3d8bbwe
 winget uninstall Microsoft.MixedReality.Portal_8wekyb3d8bbwe
 winget uninstall Microsoft.Getstarted_8wekyb3d8bbwe
 winget uninstall Microsoft.MSPaint_8wekyb3d8bbwe
-winget unisntall Microsoft.BingSearch_8wekyb3d8bbwe 
+winget uninstall Microsoft.BingSearch_8wekyb3d8bbwe 
 winget uninstall Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe 
 winget uninstall Microsoft.Office.Desktop_8wekyb3d8bbwe 
 winget uninstall Microsoft.OutlookForWindows_8wekyb3d8bbwe 
