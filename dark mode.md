@@ -13,7 +13,7 @@ aliases:
 But don't forget to take breaks too.
 
 new pc
-- [[windows dark theme]]
+- [[Windows dark theme]]
 - [[Slack dark mode]]
 - P4V settings/Display/Dark
 
