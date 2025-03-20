@@ -1,13 +1,19 @@
 I wrote a tool to add notes to folders in unity.
 https://github.com/hannesdelbeke/unity-folder-notes
-# todo
-- [ ] support [[Unity search]].  e.g. for a [class Comments](https://gist.github.com/kurtdekker/e63690a1bfe9515d40d3f09a1470daba) you can search `t:comments`
-- [ ] support [[URL]], [[wikilink]], [[Markdown]]
-## alternatives
-this can also be achieved with a README textfile in the folder, but it can't be editted from within unity by default.
-consider adding a custom inspector for this.
 
-this can also be achieved with a gameobject in each folder. and [[Unity - add notes to gameobjects]]
+The advantage is that the notes live in the folder [[metadata]], instead of creating an additional file in your project. This means it's easier to keep everything in sync.
+# todo
+- [ ] support [[Unity search]].  
+      e.g. for a [class Comments](https://gist.github.com/kurtdekker/e63690a1bfe9515d40d3f09a1470daba) you can search `t:comments`
+- [ ] support [[URL]], [[wikilink]], [[Markdown]] [[HTML]]
+      Rich text support could be interesting. 
+      Maybe even support embedded images.
+## alternatives
+- Put a README textfile containing your notes in each [[folder]]. 
+	- But you can't edit the notes in unity without a custom inspector/tool.
+	- It adds an extra file, files could get outdated/out of sync.
+- this can also be achieved with a gameobject in each folder, and [[Unity - add notes to gameobjects]]
+	- But this also adds an extra file
 
 [[Unity tool]]
 [[my projects]]
