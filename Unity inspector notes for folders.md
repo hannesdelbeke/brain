@@ -1,7 +1,7 @@
-I wrote a tool to add notes to folders in unity.
+I wrote a tool to add notes to folders in the [[Unity inspector]].
 https://github.com/hannesdelbeke/unity-folder-notes
 
-The advantage is that the notes live in the folder [[metadata]], instead of creating an additional file in your project. This means it's easier to keep everything in sync.
+The notes live in the folder's [[metadata]].
 # todo
 - [ ] support [[Unity search]].  
       e.g. for a [class Comments](https://gist.github.com/kurtdekker/e63690a1bfe9515d40d3f09a1470daba) you can search `t:comments`
