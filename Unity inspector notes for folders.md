@@ -8,6 +8,10 @@ The advantage is that the notes live in the folder [[metadata]], instead of crea
 - [ ] support [[URL]], [[wikilink]], [[Markdown]] [[HTML]]
       Rich text support could be interesting. 
       Maybe even support embedded images.
+- support private / local / user notes vs project notes.
+	- a dict with `{GUIDs: private notes}` in a gitignored folder.
+	- ideally the GUIDs would not be textdata but unity metadata so they can auto update if GUID changes somehow.
+	- this could be a separate tool
 ## alternatives
 - Put a README textfile containing your notes in each [[folder]]. 
 	- But you can't edit the notes in unity without a custom inspector/tool.
