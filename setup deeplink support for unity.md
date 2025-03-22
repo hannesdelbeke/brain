@@ -273,3 +273,4 @@ Would you like help automating the registry setup or debugging any issues? �
 - not maintained https://github.com/nicbarker/UnityEditorDeeplinking
 - uses native unity asset store URI https://github.com/AdamCarballo/HookInterceptor
 	- blogpost https://f10.dev/blog/using-a-stream-deck-in-unity/
+- https://github.com/needle-tools/unity-deeplink
