@@ -3,7 +3,7 @@ aliases:
   - Unity Asset searcher
   - Unity Command searcher
 ---
-[[Unity]] ships with a default search tool.  
+[[Unity native feature|Unity ships with]] a default search tool.  
 in the project Tab, next to the search bar there's an expand icon.
 You can search assets, [[GameObject|gameobjects]] in your open scene,  menu commands, and settings.
 
@@ -19,7 +19,6 @@ features
 	  Favorited items can be accessed with [SearchSettings.searchItemFavorites](https://docs.unity3d.com/ScriptReference/Search.SearchSettings-searchItemFavorites.html)
 
 see https://docs.unity3d.com/Manual/search-overview.html
-[[file browser]]
 
 Unity search 
 - saves its favorites in 
@@ -27,4 +26,13 @@ Unity search
 - only saves favorites to disk when you close Unity or Unity search, not when you favorite something
 - Only reads the favorite list on Unity startup, then just keeps it in memory. External edits while Unity is in use will be lost.
 
-[[Unity native feature]]
+because of the above, it's hard to extend. No API, and closed source.
+
+missing features
+- right-click an asset in the project window to (un)favorite it
+- a way to see all favorites
+
+
+[[file browser]]
+
+similar to [Unity quick search](https://docs.unity3d.com/Packages/com.unity.quicksearch@1.1/manual/index.html#api)
