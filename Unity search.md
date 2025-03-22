@@ -21,4 +21,10 @@ features
 see https://docs.unity3d.com/Manual/search-overview.html
 [[file browser]]
 
+Unity search 
+- saves its favorites in 
+`project_name\UserSettings\Search.settings`
+- only saves favorites to disk when you close Unity or Unity search, not when you favorite something
+- Only reads the favorite list on Unity startup, then just keeps it in memory. External edits while Unity is in use will be lost.
+
 [[Unity native feature]]
