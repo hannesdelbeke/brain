@@ -16,22 +16,26 @@ using System;
 using System.Net;
 using System.Threading;
 using System.IO;
+using System.Collections.Generic;
 
 [InitializeOnLoad]
 public class DeepLinkServer
 {
     private static HttpListener listener;
     private static Thread serverThread;
-    private static readonly int port = 5000; // Choose any available port
+    private static readonly int port = 5000;
+    private static readonly Queue<string> assetQueue = new Queue<string>();
+    private static readonly object lockObject = new object();
 
     static DeepLinkServer()
     {
         StartServer();
+        EditorApplication.update += ProcessQueue;
     }
 
     private static void StartServer()
     {
-        if (listener != null) return; // Prevent multiple instances
+        if (listener != null) return;
 
         listener = new HttpListener();
         listener.Prefixes.Add($"http://localhost:{port}/");
@@ -50,12 +54,15 @@ public class DeepLinkServer
 
                     if (!string.IsNullOrEmpty(assetPath))
                     {
-                        OpenAsset(assetPath);
+                        lock (lockObject)
+                        {
+                            assetQueue.Enqueue(assetPath); // Queue the operation for the main thread
+                        }
                     }
 
                     // Send response
                     HttpListenerResponse response = context.Response;
-                    string responseString = "Asset opened: " + assetPath;
+                    string responseString = "Asset selection requested: " + assetPath;
                     byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
                     response.ContentLength64 = buffer.Length;
                     Stream output = response.OutputStream;
@@ -74,14 +81,31 @@ public class DeepLinkServer
         Debug.Log($"Deep Link Server running on http://localhost:{port}/");
     }
 
-    private static void OpenAsset(string assetPath)
+    private static void ProcessQueue()
     {
-        UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(assetPath);
+        lock (lockObject)
+        {
+            while (assetQueue.Count > 0)
+            {
+                string assetPath = assetQueue.Dequeue(); // Always dequeue the item
+
+                if (string.IsNullOrEmpty(assetPath))
+                    continue; // Skip empty requests
+
+                SelectAsset(assetPath);
+            }
+        }
+    }
+
+
+    private static void SelectAsset(string assetPath)
+    {
+        UnityEngine.Object asset = AssetDatabase.LoadMainAssetAtPath(assetPath);
         if (asset != null)
         {
             Selection.activeObject = asset;
             EditorGUIUtility.PingObject(asset);
-            Debug.Log($"Opened Asset: {assetPath}");
+            Debug.Log($"Selected Asset: {assetPath}");
         }
         else
         {
@@ -111,6 +135,7 @@ public class DeepLinkServer
         }
     }
 }
+
 ```
 
 ---
