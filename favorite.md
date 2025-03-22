@@ -4,6 +4,10 @@ aliases:
   - favoriting
   - bookmarking
   - star
+  - favourite
+  - favouriting
+  - favourites
+  - favorites
 ---
 ## favorite ⭐
 
