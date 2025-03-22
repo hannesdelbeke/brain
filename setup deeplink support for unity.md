@@ -267,3 +267,9 @@ After setting up the script and registering the protocol:
 - It should open the asset inside Unity.
 
 Would you like help automating the registry setup or debugging any issues? �
+
+
+## alternatives
+- not maintained https://github.com/nicbarker/UnityEditorDeeplinking
+- uses native unity asset store URI https://github.com/AdamCarballo/HookInterceptor
+	- blogpost https://f10.dev/blog/using-a-stream-deck-in-unity/
