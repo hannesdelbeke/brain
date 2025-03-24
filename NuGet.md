@@ -1,0 +1,1 @@
+NuGet is a [[package management|package manager]], primarily used for packaging and distributing software written using [[dot NET|.NET]] and the .NET Framework
