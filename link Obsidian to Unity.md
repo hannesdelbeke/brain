@@ -7,8 +7,9 @@ Unity supports [[app URI]] via `unityhub://` but does not have built-in direct f
 [Open My Unity Project](unityhub://open?path=C:/Path/To/Your/UnityProject)
 ```
 
-[[setup deeplink support for unity]]
-[[potential issues and named pipe alternative]]
+[[setup deeplink support for unity - GPT]]
+[[Unity deeplink RnD]]
+[[potential issues and named pipe alternative - GPT]]
 
 # Unity to Unity
 it'd be great to have unity notes, that link to other Unity assets.
