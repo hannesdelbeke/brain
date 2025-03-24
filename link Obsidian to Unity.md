@@ -2,14 +2,10 @@
 - option to use links in [[Obsidian]], that browse to a file in [[Unity]]
 
 Unity supports [[app URI]] via `unityhub://` but does not have built-in direct file-opening support. 
-
 ```markdown
 [Open My Unity Project](unityhub://open?path=C:/Path/To/Your/UnityProject)
 ```
-
-[[setup deeplink support for unity - GPT]]
 [[Unity deeplink RnD]]
-[[potential issues and named pipe alternative - GPT]]
 
 # Unity to Unity
 it'd be great to have unity notes, that link to other Unity assets.
@@ -26,6 +22,9 @@ this prefab is used in the following scene:
 [Scene1.unity](unity://open?scene=Assets/Scenes/Scene1.unity)
 ```
 - it'd be great to support right-click on an asset to generate & copy the link.
+
+think this will tie into [[Unity - local UPM package installer]]
+[[Unity local manifest issue]]
 
 
 ---
@@ -45,5 +44,3 @@ this prefab is used in the following scene:
 - help menu in tool can link to rich text reference [docs](https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/StyledText.html)
 - [[Unity inspector notes for folders]]
 - [[Unity - add notes to gameobjects]]
-
-[[app URI]]

@@ -7,3 +7,5 @@
   - maintenance
   - dependency clash management (ugh)
   - i'm fixing a paid app's problem for free
+
+[[Unity local manifest issue]]
