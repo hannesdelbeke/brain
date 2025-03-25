@@ -14,7 +14,7 @@ it'd be great to have unity notes, that link to other Unity assets.
 - app URI links to other assets
 - some kind of note parser, with plugin support, to convert these links to clickable links in rich text.
 - [[Unity notes]]
-- [[Unity inspector notes for folders]]
+- [[Unity inspector notes for folders & assets]]
 - [[Unity - add notes to gameobjects]]
 e.g.
 ```
@@ -37,10 +37,10 @@ think this will tie into [[Unity - local UPM package installer]]
 	- how would the user edit the URL? no WYSIWYG in Unity editor tools
 		- could have an edit/view tab in the inspector, or an edit & save button
 	- [[Unity notes]]
-	- [[Unity inspector notes for folders]]
+	- [[Unity inspector notes for folders & assets]]
 	- [[Unity - add notes to gameobjects]]
 
 # unity rich text
 - help menu in tool can link to rich text reference [docs](https://docs.unity3d.com/Packages/com.unity.ugui@1.0/manual/StyledText.html)
-- [[Unity inspector notes for folders]]
+- [[Unity inspector notes for folders & assets]]
 - [[Unity - add notes to gameobjects]]
