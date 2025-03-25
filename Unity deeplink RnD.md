@@ -1,4 +1,4 @@
-GPT research, setup a http server in Unity: 
+GPT research, setup a http server in [[Unity]]: 
 - [[setup deeplink support for unity - GPT]]
 - [[potential issues and named pipe alternative - GPT]]
 
