@@ -4,8 +4,7 @@ aliases:
 ---
 https://openupm.com/
 
-uses java, runs outside of unity
-not compatible with [[Unity scoped registries]] ??? unsure.
+uses [[JavaScript]], runs outside of [[Unity]]
 ### **OpenUPM**
 🔹 **What it is:**
 - A scoped registry for Unity’s built-in **[[Unity Package Manager]] (UPM)**.
