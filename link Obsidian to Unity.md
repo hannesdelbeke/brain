@@ -13,7 +13,7 @@ it'd be great to have unity notes, that link to other Unity assets.
 - GUID links to other assets
 - app URI links to other assets
 - some kind of note parser, with plugin support, to convert these links to clickable links in rich text.
-- [[notes in unity]]
+- [[Unity notes]]
 - [[Unity inspector notes for folders]]
 - [[Unity - add notes to gameobjects]]
 e.g.
@@ -36,7 +36,7 @@ think this will tie into [[Unity - local UPM package installer]]
 	2. click `[[my note]]` to open `my note` in Obsidian
 	- how would the user edit the URL? no WYSIWYG in Unity editor tools
 		- could have an edit/view tab in the inspector, or an edit & save button
-	- [[notes in unity]]
+	- [[Unity notes]]
 	- [[Unity inspector notes for folders]]
 	- [[Unity - add notes to gameobjects]]
 

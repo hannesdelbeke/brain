@@ -19,6 +19,7 @@ public class Comment : MonoBehaviour
 2. Attach this script to any gameObjects to which you want to add notes
 
 ## disadvantages
+- doesn't work on assets e.g. texture
 - you need to drag the script to each gameObject, instead of instantly typing notes in the inspector.
 	- could make some kind of custom importer that adds the script to all gameObjects that don't have it yet.
 	- let's make that a custom inspector instead, that adds it to the gameobject as soon as the user writes a note in the inspector.
