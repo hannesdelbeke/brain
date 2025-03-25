@@ -2,6 +2,11 @@ I wrote a tool to add notes to folders in the [[Unity inspector]].
 https://github.com/hannesdelbeke/unity-folder-notes
 
 The notes live in the folder's [[metadata]].
+This seems like a clean solution, but it will clash with any tools using [[Unity userdata]]
+I'm not sure how common that is.
+
+
+
 # todo
 - [ ] support [[Unity search]].  
       e.g. for a [class Comments](https://gist.github.com/kurtdekker/e63690a1bfe9515d40d3f09a1470daba) you can search `t:comments`
