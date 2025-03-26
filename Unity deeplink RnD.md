@@ -3,18 +3,6 @@ GPT research, setup a http server in [[Unity]]:
 - [[potential issues and named pipe alternative - GPT]]
 
 I decided to instead piggy back on the existing asset store deeplinking support in Unity.
-
-## Existing solutions
-- https://github.com/nicbarker/UnityEditorDeeplinking 
-	- not tested
-	- not maintained
-	- deeplink through TCP/IP socket on `127.0.0.1`m 
-	- no UPM support
-- [[unity deeplink - hook interceptor]]
-	- not tested
-- [[unity deeplink - needle tools]]
-	- tested, samples didn't seem to work
-
 ## Dev
 I forked [[unity deeplink - needle tools]]
 - https://github.com/hannesdelbeke/unity-deeplink
@@ -27,6 +15,15 @@ see [[deeplink redirect - GPT]]
 - custom scheme `unity://menu?menu/path`
 - maybe support parameters in future? e.g. cube of size 4
 - option in plugin to toggle support to copy URI to the correct `unity://select?asset/path` format, if user choses to use that scheme
-
+## Existing solutions
+- https://github.com/nicbarker/UnityEditorDeeplinking 
+	- not tested
+	- not maintained
+	- deeplink through TCP/IP socket on `127.0.0.1`m 
+	- no UPM support
+- [[unity deeplink - hook interceptor]]
+	- not tested
+- [[unity deeplink - needle tools]]
+	- tested, samples didn't seem to work
 
 [[app URI]]
