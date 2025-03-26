@@ -11,7 +11,10 @@ explore this project
 - [[Unity inspector notes for folders & assets]]
 - [[Unity - add notes to gameobjects]]
 - https://github.com/plyoung/EdNotes
-	- add notes to gameobjects, and assets
+	- add notes to gameobjects in scene.
+		- GameObject notes are kept in a hidden object tagged as `EditorOnly`
+	- add notes to assets
+		- Asset Notes are kept in an asset next to the this tool's scripts.
 	- Matches Unity's UI
 	- supports color tags & icons
 	- a recent [fork](https://github.com/mhardy/EdNotes) adds inspector support
