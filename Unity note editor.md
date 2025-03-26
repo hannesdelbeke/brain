@@ -4,7 +4,9 @@ https://github.com/hannesdelbeke/unity-note-editor
 
 Once I start using this more, todo:
 - [x] add edit/view (rich text) support
-- add hyper link support.
+- [x] add URL & asset link support
+- [x] [[Unity local|private/local]] notes support 
+	- [ ] support a list of note repos. e.g. 1 for direct team, 1 private, 1 for everyone
 
 features
 - [[Unity icons]]
