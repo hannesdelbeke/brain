@@ -1,19 +1,19 @@
-create [[note taking|notes]] in [[Unity]], e.g. for [[documentation]]
-
-might be useful to link [[Obsidian]] to unity.
-create some kind of living documentation during gamedev
-
-Assets and gameobjects have different approaches of attaching notes.
-- some assets (e.g. prefabs) can have components, just like gameobjects.
-- most assets can't have components, so we need a different approach.
+Create [[note taking|notes]] in [[Unity]], e.g. for [[documentation]]. 
+- The closer documentation lives to the asset, the more likely it'll be read. 
+- Showing docs in the editor improves [[discovery]].
+- And making it easy to write docs [[accessibility|lowers the barrier]] for writing docs. 
+## Current solutions
+These cover everything. Assets & gameobjects.
 
 - [[Unity inspector notes for folders & assets]]
 	- notes on assets
 	- support urls & links to assets
 	- richtext
 - [[Unity - add notes to gameobjects]]
-- [[Unity asset chat]]
-
+	- [ ] it'd be cool if we can support urls too here.
+## Ideas
+- crazy idea: [[Unity asset chat]]
+- instead of Unity comments,can we focus on comments for any file in a git repo?
 ## alternatives 
 - https://github.com/plyoung/**EdNotes**
 	- Add notes to gameobjects in scene.
@@ -40,3 +40,8 @@ bonus
 - [ ] optional support wikilinks
 - [ ] support embedded images
 - [ ] support instanced notes, e.g. a bunch of assets have the same note.
+
+## dev
+Assets and gameobjects have different approaches of attaching notes.
+- some assets (e.g. prefabs) can have components, just like gameobjects.
+- most assets can't have components, so we need a different approach.
