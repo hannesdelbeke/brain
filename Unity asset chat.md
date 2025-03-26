@@ -4,7 +4,6 @@ but aimed at a team
 Often Slack conversations about the specifics of assets get lost.
 Imagine having a way to comment in Unity about a specific asset, and see it in the editor.
 
-
 > [!example]
 > You click an asset, and a conversation shows up:
 > - What does this asset do? <small><font color="#595959">Ben 2019-05-01</font></small>
@@ -13,5 +12,7 @@ Imagine having a way to comment in Unity about a specific asset, and see it in t
 > 
 > Assets with comments have a comment icon in the project view.
 > New comments show in your notifications.
+
+Comments could be submitted to the project, or be live in a database so commenting is instant. (think Notion)
 
 [[tool idea]]

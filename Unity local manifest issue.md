@@ -29,3 +29,5 @@ The challenge is to still allow pulling changes in the manifest while maintainin
 ### Other
 - [Forum thread](https://forum.unity.com/threads/using-multiple-assetbundle-manifests-in-one-application.484130/) complaining about lack of multiple manifests (2017)
 - [Thread](https://forum.unity.com/threads/multiple-package-sources.772961/) on use multiple package sources, can you use a local source to work around this issue?
+
+[[Unity local]]
