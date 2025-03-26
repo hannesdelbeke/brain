@@ -13,4 +13,4 @@ existing features
 - set unity version
 - download unity apps/versions
 
-[[tool ideas]]
+[[tool idea]]
