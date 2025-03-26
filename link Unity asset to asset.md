@@ -1,6 +1,8 @@
 Write notes, to create a [[link]] between 2 Unity assets. 
 To enable very quick [[navigation]] between assets. 
-This is now possible with [[Unity note editor]]
+
+> [!NOTE] 
+> Now possible with [[Unity note editor]]
 
 example:
 1. attach this note to a prefab
