@@ -1,3 +1,7 @@
+
+> [!NOTE] 
+> Use the [[Unity editor window - three dots menu|three dots menu]] instead of a custom menu bar, to match Unity's UI style.
+
 [[Unity tool|Unity editor tools]] don't support a [[menu]] bar by default.
 But we can make one ourselves with buttons.
 
