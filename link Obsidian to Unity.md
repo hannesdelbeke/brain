@@ -7,24 +7,7 @@ Unity supports [[app URI]] via `unityhub://` but does not have built-in direct f
 ```
 [[Unity deeplink RnD]]
 
-# Unity to Unity
- - [x] unity notes, that link to other Unity assets. https://github.com/hannesdelbeke/unity-note-editor
-	- [x] GUID links to other assets
-	- [ ] wikilinks to other assets (BONUS)
-- [x] some kind of note parser, with plugin support, to convert these links to clickable links in rich text.
-
-- [[Unity notes]]
-- [[Unity inspector notes for folders & assets]]
-- [[Unity - add notes to gameobjects]]
-e.g.
-```
-this prefab is used in the following scene: 
-[Scene1.unity](unity://open?scene=Assets/Scenes/Scene1.unity)
-```
-- it'd be great to support right-click on an asset to generate & copy the link.
-
-think this will tie into [[Unity - local UPM package installer]]
-[[Unity local manifest issue]]
+[[link Unity asset to asset]]
 
 
 ---
