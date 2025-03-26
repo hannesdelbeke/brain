@@ -11,7 +11,7 @@ example:
  - [x] unity notes, that link to other Unity assets. https://github.com/hannesdelbeke/unity-note-editor
 - [x] GUID links to other assets
 - [x] some kind of note parser, with plugin support, to convert these links to clickable links in rich text.
-- [ ] it'd be great to support right-click on an asset to generate & copy the link.
+- [ ] it'd be great to support right-click on an asset to generate & copy the link. [[Unity extend right click context menu]]
 - [x] a lot of the power of these notes will come from private comments, that you don't want to commit. So figure out a local solution. [[Unity local]]
 
 - [[Unity inspector notes for folders & assets]]

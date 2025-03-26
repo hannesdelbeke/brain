@@ -19,7 +19,7 @@ I decided to instead piggy back on the existing asset store deeplinking support 
 I forked [[unity deeplink - needle tools]]
 - https://github.com/hannesdelbeke/unity-deeplink
 - run menu command
-- select assets & right-click to copy URI from asset
+- select assets & [[Unity extend right click context menu|right-click menu]] to copy URI from asset
 
 todo
 see [[deeplink redirect - GPT]]
