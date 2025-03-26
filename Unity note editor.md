@@ -6,3 +6,6 @@ Once I start using this more, todo:
 - [x] add edit/view (rich text) support
 - add hyper link support.
 
+features
+- [[Unity icons]]
+- [[Unity editor window - three dots menu]]

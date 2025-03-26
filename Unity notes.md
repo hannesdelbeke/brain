@@ -13,8 +13,10 @@ explore this project
 - https://github.com/wataru-ito/AssetMessenger custom popup, feels clunky
 
 ## features
-- [x] write notes on folders [[Unity inspector notes for folders & assets]]
-- [ ] write notes on assets  [[Unity - add notes to gameobjects]]
+- [x] write notes on folders
+	- [ ] V1 [[Unity inspector notes for folders & assets]]
+	- [ ] V2 [[Unity note editor]]
+- [ ] write notes on assets
 - [ ] support URLs
 	- [ ] optional support wikilinks
 - [ ] support markdown & rich text
