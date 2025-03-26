@@ -12,7 +12,7 @@ These cover everything. Assets & gameobjects.
 - [[Unity - add notes to gameobjects]]
 	- [ ] it'd be cool if we can support urls too here.
 ## Ideas
-- crazy idea: [[Unity asset chat]]
+- crazy idea: [[Unity asset chat idea]]
 - instead of Unity comments,can we focus on comments for any file in a git repo?
 ## alternatives 
 - https://github.com/plyoung/**EdNotes**
@@ -30,8 +30,8 @@ These cover everything. Assets & gameobjects.
 ## features
 MVP
 - [x] write notes on folders & assets
-	- [ ] V1 [[Unity inspector notes for folders & assets]]
-	- [ ] V2 [[Unity note editor]]
+	- [x] V1 [[Unity inspector notes for folders & assets]]
+	- [x] V2 [[Unity note editor]]
 - [x] support URLs
 - [x] support rich text
 - [x] support private / local / user notes vs project notes
