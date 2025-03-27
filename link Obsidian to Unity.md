@@ -12,4 +12,3 @@ Unity supports [[app URI]] via `unityhub://` but does not have built-in direct f
 ## Related
 [[link Unity asset to asset]]
 [[link Unity to Obsidian]]
-[[link]]
