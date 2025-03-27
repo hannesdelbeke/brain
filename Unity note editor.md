@@ -7,6 +7,7 @@ Once I start using this more, todo:
 - [x] add URL & asset link support
 - [x] [[Unity local|private/local]] notes support 
 	- [ ] support a list of note repos. e.g. 1 for direct team, 1 private, 1 for everyone
+- [x] [[Unity extend right click context menu|right-click]] an asset to generate & copy the link. 
 
 features
 - [[Unity icons]]
