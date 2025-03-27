@@ -1,5 +1,5 @@
 Write notes, to create a [[link]] between 2 Unity assets. 
-To enable very quick [[navigation]] between assets. 
+To enable quick [[navigation]] between assets. 
 
 > [!NOTE] 
 > Now possible with [[Unity note editor]]
