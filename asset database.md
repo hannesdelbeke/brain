@@ -1,2 +1,2 @@
 [[asset]]
-[[databank|database]]
+[[database]]

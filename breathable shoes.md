@@ -23,5 +23,4 @@ bought shitty yellow trail runners, very breathy
 
 [[materialism]]
 [[hiking]]
-[[personal]]
 [[shoes]]

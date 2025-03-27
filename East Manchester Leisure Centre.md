@@ -6,4 +6,4 @@ discount free account [mcractive](https://www.mcractive.com/)
 in Beswick
 
 [[Manchester]]
-[[personal]]
+[[gym]]
