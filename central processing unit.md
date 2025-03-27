@@ -1,0 +1,6 @@
+---
+aliases:
+  - CPU
+  - CPUs
+  - processor
+---
