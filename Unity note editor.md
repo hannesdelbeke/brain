@@ -10,6 +10,9 @@ Once I start using this more, todo:
 - [x] [[Unity extend right click context menu|right-click]] an asset to generate & copy the link. 
 
 [video](https://www.youtube.com/watch?v=MQsBkyL16wI) showing Unity and Obsidian links in action
+- Obsidian forum [thread](https://forum.obsidian.md/t/obsidian-unity-bi-directional-links/98835)
+- Unity forum [thread](https://discussions.unity.com/t/bringing-bi-directional-notes-to-unity/1622054)
+- Reddit [thread](https://www.reddit.com/r/ObsidianMD/comments/1jl9gog/obsidian_unity_bidirectional_links/)
 
 features
 - [[Unity icons]]
