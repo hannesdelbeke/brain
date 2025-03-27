@@ -13,6 +13,8 @@ Once I start using this more, todo:
 - Obsidian forum [thread](https://forum.obsidian.md/t/obsidian-unity-bi-directional-links/98835)
 - Unity forum [thread](https://discussions.unity.com/t/bringing-bi-directional-notes-to-unity/1622054)
 - Reddit [thread](https://www.reddit.com/r/ObsidianMD/comments/1jl9gog/obsidian_unity_bidirectional_links/)
+- content ideas `Create a notes vault in Unity 🤯`
+- backlink support between Unity notes
 
 features
 - [[Unity icons]]
