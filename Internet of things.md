@@ -1,0 +1,5 @@
+---
+aliases:
+  - IoT
+---
+[[smart home]]

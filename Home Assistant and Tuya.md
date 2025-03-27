@@ -1,7 +1,7 @@
 to integrate a tuya hub and all devices with [[Home Assistant]]. 
 
 1. using official [tuya integration](https://www.home-assistant.io/integrations/tuya/) which relies on the internet and Tuya's servers to process  your requests. 
-2. hacking your zigbee hub so that we can install a process to send all [[zigbee]] messages to home assistant (as your hub is a very basic [[Linux]] computer).
+2. hacking your zigbee hub so that we can install a process to send all [[ZigBee]] messages to home assistant (as your hub is a very basic [[Linux]] computer).
    We should install [[zigbee2mqtt]] software there,
    and enable MQTT broker on your home assistant instance. 
    Zigbee2mqtt sends messages to home assistant MQTT broker
