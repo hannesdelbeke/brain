@@ -10,8 +10,8 @@ legend:
 
 ## community
 - [x] [[Obsidian plugin - Plugin Groups]] for delayed startup
-- [x] Homepage for [[_|my homepage]]
- - [ ] Obsidian Git - to important to delay startup. in case it fails silently.
+- [x] Homepage that auto opens every day with links to active projects and work notes
+ - [ ] Obsidian Git - too important to delay startup. in case it fails silently.
  - [x] [[Obsidian plugin - paste URL in selection]]
 ## delayed startup
 - [ ] [[Excalidraw]] for drawing [[vector image]]
