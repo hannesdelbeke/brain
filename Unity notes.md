@@ -5,6 +5,7 @@ Create [[note taking|notes]] in [[Unity]], e.g. for [[documentation]].
 ## Current solutions
 These cover everything. Assets & gameobjects.
 
+- [[Unity note editor]]
 - [[Unity inspector notes for folders & assets]]
 	- notes on assets
 	- support urls & links to assets
