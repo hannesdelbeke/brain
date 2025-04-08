@@ -5,3 +5,4 @@ aliases:
 ---
 [[product design]]
 [[3D]]
+[[printer]]
