@@ -7,5 +7,4 @@ professional publishing features:
 - versatile PDF creation.
 
 tags:
-[[print]]
 [[graphic design]]
