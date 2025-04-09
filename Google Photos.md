@@ -1,0 +1,1 @@
+Free photo [[backup]] for [[pixel 5]] and older for compressed photos
