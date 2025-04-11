@@ -9,7 +9,7 @@ when wanting to do small changes, on many repos, my current clone process is slo
 	- PR
 - if I fork from start I save some steps
 	
-I need something to easy fork, clone, edit, PR.
+I need something to easy fork, clone, edit, [[pull request|PR]].
 a workflow where it's fast to pull a repo, so I don't hesitate to get hands on.
 can I do this from within PyCharm? 
 	but usually I'm in another project in PyCharm

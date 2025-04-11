@@ -1,0 +1,6 @@
+---
+aliases:
+  - repo
+  - repos
+  - repositories
+---

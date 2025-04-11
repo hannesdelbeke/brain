@@ -4,4 +4,4 @@ aliases:
 ---
 in [[Amsterdam]]
 
-[[convention]]
+[[convention]] about [[Blender]]

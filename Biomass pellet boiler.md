@@ -1,4 +1,4 @@
-A [[boiler]] that burns wood pellets. 
+A [[boiler]] that burns [[wood]] pellets. 
 
 life. well over 20 years.
 

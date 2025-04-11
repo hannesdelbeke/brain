@@ -1,4 +1,4 @@
-Facebook Messenger doesn't support silencing it's notifications on Android.
+[[Facebook Messenger]] doesn't support silencing it's [[notification|notifications]] on Android.
 
 You can disable notifications, but then you won't get any.
 
