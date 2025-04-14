@@ -1,6 +1,7 @@
 ---
 aliases:
   - lookdev
+  - look dev
 ---
 the process of defining and refining the visual style of computer-generated assets, ensuring consistency and artistic direction throughout a project
 
