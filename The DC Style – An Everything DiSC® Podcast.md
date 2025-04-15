@@ -19,7 +19,7 @@ different characteristics associated with the DC style, things like being strong
 thinkers, like being tough-minded, uh, you know, being determined. And there's one 
 underlying theme that really ties them all together. It's probably the most pronounced 
 characteristic that separates people with this style from the average person. ==And it's this== 
-==fundamental sense of skepticism.== 
+==fundamental sense of [[skepticism]].== 
 
 It's a perspective that says the world isn't necessarily always the most friendly place, 
 you know, it's not always well meaning. There are a lot of people out there who just 
@@ -45,7 +45,7 @@ thing.
 
 And when I don't have that control, when I don't have any way to regain it, it's very 
 unnerving. I'm left in kind of an uneasy state because who knows what can happen. All 
-right. So that's the need for control and then the last, very similar control is ==a need to not 
+right. So that's the [[need for control]] and then the last, very similar control is ==a need to not 
 be vulnerable.== Again, if we've got an untrustworthy world, it's not exactly wise to make 
 yourself vulnerable on a regular basis. So when we actually do survey people with the D
 C style, they're much more likely to identify themselves as being a little bit more 
