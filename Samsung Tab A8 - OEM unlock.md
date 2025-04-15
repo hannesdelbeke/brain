@@ -24,4 +24,4 @@ I finally managed to get in it with these steps
 - follow OEM unlock instructions on the screen. this resets your device again.
 ### other
 - in download mode, you can see the OEM lock state
-- [source](https://xdaforums.com/t/guide-sm-t500-t505-galaxy-tab-a7-10-4-unlock-bootloader-root-with-magisk.4185993/) and [source](https://github.com/salvogiangri/UN1CA/discussions/129) walks you through OEM unlock on another Samsung tablet
+- [source](https://xdaforums.com/t/guide-sm-t500-t505-galaxy-tab-a7-10-4-unlock-bootloader-root-with-magisk.4185993/) & [source](https://github.com/salvogiangri/UN1CA/discussions/129) walks through OEM unlock on another Samsung tablet, using [[Magisk]]
