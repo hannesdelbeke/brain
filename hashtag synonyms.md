@@ -10,7 +10,7 @@ But their relevant app decides what word to use within it's community.
 ## Solutions
 options:
 - move away from this, and always use plugin.
-- have some kind of linked tag support: aliases for (hash)tags
+- have some kind of linked [[tag]] support: aliases for (hash)tags
   develop a plugin?
 - don't use hashtags, and use note links instead.
 

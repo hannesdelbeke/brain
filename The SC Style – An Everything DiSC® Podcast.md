@@ -210,7 +210,7 @@ ideas down.
 And so people with the SC style usually come across as very agreeable when someone 
 else pitches an idea. What they might not realize in the moment, though, is that some 
 people are actually more likely to respect the opinion of a person who's known to be 
-challenging or skeptical. And someone who's always agreeable can sometimes appear 
+challenging or [[skepticism|skeptical]]. And someone who's always agreeable can sometimes appear 
 to be less discerning or not really a strong critical thinker, regardless of how sharp the 
 person actually is. But back to conflict—the initial instinct then is to smooth things over, 
 but if things get really heated, there's often this tendency to just shut down and silently 
