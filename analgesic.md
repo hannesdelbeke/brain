@@ -1,0 +1,1 @@
+Analgesics are [[medicine|medications]] that relieve [[pain]] by either reducing [[inflammation]] or changing the way the brain perceives pain.
