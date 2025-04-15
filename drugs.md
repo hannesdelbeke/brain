@@ -1,0 +1,1 @@
+drugs is a broader term that includes medicines, [[alcohol]], tobacco and illicit substances.
