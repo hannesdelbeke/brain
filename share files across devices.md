@@ -1,4 +1,8 @@
-to share files between [[Android]] phone & [[Windows]] computer
+---
+aliases:
+  - share files between Android and PC
+---
+To share files between [[Android]] phone & [[Windows]] computer
 
 just send files
 - [[USB]] cable
@@ -11,5 +15,6 @@ require log in / install - more hassle
 - [[Google Drive]]
 - [[Dropbox]]
 - email
+- [[Syncthing Android]] and [[Syncthing]]
 
 [[file distribution]]
