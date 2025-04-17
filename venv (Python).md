@@ -26,3 +26,4 @@ This prepends that directory to your `PATH`, so that running `python` invokes 
 
 [[environment management]]
 [[Python]]
+[[Python env management]]
