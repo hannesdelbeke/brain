@@ -22,10 +22,14 @@ Only Maya has support for this, Unity, unreal, and blender don't. See [[dcc refe
 - **Delta Mush / Delta [[Blendshape]]**: Not file diffs, but examples of storing deltas for deformation
 
 ## ideas
-what if we add a manager build on git (or perforce?)
+what if we add a manager build on git
 - by default history of ASCII files doesn't show in the asset browser.
 - a file revision can be tagged as a separate file, so it shows in our browser
 - git can have branches for variations, but this might get messy with many branches?
+history just points to a commit
+- Artist won't be able to have both variants open on their pc at same time. Unless the asset manager somehow pulls only the file ([[git sparse-checkout]] or [[git archive]]) the artist wants, to a new temp repo?
+
+- 
 - how would this work in perforce
 ## tags
 [[compression]]
