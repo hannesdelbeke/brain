@@ -25,3 +25,5 @@ The quality of my notes could be better if I added a quick sketch.
 [[minimalism]]
 
 - article with similar POV https://www.eastgate.com/HypertextNow/archives/Compression.html
+
+[[compression]]
