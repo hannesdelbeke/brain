@@ -1,0 +1,32 @@
+To save data, we could save mesh variations as diffs / deltas in our project.
+
+> [!example]-
+> - Unity & Unreal projects often contain mesh variations, leading to duplicate data. 
+> - These duplicate meshes are also likely to be duplicated on the perforce repo
+
+## Saving deltas
+
+> [!example]
+> A 100mb mesh variation, where only the UV is different. It's wasteful to have two 100mb file instead of just 1.
+> 
+> [[git]] only saves the changes between 2 textfiles, instead of saving 2 full textfiles
+
+A file **reference with override capabilities** can handle this, but runs into issues if the original file changes.
+
+Git solves this by never changing the *original file* in the git history.
+
+Only Maya has support for this, Unity, unreal, and blender don't. See [[dcc referencing comparison]]
+
+## similar tech
+- **USD (Pixar's [[Universal Scene Description]])**: Supports **layered editing**, where changes (position, material, etc.) are stored as deltas in layers — very similar to what you're proposing.
+- **Delta Mush / Delta [[Blendshape]]**: Not file diffs, but examples of storing deltas for deformation
+
+## ideas
+what if we add a manager build on git (or perforce?)
+- by default history of ASCII files doesn't show in the asset browser.
+- a file revision can be tagged as a separate file, so it shows in our browser
+- git can have branches for variations, but this might get messy with many branches?
+- how would this work in perforce
+## tags
+[[compression]]
+[[compression vs. deduplication]]
