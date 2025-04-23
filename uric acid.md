@@ -1,0 +1,2 @@
+Uric acid is a waste product. It is produced by the breakdown of chemicals known as purines. Purines occur naturally in the body but are also found in certain foods. Uric acid is removed from the body in [[urine]]. If the body has high levels of uric acid, it may be deposited as
+uric acid crystals in tissues. When this occurs in joints it causes the painful arthritic condition known as gout.
