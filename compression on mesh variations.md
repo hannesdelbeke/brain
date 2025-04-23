@@ -29,8 +29,7 @@ what if we add a manager build on git
 history just points to a commit
 - Artist won't be able to have both variants open on their pc at same time. Unless the asset manager somehow pulls only the file ([[git sparse-checkout]] or [[git archive]]) the artist wants, to a new temp repo?
 
-- 
-- how would this work in perforce
+Perforce saves files, not diffs. So this won't work in perforce
 ## tags
 [[compression]]
 [[compression vs. deduplication]]
