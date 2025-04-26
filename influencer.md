@@ -1,0 +1,1 @@
+use [[social media]] like [[Instagram]] and get paid to [[ads|advertise]] for companies.
