@@ -2,4 +2,5 @@
 aliases:
   - advertisement
   - advertisements
+  - advertise
 ---
