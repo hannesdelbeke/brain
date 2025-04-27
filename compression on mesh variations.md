@@ -1,5 +1,14 @@
 To save data, we could save mesh variations as diffs / deltas in our project.
 
+## cons
+- limited to [[ASCII]]
+- can't think of many realistic uses
+	- different UVs. but usually same meshes reuse same UVs.
+	- small mesh variations. sphere with 100k verts and only a few different verts. can't see this happening in practice.
+
+- it might work if someone duplicates a mesh a few times in the project.
+  e.g. outsource studios duplicate a mesh, so they can independently change it without screwing another studio over. It's hacky but happens.
+
 > [!example]-
 > - Unity & Unreal projects often contain mesh variations, leading to duplicate data. 
 > - These duplicate meshes are also likely to be duplicated on the perforce repo
