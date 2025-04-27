@@ -43,6 +43,18 @@ POLISH
 
 create a unit test framework around the gym
 
+
+The validation gym code generates problems to solve, for various dccs.
+These can then be used to test how robust a pipeline is.
+Allow to run from console, so the user can get a percent score.
+
+examples
+[[validation gym - 001 - is a mesh]]
+[[validation gym - 002 - is a mesh with a material]]
+[[validation gym - 003 -detect split UVs]]
+[[validation gym - 004 - autofix split UVs]]
+
+
 [[pipeline as code]]
 [[Pyblish issues]]
 [[sample pipeline node view.canvas|sample pipeline node view]]
