@@ -6,3 +6,4 @@ https://www.indietraveller.co/how-to-work-remotely/
 - check insurance
 
 - use https://nomads.com/ to research the country
+- use [[portable]] things
