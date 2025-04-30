@@ -8,6 +8,6 @@
 
 If social media is consumed on phone
 - [[phubbing]] leads to worse social connections
-- Always on your person, so distraction is always only a ping away.
+- Always on your person, so [[distraction]] is always only a ping away.
 
 [[digital minimalism]] tries to counter or control the negative effect of social media.
