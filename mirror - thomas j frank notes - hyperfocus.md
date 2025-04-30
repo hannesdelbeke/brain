@@ -8,7 +8,7 @@ I recommend this book if you want a deep dive into the science of focus along wi
 
 ## Main Takeaways
 
-Deliberately setting intentions before sitting down to work is hugely effective for staying on task and being resistant to distractions.
+Deliberately setting intentions before sitting down to work is hugely effective for staying on task and being resistant to [[distraction|distractions]].
 
 Hyperfocus vs. Scatterfocus: Both are crucial. Hyperfocus allows you to stay focused on one problem and execute; Scatterfocus (i.e. the “diffuse mode” from _A Mind for Numbers_) allows for creativity and new insights. It is worthwhile to learn how to deliberately enter both modes multiple times a day.
 
