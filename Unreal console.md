@@ -1,5 +1,5 @@
 ## Open
-- press the `~` or `\` key to enter a [[console]] command in [[Unreal]]
+- press the `~` or `\` key to enter a [[console window|console]] command in [[Unreal]]
 
 ## Mode 
 you can change the dropdown to Cmd or [[Python]] 

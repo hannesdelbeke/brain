@@ -26,7 +26,7 @@ Meanwhile I had this working prototype lying around, but since it wasn't finishe
 - nodes don't need a name, since all python objects have a name. `self.__class__.__name__`
 - nodes don't need actions, since all python objects have methods, which can be private or public.
 - i was a bit fuzzy on the exact way, but nodes have connections. since they are always called by another node, which can be (recursively) accessed through the caller_object, using `inspect.stack()`. (Code felt little hacky but did the job)
-- i could do complex class manipulation, e.g. overriding `def __setattr__` so we always stored a link to the node assigned to an attribute. This was really cool but mainly ended up abstracting things. Nice when stuff worked, but a lil harder to debug.
+- i could do complex class manipulation, e.g. [[overriding]] `def __setattr__` so we always stored a link to the node assigned to an attribute. This was really cool but mainly ended up abstracting things. Nice when stuff worked, but a lil harder to debug.
 - serialization, config and raw config are surprisingly confusing. Might have made more sense to split that up. see [[composition vs inheritance]].
 - nodes don't need a run method, since python objects have `__call__`
 
