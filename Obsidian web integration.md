@@ -118,7 +118,7 @@ dynamic render uses JavaScript which might be an issue, but no html generation n
 	  YAML title, date, and lastmod field
 	  - [video](https://carpentries-incubator.github.io/blogging-with-hugo-and-github-pages/) tut on hugo 
 - [ ]  checkout obsidian thread https://forum.obsidian.md/t/static-site-generators-any-guides/8915
-- [ ] this [blogpost](https://www.kez.ie/notes/choosing%20the%20right%20platform%20to%20create%20a%20public%20digital%20garden/) discusses solutions, and shares feeling overwhelmed. they settled on Eleventy
+- [ ] this [blogpost](https://www.kez.ie/notes/choosing%20the%20right%20platform%20to%20create%20a%20public%20digital%20garden/) discusses solutions, and shares feeling [[overwhelmed]]. they settled on Eleventy
 
 ### Start publishing my notes
 

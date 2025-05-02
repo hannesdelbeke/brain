@@ -1,4 +1,4 @@
-I want to start using [[Obsidian]] to manage my notes, but am overwhelmed. Where do I start?
+I want to start using [[Obsidian]] to manage my notes, but am [[overwhelmed]]. Where do I start?
 
 1. Install Obsidian 
 2. Start writing notes in markdown files without organizing them.

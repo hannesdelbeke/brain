@@ -25,7 +25,7 @@ This seems similar to PIP. But PIP has a all or nothing. Hired or fired outcome.
 	- but some people would stop giving their all when they made millions
 
 from a personal point of view. i often work harder for tasks i care about, than silly tasks at companies that pay double.
-So personal motivation seems the biggest driver. Purpose, knowledge, ...
+So personal [[motivation]] seems the biggest driver. Purpose, knowledge, ...
 Manager connection would also impact. Feeling valued, social connections.
 Money always does, up to a point. Money is time and power.
 Recognition for your achievements.

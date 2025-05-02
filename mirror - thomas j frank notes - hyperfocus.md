@@ -116,8 +116,8 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Leaves room to reflect on the best way to finish the task
     - Greater awareness of where you should be directing your attention. Increased ability to redirect attention when it wanders.
 - **Intention**: “Intention enables us to prioritize so we don’t overload our attentional space.”
-- Noticing that you’re feeling overwhelmed is a good cue for checking in on what’s occupying your attentional space.
-- Brain’s novelty bias – when you switch tasks, you’re rewarded with a dopamine hit. Managing your time and motivation
+- Noticing that you’re feeling [[overwhelmed]] is a good cue for checking in on what’s occupying your attentional space.
+- Brain’s novelty bias – when you switch tasks, you’re rewarded with a dopamine hit. Managing your time and [[motivation]]
     - “Continually seeking novel stimuli makes us _feel_ more productive – after all, we’re doing more in the moment. But again, just because we’re busier doesn’t mean we’re getting more accomplished.”
     - Early ancestors were well-served by this, because it allowed them to keep constant tabs on a changing, dangerous environment.
 - **Productivity: Chris’ definition of productivity: Productivity means accomplishing what we intend to.**
