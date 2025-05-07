@@ -10,7 +10,7 @@ For someone who is already maintaining a healthy lifestyle with good habits, a v
 
 1. **Comprehensive Health Benefits**: Quality sleep is crucial for overall health, impacting almost every bodily function. It plays a key role in cognitive function, emotional regulation, [[immune system]] performance, and recovery from [[illness]] and [[stress]].
 2. **Disease Prevention**: Poor sleep is linked to an increased risk of numerous chronic conditions, including heart disease, diabetes, obesity, and even some cancers.
-3. **Mental Health**: Adequate sleep supports mental health, reducing the risk of depression, anxiety, and other mood disorders.
+3. **Mental Health**: Adequate sleep supports mental health, reducing the risk of [[depression]], anxiety, and other mood disorders.
 4. **Cellular Repair and Hormone Regulation**: Sleep is a time for the body to repair and regenerate cells, balance hormones, and remove toxins from the brain.
 
 **Strategies for Better Sleep**:
