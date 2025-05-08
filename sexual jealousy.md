@@ -4,7 +4,7 @@
 	- their partner is more physically attractive
 	- their partner has a higher mate value than them
 	- they suspect their partner is unfaithful
-- Women allocate more resources to mate retention when their partner has a wealth of resources
+- [[Women]] allocate more resources to mate retention when their partner has a wealth of resources
 ## men
 - Threat: a man might look after a child that's not his.
 ## women
