@@ -1,0 +1,1 @@
+plastic ropes between 2 layers of plastic, allow for more pressure when inflating without tearing the plastic. 
