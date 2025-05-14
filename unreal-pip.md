@@ -1,7 +1,7 @@
 
 
 [[Python pip|pip]]
-[[my projects]]
+[[my code projects]]
 
 
 todo
