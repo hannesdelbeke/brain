@@ -7,3 +7,4 @@ aliases:
 - [instructions](https://www.jacksons-fencing.co.uk/the-edit/how-to-build-a-raised-garden-bed-with-sleepers) on making a bed with sleepers
 
 [[gardening]]
+[[woodworking]]
