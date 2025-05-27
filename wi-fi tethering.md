@@ -1,0 +1,1 @@
+connect phone to 5G, and then share [[WiFi]] with laptop through phone
