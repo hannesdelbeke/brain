@@ -7,3 +7,5 @@
 | Additional rate    | over £125,140       | 45%      |
 goes up to 60% due to loss of allowances above 100k
 then goes down back to 45%
+
+[[income]]
