@@ -1,0 +1,3 @@
+[[streaming]]
+[[movie]]
+[[TV series]]

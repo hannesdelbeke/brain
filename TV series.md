@@ -1,4 +1,4 @@
 ---
 aliases:
-  - discovered
+  - series
 ---
