@@ -1,1 +1,1 @@
-I discovered [[Excalidraw]] by looking at the [[most popular]] plugins
+I [[discovery|discovered]] [[Excalidraw]] by looking at the [[most popular]] obsidian plugins
