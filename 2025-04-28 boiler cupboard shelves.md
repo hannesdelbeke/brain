@@ -20,5 +20,10 @@ next time?
 can it be saved?
 - with a thicker shelf holder maybe. like those metal clips
 
+### a month later
+I barely used the shelves. not using this cupboard
+i thought i d save tools in there, it'd help so much with organizing. but it didn't, because thecupboard is hard to access with the door blocking it.
+[[overestimated impact]]
+
 [[woodworking]]
 [[my woodwork projects]]

@@ -368,8 +368,8 @@ is actually a pretty effective strategy for connecting with people for for fitti
 know, I ask questions. I listen, I show interest. This is a really reliable tool in a social 
 setting. And so over a lifetime, people with this style, they really hone this listening skill. 
 And even bigger than that, they hone this kind of natural attentiveness to other people's 
-needs and they—they learn to pick up on the happiness cues or the sadness cues or 
-the anger cues. And this can really be a tremendous asset that they don't even realize 
+needs and they—they learn to pick up on the happiness cues or the [[sadness]] cues or 
+the [[anger]] cues. And this can really be a tremendous asset that they don't even realize 
 that they have. 
 And because there is naturally a higher willingness to be vulnerable in this style, they do 
 also tend to be kind of more comfortable empathizing with people, expressing 
