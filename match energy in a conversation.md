@@ -1,0 +1,3 @@
+NASA needs astronauts to not kill each other when they are in space for months at a time.  
+In the final rounds of like astronaut, interviews, everybody there knows how to fake into emotional intelligence really well. So how to find people who are not faking it?
+He tested emotional intelligence in interviews by creating an awkward but funny moment—spilling papers and wearing a loud tie. He’d laugh at himself and watch whether the applicant laugh back politely, or matched his energy and his intensity of laughter, revealing their ability to connect naturally.
