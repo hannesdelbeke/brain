@@ -9,7 +9,7 @@ In "Supercommunicators," Charles Duhigg sets the stage by illustrating the power
 
 ### The Matching Principle:
 
-Synchronization with others, including body language, eye contact, and vocal tone, is key to successful communication. Supercommunicators excel in 
+Synchronization with others, including [[body language]], eye contact, and vocal tone, is key to successful communication. Supercommunicators excel in 
 - asking questions 
 - matching the emotional tone of others
 fostering a sense of connection and chemistry. The art of asking questions, particularly in group settings, enables deeper understanding and engagement.

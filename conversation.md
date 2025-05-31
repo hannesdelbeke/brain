@@ -1,0 +1,6 @@
+---
+aliases:
+  - conversations
+---
+
+[[communication]]

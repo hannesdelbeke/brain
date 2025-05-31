@@ -6,7 +6,7 @@ common source control mistakes
   when several people work on a project simultaneously , you will at points have conflicts. Code can often be merged, but you can't merge raw data like textures, meshes, game-files.
   To prevent this, you can use a file locking system. Both git and perforce support this.
 - relying on auto merge.
-  there are several tools and apps out there that attempt to auto merge your code in case of a conflict. e.g. [unity smart merge](https://docs.unity3d.com/Manual/SmartMerge.html), beyond compare, ...
+  there are several tools and apps out there that attempt to auto merge your code in case of a [[conflict]]. e.g. [unity smart merge](https://docs.unity3d.com/Manual/SmartMerge.html), beyond compare, ...
   Do not blindly trust the result and always manually check & test the result. It often messes up.
   
 [[file distribution]]

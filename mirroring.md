@@ -1,0 +1,1 @@
+copy someone's behavior (e.g. tone, posture, vocabulary, conversation speed, ...), often done subconsciously in [[conversation|conversations]]
