@@ -1,5 +1,41 @@
 How to Unlock the Secret Language of Connection
 
+- [[match energy in a conversation]]
+
+
+3 key insights from the book
+- The goal of a meaningful conversation is connection
+- Most of our conversations fall into three categories
+- Being a supercommunicator means asking more questions
+
+
+## 3 conversation categories
+- **How do we feel?** 
+  If someone speaks about their feelings, share your feelings instead of giving advice.
+- **What is this really about?**
+  If someone is planning something and making a collective decision, respond with practical advice.
+- **Who are we?**
+  The most common category ?!
+  Requires us to understand peoples identities and social relationships.
+- helped, heard or hugged. (or vent solve support)
+
+
+supercommunicators are high-centrality participants
+- Good communicators can steer conversations, build trust, and create [[neural entrainment]].
+	- match emotions
+	- active listening
+	- ask open ended questions
+- build trust in a conversation with
+	- open ended questions, 
+	- active listening lets the other know you are listening 
+	- reciprocate when someone shares feelings 
+- they're not the loudest, but enable others to speak and feel heard. They're facilitators. Having them in groups makes the group much more effective.
+- Before speaking, they ask "why am i speaking?", they speak with purpose
+- ask 10-20 times more questions
+- share your goals, ask others about needs and feelings, and explore identities related to the conversation.
+
+## other
+
 Duhigg's book is the subject of the most recent episode of the Ten Percent Happier podcast, [_The Science of Effective Communication._](https://www.tenpercent.com/tph/podcast-episode/charles-duhigg)
 
 
@@ -9,10 +45,7 @@ Practical Takeaways
 - Practice Active Listening
 - Embrace Differences: Acknowledge and appreciate diverse perspectives to build understanding and connection
 
-**Match conversation energy**
-NASA needs astronauts to not kill each other when they are in space for months at a time.  
-In the final rounds of like astronaut, interviews, everybody there knows how to fake into emotional intelligence really well. So how to find people who are not faking it?
-He tested emotional intelligence in interviews by creating an awkward but funny moment—spilling papers and wearing a loud tie. He’d laugh at himself and watch whether the applicant laugh back politely, or matched his energy and his intensity of laughter, revealing their ability to connect naturally.
+
 
 
 **Recognize and adapt to different types of conversations: practical, emotional, and social.**  
@@ -25,16 +58,6 @@ The second part is getting to ho you feel about the topic at hand, and this was 
 The third conversation is about values and identity.  Things we hold true about ourselves shape our conversations.    This can create rapport if you find shared values and identities, or can build barriers.  But all of us have many identities, parent, business owner, sports fan and so on and acknowledging at times the complexities of this can be interesting.
 
 
-3 key insights from the book
-- The goal of a meaningful conversation is connection
-- Most of our conversations fall into three categories
-- Being a supercommunicator means asking more questions
-
-**Unsure about the Neural entrainment claim**
-when we communicate well, our brainwaves sync. Same with people in a concert.
-This is neural entrainment: eyes dilate in tandem, pulse matche, complete each others sentences in our head. 
-
-- good communicators can steer conversations, build trust, and create [[neural entrainment]].
 
 
 guidelines for Hard Conversations, from this [review](https://nutreats.co.za/supercommunicators-book-review/)
@@ -47,11 +70,6 @@ guidelines for Hard Conversations, from this [review](https://nutreats.co.za/sup
 - Confidentiality is important. People need to feel safe knowing that what they say won’t be repeated
 - Respect is essential. Respect each other’s right to be heard even when you disagree.
 - Sometimes we need to pause. If a conversation is traumatizing or painful it is a signal to stop. Encourage people to go slow, pause or step away.
-
-
-
-
-
 
 
 
