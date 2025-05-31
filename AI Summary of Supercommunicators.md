@@ -16,11 +16,11 @@ fostering a sense of connection and chemistry. The art of asking questions, part
 
 ### Every Conversation is a Negotiation:
 
-Duhigg underscores the importance of approaching every conversation as a negotiation, emphasizing the need to avoid assumptions and ask open-ended questions. Understanding the context and content of the conversation is crucial in tailoring communication strategies, whether in business or personal relationships.
+Duhigg underscores the importance of approaching every conversation as a [[negotiating|negotiation]], emphasizing the need to avoid assumptions and ask open-ended questions. Understanding the context and content of the conversation is crucial in tailoring communication strategies, whether in business or personal relationships.
 
 ### The Listening Cure:
 
-The concept of perspective-giving is introduced, highlighting the transformative power of asking questions to understand another person's point of view. Through empathetic questioning, individuals can navigate sensitive topics and foster deeper connections. Active listening and asking sensitive questions are advocated as tools for building trust and empathy.
+The concept of perspective-giving is introduced, highlighting the transformative power of asking questions to understand another person's point of view. Through empathetic questioning, individuals can navigate sensitive topics and foster deeper connections. [[Active listening]] and asking sensitive questions are advocated as tools for building trust and empathy.
 
 ### How Do You Hear Emotions No One Says Aloud?
 
