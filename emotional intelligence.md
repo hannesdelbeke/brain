@@ -1,0 +1,5 @@
+---
+aliases:
+  - EQ
+---
+[[emotional]]
