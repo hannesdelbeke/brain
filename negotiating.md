@@ -1,3 +1,8 @@
+---
+aliases:
+  - negotiation
+  - negotiate
+---
 
 
 [[social]]

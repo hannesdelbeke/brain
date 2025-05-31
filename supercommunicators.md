@@ -19,20 +19,17 @@ How to Unlock the Secret Language of Connection
   Requires us to understand peoples identities and social relationships.
 - helped, heard or hugged. (or vent solve support)
 
-
 supercommunicators are high-centrality participants
-- Good communicators can steer conversations, build trust, and create [[neural entrainment]].
-	- match emotions
-	- active listening
-	- ask open ended questions
-- build trust in a conversation with
-	- open ended questions, 
-	- active listening lets the other know you are listening 
-	- reciprocate when someone shares feelings 
+- Good communicators can steer conversations (and allegedly create [[neural entrainment]])
+- They build trust in a conversation with
+	- open ended questions
+	- [[active listening]] lets the other know you are listening with [[backchanneling]]
+	- match emotions: reciprocate when someone shares feelings 
 - they're not the loudest, but enable others to speak and feel heard. They're facilitators. Having them in groups makes the group much more effective.
 - Before speaking, they ask "why am i speaking?", they speak with purpose
 - ask 10-20 times more questions
 - share your goals, ask others about needs and feelings, and explore identities related to the conversation.
+- use body language and tone of voice (energy?)
 
 ## other
 
