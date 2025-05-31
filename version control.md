@@ -1,1 +1,6 @@
+---
+aliases:
+  - source control
+---
+
 [[versioning]]
