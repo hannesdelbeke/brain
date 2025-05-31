@@ -505,7 +505,7 @@ make things on them.
 And, you know, that's not always necessarily a conscious decision, uh, but people with 
 this style often know how to use their power to get their way. And they'll try to use the 
 carrot first, but they'll resort to the stick if they have to. And their interpersonal 
-awareness, their—their emotional intelligence—that really does help them know just 
+awareness, their—their [[emotional intelligence]]—that really does help them know just 
 how far to push the stick without necessarily doing, kind of, irreversible damage. 
 And once they've gotten compliance out of the other person, there is oftentimes this 
 kind of nice, slow flow back into a collegial relationship. So it's not a purely domineering 
