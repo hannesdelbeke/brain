@@ -5,7 +5,7 @@
 
 ### Opening:
 
-In "Supercommunicators," Charles Duhigg sets the stage by illustrating the power of effective communication through the story of Felix, an FBI negotiator. Felix's ability to establish rapport and create a comfortable environment for conversation is highlighted, emphasizing the importance of matching and synchronizing with others during communication. The principle of asking questions, mirroring emotions, and fostering connection forms the foundation of supercommunication.
+In "[[Supercommunicators - How to Unlock the Secret Language of Connection|Supercommunicators]]," Charles Duhigg sets the stage by illustrating the power of effective communication through the story of Felix, an FBI negotiator. Felix's ability to establish rapport and create a comfortable environment for conversation is highlighted, emphasizing the importance of matching and synchronizing with others during communication. The principle of asking questions, mirroring emotions, and fostering connection forms the foundation of supercommunication.
 
 ### The Matching Principle:
 
@@ -43,5 +43,3 @@ Preparing for challenging conversations involves planning, empathy, and clarity.
 Duhigg concludes by emphasizing the importance of relationships in fostering happiness and fulfillment. Cultivating deep connections, whether romantic or platonic, contributes significantly to well-being and resilience. Active participation in communities and nurturing meaningful relationships over time are highlighted as essential components of a fulfilling life.
 
 In "Supercommunicators," Charles Duhigg provides valuable insights and practical strategies for fostering meaningful connections and effective communication in various contexts, highlighting the transformative power of empathy, active listening, and understanding.
-
-[[supercommunicators]]

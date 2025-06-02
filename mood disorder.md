@@ -1,0 +1,1 @@
+Mood disorders are a class of mental health conditions characterized by persistent and extreme fluctuations in mood, often involving periods of sadness, irritability, or elevated mood.

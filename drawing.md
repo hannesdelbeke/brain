@@ -1,0 +1,3 @@
+[[painting]]
+[[art]]
+[[concept art]]

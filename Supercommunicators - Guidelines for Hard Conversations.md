@@ -1,4 +1,4 @@
-This [review](https://nutreats.co.za/supercommunicators-book-review/) of [[supercommunicators]] seems to handle very different topics than what i remember from the book. Perhaps it's hallucinated [[AI slop]]?
+This [review](https://nutreats.co.za/supercommunicators-book-review/) of [[Supercommunicators - How to Unlock the Secret Language of Connection]] seems to handle very different topics than what i remember from the book. Perhaps it's hallucinated [[AI slop]]?
 
 - start with establishing the boundaries of the conversation
 - Acknowledge discomfort

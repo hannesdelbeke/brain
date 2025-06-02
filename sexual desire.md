@@ -1,3 +1,7 @@
+---
+aliases:
+  - arousal
+---
 
 2 modes
 - anticipation of sexual arousal. 

@@ -1,4 +1,4 @@
-Excalidraw is a great app for drawing vector art.
+Excalidraw is a great app for [[drawing]] vector art.
 an open source [[Miro]] alternative
 ### file format
 format is `.excalidraw`, a [[JSON]]
