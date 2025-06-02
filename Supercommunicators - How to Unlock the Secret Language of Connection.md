@@ -40,5 +40,4 @@ Strong connections have a positive impact on our lives:
 [[Supercommunicators - ThinkFastTalkSmart‬ podcast]]
 discussed in the Ten Percent Happier podcast, [_The Science of Effective Communication._](https://www.tenpercent.com/tph/podcast-episode/charles-duhigg)
 
-
 [[memorable books]]
