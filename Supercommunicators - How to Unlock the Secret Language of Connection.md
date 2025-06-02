@@ -2,8 +2,7 @@
 aliases:
   - Supercommunicators
 ---
-
-a [[book]] about the traits of good communicators. It uses stories of people overcoming difficult situations with the use of great [[communication]] skills.
+A [[book]] about the traits of good communicators. It uses stories of people overcoming difficult situations with the use of great [[communication]] skills.
 ## Summary
 3 key insights from the book
 - The goal of a meaningful [[conversation]] is connection
@@ -36,6 +35,7 @@ Strong connections have a positive impact on our lives:
 - happiness: [[frequent conversations lead to happier relationships]]
 - connect with people: [[asking deep questions improves dating success]]
 ## other
+[Someone](https://www.thefastlaneforum.com/community/threads/supercommunicators-by-charles-duhigg-review-and-discussion.113947/) recommended the book discussion in this (free) [Rich Roll Podcast](https://www.youtube.com/watch?v=YWamRVY9ZKg) over the (paid) book, because it contains more practical tips.
 [[Supercommunicators - Guidelines for Hard Conversations]]
 [[Supercommunicators - ThinkFastTalkSmart‬ podcast]]
 discussed in the Ten Percent Happier podcast, [_The Science of Effective Communication._](https://www.tenpercent.com/tph/podcast-episode/charles-duhigg)
