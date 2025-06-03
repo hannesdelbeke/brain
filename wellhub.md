@@ -3,8 +3,9 @@ aliases:
   - gympass
 ---
 Wellhub gives you and your family members access fitness network
+https://wellhub.com/en-uk/search/
 
-There’s something for everyone, from firm favourites like Nuffield Health and Bannatyne Health Club & Spa to pocket-friendly options like Better, Everyone Active and Places Leisure Centres, as well as premium access to apps like [[Headspace]], [[Sleep Cycle]], [[Strava]] and many more
+There’s something for everyone, from firm favorites like Nuffield Health and Bannatyne Health Club & Spa to pocket-friendly options like Better, Everyone Active and Places Leisure Centers, as well as premium access to apps like [[Headspace]], [[Sleep Cycle]], [[Strava]] and many more
 
 supported countries:
 	United States, Argentina, Brazil, Chile, Mexico, Germany, Ireland, Italy, Spain, United Kingdom, and Romania
