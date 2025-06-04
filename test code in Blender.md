@@ -30,3 +30,5 @@ reload tends to miss things, better to either
 [[Blender scripting tips]]
 [[dev environment]]
 [[TODO create local test env]]
+
+[[Python env management]]

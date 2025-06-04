@@ -5,7 +5,7 @@ Get it from the [GitHub repo](https://github.com/hannesdelbeke/blender_pip)
 https://github.com/hannesdelbeke/blender_pip
 - [x] pass paths to [[Python pip|pip]]
 - [x] install to user modules folder unique for each blender version
-- [x] support editable install for local repos by auto adding a script that handles `site dir` in startup folder (which likely doesn't exist)
+- [x] support [[Python packages editable install|editable install]] for local repos by auto adding a script that handles `site dir` in startup folder (which likely doesn't exist)
       [[Blender doesn't support editable Python packages]]
 
 Original author pointed out this should be tested  on Linux and Mac, currently Windows only. AFAIK it should work on other OS.

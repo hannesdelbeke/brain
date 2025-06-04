@@ -15,3 +15,4 @@ we might be able to use a [[app launcher]] to handle the [[environment managemen
 e.g. [[my app launcher]]
 
 [[dev environment]]
+[[Python env management]]
