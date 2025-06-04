@@ -1,6 +1,10 @@
+
+> [!WARNING]
+> ⚠️ This repo evolved in a more advanced PIP installer, see [[Blender pip Qt addon]]
+
 A [[Python]] module manager for [[Blender]], using [[Python pip|pip]]
 Get it from the [GitHub repo](https://github.com/hannesdelbeke/blender_pip)
-
+<img width="490" alt="image" src="https://user-images.githubusercontent.com/3758308/190018745-52fb472c-79a9-46ea-ab85-cf3ab4843ffc.png">
 ### new repo
 https://github.com/hannesdelbeke/blender_pip
 - [x] pass paths to [[Python pip|pip]]

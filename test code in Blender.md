@@ -1,3 +1,5 @@
+
+# Packages
 ## Append path
 to test a python package
 1. add to path
@@ -9,13 +11,16 @@ sys.path.append('/path/to/directory')
 
 **notes**
 - disappears on restart
-
 ## Symlink
 or symbolic link [[mklink windows - soft & hard link]]
 
 **notes**
 - stays on restart
 - can create issues with [[git]], if git tries to delete the link e.g. when changing branch
+
+## Editable install
+[[Python packages editable install|editable install]] is the [[Pythonic]] way to symlink.
+However, this doesn't work by default with Blender. It requires the [[Blender pip addon]]
 
 ## install local addon
 to test an addon
