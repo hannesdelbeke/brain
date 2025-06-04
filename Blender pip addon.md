@@ -23,3 +23,4 @@ issues:
 
 [[Blender addon]]
 [[package management]]
+[[Python env management]]
