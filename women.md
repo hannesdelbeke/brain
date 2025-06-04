@@ -1,0 +1,6 @@
+---
+aliases:
+  - girls
+  - woman
+  - girl
+---
