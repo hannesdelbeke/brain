@@ -19,8 +19,8 @@ or symbolic link [[mklink windows - soft & hard link]]
 
 ## install local addon
 to test an addon
-1. install local [[Blender addon|addon]]
-
+1. set up your project as a blender addon
+2. install a local [[Blender addon|addon]], browse to the folder, and click install
 
 ## reload code
 reload tends to miss things, better to either
