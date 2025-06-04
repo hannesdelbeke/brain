@@ -7,6 +7,7 @@ repo: https://github.com/hannesdelbeke/pip-qt
 ## Features
 - [x] add uninstall
 - [x] add sort column support
+[[search bar]]
 
 low priority 
 - [ ] add reload (hacky)
@@ -27,5 +28,4 @@ https://github.com/open-cogsci/python-qtpip 3y old, uses pip search, outdated, u
 https://github.com/techbliss/Pip_QT_Gui 8 year old, PyQt4
 https://github.com/NathanVaughn/PipQt 4year old, - PySide2, nice UI
 ![](https://github.com/NathanVaughn/PipQt/raw/master/screenshots/main.jpg)
-
 
