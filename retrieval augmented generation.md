@@ -2,4 +2,4 @@
 aliases:
   - RAG
 ---
-connecting the AI to outside information (e.g. local documents)
+connecting the [[Artificial intelligence|AI]] to outside information (e.g. local documents)

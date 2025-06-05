@@ -10,3 +10,4 @@ light when changing material refracts through the go zone, but never the no go z
 it is reflected back inside. Total internal reflection.
 
 [[physics]]
+[[light waves]]

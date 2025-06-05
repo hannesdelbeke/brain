@@ -1,5 +1,5 @@
 there's a difference between low levels, and a deficiency.
-e.g. You don't need to take creatine as a veggie, but will do better if you do.
+e.g. You don't need to take creatine [[supplement|supplements]] as a [[vegetarian]], but will do better if you do.
 
 vegetarians have lower levels of
 - [[creatine]]
@@ -57,6 +57,5 @@ possible low levels
 
 
 
-see [[supplement]]
-
-[[vegetarian]]
+[[health]]
+[[longevity]]

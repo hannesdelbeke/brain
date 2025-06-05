@@ -48,3 +48,4 @@ Each camera has unique strengths, but for **high sensitivity and resolution**, t
 
 [[thermal imager]]
 [[infrared camera|IR camera]]
+[[temperature]]

@@ -1,0 +1,5 @@
+---
+aliases:
+  - maths
+---
+[[science]]

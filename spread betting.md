@@ -24,3 +24,6 @@ This may seem a major drawback, but any losses can be offset against future prof
 other option is x3 ETF
 
 [source](https://www.ig.com/uk/ig-academy/spread-betting-and-cfds/how-CFDs-differ-from-spread-betting#:~:text=As%20mentioned%20earlier%20in%20this,amount%20in%20the%20underlying%20market.)
+
+[[betting]]
+[[finance]]
