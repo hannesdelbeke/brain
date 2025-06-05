@@ -6,7 +6,7 @@ The most basic implantation is
 - use `< Previous` and `Next >` to navigate between the notes.
 
 MkDocs material supports this, see [navigation](https://squidfunk.github.io/mkdocs-material/setup/setting-up-the-footer/#navigation)
-MkDocs auto falls back on folder structure.
+MkDocs auto falls back on [[folder structure]].
 >The [nav](https://www.mkdocs.org/user-guide/configuration/#nav) configuration setting in your `mkdocs.yml` file defines which pages are included in the global site navigation menu as well as the structure of that menu. If not provided, the navigation will be automatically created by discovering all the Markdown files in the [documentation directory](https://www.mkdocs.org/user-guide/configuration/#docs_dir).
 
 The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/) some other great navigation concepts
