@@ -5,3 +5,5 @@ some examples:
 - patent trolls that sue companies
 - taking money from your child's savings
 - taking all the money from a joint account without permission of the joint owner
+
+[[legal]]
