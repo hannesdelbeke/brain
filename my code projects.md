@@ -8,7 +8,7 @@ Done
 - [FigmaPy](https://github.com/Amatobahn/FigmaPy) done, need more work on async and simplify UX downloading 
 - [[BQt]] [bqt](https://github.com/techartorg/bqt) wrap blender in bqt [[Qt]]
 - [note-link-janitor](https://github.com/hannesdelbeke/note-link-janitor) (JavaScript) GitHub action to add backlinks to .md files
-- [[bend modifier]]
+- [[3Ds Max - bend modifier tool]]
 - [[detect-app]]
 
 WIP
