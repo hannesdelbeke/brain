@@ -1,0 +1,1 @@
+[[Python]] is often seen as not a real coding language, because its not 
