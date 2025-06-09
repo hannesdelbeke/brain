@@ -3,3 +3,4 @@ aliases:
   - FTUE
 ---
 [[UX]]
+[[onboarding]]
