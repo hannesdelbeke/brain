@@ -3,6 +3,7 @@ aliases:
   - PRs
   - PR
   - pull requests
+  - merge request
 ---
 
-[[GitHub]]
+[[git]]
