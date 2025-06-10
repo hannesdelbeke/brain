@@ -1,0 +1,4 @@
+---
+aliases:
+  - code with AI
+---
