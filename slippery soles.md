@@ -1,4 +1,4 @@
-I first noticed slippery soles when I bought the super cheap KALENJI running shoes from Decathlon. Any wet tiles in a city or wet rocks on a trail, would send me slipping like i was walking on ice. I'm unsure if this was so from the start, or started after having worn rather quickly through the cheap soles. having flattened the threads.
+I first noticed slippery soles when I bought the super cheap KALENJI [[running]] shoes from Decathlon. Any wet tiles in a city or wet rocks on a trail, would send me slipping like i was walking on ice. I'm unsure if this was so from the start, or started after having worn rather quickly through the cheap soles. having flattened the threads.
 
 The cheap but nice shoes I bought on my [[Lisbon]] trip have the same issue, from when I bought them. Both have a cheap sole made out of a single white material / foam.
 
