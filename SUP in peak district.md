@@ -50,7 +50,7 @@ Visitor centers, car parks, cafes, and toilets can be found along the River Derw
 
 Carsington Water is a fantastic UK destination for a large selection of outdoor activities. 
 
-Cycling, walking, fishing, watersports, and horse riding are regularly enjoyed at the waters between Wirksworth and Kniveton, with plenty of toilets, shops, and outdoor areas surrounding the reservoir. 
+[[bicycle|cycling]], walking, fishing, watersports, and horse riding are regularly enjoyed at the waters between Wirksworth and Kniveton, with plenty of toilets, shops, and outdoor areas surrounding the reservoir. 
 
 The Carsington Water reservoir was built in 1980 and is the ninth-largest reservoir in the UK as it is able to hold up to 7,800 million gallons of water. 
 

@@ -1,5 +1,5 @@
 ---
 aliases:
   - cycling
-  - cycle
+  - bike
 ---
