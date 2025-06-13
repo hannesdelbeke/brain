@@ -1,4 +1,4 @@
 [[hiking]]
 [[mountain]]
-[[adventure]]
-[[sport]]
+[[Poland]]
+[[holiday]]
