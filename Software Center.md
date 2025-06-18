@@ -1,4 +1,4 @@
-Software center distributes software to users in your organisation.
+Software center distributes [[software]] to users in your organisation.
 Users can choose from a pre-configured list, which apps to install on their computer..
 
 pro

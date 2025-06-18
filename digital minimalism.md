@@ -1,7 +1,12 @@
-reduce [[notification|notifications]] on phone.
+Companies want to control your attention for profit.
+- Control what you pay attention to, 
+	- by disabling [[ads]]
+	- disable [[bloatware]]
+- Choose when you pay attention to your device
+	- disable [[notification|notifications]]
+	- decide when to check your email.
 
-example:
-Don't let companies control when you pay attention to your device (and see [[ads]]), instead you disable notifications, and decide when to check your email.
+Interruption is a big [[productivity]] killer, digital minimalism aims to reduce interruptions.
 
-interruption is a big [[productivity]] killer, digital minimalism aims to reduce interruptions and give you control.
 [[minimalism]]
+[[declutter]]
