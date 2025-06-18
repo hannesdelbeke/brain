@@ -1,1 +1,3 @@
+reduce [[clutter]]
+
 [[minimalism]]
