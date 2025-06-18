@@ -1,3 +1,9 @@
+---
+aliases:
+  - mental effort
+---
+
+
 [[concentration]]
 
 how [[tired|exhausted]] does your brain get?

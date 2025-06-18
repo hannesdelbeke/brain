@@ -2,6 +2,7 @@
 aliases:
   - mono repo
   - mono-repo
+  - monorepos
 ---
 all source code from different projects in 1 repo. The opposite of a [[polyrepo]]
 
