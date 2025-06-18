@@ -1,0 +1,3 @@
+[[lighting]]
+[[nature]]
+[[outer space]]

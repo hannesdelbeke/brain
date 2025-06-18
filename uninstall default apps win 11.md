@@ -31,7 +31,7 @@ winget uninstall Microsoft.WindowsSoundRecorder_8wekyb3d8bbwe
 winget uninstall Microsoft.YourPhone_8wekyb3d8bbwe
 ```
 
-uninstall MT 2022 laptop bloatware
+uninstall MT 2022 laptop [[bloatware]]
 ```
 winget uninstall Burnintest_is1
 winget uninstall CrystalDewWorld.CrystalDiskMark
