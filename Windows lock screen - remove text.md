@@ -6,3 +6,5 @@ to remove it:
 - Settings > Personalization > Lock screen 
 - change the background from `windows spotlight` to "Picture" or "Slideshow" 
 - toggle off "Get fun facts, tips, and more on your lock screen"
+
+[[Windows lock screen]]
