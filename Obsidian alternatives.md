@@ -36,7 +36,7 @@
 ##### VS code plugins
 - [Foam](https://foambubble.github.io/foam/)
 	- [get started](https://github.com/foambubble/foam-template/blob/master/getting-started.md) article
-	- VS code plugin
+	- [[visual studio code|vscode]] plugin
 	- technical GitHub page [template](https://github.com/foambubble/foam-template)
 - https://github.com/svsool/memo
 - [dendron](https://marketplace.visualstudio.com/items?itemName=dendron.dendron), visual studio plugin 🔥, [dendron wiki](https://wiki.dendron.so/notes/6DZiBObwhZNYRjnokQ422/), git ⭐5k

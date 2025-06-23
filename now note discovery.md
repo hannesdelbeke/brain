@@ -3,3 +3,5 @@ Most are [[link rot|dead]] but [this one](https://marcjenkins.co.uk/now/) is sti
 [[fun discoveries]]
 
 I haven't made one myself yet, since I don't think I'll keep it updated for now. But I wrote [[now note]] to revisit the concept. (And I did the day after!)
+
+A now note seems the same as a [[most recent]] note
