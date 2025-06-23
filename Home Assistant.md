@@ -1,4 +1,4 @@
-server that runs on [[Next Unit of Computing|NUC]]
+[[self hosted server]] that runs on [[Next Unit of Computing|NUC]]
 
 great uses for HA 
 [[Home Assistant examples]]
