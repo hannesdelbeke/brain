@@ -4,7 +4,7 @@ More extreme see [[vigorous aerobic activity]]
 ### Examples
 
 1. **Brisk Walking**: At a pace of about 4 miles per hour.
-2. **Cycling**: On flat terrain at speeds less than 10 miles per hour. e.g. commuting
+2. **Cycling**: On flat terrain at speeds less than 10 miles per hour. e.g. [[commuting]]
 3. **Swimming**: Leisurely swimming or water aerobics.
 	1. **Water Aerobics**: Exercise classes conducted in a pool.
 4. **Dancing**: Moderate-intensity dance classes or social dancing.
