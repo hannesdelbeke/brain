@@ -1,3 +1,3 @@
 https://www.kavitareader.com/
-[[self hosted server]]
+[[public/self hosted]]
 [[manga]]

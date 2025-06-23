@@ -1,4 +1,6 @@
 
+[[deepl]]
+
 If Unity is already open, you need a way for it to receive and handle the deep link without restarting. The best approach is to use **a local server inside Unity** to listen for URI requests or use **IPC (Inter-Process Communication) techniques**.
 
 ---

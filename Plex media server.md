@@ -1,4 +1,4 @@
 Often used with [[piracy|pirated]] [[TV series]] & [[movie|movies]]
 
-[[self hosted server]]
+[[public/self hosted]]
 [[streaming]]
