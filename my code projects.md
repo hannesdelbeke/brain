@@ -10,6 +10,7 @@ Done
 - [note-link-janitor](https://github.com/hannesdelbeke/note-link-janitor) (JavaScript) GitHub action to add backlinks to .md files
 - [[3Ds Max - bend modifier tool]]
 - [[detect-app]]
+- [[py-pip]]
 
 WIP
 - [wiki template](https://github.com/hannesdelbeke/wiki_template)
