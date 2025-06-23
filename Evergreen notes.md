@@ -8,4 +8,4 @@ I use evergreen notes for my [[note taking]]
 
 ## links
 - Andy's [post](https://notes.andymatuschak.org/zQvwwb95vzcHcpow3GWy5Wi) on [[Zettelkasten]] vs evergreen
-- Every evergreen note (organism) can be broken down into a combination of facts, which are permanent notes (atoms) [post](https://anthonyamar.fr/Digital+garden/Atomic+design+applied+to+digital+gardening). The atoms don't change, but the organism does.
+- Every evergreen note (organism) can be broken down into a combination of facts, which are permanent notes (atoms) [post](https://anthonyamar.fr/Digital+garden/Atomic+design+applied+to+digital+gardening). The atoms don't change, but the organism does. - [[atomic]]
