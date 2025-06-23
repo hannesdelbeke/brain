@@ -22,3 +22,5 @@ Private notes
 - [[plugget RAW dev notes]]
 - [GITHUB PROJECT](https://github.com/users/hannesdelbeke/projects/5) PLANNING
 - plugget package [manifest repo](https://github.com/hannesdelbeke/plugget-pkgs) 
+
+[[Python module]]
