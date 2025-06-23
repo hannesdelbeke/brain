@@ -37,6 +37,6 @@ work related topics
 - **Understand the nuances of online communication channels.**  
     _Example:_ A Slack message may lack tone, so use emojis or clarify intent to avoid misunderstandings.
 - **Take a moment to consider the mode of conversation before communicating.**  
-    _Example:_ Don’t send an email for urgent issues—call or meet instead.
+    _Example:_ Don’t send an [[email]] for [[urgent]] issues—call or meet instead.
 - **Understand the differences in conflict resolution between personal and professional settings, considering power dynamics and appropriateness.**  
     _Example:_ In personal disagreements, emotions matter more, while workplace conflicts may require neutrality.

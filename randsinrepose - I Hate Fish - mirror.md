@@ -185,18 +185,4 @@ And the Bigeye Tuna Pizza at Yellow Tail in Vegas is excellent. I highly recomme
 4. Yeah, Sometime is Never, but shush your brain — keep moving. 
 5. Possibly the most important footnote. For whatever system you use, the triage system must be lightning fast. Scrubbing my inbox first thing in the morning with the most emails (or Slack) takes five minutes maximum. Same for the todo list. Every single bit of friction in this process will accumulate into fish-hating, productivity-damning rage. 
 
-## Notes
-Just like how you can waste time on the [[meta]] of task management, [[time]] can be wasted on meta of other things:
-- [[minimal notetaking]]
-- [[people manager]]
-
-I resonate a lot with this article
-- He's a super taster, I'm a super smeller.
-- I use the same email setup. Unsubscribe from everything to create high signal.
-- Rand's suggestion to *delete tasks older than 30 days*, reminds me of [[cache]] / [[optimized cache sorting]], mentioned in the book [[Algorithms to Live By]]. 
-- I have similar struggles with productivity systems. Sometimes I blame myself, but other times I wonder, perhaps it's the system itself, or the way I'm using it, that's not intuitive.
-	- I used to have a [[todoist]] list for work and for home. After a while this list grew to hundreds of tasks and I kept postponing. Rands ran into the same issue with his paper list.
-	- I tried to rewrite my todo-list daily in [[obsidian]], but "postponing" tasks just kept pilling up, and eventually I stopped reporting them.
-
-
-[[Rands Schwag]]
+[[article mirror]]

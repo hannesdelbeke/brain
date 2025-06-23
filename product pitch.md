@@ -25,7 +25,7 @@ Why you and why now is the icing on the cake that will bring your pitch home:
 1. **Why you**: Why are you the right person or team to solve this problem?
 2. **Why now**: Why is now the perfect moment for your solution?
 example
-- **Superhuman (why now)**: AI helps you save time and hit inbox zero even faster.
+- **Superhuman (why now)**: AI helps you save time and hit [[inbox zero]] even faster.
 - **Justin Welsh (why you)**: My little one-person business crossed $5M in revenue.
 - **Roblox Analytics (why now)**: AI makes giving every creator a 24/7 analyst possible
 
