@@ -29,3 +29,7 @@ https://github.com/techbliss/Pip_QT_Gui 8 year old, PyQt4
 https://github.com/NathanVaughn/PipQt 4year old, - PySide2, nice UI
 ![](https://github.com/NathanVaughn/PipQt/raw/master/screenshots/main.jpg)
 
+## dependencies
+[[py-pip]]
+pip-search (optional, used for search, type pip-search and click install)
+[[qtpy]]
