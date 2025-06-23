@@ -3,7 +3,7 @@ aliases:
   - HA
 ---
 
-[[self hosted server]] that runs on on a small pc, e.g. a [[Next Unit of Computing|NUC]], or a [[Raspberry Pi]].
+[[public/self hosted|self hosted server]] that runs on on a small pc, e.g. a [[Next Unit of Computing|NUC]], or a [[Raspberry Pi]].
 
 great uses for HA : [[Home Assistant examples]]
 
