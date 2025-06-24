@@ -86,7 +86,7 @@ consider:
 - plugget's `_requirements.py` action already vendors [[py-pip]], see [code](https://github.com/plugget/plugget/blob/9e46d4f7588e0818adb25eb52665a1c666a93696/plugget/actions/_requirements.py#L11)
   `_utils.py` doesn't use the vendored version, but the import is wrapped in a local method so it should be fine.
   This approach doesn't handle any module reload.
-- This could work for unreal plugins, but [[Blender addon|Blender addons]] & [[Maya plugin|Maya plugins]] aren't in the PATH so only support a single python file. This requires a copy paste code solution, or dynamic adding to the path. At least maya has a workaround with [[Maya module]]s but it'd be nice to have it for plugins too.
+- This could work for unreal plugins, but [[Blender addon|Blender addons]] & [[Maya plugin|Maya plugins]] aren't in the PATH so only support a single python file. This requires a copy paste code solution, or dynamic adding to the pwath. At least maya has a workaround with [[Maya module]]s but it'd be nice to have it for plugins too.
 - the [[Maya plugin template]] already has an installer, so we can use this. (I think the installer already installs dependencies)
 - The new [[Blender extensions]] support vendoring dependencies, so lets ignore [[Blender addon]]
 # todo
