@@ -5,14 +5,15 @@ aliases:
   - Blender addons
   - addons
 ---
+
+> [!warning]
+> Blender addons are phased out in favor of [[Blender extensions]].
+
 [[Blender]] addons can be enabled in File/Preferences, add-ons tab.
 
 Blender addons require `bl_info`.
 they only show in the addon manager if they are in the addon folder.
 in the site package folder they are just normal py modules.
-
-see [[Blender extensions]]
-
 
 some helper functions regarding addons
 ```python
