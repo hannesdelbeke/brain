@@ -1,3 +1,8 @@
+---
+aliases:
+  - pypip
+---
+
 py-pip lets you install Python packages from inside a Python environment. e.g. in Blender, Maya, Max, ...
 
 The difference with existing solutions, py-pip solves an issue with the environment:
