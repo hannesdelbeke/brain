@@ -1,9 +1,9 @@
-a collection of [[Unreal plugin|unreal plugins]] i worked on:
-- [[Unreal Python script editor]]
+a collection of [[Unreal plugin|unreal plugins]] I worked on:
+- [[Unreal Python script editor]] - worked together with original author
 - [[plugget Unreal]]
-- Texture browser 
+- [[Unreal texture browser plugin]]
+- [[Unreal python plugin template]]
 
 [[todo]] 
-- qt uplugin
 
-also see [[Unreal plugin]] and [[Unreal tool]]
+also see [[Unreal tool]]
