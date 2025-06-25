@@ -1,6 +1,5 @@
 A [[Unreal plugin]] template for [[pure Python]] plugins
 https://github.com/hannesdelbeke/unreal-python-plugin-template
-
 ### Features
 - this template is ready to plug & play, so just replace the code with your own.
 - easy installation:
