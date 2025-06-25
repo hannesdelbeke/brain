@@ -1,36 +1,10 @@
 
-created a new plugin & module template https://github.com/hannesdelbeke/maya-plugin-template
-[[Maya plugin]]
+A [[Maya plugin]] [[template]]
+repo: https://github.com/hannesdelbeke/maya-plugin-template
 
-issue with updating maya template
-https://github.com/hannesdelbeke/maya-module-template
 
-Since Python modules are usually developed in their own repo, [[vendoring]] Python modules in the scripts folder results in duplicate outdated data.
-- [ ] TODO figure out a nice approach for this with requirements
-	- [x] [[plugget]] handles this
 
-### existing Maya templates
-🔻is used to highlight cons
+## Dev
+I could combine the `installer.mel` with the main plugin `my_plugin.py`, so there's only a single file to drag and drop. But keeping them separate means the plugin contains less code, so it's easier to read what the plugin does. And it saves dev time.
 
-- https://github.com/FXTD-ODYSSEY/Maya-UIBot plugin & module template, with .ui loader
-	- module with . (local path)
-	- module installer
-	- plugin
-	- parsers in [config](https://github.com/FXTD-ODYSSEY/Maya-UIBot/tree/main/UIBot/config):
-		- tool entry (toolbox /Viewport tool)
-		- shelf entry
-		- menu entry
-		- status entry? (think not yet implemented)
-	- MIT license
-	- pure [[Python]]
-	- Qt loader
-	- 🔻usersetup.py
-- https://github.com/tbttfox/mayaPluginTemplate 
-	- module
-	- 🔻contains both Python & C++
-	- 🔻complex. contains rig code etc. 
-	- i like the replace project name script.
-- https://github.com/robertjoosten/maya-module-installer maya module template, no plugin
-	- fix [fork](https://github.com/robertjoosten/maya-module-installer/commit/690d92e539a0775585975285b7031b077fa94ca0), add support for . path 
-	- MIT license
-	- 🔻no plugin
+[[existing Maya templates research]]
