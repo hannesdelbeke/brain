@@ -1,7 +1,7 @@
 [[Unreal]] doesn't has a native [[Python]] script editor.
 
 You can download the script editor as an [[Unreal plugin]] here: https://github.com/hannesdelbeke/unrealScriptEditor-plugin
-Since it's pure Python it should work in all Unreal versions.
+Since it's [[pure Python]] it should work in all Unreal versions.
 
 ![](https://i.imgur.com/KscixlU.png)
 
