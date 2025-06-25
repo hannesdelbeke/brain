@@ -3,7 +3,7 @@ bring [[plugget]] to [[Unreal]]
 
 [startup code](https://github.com/plugget/plugget-unreal-plugin/blob/main/Plugget/Content/Python/init_unreal.py) creates 
 - a [[Unreal editor button]]
-- [[Unreal add menu]]
+- [[Unreal - add menu with Python]]
 # dev notes
 - [ ] slow on Unreal startup.
 - [ ] pip freezes Unreal
