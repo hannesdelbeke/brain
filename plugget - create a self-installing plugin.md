@@ -2,7 +2,6 @@
 aliases:
   - portable plugget
 ---
-
 ### Main goal
 Create an easy solution to create plugins that auto self-install dependencies.
 So devs can create self installing plugins and addons, without asking the user to install plugget first, or manually install dependencies.
@@ -25,13 +24,12 @@ But it wouldn't increase plugget users, so it's a low impact change.
 ## dev log
 - [[plugget - create a self-installing plugin brainstorm]]
 - achieved all above plugget features in [[Unreal python plugin template]]
-- replaced plugget vendor with [[py-pip]], a simpler solution for Unreal. Less good for plugget.
+- replaced plugget vendor with [[Unreal dependencies installer]], which uses [[py-pip]], a simpler solution for Unreal. Less good for plugget.
   The reason to use plugget was to avoid having to rewrite custom installers for each dcc.
-  But plugget has more dependencies (e.g. `requests`) increasing vendor size to 3 Mb.
-- remove self updating logic of vendored modules
+  But plugget has more [[dependencies]], and the extra 3 Mb vendor size seems too bloated.
+- I removed the self updating logic for [[vendoring|vendored]] modules, it just bloats the code IMO.
 # todo
-get a working solution for other dcc. maya/blender.
-
+Get a working solution for other dcc. maya/blender.
 
 Add self installer to 
 - [[pip Qt Unreal plugin]]

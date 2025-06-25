@@ -5,7 +5,7 @@ create a module definition file https://help.autodesk.com/view/MAYAUL/2024/ENU/?
 They can:
 - modify [[environment variable]]s:
 	- custom [[maya plugin path]]s
-	- custom [[site packages]] paths
+	- custom [[site-packages]] paths
 	- ...
 - [[vendoring]] assets:
 	- [[Maya plugin]]s
