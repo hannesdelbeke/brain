@@ -90,4 +90,7 @@ consider:
 - the [[Maya plugin template]] already has an installer, so we can use this. (I think the installer already installs dependencies)
 - The new [[Blender extensions]] support vendoring dependencies, so lets ignore [[Blender addon]]
 # todo
-Add self installer to [[Unreal python plugin template]]
+Add self installer to 
+- [x] [[Unreal python plugin template]]
+- [[pip Qt Unreal plugin]]
+- [[Unreal Python script editor]]
