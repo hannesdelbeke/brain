@@ -73,8 +73,8 @@ we now have a bit messy but working first pass. The manifest:
 }
 ```
 todo: 
-- make the embeded code more user friendly
-- make the embeded dependencies more user friendly
+- make the embedded code more user friendly
+- make the embedded dependencies more user friendly
 
 
 
