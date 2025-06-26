@@ -49,6 +49,6 @@ from PySide6.QtGui import QGuiApplication;import PySide6.examples.gui.analogcloc
 - [[plugget add support for pip dependencies]]
 - still getting problems installing the dependencies. `PySide6_examples` tries to install `PySide6` which is already in use by the plugget qt tool. [[py-pip]] doesn't install already installed tools, however it doesn't handle dependencies of dependencies atm.
   For now, I manually installed this package, which then let me install it through plugget.
-- This kinda works now. But atm the widget instantly disappears because it's garbage collected.
+- This kinda works now. But atm the widget instantly disappears because it's garbage collected. Command execution is done with `exec`, so 
 
 [[tooldev]]
