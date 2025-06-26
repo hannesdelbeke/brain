@@ -22,5 +22,6 @@ packaged plugins from others:
 other
 - ported [[Maya modelchecker]] to [[Pyblish]], but stopped since dev changed a lot, and i didn't use it.
 - [pyblish-plugins-maya-quality-assurance](https://github.com/hannesdelbeke/pyblish-plugins-maya-quality-assurance)ported more maya checks to pyblish
+- [[maya scene check]]
 
 see [[Maya tool]] and [[Maya plugin]]

@@ -4,6 +4,4 @@ a collection of [[Unreal plugin|unreal plugins]] I worked on:
 - [[Unreal texture browser plugin]]
 - [[Unreal python plugin template]]
 
-[[todo]] 
-
 also see [[Unreal tool]]
