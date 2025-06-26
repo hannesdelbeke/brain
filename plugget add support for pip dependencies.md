@@ -18,3 +18,20 @@ def default_install_actions(self):
 ```
 
 we can add a new action to install python dependencies, if defined in the [[plugget manifest]]
+
+i think we can actually do this already, e.g. here we add `scipy`
+```json
+{
+  "repo_url": "https://github.com/fedackb/mesh-fairing",
+  "description": "smooth meshes without artifacts",
+  "install_actions" : [
+    {
+      "name": "blender_requirements",
+      "kwargs": {
+        "requirements": ["scipy"]
+      }
+    },
+    "blender_addon"
+  ]
+}
+```
