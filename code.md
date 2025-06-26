@@ -1,0 +1,7 @@
+---
+aliases:
+  - script
+---
+
+[[programming]]
+[[software]]

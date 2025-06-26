@@ -1,9 +1,12 @@
 ## Goal
-The goal is to run startup code, without creating an Unreal wrapper plugin for each tool.
+The goal is to run startup code, without creating an (Unreal) [[wrapper plugin]] for each tool.
 e.g. startup code could be to set up [[unreal-qt]]
 ## Notes
 This is an idea / brainstorm, startup code is not yet implemented in the [[plugget manifest]].
 Plugget does run a [[Unreal plugin]]'s startup code after installation.
+
+Maybe we can have a dynamic Unreal plugin that runs startup code.
+It's a single plugin, some kind of manager.
 
 ---
 Suggestion to add startup_code, instead of a repo_url.
