@@ -49,6 +49,35 @@ from PySide6.QtGui import QGuiApplication;import PySide6.examples.gui.analogcloc
 - [[plugget add support for pip dependencies]]
 - still getting problems installing the dependencies. `PySide6_examples` tries to install `PySide6` which is already in use by the plugget qt tool. [[py-pip]] doesn't install already installed tools, however it doesn't handle dependencies of dependencies atm.
   For now, I manually installed this package, which then let me install it through plugget.
-- This kinda works now. But atm the widget instantly disappears because it's garbage collected. Command execution is done with `exec`, so 
+- The widget now shows and instantly disappears because it's garbage collected. Command execution is done with `exec`, in a local scope. Setting the widget to global fixes this.
+
+we now have a bit messy but working first pass. The manifest:
+```json
+{
+    "docs_url": "https://doc.qt.io/qtforpython-6/examples/example_gui_analogclock.html",
+    "actions": [
+        {
+            "label": "Show clock",
+            "command": "from PySide6.QtGui import QGuiApplication;import PySide6.examples.gui.analogclock.main as main;app = QGuiApplication.instance() or QGuiApplication();global clock; clock = main.AnalogClockWindow();clock.show()"
+        }
+    ],
+    "install_actions" : [
+        {
+            "name": "unreal_requirements",
+            "kwargs": 
+            {
+                "requirements": ["PySide6_Examples"]
+            }
+        }
+    ]
+}
+```
+todo: 
+- make the embeded code more user friendly
+- make the embeded dependencies more user friendly
+
+
+
+
 
 [[tooldev]]
