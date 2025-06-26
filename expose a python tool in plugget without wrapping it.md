@@ -44,7 +44,8 @@ from PySide6.QtGui import QGuiApplication;import PySide6.examples.gui.analogcloc
 ```
 
 - Defined a [[plugget manifest]] for the clock demo: https://github.com/plugget/plugget-pkgs/tree/main/unreal/pyside6-clock-demo 
-- plugget needs some updates to support a repo url of `None`
-
+- [x] plugget needs some updates to support a repo url of `None`
+- dependencies are plugget depencendies, not pip python dependencies.
+- [[plugget add support for pip dependencies]]
 
 [[tooldev]]
