@@ -78,6 +78,7 @@ we now have a bit messy but working first pass. The manifest:
 - The `dependencies` is confusing, I already mixed them up. 
 	- The `pyproject.toml` defines `dependencies`, which are pip dependencies. 
 	- The plugget manifest defines `dependencies`, which are plugget dependencies, and `requirements` would be pip dependencies.
+- [ ] commands are available, even before the dependencies are installed. which errors
 # Goal
 - [ ] Create a requirements shortcut
 - [ ] add support for more readable command
