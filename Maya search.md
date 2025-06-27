@@ -14,4 +14,7 @@ Similar to these 3rd party tools
 - [[Maya Cosmos]]
 Since Maya search is included in Maya, I can't recommend the above tools over the default search.
 
+> [!warning]
+> it seems mel code like `buildFileMenu` is not included in search
+
 [[keystroke launcher]]

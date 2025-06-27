@@ -5,6 +5,25 @@ doesnt work yet
 When you add a menu item to a default Maya menu (e.g. `Windows`, `Mesh`, `File`, ...) on startup, it overwrites the whole menu.
 Run this before adding to the [[Maya menu]] to avoid overwriting the whole menu.
 but this only supports strign commands. no callables.
+
+depending which menu, run a different build command
+
+| menu name | command name    |
+| --------- | --------------- |
+| File      | `buildFileMenu` |
+| Windows   |                 |
+
+
+```python
+mel.eval("evalDeferred buildFileMenu")
+```
+There's no `buildWindowsMenu`
+
+
+use `whatIs buildFileMenu` prints 
+`C:/Program Files/Autodesk/Maya2024/scripts/startup/FileMenu.mel`
+
+
 ```python
 # As Maya builds its menus dynamically upon being accessed,
 # we force its build here prior to adding our entry using it's
@@ -14,11 +33,10 @@ mel.eval("evalDeferred buildFileMenu")
 # use maya.utils.executeDeferred for callables
 # or use maya.cmds.evalDeferred for strings
 maya.utils.executeDeferred(add_to_menu) 
-
-
-
 ```
 
+[[Pyblish Maya]] handles this
+adding itself to the `File` menu, but the same doesn't work for the window
 
 
 ```python
