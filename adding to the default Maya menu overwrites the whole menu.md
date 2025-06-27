@@ -8,11 +8,54 @@ but this only supports strign commands. no callables.
 
 depending which menu, run a different build command
 
-| menu name | command name    |
-| --------- | --------------- |
-| File      | `buildFileMenu` |
-| Windows   |                 |
+| menu name | command name                                       |
+| --------- | -------------------------------------------------- |
+| File      | `buildFileMenu`                                    |
+| Windows   | ?? there seems to be in `ViewMenu` but not working |
+| Display   | ?? test buildDisplayMenu                           |
+|           | ?? buildHelpMenu                                   |
 
+```c#
+global proc rebuildMenusList()
+{
+	global string $gMainWindow;
+	// These are the main common menus which are shown only in the common menuSet
+	string $commonMenus[] = {
+		// These are menus that appear in menu bar by default
+		"mainFileMenu",
+		"mainEditMenu",
+		"mainModifyMenu",
+		"mainCreateMenu",
+		"mainDisplayMenu",
+		"mainWindowMenu"
+	};
+	// This is a list of menus that will not appear in All Menus list
+	string $filterMenus[] = {
+		// These are menus that appear in menu bar by default
+		"mainFileMenu",
+		"mainEditMenu",
+		"mainModifyMenu",
+		"mainCreateMenu",
+		"mainDisplayMenu",
+		"mainWindowMenu",
+		// These help/test/bonustools menus are always shown at the end
+		"HelpMenu",
+		"MainHelpMenu",
+		"bonusToolsMenu",
+		"repoTestMenu", 
+		// These are Hotbox menus
+		"HotboxNorth1", "HotboxNorth2", "HotboxNorth3", 
+		"HotboxSouth1", "HotboxSouth2", "HotboxSouth3", 
+		"HotboxEast1", "HotboxEast2", "HotboxEast3", 
+		"HotboxWest1", "HotboxWest2", "HotboxWest3", 
+		"HotboxCenter1", "HotboxCenter2", "HotboxCenter3",
+		"HotBoxRecentCommandsMenu", 
+		"HotBoxControlsMenu"
+	};
+	...
+```
+
+this is all build in `global proc buildDeferredMenus` in `initMainMenuBar.mel`
 
 ```python
 mel.eval("evalDeferred buildFileMenu")
