@@ -8,12 +8,12 @@ but this only supports strign commands. no callables.
 
 depending which menu, run a different build command
 
-| menu name | command name                                       |
-| --------- | -------------------------------------------------- |
-| File      | `buildFileMenu`                                    |
-| Windows   | ?? there seems to be in `ViewMenu` but not working |
-| Display   | ?? test buildDisplayMenu                           |
-|           | ?? buildHelpMenu                                   |
+| menu name | command name                                                                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| File      | `buildFileMenu`                                                                                                                                   |
+| Windows   | ?? there seems to be in `ViewMenu` but not working<br>There's no `buildWindowsMenu`<br>tried`mel.eval('evalDeferred "source ViewMenu;"')` no luck |
+| Display   | ?? test buildDisplayMenu                                                                                                                          |
+|           | ?? buildHelpMenu                                                                                                                                  |
 
 ```c#
 global proc rebuildMenusList()
@@ -56,12 +56,75 @@ global proc rebuildMenusList()
 ```
 
 this is all build in `global proc buildDeferredMenus` in `initMainMenuBar.mel`
+however running this just crashes Maya with error:
+`Object 'mainFileMenu' not found.` and `Object 'mainWindowMenu' not found.`
+```c#
+// Description:
+//   This proc is provided so that users can choose to immediately build the main menus 
+//	 that we now defer building for desktop heap memory reasons (as of Maya2009)
+//	 (see bug 305296). It is not called by Maya on startup.  
+//
+global proc buildDeferredMenus()
+{
+	// File Menu
+	buildFileMenu();
+
+	// Edit Menu
+	global string $gMainEditMenu;
+	string $editMenu = "MayaWindow|" + $gMainEditMenu;
+
+	buildEditMenu( $editMenu );
+
+	// Window Menu
+	global string $gMainWindowMenu;
+
+	buildViewMenu ( $gMainWindowMenu );
+
+	// Help Menu
+	buildHelpMenu();
+}
+```
+
+custom version
+```
+
+		global string $gMainFileMenu	= "mainFileMenu";
+		global string $gMainEditMenu	= "mainEditMenu";
+		global string $gMainModifyMenu	= "mainModifyMenu";
+		global string $gMainDisplayMenu	= "mainDisplayMenu";
+		global string $gMainWindowMenu	= "mainWindowMenu";
+		global string $gMainCreateMenu	= "mainCreateMenu";
+		global string $gMainSelectMenu	= "mainSelectMenu";
+```
+```c#
+global proc buildDeferredMenus()
+{
+	// File Menu
+	buildFileMenu();
+
+	// Edit Menu
+	global string $gMainEditMenu;
+	string $editMenu = "MayaWindow|" + $gMainEditMenu;
+
+	buildEditMenu( $editMenu );
+
+	// Window Menu
+	buildViewMenu ( "mainWindowMenu" );
+
+	// Help Menu
+	buildHelpMenu();
+}
+```
+```
+
 
 ```python
 mel.eval("evalDeferred buildFileMenu")
 ```
-There's no `buildWindowsMenu`
 
+`mel.eval('evalDeferred "source ViewMenu;"')` 
+leads to `Object 'mainFileMenu' not found.`
+`
 
 use `whatIs buildFileMenu` prints 
 `C:/Program Files/Autodesk/Maya2024/scripts/startup/FileMenu.mel`
