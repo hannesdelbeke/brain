@@ -7,6 +7,8 @@ Enabling/disabling a module with this tool changes the `.mod` file, so this can 
 
 - [ ] rename to maya module manager.py
 - [ ] add refresh modules btn
+- [ ] module manager overwrites the maya menu [[Maya menu]]
+      [[adding to the default Maya menu overwrites the whole menu]]
 
 
 [[Maya plugin]]
