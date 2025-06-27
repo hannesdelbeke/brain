@@ -1,4 +1,5 @@
 Buttonizer is a [[tool launcher]] where users can easily add their own commands and easily run them by clicking a [[button]].
+![](https://github.com/hannesdelbeke/py-commander/raw/main/docs/screen_demo.jpg)
 
 ## inspiration
 - It's very similar to a [[Maya shelf]]
@@ -17,7 +18,6 @@ pip install buttonizer
 - [ ] icons?
 - [ ] add support for [[Maya search]]
 - [ ] add support to add commands and categories from the UI, instead of in the json
-![](https://github.com/hannesdelbeke/py-commander/raw/main/docs/screen_demo.jpg)
 
 tech
 - [[Qt]]
