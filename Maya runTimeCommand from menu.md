@@ -1,6 +1,8 @@
 new in 2022
 shows up in [[Maya search]]
 
+[[Maya runTimeCommand]]
+
 - good example [maya docs](https://help.autodesk.com/view/MAYAUL/2022/ENU/?guid=GUID-36CB5BF4-BB31-41E8-81AF-CD03BDD2E4A6)
 For example, if you had a script `userSetup.py` that creates a menu containing special Foo rendering scripts, you would need to convert this:
 
