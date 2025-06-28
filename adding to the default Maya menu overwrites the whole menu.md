@@ -30,5 +30,5 @@ depending which menu, run a different build command
 [[Pyblish Maya]] handles this
 adding itself to the `File` menu, but the same doesn't work for the window
 
-[[rnd add to maya windows menu on startup]]
+[[RnD to add to maya windows menu on startup]]
 
