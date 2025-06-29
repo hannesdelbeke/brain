@@ -1,1 +1,6 @@
+---
+aliases:
+  - electrical power
+---
+
 [[energy]]
