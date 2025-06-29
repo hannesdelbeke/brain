@@ -1,0 +1,1 @@
+A color rendering index (CRI) is a quantitative measure of the ability of a light source to reveal the colors of various objects faithfully

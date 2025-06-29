@@ -1,0 +1,1 @@
+the company that makes [[Tuya smart device]]

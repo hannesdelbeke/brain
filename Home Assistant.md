@@ -15,3 +15,5 @@ solar, lights, smart appliances, ...
 wonder if it can hook up to [[smart meter]]
 apparently it uses encrypted zigbee
 and verified users can use the android app "bright" to see their data.
+
+also see [[Zigbee2MQTT]]
