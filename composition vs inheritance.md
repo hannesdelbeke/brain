@@ -31,7 +31,7 @@ class BMPImage(Image):
 		bmp.save(self.pixels, self.file_path)
 ```
 
-if we refactor this we run into issues.
+if we [[refactor]] this we run into issues.
 e.g. we want to add support for a dynamically generated image, not made from a file. 
 it would not make sense to have a `load` and `save` method, so instead we either 
 - make the `load` & `save` methods throw an error. we now have 2 methods that you shouldn't use. Confusing!
