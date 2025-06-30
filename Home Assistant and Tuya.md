@@ -10,7 +10,6 @@ using tuya zigbee devices with HA
 - use a local tuya HA addon, more maintenance & setup, less stable
 - or buy a zigbee dongle and ditch tuya, use [[Zigbee Home Automation|ZHA]]
 
-
 but if you have tuya, then:
 
 Tuya devices default integrate with a [[Tuya hub]] and are meant to be used with their app. ([[Smart Life]], [[Tuya Smart]]). 
