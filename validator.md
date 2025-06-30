@@ -19,7 +19,7 @@ Complete asset pipeline automation is only possible with predictable data, and a
 5. **Monitor and iterate**: Regularly review the validator's effectiveness and make adjustments as needed. Gather feedback from your team to improve the tool and its integration into your workflow.
 ## Existing validators
 - [[datafix]] - dcc agnostic, meant to build your own python pipeline
-- [[Pyblish]] A decent basic validation API, meant to be used to code your own validation pipeline. It has some unpythonic workflows, and is more aimed at VFX & film workflow than game dev workflow.
+- [[Pyblish]] A decent basic validation API, meant to be used to code your own validation pipeline. However, it has some unpythonic workflows, and is more aimed at VFX & film workflow than game dev workflow.
 - [[Maya modelchecker]] - a great free & fast Maya validator. Not meant to be customized 
 - [[Odin validator]] - a commercial Unity validator 
 
