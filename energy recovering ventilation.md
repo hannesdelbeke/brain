@@ -8,6 +8,11 @@ An ERV provides whole-home ventilation.
 - controls humidity. 
 The difference with an HRV: **an ERV also takes the humidity out of the outgoing air and puts it into the incoming air**. ERVs tend to hold on the moisture in the air.
 
+> [!warning]
+> ERV is usually not recommended in the [[United Kingdom|UK]] because
+> - it maintains humidity, usually MVHR is meant to reduce indoor [[humidity]]
+> - it costs more than MVHR
+
 from wiki:
 An ERV is a type of air-to-air heat exchanger that transfers [sensible heat](https://en.wikipedia.org/wiki/Sensible_heat "Sensible heat") as well as [latent heat](https://en.wikipedia.org/wiki/Latent_heat "Latent heat"). Because both temperature and moisture are transferred, ERVs are described as total [enthalpic](https://en.wikipedia.org/wiki/Enthalpic "Enthalpic") devices. In contrast, a heat recovery ventilator ([[Mechanical Ventilation with Heat Recovery|MVHR]] / HRV) can only transfer sensible heat.
 
