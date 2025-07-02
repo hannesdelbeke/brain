@@ -1,0 +1,6 @@
+---
+aliases:
+  - optimisation
+  - optimizing
+  - optimising
+---
