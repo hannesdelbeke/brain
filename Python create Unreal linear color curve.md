@@ -34,3 +34,4 @@ def create_curve(asset_path, curve_name):
 [[linear color curve]]
 [[Python stubs]]
 [[Unreal Python]]
+[[Unreal Python snippet]]
