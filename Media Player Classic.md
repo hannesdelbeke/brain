@@ -9,3 +9,5 @@ aliases:
 MPC HE is not developed anymore
 MPC BE is
 
+[[streaming]]
+[[videoplayer]]
