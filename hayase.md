@@ -1,3 +1,8 @@
+---
+aliases:
+  - Miru
+---
+
 an app to watch [[anime]]
 hooks up to [[torrent]]
 
