@@ -1,14 +1,20 @@
 class: unreal.AssetData
 ```python
-unreal.AssetData(object_path='None', package_name='None', package_path='None', asset_name='None', asset_class='None')
+unreal.AssetData(object_path='None', package_name='None', package_path='None', asset_name='None', asset_class_path='None')
 ```
 
 kwargs
-- object_path
-- package_name
-- package_path
-- asset_name
-- asset_class
+- object_path: str - path to the [[unreal.Object|Object]], e.g. `/Game/folder/filename.filename`
+- package_name: str - name of the [[unreal package|package]], e.g. `/Game/Textures/T_Foo.uasset``
+- package_path: str - path to the [[unreal package|package]] e.g. ????
+- asset_name: str - name of the asset, e.g. `StaticMesh` - this is not validated, it accepts any string
+- asset_class_path: [[unreal.TopLevelAssetPath]] 
+```python
+mesh_class = unreal.StaticMesh.static_class() # <Object '/Script/Engine.StaticMesh' (0x000001EF6F294C68) Class 'Class'>
+class_path = mesh_class.get_path_name()  # '/Script/Engine.StaticMesh'
+top_lvl = unreal.TopLevelAssetPath(package_name = class_path) # <Struct 'TopLevelAssetPath' (0x00000987B9AA7BC0) {package_name: "/Script/Engine", asset_name: "StaticMesh"}>
+unreal.AssetData(asset_class_path=top_lvl) # <Struct 'AssetData' (0x000009888C40B900) {package_name: "", package_path: "", asset_name: "", asset_class_path: {package_name: "/Script/Engine", asset_name: "StaticMesh"}}>
+```
 ## attributes
 [[unreal.assetData.asset_class|asset_class]] → [[unreal.Name|Name]]    
 [[unreal.assetData.asset_name|asset_name]] → [[unreal.Name|Name]]    
