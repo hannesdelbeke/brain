@@ -36,3 +36,5 @@ Plans can be paused once **every six months** and must be **at least 15 days 
 family members can't pause it, only main acc holder.
 
 can only downgrade plan every 6 months.
+
+[[subscription]]

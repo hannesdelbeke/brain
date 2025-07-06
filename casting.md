@@ -1,3 +1,8 @@
+---
+aliases:
+  - cast
+---
+
 
 casting vs bluetooth
 - if you stream music over bluetooth to a speaker. any sound on your device will transfer
