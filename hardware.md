@@ -1,0 +1,1 @@
+electrical powered devices
