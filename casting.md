@@ -11,7 +11,6 @@ casting vs bluetooth
 casting technology:
 - [[AirPlay]]
 - [[Chromecast]]
-
 - **Matter open casting**: An open-source smart home protocol from Amazon that works with Fire TVs, Echo Show 15, and the Prime Video app 
 - **FCast**: An open-source, cross-platform alternative to Chromecast that supports DASH, HLS, and mp4 
 - **UxPlay**: An open-source AirPlay2 mirror server for Linux, macOS, and *BSD
