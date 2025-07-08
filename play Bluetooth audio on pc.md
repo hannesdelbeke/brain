@@ -6,7 +6,7 @@ When you want to use your pc as a speaker, e.g. for your phone
 ## Bluetooth Audio Receiver
 
 Instructions:
-- install app https://apps.microsoft.com/detail/9n9wclwdqs5j?hl=en-US&gl=US
+- install app [Bluetooth Audio Receiver](https://apps.microsoft.com/detail/9n9wclwdqs5j?hl=en-US&gl=US) 
 - run app
 - connect to pc from phone over bluetooth
 - on the pc, click connect in the app. 
