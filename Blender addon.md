@@ -8,6 +8,7 @@ aliases:
 
 > [!warning]
 > Blender addons are phased out in favor of [[Blender extensions]].
+> see `Converting legacy add-ons to extensions` in https://docs.blender.org/manual/en/latest/advanced/extensions/addons.html
 
 [[Blender]] addons can be enabled in File/Preferences, add-ons tab.
 
