@@ -1,6 +1,5 @@
 I can't 1 click install a Blender addon from a GitHub repo.
 
-
 I can add the Github repo to the [[plugget]] packages repo, so we can 1-click install it from Plugget. but I have to 
 - create a manifest
 - test it to ensure no typos
