@@ -1,3 +1,4 @@
 [[sport]]
 [[adventure]]
 [[nature]]
+[[outdoors]]
