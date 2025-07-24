@@ -1,0 +1,3 @@
+like [[couchsurfing.com]]
+
+[[accomodation]]
