@@ -32,7 +32,7 @@ reload tends to miss things, better to either
 - restart Blender
 - or delete imported module var from memory
 
-[[Blender scripting tips]]
+[[Blender scripting]]
 [[dev environment]]
 [[TODO create local test env]]
 

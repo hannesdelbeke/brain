@@ -4,4 +4,4 @@ run code on [[Blender]] [[startup]]
 - register a text block, to load code when you load a blend file
 - copy into the Blender install directory `scripts/startup/` folder, and it will run on Blender startup
 
-[[Blender scripting tips]]
+[[Blender scripting]]

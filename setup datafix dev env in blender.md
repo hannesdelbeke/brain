@@ -3,5 +3,5 @@ clone
 - datafix_blender
 
 
-[[Blender scripting tips]]
+[[Blender scripting]]
 [[test code in Blender]]
