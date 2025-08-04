@@ -16,8 +16,10 @@
 | OCIO                         | Path to override the OpenColorIO configuration file.                                                            |
 | TEMP                         | Store temporary files here (MS-Windows).                                                                        |
 | TMPDIR                       | Store temporary files here (UNIX Systems). The path must reference an existing directory or it will be ignored. |
-
 [source](https://docs.blender.org/manual/en/latest/advanced/command_line/arguments.html)
+
+blender env var PYTHONPATH is ignored by default, see `--python-use-system-env`
+
 
 [[environment variable]]
 [[Blender scripting]]
