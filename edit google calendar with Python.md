@@ -79,4 +79,4 @@ repo https://github.com/hannesdelbeke/calendar-wellhub
 [[automate]] editing calendar events created by [[wellhub]]
 #### tags
 [[Python snippet]]
-[[Google calendar-]]
+[[Google calendar]]
