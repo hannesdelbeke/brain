@@ -69,12 +69,14 @@ update_event_title(service, event_id='your_event_id_here', new_title='Team Sync 
 Python D:\repos\wellhub-calendar\main.py
 ```
 open [[Windows task scheduler]]
-set app to full path of python
+set app to full path of [[Python]]
 add script path in arguments
 add `input` to python script to keep console open for debugging
 run task to test
 when all works, I set to run on log on
 
+repo https://github.com/hannesdelbeke/calendar-wellhub
+[[automate]] editing calendar events created by [[wellhub]]
+#### tags
 [[Python snippet]]
 [[Google calendar-]]
-[[automate|automation]]
