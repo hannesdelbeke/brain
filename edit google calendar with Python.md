@@ -68,7 +68,12 @@ update_event_title(service, event_id='your_event_id_here', new_title='Team Sync 
 ```batch
 Python D:\repos\wellhub-calendar\main.py
 ```
-open [[task s]]
+open [[Windows task scheduler]]
+set app to full path of python
+add script path in arguments
+add `input` to python script to keep console open for debugging
+run task to test
+when all works, I set to run on log on
 
 [[Python snippet]]
 [[Google calendar-]]
