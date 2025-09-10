@@ -2,6 +2,10 @@
 aliases:
   - PDG
 ---
+a [[Houdini]] file format that can be used in unreal
+
+---
+
 https://www.sidefx.com/products/houdini/pdg/
 
 PDG is a procedural architecture designed to distribute tasks and manage dependencies to better scale, automate, and analyze content pipelines for Film, TV, Games, Advertising and VR.
