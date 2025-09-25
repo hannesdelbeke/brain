@@ -6,3 +6,4 @@ similar to [[PC Bio Unlock]]
 - install Remote Fingerprint Unlock, Google playstore or APKMirror
 - download latest fingerprint module [gdrive](https://drive.google.com/drive/folders/1bktvp0JcJKfE92efgxQlo06ARrMfLDFd)
 
+[[Windows Hello]]
