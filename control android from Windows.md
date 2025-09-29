@@ -1,3 +1,9 @@
+---
+aliases:
+  - screen copy
+  - scrcpy
+---
+
 
 https://github.com/Genymobile/scrcpy
 
