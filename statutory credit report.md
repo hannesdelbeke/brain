@@ -1,0 +1,1 @@
+A statutory credit report is a free copy of your credit history that you have a legal right to see from a [[credit reference agency]].
