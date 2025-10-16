@@ -2,7 +2,7 @@
 Imagine easily installing apps when upgrading pc. You log in and your apps automatically install in the background. No more time is wasted on reinstalling apps.
 
 With [[winget]] installing apps has become faster, but not yet smooth. (And still quite technical)
-Something similar to the UX from [[Chrome]] would be ideal, you just log in with your Gmail account, and[[chrome remembers extensions]] and auto installs them for you.
+Something similar to the UX from [[Chrome]] would be ideal, you just log in with your [[Gmail]] account, and[[chrome remembers extensions]] and auto installs them for you.
 
 # Existing solutions
 
