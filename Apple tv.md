@@ -1,3 +1,3 @@
-[[subscription]]
 [[streaming]]
 [[tv]]
+[[subscription]]
