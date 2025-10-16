@@ -2,3 +2,6 @@
 - settings
 - theme
 - dark
+
+[[Gmail]]
+[[dark mode]]
