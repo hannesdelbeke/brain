@@ -1,6 +1,7 @@
 ---
 aliases:
   - the original Google Home
+  - google home
 ---
 
 [[Google Home charger]]

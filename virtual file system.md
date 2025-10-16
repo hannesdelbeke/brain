@@ -8,6 +8,7 @@ e.g.
 - Plastic SCM / Unity version control has a VFS
 - GVFS: Git Virtual File System
 - [gitfs](https://gerrit.googlesource.com/gitfs/) : git & Android 
-- microsoft [VFSForGit](https://github.com/microsoft/VFSForGit) (Archived), surpassed by [scalar](https://github.com/microsoft/scalar), which moved to [microsoft-git](https://github.com/microsoft/git)
+- microsoft [VFSForGit](https://github.com/microsoft/VFSForGit) (Archived) [[VFSForGit]], 
+  surpassed by [scalar](https://github.com/microsoft/scalar), which moved to [microsoft-git](https://github.com/microsoft/git)
 
 [[virtual]]
