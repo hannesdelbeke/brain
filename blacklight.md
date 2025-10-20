@@ -1,0 +1,1 @@
+A blacklight is a specific type of [[ultraviolet]] light, known as UV-A
