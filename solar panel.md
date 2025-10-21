@@ -18,3 +18,4 @@ solar panels -- DC --> inverter -- AC --> grid
 the solar panels produce [[direct current]] (DC) electricity, while the [[electrical grid]] uses [[alternating current]] (AC) electricity
 
 [[solar energy]]
+[[house]]

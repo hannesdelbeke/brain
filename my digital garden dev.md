@@ -1,4 +1,4 @@
-publish notes from [[Obsidian]] to [[GitHub pages]]
+publish [[note taking|notes]] from [[Obsidian]] to [[GitHub pages]]
 use [[MkDocs]] to convert [[Markdown]] notes to [[HTML]]
 
 bugs (pages that don't render correct)
