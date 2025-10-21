@@ -2,7 +2,7 @@
 aliases:
   - V2H
 ---
-connect [[electric vehicle|EV]] battery to your home electric grid.
+connect [[electric vehicle|EV]] battery to your [[house|home]] electric grid.
 
 requirements
 - a compatible bidirectional charger 

@@ -12,3 +12,4 @@ For the max grant value, install a heat pump or solar panel/battery.
 ### tags
 [[green energy]]
 [[energy saving]]
+[[house]]
