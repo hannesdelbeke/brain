@@ -1,3 +1,8 @@
+---
+aliases:
+  - backed up
+---
+
 A way to recover something you lost, or handle a situation when something goes wrong.
 
 Usually data backed up in 2 places is sufficient.
