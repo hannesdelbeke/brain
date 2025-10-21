@@ -1,1 +1,3 @@
 [[allergy]]
+[[house]]
+[[bedding]]
