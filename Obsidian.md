@@ -20,3 +20,4 @@ Obsidian is an [[Electron]] app which basically provides a [[Chromium]] window a
 
 [[personal knowledge management|PKM]]
 [[own your data]]
+[[writing]]
