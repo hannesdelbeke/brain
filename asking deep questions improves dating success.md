@@ -2,3 +2,5 @@
 > 
 > Put another way, if you want to have a successful conversation with someone, you don’t have to ask them about their worst memories or how they prepare for telephone calls. You just have to ==ask them to describe how they feel about their life==—rather than the facts of their life—and ==then ask lots of follow-ups==.  
 > - [[Supercommunicators - How to Unlock the Secret Language of Connection]]
+
+[[success]]
