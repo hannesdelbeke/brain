@@ -9,3 +9,5 @@ aliases:
 - You could improve the performance massively and quite cheaply, by adding a 5-10cm gap behind filled with mineral wool
 - true acoustic wood slats need to be much deeper, at least 3-4 inches (no fact source)
 - this mainly helps reduce echo ("clap your hands" test), helps improve audibility of dialogue and reduce sibilance. Whereas rockwool reduces reverb time of lower frequencies, too.
+
+[[sound treatment]]
