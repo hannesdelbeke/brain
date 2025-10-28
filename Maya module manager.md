@@ -1,4 +1,4 @@
-Like the [[Maya plugin manager]], but for [[Maya module|Maya modules]] instead of plugins
+Like the [[public/Maya plugin manager]], but for [[Maya module|Maya modules]] instead of plugins
 https://github.com/hannesdelbeke/maya-module-manager
 
 <img src="https://github.com/hannesdelbeke/maya-module-manager/blob/docs/docs/_images/module-manager-example.png?raw=true">

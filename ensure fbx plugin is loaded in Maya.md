@@ -21,6 +21,6 @@ is_loaded = cmds.pluginInfo(plugin_name, query=True, loaded=True)
 print(f"Is the FBX plugin loaded? {is_loaded}")
 ```
 
-A workaround is to manually enable the fbx plugin in the [[Maya plugin manager]] 
+A workaround is to manually enable the fbx plugin in the [[public/Maya plugin manager]] 
 
 [[dependencies]] between 2 [[Maya plugin|Maya plugins]]
