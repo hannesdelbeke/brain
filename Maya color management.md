@@ -1,4 +1,4 @@
-[[Maya]] saves the Color Management setting on a scene by scene basis instead of saving it in the window or user prefs.
+[[Autodesk Maya]] saves the Color Management setting on a scene by scene basis instead of saving it in the window or user prefs.
 
 MEL command to disable it
 ```mel

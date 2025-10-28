@@ -1,5 +1,7 @@
-**update**: Maya now has this build in with CTRL+F [[Maya search]]
-# !! archived !!
+
+> [!warning] archived
+> **update**: Maya now has this build in with CTRL+F [[Maya search]]
+
 ## Quick launcher
 launch commands very quickly in Maya
 ![](https://cloud.githubusercontent.com/assets/2292742/20506707/8b19023c-b034-11e6-8598-a480924f8740.gif)

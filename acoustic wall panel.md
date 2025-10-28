@@ -28,4 +28,5 @@ rule of thumb, cover 15-25% of the wall
 similar to  [[slatted acoustic panels]]
 
 [[sound treatment]]
+[[sound absorption]]
 

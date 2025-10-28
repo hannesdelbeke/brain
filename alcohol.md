@@ -14,3 +14,5 @@ PROS
 - Cut the risk of [[diabetes]]  ([44](https://www.ncbi.nlm.nih.gov/pubmed/15735217)).
 - it can make you more social
 - moderate drinking might reduce dementia ([16](https://www.ncbi.nlm.nih.gov/pubmed/12636463), [17](https://www.ncbi.nlm.nih.gov/pubmed/20617045), [18](https://www.ncbi.nlm.nih.gov/pubmed/9296132))
+
+bad for your [[health]]
