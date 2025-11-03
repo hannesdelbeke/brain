@@ -18,7 +18,7 @@ With the HA phone app I've managed to make a bed sensor for myself and my wife b
 You can keep your Tuya lights in [[Smart Life|Tuya]] and still control them with HA, you don't HAVE to flash them with Tuya Convert. I have one that WON'T flash and works just the same as the 3 I have.
 
 ## summary
-Not trying to convince you here, just saying that there's more to [[Home Assistant]] than just the smart devices you think you have. I wasn't expecting the PlayStations or my Router to be exposed, or my Printer for that matter (it just gives me ink levels but it's there). Before I got HA on my Pi I was doing a lot of stuff with [[Smart Life]], Google, IFTTT and Tasker, but it's just easier with a dedicated Pi doing it all for me.
+Not trying to convince you here, just saying that there's more to [[Home Assistant]] than just the smart devices you think you have. I wasn't expecting the PlayStations or my Router to be exposed, or my Printer for that matter (it just gives me ink levels but it's there). Before I got HA on my Pi I was doing a lot of stuff with [[Smart Life]], Google, [[IFTTT]] and Tasker, but it's just easier with a dedicated Pi doing it all for me.
 
 Also adding the Pi meant I could get a £10 USB zigbee stick and buy Tradfri bulbs at £6 each and magnetic switches at £6 each instead of having to buy an expensive hub to add zigbee into the equation.
 
