@@ -1,4 +1,4 @@
-An exercise to develop a bot that can edit the titles of Google Calendar events.
+An exercise to develop a bot that can edit the titles of [[Google Calendar]] events.
 Goal is to auto run it on startup to edit certain google titles.
 ### Prerequisites
 - A **Google Cloud project** with the Calendar API enabled
