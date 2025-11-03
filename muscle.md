@@ -2,3 +2,4 @@
 aliases:
   - muscles
 ---
+[[human body]]
