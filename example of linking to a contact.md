@@ -17,6 +17,6 @@ Be able to link directly to an app, e.g. I went on a run with Jack. And link run
 But later on I might want to add a description or note to the strava activity.
 *In our case, strava actually supports private notes. so syncing strava activities to our vault could be an option.* 
 - see [[2026-02-22 strava link with note as middleman]]
-[[visual activity overview]]
+[[visual overview of recent exercise]]
 
 If I add a description in between, I add a [[wrapper note]] in between.

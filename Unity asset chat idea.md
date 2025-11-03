@@ -1,11 +1,11 @@
 ---
-views: 2
+views: 4
 last viewed: 2026-02-23
 ---
 similar to [[Unity note editor]]
 but aimed at a team
 
-Often Slack conversations about the specifics of assets get lost.
+Often [[Slack]] conversations about the specifics of assets get lost.
 - ~~Link assets in slack by some kind of unique ID, that can then be clicked in Unity to link to the conversation. (seems complex to dev, and bad UX, requiring user to always get the ID and paste it)~~
 - Easy: a way to comment on a specific asset in Unity.
 
