@@ -1,4 +1,4 @@
+[[tv]]
 [[streaming]]
-[[movie]]
-[[TV series]]
+[[subscription]]
 [[video streaming]]

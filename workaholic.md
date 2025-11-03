@@ -1,0 +1,1 @@
+someone who spends a lot of time on [[work]], often to much resulting in [[burnout]], and stressed [[relationship|relationships]]
