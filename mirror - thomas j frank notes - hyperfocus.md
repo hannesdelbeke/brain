@@ -892,3 +892,5 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Interesting point: In open offices, people are typically more considerate about _when_ they interrupt.
     - Open offices also promote collaborative work
     - However, highly focused, individual work often suffers in an open environment.
+
+[[Hyperfocus - book]]
