@@ -19,7 +19,7 @@ CONs
 - less consistent, harder to update tools in bulk
 
 > [!NOTE]- sample hardcoded docs button
-> At Mediatonic we had a docs button always in the same place
+> At [[Mediatonic]], [[VuCity]], and [[Rare ltd]] we had a docs button always in the same place. So artists always know where to find the documentation.
 > ![[documentation button-1676646504645.jpeg|300]]
 
 ### Dependency approach

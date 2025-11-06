@@ -14,7 +14,7 @@ Pyblish is created around the concept of plugins:
 - integration plugins handle various integrations
 	  (e.g. update Jira or the CMS for the mesh) 
 
-The plugin workflow is very powerful, allowing for the creation of a more modular pipeline. Whereas the traditional gamedev pipeline is often unique for each studio and hardcoded to the project, making it hard to reuse.
+The plugin workflow is very powerful, allowing for the creation of a more modular pipeline. Whereas the traditional gamedev pipeline is often unique for each studio and [[hardcoded]] to the project, making it hard to reuse.
 
 ## Limitations
 - Pyblish has it's root in the VFX industry, so some parts make less sense for gamedev.
