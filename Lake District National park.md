@@ -4,3 +4,6 @@ aliases:
   - the Lake District
   - Lake District
 ---
+[[national park]]
+[[nature]]
+[[hiking]]
