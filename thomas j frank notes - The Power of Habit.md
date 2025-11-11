@@ -1,11 +1,9 @@
 notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
-> These are my personal notes on _The Power of Habit_ by Charles Duhigg. I took them in 2014 when I read the book for the first time, and they are unedited.
 
 ## Chapter 1
-
 - Habit loop
     - cue, routine, reward
-- Habits are super-important – they let our brains save energy and size for other things
+- [[habit|Habits]] are super-important – they let our brains save energy and size for other things
 - Eugene could function almost normally without a memory due to his habits
     - He could also build new habits over time
 - Habits are also delicate – if the cue isn’t there, they won’t trigger
@@ -15,12 +13,9 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 - Squire’s paper on Eugene’s habits was the spark that really ignited habit research
 - Habits are bound up in the basil ganglia, one of the most ancient and central parts of the brain
 - Brain activity is much lower when executing the routine part of the habit loop
-- “Chunking” – the brain’s process of converting a sequence of actions into an automatic routine
-
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-1)
+- “Chunking” – the brain’s process of converting a sequence of actions into an [[automate|automatic]] routine
 
 ## Chapter 2
-
 - Claude C. Hopkins – successful ad man who helped make Pepsodent successful
     - Turns out Pepsodent’s success was mainly due to the tingly feeling in the mouth due to the ingredients
 - Habit loops eventually form a craving – the anticipation of the reward
@@ -41,8 +36,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 - Exercisers crave the “good feeling” after a workout, or a specific reward, or are envisioning a result
 - Shampoo doesn’t have to foam and toothpaste doesn’t need to feel tingly to work – but those components fill the craving fr validation of effectiveness
 
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-2)
-
 ## Chapter 3
 
 - Claude Hopkins created a new habit with Pepsodent – but old habits can’t be destroyed. Rather, they must be replaced.
@@ -61,8 +54,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - Not until Dungy’s son committed suicide did the change happen
     - The players rallied around Dungy in his tragedy and started to believe in what he had taught them
     - They then won the Super Bowl
-
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-3)
 
 ## Chapter 4
 
@@ -89,8 +80,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - Mortality -> malnutrition of mothers -> malnutrition before becoming pregnant -> lack of biology knowledge -> teachers weren’t trained in biology and nutrition
     - Gov’t revamped teacher education in college to add in biology teaching. Infant mortality has gone down 68%
 
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-4)
-
 ## Chapter 5
 
 - Travis had parents who were functional drug addicts
@@ -104,7 +93,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - Marshmallow study – children who could resist the marshmallow to get double treats later were more successful as adults
         - SAT scores 210 higher on average
         - More popular, did fewer drugs
-- Willpower can become an automatic habit
+- [[willpower]] can become an automatic habit
 - It’s also depletable
     - Muraven’s study of a bowl of cookies and bowl of radishes
     - Those who had to eat the radishes spent much less time on a puzzle that was actually impossible. They became irritated more easily.
@@ -128,8 +117,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - No one ate the cookies, but people who were told impolitely were much worse at hitting a space bar when a 6 flashed on a screen followed by a 4.
     - The group who was treated well felt they had a sense of control over the experience, so their willpower muscle wasn’t depleted as fast
         - 2010 study – manufacturing plant in Ohio let employees design their uniforms and control scheduling – 20% increase in productivity within 2 months. Nothing else was changed.
-
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-5)
 
 ## Chapter 6
 
@@ -156,8 +143,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - Rhode Island Hospital’s media frenzy was the crisis that the administration was able to use to enact change. Now, nurses are empowered and the hospital is very safe.
     - Desmond Fennel was assigned to investigate the King’s Cross fire. So many department heads wouldn’t budge on proposed changes, so he created a media frenzy out of it as well. It worked – the leadership was fired, new laws were passed, and now King’s Cross has much better safety procedures.
     - “You never want a serious crisis to go to waste.” – Rahm Emanuel, Obama’s chief of staff 2008
-
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-6)
 
 ## Chapter 7
 
@@ -196,8 +181,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 - This is why Target made their ads look random. People were familiar with that type of advertising
 - YMCA learned the same thing – people were actually looking for things explained by familiar human drives, such as friendship. So instead of focusing too much on new gym equipment, they focused on group fitness and trained employees to learn customers’ names.
 
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-7)
-
 ## Chapter 8
 
 - Rosa Parks’ arrest on the Montgomery bus was a catalyst for making the civil rights movement successful. The subsequent bus boycott that happened was successful because movements are carried by three things
@@ -221,8 +204,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - At first, he was working himself to death. His church was initially successful because it addressed problems people had with regular church – bad music, boredom, dressing up, etc – but he was expending far too much effort
     - He used the writings of Donald McGavran to build habits for his parishioners – who emphasized Christianizing people in a manner that didn’t take them out of their normal social relationships.
     - After Warren returned from his absence, he had people form small groups in living rooms to gather each week, taking work off his plate. He then educated people to create habits that would strengthen their faith and create a new sense of identity. This made his movement **self-propelling,** which ensured its lasting success.
-
-[](https://thomasjfrank.com/the-power-of-habit/#chapter-8)
 
 ## Chapter 9
 
@@ -266,8 +247,6 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - Water hollows out a channel and flows through it. If its flow is stopped, it’ll flow the same way when it starts again. Habits are similar
         - James – _The Principles of Psychology –_ chapter on habits
 
-[](https://thomasjfrank.com/the-power-of-habit/#afterword)
-
 ## Afterword
 
 - No matter how strong our willpower, we **will** occasionally fall back on bad habits. It’s important not to make the “second mistake” (as James Clear would say) or commit the “What the Hell” effect – leave these slip-ups as slip-ups. Outliers.
@@ -276,15 +255,13 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
     - They learn more about themselves, where the cues actually lie, and what new habits provide good rewards
         - For Eric, that habit was [[meditation]]
         - “That’s why failure is so valuable. It forces us to learn, even if we don’t want to.”
-- [[Procrastination]] studies – people’s willpower often fails after a while, and then they’re back to Facebook
+- [[procrastination]] studies – people’s willpower often fails after a while, and then they’re back to Facebook
     - The key is to pay attention to _how_ resolve eventually fades
         - Don’t ignore it
     - Learn when you feel the urge to check Facebook or another website
         - But limit that break to 10 minutes
     - You’re planning for pressure-released moments ahead of time – just like the knee-replacement patients planned for the painful points ahead of time
         - (You could use an extension to actually limit FB time to be more successful with this)
-
-[](https://thomasjfrank.com/the-power-of-habit/#appendix)
 
 ## Appendix
 
@@ -318,4 +295,3 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
         - Re-engineer the habit loop so that you’re making choices again.
         - Take the data you have a write down a deliberate choice that you’ll make when the craving strikes
 
-[[books]]

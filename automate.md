@@ -1,4 +1,5 @@
 ---
 aliases:
   - automation
+  - automatic
 ---

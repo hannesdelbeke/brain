@@ -16,6 +16,6 @@ How to visualize this?
 - add a priority score every day
 - show a task list ordered by priority
 
-It also would be easier if everything was in 1 system, see [[unify tasklists]]
+It also would be easier if everything was in 1 system
 ## goal
 become more [[productivity|productive]] and better at [[planning]]
