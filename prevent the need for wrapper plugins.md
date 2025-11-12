@@ -27,3 +27,4 @@ There's some overlap with
 - [ ] A nice thing about plugins is that they can run startup code, can we also do this without plugins? e.g. on startup we run the plugget package startup code. See [[Plugget - run startup code without a plugin]]
 - [ ] Plugins also are easy to enable/disable. Plugget packages are easy to (un)install, so we kinda already have this logic. Maybe add support to keep it installed but disabled.
 
+[[wrapping]]
