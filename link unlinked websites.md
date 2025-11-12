@@ -26,4 +26,4 @@ Allow better tutorial links. I can provide a link to a website, and add links to
 
 [shared on reddit](https://www.reddit.com/r/PKMS/comments/104d2dd/link_unlinked_websites/)
 
-[[annotate websites]]
+[[annotate websites]] for more about notes for each website

@@ -7,10 +7,21 @@ It'd be cool if I could clone and view these notes in Obsidian, so I have 1 cent
 CON
 - [[wikilink|Wikilinks]] in my current notes would break, since some wiki pages share the same name as these notes. 
   E.g. I have a `Maya` note, but there's also a `Maya` note in the plugget wiki. Adding the plugget wiki in my Obsidian vault would break the `Maya` wiki link, replacing it with `public/Maya` or `plugget-wiki/Maya`
-	- this in turn would break all links in the wiki, since the wiki doesn't ha the folder context of `plugget-wiki`
+	- this in turn would break all links in the wiki, since the wiki doesn't have the folder context of `plugget-wiki`
 
+### Idea: mirror external file repo
 It's only possible if I avoid name clashes.
-This might be doable with a script, that mirrors the files from an external repo, syncing and renaming them.
+This might be doable instead with a script
+- mirror the files from an external repo, syncing and renaming them.
+- handle file renaming, and what happens if file is renamed outside obsidian
+- handle images etc
+- exclude from git in Obsidian
+
+ideally: if this could be contained in a git submodule, which has some kind of custom post-processing on it to change name, and change name back.
+
+This is a lot of work, and adds [[complexity]]
+
+---
 
 This reminds me of [[annotate websites]]
 
