@@ -81,7 +81,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
 - Csikszentmihalyi: The simple act of decoding a conversation (parsing the language so we understand it) consumes about half our attentional resources.
 - Working memory: After focusing on something, we can only hold so much of it in working memory. The average is **four bits**.
     - Some people can naturally hold more – often up to 7 without other aids
-    - **Chunking** can aide working memory by bundling bits together through meaning – e.g. names in a list could be bundled if some of them are your friends or people you talk to often, or if some start with the same letter.
+    - [[chunking]] can aide working memory by bundling bits together through meaning – e.g. names in a list could be bundled if some of them are your friends or people you talk to often, or if some start with the same letter.
 - Popular culture has tons of examples of groups of information ranging from 2-7 bits.
     - Pairs – Calvin and Hobbes
     - Three – Third time’s the charm
