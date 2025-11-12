@@ -1,5 +1,8 @@
 ---
-wikilinks:
+aliases:
+  - wikilinks
+  - wiki link
+  - wiki links
 ---
 
 - not compatible with GitHub md preview / default markdown [[link]]s
