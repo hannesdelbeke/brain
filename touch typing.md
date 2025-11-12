@@ -1,0 +1,6 @@
+---
+aliases:
+  - touch type
+---
+
+[[keyboard]]
