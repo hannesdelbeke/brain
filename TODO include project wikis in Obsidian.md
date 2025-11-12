@@ -21,6 +21,15 @@ ideally: if this could be contained in a git submodule, which has some kind of c
 
 This is a lot of work, and adds [[complexity]]
 
+### idea: use URI
+There is a way to do that: `[note in other vault](obsidian://vault/other_vault/note)` will open the note `note` in the vault `other_vault`.
+[[Obsidian URI]]
+
+1. clone separate Obsidian vault
+2. open it once so Obsidian knows the vault's location
+3. use `(obsidian://vault/other_vault/note)`
+bonus: some kind of wiki link shortcut plugin, that replaces it with the above URI. Showing autocomplete when typing `[[]]` Enabling the user to quickly add these links.
+
 ---
 
 This reminds me of [[annotate websites]]
