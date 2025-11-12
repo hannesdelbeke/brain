@@ -1,7 +1,7 @@
 %%This is the front page of the [wiki](https://hannesdelbeke.github.io/wiki/)%%
 This site contains a collection of notes, mostly technical [[knowledge]] related to [[gamedev]] & [[technical artist]] tips. 
 
-I also use it for [[journaling]], getting ideas out of my head, or researching various hobbies & interests (like [[ventilation]]).
+I also use it for [[journaling]], getting ideas out of my head, or to research various hobbies & interests (like [[ventilation]]).
 Since I write for my future self, in the [[Evergreen notes]] style, there will be:
 - unfinished notes
 - empty notes with only links

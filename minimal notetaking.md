@@ -1,4 +1,4 @@
-- don't focus on the tech (e.g. plugins and apps)
+- don't [[gearhead|focus on the tech]] (e.g. plugins and apps)
 	- keep your setup simple, to not waste brainpower on the "meta" of [[note taking]], e.g. [[reducing note folders]]
 - just start writing: [[don't overthink note taking]]
 
