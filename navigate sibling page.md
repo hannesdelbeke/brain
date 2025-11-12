@@ -9,12 +9,12 @@ MkDocs material supports this, see [navigation](https://squidfunk.github.io/mkdo
 MkDocs auto falls back on [[folder structure]].
 >The [nav](https://www.mkdocs.org/user-guide/configuration/#nav) configuration setting in your `mkdocs.yml` file defines which pages are included in the global site navigation menu as well as the structure of that menu. If not provided, the navigation will be automatically created by discovering all the Markdown files in the [documentation directory](https://www.mkdocs.org/user-guide/configuration/#docs_dir).
 
-The mkdocs material theme  [describes](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/) some other great navigation concepts
+The mkdocs material theme [describes](https://squidfunk.github.io/mkdocs-material/setup/setting-up-navigation/) some other great navigation concepts
 
 ### Disadvantage
 - Less minimalistic UI
-- Might link unrelated notes in a flat hierarchy setup, popular in the Zettelkasten community.
-- maintaining a nav file wastes time if not automated
+- Might link unrelated notes in a flat hierarchy setup, which is popular in the Zettelkasten community.
+- Manually maintaining a nav file wastes time if not automated
 
 [[navigation]]
 [[browser]]
