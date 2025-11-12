@@ -2,4 +2,5 @@
 aliases:
   - categories
   - category
+  - categorizing
 ---

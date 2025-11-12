@@ -2,6 +2,7 @@
 aliases:
   - note
   - notes
+  - note-taking
 ---
 
 - summarise knowledge
