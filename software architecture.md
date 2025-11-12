@@ -1,8 +1,10 @@
 ---
 aliases:
   - code architecture
+  - architecture
 ---
 
-blog [post](https://maheshba.bitbucket.io/blog/2023/07/12/Design.html)#
+blog [post](https://maheshba.bitbucket.io/blog/2023/07/12/Design.html)
 
 [[programming]]
+[[thinking]]

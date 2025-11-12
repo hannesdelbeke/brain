@@ -10,10 +10,11 @@ aliases:
 - How you feel affects how well you remember
 
 tips to remember info
-- Use "Spaced Learning
+- Use "Spaced Learning [[spaced repetition]]
 - Overlearn
 	- learn more than you need too
 - Make Information Meaningful
 - Keep Challenging Your Memory
 	- try recall something when you forgot
 	- ask questions to make the recall interactive
+- link it to [[social]] cues and memories - [[social how our brains work]]

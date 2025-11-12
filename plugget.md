@@ -24,3 +24,4 @@ Private notes
 - plugget package [manifest repo](https://github.com/hannesdelbeke/plugget-pkgs) 
 
 [[Python module]]
+[[glue code]]

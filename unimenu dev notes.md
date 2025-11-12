@@ -33,3 +33,5 @@ much easier to just build our menu in a python file.
 - [ ] unimenu [[Autodesk Maya|maya]] plugin, TODO maya template
 
 - [ ] fix warnings unimenu [[Blender]] separator bug
+
+[[dev notes]]

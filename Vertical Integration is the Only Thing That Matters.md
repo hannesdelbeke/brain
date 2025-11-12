@@ -21,7 +21,7 @@ Here are some workflows that are possible with a vertically-integrated stack:
 6. A service crashes in production. A ticket is automatically opened and routed to your team (or a note is added to an existing ticket). You click a button to open the line of code that crashed in your editor, and again you’re shown an interactive call-stack for the failure.
     
 
-All of these workflows span multiple parts of the stack: local builds and CI builds, the test runner and the editor, the code review system and CI, the deploy system and version control. These features are often derisively referred to as “glue code”. **The glue code _is_ the vertical integration work.**
+All of these workflows span multiple parts of the stack: local builds and CI builds, the test runner and the editor, the code review system and CI, the deploy system and version control. These features are often derisively referred to as “[[glue code]]”. **The glue code _is_ the vertical integration work.**
 
 I’d like to draw your attention to a couple different themes here:
 
