@@ -11,7 +11,7 @@ I rather write notes & stories than watch [[reels]], but reels are more accessib
 > My [[laptop]] is too big and heavy for easily carrying in my backpack when I go on a trip. I want to take it on a train, and a plane. 
 
 > [!NOTE]- I consider a tablet
-> So I need something [[portable]] & thin. Like a tablet with keyboard. Or a mini laptop.
+> So I need something [[portable]] & thin. Like a [[tablet]] with keyboard. Or a mini laptop.
 > 
 > I have [[my calendar tablet modelXXX|an android tablet i use for viewing my calendar]]
 > - but it feels slow, I think it might crash when writing notes.
@@ -36,6 +36,7 @@ make it a habit to
 - [ ] sync notes before I go / shut down pc.
 - [ ] write when bored, instead of watch reels
 
+See [[thomas j frank notes - The Power of Habit]]
 To break an old habit (reels), i need to give a reward to my new habit
 The cue is: I'm bored. The reward: stimulation without thinking.
 Since writing is an active thing, it might be hard to replace reels with writing.
