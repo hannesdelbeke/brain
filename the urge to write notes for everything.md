@@ -1,7 +1,7 @@
 Today I wrote a lot of notes. But I expect I wont read most of them again unlike my usual productivity notes, e.g. on `programming`.
 Today I am quite tired because of a hang over, and I've noticed that being tired often leads to fake productivity. Being busy but not getting much done
 
-I think perfectionism, the same reason discussed in  [[not finishing books]], is why I want to write down all my thoughts and discoveries. And why I struggle to stop writing a half written note, and just drop it.
+I think [[perfection|perfectionism]], the same reason discussed in  [[not finishing books]], is why I want to write down all my thoughts and discoveries. And why I struggle to stop writing a half written note, and just drop it.
 
 This is not an effective use of my time, but it's fun. 
 - I write because I want to write.
@@ -12,6 +12,7 @@ This is not an effective use of my time, but it's fun.
 	- I think that maybe someone will one day read these notes.
 
 Fake productivity. I'm busy creating things, even if those things don't matter.
+e.g. [[writing notes about notes]]
 
 It does however improve my writing skills, so it's not a complete waste of time.
 
