@@ -1,5 +1,5 @@
 Datafix used to use [[Python namespace packages]].
-During development, I kept running in issues
+During development, I kept running in to issues
 - [[integrated development environment|IDE]] doesn't support and is confused
 - I'm confused, having to track implicit things across projects. [[cognitive load]]
 - A change of folder structure affects multiple projects, low [[connascence]]
