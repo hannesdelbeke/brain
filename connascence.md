@@ -1,3 +1,5 @@
+Code connascence is a concept describing the degree of interdependence between two or more parts of a codebase, where a change in one part requires a change in another for the system to remain correct
+
 Connascence is a unit to measure code complexity
 https://connascence.io/meaning.html
 
