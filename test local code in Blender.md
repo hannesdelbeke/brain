@@ -9,7 +9,7 @@ options
 - TODO VS Code plugin - I don't have much experience with this. 
 - blender env vars?
 
-I often end up using symlink since it's the least effort, and I know what issues I can expect caused by git.
+I often end up using symlink since it's the least effort, and I know what issues I can expect that are caused by git deleting symlinks.
 
 ## Append path
 to test a python package
