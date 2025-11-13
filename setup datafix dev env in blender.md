@@ -4,4 +4,4 @@ clone
 
 
 [[Blender scripting]]
-[[test code in Blender]]
+[[test local code in Blender]]
