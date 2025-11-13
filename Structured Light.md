@@ -5,6 +5,6 @@ Most low-budget depth sensors on the market use Structured Light technology whic
 - Orbbec Astra
 - Project Tango (it’s modular, there are many options there)
 - Structure sensor
-- Asus Xtion
+- [[Asus]] Xtion
 
-Kinect V2 uses Time-Of-Flight technology which was used in very expensive depth cameras. It has enhanced resolution, image quality, noise reduction etc. comparing to previous version. In terms of raw data processing it’s really great. The only downside (for me) is usb 3.0 (realsense has it too) that is hard to extend and its bigger size.
+Kinect V2 uses Time-Of-Flight technology which was used in very expensive depth cameras. It has enhanced resolution, image quality, noise reduction etc. comparing to previous version. In terms of raw data processing it’s really great. The only downside is usb 3.0 (realsense has it too) that is hard to extend and its bigger size.
