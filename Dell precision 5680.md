@@ -9,6 +9,9 @@ right
 2. USB-C port  
 3. Lock slot
 
+⚠️ sometimes audio has driver issues, resulting in the built-in mic and speaker not being detected, or a detected headset not playing audio.
+Usually a restart fixes it.
+
 [[laptop]]
 2 x microphone
 [[infrared camera]] ([[Windows Hello]])
