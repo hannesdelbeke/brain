@@ -47,10 +47,15 @@ my own workflow improvements, not related to obsidian
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
 - [ ] [[Obsidian auto complete]]
 - [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)
-- [ ] exclude folders, e.g. daily folder, from backlinks
-	- [ ] Settings > Files & Links > Excluded files
-- [x] support code in dropdown, workaround: [[Obsidian toggle code]]
-- [x] open web URLs in obsidian tab.  https://github.com/MamoruDS/obsidian-open-link-with
+- [ ] exclude from [[Obsidian backlinks]]
+	- [ ] exclude folders, e.g. daily folder from backlinks
+		- there's a workaround: an option to exclude files from all links and search etc. `Settings > Files & Links > Excluded files`
+		- Cons: excluded not only from backlinks
+- [ ] [[Obsidian unlinked mentions include code snippets|exclude code snippets from backlinks]] 
+- [x] [[Obsidian toggle code|support code in dropdown]]
+- [x] open web URLs in obsidian tab. 
+	- I use [[Obsidian plugin - open link with]] since it gives more control, like open in obsidian on left click, or open in browser on middle mouse click.
+	- obsidian now ships with browsing support
 - [x] [[Obsidian quick move]] the current note to a folder
 - [x] [[Obsidian distinguish internal & external links]]
 - [ ] [[Obsidian - support CSV]]

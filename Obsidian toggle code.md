@@ -4,17 +4,21 @@ also see [[embed code in Markdown]]
 ### ✅ Callouts
 see the [docs](https://help.obsidian.md/How+to/Use+callouts) for more info
 ````
-> [!FAQ]- 
-> some test code:
-> ```
-> test
+> [!Show code]- 
+> ```python
+> import sys
+> 
+> p = sys.path
+> print(p)
 > ```
 ````
 
-> [!FAQ]- 
-> some test code:
-> ```
-> test
+> [!Show code]-
+> ```python
+> import sys
+> 
+> p = sys.path
+> print(p)
 > ```
 
 ### ❌ Toggle 

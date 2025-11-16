@@ -5,4 +5,5 @@ import sys
 [print(path) for path in sys.path]  
 ```
 
+[[Python sys path]]
 [[Python stubs]]
