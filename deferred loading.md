@@ -4,3 +4,4 @@ aliases:
   - "- background initialization"
   - deferred initialization
 ---
+Similar to [[lazy loading]]
