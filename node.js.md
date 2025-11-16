@@ -1,5 +1,5 @@
 ---
-aliases: []
+aliases:
 ---
 app to run JavaScript on the server
 
