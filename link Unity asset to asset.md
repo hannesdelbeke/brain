@@ -1,4 +1,4 @@
-Write notes, to create a [[link]] between 2 Unity assets. 
+Write notes, to create a [[public/link]] between 2 Unity assets. 
 To enable quick [[navigation]] between assets. 
 
 > [!NOTE] 

@@ -4,4 +4,4 @@ aliases:
   - social connections
 ---
 
-Usually used in the context of a [[link|relation]] between people.
+Usually used in the context of a [[public/link|relation]] between people.

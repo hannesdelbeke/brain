@@ -1,1 +1,1 @@
-Good [[UX]] to [[link]] to [[documentation]] from within a tool.
+Good [[UX]] to [[public/link]] to [[documentation]] from within a tool.

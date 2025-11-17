@@ -7,5 +7,5 @@
 In the past I used rescue time, it would give me percentages that didn't mean much. I might see I wasted a lot of time, but it was trickier to see when I did, e.g. mornings, or in between meetings.
 It was designed for software tracking only, it  didn't integrate with real life, e.g. travel, see friends, ...
 
-[[link]]
+[[public/link]]
 [[use more links in life]]

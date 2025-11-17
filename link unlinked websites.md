@@ -22,7 +22,7 @@ Allow better tutorial links. I can provide a link to a website, and add links to
 - https://web.hypothes.is/ make notes for anything on the web!
 
 
-#toolidea #extension [[Chrome]] #browser [[URL]] [[link]] [[productivity]]
+#toolidea #extension [[Chrome]] #browser [[URL]] [[public/link]] [[productivity]]
 
 [shared on reddit](https://www.reddit.com/r/PKMS/comments/104d2dd/link_unlinked_websites/)
 
