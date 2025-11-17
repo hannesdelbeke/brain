@@ -1,1 +1,1 @@
-A [[git]] [[repository]] on [[GitHub]]
+A [[git repository]] on [[GitHub]]

@@ -1,3 +1,3 @@
-a monitor bar
+a [[monitor light bar]]
 [[lighting]]
 [[BenQ]]

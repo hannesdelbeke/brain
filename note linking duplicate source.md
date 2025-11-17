@@ -24,6 +24,7 @@ Look into [[annotate websites]], for more discussion on storing notes for a site
 Embed the URL in an [[iframe]].
 Note in [[Obsidian]], first define height, then width. Else height won't work.  
 ```HTML
-<iframe src="https://www.example.com" height="800" width="800" ></iframe>
+<iframe src="https://www.example.com" height="200" width="800" ></iframe>
 ```
-<iframe src="https://www.example.com" height="800" width="800" ></iframe>
+<iframe src="https://www.example.com" height="200" width="800" ></iframe>
+[[wrapping]]
