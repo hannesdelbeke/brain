@@ -1,7 +1,10 @@
 
-Default: <span style="background:#9254de">This sentence is <font color="#7f6df2"><u>easy to read</u></font> without <font color="#99caf"><u>visual</u></font> interruption.</span>
-This sentence is easy to read without visual interruption.
-This sentence is easy to read without visual interruption.
+Default Obsidian styling in the dark theme:
+- <span style="background:#202020; color:#dcddde">This sentence is <font color="#7f6df2"><u>easy to read</u></font> without <font color="#99caf"><u>visual</u></font> interruption.</span>
+A sentence with normal text formatting is easier to read:
+- <span style="background:#202020; color:#dcddde">This sentence is easy to read without visual interruption.</span>
+My custom styling tries to have the best of both worlds:
+- <span style="background:#202020; color:#dcddde">This sentence is <font color="#AE8CFF">easy to read</font> without <font color="#ADD8E6">visual</font> interruption.</span>
 
 ## Problem: text color
 I find that [[wikilink|wikilinks]] in text decrease the readability of my notes. Because links are colored dark purple, which clashes with the white color from normal text. A colored word in the middle of a sentence, interrupts the reading flow.

@@ -3,4 +3,4 @@ Ideally open them in Obsidian, or secondary, clicking them in the file browser o
 
 I mostly want [[CSV]] support so I can move some of my [[Google Sheets]] over to my [[Obsidian vault]], or my bank statements.
 
- [[CSV]] viewer , checkout this https://github.com/zds-dev/csv-obsidian
+[[CSV]] viewer , checkout this https://github.com/zds-dev/csv-obsidian
