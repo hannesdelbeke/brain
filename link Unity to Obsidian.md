@@ -1,4 +1,4 @@
-To [[link]] [[Obsidian]] [[note taking|notes]] to [[Unity]]:
+To [[public/link]] [[Obsidian]] [[note taking|notes]] to [[Unity]]:
 1. Click `Copy Obsidian URL` from the right-click menu of a note in Obsidian
 2. Paste the URL in a Unity note with [[Unity note editor]].
 

@@ -9,5 +9,5 @@
 
 [[Google Photos]] is great, but it doesn't sort my pics like that. Instead, it contains all my pics as backup of that day, which is overwhelming. 100 pics, vs a few highlights of the best pics. It also often doesn't has post-processing applies, corrected colors, straight horizon, crop etc
 
-[[link]]
+[[public/link]]
 [[use more links in life]]
