@@ -26,4 +26,4 @@ If I want to continue to use [[Google Sheets]], I should consider
 	- [ ] ✅ [[wikilink GDrive files]] by embedding the drive in my vault
 
 [[practical]]
-[[software review]] vault
+[[software review]]
