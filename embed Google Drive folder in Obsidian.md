@@ -6,7 +6,7 @@ challenges:
 	- If it happens I can just rename the file.
 
 ### Walkthrough: How to embed GDrive folder in vault
-- [ ] can i use google drive as a subfolder in my [[Obsidian vault|vault]]?
+- [x] can i use google drive as a subfolder in my [[Obsidian vault|vault]]?
 - download gdrive [here](https://support.google.com/a/users/answer/13022292?hl=en)
 - launch and sign in
 - step 1
@@ -20,7 +20,7 @@ challenges:
 		- to make drive files available offline rightclick - make available
 	- you can set to `Mirror files` to [[file sync|sync]] drive to a folder in both ways (two-way sync) 
 		- asks to select a folder where to mirror the whole drive too.
-- create a gitignore folder for drive in my vault
+- add `google-drive/` to [[gitignore|.gitignore]] in my vault if you use [[git]]
 - change drive settings to point to that folder.
 	- seems i can also make it point to a streaming folder instead of `G:\` drive.
 	 But when I do so Obsidian doesn't pick it up
