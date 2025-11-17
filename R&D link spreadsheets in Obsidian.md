@@ -3,7 +3,7 @@
 - I rarely edit sheets on location, always on my laptop. So a local edit mode would meet my needs.
 
 - [x] [[Google Sheets]] has nice edit support, 
-	- [x] so I will  [[keep using google drive for my sheets]]
+	- [x] so I will  [[keep using google drive for my sheets in my vault]]
 - [x] but my drive data is not backed up.
 	- I could create a startup script that auto backs up changed notes.
 	- [x] Don't bother, [[Drive for desktop]] does this already
