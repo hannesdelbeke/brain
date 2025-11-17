@@ -29,6 +29,15 @@ challenges:
 > [!warning] 
 > the [[obsidian jp]]
 
+There's a bug related to [[obsidian jp]]
+
+Uncaught (in promise) Error: ENOENT: no such file or directory, rename 
+C:\repos\pkm\google-drive\admin\work\archive\2016 Freejam\robocraft\robocraft wallpapers\ScreensRhino-4.jpg' ->
+'C:\repos\pkm\google-drive\admin\work\archive\2016 Freejam\robocraft\robocraft wallpapers**NaNimage**\ScreensRhino-4.jpeg'
+
+After integrating drive in [[my vault]], the [[Obsidian auto complete]] is terribly slow. (5 seconds)
+
+
 this might be an option
 also xslx files can be edited in google drive, so could use that instead of gsheet if i want to not be stuck in their custom file format.
 
