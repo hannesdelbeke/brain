@@ -1,6 +1,6 @@
 
 > [!tip] 
-> Always explain why you [[link]] a note, never just link a note.
+> Always explain why you [[public/link]] a note, never just link a note.
 
 I read this advice when learning [[personal knowledge management|PKM]], this turned out to be one of my most useful [[note taking]] habits. 
 - It adds [[context]] to each link, which is especially useful when you revisit a note years later. I get the most value from my notes in the future, when I've forgotten all that context.

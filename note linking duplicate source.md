@@ -3,7 +3,7 @@ aliases:
   - wrap in iframe
 ---
 
-notes in obsidian rely on [[link|links]] between notes.
+notes in obsidian rely on [[public/link|links]] between notes.
 When you talk about something external, e.g. a github repo, you can't link to it.
 
 So to create connections between notes, you make a note that duplicates the github repo, and just paste the URL in there. Maybe a screenshot and small description.

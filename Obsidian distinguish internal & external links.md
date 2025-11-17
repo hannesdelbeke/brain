@@ -7,3 +7,5 @@ span.cm-url a.cm-underline {
     color: lightblue; 
 }
 ```
+
+[[Obsidian css]]

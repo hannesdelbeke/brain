@@ -9,7 +9,7 @@ Since I write for my future self, in the [[Evergreen notes]] style, there will b
 
 To [[navigation|navigate]] this [[website]] 
 1. Search for something you are interested in, e.g. [[Blender]], [[Unreal]], [[Autodesk Maya|Maya]], [[Python]], [[gamejam]], [[tool launcher|tool browser]]
-2. [[discovery|Discover]] more by clicking [[URL|links]] in the note you read. Use the [[backlink|backlinks]] at the bottom to find [[link|related]] notes. 
+2. [[discovery|Discover]] more by clicking [[URL|links]] in the note you read. Use the [[backlink|backlinks]] at the bottom to find [[public/link|related]] notes. 
 
 [[my most impactful note taking learnings]]
 

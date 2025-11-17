@@ -13,6 +13,6 @@ CON
 [this article](https://brainbaking.com/post/2021/03/the-indieweb-mixed-bag/) from [[brainbaking.com]] says integrating webmentions is too technical, and not worth the effort. Nobody will webmention your page, because it's not easy & popular.
 
 [[IndieWeb]] 
-[[link]]
+[[public/link]]
 [[comment]]
 [[PKM social media]]

@@ -26,4 +26,4 @@ Review your previously solved problems at previous jobs, and you might notice th
 How can we discover strong links? The graph view pulls nodes closer to each other if they have multiple links.
 
 
-[[link]]
+[[public/link]]

@@ -2,7 +2,7 @@
 aliases:
   - backlinks
 ---
-A backlink informs which notes [[link]] to the current note.
+A backlink informs which notes [[public/link]] to the current note.
 
 Backlinks easily let you go back to where you came from.
 - better  [[navigation]] 

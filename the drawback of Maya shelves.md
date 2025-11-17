@@ -3,7 +3,7 @@ Artists often want to put all tools on a [[Maya shelf]].
 - it's simple, just click a button to launch the tool.
 
 ## Cons
-Maya shelves are a little clunky tech wise when distributed to teams through [[source control]], 
+Maya shelves are a little clunky tech wise when distributed to teams through [[version control|source control]], 
 I'm a bit rusty on the exact why since I've been avoiding them, i think it related to
 - you can't delete/unload a shelf once loaded in Maya
 - shelves contain code, which can be edited by the user.

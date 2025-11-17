@@ -1,1 +1,1 @@
-[[link]]
+[[public/link]]
