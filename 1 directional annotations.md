@@ -43,4 +43,4 @@ Slack supports URL links to threads. We could have a database that gets the thre
 If linking to a specific line, what happens if the line changes?
 let's link to the whole doc, or thread for now.
 
-[[link]]
+[[public/link]]

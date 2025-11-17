@@ -5,7 +5,7 @@ aliases:
   - wiki links
 ---
 
-- not compatible with GitHub md preview / default markdown [[link]]s
+- not compatible with GitHub md preview / default markdown [[public/link]]s
 - compatible with GitHub wiki
 - several static site generators support it
 - has been around for a while

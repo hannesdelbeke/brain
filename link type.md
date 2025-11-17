@@ -5,7 +5,7 @@ if `son` is linked to `mother`, what kind of link is this?
 
 Support for link types would allow us to add relationships or [[1 directional annotations|descriptions/notes to links]].
 
-right now we can [[link]] note A to note B, but it's not always clear why they are related.
+right now we can [[public/link]] note A to note B, but it's not always clear why they are related.
 Ideally the note says: Note A relates to note B because of reason.
 e.g. `[[Bob]] is [[Lucy]]'s dad'`
 
