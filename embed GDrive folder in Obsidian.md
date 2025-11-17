@@ -1,0 +1,32 @@
+If I download my [[Google Drive]] folder in my vault, i can [[wikilink GDrive files]] in my notes.
+
+challenges:
+- potential clashing file names with public notes
+	- I expect this is rare since there are no [[Markdown]] files in my drive.
+	- If it happens I can just rename the file.
+
+### Walkthrough: How to embed GDrive folder in vault
+- [ ] can i use google drive as a subfolder in my [[Obsidian vault|vault]]?
+- download gdrive [here](https://support.google.com/a/users/answer/13022292?hl=en)
+- launch and sign in
+- step 1
+	- there's only the option to sync folders too drive, untick them all and don't use this.
+- step 2 google photos
+	- I get a warning for differences between [[sync with drive vs back up to photos]]
+	- there's only an option to sync photo folders to photos/drive, untick all
+- step 3 see drive files in explorer
+	- defaults to stream mode, a [[virtual file system]], shows in explorer without taking up space.
+		- it created a new hard drive `G:\`
+		- to make drive files available offline rightclick - make available
+	- you can set to `Mirror files` to [[file sync|sync]] drive to a folder in both ways (two-way sync) 
+		- asks to select a folder where to mirror the whole drive too.
+- create a gitignore folder for drive in my vault
+- change drive settings to point to that folder.
+	- seems i can also make it point to a streaming folder instead of `G:\` drive.
+	 But when I do so Obsidian doesn't pick it up
+
+this might be an option
+also xslx files can be edited in google drive, so could use that instead of gsheet if i want to not be stuck in their custom file format.
+
+
+see [[keep using google drive for my sheets in my vault]]
