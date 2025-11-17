@@ -25,6 +25,10 @@ challenges:
 	- seems i can also make it point to a streaming folder instead of `G:\` drive.
 	 But when I do so Obsidian doesn't pick it up
 
+
+> [!warning] 
+> the [[obsidian jp]]
+
 this might be an option
 also xslx files can be edited in google drive, so could use that instead of gsheet if i want to not be stuck in their custom file format.
 
