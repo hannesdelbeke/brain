@@ -10,6 +10,9 @@ it seems i could do this, if i could add to the suggested tab list in obsidian.
 - I want it to work with [[google contacts]], my [[Obsidian vault]], and [[Instagram]] posts, and [[Strava]], and [[GitHub]]
 - how can the database be backed up?
 
+## solution
+[[sync html shortcuts to obsidian vault]]
+
 ## brainstorm
 Think of a generic wrapper.
 - backup
