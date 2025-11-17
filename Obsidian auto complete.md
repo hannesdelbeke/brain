@@ -1,4 +1,4 @@
-when I type a word, predict what I want to write. And let me complete it with tab.
+When I type a word, predict what I want to write. And let me complete it with tab.
 
 Just like GMail, or VS-code, or Copilot
 
