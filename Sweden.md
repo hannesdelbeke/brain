@@ -1,0 +1,3 @@
+[[country]]
+[[snow]]
+[[hiking]]
