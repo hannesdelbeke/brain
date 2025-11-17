@@ -19,6 +19,7 @@ Don't spend more time on notes than work.
 - [x] automatic support for submodules, workaround for manually pulling and pushing submodules., see [[Obsidian submodule]]
 - [x] [[Obsidian auto collapse linked mentions]] (Work around)
 - [ ] this [[Obsidian plugin - paste URL in selection|plugin]] : when you copy a URL, select a word and paste. it wraps that word in the URL. I want this also if i copy paste a wikilink, like this `[[favorite]]`
+- [x] [[Obsidian paste img png to jpg]]
 
 my own workflow improvements, not related to obsidian
 - [ ] [[minimize pkm image size]]
