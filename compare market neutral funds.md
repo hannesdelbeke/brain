@@ -6,10 +6,11 @@
     - Over long horizons, the **average annualized return since 2001 is close to zero, around –0.4% per year**
 
 2021-2025 data
+[[t]]
 
-|Asset Class|Avg. Annual Return|Inflation-Adjusted|Risk Profile|
-|---|---|---|---|
-|S&P 500 (stocks)|~7–8%|~6%|High volatility, strong long-term growth|
-|U.S. Bonds (10-year Treasuries, corporates)|~3–4%|~1–2%|Lower volatility, steady income|
-|Market-Neutral Funds|~–0.4%|Negative|Low correlation, weak absolute returns|
+| Asset Class                                 | Avg. Annual Return | Inflation-Adjusted | Risk Profile                             |
+| ------------------------------------------- | ------------------ | ------------------ | ---------------------------------------- |
+| [[S&P 500]] (stocks)[[t]]                    | ~7–8%              | ~6%                | High volatility, strong long-term growth |
+| U.S. Bonds (10-year Treasuries, corporates) | ~3–4%              | ~1–2%              | Lower volatility, steady income          |
+| Market-Neutral Funds                        | ~–0.4%             | Negative           | Low correlation, weak absolute returns   |
 [[investing]]
