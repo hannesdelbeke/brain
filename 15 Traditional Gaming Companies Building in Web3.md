@@ -16,3 +16,4 @@
 14. [[Bandai Namco Entertainment Asia]]
 15. [[GREE International Entertainment, Inc]]
 
+[[game company]]
