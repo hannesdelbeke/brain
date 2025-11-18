@@ -1,6 +1,7 @@
 ---
 aliases:
   - usersetup
+  - usersetup.py
 ---
 
 > [!warning]
