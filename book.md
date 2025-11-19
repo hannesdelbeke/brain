@@ -1,1 +1,1 @@
-[[books]]
+[[blog]], or [[book]][[books]]
