@@ -1,0 +1,3 @@
+After [[embed GDrive folder in Obsidian|integrating my Google Drive folder in Obsidian]], I'd like to add an [[icon]] to the Google Drive folder in Obsidian's navigation tab. So I'm less likely to accidentally drag files out of my drive, or move notes into my drive.
+
+I installed `obsidian-iconize`. In settings, I then clicked `browse iconpacks` and installed `fontawesome brands`. Then right-click my drive folder, change icon, and set it to the new `google drive` icon.
