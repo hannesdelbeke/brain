@@ -2,3 +2,4 @@
 [[movie]]
 [[TV series]]
 [[video streaming]]
+[[subscription]]
