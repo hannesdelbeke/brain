@@ -16,6 +16,10 @@ But this is more of a [[blog]] than a personal [[digital garden]]
 - No backlinks
 - Not designed for [[Evergreen notes]]
 
+this person is using a blog as PKM, and what appears to be backlinks `pingback`
+https://thezvi.wordpress.com/2020/01/12/how-to-identify-an-immoral-maze/
+
+
 [[Obsidian]]
 [[social media]]
 [[community]]
