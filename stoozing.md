@@ -1,5 +1,5 @@
 instead of paying 1000.
-put 1000 in savings account and get interest
+put 1000 in [[savings]] account and get interest
 pay monthly free interest off.
 
 also on top of that inflation means you pay less in the future, leading to free discount.
