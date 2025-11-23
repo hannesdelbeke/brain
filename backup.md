@@ -1,6 +1,7 @@
 ---
 aliases:
   - backed up
+  - backups
 ---
 
 A way to recover something you lost, or handle a situation when something goes wrong.
