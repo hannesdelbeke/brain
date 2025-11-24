@@ -1,3 +1,9 @@
+---
+aliases:
+  - hotlinked
+  - hotlink
+---
+
 when you [[public/link]] directly to [[image|images]] on a website, instead of copying them on your own website.
 
 ### Practical disadvantage
