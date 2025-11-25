@@ -1,0 +1,6 @@
+---
+aliases:
+---
+
+[[Artificial intelligence|AI]]
+
