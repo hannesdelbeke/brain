@@ -4,7 +4,7 @@ Acoustic wall panels absorb sound instead of bounce it back, eliminating echos.
 
 
 [tutorial video](https://fixthisbuildthat.com/easiest-diy-acoustic-panels-under-20-bucks/)
-amateur [video](https://www.youtube.com/watch?v=pABvTWSxOes&t=1s) on creating your own panels with wood & towels
+amateur [video](https://www.youtube.com/watch?v=pABvTWSxOes&t=1s) on creating your own panels with wood & [[towels]]
 better [video](https://www.youtube.com/watch?v=HO7aeraKLsM) on DIY panels. denim. rockwool, ...
 	20kg / m³ - okay
 	30kg better
