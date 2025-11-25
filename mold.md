@@ -1,6 +1,7 @@
 ---
 aliases:
   - mould
+  - moldy
 ---
 
 often caused by [[damp]]
