@@ -3,3 +3,4 @@
 - root [guide](https://github.com/pezema/home-vacuum), making your own firmware in linux & flashing your robot
 
 [[vacuum]]
+[[vacuum cleaner]]
