@@ -1,1 +1,3 @@
 [[bin]]
+[[house]]
+[[kitchen]]
