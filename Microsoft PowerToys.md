@@ -1,0 +1,6 @@
+---
+aliases:
+  - PowerToys
+---
+
+[[Microsoft]]

@@ -32,7 +32,7 @@ print("height bpy", bpy.context.window_manager.windows[0].height, "width", bpy.c
 
 when qt wrapped window is 0 height. bpy returns 0
 but qt returns 56 height. likely the title bar height
-measure with powertoys returns 28 pixels height
+measure with [[Microsoft PowerToys|PowerToys]] returns 28 pixels height
 windows, 150% scale on `3840 x 2160px`
 
 [[Blender Python]]
