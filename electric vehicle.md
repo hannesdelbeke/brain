@@ -25,3 +25,5 @@ finance options:
 - car finance
 - bank [[loan]]
 - buy on credit card
+
+[[EV charger]]
