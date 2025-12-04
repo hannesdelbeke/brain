@@ -1,4 +1,4 @@
-Barrier is a [[virtual]] keyboard switcher [[keyboard video mouse|KVM]] to control multiple computers with 1 mouse and 1 keyboard. 
+Barrier is a [[virtual]] [[keyboard video mouse|KVM]] to control multiple computers with 1 mouse and 1 keyboard. 
 When moving your cursor of the side of 1 screen, it appears on other computer's screen. It's just like having 2 screens attached to 1 computer, with the difference that instead you control 2 computers.
 
 *KVM stands for "keyboard, video, mouse."*
