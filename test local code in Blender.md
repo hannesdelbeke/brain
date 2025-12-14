@@ -31,8 +31,10 @@ to test an addon
 - restart Blender
 - or delete imported module var from memory, e.g. with [[qt-module-manager]]
 
+I wrote more about setting up a blender dev env here https://github.com/techartorg/bqt/wiki/setup-bqt-develop-environment#editable-package-install
+
+## Tags
 [[Blender scripting]]
 [[dev environment]]
 [[TODO create local test env]]
-
 [[Python env management]]
