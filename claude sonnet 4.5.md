@@ -1,1 +1,1 @@
-[[Claude Code-|Claude]]
+[[Claude Code|Claude]]
