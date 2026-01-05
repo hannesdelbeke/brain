@@ -18,3 +18,4 @@ require log in / install - more hassle
 - [[Syncthing Android]] and [[Syncthing]]
 
 [[file distribution]]
+[[file transfer]]
