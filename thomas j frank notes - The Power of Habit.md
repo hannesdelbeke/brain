@@ -13,7 +13,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 - Squire’s paper on Eugene’s habits was the spark that really ignited habit research
 - Habits are bound up in the basil ganglia, one of the most ancient and central parts of the brain
 - Brain activity is much lower when executing the routine part of the habit loop
-- “Chunking” – the brain’s process of converting a sequence of actions into an [[automate|automatic]] routine
+- “Chunking” – the brain’s process of converting a sequence of actions into an [[public/automate|automatic]] routine
 
 ## Chapter 2
 - Claude C. Hopkins – successful ad man who helped make Pepsodent successful
