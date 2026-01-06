@@ -28,5 +28,8 @@ e.g. a Gigabit 1,300Mbps fastest real-world speed was 115Mbps
 	-  Devolo 1200 (104Mbps).
 	- TP-Link 300Mbps AV500 (68Mbps average, up to 92)
 
+nnow there also is MIMO, which uses all 3 wires neutral positve negative for faster speed.
+eg. PA8010P and PA9020P
+
 [[portable]]
 [[minimalism]]
