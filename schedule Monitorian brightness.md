@@ -77,5 +77,5 @@ Write-Host "Scheduled tasks for Monitorian brightness adjustment have been set u
 ```
 
 
-[[automate]]
+[[public/automate]]
 relates to [[dark mode]] since both ease your eyes.
