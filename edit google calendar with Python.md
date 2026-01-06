@@ -76,7 +76,7 @@ run task to test
 when all works, I set to run on log on
 
 repo https://github.com/hannesdelbeke/calendar-wellhub
-[[automate]] editing calendar events created by [[wellhub]]
+[[public/automate]] editing calendar events created by [[wellhub]]
 
 ## other
 someone else used similar tech to [auto set alarms](https://www.reddit.com/r/Android/comments/1gi8ux/remote_alarm_clock_ever_wanted_to_set_your_phones/) on your phone when it detects an event named "alarm" in your calendar. 
