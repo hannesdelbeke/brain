@@ -7,4 +7,4 @@ https://xkcd.com/1205/
 > - [[my digital garden dev]]
 
 [[optimization]]
-[[automate]]
+[[public/automate]]
