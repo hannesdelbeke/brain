@@ -1,0 +1,5 @@
+---
+aliases:
+  - OCPP
+---
+[[EV charger]]
