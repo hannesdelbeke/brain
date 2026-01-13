@@ -19,6 +19,9 @@ This monitor is SuperSpeed USB 5 Gbps (USB 3.2 Gen 1) compatible.
 comes with
 - [[USB-C]] to [[DisplayPort]] 1.4 cable
 
+### energy
+Typical On Mode: ~25.9 Watts (W)
+Maximum: Up to 72 Watts (W)
 ## Tags
 [[monitor]]
 [[Alienware]]

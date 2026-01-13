@@ -32,3 +32,7 @@ bottom, from left to right (lying screen flat on table)
    
    side:
 	1. 2 x USB (-OUT) downstream Ports (x1 with [[fast charge|Power Charging]])
+
+### energy 
+Typical Operation: ~17 W
+Maximum (with maximum brightness): Up to 68 W
