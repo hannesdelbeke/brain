@@ -19,6 +19,7 @@ camera
 [[fingerprint reader]]
 [[OLED]]
 4K
+[[WiFi 6E]]
 
 [[hardware]]
 [[Dell Technologies|Dell]]

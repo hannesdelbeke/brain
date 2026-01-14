@@ -17,3 +17,5 @@ should be able to access dashboard from http://tplinkrepeater.net/ when
 - connected to wifi extender over wifi.
 - connected over ethernet, and the extender has the same wifi network name as the main wifi (works now)
 - connect to the extender LAN ip. current 192.168.1.64
+
+[[wifi 6]]
