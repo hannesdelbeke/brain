@@ -10,4 +10,5 @@ similar to [[PC Bio Unlock]]
 
 [[Windows Hello]]
 
-it would be great to use [[Home Assistant]] to open the fingerprint app, when i'm on the lock screen.
+- [ ] It would be great to use [[Home Assistant]] to open the fingerprint app, when I'm on the lock screen.
+[[mcp server home assistant]]
