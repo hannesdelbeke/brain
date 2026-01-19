@@ -9,3 +9,5 @@ similar to [[PC Bio Unlock]]
 2026-01 - tested and works great
 
 [[Windows Hello]]
+
+it would be great to use [[Home Assistant]] to open the fingerprint app, when i'm on the lock screen.
