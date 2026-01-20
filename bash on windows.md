@@ -1,3 +1,7 @@
+---
+aliases:
+  - git bash
+---
 By default, [[windows|windows]] can't run shell scripts because it doesn't ship with [[bash]]. To add bash support:
 
 1. install [git for windows](https://gitforwindows.org/)  ([[git]])
