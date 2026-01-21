@@ -2,4 +2,4 @@
 aliases:
   - PAYE
 ---
-taxed through payslip
+taxed through [[payslip]]
