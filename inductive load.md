@@ -1,0 +1,1 @@
+Inductors are (simplified) coils of wire, they create a magnetic field when powered. When the power stops, that magnetic field needs to go somewhere, and is pumped back into the circuit
