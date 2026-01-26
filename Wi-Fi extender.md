@@ -7,9 +7,9 @@ Repeat the [[WiFi]] signal to extend the range. Speed will reduce since the sign
 - Wireless Repeaters
 	-  re-broadcast the WiFi signal, latency is increased. limited to 5 devices. oldest method.
 - Wireless Range Extenders
-	- grabs existing WiFi signal from your wireless router and re-broadcasts it on a different channel.
+	- grabs existing WiFi signal from your wireless [[router]] and re-broadcasts it on a different channel.
 - WiFi Network Extenders
-	- uses ethernet to connect extenders.
+	- uses [[ethernet]] to connect extenders.
 see https://www.screenbeam.com/wifihelp/wifibooster/differences-wifi-booster-wifi-extender-wifi-repeater/
 
 

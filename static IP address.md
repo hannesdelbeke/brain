@@ -1,3 +1,7 @@
+---
+aliases:
+  - static IP
+---
 it's much better to assign a static IP in your router, else there might be [[Dynamic Host Configuration Protocol|DHCP]] conflicts if multiple devices are assigned the same static IP.
 
 # set static IP on windows
@@ -18,7 +22,7 @@ netsh interface ip delete address name="Ethernet"
 
 ## Manual
 1. you can also go to `network connections`
-2. righ click ethernet, properties
+2. right click ethernet, properties
 3. set ipv4 properties
 4. set the ip address etc
 
