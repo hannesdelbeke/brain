@@ -11,5 +11,5 @@ how to speed up
 	- [ ] can i make a preset for this that is 1 click setup for new site? current setup is slow
 
 are there ways for android?
-- logging in [[Bitwarden-]] everytime w fingerprint is slow
+- logging in [[Bitwarden]] everytime w fingerprint is slow
 - [[google authenticator]] is faster but less reliable

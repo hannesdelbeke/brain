@@ -1,4 +1,4 @@
-[[Bitwarden-]] doesn't let you create more than 2 organisations on a free account. 
+[[Bitwarden]] doesn't let you create more than 2 organisations on a free account. 
 But you can make multiple accounts, and invite yourself as a non admin member to these free organisations.
 (Ensure your IT company policy allows this, or ask your IT department first)
 ## steps
