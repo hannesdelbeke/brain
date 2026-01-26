@@ -1,0 +1,5 @@
+---
+aliases:
+  - Zwave
+  - Z Wave
+---
