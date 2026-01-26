@@ -14,9 +14,9 @@
 | AC Mains        | ❌ No           | Power only                   |
 | Speaker Wire    | ❌ No           | Audio signal only            |
 
-# 🔄 Major Cable Types That Transfer Data
+# ✅ Major Cable Types That Transfer Data
 
-## 🟦 1. USB (Universal Serial Bus)
+## USB (Universal Serial Bus)
 The most common data cable family today.
 **Supports data?** Yes  
 **Examples:** USB‑A, USB‑B, Micro‑USB, USB‑C  
@@ -24,130 +24,75 @@ The most common data cable family today.
 **Notes:**
 - USB‑C supports the fastest speeds (up to 80–120 Gbps depending on spec).
 - USB‑PD power is optional but common.
-
-## 🟩 2. Ethernet (RJ45)
-
+## Ethernet (RJ45)
 The standard for wired networking.
-
 **Supports data?** Yes  
 **Use cases:** Internet, LAN, servers, routers  
 **Notes:**
-
 - Cat5e → 1 Gbps
 - Cat6/6A → 10 Gbps
 - Cat7/8 → 40–100 Gbps (data‑centre use)
-
-## 🟧 3. HDMI
-
+## HDMI
 Primarily a video cable, but it _does_ carry digital data streams.
-
 **Supports data?** Yes  
 **Use cases:** Video, audio, CEC control, Ethernet (rarely used)  
 **Notes:**
-
 - HDMI includes a low‑speed Ethernet channel (HEC), but almost no devices implement it.
-
----
-
-## 🟪 4. DisplayPort
-
+## DisplayPort
 Another video‑first cable that carries high‑bandwidth digital data.
-
 **Supports data?** Yes  
 **Use cases:** Video, audio, USB‑C alt‑mode tunnelling  
 **Notes:**
-
 - DisplayPort Alt Mode over USB‑C can tunnel DisplayPort signals through USB‑C.
-
----
-
-## 🟫 5. Thunderbolt (2/3/4/5)
-
+## Thunderbolt (2/3/4/5)
 A high‑speed data and display interface.
-
 **Supports data?** Yes  
 **Use cases:** External GPUs, docks, SSDs, monitors  
 **Notes:**
-
 - Thunderbolt 3/4/5 uses USB‑C connectors.
 - Supports PCIe, USB, DisplayPort, and networking over one cable.
-
----
-
-## 🟨 6. FireWire (IEEE 1394)
-
+## FireWire (IEEE 1394)
 Older but still used in some audio/video equipment.
-
 **Supports data?** Yes  
 **Use cases:** Audio interfaces, legacy video cameras  
 **Notes:**
-
 - Largely replaced by USB and Thunderbolt.
-
----
-
-## 🟦 7. SATA / eSATA
+## SATA / eSATA
 
 Storage‑specific data cables.
 
 **Supports data?** Yes  
 **Use cases:** Hard drives, SSDs, optical drives  
 **Notes:**
-
 - Internal SATA is still common in desktops.
-
----
-
-## 🟩 8. PCIe (via cables or risers)
-
+## PCIe (via cables or risers)
 Used inside PCs or for external GPU enclosures.
-
 **Supports data?** Yes  
 **Use cases:** GPUs, NVMe drives, expansion cards  
 **Notes:**
-
 - Extremely high bandwidth.
-
----
-
-## 🟧 9. Coaxial (RF Coax)
-
+## Coaxial (RF Coax)
 Used for radio‑frequency data.
-
 **Supports data?** Yes  
 **Use cases:** Cable internet, satellite, TV tuners  
 **Notes:**
-
 - DOCSIS cable modems use coax for broadband.
-
----
-
-## 🟪 10. Optical Fibre
-
+## Optical Fibre
 High‑speed data transmission using light.
-
 **Supports data?** Yes  
 **Use cases:** Internet backbones, FTTP, SFP modules  
 **Notes:**
-
 - Immune to electrical interference.
-
----
-
-## 🟫 11. Audio/Data Hybrid Cables
-
+## Audio/Data Hybrid Cables
 Some audio cables can carry digital data:
-### 🔸 USB‑C to 3.5mm (digital audio adapters)
-- Carries digital data → DAC converts to analog.
-### 🔸 Optical TOSLINK
-- Carries digital audio data (S/PDIF).
-### 🔸 MIDI (5‑pin DIN)
-- Carries digital control data for instruments.
-
+- USB‑C to 3.5mm (digital audio adapters)
+  Carries digital data → DAC converts to analog.
+- Optical TOSLINK
+  Carries digital audio data (S/PDIF)
+- MIDI (5‑pin DIN)
+  Carries digital control data for instruments.
 # ❌ Cables That _Do Not_ Transfer Data
-
 These are power‑only or signal‑only:
-
 - DC barrel jacks
 - AC power cords
 - Most proprietary charger cables (unless USB‑based)
