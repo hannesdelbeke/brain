@@ -98,3 +98,5 @@ These are power‑only or signal‑only:
 - Most proprietary charger cables (unless USB‑based)
 - Speaker wire
 - Analog RCA (except when used for composite video, which is analog signal, not digital data)
+
+[[AI article]]

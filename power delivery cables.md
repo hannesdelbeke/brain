@@ -22,3 +22,4 @@ But it’s not in any consumer products yet.
 also see [[data transfer cables]]
 
 [[electricity]]
+[[AI article]]
