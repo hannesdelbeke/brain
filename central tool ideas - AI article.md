@@ -49,3 +49,4 @@ The "Exporter" should handle the heavy lifting of getting the game out of Unity 
 | **Cheat Console** | QA / Dev | "I have to play for 20 minutes just to test the boss." |
 [[gamedev]]
 [[tooldev]]
+[[AI article]]
