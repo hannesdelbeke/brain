@@ -8,7 +8,7 @@ Let's figure it out
 **and why it's actually wrong**
 
 > [!NOTE]- context
-> When asking around for ideas for cool tools to make, Sjoerd De Jong told me about a problem he had with the bend modifier in [[Autodesk 3ds Max]]. He always had to fix it manual which was tedious. When applying a bend modifier on a prop with a power of 2 height, the end results width was not dividable by 2 and thus not on the grid (UDK grid, every 8 units) However Sjoerd found a [solution](http://www.hourences.com/maxmaya-bending-of-modular-meshes/) which he posted on his site
+> When asking around for ideas for cool tools to make, [[Sjoerd De Jong]] told me about a problem he had with the bend modifier in [[Autodesk 3ds Max]]. He always had to fix it manual which was tedious. When applying a bend modifier on a prop with a power of 2 height, the end results width was not dividable by 2 and thus not on the grid (UDK grid, every 8 units) However Sjoerd found a [solution](http://www.hourences.com/maxmaya-bending-of-modular-meshes/) which he posted on his site
 >
 >>[!QUOTE] [Sjoerd](http://www.hourences.com/maxmaya-bending-of-modular-meshes/)
 >> When you got modular on grid meshes in Max/Maya, and you bend them 90/180/270 degrees, their ends are never ever on grid, even though the original mesh was perfectly on grid. Most people, that included me, would in that case manually move the vertices on one end and snap them to the grid. That gets very tedious to do very fast though.
@@ -167,3 +167,5 @@ Now knowing all of this, it easy to automate the whole process! This will make c
 This was quite different from my usual process, which barely uses [[mathematics]] and is more pure scripting and automating. I decided to write down my though process, so people can understand why this number was used and how they can use it for their own solutions.
 
 You can download my [[3ds max tool]] [here](<[http://www.scriptspot.com/3ds-max/scripts/advanced-bend-modifier](http://www.scriptspot.com/3ds-max/scripts/advanced-bend-modifier)>) for easy bends in 3ds Max.
+
+[[calculations]]
