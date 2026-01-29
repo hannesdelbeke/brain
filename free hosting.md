@@ -4,7 +4,7 @@ https://ipv64.net/
 free DNS https://www.dynu.com/ -  free [[dynamic DNS|DDNS]] service
 Noip.com - nag emails to confirm hostname or lose access
 https://dns.he.net Supports [[dynamic dns]]
-DuckDNS
+DuckDNS 
 https://freedns.afraid.org/ 
   
 https://desec.io Free, no ads/premium/nag emails, run by a German non-profit
