@@ -45,7 +45,7 @@ Lifestyle & Well-being
 
 **Lifestyle & Health**
 
-- **Physical Activity:** Exercise regularly to boost dopamine and norepinephrine, which helps with focus.
+- **Physical Activity:** Exercise regularly to boost dopamine and norepinephrine, which helps with focus. [[gym]], [[exercise]], [[sport]]
 - **Dietary Adjustments:** Increase intake of omega-3 fatty acids, and ensure consistent meal times.
 - **Sleep Hygiene:** Maintain a consistent wake-up time, keep the bedroom cool (65-68°F), and consider using a sleep mask or white noise.
 	- **Limit Caffeine:** Avoid caffeinated beverages 5-7 hours before bed. 
