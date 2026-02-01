@@ -115,4 +115,4 @@ Advanced → Onboard Devices Configuration
 
 After wasting over 3h yesterday, I give up on [[Wake on LAN]].
 And instead set restore power -> power on
-and start the pc with a [[smart switch|smart socket]] from [[Home Assistant]].
+and start the pc with a [[smart socket]] from [[Home Assistant]].
