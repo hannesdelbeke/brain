@@ -10,7 +10,7 @@ IF
 - Add a time window, weekdays between 7am and 10am
 
 THEN
-- toggle power [[smart switch|smart socket]]
+- toggle power [[smart socket]]
 	- this triggers start since in bios set to power on after power loss
 
 Prevent multiple triggers in the same morning.

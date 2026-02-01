@@ -1,4 +1,3 @@
 ---
 aliases:
-  - smart socket
 ---
