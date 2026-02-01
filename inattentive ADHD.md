@@ -7,3 +7,5 @@ Inattentive ADHD (often called ADD), a type of ADHD, primarily involves difficul
 Unlike the hyperactive-impulsive type, individuals with inattentive ADHD may not exhibit hyperactivity or impulsivity to the same extent. 
 
 It can be mistaken for anxiety or a [[mood disorder]] in adults.
+
+[[ADD strategies]]
