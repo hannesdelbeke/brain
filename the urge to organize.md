@@ -1,4 +1,4 @@
-It's always addicting to [[categorize|categorize]]/[[organisation|organize]] everything
+It's always addicting to [[categorize|categorize]]/[[organizing|organize]] everything
 to write notes for everything
 
 pros

@@ -12,12 +12,12 @@ height : 18 inches - 46 cm
 
 seats down : 67/75 inches - 170/190 cm
 
-### reddit measurement
+### Reddit measurement
 so 930mm wide,
 **440mm high** is from floor to the cross member in the top of the boot, 
 and 1700mm long if a 6’2” person is driving. You could prob easy fit 1800 or even 1900 if you wanted to drive clown car style
 
-I personally would reduce that max height to say 400mm as you need room to manoeuvre the package over the boot lip if that makes sense….
+I personally would reduce that max height to say 400mm as you need room to maneuver the package over the boot lip if that makes sense….
 
 the dimensions of a 22’ M3LR.
 

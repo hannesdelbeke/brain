@@ -15,5 +15,5 @@ And [[the drawbacks of categorizing|don't waste time on deciding where it should
 - Put all your Python packages in a single folder. Just like how Python does it.
   (You can have multiple folders for multiple apps/environments, but try [[keep it simple]] )
 
-[[organisation]]
+[[organizing]]
 similar to [[don't waste time on naming]]
