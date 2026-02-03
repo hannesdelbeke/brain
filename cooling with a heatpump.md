@@ -6,4 +6,4 @@ You either need
 - a smart system that manages [[dew point|dew temperature]] to prevent condensation
 - handle condensation
 	- fans to manage condensation on [[radiator|radiators]] 
-	- a moisture barrier to protect the underfloor heating from condensation
+	- a [[moisture barrier]] to protect the underfloor heating from condensation
