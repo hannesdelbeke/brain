@@ -1,4 +1,4 @@
-Economy 10 offers three off-peak hours:
+Economy 10 offers three [[off-peak]] hours:
 - 3 h between midday-3 pm
 - 2 h between 5 pm-7 pm
 - 5 h between midnight-5 am.
