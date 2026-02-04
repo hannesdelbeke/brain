@@ -41,7 +41,7 @@ Charging EV slowly in winter, wastes more energy keeping the EV on and the batte
 - Use a higher kWh, less energy wasted.
 - Charge less often, e.g. Instead of 20% → 60% every night, Do 20% → 80% every 2–3 nights.
 
-But with off-peak cost 6p, and peak cost 28p / kWh, I could waste **367% extra energy** and _still_ be no worse than charging at peak. So overhead is negligible.
+But with [[off-peak]] cost 6p, and peak cost 28p / kWh, I could waste **367% extra energy** and _still_ be no worse than charging at peak. So overhead is negligible.
 
 ## Possible improvements
 In the future, I might calculate total charge time needed per week, add a buffer, and then increase charge speed based on expected driving distance for the week. This would reduce wasted overhead. However, it adds more [[complexity]], dev [[time]], and there's a higher chance off using peak time if I don't drive for a week.
