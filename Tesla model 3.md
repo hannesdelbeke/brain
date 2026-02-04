@@ -1,23 +1,15 @@
 
-144 W max continuous draw with a [[12 V car‑socket inverter]]
-reported to get extremely hot
-newer models have 15v, which might error with some inverters.
-The cigarette plug offers DC, inverter converts to AC ([[electricity socket]])
-if you charge a laptop, it usually converts to DC again, so it's inefficient.
-Try charge directly from 12v USB-C car charger instead.
 
-## Power outlet
-The power outlet is suitable for accessories requiring up to 12A continuous draw (16A peak)
-For vehicles manufactured after approximately November 2021, power inverters plugged into the low voltage power outlet must support 16V DC input to function.
-
-Older cars (≈13 V × 12 A)
-≈ 156 W max
-Newer cars (≈16 V × 12 A)
-≈ 192 W max
-After inverter losses (10–20%), you get: 120–160 W
-
-The USB ports can output power up to approximately 15W
-Wireless Phone Charger is 15W
+> [!NOTE]- Power outlet
+> The power outlet is suitable for accessories requiring up to 12A continuous draw (16A peak)
+> For vehicles manufactured after approximately November 2021, power inverters plugged into the low voltage power outlet must support 16V DC input to function.
+> 
+> Older cars  (≈13 V × 12 A) ≈ 156 W max
+> Newer cars (≈16 V × 12 A) ≈ 192 W max
+> After inverter losses (10–20%), you get: 120–160 W
+> 
+> The USB ports can output power up to approximately 15W
+> Wireless Phone Charger is 15W
 
 > [!NOTE]- Trunk dimensions
 > 
