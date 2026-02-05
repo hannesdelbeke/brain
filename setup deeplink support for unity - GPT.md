@@ -1,9 +1,9 @@
 Enabling [[deep link]] in [[unity]], allows you to open specific assets directly from external applications, which can significantly improve workflow efficiency. 
 
 > [!info]
-> I'm unsure how much of this article has been tested, I wrote it with AI a while ago. But I was able to get deep link to work, and wrote 2 small Unity tools that used it. So I believe it likely contains the things I tested.
-> - I believe [[Unity inspector notes for folders & assets]] lets you create URL links, which included support for URI links to other game objects
-> - I got unity URI to work here: [[Unity deeplink RnD]], so this might be a better reference, especially the forked repo.
+> A while ago I got Unity URI to work, see the forked repo in [[Unity deeplink RnD]] The code in that repo might be a better reference than the below code.
+> 
+> I'm unsure how much of this article has been tested, I wrote it with AI a while ago during my deep link investigation. Since I was able to get deep link to work, it might be correct. It also might be that I saved below code with the goal of coming back to it and testing it, and never did. Or as part of my research notes. 
 
 ---
 
@@ -180,8 +180,6 @@ If you still want to use `unityasset://` URIs, create a simple script that redir
 ## **Method 2: Named Pipes (IPC)**
 If you don’t want an HTTP server, another approach is using **Named Pipes** for communication between external apps and Unity. You can set up a named pipe server in Unity and send messages to it from an external script.
 
-Would you like a named pipe example, or does the local server method work for you? �
-
 --
 [[deeplink redirect - GPT]]
 
@@ -194,6 +192,3 @@ After setting up the script and registering the protocol:
   unityasset://Assets/MyFolder/MyPrefab.prefab
   ```
 - It should open the asset inside Unity.
-
-Would you like help automating the registry setup or debugging any issues? �
-
