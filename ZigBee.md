@@ -5,4 +5,4 @@ It transfers less data, so needs less power
 
 It requires a Zigbee hub. 
 - This can either then connect to a server on the internet [[Smart Life]], 
-- or a [[self hosted server]] like [[Home Assistant]] or [[zigbee2mqtt]]. 
+- or a [[public/self hosted|self hosted server]] like [[Home Assistant]] or [[zigbee2mqtt]]. 
