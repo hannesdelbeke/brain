@@ -1,5 +1,11 @@
+Enabling [[deep link]] in [[unity]], allows you to open specific assets directly from external applications, which can significantly improve workflow efficiency. 
 
-[[deepl]]
+> [!info]
+> I'm unsure how much of this article has been tested, I wrote it with AI a while ago. But I was able to get deep link to work, and wrote 2 small Unity tools that used it. So I believe it likely contains the things I tested.
+> - I believe [[Unity inspector notes for folders & assets]] lets you create URL links, which included support for URI links to other game objects
+> - I got unity URI to work here: [[Unity deeplink RnD]], so this might be a better reference, especially the forked repo.
+
+---
 
 If Unity is already open, you need a way for it to receive and handle the deep link without restarting. The best approach is to use **a local server inside Unity** to listen for URI requests or use **IPC (Inter-Process Communication) techniques**.
 
