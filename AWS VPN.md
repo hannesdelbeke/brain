@@ -1,5 +1,5 @@
 # AWS VPN
-AWS Virtual Private Network solutions establish secure connections between your on-premises networks,
+AWS [[Virtual Private Network]] solutions establish secure connections between your on-premises networks,
 remote offices, client devices, and the AWS global network. AWS VPN is comprised of two services: AWS
 Site-to-Site VPN and AWS Client VPN. Each service provides a highly-available, managed, and elastic
 cloud VPN solution to protect your network traffic.
