@@ -12,7 +12,10 @@ Do max plugins handle their own python [[dependencies]]?
   4. Use isolated external Python and communicate with Max (less common, more complex).
 
 ## My preference
-I like the installer/bootstrap step, because it's like a pip install or npm install, and avoids shipping duplicate dependencies. However, it might be less stable and harder to resolve.
+I like the installer/bootstrap step, because it's like a pip install or npm install, 
+- It avoids shipping duplicate dependencies, and leads to smaller repos.
+- It avoids the need for a build step → Faster to develop 
+However, it might be less stable and harder to resolve: e.g. What if a package needs `NumPy 1.2.5` and another needs `NumPy 2.0.1`
 
 If you set up [[CICD]] and build a released plugin package, shipping wheels is more stable, but you might need to build for multiple platforms and Python versions.
 
