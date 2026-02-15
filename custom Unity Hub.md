@@ -1,15 +1,16 @@
 
-see https://github.com/hannesdelbeke/electron-unity-hub
+I implemented this, see https://github.com/hannesdelbeke/electron-unity-hub
 
+### Features
 the new features:
 - [x] give projects a nickname, so you can have 2 branches checked out of the same project without confusion
 - [x] When trying to open a project, that's already open, make that project's window active, Instead of just saying "this project is already open"
-- support other [[version control]], not just Unity Version control. e.g. integrate with perforce or git.
+- [x] support other [[version control]], not just Unity Version control. e.g. integrate with perforce or git.
 
 existing features
 - [x] project name
 - [x] project path 
-- browse to project
+- [x] browse to project
 - [x] set unity version
 - download unity apps/versions
 
@@ -22,16 +23,21 @@ This adds visual clutter.
 
 Instead of recreating the whole hub, let's rely on the existing hub to manage and install versions. And make a new hub that only acts as a project launcher.
 
-However this has a lot of overlap with a generic launcher.
+--- 
+
+> This has a lot of overlap with a generic [[app launcher]], why don't we use that?
+
 The difference would be
 - **Modified** - show when the project was last opened
 - **Editor version** - show unity version of the project
+- **version control** integration
+
 A generic launcher can already set a nickname for a launch icon or command, and open a project with a specific version.
 But you need to manually set it up every time you change unity version.
 
-How could it integrate with source control?
-
 ---
+
+> How could it integrate with source control?
 
  Use source control as a thin metadata/safety layer, not as a full VCS client.
 
@@ -81,7 +87,5 @@ How could it integrate with source control?
 
 ---
 
-
-
-
 [[tool idea]]
+[[Unity Hub]]
