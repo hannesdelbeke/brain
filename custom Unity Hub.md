@@ -1,5 +1,6 @@
 
-I implemented this, see https://github.com/hannesdelbeke/electron-unity-hub
+I implemented this with [[OpenAI Codex]], see https://github.com/hannesdelbeke/electron-unity-hub
+The prototype was maybe an hour, very fast. Then a lot of time was spent on polishing the UI, and tweaking the UX like [[GitHub]] and [[GitLab]] auth flows.
 
 ### Features
 the new features:
