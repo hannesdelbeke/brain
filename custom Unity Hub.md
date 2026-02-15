@@ -7,7 +7,7 @@ the new features:
 - [x] When trying to open a project, that's already open, make that project's window active, Instead of just saying "this project is already open"
 - [x] support other [[version control]], not just Unity Version control. e.g. integrate with perforce or git.
 
-existing features
+Existing features
 - [x] project name
 - [x] project path 
 - [x] browse to project
