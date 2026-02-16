@@ -1,1 +1,5 @@
-projects made with [[Unity]]
+---
+aliases:
+  - Unity projects
+---
+Unity projectprojects made with [[Unity]]

@@ -5,7 +5,7 @@ aliases:
 A backlink informs which notes [[public/link]] to the current note.
 
 Backlinks easily let you go back to where you came from.
-- better  [[navigation]] 
+- better [[navigation]] 
 - better [[discovery]]: you discover related concepts that can lead to new ideas
 ## Examples
 if note A links to note B.

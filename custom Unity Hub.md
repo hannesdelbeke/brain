@@ -15,6 +15,7 @@ Existing features
 - [x] set unity version
 - download unity apps/versions
 
+## Planning
 the unity hub already does a lot of great things.
 - download and install unity versions for us, and auto load the correct one for our project.
 
@@ -88,5 +89,5 @@ But you need to manually set it up every time you change unity version.
 
 ---
 
-[[tool idea]]
+[[Unity tool]]
 [[Unity Hub]]
