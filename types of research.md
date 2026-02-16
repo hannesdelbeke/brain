@@ -15,7 +15,7 @@ But what if I reach conclusions not found online, but not do any development?
 🔍 [[Research]]
 - **Definition:** Systematic investigation to establish facts, gather knowledge, or explore ideas.
 - **Your “mind exercises”:**
-- When you brainstorm, analyze, and try to solve problems theoretically (without building or coding), you’re doing **research**.
+- When you [[brainstorm]], analyze, and try to solve problems theoretically (without building or coding), you’re doing **research**.
 - Even if your conclusions aren’t found online, they’re still part of research — because you’re generating new insights or hypotheses.
 - **Outcome:** Knowledge, frameworks, or conceptual solutions.
 
