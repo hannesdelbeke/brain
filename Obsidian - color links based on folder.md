@@ -1,8 +1,8 @@
 ---
-views: 13
+views: 14
 aliases:
   - coloring links based on folder
-last viewed: 22-02-2026
+last viewed: 2026-02-23
 ---
 I want to visually differentiate between public and private notes.
 I want as many of my notes set to public, but when I create a new note from a private note, the new note will be made in the same folder, making it private.

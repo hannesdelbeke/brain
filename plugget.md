@@ -1,5 +1,5 @@
 ---
-views: 5
+views: 6
 last viewed: 2026-02-22
 ---
 Plugget is a [[package management|package manager]] to easily install tools in your apps.

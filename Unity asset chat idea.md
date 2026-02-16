@@ -1,3 +1,7 @@
+---
+views: 2
+last viewed: 2026-02-23
+---
 similar to [[Unity note editor]]
 but aimed at a team
 
