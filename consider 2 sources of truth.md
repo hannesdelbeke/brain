@@ -31,7 +31,7 @@ And if we edit files outside Obsidian, the changed file hash tells Obsidian to r
 > 3. Now when I look at my youtube video, it informs me there are 2 related notes. I can click them to open then in Obsidian
 > 
 
-There is always some type of dependency, and a way 2 systems can fail to stay in sync.
+There is always some type of [[dependencies|dependency]], and a way 2 systems can fail to stay in sync.
 
 For [[Obsidian]], we recalculate all links according a formula.
 For each [[Markdown]] file, get each [[wikilink]], and create a data entry in our link database. Then look up each file in the link database, and show backlinks.
