@@ -1,6 +1,6 @@
 ---
-views: 1
-last viewed: 2026-02-22
+views: 5
+last viewed: 2026-02-23
 ---
 If a user rolls back an asset to an older version, that asset might be only compatible with the old tool version, or the old [[asset pipeline]]. 
 	*e.g. the new workflow relies on a new naming convention, we updated all tools to work with the new naming convention. But are still relying on a few legacy assets that never needed updating. But now we need to update them and the new tools aren't compatible.*
