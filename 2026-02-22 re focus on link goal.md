@@ -1,5 +1,5 @@
 ---
-views: 10
+views: 11
 last viewed: 2026-02-22
 ---
 Let's zoom out. I can tell I'm loosing focus, since I'm writing[[2026-02-22 strava link with note as middleman| a Strava link note]], but I don't care much about Strava.
