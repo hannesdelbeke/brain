@@ -13,3 +13,5 @@ I also have a related youtube video, which I found, but it has no links to my no
 I want the option to see links in my [[Chromium]] browser.
 
 Since my obsidian files are digital notes, [[digital asset management]] might be a relevant topic. It usually deals with game dev files, e.g. 3d models.
+
+[[UX|user experience]]
