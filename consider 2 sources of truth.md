@@ -38,16 +38,27 @@ For each [[Markdown]] file, get each [[wikilink]], and create a data entry in ou
 
 The con is the dependency on this link database . If a user every uses the files outside of Obsidian, backlinks won't show.
 
-We could create a JIRA link manager, and link to wiki links with JIRA IDs, like the ticket ID `[[AB12345]]`. This would look neat in our Obsidian notes, but if you ever swap to another project, e.g. by joining another company, the ticket ID might not be unique between these projects. So it only works withing your "environment".
+We could create a [[Obsidian plugin - JIRA link manager|JIRA link manager for Obsidian]], but how many managers do we want to make?
+Instead, think of a generic solution that works with other apps. (Notion, Trello, Miro, Obsidian, web pages, ...).
+They all support URLs. But URLs can lead to [[link rot]].
 
 ---
 > We could create a JIRA link manager ...
 
-This is similar to how if notes are stored in your repo directly, instead of an external vault, it would be easier to link to them.
-- [ ] todo link to this note
+This is similar to how it's easier to link to notes in the same vault, instead of an external vault.
+I'm writing about this here [[Game dev flow]]
 
+#### Is monorepo the solution?
 [[link|Linking]] between systems is harder than linking inside a contained system.
 [[mono vs poly repo]] runs into this same issue for code dependencies.
+Moving to a monorepo avoids this, but means you need to own all the data, instead of relying on external systems. 
+This sometimes slows me down, copying an article takes time, and it might get updated online, whereas yours never will.
 
+In the end a hybrid solution often works. We [[wikilink]] to internal notes, but [[URL ]]
+to external webpages. 
 
-But how many managers do we want to make?
+If I discuss an article in-depth, I might copy it to ensure I still have it when the site goes down, to avoid [[link rot]], and add [[wikilink|wikilinks]] in the copied article, to help me understand and discover new terms, or link to my own notes.
+
+If I just want to quickly reference an article, I might just [[URL|URL link to it]].
+
+[[note taking|notes]]
