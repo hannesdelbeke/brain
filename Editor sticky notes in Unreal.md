@@ -47,3 +47,8 @@ If you want something more visual (e.g., a sticky‑note mesh):
 - Set Actor → Is Editor Only.
 - Add a TextRender for the message.
 This gives you a literal sticky note object.
+
+---
+### References
+- [forums.unrealengine.com/t/question-adding-notes-in-levels](https://forums.unrealengine.com/t/question-adding-notes-in-levels/276269) suggests the Note actor, also mentions it is primitive.
+- [forums.unrealengine.com/t/internal-database-of-collectible-notes-and-how-to-implement-it](https://forums.unrealengine.com/t/internal-database-of-collectible-notes-and-how-to-implement-it/667211) Discusses a note system for in game, not in editor, so not relevant. They propose a `BP_Actor` sticky note system with ID/tag
