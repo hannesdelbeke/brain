@@ -1,6 +1,6 @@
 [[app launcher]]
 
-rez only
+[[rez]] only
 https://allzpark.com/
 
 ![](https://user-images.githubusercontent.com/90282974/133529630-ed1522de-ff65-486b-b175-d8d0e3521c06.gif)
