@@ -12,7 +12,7 @@ Before the Industrial Revolution, the average person only owned a few pairs of [
 The transition from "hand-crafted" to "AI-industrialized" software will likely mirror the shift from artisanal tailoring to mass-market textiles, with several key impacts on the displaced technical class:
 
 ### 1. Migration to "Hard" Engineering and Physical Sciences
-The "uniquely talented" minds currently optimized for logic, systems architecture, and abstraction may shift back to physical-world problems that AI cannot yet solve autonomously (e.g., fusion energy, material science, bio-engineering). This could lead to a renaissance in physical innovation as the intellectual surplus exits the digital-only realm.
+The "uniquely talented" minds currently optimized for logic, systems architecture, and abstraction **may shift back to physical-world problems that AI cannot yet solve autonomously (e.g., fusion energy, material science, bio-engineering**). This could lead to a renaissance in physical innovation as the intellectual surplus exits the digital-only realm.
 
 ### 2. Evolution from "Builders" to "Architects of Intent"
 The role of the developer may shift from writing syntax (the "sewing") to defining system requirements and ethics (the "fashion design"). Those who adapt will become high-level orchestrators. Those who cannot adapt may face significant wage depression as the barrier to entry for "creating software" drops to near zero, commoditizing the skill of implementation.
