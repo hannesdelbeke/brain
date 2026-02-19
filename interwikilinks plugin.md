@@ -59,7 +59,7 @@ instead of copying notes such as [[Uniform Resource Identifier|URI]], we should 
 saving me the time of looking this up on wikipedia.
 
 ## reference logseq
-logseq supports interwiki links using [[app URI]], see [PR](https://github.com/logseq/logseq/pull/4881)
+[[logseq]] supports interwiki links using [[app URI]], see [PR](https://github.com/logseq/logseq/pull/4881)
 `logseq://graph/<graph name>?page=<page name>`
 It works, but it's not as neat as `[[graph:page name]]`
 

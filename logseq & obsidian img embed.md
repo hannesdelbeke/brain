@@ -1,6 +1,6 @@
 [[Obsidian]] image embeds aren't compatible with logseq when using [[wikilink]] in Obsidian.
 
-logseq embeds images like this:  
+[[logseq]] embeds images like this:  
 `![foo.png](./assets/foo.png)`
 
 Obsidian however embeds images like this (if using wikilinks):  

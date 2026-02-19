@@ -14,3 +14,4 @@ relates too
 [[idea - open google calendar events from notes]]
 
 [[note taking]]
+[[idea]]

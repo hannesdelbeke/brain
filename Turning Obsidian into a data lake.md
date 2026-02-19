@@ -10,11 +10,24 @@ I used to store my data in [[cloud storage]], now I mostly use my [[Obsidian vau
 > | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 > | I can download & backup my vault data with 1 git command.<br>.                                                 | not backed up, only in cloud                                                                   |
 > | If [[GitHub]] goes down, I can still access my data.<br>.                                                      | not local. When [[2020-08 Gdrive went down\|GDrive went down]] I couldn't access my documents. |
-> | can easily link notes & data. Linking adds a lot of value to my life, so I want to [[use more links in life]]. | Can't link in Obsidian with [[Obsidian auto complete]], it's more time consuming to link       |
+> | can easily link notes & data. Linking adds a lot of value to my life, so I want to [[use more links in life]]. | Can't link in Obsidian with [[Obsidian autocomplete]], it's more time consuming to link       |
 
-Because of the pros of using Obsidian, I want to move all my data to a central place. 
-- I'm mostly interested in the power of [[link|linking]], the [[Obsidian auto complete]] that shows when I type `[[`. 
+Because of the pros of using [[Obsidian]], I want to move all my data to a central place. 
+- I'm mostly interested in the power of [[link|linking]], the [[Obsidian autocomplete]] that shows when I type `[[`. 
+	- imagine i link to a script from a personal project, and clicking the link opens it up in my code editor.
+		- but how does it know to open a single file, or load a whole project?
+		- what would the UX look like for other things, e.g. "memories" [[TODO localize instagram memory posts]].
+
+[[Obsidian auto complete app URI]]
+
+bonus points if my IDE also can do this in the comments section.
+but in future i might not even read comments since AI coding is taking over.
+
 - Secondly, I want to [[backup]] my data. My dropbox and gdrive aren't backed up.
+	- [x] I backed up [[Google Drive]] by [[embed GDrive folder in Obsidian]]
+	- There's not much left I care about on my [[dropbox]], i moved some game repos on [[github]]
+	- [ ] still need to back up many photos. Some live on [[Google Photos]] only so no backup.
+	- [ ] what about my old hard drives from (pre) uni? haven't touched them since.
 
 [[git repo is not great for binaries]]
 

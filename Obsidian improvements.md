@@ -46,7 +46,7 @@ my own workflow improvements, not related to obsidian
 - [ ] add shortcut for adding to callout . select text, insert call out
 - [ ] [[Obsidian plugin - Tabber]] 
 - [ ] if 'Files' is open, and I click on 'Files' again. I expect the side tab to collapse.
-- [ ] [[Obsidian auto complete]]
+- [ ] [[Obsidian autocomplete]]
 - [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)
 - [ ] exclude from [[Obsidian backlinks]]
 	- [ ] exclude folders, e.g. daily folder from backlinks
