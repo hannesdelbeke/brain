@@ -56,4 +56,4 @@ what if we just toss it in a single folder, and rely on [[Artificial intelligenc
 [[wrapping]]
 
 ---
-[[2026-02 app‑agnostic Entity Registry]]
+[[2026-02 app‑agnostic Entity Registry - copilot first pass]]
