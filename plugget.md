@@ -3,7 +3,6 @@ It aims to dummy proof tool distribution, and is designed to assist artists in t
 
 Github repo: [plugget](https://github.com/hannesdelbeke/plugget) 
 
-
 Plugget is not an [[environment management|environment manager]]
 
 - [ ] make more accessible
