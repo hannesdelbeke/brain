@@ -1,0 +1,1 @@
+Disabling a plugin doesn't delete its menu (`civil view`)
