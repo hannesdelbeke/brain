@@ -6,9 +6,9 @@ A [[validator|validation tool]] checks if Max scenes (city tiles) are set up cor
 	- `fix` attempts to fix the issue if the fix is 100% sure, else error and warn user
 - this tool can be batch run on 100s of Max scenes in the [[VuCity batcher]]
 
-![[VuCity validator-1725549538638.jpeg]]
+![[VuCity validator-1725549538638.jpeg|400]]
 
-- UI and functionality are kinda separated in code, but not fully. Since this was written before I learned about [[MVP MVC MVVM compared]]
+- UI and functionality were mostly separated in code, but not fully. Since this was written before I learned about [[MVP MVC MVVM compared]]
 - It's tightly intertwined with Max, so not a [[dcc independent]] tool.
 
 Existing tiles have different workflows from new tiles, so different fix buttons

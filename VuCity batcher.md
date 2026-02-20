@@ -1,6 +1,6 @@
 A [[batcher]] [[3ds max tool]] to run scripts on multiple max files for [[VuCity]] tiles
 
-It mostly was used to run the [[validator]] overnight on 100s of scenes, auto fix any issues it finds, and create a log with the fixes it did, and the scenes it couldn't fix.
+It mostly was used to run the [[VuCity validator]] overnight on 100s of scenes, auto fix any issues it finds, log the fixes it did, and log the scenes it couldn't fix.
 
 ![](vucity_batcher.jpeg)
 
