@@ -24,7 +24,7 @@ bonus points if my IDE also can do this in the comments section.
 but in future i might not even read comments since AI coding is taking over.
 
 - Secondly, I want to [[backup]] my data. My dropbox and gdrive aren't backed up.
-	- [x] I backed up [[Google Drive]] by [[embed GDrive folder in Obsidian]]
+	- [x] I backed up [[Google Drive]] by [[embed Google Drive folder in Obsidian]]
 	- There's not much left I care about on my [[dropbox]], i moved some game repos on [[github]]
 	- [ ] still need to back up many photos. Some live on [[Google Photos]] only so no backup.
 	- [ ] what about my old hard drives from (pre) uni? haven't touched them since.
@@ -54,7 +54,7 @@ to move over my drive I need to
 
 ideally the solutions for the binaries on drive is the same as the solution for my [[Google Photos]] backup.
 
-[[embed GDrive folder in Obsidian]]
+[[embed Google Drive folder in Obsidian]]
 ## insta 
 
 integrate instagram into my data lake:
