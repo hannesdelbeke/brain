@@ -1023,7 +1023,7 @@ with widget_batch_register():
 > - **A** for architecture, API design, documentation, and production readiness
 > - **Minus** for missing tests, incomplete cleanup, and platform gaps
 >
-> BQt is a **well-crafted, production-ready tool** that demonstrates strong software engineering principles. The platform abstraction is textbook-quality, the API is intuitive, and it solves a genuine pain point for Blender developers.
+> [[BQt]] is a **well-crafted, production-ready tool** that demonstrates strong software engineering principles. The platform abstraction is textbook-quality, the API is intuitive, and it solves a genuine pain point for Blender developers.
 >
 > The recommended improvements are largely "nice-to-haves" for long-term maintenance and scalability, not critical flaws.
 >
