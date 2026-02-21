@@ -16,7 +16,7 @@ Rand's suggestion to *delete tasks older than 30 days*, reminds me of [[cache]] 
   Could be extrapolated to, for every task you take on, delete an old task.
   
 I have similar struggles with productivity systems. Sometimes I blame myself, other times I think that perhaps it's the system itself - or the way I'm using it - that's not intuitive.
-- I used to have a [[todoist]] list for work and for home. After a while this list grew to hundreds of tasks and I kept postponing. Rands ran into the same issue with his paper list.
+- I used to have a [[Todoist]] list for work and for home. After a while this list grew to hundreds of tasks and I kept postponing. Rands ran into the same issue with his paper list.
 - I tried to rewrite my todo-list daily in [[obsidian]], but "postponing" tasks just kept pilling up, and eventually I stopped reporting them.
 
 

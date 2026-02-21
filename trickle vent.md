@@ -1,3 +1,8 @@
+---
+aliases:
+  - trickle vents
+---
+
 [[ventilation]]
 holes in windows.
 
