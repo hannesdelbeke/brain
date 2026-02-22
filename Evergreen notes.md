@@ -1,3 +1,6 @@
+---
+views: 1
+---
 Evergreen notes are notes that are meant to be updated over time.
 Notes you reread regularly, update with new info, or correct outdated info.
 

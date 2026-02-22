@@ -1,5 +1,10 @@
+---
+views: 4
+---
 
-I moved away from using hashtags for my site, so this is now less relevant.
+> [!warning]
+> I moved away from using hashtags for my site, so this is now less relevant.
+> See [[use wikilinks instead of hashtags]]
 
 ---
 ## Hashtag aliases
