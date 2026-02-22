@@ -1,5 +1,9 @@
+---
+views: 3
+last viewed: 22-02-2026
+---
 
-[[AI article]] created from [[Obsidian auto complete app URI]]
+[[AI article]] created from [[2026-02-19 Obsidian auto complete app URI]]
 
 you’re circling around a _unified data‑layer_ that sits **outside** [[Obsidian]], outside [[Google]], outside [[Strava]], outside [[GitHub]] — and acts as a **resolver**, **index**, and **link registry** for _everything you own_.  
 [[Obsidian autocomplete]] is just one _client_ of that system, not the system itself.

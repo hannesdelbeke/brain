@@ -1,3 +1,7 @@
+---
+views: 5
+last viewed: 2026-02-22
+---
 Plugget is a [[package management|package manager]] to easily install tools in your apps.
 It aims to dummy proof tool distribution, and is designed to assist artists in the games & VFX industry.
 
