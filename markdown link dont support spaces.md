@@ -1,5 +1,5 @@
 ---
-views: 8
+views: 11
 ---
 Markdown links don't support spaces in Obsidian.
 

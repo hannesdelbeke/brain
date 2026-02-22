@@ -1,5 +1,5 @@
 ---
-views: 4
+views: 8
 ---
 Standard [[wikilink|wikilinks]] are of the format `[[note title]]`.
 In Obsidian, they show up in the [[Obsidian backlinks]] panel.
@@ -46,7 +46,9 @@ Lots of technical work, with a lot of edge cases to handle, for a small UX impro
 [[Obsidian URI]] can [[URL]] link to a note in a vault, but it's not as user-friendly as [[tabbing]] in a wiki link with [[Obsidian autocomplete]].
 e.g. `obsidian://open?vault=...&file=Some%20Note`
 
-#### Markdown links
+#### ❌ Markdown links
+This still shows up in the [[Obsidian backlinks]] panel.
+
 `[Obsidian](<Obsidian.md>)`
 cons
 - [[markdown link dont support spaces]]
