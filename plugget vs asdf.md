@@ -1,3 +1,7 @@
+---
+views: 2
+last viewed: 2026-02-22
+---
 [[AI article]]
 
 While **mise** and **asdf-vm** are powerful package managers, they solve a fundamentally different problem than [[Plugget]].
@@ -8,7 +12,7 @@ Here is a breakdown of why your project is unique compared to them:
 
 ### 1. Scope: Runtimes vs. App-Internal Plugins
 
-- **Mise / ASDF:** These are "Runtime Version Managers." They are designed to manage different versions of programming languages (e.g., "I need Node 18 for Project A and Node 20 for Project B") and CLI tools (like `fzf`, `kubectl`, or `terraform`).
+- **Mise / [[asdf]]:** These are "Runtime Version Managers." They are designed to manage different versions of programming languages (e.g., "I need Node 18 for Project A and Node 20 for Project B") and CLI tools (like `fzf`, `kubectl`, or `terraform`).
     
 - **Plugget:** This is an "Application Plugin Manager." It installs scripts, addons, and tools _into_ a host environment (like Blender’s `scripts/addons` folder or Maya’s modules path). Mise and ASDF have no concept of "Blender Addons" or "Maya Plugins"; they wouldn't know where to put the files or how to register them with the host software.
     

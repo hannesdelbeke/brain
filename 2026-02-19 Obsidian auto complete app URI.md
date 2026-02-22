@@ -1,8 +1,16 @@
-think of a plugin system, where you can subscribe to external data lists. and it auto provides a [[app URI]] that lets you open the file in the right app.
+---
+views: 4
+last viewed: 2026-02-22
+---
+Think of an Obsidian plugin where you can 
+1. subscribe to external data lists in settings (activities, memories, photos, ...)
+2. these lists add entries to the [[Obsidian autocomplete]] suggestions list.
+3. When you accept the suggestion (e.g. `[[Jack Arthur]]`), it adds a [[app URI]] link to the note, so you can click on the link to open the related app directly from your note. (e.g. [[Google contacts]])
+
 it seems i could do this, if i could add to the suggested tab list in obsidian. 
 
 > [!warning]
-> below focusses more on wrapper and less on concept of obsidian auto complete list. but we do need the wrapper for this.
+> below focusses more on a wrapper plugin, and less on the concept of adding to the obsidian auto complete list. but we do need the wrapper for this.
 
 ## asks
 - dont rely on obsidian. the links are stored in open source app and work with other apps.
@@ -11,7 +19,7 @@ it seems i could do this, if i could add to the suggested tab list in obsidian.
 - how can the database be backed up?
 
 ## solution
-[[sync html shortcuts to obsidian vault]]
+[[sync URL shortcuts to obsidian vault]]
 
 ## brainstorm
 Think of a generic wrapper.
