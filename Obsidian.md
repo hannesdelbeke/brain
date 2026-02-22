@@ -1,3 +1,6 @@
+---
+views: 1
+---
 **Obsidian** is an app to store notes, focused on linking notes to each other with [[wikilink]] & `#hashtags`
 It supports various open source plugins, such as [[Obsidian plugin - Git]]
 

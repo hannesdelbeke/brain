@@ -1,3 +1,7 @@
+---
+views: 2
+last viewed: 2026-02-22
+---
 
 > People who write about note-taking ... aren’t applying their notes to some exogenous creative problem.
 
