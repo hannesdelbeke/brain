@@ -1,3 +1,6 @@
+---
+views: 1
+---
 some links are loose, others are close.
 
 ## close relation

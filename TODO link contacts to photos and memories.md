@@ -1,3 +1,6 @@
+---
+views: 1
+---
 it d be great if i could link my contacts to events, posts, ...
 
 example
