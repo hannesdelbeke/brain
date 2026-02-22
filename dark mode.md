@@ -3,6 +3,7 @@ aliases:
   - night mode
   - night theme
   - dark theme
+views: 1
 ---
 - reduces blue light, improving sleep.
 - can reduce glare & eye strain

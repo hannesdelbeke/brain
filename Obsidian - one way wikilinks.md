@@ -1,5 +1,6 @@
 ---
-views: 8
+views: 15
+last viewed: 22-02-2026
 ---
 Standard [[wikilink|wikilinks]] are of the format `[[note title]]`.
 In Obsidian, they show up in the [[Obsidian backlinks]] panel.
@@ -10,7 +11,7 @@ But sometimes, we might want to have a one directional link, instead of a bi-dir
 Popular notes, like [[Obsidian]] or [[Windows]], are linked from many notes, but they don't need to link back to those notes. The [[Obsidian backlinks]] panel looses its value, once the user becomes overwhelmed. For me, it get's the most value around up to 20 backlinks.
 
 ## Idea
-What if we could type a one directional wikilink `[[>note title]]`? 
+What if we could type a [[one directional]] [[wikilink]] `[[>note title]]`? 
 Like this: [[>note title]].
 
 Add support for a link that is navigational, not relational.
@@ -42,7 +43,7 @@ Lots of technical work, with a lot of edge cases to handle, for a small UX impro
 ---
 ## Existing one directional links
 
-#### Obsidian URI
+#### ❔Obsidian URI
 [[Obsidian URI]] can [[URL]] link to a note in a vault, but it's not as user-friendly as [[tabbing]] in a wiki link with [[Obsidian autocomplete]].
 e.g. `obsidian://open?vault=...&file=Some%20Note`
 
@@ -54,7 +55,7 @@ cons
 - [[markdown link dont support spaces]]
 - no [[autocomplete]] without a plugin like _Link Favicons_ or _Markdown Links_
 
-#### Frontmatter
+#### ❔Frontmatter
 Use [[YAML front matter|frontmatter]] fields as one‑directional links
 
 ---

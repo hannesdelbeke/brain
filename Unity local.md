@@ -1,6 +1,7 @@
 ---
 aliases:
   - Unity user
+views: 1
 ---
 
 Keeping files or settings local, as opposed to sharing with the project or your team.

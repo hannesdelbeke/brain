@@ -1,6 +1,8 @@
+---
+views: 10
+---
 ## goal
-Auto dim monitor in the evening, and brighten in the morning, to help with sleep and focus.
-
+Auto dim monitor in the evening, and brighten in the [[morning]], to help with [[sleep]] and [[concentration|focus]].
 
 ## initial idea
 use [[Windows task scheduler]] to schedule [[Monitorian]] 
@@ -86,6 +88,10 @@ use [[Windows task scheduler]] to schedule [[Monitorian]]
 > Write-Host "Scheduled tasks for Monitorian brightness adjustment have been set up successfully!"
 > 
 > ```
+
+### log
+- started with simple windows task to run on [[startup]]. worked but didn't work if you started your pc after the trigger hours.
+- wrote new script with AI, it schedules the tasks on windows, but in between still seems to not work (tested 2026-02-22)
 
 ## final install script
 ⚠️ run as admin in [[powershell]], AFAIK shouldn't be needed, but I wasn't able to run this from Obsidian without admin.

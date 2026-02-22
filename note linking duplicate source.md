@@ -1,6 +1,8 @@
 ---
 aliases:
   - wrap in iframe
+views: 3
+last viewed: 22-02-2026
 ---
 
 notes in obsidian rely on [[public/link|links]] between notes.

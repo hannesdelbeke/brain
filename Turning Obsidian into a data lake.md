@@ -21,7 +21,7 @@ Because of the pros of using [[Obsidian]], I want to move all my data to a centr
 		- but how does it know to open a single file, or load a whole project?
 		- what would the UX look like for other things, e.g. "memories" [[TODO localize instagram memory posts]].
 
-[[Obsidian auto complete app URI]]
+[[2026-02-19 Obsidian auto complete app URI]]
 
 bonus points if my IDE also can do this in the comments section.
 but in future i might not even read comments since AI coding is taking over.

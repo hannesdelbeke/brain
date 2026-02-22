@@ -1,4 +1,3 @@
 ---
 views: 4
 ---
-[[Microsoft]]
