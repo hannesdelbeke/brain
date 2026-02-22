@@ -1,6 +1,8 @@
 ---
 aliases:
   - my site
+  - my digital garden
+views: 1
 ---
 
 **Structure**
