@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 3
 ---
 it d be great if i could link my contacts to events, posts, ...
 
