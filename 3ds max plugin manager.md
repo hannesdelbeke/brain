@@ -1,3 +1,6 @@
+---
+views: 5
+---
 ### No use for disabling plugins
 Disabling a [[Autodesk 3ds Max|3ds max]] plugin doesn't delete its [[menu]] in max (e.g. `civil view`).
 Whereas maya and blender have option to run code on disable, cleaning up the menu. There's no callback or hook on disabling a plugin.
@@ -12,5 +15,6 @@ I only once used the modern plugin framework: for [[Max dark script editor liste
 
 Also check out [[Distributing plug-ins & files on Maya (and 3ds Max) - 2013]] for more info on the package format.
 
+docs https://help.autodesk.com/view/3DSMAX/2026/ENU/?guid=GUID-68E2273A-6E4A-4995-B40E-18D6575E2823
 
 [[3ds max tool]]
