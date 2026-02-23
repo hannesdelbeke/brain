@@ -1,5 +1,6 @@
 ---
 source: https://around-the-corner.typepad.com/adn/2013/04/distributing-plug-insfiles-on-maya-and-3ds-max.html
+views: 5
 ---
 # Distributing plug-ins/files on Maya
 (and 3ds Max)
