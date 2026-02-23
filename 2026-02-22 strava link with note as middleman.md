@@ -1,5 +1,5 @@
 ---
-views: 15
+views: 16
 last viewed: 2026-02-22
 ---
 I wrote about autocomplete and linking to my data (e.g. Strava activities):
