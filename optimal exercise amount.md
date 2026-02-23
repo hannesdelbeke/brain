@@ -1,5 +1,8 @@
+---
+views: 1
+---
 ## super TLDR
-Optimal weekly exercise is 6 hours [[moderate aerobic activity|moderate]] AND 2.5 hours [[vigorous aerobic activity|vigorous]]
+Optimal weekly [[exercise]] is 6 hours [[moderate aerobic activity|moderate]] AND 2.5 hours [[vigorous aerobic activity|vigorous]]
 ## Notes
 This is in contrast with "move naturally" in [[blue zones]]
 This is approximately 22.5 to 40 [[metabolic equivalent of task|MET]]-h/week.

@@ -1,3 +1,6 @@
+---
+views: 1
+---
 I want to [[use more links in life]]
 I already can link to [[Google Drive]] files, but these links don't show in [[Obsidian autocomplete]].
 
