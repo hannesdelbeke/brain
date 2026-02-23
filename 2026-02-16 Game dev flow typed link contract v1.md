@@ -1,3 +1,7 @@
+---
+views: 2
+last viewed: 2026-02-22
+---
 ⚠️ IMO this whole summary is kinda shit
 I asked [[OpenAI Codex]] to analyze [[Game dev flow]].
 It assumed I want to combine my whole personal vault with a unity repo, instead of talking about general project documentation practices.

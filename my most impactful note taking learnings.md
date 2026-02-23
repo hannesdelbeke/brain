@@ -1,3 +1,7 @@
+---
+views: 1
+last viewed: 2026-02-23
+---
 
 - [[always explain why you link|Always explain why you link notes]] 
 - Keep your notes [[atomic]]

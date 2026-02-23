@@ -1,5 +1,5 @@
 ---
-views: 4
+views: 7
 last viewed: 2026-02-22
 ---
 Think of an Obsidian plugin where you can 
@@ -22,7 +22,7 @@ it seems i could do this, if i could add to the suggested tab list in obsidian.
 [[sync URL shortcuts to obsidian vault]]
 
 ## brainstorm
-Think of a generic wrapper.
+Think of a generic wrapper plugin.
 - backup
 	- e.g. local download contacts. local download memories, local download notes from Notion, ...
 - subscribe (with obsidian) to URIs
