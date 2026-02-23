@@ -1,3 +1,6 @@
+---
+views: 1
+---
 a [[Maya MEL|mel]] script named `someName_load.mel` runs on startup if placed in a path in `MAYA_SCRIPT_PATH`
 
 ## TODO
