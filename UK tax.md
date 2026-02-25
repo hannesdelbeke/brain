@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 2
 ---
 types of tax
 - [[UK dividend tax]]
