@@ -1,5 +1,5 @@
 ---
-views: 2
+views: 6
 last viewed: 2026-02-22
 ---
 feedback on my forumpost: [[link Unity to Obsidian]] and [[link Obsidian to Unity]]
