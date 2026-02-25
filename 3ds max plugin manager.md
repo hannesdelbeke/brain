@@ -1,5 +1,5 @@
 ---
-views: 8
+views: 9
 ---
 ### No use for disabling plugins
 Disabling a [[Autodesk 3ds Max|3ds max]] plugin doesn't delete its [[menu]] in max (e.g. `civil view`).
