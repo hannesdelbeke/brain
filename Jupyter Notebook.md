@@ -1,6 +1,7 @@
 ---
 aliases:
   - IPython Notebook
+views: 2
 ---
 Kernels are programming language specific processes that run independently and interact with the Jupyter Applications and their user interfaces
 
