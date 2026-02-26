@@ -1,5 +1,5 @@
 ---
-views: 3
+views: 6
 ---
 [[Microsoft]]
 [[graphics processing unit|GPU]] capture
