@@ -1,5 +1,5 @@
 ---
-views: 28
+views: 29
 last viewed: 2026-02-23
 ---
 Yesterday, when writing [[Obsidian - one way wikilinks]] - a potential solution to  how [[Obsidian backlinks]] become [[visual clutter|visually cluttered]] when it's linked too often - I was reminded of [[Link strength]]. Today I wanted to see if I could calculate this based on note [[view count]]. 
