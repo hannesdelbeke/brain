@@ -1,3 +1,6 @@
+---
+views: 1
+---
 notes by thomasjfrank, [source](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/)
 
 ## Overall Thoughts
@@ -10,7 +13,7 @@ I recommend this book if you want a deep dive into the science of focus along wi
 
 Deliberately setting intentions before sitting down to work is hugely effective for staying on task and being resistant to [[distraction|distractions]].
 
-Hyperfocus vs. Scatterfocus: Both are crucial. Hyperfocus allows you to stay focused on one problem and execute; Scatterfocus (i.e. the “diffuse mode” from _A Mind for Numbers_) allows for creativity and new insights. It is worthwhile to learn how to deliberately enter both modes multiple times a day.
+[[Hyperfocus]] vs. Scatterfocus: Both are crucial. Hyperfocus allows you to stay focused on one problem and execute; Scatterfocus (i.e. the “diffuse mode” from _A Mind for Numbers_) allows for creativity and new insights. It is worthwhile to learn how to deliberately enter both modes multiple times a day.
 
 Chris’ writing on creating a distraction-free ritual was probably the most actionable thing for me in this book.
 
