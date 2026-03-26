@@ -1,3 +1,6 @@
+---
+views: 1
+---
 easy to take with you.
 
 e.g. 
