@@ -1,3 +1,6 @@
+---
+views: 1
+---
 run code on [[Blender]] [[startup]]
 
 - Cleanest way is to wrap your code in a [[Blender addon]], and run the startup code on addon load. Then enable addon to load on startup
