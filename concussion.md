@@ -1,5 +1,5 @@
 ---
-views: 2
+views: 3
 aliases:
   - concussion
 ---
