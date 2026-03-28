@@ -1,3 +1,6 @@
+---
+views: 1
+---
 when you focus on [[optimization]] too early.
 resulting in wasted effort.
 
