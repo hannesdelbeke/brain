@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 3
 ---
 new notes
 - [[wikilink GDrive files]]
