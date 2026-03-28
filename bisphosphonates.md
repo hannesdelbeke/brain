@@ -1,3 +1,6 @@
+---
+views: 1
+---
 Bisphosphonates are a class of drugs used to treat bone conditions and some cancers. They are also known as bone strengthening or bone hardening treatments. 
 
 - risedronate (Actonel), 
@@ -10,7 +13,7 @@ typically **prescription-only**
 
 ### Over-the-Counter Alternatives
 
-If you're looking for **bone health support** without a prescription, some OTC options include:
+If you're looking for **bone health support** without a prescription, some [[over the counter|OTC]] options include:
 
 - **Calcium and Vitamin D** – Essential for bone strength and bisphosphonate effectiveness.
 - **Magnesium and Vitamin K2** – Support calcium absorption and bone metabolism.
