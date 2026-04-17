@@ -3,5 +3,5 @@ aliases:
   - blood check
   - bloodtest
   - bloodcheck
-views: 2
+views: 3
 ---
