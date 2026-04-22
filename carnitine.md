@@ -1,6 +1,7 @@
 ---
 aliases:
   - L-carnitine
+views: 1
 ---
 
 Carnitine is a substance that helps the body turn fat into energy. 
