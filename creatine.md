@@ -1,3 +1,6 @@
+---
+views: 3
+---
 Creatine is a compound that comes from three [[amino acid|amino acids]]
 Creatine is found mostly in your body's [[muscle|muscles]] as well as in the [[brain]]
 Most people get creatine through seafood and red meat.
@@ -21,3 +24,5 @@ If vulnerable, or taking to high doses, side effects of creatine can include:
 - High blood pressure
 - [[Liver]] dysfunction
 - [[kidneys|Kidney]] damage
+
+not same as [[creatinine]]

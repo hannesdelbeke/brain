@@ -16,7 +16,7 @@ typically **prescription-only**
 If you're looking for **bone health support** without a prescription, some [[over the counter|OTC]] options include:
 
 - **Calcium and Vitamin D** – Essential for bone strength and bisphosphonate effectiveness.
-- **Magnesium and Vitamin K2** – Support calcium absorption and bone metabolism.
+- **[[Magnesium]] and Vitamin K2** – Support calcium absorption and bone metabolism.
 - **Collagen Peptides** – May help with bone and joint health.
 - **Boron** – Can support bone mineralization.
 - **Strontium Citrate** – Sometimes used as a supplement for bone health, though it's different from the prescription drug **Strontium ranelate**.
