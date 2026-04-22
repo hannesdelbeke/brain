@@ -31,7 +31,7 @@ thermal devices compared
     - Compatible with USB-C and micro USB, weighing under an ounce.
 3. **Ti 256I Thermal Camera**:
     - High infrared resolution and sensitivity for precise diagnostics.
-    - Sturdy, lightweight magnesium alloy build.
+    - Sturdy, lightweight [[magnesium]] alloy build.
     - Broad temperature range (5°F to 1112°F) for versatility in applications.
     - Includes advanced data analysis software and color palette options.
 4. **Unit Thermal Camera**:
