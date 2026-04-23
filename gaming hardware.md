@@ -1,5 +1,5 @@
 
 [[desktop]]
 [[gaming console]]
-[[mobile phone|mobile]]
+[[phone|mobile]]
 [[virtual reality|VR]] headsets

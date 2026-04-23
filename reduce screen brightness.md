@@ -6,4 +6,4 @@ Now I use [[Monitorian]] on my pc for this. And it has improved my sleep.
 Of course the best thing is to not use your screen 2 hours before bed time at all. 
 But I often do.
 
-[[mobile phone|Phones]] have auto brightness, so automatically do this.
+[[phone|Phones]] have auto brightness, so automatically do this.
