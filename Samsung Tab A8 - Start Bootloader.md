@@ -1,3 +1,6 @@
+---
+views: 1
+---
 
 you can start the bootloader, even if you don't have the bootloader "unlocked"
 when you are in the bootloader, you ll see OEM LOCK ON, which means it's locked
@@ -9,7 +12,7 @@ aliasses:
 - odin mode
 
 ## Samsung Tab A8 - Start Bootloader - download mode
-you can either start it manually from the tablet, or with a adb command
+you can either start it manually from the tablet, or with a [[adb]] command
 ### manual 1
 - launch the menu (2 options)
 	- hold volume up volume down, and meanwhile connect the usb cable

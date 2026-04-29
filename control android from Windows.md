@@ -2,6 +2,7 @@
 aliases:
   - screen copy
   - scrcpy
+views: 1
 ---
 
 

@@ -1,3 +1,6 @@
+---
+views: 1
+---
 chat GPT
 
 ```python

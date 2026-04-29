@@ -1,5 +1,5 @@
 ---
-views: 8
+views: 10
 ---
 When I log an activity in Strava, it auto adds a matching event in my calendar.
 This is helpfull to [[visualize time spent]] in my [[Google calendar]].
@@ -11,3 +11,4 @@ A while ago i [[edit google calendar with Python|edited google calendar with pyt
 
 [[2025-10 link Tesla to Google Calendar]]
 
+[[track time]]
