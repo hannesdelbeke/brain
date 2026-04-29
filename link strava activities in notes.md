@@ -1,5 +1,5 @@
 ---
-views: 12
+views: 17
 ---
 
 
@@ -17,9 +17,18 @@ https://github.com/saadsaifse/strava-obsidian
 - adds clutter `see strava activity details` to right click menu on notes in note file viewer in Obsidian
 - [[YAML front matter]] so supports [[obsidian-dataview]]
 
-[[obsidian-strava-sync]]
+
 https://github.com/watsonbox/obsidian-strava-sync
 - more [[YAML front matter]] fields than the above one, also supports activity notes
 - so far i prefer this one.
+- more notes on using it: [[obsidian-strava-sync]]
 
-installs fine in obsidian
+overal, let's use this now, and see how it goes.
+
+historic data can get in the bin for now
+most of time i ll only need to link recent activities in my daily notes.
+so limit of last 30 activities is fine for now.
+
+for analysis i might instead use a strava [[MCP server]].
+so lets not worry about frontmatter details for now.
+lets try run some analysis, see [[snowboard2026/README|README]]
