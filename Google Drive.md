@@ -1,6 +1,7 @@
 ---
 aliases:
   - GDrive
+views: 2
 ---
 
 [[google]]
