@@ -1,5 +1,6 @@
 ---
 views: 1
 aliases:
-  - brainstorming
+  - call-log
+  - calllog
 ---
