@@ -31,4 +31,4 @@ so limit of last 30 activities is fine for now.
 
 for analysis i might instead use a strava [[MCP server]].
 so lets not worry about frontmatter details for now.
-lets try run some analysis, see [[snowboard2026/README|README]]
+lets try run some analysis, see [[README snwboard intro|README snwboard intro]]
