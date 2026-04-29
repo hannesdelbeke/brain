@@ -1,5 +1,5 @@
 ---
-views: 31
+views: 32
 last viewed: 2026-02-23
 ---
 Yesterday, when writing [[Obsidian - one way wikilinks]] - a potential solution to  how [[Obsidian backlinks]] become [[visual clutter|visually cluttered]] when it's linked too often - I was reminded of [[Link strength]]. Today I wanted to see if I could calculate this based on note [[view count]]. 
@@ -39,3 +39,10 @@ This can be usefull since [[most recent]] notes might be the most relevant
 
 I already use [[supercharged links]] for [[Obsidian - color links based on folder]]
 But I could use it to color notes with many views, or recentlly viewed notes.
+
+2026-04
+this works quite well
+few issues
+clutter
+- clutter git history everytime i view a file
+- when i start writing in a new note, i
