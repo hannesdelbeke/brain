@@ -1,5 +1,5 @@
 ---
-views: 6
+views: 8
 created: 2026-04-23
 ---
 
