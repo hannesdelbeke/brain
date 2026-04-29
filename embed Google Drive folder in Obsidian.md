@@ -1,9 +1,14 @@
+---
+views: 4
+---
 If I download my [[Google Drive]] folder in my vault, i can [[wikilink GDrive files]] in my notes.
 
-challenges:
+## challenges
 - potential clashing file names with public notes
 	- I expect this is rare since there are no [[Markdown]] files in my drive.
 	- If it happens I can just rename the file.
+- renaming files in google drive , will break [[wikilink|wikilinks]] in [[my vault]] in [[Obsidian]]
+	- renaming likely happens at the start of a file's life. once a file is linked in a note, it's not likely to be renamed. so i don't expect this to often be an issue, if it breaks, i can manually fix it.
 
 ### Walkthrough: How to embed GDrive folder in vault
 - [x] can i use google drive as a subfolder in my [[Obsidian vault|vault]]?
@@ -48,6 +53,8 @@ I ran into some issues:
 > However, after fixing the previous image bugs and restarting it seems fine again.
 
 this might be an option
-also xslx files can be edited in google drive, so could use that instead of gsheet if i want to not be stuck in their custom file format.
+
+- `xslx` files can be edited in [[google drive]], so could use that instead of gsheet if i want to not be stuck in their custom file format.
+- same for `docx` for word docs.
 
 see [[keep using google drive for my sheets in my vault]]
