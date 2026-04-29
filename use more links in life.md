@@ -18,10 +18,7 @@ This is already possible with [[URL|URLs]], but inconvenient
 - opening browser, loading content takes time and takes user out of [[Obsidian]], could be interruption of [[flow]]
 	- not enough use cases to say for now.
 
-strava has an API
-consider using this to hook up to AI, to auto link URLs to posts.
-strava has option to write both public and private notes per activity.
-this can then be downloaded locally
+[[link strava activities in notes]]
 
 
 
