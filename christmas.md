@@ -1,5 +1,5 @@
 ---
 aliases:
   - xmas
-views: 1
+views: 2
 ---
