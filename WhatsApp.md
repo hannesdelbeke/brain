@@ -1,3 +1,6 @@
+---
+views: 4
+---
 [[chat]]
 [[Android app]]
 [[instant messaging]]

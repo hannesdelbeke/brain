@@ -2,5 +2,5 @@
 aliases:
   - automation
   - automatic
-views: 1
+views: 2
 ---
