@@ -1,11 +1,13 @@
 ---
-views: 1
+views: 9
 ---
 I want to [[use more links in life]]
-I already can link to [[Google Drive]] files, but these links don't show in [[Obsidian autocomplete]].
 
-examples
-- in a daily dev note I can link the script I worked on that day
-- in a tax return note, I can link the related sheets and csvs and pdfs stored on drive
-- in a daily personal note i can link a picture form [[Google Photos]]
+I can URL link (copy link) to [[Google Drive]] files & folders.
+But these links don't show in [[Obsidian autocomplete]].
+
+[[embed Google Drive folder in Obsidian]] enables wikilink support for Google Drive files. (not folders)
+
+
+
 
