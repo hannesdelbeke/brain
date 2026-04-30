@@ -14,6 +14,6 @@ Remember why you started writing notes. Maybe it was to learn programming, or wr
   Stay focused on the content of your notes, and your goal.
 - Just start writing to avoid [[writer's block]]
   Don't worry about structure.
-	- related [[asdfjngfdn]]
+	- related [[random title note flow]]
 
 [[personal knowledge management]]
