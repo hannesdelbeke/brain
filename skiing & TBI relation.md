@@ -1,6 +1,11 @@
 ---
-views: 4
+views: 7
 ---
+## Conclusion
+Winter sports are generally worth doing, but skiing, snowboarding, and hockey have meaningful [[concussion]] risk because of speed + hard impacts. Use [[helmet|helmets]], ski within your limits, and treat any head injury seriously.
+
+---
+
 [This article](https://www.neurologyadvisor.com/features/tbi-risk-in-winter-sports/) explains that winter sports can be fun and healthy, but they also carry a real risk of traumatic brain injury (TBI) — especially [[concussion|concussions]]
 
 ## Plain English Summary
@@ -67,7 +72,3 @@ Helmets help reduce some injuries, though they do not prevent every concussion. 
 Do **not** “shake it off” and continue.
 
 You should stop activity and seek medical advice if symptoms appear, because repeated injury before recovery can be dangerous. ([weillcornell.org](https://weillcornell.org/news/national-winter-sports-traumatic-brain-injury-tbi-awareness?utm_source=chatgpt.com "National Winter Sports Traumatic Brain Injury (TBI) Awareness | Patient Care"))
-
-## Bottom line
-
-Winter sports are generally worth doing, but **skiing, snowboarding, and hockey have meaningful concussion risk** because of speed + hard impacts. Use helmets, ski within your limits, and treat any head injury seriously.

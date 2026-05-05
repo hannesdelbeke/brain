@@ -23,5 +23,5 @@ Giant cathedral
 
 [[travel]]
 [[city trip]]
-[[liverpool]]
+[[Liverpool]]
 [[United Kingdom]]
