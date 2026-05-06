@@ -1,4 +1,4 @@
 ---
-views: 2
+views: 4
 ---
 [[insurance]]
