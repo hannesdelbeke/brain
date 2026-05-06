@@ -1,3 +1,6 @@
+---
+views: 2
+---
 In [[Python]] 3.6 classes now have a init method
 this makes implementing the [[registry pattern]] easier.
 
