@@ -1,5 +1,5 @@
 ---
-views: 4
+views: 5
 ---
 Mermaid is a language for simple flow charts.
 It's supported by [[Obsidian]], [[MkDocs]], [[GitHub]]

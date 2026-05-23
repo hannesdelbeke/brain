@@ -1,3 +1,6 @@
+---
+views: 2
+---
 
 | Name                                  | Per Serving (6 capsule)          | Reference Intake of an average adult (%) |
 | ------------------------------------- | -------------------------------- | ---------------------------------------- |
@@ -16,5 +19,5 @@
 | [[Niacin]]                            | 16mg NE                          | 100                                      |
 | [[zinc]]                              | 10mg                             | 100                                      |
 | [[vitamin B5\|Pantothenic acid]]      | 6mg                              | 100                                      |
-| Vitamin B6                            | 1.4mg                            | 100                                      |
+| [[Vitamin B6]]                        | 1.4mg                            | 100                                      |
 | [[vitamin B12]]                       | 2.5μg                            | 100                                      |
