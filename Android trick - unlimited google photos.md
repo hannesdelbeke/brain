@@ -1,3 +1,6 @@
+---
+views: 1
+---
 I've not tested this yet
 
 Free photo [[backup]] for [[pixel 5]] and older for compressed photos

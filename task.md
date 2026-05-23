@@ -1,7 +1,7 @@
 ---
 aliases:
   - tasks
-views: 1
+views: 5
 ---
 Something that needs doing
 
