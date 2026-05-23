@@ -1,6 +1,7 @@
 ---
 tags:
   - archive
+views: 1
 ---
 
 > [!warning]
