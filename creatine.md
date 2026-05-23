@@ -1,5 +1,5 @@
 ---
-views: 3
+views: 5
 ---
 Creatine is a compound that comes from three [[amino acid|amino acids]]
 Creatine is found mostly in your body's [[muscle|muscles]] as well as in the [[brain]]
