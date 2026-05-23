@@ -1,5 +1,5 @@
 ---
-views: 3
+views: 4
 ---
 Taking iron [[supplement]] is more effective if done every 2 days instead of every day.
 
