@@ -1,3 +1,6 @@
+---
+views: 3
+---
 cholesterol-rich sources
 - Eggs
 - cheese  (100 g has 105 mg of cholesterol)
