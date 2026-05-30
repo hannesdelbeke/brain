@@ -4,5 +4,6 @@ aliases:
   - video game
   - video games
   - videogames
+views: 2
 ---
 [[gaming]]
