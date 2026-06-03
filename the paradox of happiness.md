@@ -1,3 +1,6 @@
+---
+views: 1
+---
 Nietzsche. 
 > People want [[meaning]] instead of [[happiness]]. Pursuing happiness is stupid.
 
