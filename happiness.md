@@ -1,3 +1,6 @@
+---
+views: 1
+---
 happiness is a sense of purpose and [[well-being]]
 
 According to some [research](http://www.huffingtonpost.com/richard-j-davidson/well-being-skill-learned_b_7102636.html), well-being can be learned by practicing the following:
