@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 4
 ---
 Thrombocytopenia occurs when your [[bone marrow]] doesn’t make enough [[platelets]].
 It often affects people with certain medical conditions, like [[autoimmune]] disease
