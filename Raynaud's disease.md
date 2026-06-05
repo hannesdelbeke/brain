@@ -4,6 +4,7 @@ aliases:
   - Raynaud's
   - Raynauds
   - Raynaud's syndrome
+views: 2
 ---
 cold fingers, reduced bloodflow
 
