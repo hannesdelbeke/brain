@@ -3,3 +3,4 @@ https://github.com/KoljaB/RealtimeSTT
 
 [[Python]]
 [[voice control]]
+[[speech to text]]
