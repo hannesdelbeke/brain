@@ -1,5 +1,5 @@
 ---
-views: 4
+views: 5
 ---
 If I download my [[Google Drive]] folder in my vault, i can [[wikilink GDrive files]] in my notes.
 
