@@ -2,6 +2,6 @@
 aliases:
   - HDL
   - good cholesterol
-views: 3
+views: 4
 ---
 [[cholesterol]]

@@ -2,7 +2,7 @@
 aliases:
   - LDL
   - bad cholesterol
-views: 8
+views: 9
 ---
 
 [[cholesterol]]
