@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 3
 ---
 acting or done without [[planning|forethought]]
 

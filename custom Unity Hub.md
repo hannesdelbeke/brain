@@ -1,5 +1,5 @@
 ---
-views: 1
+views: 2
 ---
 
 I implemented this with [[OpenAI Codex]], see https://github.com/hannesdelbeke/electron-unity-hub
