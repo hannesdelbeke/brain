@@ -1,3 +1,6 @@
+---
+views: 1
+---
 # Algorithms to Live By: The Computer Science of Human Decisions
 
 recap [source](https://jsilva.blog/2019/02/05/algorithms-book-summary/)
