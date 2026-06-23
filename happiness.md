@@ -1,5 +1,7 @@
 ---
-views: 1
+views: 2
+aliases:
+  - happy
 ---
 happiness is a sense of purpose and [[well-being]]
 
