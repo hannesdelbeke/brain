@@ -1,3 +1,6 @@
+---
+views: 1
+---
 
 > [!NOTE] 
 > unresolved
@@ -14,7 +17,7 @@ A task with no deadline, but the longer it's not done, the more important it bec
 e.g. a request from your manager, might become more damaging for your career the longer it's not done.
 How to visualize this?
 - add a priority score every day
-- show a task list ordered by priority
+- show a [[task list]] ordered by priority
 
 It also would be easier if everything was in 1 system
 ## goal

@@ -1,5 +1,5 @@
 ---
-views: 2
+views: 3
 ---
 [[Gemini CLI]] stopped working. Just noticed, as I've not used it for weeks
 

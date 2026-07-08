@@ -1,3 +1,6 @@
+---
+views: 1
+---
 
 > [!success] 
 > I made my own MCP server in Unreal, see [[2026-02-04 write mcp unreal]]
