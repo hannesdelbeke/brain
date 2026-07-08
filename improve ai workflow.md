@@ -1,4 +1,4 @@
 ---
-views: 3
+views: 5
 ---
 [[improve workflow]]
