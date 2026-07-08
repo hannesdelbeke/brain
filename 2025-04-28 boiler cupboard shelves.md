@@ -1,4 +1,7 @@
-i made 2 shelves for the boiler cupboard.
+---
+views: 2
+---
+i made 2 shelves for the [[boiler]] [[cupboard]].
 
 i cut them too short by about .5 cm
 sadly i cut both of them, before measuring.
