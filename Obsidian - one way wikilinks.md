@@ -34,7 +34,7 @@ then we have one directional [[wikilink]] support.
 - clicking the wiki link opens the note
 
 Extra:
-- [[MkDocs materials]] might need extra support for this.
+- [[MkDocs material]] might need extra support for this.
 - other workflows from other users might need similar updates.
 
 ## Conclusion

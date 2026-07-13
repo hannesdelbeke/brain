@@ -1,4 +1,6 @@
 ---
-views: 3
+views: 4
 last viewed: 2026-02-22
+aliases:
+  - friends
 ---
