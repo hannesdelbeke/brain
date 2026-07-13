@@ -1,6 +1,3 @@
----
-views: 2
----
 [[productivity]] flywheel
 something that once is going, it keeps feeding back on its own productivity boost, like a flywheel.
 

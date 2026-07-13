@@ -1,5 +1,4 @@
 ---
-views: 5
 last viewed: 2026-02-23
 ---
 If a user rolls back an asset to an older version, that asset might be only compatible with the old tool version, or the old [[asset pipeline]]. 

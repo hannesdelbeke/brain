@@ -1,6 +1,3 @@
----
-views: 1
----
 ## super TLDR
 Optimal weekly [[exercise]] is 6 hours [[moderate aerobic activity|moderate]] AND 2.5 hours [[vigorous aerobic activity|vigorous]]
 ## Notes

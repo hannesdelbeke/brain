@@ -1,6 +1,3 @@
----
-views: 20
----
 
 
 link [[Strava]] in [[Obsidian]]

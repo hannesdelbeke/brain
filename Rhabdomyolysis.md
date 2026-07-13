@@ -1,6 +1,3 @@
----
-views: 3
----
 
 **(Extremely Rare):** It occurs in only a few cases per _million_ people taking the [[statins]].
 

@@ -1,5 +1,4 @@
 ---
-views: 3
 aliases:
   - cabinet
 ---

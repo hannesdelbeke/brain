@@ -1,6 +1,3 @@
----
-views: 1
----
 
 you can start the bootloader, even if you don't have the bootloader "unlocked"
 when you are in the bootloader, you ll see OEM LOCK ON, which means it's locked

@@ -3,7 +3,6 @@ aliases:
   - MCP server
   - Model Context Protocol server
   - MCP
-views: 10
 ---
 A Model Context Protocol (MCP) server acts as a bridge between your [[AI agent]] and an external service. 
 

@@ -4,7 +4,6 @@ aliases:
   - home battery
   - solar batteries
   - home batteries
-views: 4
 ---
 
 

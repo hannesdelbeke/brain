@@ -1,6 +1,3 @@
----
-views: 1
----
 notes by thomasjfrank, [source](https://thomasjfrank.com/hyperfocus-by-chris-bailey-summary-and-notes/)
 
 ## Overall Thoughts

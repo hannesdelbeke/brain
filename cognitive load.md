@@ -1,7 +1,6 @@
 ---
 aliases:
   - mental effort
-views: 2
 ---
 
 

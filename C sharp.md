@@ -1,7 +1,6 @@
 ---
 aliases:
   - C#
-views: 3
 ---
 ## `C#`
 compiles source code to [[Common intermediate Language|CIL]] during **compile time**
