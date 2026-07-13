@@ -1,6 +1,3 @@
----
-views: 3
----
 Often a [[single source of truth]] is seen as the perfect case.
 But what if we have 2 sources of truth, and a manager?
 

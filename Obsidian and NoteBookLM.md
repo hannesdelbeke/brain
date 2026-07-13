@@ -1,6 +1,3 @@
----
-views: 1
----
 https://www.xda-developers.com/using-notebooklm-with-obsidian/
 
 The author says [[notebookLM]] has been a game-changer to their [[Obsidian]] workflow.

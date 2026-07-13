@@ -1,5 +1,4 @@
 ---
-views: 17
 last viewed: 2026-02-23
 ---
 

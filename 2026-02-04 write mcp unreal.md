@@ -1,6 +1,3 @@
----
-views: 2
----
 
 ## Challenge
 I want [[OpenCode]] to talk directly with [[unreal]] (through an [[MCP server]]) 

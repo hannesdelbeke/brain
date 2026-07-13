@@ -1,6 +1,3 @@
----
-views: 8
----
 
 > [!warning] problem
 > I made a [[custom Unity Hub]] and am not using it

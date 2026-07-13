@@ -1,6 +1,3 @@
----
-views: 1
----
 https://assetstore.unity.com/packages/tools/utilities/devtasks-offline-project-manager-307257
 
 No free trail version

@@ -1,6 +1,3 @@
----
-views: 1
----
 Bisphosphonates are a class of drugs used to treat bone conditions and some cancers. They are also known as bone strengthening or bone hardening treatments. 
 
 - risedronate (Actonel), 

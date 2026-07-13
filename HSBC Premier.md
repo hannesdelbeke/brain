@@ -1,6 +1,3 @@
----
-views: 2
----
 
 
 - comes with [[travel insurance]], info and claim [here](https://www.hsbc.co.uk/help/coronavirus/travel-guidance/whats-covered-under-hsbc-travel-insurance/)

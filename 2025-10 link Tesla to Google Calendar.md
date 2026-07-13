@@ -1,6 +1,3 @@
----
-views: 3
----
 **Idea**
 Automatically show my driving ([[Tesla model 3]]) in my [[Google calendar]].
 

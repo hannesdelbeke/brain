@@ -1,6 +1,3 @@
----
-views: 4
----
 Now that my [[Obsidian vault]] has grown big (5k notes), I start to notice that finding backlinks is becoming slower. Often when I click show backlinks it shows a loading bar, and half a minute later it starts populating a list.
 
 1. Reverse lookup cost scales with vault size

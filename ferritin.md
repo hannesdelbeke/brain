@@ -1,6 +1,3 @@
----
-views: 41
----
 
 # Ferritin
 
