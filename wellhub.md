@@ -1,7 +1,6 @@
 ---
 aliases:
   - gympass
-views: 5
 ---
 Wellhub gives you and your family members access fitness network
 https://wellhub.com/en-uk/search/

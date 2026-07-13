@@ -1,6 +1,3 @@
----
-views: 9
----
 
 # Creatinine
 

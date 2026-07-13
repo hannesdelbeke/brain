@@ -1,6 +1,3 @@
----
-views: 5
----
 [[MIPS]] helmets reduce rotational forces on head impact.
 
 

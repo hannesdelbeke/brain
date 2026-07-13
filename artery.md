@@ -1,5 +1,4 @@
 ---
-views: 9
 aliases:
   - arteries
 ---

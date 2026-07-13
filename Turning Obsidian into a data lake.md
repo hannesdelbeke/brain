@@ -1,6 +1,3 @@
----
-views: 3
----
 new notes
 - [[wikilink GDrive files]]
 	- [ ] [[link spreadsheets in Obsidian]]

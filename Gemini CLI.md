@@ -1,6 +1,3 @@
----
-views: 1
----
 Gemini CLI is intended to be run from commandline.
 it can launch sub agents etc to do tasks
 

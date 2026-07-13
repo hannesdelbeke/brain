@@ -1,6 +1,3 @@
----
-views: 1
----
 [[checkbox]]
 [[todo]]
 [[batcher|task queue]]

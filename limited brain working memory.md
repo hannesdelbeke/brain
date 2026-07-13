@@ -1,5 +1,4 @@
 ---
-views: 2
 last viewed: 2026-02-22
 ---
 the brain can only hold 3-5 items at a time in working memory.

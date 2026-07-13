@@ -1,6 +1,3 @@
----
-views: 2
----
 right now. I am manually add aliases in Obsidian notes.
 i waste a few seconds on typing the alias.
 

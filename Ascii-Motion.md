@@ -1,6 +1,3 @@
----
-views: 2
----
 https://github.com/CameronFoxly/Ascii-Motion
 
 [[ASCII]]

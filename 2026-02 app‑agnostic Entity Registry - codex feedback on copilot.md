@@ -1,5 +1,4 @@
 ---
-views: 2
 last viewed: 2026-02
 ---
 Critique on [[2026-02 app‑agnostic Entity Registry - copilot first pass]]

@@ -1,6 +1,3 @@
----
-views: 2
----
 #### Pyblish inconsistent logic
 Some of the core logic is flawed IMO:
  - actions are not directly aware of the plugins/instances they belong too

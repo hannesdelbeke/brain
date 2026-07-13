@@ -4,7 +4,6 @@ aliases:
   - notes
   - note-taking
   - notetaking
-views: 7
 ---
 
 - Summarize knowledge

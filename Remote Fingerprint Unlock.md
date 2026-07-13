@@ -1,5 +1,4 @@
 ---
-views: 1
 last viewed: 2026-02-22
 ---
 unlock your pc with your phone's [[fingerprint reader]]. (on the same network, no VPN)

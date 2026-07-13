@@ -1,6 +1,3 @@
----
-views: 7
----
 ## Conclusion
 Winter sports are generally worth doing, but skiing, snowboarding, and hockey have meaningful [[concussion]] risk because of speed + hard impacts. Use [[helmet|helmets]], ski within your limits, and treat any head injury seriously.
 

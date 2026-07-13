@@ -1,5 +1,4 @@
 ---
-views: 13
 last viewed: 22-02-2026
 ---
 There are a few books I think of as very impactful or memorable. Let's see what I remembered after the years. (likely the core message of the book)
