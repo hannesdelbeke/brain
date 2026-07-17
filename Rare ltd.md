@@ -1,1 +1,6 @@
+---
+aliases:
+  - Rare
+---
+
 [[game company]]
