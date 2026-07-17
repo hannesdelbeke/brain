@@ -65,5 +65,6 @@ integrate instagram into my data lake:
 - [[2025 - Instagram as a diary]]
 
 also see [[ontology]]
+consider how [[encryption]] and security would affect everything
 ### tags
 [[data lake]]
