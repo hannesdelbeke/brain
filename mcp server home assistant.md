@@ -1,5 +1,6 @@
 ---
-views: 3
+views: 6
 ---
 [[MCP server]]
 [[todo]]
+[[Home Assistant]]

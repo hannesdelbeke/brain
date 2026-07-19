@@ -1,7 +1,10 @@
+---
+views: 1
+---
 ## Cause
 - Around 20% of people, originates in childhood, often from unpredictable or insensitive parenting.
 	- Emotionally distant caregivers
-		- e.g. silent treatment instead of conforting
+		- e.g. [[silent treatment]] instead of comforting
 	- Inconsistent parenting
 		- sometimes parents are caring, other times cold
 	- Caregiver’s emotional hunger
