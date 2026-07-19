@@ -2,6 +2,7 @@
 aliases:
   - Your Phone
   - Link to Windows
+views: 2
 ---
 connect your phone to your pc
 - see & reply messages

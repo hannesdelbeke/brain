@@ -1,3 +1,6 @@
+---
+views: 1
+---
 In my [[monthly review]], I want to see my [[calendar entry|calendar events]]
 
 **current**: I manually browse my [[calendar]] and write events
@@ -15,3 +18,4 @@ relates too
 
 [[note taking]]
 [[idea]]
+[[automate note taking]]
