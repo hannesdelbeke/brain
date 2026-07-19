@@ -1,7 +1,9 @@
 ---
-views: 1
+views: 4
+aliases:
+  - my Razor's fans
 ---
-It's nice and quiet when coding or writing, but sometimes it fires up like most laptops and the fans are loud, disturbing the surrounding peace and quiet.
+It's nice and quiet when [[programming|coding]] or [[writing]], but sometimes it fires up like most laptops and the fans are loud, disturbing the surrounding peace and quiet.
 
 [[Razor synapse]] 4 only offers an auto fan-profile (so no change) or minimum fan of 3500, which is still loud. There's no quiet profile.
 
