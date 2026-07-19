@@ -1,6 +1,7 @@
 ---
 aliases:
   - phone snubbing
+views: 1
 ---
 The act of ignoring someone in a social setting to focus on your smartphone instead
 This behavior can negatively impact [[relationship|relationships]] and [[mental health]]

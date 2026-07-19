@@ -1,5 +1,5 @@
 ---
-views: 7
+views: 8
 ---
 i alrdy have a [[Home Assistant]] [[MCP server|MCP]]
 but i often have to set it up again when using a [[large language model|LLM]] like [[OpenAI Codex]] today
