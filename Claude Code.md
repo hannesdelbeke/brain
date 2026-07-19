@@ -1,5 +1,7 @@
 ---
 aliases:
+  - Claude
+views: 1
 ---
 
 

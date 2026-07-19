@@ -1,6 +1,8 @@
 ---
 aliases:
   - arousal
+  - aroused
+views: 2
 ---
 
 2 modes
