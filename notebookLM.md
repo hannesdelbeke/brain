@@ -1,6 +1,12 @@
+---
+views: 4
+aliases:
+  - Gemini notebook
+---
 
 
 [[Google]]
-[[chat GPT|chatGPT]]
+[[Gemini]]
+[[antigravity]]
 [[large language model|LLM]]
 [[retrieval augmented generation|RAG]]
