@@ -2,6 +2,7 @@
 aliases:
   - LLM
   - LLMs
+views: 2
 ---
 [[Artificial intelligence|AI]]
 
