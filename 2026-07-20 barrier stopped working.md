@@ -1,5 +1,5 @@
 ---
-views: 10
+views: 12
 ---
 [[Barrier]] doesnt work on my [[TT desktop]]
 i'v not used it in a while, but notice i use a different server ip there, likely to make it work with the [[virtual private network|VPN]]
