@@ -20,3 +20,4 @@ The following is the [[amino acid]] profile of [**Optimum Nutrition Gold Standa
 | [[Tryptophan]]    | 1.92   | 0.56           |
 | [[Tyrosine]]      | 2.53   | 0.74           |
 | [[Valine]]        | 4.74   | 1.39           |
+[[whey powder]]
