@@ -32,7 +32,7 @@ Introduce a “Tool Resolver” Layer, a small service or script that:
 example:
 - `nvm` for artists
 - `pyenv` for asset pipelines
-- [[asdf]] for game tools
+- [[public/asdf]] for game tools
 
 Make Tool Environments Immutable
 - versioned installers
