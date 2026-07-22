@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 [[AI article]]
 
 While **mise** and **asdf-vm** are powerful package managers, they solve a fundamentally different problem than [[Plugget]].

@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 
 examples
 - in a daily dev note I can link the script I worked on that day

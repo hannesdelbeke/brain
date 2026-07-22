@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 it d be great if i could link my contacts to events, posts, ...
 
 [[example of linking to a contact]]

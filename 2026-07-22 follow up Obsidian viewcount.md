@@ -37,4 +37,5 @@ added feature to import custom frontmatter fields `views`
 imported my old view data successfully, seeing it in obsidian viewcount
 removed rule from [[obsidian-sentinel]] and disabled plugin. 
 	which i setup originally here [[2026-02-22 Obsidian track note view]]
+created PR https://github.com/Moyf/obsidian-view-count/pull/1
 

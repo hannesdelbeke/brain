@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 ### Why do I want to link to contacts?
 I almost only use [[Google contacts]] to look up
 - address

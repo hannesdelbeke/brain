@@ -1,6 +1,3 @@
----
-last viewed: 22-02-2026
----
 so put the last used thing on top.
 
 the most [[optimization|optimized]] way of sorting.
