@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 I wrote about autocomplete and linking to my data (e.g. Strava activities):
 - [[2026-02-19 Obsidian auto complete app URI]]
  - [[Turning Obsidian into a data lake]]

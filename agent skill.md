@@ -6,7 +6,6 @@ aliases:
   - AI skill
   - agent skill
   - agent skills
-views: 6
 ---
 
 https://skillwiki.ai/

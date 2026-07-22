@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-23
----
 [[Why I want to link to contacts]]
 
 ### Local contacts app

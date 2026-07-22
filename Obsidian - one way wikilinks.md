@@ -1,6 +1,3 @@
----
-last viewed: 22-02-2026
----
 Standard [[wikilink|wikilinks]] are of the format `[[note title]]`.
 In Obsidian, they show up in the [[Obsidian backlinks]] panel.
 

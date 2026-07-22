@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 Think of an Obsidian plugin where you can 
 1. subscribe to external data lists in settings (activities, memories, photos, ...)
 2. these lists add entries to the [[Obsidian autocomplete]] suggestions list.

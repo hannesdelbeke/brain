@@ -1,6 +1,3 @@
----
-last viewed: 22-02-2026
----
 Recently I started writing more notes that start with the date.
 
 The biggest win is the reduction in [[mental resistance|mental friction]].

@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-23
----
 When I look at my [[Obsidian graph view]], I notice patterns 
 - I color each past job in a different color
 - I color public and private notes

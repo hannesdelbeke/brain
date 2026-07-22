@@ -1,6 +1,3 @@
----
-last viewed: 2026-02
----
 Critique on [[2026-02 app‑agnostic Entity Registry - copilot first pass]]
 next version [[2026-02 appagnostic Entity Registry - codex v2 plan]]
 # critique
