@@ -20,13 +20,21 @@ Instead of writing to the note, store viewcounts in a single file:
 Challenge, what if a note renames.
 create a hook that runs on file rename
 ### alternatives
-[[obsidian viewcount]]
+i researched alternatives and forks here: [[obsidian viewcount rnd]]
+
+https://github.com/tahayigitmelek/note-radar
+does this too, but 0 stars
+data saved in a json in the plugin folder.
+
 https://github.com/decaf-dev/obsidian-view-count seems to do this
 ⚠️ development is dropped.
 i dont know how the tech works under the hood
 reddit [post](https://www.reddit.com/r/ObsidianMD/comments/120fcuq/plugin_request_note_view_trackercounter/)
 fork https://github.com/Moyf/obsidian-view-count
 
-https://github.com/tahayigitmelek/note-radar
-does this too, but 0 stars
-data saved in a json in the plugin folder.
+forked it
+added feature to import custom frontmatter fields `views`
+imported my old view data successfully, seeing it in obsidian viewcount
+removed rule from [[obsidian-sentinel]] and disabled plugin. 
+	which i setup originally here [[2026-02-22 Obsidian track note view]]
+
