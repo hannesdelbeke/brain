@@ -1,5 +1,4 @@
 ---
-views: 4
 aliases:
   - my Razor's fans
 ---

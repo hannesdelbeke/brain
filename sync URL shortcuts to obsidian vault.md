@@ -1,5 +1,4 @@
 ---
-views: 6
 last viewed: 22-02-2026
 ---
 We can create [[URL]] shortcuts in our [[Obsidian vault|vault]]. Kinda like what [[google drive]] does.

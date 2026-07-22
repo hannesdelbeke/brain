@@ -1,6 +1,3 @@
----
-views: 7
----
 ## Don't
 People in the [[note taking]] community often get obsessed with [[writing notes about notes|writing notes about note taking]].  
 It's exciting when you discover a "better" way of thinking, wanting to share it with everyone. 

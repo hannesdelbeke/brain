@@ -1,6 +1,3 @@
----
-views: 4
----
 ### Time milestones
 - **50 Hours:** To move from acquaintance to casual [[friend]].
 - **90 Hours:** To become a standard friend.

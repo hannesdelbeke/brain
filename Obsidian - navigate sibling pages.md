@@ -1,6 +1,3 @@
----
-views: 1
----
 
 ## Obsidian plugin ✅
 add [[navigate sibling page]] support to [[Obsidian]]

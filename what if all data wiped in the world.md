@@ -1,6 +1,3 @@
----
-views: 4
----
 if all the data was wiped, how would it affect you?
 e.g. credit card, savings, mortgage, ...
 your earnings and savings are gone, your debts are gone, ...

@@ -1,5 +1,4 @@
 ---
-views: 2
 aliases:
   - skill.md
   - skill
@@ -7,6 +6,7 @@ aliases:
   - AI skill
   - agent skill
   - agent skills
+views: 6
 ---
 
 https://skillwiki.ai/

@@ -1,6 +1,3 @@
----
-views: 1
----
 https://www.ctrlpaint.com/library/ covers all your needs with free videos, structured in a nice curriculum
 
 ## communities

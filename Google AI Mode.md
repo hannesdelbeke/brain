@@ -1,5 +1,4 @@
 ---
-views: 4
 aliases:
   - AI Mode
   - Search AI

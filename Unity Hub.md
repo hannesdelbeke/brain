@@ -1,6 +1,3 @@
----
-views: 1
----
 
 [[project manager]]
 [[versioning]]

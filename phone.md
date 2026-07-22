@@ -5,5 +5,4 @@ aliases:
   - phones
   - mobiles
   - mobile phone
-views: 1
 ---

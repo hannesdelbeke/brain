@@ -1,4 +1,1 @@
----
-views: 3
----
 Reacts against actin filaments in smooth [[muscle]] cells, often found in [[autoimmune]] [[hepatitis]] type 1.

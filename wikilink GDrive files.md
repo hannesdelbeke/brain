@@ -1,6 +1,3 @@
----
-views: 9
----
 I want to [[use more links in life]]
 
 I can URL link (copy link) to [[Google Drive]] files & folders.

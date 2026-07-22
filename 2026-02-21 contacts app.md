@@ -1,5 +1,4 @@
 ---
-views: 10
 last viewed: 2026-02-23
 ---
 [[Why I want to link to contacts]]

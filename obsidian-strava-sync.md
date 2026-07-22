@@ -1,6 +1,3 @@
----
-views: 1
----
 
 ## Issue starting strava sync
 but cant get strava auth to work, despite having client id and secret.

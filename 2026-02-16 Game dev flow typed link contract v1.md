@@ -1,5 +1,4 @@
 ---
-views: 2
 last viewed: 2026-02-22
 ---
 ⚠️ IMO this whole summary is kinda shit

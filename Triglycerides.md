@@ -1,6 +1,3 @@
----
-views: 8
----
 
 # Triglycerides
 

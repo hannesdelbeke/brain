@@ -1,5 +1,4 @@
 ---
-views: 6
 created: 2026-04-23
 ---
 I want to visualize [[Whatsapp]] calls on my [[Google calendar]], just how I [[2025-10 link Strava to Google calendar|visualize Strava activities on my Google calendar]].

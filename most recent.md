@@ -1,5 +1,4 @@
 ---
-views: 4
 last viewed: 22-02-2026
 ---
 the most recent files you used, are likely the most relevant files you will use again.

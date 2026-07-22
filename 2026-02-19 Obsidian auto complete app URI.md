@@ -1,5 +1,4 @@
 ---
-views: 7
 last viewed: 2026-02-22
 ---
 Think of an Obsidian plugin where you can 

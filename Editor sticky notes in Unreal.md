@@ -1,5 +1,4 @@
 ---
-views: 3
 last viewed: 22-02-2026
 ---
 If I want to leave something like editor only digital sticky notes in [[unreal]] project, in the 3d world. how could I achieve this.

@@ -1,6 +1,3 @@
----
-views: 1
----
 https://assetstore.unity.com/packages/tools/level-design/task-atlas-tasks-stickies-maps-reference-galleries-and-more-185959
 
 save notes in the project

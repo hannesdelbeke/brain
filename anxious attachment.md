@@ -1,6 +1,3 @@
----
-views: 1
----
 ## Cause
 - Around 20% of people, originates in childhood, often from unpredictable or insensitive parenting.
 	- Emotionally distant caregivers

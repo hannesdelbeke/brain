@@ -1,7 +1,6 @@
 ---
 aliases:
   - chatGPT
-views: 2
 ---
 
 try model 4 on free

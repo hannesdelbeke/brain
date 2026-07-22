@@ -1,5 +1,4 @@
 ---
-views: 14
 aliases:
   - coloring links based on folder
 last viewed: 2026-02-23

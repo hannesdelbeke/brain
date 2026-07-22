@@ -1,6 +1,3 @@
----
-views: 1
----
 The i D Style – An Everything DiSC® Podcast
 Narrator: The following podcast by Dr. Mark Scullard describes the i D style. It is an Everything DiSC® production brought to you by Wiley. 
 Dr. Mark Scullard: All right, so, we're going to spend some time talking about the i D style and—and if you have an i D style, I think one of the things that you're going to find is that, you know, roughly maybe 70, 80 percent of what we're going to talk about will kind of fit for you here, you know. Maybe—maybe less, maybe more. You know, some of it will be spot on and then there's going to be, you know, parts that feel a little bit like, you know, well, you know—you know, that's not really me. But I think the value here is more about listening for those insights that really help you make sense of your past experiences or really help you see your thought processes and habits in a new light. 

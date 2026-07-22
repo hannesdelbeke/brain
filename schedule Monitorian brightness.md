@@ -1,6 +1,3 @@
----
-views: 10
----
 ## goal
 Auto dim monitor in the evening, and brighten in the [[morning]], to help with [[sleep]] and [[concentration|focus]].
 

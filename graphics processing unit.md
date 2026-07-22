@@ -3,7 +3,6 @@ aliases:
   - GPU
   - GPUs
   - graphics processor
-views: 1
 ---
 ![](https://blog.paperspace.com/content/images/size/w1000/2022/06/a100.png)
 

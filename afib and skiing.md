@@ -1,6 +1,3 @@
----
-views: 2
----
 
 
 [This article](https://www.heart.org/en/news/2019/08/26/study-of-skiers-holds-surprises-about-afib-stroke-and-intense-exercise) is a news summary from the American Heart Association about a study of long-distance cross-country skiers and what it found about AFib ([[atrial fibrillation]]), [[stroke]], and intense exercise.

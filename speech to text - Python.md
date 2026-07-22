@@ -1,6 +1,3 @@
----
-views: 1
----
 an interesting python lib
 https://github.com/KoljaB/RealtimeSTT
 

@@ -1,5 +1,4 @@
 ---
-views: 2
 last viewed: 2026-02-22
 ---
 **Obsidian** is an app to store notes, focused on linking notes to each other with [[wikilink]] & `#hashtags`

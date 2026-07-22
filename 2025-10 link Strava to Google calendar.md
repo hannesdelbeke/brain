@@ -1,6 +1,3 @@
----
-views: 16
----
 When I log an activity in Strava, it auto adds a matching event in my calendar.
 This is helpfull to [[visualize time spent]] in my [[Google calendar]].
 

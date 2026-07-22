@@ -1,6 +1,3 @@
----
-views: 4
----
 
 > [!warning]
 > I moved away from using hashtags for my site, so this is now less relevant.

@@ -1,6 +1,3 @@
----
-views: 2
----
 There’s a second limiter too:
 
   - after each import, obsidian-strava-sync-fork/src/StravaSync.ts updates settings.sync.lastActivityTimestamp

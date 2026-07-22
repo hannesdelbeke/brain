@@ -1,6 +1,3 @@
----
-views: 3
----
 My notes seem to have improved a lot compared to a year ago.
 - Use full sentences, [[abbreviation|abbreviations]] cause confusion in the future.
 - Write about personal experience, and steps to take. Don't search for the truth, write what you think or believe at the time. So you can later reflect and see how your thinking evolved.

@@ -1,6 +1,3 @@
----
-views: 1
----
 To make scrcpy work over your network, you need to manually connect adb to your phone's wireless debugging port.
 Follow these steps:
 

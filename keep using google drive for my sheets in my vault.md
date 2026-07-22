@@ -1,6 +1,3 @@
----
-views: 1
----
 ### What if I keep using Google Sheets?
 
 #### Pros & Cons

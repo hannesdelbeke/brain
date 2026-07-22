@@ -1,5 +1,4 @@
 ---
-views: 7
 last viewed: 2026-02-22
 ---
 I browse through my memories, and see a picture of my [[friend]] Jack.

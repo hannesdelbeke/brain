@@ -1,6 +1,3 @@
----
-views: 3
----
 - hsbc premier health
 	- Cancer Bereavement Cover. 2k if i die of cancer - [email](https://mail.google.com/mail/u/0/#search/cancer++hsbc/FMfcgzQZTCjdNJwmTqgbMjGFwJQBBLKj)
 	- [ ] TODO - share details with partner

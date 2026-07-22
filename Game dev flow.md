@@ -1,6 +1,3 @@
----
-views: 1
----
 
 ### Documentation
 We write about our game, brainstorm, documentation, ...

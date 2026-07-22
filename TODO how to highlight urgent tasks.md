@@ -1,6 +1,3 @@
----
-views: 1
----
 
 > [!NOTE] 
 > unresolved

@@ -1,6 +1,5 @@
 ---
 last viewed: 2026-02
-views: 8
 ---
 [[comment|commenting]], [[liking]]
 

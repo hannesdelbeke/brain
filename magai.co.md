@@ -1,6 +1,3 @@
----
-views: 3
----
 Magai lets you switch [[Artificial intelligence|AI]] models mid-conversation, reuse GPT instructions across models, and collaborate directly with your team.
 
 > [!warning]

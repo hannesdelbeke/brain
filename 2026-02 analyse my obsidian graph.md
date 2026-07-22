@@ -1,5 +1,4 @@
 ---
-views: 7
 last viewed: 2026-02-23
 ---
 When I look at my [[Obsidian graph view]], I notice patterns 

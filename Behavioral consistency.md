@@ -1,6 +1,3 @@
----
-views: 2
----
 **Behavioral consistency** refers to people’s tendency to behave in a manner that matches their past decisions or behaviors.
 
 [[Behavioral]] consistency is a judgement heuristic to which we default in order to ease decision making: it is easier to make one decision, and stay consistent to it, than it is to make a new decision every single time we are presented with a problem. 

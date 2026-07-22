@@ -1,6 +1,3 @@
----
-views: 2
----
 Serotonin helps your body to:
 
 - balance your mood and experience pleasure

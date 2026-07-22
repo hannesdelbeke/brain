@@ -1,7 +1,6 @@
 ---
 aliases:
   - memory posts
-views: 2
 ---
 A memory post is a post about an event, or a day, or a trip.
 It could be a note, an image, something that summarizes a memory.
