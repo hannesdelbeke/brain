@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-23
----
 
 > [!warning]
 > When we link to a contact

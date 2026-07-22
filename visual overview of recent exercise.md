@@ -1,5 +1,4 @@
 ---
-last viewed: 2026-02-22
 created: 2026-02-22
 ---
 I love to see when I exercised recently.
