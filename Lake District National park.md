@@ -3,7 +3,7 @@ aliases:
   - the Lakes
   - the Lake District
   - Lake District
-views: 3
+views: 5
 ---
 [[national park]]
 [[nature]]
