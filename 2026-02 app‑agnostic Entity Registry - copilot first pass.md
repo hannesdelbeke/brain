@@ -1,6 +1,3 @@
----
-last viewed: 22-02-2026
----
 
 [[AI article]] created from [[2026-02-19 Obsidian auto complete app URI]]
 

@@ -1,6 +1,3 @@
----
-last viewed: 2026-02-22
----
 GitHub is a free hosting platform for git [[repository|repos]]. 
 It also has some [[social media]] elements like [[comment|commenting]], [[liking]], etc.
 ## Tech
