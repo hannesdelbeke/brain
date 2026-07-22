@@ -1,5 +1,5 @@
 ---
-views: 2
+views: 3
 ---
 Setting up **[Backlog.md](https://github.com/MrLesk/Backlog.md)** inside an [[Obsidian vault]] is straightforward because both tools are built around local [[Markdown]] files.
 
