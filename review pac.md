@@ -1,4 +1,4 @@
-review of the first pipeline as code i wrote (now named pac2 oddly enough)
+preview of the first pipeline as code i wrote (now named pac2 oddly enough)
 [[pipeline as code]]
 ## Summary
 - had a working prototype in days
