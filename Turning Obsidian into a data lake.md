@@ -61,5 +61,7 @@ integrate instagram into my data lake:
 - [[TODO link contacts to photos and memories]]
 - [[TODO localize instagram memory posts]]
 - [[2025 - Instagram as a diary]]
+
+also see [[ontology]]
 ### tags
 [[data lake]]
