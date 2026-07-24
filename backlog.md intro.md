@@ -1,4 +1,4 @@
-Setting up [[backlogs.md]] inside an [[Obsidian vault]] is straightforward because both tools are built around local [[Markdown]] files.
+Setting up [[backlog.md task mngr]] inside an [[Obsidian vault]] is straightforward because both tools are built around local [[Markdown]] files.
 
 ---
 
