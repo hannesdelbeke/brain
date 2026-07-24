@@ -6,4 +6,5 @@
 Reflecting by looking back on a [[google calendar]], is a good way to see where your time went.
 
 [[visualize]]
+[[time spent]]
 #planning #retro #reflection
