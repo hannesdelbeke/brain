@@ -5,3 +5,8 @@ aliases:
 ---
 
 someone who manages people at [[work]]
+
+
+see [[coaching]]
+[[leadership]]
+[[team]]

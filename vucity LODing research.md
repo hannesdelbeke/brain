@@ -7,7 +7,7 @@ remeshing will create a brand new mesh, with a brand new uv, based on the origin
 imposters is similar to remeshing, but bakes several textures from several angles. and uses a special shader to blend between them.
 
 good LODs, remeshed meshes, and imposters should not be noticeable
-quality of LOD doesn’t matter, only important thing is that it should be indistinguishable from the original mesh at the closest LOD distance it is meant to be used. so don’t worry if it looks bad closeup/
+quality of LOD doesn’t matter, only important thing is that it should be indistinguishable from the original mesh at the closest [[LOD distance]] it is meant to be used. so don’t worry if it looks bad closeup/
 
 ## pixel vs percentage LODing 
 
@@ -36,7 +36,7 @@ Then put these LODs in the game engine, push the distance until you cant tell th
   
 
 a better but more advanced approach is the create the LODs based on pixelsize, targeting the maximum resolution, for a certain distance. so before we create LODs we decide when the LODs need to kick in. then we generate the LODs and implement them in [[Unity]]. however this means that when we go to a lower resolution, the LODs are not as optimized as they could be.
-a solution to this would be to recalculate the LOD distances every time you change resolution.
+a solution to this would be to recalculate the [[LOD distance|LOD distances]] every time you change resolution.
 
   
 
