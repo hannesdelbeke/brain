@@ -37,6 +37,6 @@ make it a habit to
 - [ ] write when bored, instead of watch reels
 
 See [[thomas j frank notes - The Power of Habit]]
-To break an old habit (reels), i need to give a reward to my new habit
+To break an old habit ([[reels]]), i need to give a reward to my new habit
 The cue is: I'm bored. The reward: stimulation without thinking.
 Since writing is an active thing, it might be hard to replace reels with writing.
