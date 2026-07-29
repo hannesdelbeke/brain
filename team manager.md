@@ -1,4 +1,0 @@
-
-see [[coaching]]
-[[leadership]]
-[[team]]

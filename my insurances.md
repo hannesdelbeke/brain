@@ -3,7 +3,7 @@
 	- [ ] TODO - share details with partner
 - [[WorldWide Travel Insurance]]
 - income protection TT - aviva income protection - group
-- critical illness TT [[Avivacritical illness claim]]
+- critical illness TT [[2026 Aviva critical illness claim]]
 - [[axa]]
 
 
