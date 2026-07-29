@@ -49,7 +49,7 @@ my own workflow improvements, not related to obsidian
 - [ ] [[Obsidian autocomplete]]
 - [ ] first define iframe height, then width. Else height won't work.  [forum post](https://forum.obsidian.md/t/iframe/14296/20)
 - [ ] exclude from [[Obsidian backlinks]]
-	- [ ] exclude folders, e.g. daily folder from backlinks
+	- [ ] exclude folders, e.g. [[daily folder]] from [[backlink|backlinks]]
 		- there's a workaround: an option to exclude files from all links and search etc. `Settings > Files & Links > Excluded files`
 		- Cons: excluded not only from backlinks
 - [ ] [[Obsidian unlinked mentions include code snippets|exclude code snippets from backlinks]] 

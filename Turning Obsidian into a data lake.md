@@ -1,5 +1,5 @@
 new notes
-- [[wikilink GDrive files]]
+- [x] [[wikilink GDrive files]]
 	- [ ] [[link spreadsheets in Obsidian]]
 - [ ] wikilink google photos
 
@@ -25,7 +25,9 @@ but in future i might not even read comments since AI coding is taking over.
 
 - Secondly, I want to [[backup]] my data. My dropbox and gdrive aren't backed up.
 	- [x] I backed up [[Google Drive]] by [[embed Google Drive folder in Obsidian]]
+		- so now i have a cloud backup, and a local backup
 	- There's not much left I care about on my [[dropbox]], i moved some game repos on [[github]]
+	- [[backup my github projects]]
 	- [ ] still need to back up many photos. Some live on [[Google Photos]] only so no backup.
 	- [ ] what about my old hard drives from (pre) uni? haven't touched them since.
 
