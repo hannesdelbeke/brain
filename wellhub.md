@@ -8,24 +8,18 @@ https://wellhub.com/en-uk/search/
 [[Gym|Gyms]] like [[Nuffield Health]] 
 premium access to apps like [[Headspace]], [[Sleep Cycle]], [[Strava]] and many more
 
-supported countries:
-	United States, Argentina, Brazil, Chile, Mexico, Germany, Ireland, Italy, Spain, United Kingdom, and Romania
+bronze
+- [[Nuffield Health]]
+- gym 24 old trafford
 
-| tier     | price |
-| -------- | ----- |
-| starter  | 8     |
-| basic    | 15    |
-| bronze   | 27    |
-| silver   | 45    |
-| gold     |       |
-| platinum | 125   |
-| diamond  | 190   |
+gold
+[[Embrace Welness studio]]
+the studio burton road
+various reformer places
+
 platinum
 - [[runway pilates]] 
 - [[RE Sculpt]]
-
-bronze
-- [[Nuffield Health]]
 
 free
 the free plan includes some apps
