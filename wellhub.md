@@ -14,7 +14,7 @@ bronze
 
 gold
 [[Embrace Welness studio]]
-the studio burton road
+the studio on Burton road
 various reformer places
 
 platinum
