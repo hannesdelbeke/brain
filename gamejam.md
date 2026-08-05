@@ -6,3 +6,4 @@ aliases:
 [[gamedev]]
 [[hackathon]]
 [[videogame]]
+[[polish over originality]]
