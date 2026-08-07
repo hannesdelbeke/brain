@@ -15,9 +15,11 @@ but if there is no link, we can rely on auto link.
 ### pros
 - it would prevent the need to often select a word and type `[[`
 - more links, more context.
+- `[[ ]]` create clutter in a raw note. however it does help explicitly show what is linked and what is not.
 ### cons
-this might break things like [[static site generator]] for [[public notes]]
-if no support for this is added to the generator.
+- this might break things like [[static site generator]] for [[public notes]]
+  if no support for this is added to the generator.
+- could link to the wrong thing. e.g. if I have multiple notes for `Ben`
 
 ### Alternatives
 while writing a note
