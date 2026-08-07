@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: da0550ce
+sentiment-label:
+- conflicted
+tags:
+- journal
+- procrastination
+- self-reflection
+- hobby
+- home
+---
+
 It feels like a more efficient use of my time, when I listen to an [[audiobook]] while doing something physical like dishes, [[running]], [[cleaning]], [[commuting]], ... 
 
 But it also feels like a [[waste of time]] when I do those things without the audiobook.

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5bc4d8a7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 to add icons in [[Qt]] 
 
 iconify module 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d1a0efda
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 common source control mistakes
 - not using source control
 - versioning inside source control. e.g.  uploading a v1, v2, v3 to a [[git]] or [[Perforce]] repo

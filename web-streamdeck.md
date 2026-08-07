@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6a1a7614
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 control your pc from a browser, e.g. on a mobile device.
 

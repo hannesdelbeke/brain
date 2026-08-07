@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 09d5d7d6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A [[plugget package]] without a `repo_url` doesn't always need to be installed.
 If the requirements are already met, e.g. another plugin installed the dependencies, you should be able to just run it.
 

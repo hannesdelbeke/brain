@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 9f772b69
+sentiment-label:
+- inspired
+tags:
+- creative
+- planning
+- technical
+- self-reflection
+- hobby
+---
+
 The brain learns by enforcing [[neuron]] connections that are often used.
 We can see a graph in [[Obsidian]] visualizing connections, but we can't see connection strength. 
 The [[Obsidian plugin - recent files]] plugin helps with this for your current session.

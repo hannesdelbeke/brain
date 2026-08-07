@@ -1,5 +1,13 @@
 ---
 alias: package manager
+sentiment:
+- 5
+sentiment-hash: 2905080e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 package management is about everything related to managing your packages.
@@ -15,4 +23,4 @@ mac brew
 
 [[file distribution]]
 
-[meta-package-manager](https://github.com/kdeldycke/meta-package-manager) : the one package manager to control them all 
+[meta-package-manager](https://github.com/kdeldycke/meta-package-manager) : the one package manager to control them all

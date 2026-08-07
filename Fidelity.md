@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 70c99c84
+sentiment-label:
+- factual
+tags:
+- financial
+- planning
+- finance
+---
+
 UK SIPP and Stocks & Shares provider / [[broker]]
 
 You can't switch Fund to ETF (e.g. VWRP) .
@@ -11,4 +23,3 @@ no exit fee
 [estimate fees](https://www.fidelity.co.uk/estimate-my-fees/)
 
 `II` might be cheaper
-

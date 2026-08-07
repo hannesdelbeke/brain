@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 0e5f83a3
+sentiment-label:
+- analytical
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+- hobby
+---
+
 Pyblish let's you create content pipelines, and is aimed at VFX & games.
 It's a plugin based system, that's [[dcc independent]], so you can use the same pipeline in different apps, such as [[Autodesk 3ds Max|max]], ,maya, [[Blender]], substance, …
 

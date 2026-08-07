@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 19c744e4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 - `BLENDER_SYSTEM_EXTENSIONS` points to a folder of [[Blender extension]]s 
   (see [[Blender environment variables]])
@@ -10,4 +20,3 @@
 - copied the jiggle physics extension in there `C:/folder/system/jiggle_physics`
 - rename folder, manifest id, manifest name
 - it now shows a disabled extension in Blender with the new name, enable it.
-

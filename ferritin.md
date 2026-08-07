@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1a2cb78d
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
 
 # Ferritin
 

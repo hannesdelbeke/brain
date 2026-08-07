@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7c6e9908
+sentiment-label:
+- factual
+tags:
+- technical
+- health
+---
+
 ### Similarities
 both [[pilates]] and [[yoga]] are 
 - full body workouts

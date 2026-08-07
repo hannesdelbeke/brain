@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 442d3dc9
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+---
+
 - [ ] [[install apps winget]]
 	- [ ] [[Monitorian]]
 - [ ] [[check ssh github connection]]

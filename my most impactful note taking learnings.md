@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: 687ff169
+sentiment-label:
+- reflective
+tags:
+- journal
+- technical
+- self-reflection
+---
 
 - [[always explain why you link|Always explain why you link notes]] 
 - Keep your notes [[atomic]]

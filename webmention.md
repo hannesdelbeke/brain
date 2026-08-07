@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: '73749182'
+sentiment-label:
+- skeptical
+tags:
+- technical
+- social
+- communication
+---
+
 You post a comment on your own site, and ping a service to let another site know you commented on their site. The comment doesn't live on an external site.
 
 TLDR: UX needs to be smoother for mass adoption. without adoption this isn't useful.

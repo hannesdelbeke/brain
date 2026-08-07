@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: c460e68f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon Elastic Block Store 
 ---
 alias: Amazon EBS

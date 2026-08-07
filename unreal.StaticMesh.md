@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 10d9d04d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 inherits from [[unreal.StreamableRenderAsset]]
 
 https://dev.epicgames.com/documentation/en-us/unreal-engine/python-api/class/StaticMesh
@@ -11,4 +21,4 @@ mesh_asset.get_material(99) # returns None if no material at index 99
 > [!warning] figure out why this works
 > to find out how many materials are assigned to a mesh, you can count `get_material` in a loop until it returns `None`
 > However get_material is supposed to take a LOD index which it doesn't
-> You can compare with static_materials, to find if any materials are unassigned. 
+> You can compare with static_materials, to find if any materials are unassigned.

@@ -1,8 +1,17 @@
 ---
 aliases:
-  - Tuya
-  - SmartLife
+- Tuya
+- SmartLife
+sentiment:
+- 5
+sentiment-hash: 68edbc0e
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
+
 [[Home Assistant]] supports Tuya as an integration.
 [https://www.home-assistant.io/integrations/tuya/](https://www.home-assistant.io/integrations/tuya/)
 

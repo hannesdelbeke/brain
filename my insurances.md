@@ -1,3 +1,17 @@
+---
+sentiment:
+- 5
+sentiment-hash: 83381db7
+sentiment-label:
+- factual
+tags:
+- medical
+- financial
+- planning
+- health
+- finance
+---
+
 - hsbc premier health
 	- Cancer Bereavement Cover. 2k if i die of cancer - [email](https://mail.google.com/mail/u/0/#search/cancer++hsbc/FMfcgzQZTCjdNJwmTqgbMjGFwJQBBLKj)
 	- [ ] TODO - share details with partner

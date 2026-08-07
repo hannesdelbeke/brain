@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: e1913f52
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 todo format page
 
 © by John Wiley & Sons, Inc. All rights reserved. 1
@@ -703,4 +715,4 @@ know, absolutely, this takes some time, and it takes deliberate effort. But ulti
 what I end up with is having more control over how I see the world and really how I 
 interact with it. 
 Alright. Well, thank you all for your time. 
-Narrator: This podcast is a copyrighted production of John Wiley and Sons. 
+Narrator: This podcast is a copyrighted production of John Wiley and Sons.

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: be61a44b
+sentiment-label:
+- factual
+tags:
+- planning
+- hobby
+---
+
 summaries:
 [[thomas j frank notes - The Power of Habit]]
 [[mirror - thomas j frank notes - hyperfocus]]

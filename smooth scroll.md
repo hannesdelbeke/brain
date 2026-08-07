@@ -1,6 +1,13 @@
 ---
 aliases:
-  - smooth scrolling
+- smooth scrolling
+sentiment:
+- 5
+sentiment-hash: 2a75620d
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Smooth scroll is a animation to make web page scrolling feel nicer.

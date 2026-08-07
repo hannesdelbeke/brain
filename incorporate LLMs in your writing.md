@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 1ec0b591
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- creative
+- self-reflection
+- communication
+- work
+---
+
 Auto generated text from [[large language model|LLMs]] usually results in poor [[AI slop]].
 It reads poorly, contains untruths, and is just a [[waste of time]].
 
@@ -17,5 +32,3 @@ I add a heading that says LLM or GPT or AI generated text.
 So I can always review the AI text again in the future every time I read my [[Evergreen notes]].
 
 [[writing]]
-
-

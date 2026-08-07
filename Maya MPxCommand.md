@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 746be683
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 `MPxCommand` is a base class for creating custom [[command|commands]], that can be run from `maya.cmds`
 
 > [!warning] see runtime commands
@@ -56,4 +67,3 @@ def uninitializePlugin(plugin):
     except:
         om.MGlobal.displayError("Failed to deregister command: {0}".format(HelloWorldCmd))
 ```
-

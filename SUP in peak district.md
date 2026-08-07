@@ -1,5 +1,15 @@
 ---
-locations: 
+locations: null
+sentiment:
+- 5
+sentiment-hash: 44b5f850
+sentiment-label:
+- factual
+tags:
+- planning
+- outdoors
+- hobby
+- travel
 ---
 
 [Cromford Canal](geo:53.1395212,-1.5590102)
@@ -86,4 +96,3 @@ LadyBower reservoir is the largest reservoir formed off the River Derwent and wa
 ## Tags
 [[Peak District]]
 [[stand up paddle board]]
-

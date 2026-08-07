@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 3667b9e6
+sentiment-label:
+- reflective
+tags:
+- journal
+- planning
+- communication
+- self-reflection
+- work
+---
+
 [[reminders to refocus during day]]
 
 

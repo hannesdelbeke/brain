@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f272f1cf
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 If you create a `runTimeCommand` at startup, set `default` to `true`. So it won't save the command.
 
 ```python
@@ -19,5 +29,3 @@ TODO figure out how category works
 
 
 https://help.autodesk.com/cloudhelp/2022/ENU/Maya-Tech-Docs/CommandsPython/runTimeCommand.html
-
-

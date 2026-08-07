@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 22ad8f50
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 can be set in preferences/package manager
 

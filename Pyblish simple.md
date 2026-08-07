@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: a48e9d77
+sentiment-label:
+- constructive
+tags:
+- technical
+- planning
+- creative
+- work
+- hobby
+---
+
 A UI for [[Pyblish]], aimed at artists. To address that [[Pyblish issue - UI is not artist friendly]]
 
 Features

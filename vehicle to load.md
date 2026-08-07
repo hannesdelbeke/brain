@@ -1,6 +1,13 @@
 ---
 aliases:
-  - V2L
+- V2L
+sentiment:
+- 5
+sentiment-hash: 729644b1
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Charge 3 pin devices from your [[electric vehicle]].

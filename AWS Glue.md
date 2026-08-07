@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 839672b4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Glue
 AWS Glue is a fully managed extract, transform, and load (ETL) service that makes it easy for customers
 to prepare and load their data for analytics. You can create and run an ETL job with a few clicks in the

@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 281ca9c4
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 # Amazon Simple Notification Service
 Amazon Simple Notification Service (Amazon SNS) is a highly available, durable, secure, fully managed

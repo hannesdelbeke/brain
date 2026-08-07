@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 611118ba
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Managed Streaming for Apache Kafka
 (Amazon MSK)
 Amazon Managed Streaming for Apache Kafka (Amazon MSK) is a fully managed service that makes

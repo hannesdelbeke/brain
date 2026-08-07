@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4a987131
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## question
 
 how does used by work in [[GitHub]] for Python packages?

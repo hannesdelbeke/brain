@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 957fad35
+sentiment-label:
+- satisfied
+tags:
+- journal
+- self-reflection
+---
+
 Recently I started writing more notes that start with the date.
 
 The biggest win is the reduction in [[mental resistance|mental friction]].

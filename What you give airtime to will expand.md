@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 6f9c62f6
+sentiment-label:
+- constructive
+tags:
+- technical
+- communication
+- work
+---
+
 Original [post](https://newsletter.weskao.com/p/what-you-give-airtime-to-will-expand) by Wes Kao
 
 ---

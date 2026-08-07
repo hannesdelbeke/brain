@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 14124f59
+sentiment-label:
+- critical
+tags:
+- journal
+- memory
+- outdoors
+- travel
+---
+
 rented one for lake district trip
 
 pros

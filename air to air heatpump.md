@@ -1,7 +1,17 @@
 ---
 aliases:
-  - A2A
+- A2A
+sentiment:
+- 5
+sentiment-hash: f66996e9
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
 ---
+
 most air to air heatpumps are reversible [[air conditioning]] systems
 
 the manufacturer makes both the heat source, the controls and the heat sink (the emitter of heat).

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9585e743
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 Write notes, to create a [[public/link|link]] between 2 Unity assets. 
 To enable quick [[navigation]] between assets. 
 
@@ -12,4 +24,3 @@ To enable quick [[navigation]] between assets.
 
 - [[Unity inspector notes for folders & assets]]
 - [[Unity - add notes to gameobjects]]
-

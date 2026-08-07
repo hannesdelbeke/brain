@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 39c00117
+sentiment-label:
+- appreciative
+tags:
+- journal
+- hobby
+---
+
 A fun & simple family game, that's more interactive than [[Carcassonne]] 
 
 ### Pro

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c0601751
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 In Maya's script editor,  to [[close tab]] you can middle mouse click it.
 A popup shows asking if you want to delete this tab, this is a bit annoying, and doesn't happen in other apps like [[Chrome]], [[Obsidian]], [[PyCharm]] and other [[integrated development environment|IDEs]].
 

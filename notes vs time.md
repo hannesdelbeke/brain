@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: 528e6a1b
+sentiment-label:
+- skeptical
+- reflective
+tags:
+- journal
+- self-reflection
+- hobby
+---
 
 ## Save time
 I spend [[time]] writing notes, storing data I think will be useful in the future. Save time in the future.

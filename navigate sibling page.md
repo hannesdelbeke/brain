@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 93db50eb
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## The concept
 Andy's note [It’s hard to navigate to unlinked “neighbors” in associative note systems](https://notes.andymatuschak.org/zT6iA52811NuLvbU9W8ixeDc3KUqyCT1wN8) would be address with buttons to go to sibling notes.
 

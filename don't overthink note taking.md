@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 8e9c8453
+sentiment-label:
+- pragmatic
+tags:
+- journal
+- planning
+- self-reflection
+- procrastination
+- hobby
+---
+
 ## Don't
 People in the [[note taking]] community often get obsessed with [[writing notes about notes|writing notes about note taking]].  
 It's exciting when you discover a "better" way of thinking, wanting to share it with everyone. 

@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: f98d899f
+sentiment-label:
+- frustrated
+tags:
+- technical
+- work
+---
+
 ### Plugins are hardcoded to the project or studio
 Most plugins found online are not reusable, but hardcoded to the project.
 They only work with other plugins compatible with the project.

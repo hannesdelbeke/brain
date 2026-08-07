@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 21e79234
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 | D   | Dominance: Direct, Firm                  |
 | --- | ---------------------------------------- |

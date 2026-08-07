@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: c490b943
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ```python
 unreal.StaticMesh.static_class()

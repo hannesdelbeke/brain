@@ -1,8 +1,16 @@
 ---
 aliases:
-  - recirc pump
-  - recirculating pump
-  - re-circulating pump
+- recirc pump
+- recirculating pump
+- re-circulating pump
+sentiment:
+- 5
+sentiment-hash: 645517d1
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
 
 A home water re-circulating pump is used **to circulate domestic hot water so that any faucet or shower will provide hot water instantly upon demand**. 

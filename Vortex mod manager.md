@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: abafc87b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Vortex mod manager is a mod manager for games.
 ### mod manager
 [[mod manager]]

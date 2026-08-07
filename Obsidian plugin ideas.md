@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4e0e16db
+sentiment-label:
+- factual
+tags:
+- planning
+- creative
+- technical
+---
+
 here are some [[Obsidian plugin]] ideas
 - [[Obsidian plugin - Tabber]]
 - [[Obsidian private comments]]

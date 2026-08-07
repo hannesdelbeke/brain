@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7513d84b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## make a symlink
 on windows, you can have 1 folder in 2 places at the same time.
 ```batch

@@ -1,6 +1,13 @@
 ---
 aliases:
-  - HA
+- HA
+sentiment:
+- 5
+sentiment-hash: 2375afb7
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 [[public/self hosted|self hosted server]] that runs on on a small pc, e.g. a [[Next Unit of Computing|NUC]], or a [[Raspberry Pi]].

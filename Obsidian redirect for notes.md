@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3750ce8f
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 #lowpriority #pluginidea
 
 potentially an Obsidian plugin to redirect notes to URLs or other notes

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3231560d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[URL]] textlinks let you link to highlighted text on a website.
 
 1. select text in Chrome

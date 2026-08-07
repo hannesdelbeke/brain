@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 1371e9b0
+sentiment-label:
+- satisfied
+tags:
+- technical
+- planning
+- journal
+- home
+- finance
+---
+
 ### Goal
 Currently charge and discharge are set at 85A, could I lower this to increase battery life, and reduce charging [[noise (sound)|noise]]?
 

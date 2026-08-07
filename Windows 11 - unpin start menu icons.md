@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dd0b1188
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 ## unpin start menu icons win 11
 solution: right click on icon, unpin. 
 manually it takes <1 min for all icons.

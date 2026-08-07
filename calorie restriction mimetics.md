@@ -1,8 +1,18 @@
 ---
 aliases:
-  - CRM
-  - energy restriction mimetics
+- CRM
+- energy restriction mimetics
+sentiment:
+- 5
+sentiment-hash: da668e29
+sentiment-label:
+- factual
+tags:
+- medical
+- technical
+- health
 ---
+
 A hypothetical class of dietary supplements or drug candidates that would, in principle, mimic the substantial anti-aging effects that [[calorie restriction]] (CR) has on animals and humans.
 
 Since it mimics CR, you could just not have it and eat less calories.

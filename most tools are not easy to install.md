@@ -1,3 +1,22 @@
+---
+energy: 5
+sentiment:
+- 4
+- 6
+sentiment-hash: aadfef43
+sentiment-label:
+- resistant
+- hopeful
+tags:
+- journal
+- technical
+- creative
+- self-reflection
+- procrastination
+- work
+- hobby
+---
+
 most tools are not easy to install because of the need to 
 - install it in a certain location,
 - install dependencies

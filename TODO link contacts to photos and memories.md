@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: bb22c041
+sentiment-label:
+- inspired
+tags:
+- technical
+- planning
+- communication
+- hobby
+- home
+---
+
 it d be great if i could link my contacts to events, posts, ...
 
 [[example of linking to a contact]]

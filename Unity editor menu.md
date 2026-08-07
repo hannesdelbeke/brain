@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 04d44d63
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
 
 > [!NOTE] 
 > Use the [[Unity editor window - three dots menu|three dots menu]] instead of a custom menu bar, to match Unity's UI style.

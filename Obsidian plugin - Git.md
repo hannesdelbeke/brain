@@ -1,4 +1,14 @@
- [obsidian-git](https://github.com/denolehov/obsidian-git) is a [[Obsidian plugin]] to automatically [[backup]] your Obsidian notes with [[git]].
+---
+sentiment:
+- 5
+sentiment-hash: 5c6ec5f2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
+[obsidian-git](https://github.com/denolehov/obsidian-git) is a [[Obsidian plugin]] to automatically [[backup]] your Obsidian notes with [[git]].
 
 Here's a [tutorial](https://github.com/gitobsidiantutorial/obsidian-git-tut-windows/blob/main/README.md) with images on setting up Git with Obsidian for non-tech people.
 and the related Obsidian forum [Discussion](https://forum.obsidian.md/t/setting-up-obsidian-git-on-windows-for-the-tech-uninitiated-with-images/15297)

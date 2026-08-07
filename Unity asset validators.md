@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d1ebc259
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 - [[Odin validator]] has nice UI
 - [OmniShade asset validator](https://assetstore.unity.com/packages/tools/utilities/asset-validator-271338?) - free, but UI not intuitive
 - package validation suite.

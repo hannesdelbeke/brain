@@ -1,6 +1,14 @@
 ---
 aliases:
-  - smart socket
+- smart socket
+sentiment:
+- 5
+sentiment-hash: 32e09b97
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
 
 remotely toggle an [[electric socket]]

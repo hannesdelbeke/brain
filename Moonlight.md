@@ -1,7 +1,15 @@
 ---
 aliases:
-  - Open Moonlight
-  - Limelight
+- Open Moonlight
+- Limelight
+sentiment:
+- 5
+sentiment-hash: 6d447b37
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
 ---
 
 https://moonlight-stream.org/

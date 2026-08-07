@@ -1,8 +1,15 @@
 ---
 aliases:
-  - importable
-  - import
-  - imported
+- importable
+- import
+- imported
+sentiment:
+- 5
+sentiment-hash: 1a8889fe
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Importing means to load a [[Python module]] or [[Python package]] into a script, to access the attributes (variables & methods) from these external scripts.

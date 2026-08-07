@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4e24a145
+sentiment-label:
+- factual
+tags:
+- memory
+- creative
+- hobby
+---
+
 a smash bros clone.
 
 I worked on the background and [[handpainted]] environment assets.

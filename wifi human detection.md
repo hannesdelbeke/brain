@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e9950611
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 - Human presence detection using WiFi and Convolutional Neural Networks https://github.com/bigtreeyanger/presence_detection_cnn
 - WiFi-based dense human pose estimation system that enables real-time full-body tracking through walls using commodity mesh routers https://github.com/ruvnet/wifi-densepose
 - detect human posture from CSI data https://github.com/zzxrepository/Wifi_Human_Gesture_Recognition

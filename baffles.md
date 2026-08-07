@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6ae38c21
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 baffles hang from the ceiling to reduce the [[echo]] in a room.
 they hang so the sound isn't transferred to the ceiling.
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5d2983b7
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
 
 [[permitted development]] allows the following (including a trellis topper )
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f9f58baf
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
+
 from what i understand it's like a [[margin loan]] but you lock in interest for x years. 
 e.g. 4 years at 5%
 

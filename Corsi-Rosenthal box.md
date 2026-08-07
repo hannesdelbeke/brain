@@ -1,7 +1,18 @@
 ---
 aliases:
-  - Comparetto Cube
+- Comparetto Cube
+sentiment:
+- 5
+sentiment-hash: dd35fb8f
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+- health
 ---
+
 uses a [[table fan]] and some [[air filter]]s
 
 You'll need a box fan, four air filters (MERV-13 or higher), duct tape, cardboard, and scissors.

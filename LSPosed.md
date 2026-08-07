@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a325fa4f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 LSPosed lets you customize how your Android phone and apps work, by injecting code _into them as they run_—without modifying the apps or system files directly.
 
 ### How it works:

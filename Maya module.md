@@ -1,6 +1,14 @@
 ---
 aliases:
-  - Maya modules
+- Maya modules
+sentiment:
+- 5
+sentiment-hash: 878ad2e7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Maya modules are self contained Maya environments. Enable easy [[file distribution|distribution]] with relative paths in the module config.

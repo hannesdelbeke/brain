@@ -1,7 +1,15 @@
 ---
 aliases:
-  - backlinks
+- backlinks
+sentiment:
+- 5
+sentiment-hash: 9e06d926
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 A backlink informs which notes [[public/link]] to the current note.
 
 Backlinks easily let you go back to where you came from.

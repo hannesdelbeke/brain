@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 0eb45c69
+sentiment-label:
+- resourceful
+tags:
+- planning
+- journal
+- self-reflection
+- work
+- hobby
+---
+
 In my [[monthly review]], I want to see my [[calendar entry|calendar events]]
 
 **current**: I manually browse my [[calendar]] and write events

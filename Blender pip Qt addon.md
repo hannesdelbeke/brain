@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b25be46d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 A Blender Add-on wrapper around [[pip qt]] to manage your Python modules in Blender.  
 🔍Search, ⚙️(un)install, 📃list
 

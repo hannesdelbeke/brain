@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: da60984e
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- finance
+---
+
 # Savings Plans
 Savings Plans is a flexible pricing model offering lower prices compared to On-Demand pricing, in
 exchange for a specific usage commitment (measured in $/hour) for a one or three-year period. [[AWS]] offers three types of Savings Plans – 

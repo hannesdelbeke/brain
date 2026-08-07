@@ -1,7 +1,14 @@
 ---
-aliases: 
+aliases:
 - Amazon web services
 - AWS services
+sentiment:
+- 5
+sentiment-hash: 24f99d66
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Amazon Web Services (AWS) is the world’s most comprehensive and broadly adopted cloud

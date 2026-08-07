@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f0fc4eca
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ### limitations
 - all files require a Zim header, similar to a [[YAML front matter]]
   So you can't open markdown notes without converting them to Zim notes.

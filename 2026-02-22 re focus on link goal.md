@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: a3e787f3
+sentiment-label:
+- unfocused
+- insightful
+tags:
+- journal
+- self-reflection
+- procrastination
+- planning
+- hobby
+---
+
 Let's zoom out. I can tell I'm loosing focus, since I'm writing[[2026-02-22 strava link with note as middleman| a Strava link note]], but I don't care much about Strava.
 
 ### Observation

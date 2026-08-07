@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: aaf04f10
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Autodesk Maya|Maya]] **Hypergraph** shows a graphical view of the scene hierarchy with object's relationship to each other
 
 [[node editor]]

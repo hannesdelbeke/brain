@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 14ed85de
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS Fargate
 AWS Fargate is a compute engine for Amazon ECS that allows you to run containers without having to
 manage servers or clusters. With AWS Fargate, you no longer have to provision, configure, and scale

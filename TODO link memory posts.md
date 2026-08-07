@@ -1,3 +1,20 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 036b7624
+sentiment-label:
+- nostalgic
+tags:
+- journal
+- memory
+- planning
+- outdoors
+- self-reflection
+- hobby
+- travel
+---
+
 14-10-2025
 ### Instagram
 [[instagram]], to look back on memories. There's a [[memory post]] for every day of a fun event, often traveling related.

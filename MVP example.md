@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5243dc25
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # MVP example
 
 written by me, another example by chatGPT [[MVP python example]]

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b68d6b1e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 **Examples**
 - instead of finding a solution for Google sheets, which live on Google Drive. Try to find a solution for all files on GDrive.

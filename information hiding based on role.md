@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 6b4d8519
+sentiment-label:
+- curious
+tags:
+- creative
+- technical
+- planning
+- communication
+- work
+---
+
 information that changes based on your role.
 
 basic concept:

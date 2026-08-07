@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 7692d61f
+sentiment-label:
+- motivated
+tags:
+- journal
+- memory
+- planning
+- self-reflection
+- hobby
+---
+
 I use [[2025 - Instagram as a diary|Instagram as a diary]], so my data is in [[the cloud]] and not [[backup|backed up]].
 
 todo back this up
@@ -10,4 +25,3 @@ end result
 - each memory can have an image attached, but it's not required
 
 it's basically a database with [[thumbnail]]s
-

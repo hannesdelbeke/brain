@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 976ce059
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 powershell code to [[Python packages editable install|editable install]] all python packages in my repos folder
 
@@ -49,4 +59,3 @@ pip install -e "D:/repos/plugget" --no-deps --target "$targetPath"
 ```
 [[support Maya site packages in documents folder]]
 [[Python packages editable install]]
-

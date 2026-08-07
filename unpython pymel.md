@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 796b41bd
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 gathering [[unpythonic]] [[pymel]] examples
 
@@ -46,6 +56,3 @@ node.children
 # or 
 node.parent
 ```
-
-
-

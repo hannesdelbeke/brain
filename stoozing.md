@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0ceb6233
+sentiment-label:
+- factual
+tags:
+- financial
+- planning
+- finance
+---
+
 instead of paying 1000.
 put 1000 in [[savings]] account and get interest
 pay monthly free interest off.

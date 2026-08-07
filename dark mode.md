@@ -1,9 +1,18 @@
 ---
 aliases:
-  - night mode
-  - night theme
-  - dark theme
+- night mode
+- night theme
+- dark theme
+sentiment:
+- 5
+sentiment-hash: ebd9f116
+sentiment-label:
+- factual
+tags:
+- technical
+- health
 ---
+
 - reduces blue light, improving sleep.
 - can reduce glare & eye strain
 - improves concentration
@@ -27,4 +36,3 @@ new online accounts
 - [[gmail dark theme]]
 - google extension [dark reader](https://chromewebstore.google.com/detail/dark-reader/eimadpbcbfnmbkopoojfekhnkhdbieeh)
 - [[microsoft outlook office - dark mode]]
-

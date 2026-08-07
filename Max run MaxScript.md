@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: b7a17eb6
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 To run a maxscript file in [[Autodesk 3ds Max]]
 
 Maxscript, Paths need to be double `\\` in maxscript.

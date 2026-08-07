@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a48260c8
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A [[git fork]] from a [[GitHub]] repo
 
 [[git]]

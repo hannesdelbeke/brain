@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 3
+sentiment-hash: f89dd7a9
+sentiment-label:
+- frustrated
+tags:
+- journal
+- technical
+- work
+---
+
 #### Pyblish has no explicit plugin control
 Despite people requesting explicit control over plugin registration, there is only an implicit implementation.
 You can't (easily) register a single plugin, (instead you register a folder with plugins.)

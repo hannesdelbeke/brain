@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: f6e6efa1
+sentiment-label:
+- factual
+tags:
+- planning
+- health
+- hobby
+---
+
 ### yoga equipment
 - yoga mat
 - yoga mat cover / towel

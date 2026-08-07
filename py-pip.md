@@ -1,6 +1,14 @@
 ---
 aliases:
-  - pypip
+- pypip
+sentiment:
+- 5
+sentiment-hash: 3d1ce6c9
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 py-pip lets you install Python packages from inside a Python environment. e.g. in Blender, Maya, Max, ...

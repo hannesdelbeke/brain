@@ -1,3 +1,17 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 18eb3580
+sentiment-label:
+- contemplative
+tags:
+- journal
+- communication
+- self-reflection
+- work
+---
+
 More time spend on [[email]], means less [[productivity]] and higher [[stress]].
 
 Checking email through self-interruptions leads to higher productivity with longer email duration compared to relying on [[notification|notifications]]. 

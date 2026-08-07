@@ -1,6 +1,13 @@
 ---
 aliases:
-  - version
+- version
+sentiment:
+- 5
+sentiment-hash: afb351f1
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Handling multiple versions of something, 

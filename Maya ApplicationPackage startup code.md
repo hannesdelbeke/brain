@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 1b06e736
+sentiment-label:
+- curious
+tags:
+- technical
+- social
+- communication
+- work
+---
+
 hey i remember there was a discussion of some very niche way to execute maya (or was it max) startup code.  
 it's not [[Maya plugin]] or [[usersetup]]. it's something that bypasses the startup checks etc.  
 believe [@theodox](https://tech-artists.slack.com/team/U0A7B2S90) or [@bob.w](https://tech-artists.slack.com/team/U0AGU8571) mentioned it. might have been related to how maya handles translation? if anyone can point me in the right direction ![:pray:](https://a.slack-edge.com/production-standard-emoji-assets/14.0/google-medium/1f64f.png)
@@ -12,4 +26,4 @@ think it might be this that i m talking about
 
 >  One new thing for Maya is that Maya will now call a `<moduleName>_load.mel/.py` file as soon as a module is detected.
 
-from 
+from

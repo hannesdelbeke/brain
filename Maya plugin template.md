@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7f1b34e7
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
 
 A [[Maya plugin]] [[template]]
 repo: https://github.com/hannesdelbeke/maya-plugin-template

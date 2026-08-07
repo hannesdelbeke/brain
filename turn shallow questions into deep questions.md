@@ -1,3 +1,18 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 20dd8c5e
+sentiment-label:
+- inspired
+tags:
+- journal
+- planning
+- communication
+- relationship
+- self-reflection
+---
+
 > Questions about facts (“Where do you live?” “What college did you attend?”) are often conversational dead-ends. They don’t draw out values or experiences. They don’t invite vulnerability. However, those same inquiries, recast slightly (“What do you like about where you live?” “What was your favorite part of college?”), invite others to share their preferences, beliefs, and values, and to describe experiences that caused them to grow or change. Those questions make emotional replies easier, and they practically beg the questioner to reciprocate—to divulge, in return, why they live in this neighborhood, what they enjoyed about college—until everyone is drawn in, asking and answering back and forth.
 > - [[Supercommunicators - How to Unlock the Secret Language of Connection]]
 

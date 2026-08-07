@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a5fc638b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 To save data, we could save mesh variations as diffs / deltas in our project.
 
 ## cons

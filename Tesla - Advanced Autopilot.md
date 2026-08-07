@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 016abc41
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Enhanced Autopilot includes additional features. Enhanced Autopilot Features are designed to further reduce driver workload and make common actions, such as changing lanes or parking, easier.
 
 - **Auto Lane Change**: 

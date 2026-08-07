@@ -1,3 +1,17 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 1d95b5ef
+sentiment-label:
+- inspired
+tags:
+- planning
+- outdoors
+- travel
+- hobby
+---
+
 black bears & wolves, skittish, do not feed, make noise, secure food.
 
 from tbisili

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d1407ad1
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # The YAML doc from hell
 
 [source](https://ruudvanasseldonk.com/2023/01/11/the-yaml-document-from-hell)

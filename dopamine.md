@@ -1,1 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 71fa080d
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Dopamine **acts on areas of the [[brain]] to give you feelings of pleasure, satisfaction and motivation**. Dopamine also has a role to play in controlling memory, mood, [[sleep]], learning, [[concentration]], movement and other body functions.

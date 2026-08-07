@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: eb7c70b7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 also see https://github.com/hannesdelbeke
 
 - [[Maya Pip Qt plugin]]

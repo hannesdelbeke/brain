@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0dda0bd7
+sentiment-label:
+- factual
+tags:
+- technical
+- relationship
+- social
+---
+
 Abuse is when someone causes us harm or distress. 
 Ranging from disrespect to causing physical or mental [[pain]]. 
 Often the abuser takes advantage of a special [[relationship]].

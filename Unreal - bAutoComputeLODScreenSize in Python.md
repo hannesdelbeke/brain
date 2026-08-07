@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 869e070a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ```python
 mesh_asset.get_editor_property("bAutoComputeLODScreenSize")
 # LogPython: Error: Exception: StaticMesh: Property 'bAutoComputeLODScreenSize' for attribute 'bAutoComputeLODScreenSize' on 'StaticMesh' is protected and cannot be read

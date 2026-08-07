@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 65711cbd
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ### Excel sheets
 - Github has no excel sheet edit support AFAIK.
 - I rarely edit sheets on location, always on my laptop. So a local edit mode would meet my needs.

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: ea56c644
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+- home
+---
+
 some kind of toxic thing. lol
 ## Increasing factors
 Endotoxin concentrations increased with 

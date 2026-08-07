@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: '63945370'
+sentiment-label:
+- reflective
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 I often try [[discovery|discover]] better solutions. e.g. designing a [[validation]] workflow at [[work]].
 
 1. [[Research]] existing approaches

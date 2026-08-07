@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 53d35fe3
+sentiment-label:
+- factual
+tags:
+- technical
+- outdoors
+- travel
+---
+
 boat license enforcement [article](https://canalrivertrust.org.uk/boating/license-your-boat/boat-licensing-compliance-and-enforcement-team/how-we-tackle-evasion) from canal river trust
 
 if no license

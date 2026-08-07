@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dba4350e
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 # Google Home charger
 The original Google Home (not the newer Nest models) uses a **proprietary 16.5V DC barrel jack** for power. The power adapter typically outputs 16.5V at 2A.
 

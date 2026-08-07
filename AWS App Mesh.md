@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f8cdf1b7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # AWS App Mesh
 AWS App Mesh makes it easy to monitor and control microservices running on AWS. App Mesh
 standardizes how your microservices communicate, giving you end-to-end visibility and helping to

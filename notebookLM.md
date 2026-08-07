@@ -1,8 +1,14 @@
 ---
 aliases:
-  - Gemini notebook
+- Gemini notebook
+sentiment:
+- 5
+sentiment-hash: a1446e0b
+sentiment-label:
+- factual
+tags:
+- technical
 ---
-
 
 [[Google]]
 [[Gemini]]

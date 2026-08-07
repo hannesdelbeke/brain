@@ -1,7 +1,15 @@
 ---
 aliases:
-  - V2H
+- V2H
+sentiment:
+- 5
+sentiment-hash: 246a53a4
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 connect [[electric vehicle|EV]] battery to your [[house|home]] electric grid.
 
 requirements
@@ -22,6 +30,4 @@ If you have solar this can replace your solar battery.
 
 provider
 - [wallbox](https://wallbox.com/en_uk/quasar-2-bidirectional-ev-charger) 
-- [accraine](https://accraine.co.uk/product/vehicle-to-home-v2h-6kw-charger/) 
-
-
+- [accraine](https://accraine.co.uk/product/vehicle-to-home-v2h-6kw-charger/)

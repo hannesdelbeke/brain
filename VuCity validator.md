@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 67af92f7
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 A [[validator|validation tool]] checks if Max scenes (city tiles) are set up correctly.
 - Success shows as green, fail as red, for a quick visual impression of the scene.
 - each check tracks its own status, and can be right-clicked to run actions on it:

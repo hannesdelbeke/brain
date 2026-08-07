@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: dccbc0e1
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+- hobby
+---
+
 if `son` is linked to `mother`, what kind of link is this? 
 - if you could add a type we could say the link is of type `family`.
   This would allow to make more complex links than just a normal [[wikilink]].
@@ -20,4 +33,3 @@ link types could also be confused with, what type of link is it. e.g. :
 - [[backlink]]
 - [[wikilink]]
 - hyperlink / [[URL]]
-

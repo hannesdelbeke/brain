@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: d70c4d85
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- home
+- finance
+---
+
 A vintage speaker with alarm clock features.
 Still good audio quality for its age.
 #### Features

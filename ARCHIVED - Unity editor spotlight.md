@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a0f04ed1
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 > [!warning] ARCHIVED
 > There's no more need for this [[Unity tool]].

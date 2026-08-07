@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: eff4202a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 chat GPT
 a fucntional approach to MVP
 ```python

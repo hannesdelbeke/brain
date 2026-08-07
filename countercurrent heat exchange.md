@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9ea18e88
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A counterflow mechanism that enables fluids at different temperatures flowing in channels in opposite directions to exchange their heat content without mixing. 
 
 > [!example]

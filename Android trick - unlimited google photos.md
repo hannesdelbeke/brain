@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 35325e1d
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 I've not tested this yet
 
 Free photo [[backup]] for [[pixel 5]] and older for compressed photos

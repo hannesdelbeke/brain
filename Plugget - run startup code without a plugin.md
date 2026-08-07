@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0ab474c8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 ## Goal
 The goal is to run startup code, without creating an (Unreal) [[wrapper plugin]] for each tool.
 e.g. startup code could be to set up [[unreal-qt]]

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6a9590f4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 - search `optional features`
 - click `view features`, next to `Add an optional feature` at the top
 - install `Wireless display`

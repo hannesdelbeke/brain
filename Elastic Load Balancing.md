@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: ee95ab91
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Elastic Load Balancing
 Elastic Load Balancing (ELB) automatically distributes incoming application traffic across multiple
 targets, such as Amazon EC2 instances, containers, and IP addresses. It can handle the varying load of

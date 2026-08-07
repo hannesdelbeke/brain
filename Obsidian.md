@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 5d29f7f6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 **Obsidian** is an app to store notes, focused on linking notes to each other with [[wikilink]] & `#hashtags`
 It supports various open source plugins, such as [[Obsidian plugin - Git]]
 

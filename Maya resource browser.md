@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 620e547b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Launch the resource browser to see default available icons in Autodesk Maya
 ```python
 import maya.app.general.resourceBrowser as resourceBrowser

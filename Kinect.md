@@ -1,6 +1,14 @@
 ---
-aliases:
+aliases: null
+sentiment:
+- 5
+sentiment-hash: a88c676d
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 3D depth camera
 recognise human poses
 ## compared

@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: 4a5d908d
+sentiment-label:
+- annoyed
+- relieved
+tags:
+- journal
+- technical
+- hobby
+- work
+---
+
 [[Gemini CLI]] stopped working. Just noticed, as I've not used it for weeks
 
 ```

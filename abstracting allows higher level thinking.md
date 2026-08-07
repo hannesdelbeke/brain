@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4e0a083b
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+---
+
 Your brain can only hold so much info at a time, so it uses tricks to do more.
 
 - [[chunking]]: Abstracting multiple concepts into 1 concept, allows your brain to understand the whole picture without taking up as much brainpower.

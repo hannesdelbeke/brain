@@ -1,7 +1,15 @@
 ---
 aliases:
-  - close a tab
+- close a tab
+sentiment:
+- 5
+sentiment-hash: bbb89f1a
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 A lot of apps let you close the active [[tab]] with `ctrl`+`W`
 e.g. [[Chrome]], [[Obsidian]], [[PyCharm]] and other [[integrated development environment|IDEs]]
 

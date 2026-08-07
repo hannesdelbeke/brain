@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 895ed651
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 if you have multiple [[window (computing)|windows]] on a pc open over each other
 sometimes the top bar looks identical
 you click close in one window, but accidentaly close the window behind it.

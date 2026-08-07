@@ -1,7 +1,17 @@
 ---
 aliases:
-  - show filetype in Unity
+- show filetype in Unity
+sentiment:
+- 5
+sentiment-hash: 337375fe
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
+
 [[Unity]] hides the [[file extension]], which makes it hard to know if we have a mesh or prefab.
 
 To show extensions in the [[Unity Project window]] 

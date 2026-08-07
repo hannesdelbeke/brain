@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1eeed6aa
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 when distributing tools to artists
 dependencies are going to get outdated.
 create an add-on that tracks this in blender. 

@@ -1,6 +1,14 @@
 ---
 aliases:
-  - combi boiler
+- combi boiler
+sentiment:
+- 5
+sentiment-hash: 062552c0
+sentiment-label:
+- factual
+tags:
+- technical
+- home
 ---
 
 A combination boiler heats both [[drinking water]] & water for the [[central heating]].

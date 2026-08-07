@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: bb38c0da
+sentiment-label:
+- pragmatic
+tags:
+- journal
+- technical
+- planning
+- procrastination
+- self-reflection
+- work
+- hobby
+---
+
 Don't [[waste of time|waste time]] on organizing your tools.
 I'm not saying, don't organize your tools.
 I'm also not saying you should not spend time on organizing.

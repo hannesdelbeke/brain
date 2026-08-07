@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7aedcea6
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 Serotonin helps your body to:
 
 - balance your mood and experience pleasure

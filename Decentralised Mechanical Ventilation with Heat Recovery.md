@@ -1,8 +1,18 @@
 ---
 aliases:
-  - dMVHR
-  - spot HRV
+- dMVHR
+- spot HRV
+sentiment:
+- 5
+sentiment-hash: f98697a4
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
 ---
+
 a [[Mechanical Ventilation with Heat Recovery|MVHR]] for 1 room. Unlike the MVHR that has 1 motor and heat exchane unit for the whole house, a dMVHR has these built in every unit. ([[decentralized]])
 
 It can be easier to install afterwards in a single room, e.g. bathroom since it's [[ductless]]

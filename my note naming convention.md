@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f139d32c
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 file names
 - lower case (except for names & abbreviations)
 	- Try to use consistent upper cases for names, e.g. `Obsidian` instead of `obsidian`

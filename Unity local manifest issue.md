@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9ead8d99
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 # Solution
 - you now can copy packages from `project\Library\PackageCache` to `project\Packages`, which embeds them in the project.
 - add a [[gitignore]] to the Packages folder and you have local packages.

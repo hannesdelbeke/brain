@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 305f7ca9
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 lPneumokokkenvaccinatie wordt aanbevolen voor alle zuigelingen. Vaccinatie tegen pneumokokken werd geïntroduceerd in 2004, en werd vanaf 2007 veralgemeend voor kinderen met het 7-valente conjugaatvaccin PCV7 en daarna met het dertien-valente PCV13 vanaf 2011. In juli 2015 (Vlaanderen) en mei 2016 (Wallonië) werd PCV13 vervangen door het tien-valente PCV10.
 
 Het vaccin tegen pneumokken wordt gelijktijdig gegeven met het combinatievaccin tegen 

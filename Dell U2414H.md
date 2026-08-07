@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 814a9965
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[monitor]], [[hardware]] [[Dell Technologies]]
 
 back
@@ -18,4 +28,4 @@ bottom
    
    USB
 8. USB (-IN) upstream port
-9. 3 x USB (-OUT) downstream port 
+9. 3 x USB (-OUT) downstream port

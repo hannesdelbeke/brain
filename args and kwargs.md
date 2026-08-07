@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: '80806301'
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 args and kwargs can be used in Python to pass leftover arguments in a function
 
 ## example

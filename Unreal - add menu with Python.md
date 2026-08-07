@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0d747dd4
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 When using [[Unreal Python|Python in Unreal]], you can add a python command to the [[menu]]. 
 
 It's a good practice to let the user launch your tool from  the Menu.

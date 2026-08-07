@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6a71dafb
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 > [!warning] 
 > outdated

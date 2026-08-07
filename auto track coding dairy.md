@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 41e58767
+sentiment-label:
+- inspired
+tags:
+- technical
+- planning
+- creative
+- self-reflection
+- work
+- hobby
+---
+
 what if a script tracks all commands you run in terminal
 save to code history, like [[browse history]]
 then i can see what i was working on last week.

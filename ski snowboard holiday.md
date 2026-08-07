@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 732329a4
+sentiment-label:
+- satisfied
+tags:
+- planning
+- memory
+- financial
+- outdoors
+- hobby
+- finance
+- travel
+---
+
 If you want cheap, look at Borovets or Bansko in Bulgaria.
 
 [[snowboarding]]

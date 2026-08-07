@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1f4f94c9
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
 
 # DEV notes
 - [ ] no docs on writing configs

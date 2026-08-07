@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4458dc3c
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon Route 53
 Amazon Route 53 is a highly available and scalable cloud Domain Name System (DNS) web service. It
 is designed to give developers and businesses an extremely reliable and cost-effective way to route end users to Internet applications by translating human readable names, such as www.example.com, into the

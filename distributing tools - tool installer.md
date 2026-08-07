@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: f43a05eb
+sentiment-label:
+- annoyed
+- pragmatic
+tags:
+- journal
+- technical
+- self-reflection
+- work
+---
+
 ⚠️ kinda duplicate of [[tool distribution]]
 
 in a project, we distribute tons of tools.

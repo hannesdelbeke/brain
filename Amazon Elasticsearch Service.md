@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: d3e56a16
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 # Amazon Elasticsearch Service
 Amazon Elasticsearch Service makes it easy to deploy, secure, operate, and scale Elasticsearch to search,
 analyze, and visualize data in real-time. With Amazon Elasticsearch Service, you get easy-to-use APIs

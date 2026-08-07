@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 98b08f64
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+---
+
 for every app there are scripts on [GitHub](https://github.com/)
 There are also more specific sites aimed at apps. 
 These are great for exposure to the target audience & users.

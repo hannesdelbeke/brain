@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 229bf993
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
 
 ##  Guidelines for my Obsidian vault
 When adding sample [[Unreal Python snippet]] code to a note, add a link to [[Unreal Python]] or [[Unreal Python snippet]]

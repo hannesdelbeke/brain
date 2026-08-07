@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2ebd9f59
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- memory
+- work
+---
+
 This was an old idea, before I knew you could embed UPM packages.
 ## Proposal
 Create a local package that adds other local packages

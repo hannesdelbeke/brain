@@ -1,7 +1,17 @@
 ---
 aliases:
-  - UPM
+- UPM
+sentiment:
+- 5
+sentiment-hash: 5197b9e2
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
 ---
+
 https://docs.unity3d.com/Manual/Packages.html
 [[package management]]
 [[Unity]]

@@ -1,7 +1,21 @@
 ---
 aliases:
-  - an example of bad cross app linking
+- an example of bad cross app linking
+energy: 6
+sentiment:
+- 4
+- 6
+sentiment-hash: 677087b7
+sentiment-label:
+- frustrated
+- determined
+tags:
+- journal
+- technical
+- self-reflection
+- hobby
 ---
+
 I could not easily find notes related to a forum post in Obsidian, despite knowing that the forum post URL is in the note I'm searching for.
 
 - Backlinks in the browser would have solved this. [[use more links in life]]

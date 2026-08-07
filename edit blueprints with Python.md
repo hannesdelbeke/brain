@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 22ece13f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 notes on how to edit blueprints in [[Unreal]] with [[Python]]
 
 - [Make a Blueprint class with components from Python](https://dev.epicgames.com/community/snippets/8zx/unreal-engine-make-a-blueprint-class-with-components-from-python)
@@ -9,4 +20,3 @@ notes on how to edit blueprints in [[Unreal]] with [[Python]]
 - [Get parent UserWidget of Widget](https://forums.unrealengine.com/t/get-parent-userwidget-of-widget/476221)
 - [Change component variables on Blueprint class via Python](https://forums.unrealengine.com/t/change-component-variables-on-blueprint-class-via-python/152584)
 - 3rd party [[Unreal]] slate UI Python API https://github.com/cgerchenhp/UE_TAPython_Plugin_Release
-

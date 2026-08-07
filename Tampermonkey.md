@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: a2d6798a
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 an extension to run custom [[JavaScript]] on a website
 
 tip

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8462475c
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 The MenACWY vaccine is given as an injection in the upper arm. 
 It's recommended for young people, who are at a higher risk of getting meningococcal disease. The vaccine is also recommended for people with no spleen or a spleen that doesn't work properly, Hajj pilgrims, and travelers to countries with high rates of meningococcal disease.
 

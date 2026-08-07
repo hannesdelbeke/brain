@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3d92d40b
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To save arbitrary data to a [[Autodesk Maya|Maya]] scene so it persists between sessions.
 `cmds.fileInfo` can do simple data. My recommendation is `json` if you need anything with a structure, and `base64` it because `cmds.fileInfo` is annoying about quoting and likes to add `\\` 
 

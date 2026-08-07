@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 8da7c12a
+sentiment-label:
+- focused
+tags:
+- planning
+- technical
+- creative
+- work
+---
+
 from gdrive 
 
 https://www.thinkific.com/pricing/#core-features
@@ -71,8 +85,3 @@ optimisation tips: re use classes instead of reinstantiate
 create standalone tools (quick rig, exporter, ....)
 create pipelines instead of tools (combine tools in package/workflow, automate testing, control the workflow by having insight and prevent repeat mistakes)
 knowledge on 3d assets / game engine (normals, tangent, shaders, lods, ...)
-
-
-
-
-

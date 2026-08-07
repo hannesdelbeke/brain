@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d374e309
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- work
+---
+
 The [[Maya plugin manager]] enables the user to enable plugins.
 It shows the name & path of a plugin,
 but it doesn't show what the plugin does.

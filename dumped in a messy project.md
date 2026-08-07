@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: bbc1e8d4
+sentiment-label:
+- pragmatic
+tags:
+- technical
+- planning
+- communication
+- work
+---
+
 As a [[technical artist]], there's a high likelyhood you will join a messy project.
 No naming conventions, or folder structure, etc.
 ### How to handle being dumped in a messy project.

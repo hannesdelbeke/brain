@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 091fa5e2
+sentiment-label:
+- analytical
+tags:
+- financial
+- planning
+- finance
+---
+
 a [[loan]] against your [[equity]]
 similar to how a mortgage is a loan against your house
 interest changes time to time

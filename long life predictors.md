@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 010e2b98
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 predictors
 - strong handshake in over 60
 - strength in male teenagers

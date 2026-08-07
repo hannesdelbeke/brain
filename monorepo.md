@@ -1,9 +1,17 @@
 ---
 aliases:
-  - mono repo
-  - mono-repo
-  - monorepos
+- mono repo
+- mono-repo
+- monorepos
+sentiment:
+- 5
+sentiment-hash: 38f51186
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 all source code from different projects in 1 repo. The opposite of a [[polyrepo]]
 
 fast to develop, and a good overview of everything.

@@ -1,7 +1,15 @@
 ---
 aliases:
-  - Wi-Fi extenders
+- Wi-Fi extenders
+sentiment:
+- 5
+sentiment-hash: 86d0afe1
+sentiment-label:
+- factual
+tags:
+- technical
 ---
+
 Repeat the [[WiFi]] signal to extend the range. Speed will reduce since the signal needs to be repeated.
 
 - Wireless Repeaters

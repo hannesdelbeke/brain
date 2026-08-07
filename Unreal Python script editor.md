@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: ff3084cd
+sentiment-label:
+- resourceful
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 [[Unreal]] doesn't has a native [[Python]] script editor.
 
 You can download the script editor as an [[Unreal plugin]] here: https://github.com/hannesdelbeke/unrealScriptEditor-plugin

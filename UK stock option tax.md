@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1b960d2e
+sentiment-label:
+- factual
+tags:
+- financial
+- planning
+- finance
+- work
+---
+
 In the UK, [[stock options|options]] aren't taxed when they're granted or fully vested. Instead, **taxation happens at the point of exercise**. 
 You pay income tax and national insurance contributions (NICs) on the difference between the strike price and the share price
 

@@ -1,7 +1,17 @@
 ---
 aliases:
-  - share files between Android and PC
+- share files between Android and PC
+sentiment:
+- 5
+sentiment-hash: 3b6deb06
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+- work
 ---
+
 To share files between [[Android]] phone & [[Windows]] computer
 
 just send files

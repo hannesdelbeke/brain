@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: e577a41d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 the cons are minor, easy to live with them
 
 cons

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 88829bec
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Obsidian]]
 [[Uniform Resource Identifier|URI]]
 

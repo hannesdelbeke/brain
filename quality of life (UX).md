@@ -1,7 +1,14 @@
 ---
 aliases:
-  - quality of life
-  - QoL
+- quality of life
+- QoL
+sentiment:
+- 5
+sentiment-hash: d8fb74f4
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 Quality of life represents elements that functionally are not necessary, but they improve the experience. Often used in [[product design]] or [[gamedev]]

@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 4
+- 7
+sentiment-hash: 7c06591b
+sentiment-label:
+- frustrated
+- relieved
+tags:
+- journal
+- technical
+- planning
+- self-reflection
+- work
+---
+
 Until now, I was setting up projects like this:
 Menus in a project are created with [[unimenu]], by hooking up code as a string in a [[yaml]] config.
 ```

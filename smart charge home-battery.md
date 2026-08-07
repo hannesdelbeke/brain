@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2e292167
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 **problem**
 The main problem is that [[charging EV drains home battery|charging my EV drains my home battery]]
 

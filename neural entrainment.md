@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: b4fc1fef
+sentiment-label:
+- skeptical
+tags:
+- technical
+- communication
+- self-reflection
+---
 
 I'm unsure about the Neural entrainment claim from the book [[Supercommunicators - How to Unlock the Secret Language of Connection]], I've not yet seen research that backs up this claim.
 

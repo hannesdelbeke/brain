@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6494d7a2
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 [[Palantir Technologies|Palantir]] [[ontology]] is a digital twin, that also can control it's real life twin.
 
 Imagine your business is a massive box of mismatched LEGO bricks.
@@ -145,5 +156,3 @@ Palantir takes the DAM concept two steps further:
 In short, it is a DAM for an entire corporation's live data, business logic, and operational systems. [4]
 
 ---
-
-

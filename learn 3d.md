@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: 392c1da6
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 Pick a single 3d software and stick to it, until you join a studio.
 Then adopt the 3d package of the studio and master that.
 It's better to be a good modeler in 1 app, than to know all the 3d packages.

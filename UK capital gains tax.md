@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 97cd365a
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+---
 
 current allowance for 
 2024 to 2025 is - £3,000

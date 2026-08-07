@@ -1,6 +1,13 @@
 ---
 aliases:
-  - Maya shelves
+- Maya shelves
+sentiment:
+- 5
+sentiment-hash: b9f72ae9
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 [[Autodesk Maya]] shelves

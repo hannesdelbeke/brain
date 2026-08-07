@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 6
+- 5
+sentiment-hash: ba88746b
+sentiment-label:
+- enthusiastic
+- reflective
+tags:
+- journal
+- creative
+- self-reflection
+- hobby
+---
+
 click a [[thumbnail]] on your [[phone]] to launch a [[macro]] or [[action]] on your device, similar to an [[app launcher]]
 
 Deckboard is not open source, but there is a free version with limited grid.

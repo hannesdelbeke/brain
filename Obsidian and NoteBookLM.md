@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: bbc6d5d0
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 https://www.xda-developers.com/using-notebooklm-with-obsidian/
 
 The author says [[notebookLM]] has been a game-changer to their [[Obsidian]] workflow.

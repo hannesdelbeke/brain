@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7e9c0f8f
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 ## native auto-completion
 - disabled by default
 - primitive when enabled

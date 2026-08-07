@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: fdfb88b6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 **TLDR:** 
 The JPG & JPEG [[file extension]] are used for the same filetype, if given the choice, use JPEG.
 ### History

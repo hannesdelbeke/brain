@@ -1,3 +1,19 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 6e0064d6
+sentiment-label:
+- reflective
+tags:
+- memory
+- journal
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 When I started out with game development, I used to develop [[my games]] on [[Dropbox]].
 
 A few issues with that:

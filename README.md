@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 2cd7c3cc
+sentiment-label:
+- welcoming
+tags:
+- journal
+- creative
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 %%This is the front page of the [wiki](https://hannesdelbeke.github.io/wiki/)%%
 This site contains a collection of notes, mostly technical [[knowledge]] related to [[gamedev]] & [[technical artist]] tips. 
 

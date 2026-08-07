@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 3aa089ae
+sentiment-label:
+- intrigued
+tags:
+- journal
+- creative
+- technical
+- self-reflection
+- hobby
+- work
+---
+
 Apps are all about keeping your attention span, and suggesting you the next content to consume.
 
 Today I saw a smart [[UX]] decision, 

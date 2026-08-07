@@ -1,3 +1,14 @@
+---
+energy: 4
+sentiment:
+- 3
+sentiment-hash: 785004b3
+sentiment-label:
+- frustrated
+tags:
+- technical
+---
+
 macro buttons to control your pc from a browser, e.g. on a mobile device.
 similar to [[stream deck]]
 

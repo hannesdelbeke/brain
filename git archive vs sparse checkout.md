@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: ae37aaa0
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 To download a single file, **`git archive`** is generally faster and more efficient than [[git sparse-checkout]]. Here's why:
 
 - **`git archive`**: This command creates an archive of the specified file or directory without downloading the entire repository. It's lightweight and avoids unnecessary data transfer, making it ideal for retrieving a single file.

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '79755372'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 great [[boardgame]]
 - people don't die unlike in normal werewolf
 

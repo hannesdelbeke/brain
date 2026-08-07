@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: caf0a5dd
+sentiment-label:
+- curious
+tags:
+- planning
+- home
+- outdoors
+---
+
 proposed rule: The size of the [[bicycle]] sheds would be restricted to
 **2m** in width, **1m** in depth and **1.5m** in height
 

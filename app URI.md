@@ -1,9 +1,15 @@
 ---
 aliases:
-  - app link
-  - universal link
+- app link
+- universal link
+sentiment:
+- 5
+sentiment-hash: 76a955c1
+sentiment-label:
+- factual
+tags:
+- technical
 ---
-	
 
 An app [[Uniform Resource Identifier]] launches an app from a [[URL]].
 this can be useful if an app wants to open another app.

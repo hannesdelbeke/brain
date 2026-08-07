@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 5a4c3e54
+sentiment-label:
+- purposeful
+tags:
+- technical
+- planning
+- work
+- hobby
+---
+
 i mainly use this tool to navigate between previously selected Unity assets.
 
 ## Details

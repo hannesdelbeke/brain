@@ -1,8 +1,19 @@
 ---
 aliases:
-  - unreal plugins
-  - uplugin
+- unreal plugins
+- uplugin
+energy: 5
+sentiment:
+- 5
+sentiment-hash: bfb6a711
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- work
 ---
+
 A [[plugin]] for [[Unreal]].
 To install a Unreal plugin, place your plugin folder either in engine, or in project folder
 
@@ -32,5 +43,3 @@ This tells Unreal to treat the plugin as enabled by default (for your local engi
 - Open the `.uplugin` file in a text editor & modify the fields.
 
 Only use this for **editor-only plugins**.
-
-

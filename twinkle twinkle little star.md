@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dedf8fd3
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- hobby
+---
 
 ```abc
 X: 1

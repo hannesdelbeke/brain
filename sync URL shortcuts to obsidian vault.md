@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 2b910c53
+sentiment-label:
+- reflective
+tags:
+- planning
+- technical
+- self-reflection
+- hobby
+---
+
 We can create [[URL]] shortcuts in our [[Obsidian vault|vault]]. Kinda like what [[google drive]] does.
 It stores a file on my pc, but when I click it, it opens it in the web. e.g. `gdoc`.
 I used this to [[embed Google Drive folder in Obsidian|embed Google Drive files in my Obsidian vault]] so I can [[wikilink]] them in my notes with [[Obsidian autocomplete]].

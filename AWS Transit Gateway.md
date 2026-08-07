@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: dde4d664
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # AWS Transit Gateway
 AWS Transit Gateway is a service that enables customers to connect their Amazon Virtual Private Clouds
 (VPCs) and their on-premises networks to a single gateway. As you grow the number of workloads

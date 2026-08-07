@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: d7dad05c
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A performant realtime rendering of [[vector image]] & fonts without rasterizing.
 
 slides on [slug](https://sluglibrary.com/): 

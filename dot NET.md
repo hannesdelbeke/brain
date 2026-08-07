@@ -1,9 +1,18 @@
 ---
 aliases:
-  - .NET
-  - .NET Framework
+- .NET
+- .NET Framework
+sentiment:
+- 5
+sentiment-hash: f6fe518c
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
- . NET is the framework and runtime that [[C sharp|C#]] programs are built with and run on
+
+. NET is the framework and runtime that [[C sharp|C#]] programs are built with and run on
  .NET is a collection of [[assembly|assemblies]] (usually libraries) and comes in 3 flavors:
 - .NET Framework
 - .NET Core
@@ -27,7 +36,3 @@ apps build require .NET Framework to be preinstalled.
 - open source
 - Mono-based runtime (Mono.NET)
 - distributed with app
-
-
-
-

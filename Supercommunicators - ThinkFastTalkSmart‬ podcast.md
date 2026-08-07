@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9548423c
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+- work
+---
+
 topics from the [video](https://www.youtube.com/watch?v=v_lpMg-U1Dk)
 - **Listen actively by using the technique of looping for understanding.**  
     _Example:_ If someone shares a problem, [[paraphrasing|paraphrase]] their key points and ask, “Did I get that right?” This helps them feel heard.

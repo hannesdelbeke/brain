@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: c23090ce
+sentiment-label:
+- factual
+tags:
+- planning
+- work
+- travel
+---
+
 [[travel]]
 [[work]]
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: '20681513'
+sentiment-label:
+- factual
+tags:
+- technical
+- health
+---
+
 [[nitrogen]]
 
 

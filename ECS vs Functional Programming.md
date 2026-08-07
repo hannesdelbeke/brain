@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4b8b429a
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 **ECS ([[entity component system|Entity-Component-System]])** and **[[Functional Programming]] (FP)** are not the same, but they share some principles and can complement each other. Here's a comparison and clarification:
 ### **Similarities**
 1. **Separation of Concerns**:

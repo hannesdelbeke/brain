@@ -1,7 +1,17 @@
 ---
 aliases:
-  - electronic ink
+- electronic ink
+sentiment:
+- 5
+sentiment-hash: d0cfced8
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- hobby
 ---
+
 Waveshare, the cheapest e ink monitor 300-500GBP [link](https://www.waveshare.com/product/displays/e-paper/epaper-1/eink-disp.htm)
 
 ## e ink lifespan

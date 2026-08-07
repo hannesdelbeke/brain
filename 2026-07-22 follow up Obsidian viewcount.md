@@ -1,3 +1,19 @@
+---
+energy: 7
+sentiment:
+- 3
+- 8
+sentiment-hash: 2f970852
+sentiment-label:
+- frustrated
+- accomplished
+tags:
+- journal
+- technical
+- self-reflection
+- hobby
+---
+
 follow up [[2026-02-22 Obsidian track note view]]
 
 the automation that updates [[view count|viewcount]] each note is working but also causes issues.
@@ -38,4 +54,3 @@ imported my old view data successfully, seeing it in obsidian viewcount
 removed rule from [[obsidian-sentinel]] and disabled plugin. 
 	which i setup originally here [[2026-02-22 Obsidian track note view]]
 created PR https://github.com/Moyf/obsidian-view-count/pull/1
-

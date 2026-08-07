@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 0101adfb
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- work
+---
+
 # Add notes to explorer
 I find myself in need to attach notes to files.
 e.g. this file contains this, or is used by this.

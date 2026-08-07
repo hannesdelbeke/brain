@@ -1,3 +1,18 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: b22dafc7
+sentiment-label:
+- reflective
+tags:
+- journal
+- technical
+- self-reflection
+- work
+- hobby
+---
+
 Looking back 2 years later, I would do some things different. Let's review.
 ### Summary
 I *finished* figmapy and released it. There were a few polish bits here and there that'd be nice to add, but overall it was pretty complete for a first pass.

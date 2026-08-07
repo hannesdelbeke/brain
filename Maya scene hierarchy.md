@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b83c13d9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[Autodesk Maya|Maya]] The scene hierarchy is the grouping of child nodes under parent nodes.
 
 You can view & edit the scene hierarchy with the [[Maya outliner]] or the [[Maya Hypergraph]].

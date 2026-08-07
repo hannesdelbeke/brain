@@ -1,5 +1,13 @@
 ---
 aliases: options, settings
+sentiment:
+- 5
+sentiment-hash: 248d378d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 - Properties: characteristics of an object, similar to attributes.

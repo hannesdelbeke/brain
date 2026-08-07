@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 45e4d3d9
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 1. open cmd
 	1. [[check ssh github connection]]
 	2. run `gh auth login`, follow the steps

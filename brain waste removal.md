@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0678b004
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 [[brain]] cells produce waste, which needs removing.
 The brain lies in water, but it was unclear how the water is flushed through the brain.
 Scientists now  believe slow electric waves during [[sleep]] let neurons synchronize and pump out the waste.

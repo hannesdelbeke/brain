@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: '70475237'
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # AWS VPN
 AWS [[Virtual Private Network]] solutions establish secure connections between your on-premises networks,
 remote offices, client devices, and the AWS global network. AWS VPN is comprised of two services: AWS

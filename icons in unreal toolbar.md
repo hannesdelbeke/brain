@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 43ca904e
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 the [[Unreal]] template adds our tool to the toolbar.
 to modify the icon, find an icon in this [repo](https://github.com/EpicKiwi/unreal-engine-editor-icons) and update this line
 ```python

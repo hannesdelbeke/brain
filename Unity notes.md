@@ -1,3 +1,17 @@
+---
+sentiment:
+- 5
+sentiment-hash: c0855c6d
+sentiment-label:
+- factual
+tags:
+- technical
+- creative
+- planning
+- communication
+- work
+---
+
 Create [[note taking|notes]] in [[Unity]], e.g. for [[documentation]]. 
 - The closer documentation lives to the asset, the more likely it'll be read. 
 - Showing docs in the editor improves [[discovery]].

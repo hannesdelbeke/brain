@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c7ad6ef1
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 let's take this [package.json](https://github.com/garettbass/UnityExtensions.SelectionHistory/blob/master/package.json)
 with this github URL https://github.com/garettbass/UnityExtensions.SelectionHistory
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 29298dae
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 find the active [[Perforce]] workspace (=client) in [[Python]] with [[python-perforce]]
 ```python
 import perforce

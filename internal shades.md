@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 070afba9
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 internal blinds stop the light from coming in.
 
 if the light comes through double or triple glass, and then is reflected back outside. a lot of energy stays inside.

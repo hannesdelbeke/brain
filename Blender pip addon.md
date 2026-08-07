@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0f3fe9c0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 > [!WARNING]
 > ⚠️ This repo evolved in a more advanced PIP installer, see [[Blender pip Qt addon]]

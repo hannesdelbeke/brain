@@ -1,6 +1,16 @@
 ---
 aliases:
-  - Wi-Fi sharing
+- Wi-Fi sharing
+sentiment:
+- 5
+sentiment-hash: 535711d7
+sentiment-label:
+- factual
+tags:
+- technical
+- journal
+- home
+- work
 ---
 
 When you set up a new [[Windows]] pc and have to enter the wifi, it often takes a long time typing the password.

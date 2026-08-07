@@ -1,3 +1,16 @@
+---
+sentiment:
+- 5
+sentiment-hash: c63f298c
+sentiment-label:
+- factual
+tags:
+- memory
+- technical
+- creative
+- hobby
+---
+
 https://github.com/hannesdelbeke/2016-gamejam-AI
 2016-9-20
 

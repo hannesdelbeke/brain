@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 6b9bbca8
+sentiment-label:
+- factual
+tags:
+- journal
+- technical
+- home
+---
+
 Set upp my extender, to receive [[WiFi]], and forward it over [[ethernet]] to my pc-s.
 
 - [[Wi-fi Protected Setup|WPS]] didnt work untill i reset the extender, with the small reset button

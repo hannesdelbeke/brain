@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 97c9a89a
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 - copy the publish action
 - set the `PYPI_API_TOKEN` token in `settings / secrets & variables / Actions`
 	- either copy from pass-mngr or create a new one in py-pi

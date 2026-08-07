@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8395bd94
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 If you package your [[Maya tool]] in a [[Maya module]] (e.g. using the [[Maya module template]]),
 [[vendoring]] your dependencies in the scripts folder results in duplicated Python modules between your tools. And your dependencies will get outdated.
 

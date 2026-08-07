@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0e693550
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 A well insulated house, that's air tight.
 It's recommended to have a [[Mechanical Ventilation with Heat Recovery|MVHR]]
 

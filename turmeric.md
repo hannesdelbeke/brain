@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: a9424ee6
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
+
 - black pepper with turmeric improves curcumin’s absorption.
 - Turmeric contains about **3–8%** curcumin
 	- A dessert spoon of turmeric powder (3 g) contains 30–90 mg of curcumin

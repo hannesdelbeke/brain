@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 5
+sentiment-hash: 6148612c
+sentiment-label:
+- contemplative
+tags:
+- journal
+- self-reflection
+- work
+- health
+---
+
 we only grow, if we push ourselves to failure. Then rest and come back to keep pushing past it.
 e.g. Weight Training.
 

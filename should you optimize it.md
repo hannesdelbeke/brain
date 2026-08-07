@@ -1,3 +1,20 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: 60c1b41b
+sentiment-label:
+- inspired
+tags:
+- creative
+- planning
+- technical
+- procrastination
+- self-reflection
+- hobby
+- work
+---
+
 https://xkcd.com/1205/
 ![](https://imgs.xkcd.com/comics/is_it_worth_the_time.png)
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: c0d38fd6
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
 
 ## devices
 

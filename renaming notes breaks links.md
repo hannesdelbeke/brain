@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 5
+sentiment-hash: 185b908a
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- hobby
+---
+
 You can create a [[wiki]] from your notes: [[Obsidian Publish]]
 Since note names are used to create web pages, 
 when you rename a note, it will break any URL links another website has to your website.  

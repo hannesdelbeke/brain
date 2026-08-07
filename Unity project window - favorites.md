@@ -1,3 +1,16 @@
+---
+energy: 4
+sentiment:
+- 3
+sentiment-hash: ad3f7a42
+sentiment-label:
+- critical
+tags:
+- journal
+- technical
+- work
+- hobby
+---
 
 Overall a quite useless feature in the [[Unity Project window]]
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 9c263d21
+sentiment-label:
+- factual
+tags:
+- technical
+- outdoors
+- home
+---
 
 Adding gypsum to clay soil can improve [[drainage]] in the [[garden]]
 

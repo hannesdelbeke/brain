@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e86cb907
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 [[git submodule]]
 [[Obsidian]]
 # update submodules in vault

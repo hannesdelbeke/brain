@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 7
+- 4
+sentiment-hash: bd200f78
+sentiment-label:
+- interested
+- critical
+tags:
+- technical
+- self-reflection
+- work
+---
+
 [[Python]]
 namespace modules are interesting
 on paper i love the concept, since it's very [[modular]]

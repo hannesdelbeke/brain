@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1969545e
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 I used [[AS SSD Benchmark]] to test SSD speeds
 - **4K Read/Write** represent the performance with random small files. 
 - **4K-64thrd Read/Write** measures the performance with multiple threads.

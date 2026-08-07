@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 72f93c40
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon WorkDocs
 Amazon WorkDocs is a fully managed, secure enterprise storage and sharing service with strong
 administrative controls and feedback capabilities that improve user productivity.

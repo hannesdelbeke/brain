@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: aedc2b5e
+sentiment-label:
+- factual
+tags:
+- technical
+- outdoors
+- health
+---
+
 Walking at a slow pace (3 km/h) is less intense than walking at a brisk pace (approximately 6.4 km/h or 4 mph). To determine how much more time you would need to achieve equivalent health benefits at a slower pace, we can use the concept of [[metabolic equivalent of task]] (METs), which measures the energy cost of physical activities.
 ### MET Values
 - **Brisk Walking (approximately 6.4 km/h)**: About 4.3 METs.

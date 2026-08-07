@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 7
+sentiment-hash: f436137d
+sentiment-label:
+- productive
+tags:
+- technical
+- planning
+- creative
+- work
+---
+
 A [[Unreal plugin]] template for [[pure Python]] plugins
 https://github.com/hannesdelbeke/unreal-python-plugin-template
 ### Features

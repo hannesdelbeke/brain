@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3116dc32
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 mkdocs creates a HTML site from markdown.
 This is compatible with [[Obsidian]]
 

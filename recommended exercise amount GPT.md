@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 52f6d10e
+sentiment-label:
+- factual
+tags:
+- planning
+- health
+---
+
 see [[optimal exercise amount]] instead
 
 - **Recommended**: 150 minutes [[moderate aerobic activity|moderate]] or 75 minutes [[vigorous aerobic activity]] + 2 days muscle-strengthening.

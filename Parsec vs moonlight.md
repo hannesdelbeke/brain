@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: '97856155'
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 # compare with parsec
 reddit quote
 > Moonlight/Sunshine is better for gaming, since video quality is miles ahead of anything else due to [[Nvidia]]'s encoder. Input latency overall also seems better from my experience.

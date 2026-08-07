@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 55ad6a89
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 sitecustomize.py and - usercustomize.py
 
@@ -29,5 +39,3 @@ write_test_file()
 - works in unreal in `C:\Program Files\Epic Games\UE_5.6\Engine\Binaries\ThirdParty\Python3\Win64\Lib\site-packages`
 - doesn't work in `plugin/content/python`
 - doesn't work in `plugin/content/python/site-packages`
-
-

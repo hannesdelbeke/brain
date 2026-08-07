@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 114c7ac5
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+---
+
 It can be hard to [[categorize]].
 
 Often people expect things to neatly fit in a category. Like this:
@@ -20,4 +31,4 @@ But this might
 
 When writing [[note taking|notes]] we run in the same problem. Often we start with multiple folders, 1 for each category. And we organize our files in the folders. 
 But when we have thousands of files, there will be notes that belong in multiple categories. 
-I start to waste a lot of time thinking which folder to put it in. This is a [[cognitive load]] with zero productive value, and can be avoided by [[reducing note folders|putting all notes in a single folder]]. Instead of trying to organize and choosing a single category (folder) for the file, we can create an infinite amount of links inside a note to other notes. This means a note can be linked to multiple categories. 1 note for each category. 
+I start to waste a lot of time thinking which folder to put it in. This is a [[cognitive load]] with zero productive value, and can be avoided by [[reducing note folders|putting all notes in a single folder]]. Instead of trying to organize and choosing a single category (folder) for the file, we can create an infinite amount of links inside a note to other notes. This means a note can be linked to multiple categories. 1 note for each category.

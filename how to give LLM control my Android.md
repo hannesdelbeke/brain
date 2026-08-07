@@ -1,5 +1,15 @@
 ---
 created: 2026-04-23
+energy: 6
+sentiment:
+- 6
+sentiment-hash: fd8d3ae9
+sentiment-label:
+- curious
+tags:
+- planning
+- technical
+- hobby
 ---
 
 I want to let AI figure out how to do this and set it all up on my Android device.

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 941732c2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 online [[digital garden]]s: 
 - https://maggieappleton.com/garden
 - https://github.com/rhelmstedter/Zettelkasten/blob/main/zettel/202104050949.md  public python notes
@@ -13,4 +23,4 @@ online [[digital garden]]s:
 - https://github.com/data-engineering-community/data-engineering-wiki  professional looking wiki made with Obsidian
 - collection of digital gardens https://github.com/lyz-code/best-of-digital-gardens
 - collection https://github.com/RichardLitt/meta-knowledge
-- 
+-

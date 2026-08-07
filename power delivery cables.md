@@ -1,4 +1,14 @@
-
+---
+sentiment:
+- 5
+sentiment-hash: f1c7356c
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+- work
+---
 
 | Cable Type              | Power Delivery?     | Typical Wattage | Notes                        |
 | ----------------------- | ------------------- | --------------- | ---------------------------- |

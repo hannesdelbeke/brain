@@ -1,6 +1,13 @@
 ---
+sentiment:
+- 5
+sentiment-hash: 3a15db87
+sentiment-label:
+- factual
 tags:
-  - archive
+- archive
+- technical
+- hobby
 ---
 
 > [!warning]

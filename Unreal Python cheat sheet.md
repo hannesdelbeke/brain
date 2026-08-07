@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1c9ca2a0
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 see [docs](https://docs.unrealengine.com/4.27/en-US/PythonAPI/class/_ObjectBase.html#unreal._ObjectBase)
 
 get all [[Unreal]] actors in scene

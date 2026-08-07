@@ -1,3 +1,19 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 912d1ad4
+sentiment-label:
+- analytical
+tags:
+- technical
+- planning
+- communication
+- self-reflection
+- work
+- hobby
+---
+
 This [[chat dashboard]] shows how you can move links to web pages or Obsidian.
 Create an [[icon]], that when clicked opens the web version of a chat app.
 This same approach could be used on a desktop with shortcuts or pin to taskbar.

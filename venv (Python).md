@@ -1,6 +1,13 @@
 ---
 aliases:
-  - .venv
+- .venv
+sentiment:
+- 5
+sentiment-hash: 6ef89468
+sentiment-label:
+- factual
+tags:
+- technical
 ---
 
 https://docs.python.org/3/library/venv.html

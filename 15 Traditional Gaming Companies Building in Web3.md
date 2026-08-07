@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b0a089f3
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 15 Traditional Gaming Companies Building in [[Web3]]
 
 1. [[TSM]]

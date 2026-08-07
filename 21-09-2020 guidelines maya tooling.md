@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 2fb72601
+sentiment-label:
+- constructive
+tags:
+- technical
+- journal
+- planning
+- communication
+- self-reflection
+- work
+---
+
 # guidelines maya tooling
 a guide on writing shared tools between projects
 

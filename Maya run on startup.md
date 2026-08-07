@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 69f10ec4
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 various solutions to run code on Maya [[startup]]
 I recommend [[Maya plugin]] and ignore the rest.
 

@@ -1,4 +1,17 @@
-
+---
+energy: 4
+sentiment:
+- 6
+sentiment-hash: d969c9ec
+sentiment-label:
+- relaxed
+tags:
+- planning
+- journal
+- outdoors
+- travel
+- hobby
+---
 
 ![](https://upload.wikimedia.org/wikipedia/commons/0/0f/River_Tame_map.png)
 

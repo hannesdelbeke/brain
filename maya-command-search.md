@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2bc50df6
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 > [!warning]
 > replaced by [[Maya search]]

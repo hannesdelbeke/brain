@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 99d3227d
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 a icon scroll [[window (computing)|window]] has a lot in common with a [[keystroke launcher]].
 They both launch apps, and both show icons.
 e.g. https://ueli.app/#/

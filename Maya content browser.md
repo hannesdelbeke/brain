@@ -1,3 +1,15 @@
+---
+energy: 4
+sentiment:
+- 4
+sentiment-hash: 8c29a1ca
+sentiment-label:
+- critical
+tags:
+- technical
+- work
+---
+
 The Maya [[file browser|content browser]] ships with [[Autodesk Maya]]
 
 ![](https://help.autodesk.com/cloudhelp/ENU/MayaCRE-ManagingScenes/images/GUID-5C63B22A-E799-4F48-8EED-C8FD108B47F9.png)

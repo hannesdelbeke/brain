@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 2288e81f
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ### win 11
 #### native
 - links

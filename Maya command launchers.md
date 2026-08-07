@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d9eee90a
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 user friendly ways to run [[Autodesk Maya|Maya]] scripts: 
 - [[Maya quick launcher]] - ARCHIVED, replaced by [[Maya search]]
 - [[buttonizer]]

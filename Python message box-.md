@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 1507e5f0
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Create a simple [[message dialogue]] in [[Python]] without [[Qt]] or dcc code
 
 ```python
@@ -14,5 +24,4 @@ Styles
 ##  5 : Retry | Cancel 
 ##  6 : Cancel | Try Again | Continue
 ```
-[source](https://stackoverflow.com/questions/2963263/how-can-i-create-a-simple-message-box-in-python) 
-
+[source](https://stackoverflow.com/questions/2963263/how-can-i-create-a-simple-message-box-in-python)

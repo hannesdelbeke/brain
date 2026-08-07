@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 04159cd7
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 The [[Autodesk Maya|Maya]] plugin manager let's you enable and disable [[Maya plugin|Maya plugins]].
 [Plug-in manager docs](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-2CF7D90B-EF10-40D1-9129-9D401CCAB952)
 

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: f3bde557
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- home
+---
+
 # Tailscale + Home Assistant
 **Home Assistant + Tailscale (Android + HA Add‑on)**
 
@@ -96,4 +108,3 @@ Next steps could be
 - Add MagicDNS so you can use a stable hostname instead of the 100.x.x.x address
 - Use Tailscale for presence detection in Home Assistant
 - Fix routing so you never need to disconnect Tailscale on Wi‑Fi again
-

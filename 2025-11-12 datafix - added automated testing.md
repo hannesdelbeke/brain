@@ -1,3 +1,19 @@
+---
+energy: 7
+sentiment:
+- 8
+sentiment-hash: abb5a2bf
+sentiment-label:
+- accomplished
+tags:
+- technical
+- journal
+- procrastination
+- self-reflection
+- work
+- hobby
+---
+
 Project: [[datafix dev]]
 
 used [[Github Copilot|Copilot]] in [[visual studio code|vs code]] to add automated testing on [[pull request|PR]]

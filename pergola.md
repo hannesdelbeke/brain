@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 80fe6afb
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+- home
+---
+
 a roof on sticks
 sometimes with tarp
 aims to provide some [[shade]]

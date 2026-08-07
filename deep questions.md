@@ -1,4 +1,19 @@
- A deep question doesn’t ask about the facts of someone’s life but asks how they feel about it. In doing so, we learn who they are.
+---
+energy: 5
+sentiment:
+- 7
+sentiment-hash: 7aa6a535
+sentiment-label:
+- thoughtful
+tags:
+- journal
+- social
+- communication
+- relationship
+- self-reflection
+---
+
+A deep question doesn’t ask about the facts of someone’s life but asks how they feel about it. In doing so, we learn who they are.
  
  And if we want to connect with them, we can [[reciprocate]] and share the same thing about ourselves with them.
 ## 3 key features

@@ -1,5 +1,13 @@
 ---
 alias: IaaS
+sentiment:
+- 5
+sentiment-hash: 0ce96bcc
+sentiment-label:
+- factual
+tags:
+- technical
+- work
 ---
 
 Infrastructure as a Service contains the basic building blocks for cloud IT and provides access to 

@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 4d8e800a
+sentiment-label:
+- factual
+tags:
+- planning
+- communication
+- work
+---
+
 The goal is **to start a conversation between managers and each of their employees**. This survey allows employees to communicate their needs, so managers know what to work on.
 
 The [gallup survey](https://studentaffairs.unt.edu/gallup-questions-descriptions) contains 12 yes/no questions:

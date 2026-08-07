@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 3bc3715b
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 create a dev environment for e.g. unreal, blender, maya
 and a release env.
 ### Dev env

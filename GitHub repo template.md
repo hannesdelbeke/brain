@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: b8793109
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 a [[GitHub repo]] can act as a [[template]].
 if you create a new repo from a template, it will be a new repo with a copy of the same file.
 

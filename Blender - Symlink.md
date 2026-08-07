@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: bda50a72
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+- hobby
+---
+
 To make code from external repositories importable in blender, you can create a symlink to Blender's scripts folder.
 
 To create the symlink, see [[mklink windows - soft & hard link|instructions for Windows]].

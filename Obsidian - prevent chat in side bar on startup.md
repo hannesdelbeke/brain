@@ -1,3 +1,15 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 3aca7094
+sentiment-label:
+- frustrated
+tags:
+- technical
+- journal
+- hobby
+---
 
 ### Problem
 When I start [[Obsidian]], it shows the copilot Chat in the right sidebar.

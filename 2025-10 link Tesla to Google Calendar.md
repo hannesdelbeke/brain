@@ -1,3 +1,18 @@
+---
+energy: 7
+sentiment:
+- 7
+sentiment-hash: 03960a4a
+sentiment-label:
+- inspired
+tags:
+- planning
+- creative
+- self-reflection
+- travel
+- hobby
+---
+
 **Idea**
 Automatically show my driving ([[Tesla model 3]]) in my [[Google calendar]].
 

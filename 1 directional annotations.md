@@ -1,3 +1,12 @@
+---
+sentiment:
+- 5
+sentiment-hash: edc0d37a
+sentiment-label:
+- factual
+tags:
+- technical
+---
 
 ### Scenario
 - you want to add private comments to a slack thread for yourself

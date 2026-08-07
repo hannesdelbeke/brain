@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 16f44b41
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 to get the version in Maya, don't use 
 ```python  
 import maya.cmds as cmds  

@@ -1,3 +1,20 @@
+---
+energy: 3
+sentiment:
+- 3
+- 6
+sentiment-hash: a5c9f2ef
+sentiment-label:
+- sluggish
+- content
+tags:
+- journal
+- self-reflection
+- procrastination
+- health
+- hobby
+---
+
 Today I wrote a lot of notes. But I expect I wont read most of them again unlike my usual productivity notes, e.g. on `programming`.
 Today I am quite tired because of a hang over, and I've noticed that being tired often leads to [[fake productivity]]. Being busy but not getting much done
 

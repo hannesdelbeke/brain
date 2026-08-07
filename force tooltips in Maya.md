@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 0c8ab41d
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 you can also enable tool tips in Maya's preferences
 to set [[tooltip|tooltips]] visible in [[Autodesk Maya|Maya]] by code: 
 
@@ -13,4 +23,3 @@ for action in menu_bar.actions() :1
 
 shared to https://groups.google.com/g/python_inside_maya/c/IcMpXXmDnSM
 and https://discourse.techart.online/t/is-there-a-way-to-get-tooltips-for-maya-menitem/15385/12
-

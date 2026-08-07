@@ -1,3 +1,18 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: 781fca45
+sentiment-label:
+- thoughtful
+tags:
+- technical
+- journal
+- self-reflection
+- health
+- home
+---
+
 minimize the sound of a [[fan]]
 
 - smaller fans tend to be louder since they work harder

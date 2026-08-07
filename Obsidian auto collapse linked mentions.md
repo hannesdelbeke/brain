@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+- 7
+sentiment-hash: dcfcf84d
+sentiment-label:
+- annoyed
+- satisfied
+tags:
+- technical
+- hobby
+---
+
 ## Problem
 When you open [[Obsidian]], `linked mentions` ([[backlink|backlinks]]) aren't collapsed, this is cluttered and hard to read. 
 ## Solution

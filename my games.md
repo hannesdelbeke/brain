@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: d3eea59a
+sentiment-label:
+- factual
+tags:
+- memory
+- technical
+- hobby
+---
+
 A collection of my game jams, solo projects, and uni projects.
 Commercial studio games & projects are excluded.
 ## solo projects

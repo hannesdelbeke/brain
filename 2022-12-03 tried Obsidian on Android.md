@@ -1,3 +1,16 @@
+---
+energy: 6
+sentiment:
+- 3
+sentiment-hash: 8f54bff3
+sentiment-label:
+- frustrated
+tags:
+- technical
+- journal
+- self-reflection
+- hobby
+---
 
 Install [[Obsidian]] on [[android]]
 Painfull

@@ -1,8 +1,16 @@
 ---
 aliases:
-  - mental effort
+- mental effort
+sentiment:
+- 5
+sentiment-hash: '33534138'
+sentiment-label:
+- factual
+tags:
+- technical
+- self-reflection
+- work
 ---
-
 
 [[concentration]]
 

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 52009c57
+sentiment-label:
+- factual
+tags:
+- technical
+- communication
+---
+
 Geert Hofstede’s model identifies six key dimensions that describe how cultures differ in values, behaviors, and social norms. It’s widely used to understand cross-cultural [[communication]] and organizational behavior.
 
 dimensions

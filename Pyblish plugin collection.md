@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: 847a3d2a
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+- work
+---
+
 a collection of [[Pyblish plugin|Pyblish plugins]]
 
 to port

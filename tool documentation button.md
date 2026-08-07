@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 6
+sentiment-hash: fa8fec1d
+sentiment-label:
+- constructive
+tags:
+- journal
+- technical
+- communication
+- work
+---
+
 # Tool UX: User
 A great UX improvement, is to have a link to the docs from your tools.
 This way users always know where the docs live.

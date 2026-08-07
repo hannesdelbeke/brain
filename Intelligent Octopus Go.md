@@ -1,6 +1,16 @@
 ---
 aliases:
-  - smart charge
+- smart charge
+sentiment:
+- 5
+sentiment-hash: ff4f078e
+sentiment-label:
+- factual
+tags:
+- technical
+- financial
+- home
+- finance
 ---
 
 When it charges [[off-peak]], it costs only 7p / kWh, instead of 28p.

@@ -1,4 +1,14 @@
-
+---
+sentiment:
+- 5
+sentiment-hash: 14ff0685
+sentiment-label:
+- factual
+tags:
+- financial
+- finance
+- travel
+---
 
 - comes with [[travel insurance]], info and claim [here](https://www.hsbc.co.uk/help/coronavirus/travel-guidance/whats-covered-under-hsbc-travel-insurance/)
 	- in UK it requires 2+ days of booked accommodation or transport.

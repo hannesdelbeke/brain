@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: 3359946e
+sentiment-label:
+- anticipative
+tags:
+- planning
+- financial
+- outdoors
+- travel
+- finance
+---
 
 - St Johns Beacon Tour - £8.00
 - squirrel reserve - Free

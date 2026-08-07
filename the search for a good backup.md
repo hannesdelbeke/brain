@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 5
+sentiment-hash: 15bc60d7
+sentiment-label:
+- organized
+tags:
+- planning
+- technical
+- work
+- hobby
+---
+
 i have lots of files on various locations
 hard drive, dropbox, github, ...
 

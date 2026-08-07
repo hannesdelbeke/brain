@@ -1,3 +1,17 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: c20743d4
+sentiment-label:
+- frustrated
+tags:
+- journal
+- technical
+- communication
+- work
+---
+
 - [[asset path is not relative]], detect and autofix
 - asset issues, solved by [[validator]]
 - tools are outdated

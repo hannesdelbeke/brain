@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 8c5c1951
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
 
 ```c++
 // MyEditorUtilityWidget.h

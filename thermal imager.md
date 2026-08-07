@@ -1,9 +1,17 @@
 ---
 aliases:
-  - thermal camera
+- thermal camera
+sentiment:
+- 5
+sentiment-hash: 65a4f6f3
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
 ---
 
- a thermal imager shows [[infrared]] lighting
+a thermal imager shows [[infrared]] lighting
 
 it can be used for nightvision, a.k.a. active IR [[covert illumination]] [article](https://www.sensorsinc.com/applications/military/covert-illumination)
 

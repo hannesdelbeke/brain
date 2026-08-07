@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 35e3292b
+sentiment-label:
+- factual
+tags:
+- medical
+- health
+---
 
 # Triglycerides
 

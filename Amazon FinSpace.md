@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: e3a81fad
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # Amazon FinSpace
 Amazon FinSpace is a data management and analytics service purpose-built for the financial services
 industry (FSI). FinSpace reduces the time you spend finding and preparing petabytes of financial data to

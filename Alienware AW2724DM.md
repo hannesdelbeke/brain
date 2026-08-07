@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f601afd2
+sentiment-label:
+- factual
+tags:
+- technical
+- home
+---
+
 weight Without stand: 9.66 lbs (4.38 kg)
 stand weight 2kg
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 004b23b6
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # object oriented programming (OOP) Example
 Imagine a game where you have a player and an enemy. 
 Each has attributes like position and health, and they can move.

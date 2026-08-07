@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: dcce4f1b
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 By default [[Blender]] only supports [[icon|icons]] in the [icon items](https://docs.blender.org/api/current/bpy_types_enum_items/icon_items.html) enum 
 
 Creating an operator takes 2 kwargs (e.g. see [the UILayout docs](https://docs.blender.org/api/current/bpy.types.UILayout.html))

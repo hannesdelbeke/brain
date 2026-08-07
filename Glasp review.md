@@ -1,3 +1,16 @@
+---
+energy: 5
+sentiment:
+- 4
+sentiment-hash: 94673cbe
+sentiment-label:
+- critical
+tags:
+- technical
+- planning
+- self-reflection
+---
+
 Glasp seems great for taking notes, but not for importing in Obsidian.
 ## cons
 - not easy to import notes to Obsidian

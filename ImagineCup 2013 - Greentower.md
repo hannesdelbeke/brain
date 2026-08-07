@@ -1,3 +1,19 @@
+---
+energy: 6
+sentiment:
+- 8
+sentiment-hash: 41cb6243
+sentiment-label:
+- satisfied
+tags:
+- journal
+- memory
+- creative
+- self-reflection
+- hobby
+- work
+---
+
 I was quite happy with my concept art and how the [[handpainted]] assets turned out. The art style was consistent.
 We had decent animations and UI. 
 The VFX needed more love.

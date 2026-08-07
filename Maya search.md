@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: f4edfcc5
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 A command [[search bar]] added in [[Autodesk Maya|Maya]] 2022
 ![[Maya search-1761664071201.jpeg]]
 

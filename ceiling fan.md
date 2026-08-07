@@ -1,3 +1,15 @@
+---
+sentiment:
+- 5
+sentiment-hash: c636d457
+sentiment-label:
+- factual
+tags:
+- planning
+- technical
+- home
+---
+
 ### Pros
 - A ceiling fan is **quieter** than a portable fan. The bigger blades move the same amount of air with a slower rotation.
 - A cleaner look, integrated in the room, compared to desk fans. 

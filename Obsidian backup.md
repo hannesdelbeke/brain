@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: f59e99d8
+sentiment-label:
+- factual
+tags:
+- technical
+- planning
+---
+
 # Backups
 To avoid losing notes when the hard drive crashes or gets stolen, we need backups
 

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: 476e0db2
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 # AWS Step Functions
 AWS Step Functions is a fully managed service that makes it easy to coordinate the components of
 distributed applications and microservices using visual workflows. Building applications from individual

@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 622b6b48
+sentiment-label:
+- factual
+tags:
+- technical
+- hobby
+---
+
 Play on another PC or laptop 
 - log into Steam on both computers. 
 - visit your Steam Library to start streaming between them. 

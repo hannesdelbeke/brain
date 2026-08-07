@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: ad6f97de
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 ## Challenges
 writing a custom class takes time
 using a dict is too primitive, and has no [[autocomplete|autocomplete]].

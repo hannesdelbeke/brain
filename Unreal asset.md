@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 88aafcd6
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 an asset in unreal is represented in python by [[unreal.assetData]]
 e.g. [[unreal.AssetRegistry]] will be used to get them
 

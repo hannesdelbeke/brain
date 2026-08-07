@@ -1,3 +1,17 @@
+---
+energy: 6
+sentiment:
+- 6
+sentiment-hash: ccd1be95
+sentiment-label:
+- analytical
+tags:
+- technical
+- creative
+- planning
+- hobby
+---
+
 great overview of the features & addons https://ayon.ynput.io/features
 
 ## con

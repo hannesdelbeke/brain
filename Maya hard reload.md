@@ -1,3 +1,14 @@
+---
+sentiment:
+- 5
+sentiment-hash: 7ba926ed
+sentiment-label:
+- factual
+tags:
+- technical
+- work
+---
+
 https://github.com/csaez/hard_reload
 hard_reload is a neat little widget, to delete python module from memory, so they can be cleanly re-imported.
 `importlib.reload` doesn't always does it as cleanly.

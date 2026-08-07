@@ -1,7 +1,16 @@
 ---
 aliases:
-  - LA
+- LA
+sentiment:
+- 5
+sentiment-hash: 7ec9f8cb
+sentiment-label:
+- factual
+tags:
+- medical
+- health
 ---
+
 Food sources of [[omega-6]] are called LAs, [include](https://www.ncbi.nlm.nih.gov/labs/pmc/articles/PMC7990530/)
 ### sources
 mostly nuts, seeds, and beans

@@ -1,3 +1,13 @@
+---
+sentiment:
+- 5
+sentiment-hash: da80c99c
+sentiment-label:
+- factual
+tags:
+- technical
+---
+
 Figma is a cloud based app that let's UI designers collaborate in the same file.
 
 Every element is a node.
