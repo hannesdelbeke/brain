@@ -1,10 +1,10 @@
 ---
 author: Rands (Michael Lopp)
 sentiment:
-- 5
-sentiment-hash: 5bba19a2
+- 7
+sentiment-hash: 64e5269c
 sentiment-label:
-- factual
+- inspired
 source: https://randsinrepose.com/archives/i-hate-fish/
 tags:
 - productivity
