@@ -36,7 +36,7 @@ Rands argues that people treat productivity systems like fish: they keep insisti
 - **The Failure State:** Systems die when lists grow so long that "signal" is lost in the "noise."
 
 ## The "Hostile" Approach
-Rands suggests a system should be "hostile" to prevent task hoarding:
+Rands suggests a system should be "hostile" to prevent task [[hoarding]]:
 - **The 30-Day Auto-Delete:** If a task has no due date and no updates for 30 days, it should be deleted.
 - **Time as a Filter:** Most things that seem "[[urgent]]" when requested by others are objectively irrelevant a week later.
 
