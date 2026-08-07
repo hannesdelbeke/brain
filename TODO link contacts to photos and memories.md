@@ -9,3 +9,4 @@ Combine this with [[2026-02-19 Obsidian auto complete app URI|Obsidian auto comp
 
 Or if you have a memory named `2012-01-01 new year party`, you just start typing `[[new year` and it auto completes the memory name.
 
+[[ontology]]
