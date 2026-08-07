@@ -1,4 +1,9 @@
 
+
+> [!success] solved
+> solved with custom css
+
+
 Default Obsidian styling in the dark theme:
 - <span style="background:#202020; color:#dcddde">This sentence is <font color="#7f6df2"><u>easy to read</u></font> without <font color="#99caf"><u>visual</u></font> interruption.</span>
 A sentence with normal text formatting is easier to read:
