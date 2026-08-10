@@ -10,3 +10,5 @@ tags:
 
 BQt enables [[Qt]] in [[Blender]]
 https://github.com/techartorg/bqt
+
+someone else made a c alternative: https://github.com/minimalefforttech/blender_qt

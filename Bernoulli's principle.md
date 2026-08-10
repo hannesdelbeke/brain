@@ -1,11 +1,15 @@
 ---
+energy: 6
 sentiment:
-- 5
+- 7
 sentiment-hash: e3d03343
 sentiment-label:
-- factual
+- curious
 tags:
 - technical
+- science
+- physics
+- education
 ---
 
 when you blow in a bag from outside the bag, the bag inflates quicker than if you put your lips against the bag and blow it up like a balloon.

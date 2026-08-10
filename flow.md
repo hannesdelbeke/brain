@@ -1,16 +1,21 @@
 ---
-energy: 6
+energy: 8
 sentiment:
-- 7
-sentiment-hash: 2090e973
+- 8
+sentiment-hash: a6ff8058
 sentiment-label:
-- inspired
+- focused
 tags:
 - journal
 - creative
 - self-reflection
 - work
 - hobby
+- technical
+- planning
+- productivity
+- mental state
+- programming
 ---
 
 When [[mental resistance]] is low, you are in a state of flow
