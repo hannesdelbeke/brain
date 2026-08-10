@@ -3,10 +3,13 @@ sentiment:
 - 5
 sentiment-hash: bc3e8cd9
 sentiment-label:
-- factual
+- neutral
 tags:
 - technical
 - home
+- technology
+- gaming
+- hardware
 ---
 
 a [[monitor light bar]]
