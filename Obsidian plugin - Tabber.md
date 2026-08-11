@@ -16,6 +16,16 @@ The user clicks the [[tab]] of their coding language
 
 ![[Obsidian Tabber-1674600128447.jpeg|150]]
 
+not a fan of below anymore
+i often dont use callouts because of the mess they add. all the > it adds.
+makes it a bit more annoying to edit text.
+start col 1
+markdown content
+end col 1 approach would be more markdown friendly IMO. which would work better in obsidian UX.
+similar to content tabs in MkDocs, or the Advanced Multi Column plugin.
+
+However if we move away from obsidian it wouldn't matter.
+
 Proposal for a [[Obsidian plugin]] #pluginidea 
 > [!info]+ Tabber proposal
 > - markdown friendly
