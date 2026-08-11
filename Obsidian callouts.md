@@ -1,11 +1,14 @@
 ---
 sentiment:
-- 5
+  - 5
 sentiment-hash: 1e1ad2e9
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
+  - technical
+aliases:
+  - callout
+  - callouts
 ---
 
 test page with all callouts

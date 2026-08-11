@@ -8,6 +8,6 @@ tags:
 - technical
 - work
 ---
-
+succeeded by [[zensical]]
 create a site from [[Markdown]] files 
 https://www.mkdocs.org/
