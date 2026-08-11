@@ -16,12 +16,17 @@ The user clicks the [[tab]] of their coding language
 
 ![[Obsidian Tabber-1674600128447.jpeg|150]]
 
-not a fan of below anymore
-i often dont use callouts because of the mess they add. all the > it adds.
+not a fan of complex callouts anymore
+i often dont use callouts because of the mess they add. all the `>` it adds.
 makes it a bit more annoying to edit text.
+I often instead [[keep it simple]] and make a new note instead of a long [[Obsidian callouts|callout]].
+
+```
 start col 1
 markdown content
-end col 1 approach would be more markdown friendly IMO. which would work better in obsidian UX.
+end col 1 
+```
+This approach would be more markdown friendly IMO. which would work better in obsidian UX.
 similar to content tabs in MkDocs, or the Advanced Multi Column plugin.
 
 However if we move away from obsidian it wouldn't matter.
@@ -57,7 +62,6 @@ Proposal for a [[Obsidian plugin]] #pluginidea
 ![[Obsidian Tabber-1674601442427.jpeg]]
 
 [discussion](https://forum.obsidian.md/t/tabber-plugin/53054) in Obsidian  forum
-
 ### Steps for nice UX in Obsidian
 - [ ] plugin to preview tabs in Obsidian 
 	⚠️ GREAT [reference](https://marcus.se.net/obsidian-plugin-docs/editor/markdown-post-processing) on editing HTML with markdown post processor.
@@ -70,7 +74,7 @@ Proposal for a [[Obsidian plugin]] #pluginidea
 
 ### MkDocs content tabs
 https://squidfunk.github.io/mkdocs-material/reference/content-tabs/
-mkdocs already supports a tabber! it looks bad in Obsidian though
+[[MkDocs|mkdocs]] already supports a tabber! it looks bad in Obsidian though
 https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
 ```
 === "Tab 1"
@@ -97,6 +101,7 @@ https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/
 >     - list item a
 >     - list item b
 
+splitting the above in 2 sep notes allows AI to just send the relevant workflow, saving [[AI tokens]]
 ### tabber CSS hack in Obsidian
 - someone made a hacky tabber solution for Obsidian
   mixing HTML in the text, and using CSS to render the tabs.
