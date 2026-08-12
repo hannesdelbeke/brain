@@ -24,7 +24,7 @@ I rather write notes & stories than watch [[reels]], but reels are more accessib
 
 ## Get portable hardware
 > [!NOTE]- My laptop is too big to always have one me
-> My [[laptop]] is too big and heavy for easily carrying in my backpack when I go on a trip. I want to take it on a train, and a plane. 
+> My [[2026-08-12 laptop]] is too big and heavy for easily carrying in my backpack when I go on a trip. I want to take it on a train, and a plane. 
 
 > [!NOTE]- I consider a tablet
 > So I need something [[portable]] & thin. Like a [[tablet]] with keyboard. Or a mini laptop.
