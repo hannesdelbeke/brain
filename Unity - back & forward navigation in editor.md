@@ -13,7 +13,7 @@ tags:
 [[Unity]]'s [[UX]] doesn't support navigating back to the previous [[most recent]] selected asset, with mouse back/forward buttons.
 
 The current best workaround:
-https://github.com/BedtimeDigitalGames/Unity-Editor-History
+	https://github.com/BedtimeDigitalGames/Unity-Editor-History
 a [[Unity tool]] that supports mouse back & forward 
 
 > [!NOTE]- other solutions
@@ -34,7 +34,6 @@ forum [thread](https://discussions.unity.com/t/feature-request-history-favorites
 - lists various solutions
 - most solutions don't handle multi selection
 - [official feature request](https://portal.productboard.com/ca1chnbwvzw1eg5yjc5rijnj/c/393-selection-logger) is now marked as released
-
 
 
 PS: 
