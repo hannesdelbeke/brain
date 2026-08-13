@@ -1,14 +1,15 @@
 ---
 aliases:
-- symlink
-- sym link
+  - symlink
+  - sym link
+  - symlinks
 sentiment:
-- 5
+  - 5
 sentiment-hash: 70dc3600
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
+  - technical
 ---
 
 a type of file that acts as a pointer to another file or directory

@@ -11,7 +11,9 @@ tags:
 - work
 ---
 
-This was an old idea, before I knew you could embed UPM packages.
+> [!warning]
+> This was an old idea, before I knew you could embed [[Unity Package Manager|UPM]] packages.
+
 ## Proposal
 Create a local package that adds other local packages
 https://docs.unity3d.com/Manual/upm-localpath.html
