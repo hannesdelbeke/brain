@@ -1,12 +1,13 @@
 ---
-aliases: null
+aliases:
+  - AI agents
 sentiment:
-- 5
+  - 5
 sentiment-hash: 0a47ba5f
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
+  - technical
 ---
 
 [[Artificial intelligence|AI]]
