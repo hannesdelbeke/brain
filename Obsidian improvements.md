@@ -21,6 +21,7 @@ Don't spend more time on notes than work.
 - [ ] fix to prevent [[obsidian git backup can fail]]
 - [ ] [[Obsidian web integration]] would allow for community growth
 - [ ] use obsidian with separated streams of notes / submodules (submodule have issues)
+	- i mostly use submodules for this. not run into many issues so far.
 	exclude download of some folders to your pc. e.g. personal / work
 	ideally even exclude from the git repo, to avoid any accidental leaking of data.
 	You could use another vault, but then you can't link in your master vault on your own pc.
@@ -30,12 +31,15 @@ Don't spend more time on notes than work.
 	- [ ] action to auto sync from gitwiki to repo
 - [ ] right click and button hover show short keys, [thread](https://forum.obsidian.md/t/adding-shortcuts-to-the-right-click-context-menu/46160) 
 - [ ] [[note linking duplicate source]]
-- [ ] color a orange border around a note, if the note is unlinked
+- [x] color a orange border around a note, if the note is unlinked
+	- [x] [[Obsidian - color unlinked notes red]]
 - [x] improve [[navigate sibling page]], next & previous button
 - [x] automatic support for submodules, workaround for manually pulling and pushing submodules., see [[Obsidian submodule]]
 - [x] [[Obsidian auto collapse linked mentions]] (Work around)
-- [ ] this [[Obsidian plugin - paste URL in selection|plugin]] : when you copy a URL, select a word and paste. it wraps that word in the URL. I want this also if i copy paste a wikilink, like this `[[favorite]]`
+- [x] this [[Obsidian plugin - paste URL in selection|plugin]] : when you copy a URL, select a word and paste. it wraps that word in the URL. I want this also if i copy paste a wikilink, like this `[[favorite]]`
+	- [ ] [[Obsidian plugin - paste URL in selection]]
 - [x] [[Obsidian paste img png to jpg]]
+- [x] [[collapse properties problem]]
 
 my own workflow improvements, not related to obsidian
 - [ ] [[minimize pkm image size]]

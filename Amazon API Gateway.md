@@ -9,7 +9,6 @@ tags:
 - technical
 - work
 ---
-
 # Amazon API Gateway
 https://aws.amazon.com/api-gateway/
 
