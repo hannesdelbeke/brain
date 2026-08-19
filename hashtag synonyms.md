@@ -46,3 +46,5 @@ related: nested tags, e.g. `#writing, #writing/academic`
 [[hashtag]]
 
 [discuss](https://www.reddit.com/r/PKMS/comments/10a07wh/comment/j42frm2/?context=3) in reddit
+
+Is this is a limitation of obsidian?

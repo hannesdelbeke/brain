@@ -18,7 +18,7 @@ notes by thomasjfrank, [source](https://thomasjfrank.com/the-power-of-habit/)
 ## Chapter 1
 - Habit loop
     - cue, routine, reward
-- [[habit|Habits]] are super-important – they let our brains save energy and size for other things
+- [[public/habit|Habits]] are super-important – they let our brains save energy and size for other things
 - Eugene could function almost normally without a memory due to his habits
     - He could also build new habits over time
 - Habits are also delicate – if the cue isn’t there, they won’t trigger
