@@ -1,4 +1,11 @@
-I was doing human, ai, human, ai git commits to [[linking to git commits and diffs in obsidian via uri|this note]]
+I was doing git commits to [[linking to git commits and diffs in obsidian via uri|this note]], in order of:
+1. human
+2. ai
+3. human
+4. ai 
+
+which attributes it nicely with [[git author]]
+
 But then decided to extract part of it to [[link to git historic notes devlog|this note]], losing all this human/AI history. It's indirectly accessible, both file changes in same commit.
 Would AI and scripts used in future be smart enough to find this indirect history?
 
