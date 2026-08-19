@@ -18,7 +18,7 @@ opensource
 Done
 - [[unimenu]] wiki standardized menu creation across in dcc apps
 	- [[unimenu addon]] demo addon for blender to easy setup unimenu
-- [[figmapy]] done, need more work on async and simplify UX downloading 
+- [[public/figmapy]] done, need more work on async and simplify UX downloading 
 - [[BQt]] wrap blender in bqt
 - [[note-link-janitor]](JavaScript) GitHub action to add backlinks to .md files
 - [[3Ds Max - bend modifier tool]] create bend modular meshes that fit exactly on a grid

@@ -16,7 +16,7 @@ file
 		page
 
 [[Figma]]
-[[figmapy]]
+[[public/figmapy]]
 
 to avoid circular imports, import in this order:
 
