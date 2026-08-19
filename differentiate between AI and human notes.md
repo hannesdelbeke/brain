@@ -38,7 +38,7 @@ would you be able to detect between different AI models? ideally we show in auth
 and handle partial commits like part AI part human or human copy pasting AI.
 
 > [!ai]- 1. Model Distinction in Git Author & Co-Author
-> - **Primary Author vs. Co-Author:**
+> - **Primary [[git author]] vs. Co-Author:**
 >   - Direct agent commits: `Author: claude-3-7-sonnet <claude@anthropic.com>` or `gemini-2-5-pro <gemini@google.com>`.
 >   - Human commits incorporating AI drafts / partial edits: Keep human as `Author: hannesdelbeke` and append standard Git trailers in the commit message:
 >     ```git
