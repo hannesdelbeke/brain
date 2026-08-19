@@ -18,10 +18,11 @@ Would AI and scripts used in future be smart enough to find this indirect histor
 ---
 
 ## Related Notes
-- [[history]] — Central MOC for note provenance, Git history, and temporal tracking.
-- [[how to keep history]] — Moving notes between private vault and public repository while preserving Git commits.
-- [[linking to git commits and diffs in obsidian via uri]] — How the original note linked to Git history before devlog extraction.
-- [[wikilink temporal integrity]] — Automating link drift detection based on extraction timestamps.
-- [[link to git historic notes devlog]] — Devlog created during the extraction mentioned in this note.
+- [[history]] — Central MOC indexing line-level provenance alongside Git history workflows and temporal integrity.
+- [[link to git historic notes devlog]] — The concrete extracted note tested in this experiment: verified with `git blame -C` that human vs AI lines survived extraction.
+- [[linking to git commits and diffs in obsidian via uri]] — The original source note from which the devlog content was extracted.
+- [[how to keep history]] — The cross-repository counterpart: explains how to transfer Git history when an extracted note is moved across submodule boundaries.
+- [[wikilink temporal integrity]] — Complements line provenance by ensuring links created during the extraction maintain their contextual snapshot meaning.
+
 
 
