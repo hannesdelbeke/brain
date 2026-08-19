@@ -10,6 +10,7 @@ tags:
 - procrastination
 - work
 ---
+see [[agentic note taking]]
 
 [[improve workflow]]
 [[productivity flywheel]]

@@ -42,3 +42,5 @@ to [[visualize time spent]], it would be great to see:
 
 ---
 AI suggested this might be a good idea for [[ontology]]
+
+task example, solved by AI [[Obsidian note per tag]]
