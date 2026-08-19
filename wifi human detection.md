@@ -15,3 +15,4 @@ tags:
 - estimate dense human pose https://github.com/superstar1225/DensePose_from_WiFi
 
 [[WiFi]]
+[[human]]
