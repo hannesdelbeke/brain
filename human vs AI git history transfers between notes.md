@@ -14,3 +14,13 @@ Would AI and scripts used in future be smart enough to find this indirect histor
 > 3. **Preserving Fine-Grained Provenance (Best Practice):**
 >    - Committing extraction changes explicitly (e.g. `refactor: extract devlog from URI note`) makes intent unambiguous.
 >    - Adding a footer/backlink like `extracted-from: [[linking to git commits and diffs in obsidian via uri]]` allows instant static link traversal without needing to run `git log -C`.
+
+---
+
+## Related Notes
+- [[how to keep history]]
+- [[history]]
+- [[wikilink temporal integrity]]
+- [[linking to git commits and diffs in obsidian via uri]]
+- [[link to git historic notes devlog]]
+
