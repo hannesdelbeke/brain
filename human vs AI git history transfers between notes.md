@@ -18,9 +18,10 @@ Would AI and scripts used in future be smart enough to find this indirect histor
 ---
 
 ## Related Notes
-- [[how to keep history]]
-- [[history]]
-- [[wikilink temporal integrity]]
-- [[linking to git commits and diffs in obsidian via uri]]
-- [[link to git historic notes devlog]]
+- [[history]] — Central MOC for note provenance, Git history, and temporal tracking.
+- [[how to keep history]] — Moving notes between private vault and public repository while preserving Git commits.
+- [[linking to git commits and diffs in obsidian via uri]] — How the original note linked to Git history before devlog extraction.
+- [[wikilink temporal integrity]] — Automating link drift detection based on extraction timestamps.
+- [[link to git historic notes devlog]] — Devlog created during the extraction mentioned in this note.
+
 
