@@ -13,7 +13,7 @@ Your brain can only hold so much info at a time, so it uses tricks to do more.
 
 - [[chunking]]: Abstracting multiple concepts into 1 concept, allows your brain to understand the whole picture without taking up as much brainpower.
 	e.g. chess players recognize moves based on the whole board
-- [[habit|habits]] let you do tasks with a reduced [[cognitive load]].
+- [[public/habit|habits]] let you do tasks with a reduced [[cognitive load]].
 - [[cache]] - recent events are more likely to predict the near future than past events. Recent memories are more relevant than old ones. That's why we forget, the brain is efficient, [[optimization|optimizing]] itself. - [[Ebbinghaus's Forgetting Curve]]
 
 ## others

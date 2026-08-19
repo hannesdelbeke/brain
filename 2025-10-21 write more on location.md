@@ -19,7 +19,7 @@ I rather write notes & stories than watch [[reels]], but reels are more accessib
 
 - how can I write when not at my pc?
 	- get [[portable]] [[hardware]]
-	- make it a [[habit]] of always bringing the hardware
+	- make it a [[public/habit]] of always bringing the hardware
 - make it a habit to write instead of watch reels
 
 ## Get portable hardware

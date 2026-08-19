@@ -1,2 +1,2 @@
 [[writing]]
-[[habit]]
+[[public/habit]]

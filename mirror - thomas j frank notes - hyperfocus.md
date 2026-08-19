@@ -186,7 +186,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Most important aspect: **“…that only one productive or meaningful task consumes your attentional space.”**
 - The more demands there are on your time, the more critical it is to hyperfocus
     - Counterintuitive, as when we’re super-busy and overburdened, it feels like we should be juggling lots of tasks.
-- Hyperfocus is for complex tasks, not [[habit|habits]]. Two reasons why:
+- Hyperfocus is for complex tasks, not [[public/habit|habits]]. Two reasons why:
     - Requires [[willpower]] and mental energy to activate. We have a limited store of this each day, so it’s best to use it on the complex things. Habit-based tasks are easy to initiate on an almost automatic basis.
     - Performance on complex tasks increases through conscious focus. However, performance on habit-based tasks _decreases_ through this focus.
         - _When you try to exert conscious control over something that has become unconscious or governed by muscle memory or instinct, you become worse at it. Your conscious mind is actually a lot weaker than your subconscious for these types of tasks. It’s slow, clumsy, and can only focus on one element – which is usually not enough. You clamp down on your subconscious mind’s ability to handle things._
