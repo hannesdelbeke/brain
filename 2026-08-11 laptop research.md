@@ -4,10 +4,6 @@ tags:
   - tech
   - review
 origin-sha: 645baa21b
-authorship:
-  generated-by: hybrid
-  committed-by: human
-  ai-proportion: 60%
 ---
 Comparison and used-market buying guide across ThinkPad X1 Yoga / 2-in-1 generations (Gen 7–11), Razer Blade 15, and Surface Pro 11.
 

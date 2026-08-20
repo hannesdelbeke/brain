@@ -4,10 +4,6 @@ tags:
   - tech
   - review
 origin-sha: 47c6734e6e0f
-authorship:
-  generated-by: copilot
-  committed-by: human
-  ai-proportion: 90%
 ---
 Early lightweight laptop and 2-in-1 research exploring thin tablet and hybrid form factors with stylus and Thunderbolt support.
 
