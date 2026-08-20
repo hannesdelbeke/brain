@@ -48,7 +48,7 @@ For human commits incorporating AI drafts or assistance, keep the human author a
 Co-authored-by: gemini-3-7-flash <gemini@google.com>
 ```
 
-Using native Git author metadata eliminates the need for `#ai-generated` [[tag|tags]], keeping notes shorter and adhering to [[minimal notetaking]]. Author rules are documented in [[AGENTS]].
+Using native Git author metadata eliminates the need for `#ai-generated` [[tag|tags]], keeping notes shorter and adhering to [[minimal notetaking]]. Author rules are documented in `AGENTS.md`
 
 ## Test Case Audits & Post-Mortem
 
@@ -61,3 +61,7 @@ Using native Git author metadata eliminates the need for `#ai-generated` [[tag|t
 - [[2026-07-31 historic obsidian links]] — Learning from past commit patterns.
 - [[link to git historic notes devlog]] — Tracking prompt commits and history.
 - [[track prompt history]] — Dedicated log or browser-like history for prompts.
+
+LLM text watermarks:
+- [How Claude marks AI-generated content](https://support.claude.com/en/articles/16266773-how-claude-marks-ai-generated-content) - could be used to detect Claude
+- Google embeds an invisible statistical watermark called SynthID
