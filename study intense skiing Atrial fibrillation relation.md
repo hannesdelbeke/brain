@@ -59,3 +59,5 @@ Also, it was an observational study, so it shows associations, not absolute proo
 ## Bottom line
 
 Doing regular hard aerobic exercise like cross-country skiing **did not increase stroke or irregular heartbeat risk** in this study
+
+[[clinical study]]
