@@ -35,8 +35,5 @@ When an [[AI agent|AI agent]] reads an older note, it checks `git blame` to see 
 - [[2026-07-31 historic obsidian links]] — Extracting historical graph edge birth/death timestamps from Git.
 - [[human vs ai text context]] — Preserving Git timestamps required for temporal resolution when moving notes across submodules.
 - [[agentic note taking]] — AI agents inspecting past revisions based on when a task was formulated.
-- [[differentiate between AI and human notes]] — Distinguishing whether a historical link was created by a human or an AI agent.
+- [[algo to differentiate between AI and human notes]] — Distinguishing whether a historical link was created by a human or an AI agent.
 - [[Obsidian plugin - Git]] — Underlying Git engine providing local logs and diff views for temporal resolution.
-
-
-

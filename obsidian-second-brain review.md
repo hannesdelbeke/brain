@@ -29,6 +29,6 @@ Good source of architectural ideas, but don't install the full automated suite. 
 ### References
 - [[public/offline GPU embeddings with incremental cache]] — lightweight local embedding alternative without API dependencies.
 - [[agentic note taking]] — patterns for agent-assisted note generation.
-- [[differentiate between AI and human notes]] — preserving authorship attribution in hybrid vaults.
+- [[algo to differentiate between AI and human notes]] — preserving authorship attribution in hybrid vaults.
 
 [[agentic note taking]]

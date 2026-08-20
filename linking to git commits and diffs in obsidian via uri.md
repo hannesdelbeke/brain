@@ -65,10 +65,7 @@ The `obsidian-git` plugin does not accept commit SHAs via URI. To trigger a loca
 - [[wikilink temporal integrity]] — Resolves links via Git timestamps automatically without manual commit URIs.
 - [[link to git historic notes devlog]] — Hands-on testing of URI schemes and Obsidian Git internals.
 - [[human vs ai text context]] — Preserving commit SHAs when moving notes between submodules.
-- [[public/human vs AI git history transfers between notes]] — How diffs preserve author provenance across extractions.
+- [[human vs AI git history transfers between notes]] — How diffs preserve author provenance across extractions.
 - [[2026-07-31 historic obsidian links]] — Recovering deleted links and conceptual drift invisible in current notes.
 - [[Obsidian plugin - Git]] — Target integration for extending obsidian-git with diff URIs.
 - [[agentic note taking]] — AI agents following commit URIs to learn from historical revisions.
-
-
-

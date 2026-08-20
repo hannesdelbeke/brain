@@ -33,6 +33,6 @@ Markdown fallbacks when no direct endpoint exists:
 - 🟢 [freeCodeCamp/devdocs](https://github.com/freeCodeCamp/devdocs) ⭐39313 — offline searchable copies of hundreds of API documentation sets.
 
 ### References
-- [[public/2026-08-19 AI tool research]] — review of Herdr, Roo Code, Devstral, and agent harnesses.
-- [[public/offline GPU embeddings with incremental cache]] — local vector search over markdown files.
-- [[public/how can we get value out of public notes]] — discovery and retrieval across external vaults.
+- [[2026-08-19 AI tool research]] — review of Herdr, Roo Code, Devstral, and agent harnesses.
+- [[offline GPU embeddings with incremental cache]] — local vector search over markdown files.
+- [[how can we get value out of public notes]] — discovery and retrieval across external vaults.

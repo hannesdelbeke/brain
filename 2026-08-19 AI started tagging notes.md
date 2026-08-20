@@ -25,5 +25,5 @@ but should we use it?
 - [[use wikilinks instead of hashtags]]
 - [[note types]]
 - [[no hashtag support in obsidian link]]
-- [[differentiate between AI and human notes]]
+- [[algo to differentiate between AI and human notes]]
 
