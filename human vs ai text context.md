@@ -4,6 +4,8 @@ tags:
   - pkm
   - metadata
   - maintenance
+aliases:
+  - human vs AI authorship
 ---
 ## Summary
 - **Cross-submodule migration problem:** Moving notes across submodule boundaries drops Git history, birth dates, and author attribution.
