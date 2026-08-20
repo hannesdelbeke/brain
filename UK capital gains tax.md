@@ -15,6 +15,7 @@ current allowance for
 
 [[UK tax]]
 [[capital gains]]
+[[capital gains tax]]
 
 | tax rate    | tax |
 | ----------- | --- |
