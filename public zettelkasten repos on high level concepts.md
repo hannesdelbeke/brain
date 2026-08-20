@@ -4,6 +4,8 @@ searched github by topic (`zettelkasten`, `digital-garden`, `second-brain`, `obs
 
 sorted by what the notes are about rather than by whether anyone still writes them. staleness is not a disqualifier for a note collection, it is a disqualifier for a tool: a frozen vault still reads fine, a frozen plugin stops loading. the dead ones are better than the live ones on average, because the live ones are competing for stars and the dead ones were written for the author.
 
+indexed from [[2026-08-20 domain masters hub]], which covers authoritative seeds across domains.
+
 > [!info] Reference
 > 🟢 pushed this quarter, 🟡 quiet for months, 🔴 finished, abandoned or the author is gone. ⭐ is stars as of 2026-08-20.
 
