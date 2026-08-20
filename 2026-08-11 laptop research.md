@@ -8,11 +8,12 @@ Comparison and used-market buying guide across ThinkPad X1 Yoga / 2-in-1 generat
 
 ## Generation Overview
 
-- **Gen 7 (2022, 12th Gen i7-1270P/1280P):** Garaged pen, £300–450 used. Baseline value option with identical ports/chassis to Gen 8.
-- **Gen 8 (2023, 13th Gen i7-1360P, 12c/28W):** Garaged pen, £350–550 used. The sweet spot. Modest CPU bump over Gen 7 with identical chassis.
-- **Gen 9 (2024, Ultra 5/7 U-series, 15W):** Magnetic side pen, ~£1,050 used. Skip. Lost pen garage and downgraded to 15W 2-core CPU.
-- **Gen 10 (2025, Lunar Lake Ultra 7 258V/268V):** Magnetic side pen, £1,400+ used. Skip. Efficient, but expensive and capped at 8 cores.
-- **Gen 11 (2026, Panther Lake Ultra X7 368H, 16c):** Bottom recess garaged pen, ~£1,900 new. Future buy (~2028) once off corporate leases.
+- 🟢 **Gen 8 (2023, 13th Gen i7-1360P, 12c/28W):** The buy (£350–550 used). Garaged pen, 12-core CPU, identical solid chassis.
+- 🟢 **Gen 7 (2022, 12th Gen i7-1270P/1280P):** Strong budget buy (£300–450 used). Same chassis, ports, and garaged pen as Gen 8.
+- 🟡 **Gen 11 (2026, Panther Lake Ultra X7 368H, 16c):** Future buy (~2028). Redesigned bottom recess garaged pen, ~£1,900 new; wait for enterprise off-lease.
+- 🟡 **Surface Pro 11 (Snapdragon ARM):** Wait for refresh (£970–1,230 used). Great battery, but x86 Docker emulation hurdles.
+- 🔴 **Gen 9 (2024, Ultra 5/7 U-series, 15W):** Skip (~£1,050 used). Lost pen garage (magnetic side) and downgraded to 15W 2-core CPU.
+- 🔴 **Gen 10 (2025, Lunar Lake Ultra 7 258V/268V):** Skip (£1,400+ used). Lost pen garage, expensive, and capped at 8 cores.
 
 ## Comparison with Razer Blade 15
 
@@ -34,23 +35,33 @@ Upgrading from the [[razor blade 15 rz09-02705w76 2018|Razer Blade 15]] (i7-8750
 
 **Gen 8 (Primary Pick)**
 Last true "X1 Yoga" before Lenovo switched naming to "X1 2-in-1" and removed the built-in pen garage. 32GB models run £350–550 used.
+🟢 **Verdict: The Buy.** Best balance of 13th Gen multi-core speed, garaged stylus, and used market value.
 
 **Gen 7 (Budget Alternative)**
 If priced at £300–400, it offers nearly identical daily performance and chassis build for less money.
-
-**Gens 9 and 10 (Skip)**
-Lenovo dropped the pen garage for a side magnetic pen and shifted to lower-power 15W U-series chips. A £1,050 Gen 9 compiles code slower than a £450 Gen 7.
+🟢 **Verdict: Strong Buy on Discount.** Identical chassis and garaged pen if found under £400.
 
 **Gen 11 (Future Target ~2028)**
 16-core Panther Lake, under 1.2 kg, and restored garaged charging recess in the bottom panel. Target used around 2028 when enterprise lease cycles conclude.
+🟡 **Verdict: Future Buy (~2028).** Outstanding hardware, but ~£1,900 new with no used market yet.
 
-**Surface Pro 11 (Wait for Refresh)**
+**Surface Pro 11 (Snapdragon ARM)**
 32GB/1TB runs £970–1,230 used on Snapdragon ARM. Strong for text editing and web tasks, but x86 Docker containers still run under emulation.
+🟡 **Verdict: Wait for Refresh.** ARM emulation trade-offs and X2 Elite refresh will push prices down.
+
+**Gen 9 (Skip)**
+Lenovo dropped the pen garage for a side magnetic pen and shifted to lower-power 15W U-series chips. A £1,050 Gen 9 compiles code slower than a £450 Gen 7.
+🔴 **Verdict: Skip.** Slower 2-performance-core CPU and losable magnetic pen.
+
+**Gen 10 (Skip)**
+Efficient Lunar Lake chip, but thermally limited, capped at 8 cores, missing the pen garage, and £1,400+ used.
+🔴 **Verdict: Skip.** Overpriced for an 8-core machine with no garaged pen.
 
 ## Bottom Line
 
-- **Buy now:** ThinkPad X1 Yoga Gen 8 at £400–550 (or Gen 7 at £300–400).
-- **Future:** Revisit Gen 11 around 2028.
+- 🟢 **Buy now:** ThinkPad X1 Yoga Gen 8 at £350–550 (or Gen 7 at £300–400).
+- 🟡 **Wait & revisit:** Gen 11 around 2028; Surface Pro 11 once X2 Elite refresh discounts used units.
+- 🔴 **Skip:** Gens 9 and 10.
 
 ### References
 - [[razor blade 15 rz09-02705w76 2018]] — Baseline hardware benchmark and existing workstation specs.
