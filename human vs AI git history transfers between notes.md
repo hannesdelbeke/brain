@@ -20,7 +20,7 @@ When parsing history via `git log -p`, scripts pair simultaneous deletions in th
 This tracking only works within a single repository. Moving notes across [[git submodule|git submodules]] severs Git history tracking unless commits are explicitly migrated with `git format-patch`.
 
 ### References
-- [[differentiate between AI and human notes]] — tracking author provenance across vault edits.
+- [[algo to differentiate between AI and human notes]] — tracking author provenance across vault edits.
 - [[linking to git commits and diffs in obsidian via uri]] — source note where the initial devlog content originated.
 - [[wikilink temporal integrity]] — resolving historical note states by commit timestamp.
 - [[human vs ai text context]] — preserving Git history when moving notes between submodules.
