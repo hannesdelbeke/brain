@@ -62,6 +62,17 @@ But using correct git author removes the need for [[tag|tags]], and as a bonus m
 	I added new git author instructions to [[AGENTS]]
 
 
+
+**4. Test Case Audit**
+
+[[2025-12-02 laptop research]]: Written 100% by [[Microsoft Copilot|Copilot]] 
+(rigid symmetric feature bullets, speculative M5 chip, "shopping notes" formula). Origin SHA: `47c6734e6e0f`. Published with `origin-sha` and committed with Copilot/AI git author.
+
+[[2026-08-11 laptop research]]: 100% AI gemini flash 3.7
+currently flagged as Hybrid note (~40% human specific pricing/used market constraints on ThinkPad X1 Yoga Gen 7/8 vs Razer Blade 15, ~60% AI structured comparison). Origin SHA: `645baa21b`. Ran through custom agent formatting rules. more recent, better AI research.
+
+
+
 ## Possible flaws
 - [x] [[human vs AI git history transfers between notes]]
 

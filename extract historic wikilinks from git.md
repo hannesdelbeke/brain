@@ -57,4 +57,4 @@ if __name__ == "__main__":
 - [[2026-07-31 historic obsidian links]] — research on why historical graph edges improve retrieval and detect conceptual drift.
 - [[wikilink temporal integrity]] — resolves links to their historical snapshot states based on commit timestamps.
 - [[linking to git commits and diffs in obsidian via uri]] — URI protocol schemes to inspect the commit diffs where links were edited.
-- [[how to keep history]] — preserving Git commit history when moving notes to `public/`.
+- [[human vs ai text context]] — preserving Git commit history when moving notes to `public/`.
