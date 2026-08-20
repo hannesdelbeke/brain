@@ -39,3 +39,4 @@ Notable public [[digital garden|digital gardens]] and [[Evergreen notes|evergree
 - **Logseq / SilverBullet** — local-first outliners with built-in publishing.
 
 [[public notes]]
+[[public zettelkasten repos on high level concepts]]
