@@ -3,6 +3,7 @@ tags:
   - solved
   - git
   - pkm
+origin-sha: 5c842fe4b
 ---
 When alternating commits between human and AI on [[linking to git commits and diffs in obsidian via uri]], authorship is tracked via [[git author]].
 

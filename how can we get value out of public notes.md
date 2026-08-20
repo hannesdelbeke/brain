@@ -3,6 +3,7 @@ tags:
   - pkm
   - digital-garden
   - research
+origin-sha: f202a3e0a
 ---
 Extracting value from public [[Obsidian note|notes]] and [[digital garden|digital gardens]] (like [[public zettelkasten repos on high level concepts|public zettelkasten repos]]):
 

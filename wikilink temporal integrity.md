@@ -4,6 +4,7 @@ tags:
   - git
   - obsidian
   - pkm
+origin-sha: 1cda10c56
 ---
 Notes change constantly, but the reasons we link them don't. When you link to a note, you're referencing how it looked *right then*, not how it might look three years later.
 
