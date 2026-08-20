@@ -25,6 +25,6 @@ git log --oneline -- '*.md' | wc -l
 
 proposed solution: [[extract historic wikilinks from git]]
 
-### related notes
+### References
 - [[wikilink temporal integrity]] — resolves links to their historical snapshot states based on commit timestamps.
 - [[linking to git commits and diffs in obsidian via uri]] — inspecting historical diffs via URI protocol.

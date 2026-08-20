@@ -143,7 +143,7 @@ benefits of custom script vs plugin
    # Cosine similarity in numpy across 3000 vectors takes < 2ms on CPU/GPU
    ```
 
-## related notes
+## References
 - [[token efficient PKM analysis architecture]]
 - [[2026-08-17 PKM review]]
 - [[what AI models can razor blade run]]

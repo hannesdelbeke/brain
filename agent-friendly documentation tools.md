@@ -32,7 +32,7 @@ Markdown fallbacks when no direct endpoint exists:
 - 🟡 [jina-ai/reader](https://github.com/jina-ai/reader) ⭐11886 — converts any web page to clean markdown by prefixing `https://r.jina.ai/`.
 - 🟢 [freeCodeCamp/devdocs](https://github.com/freeCodeCamp/devdocs) ⭐39313 — offline searchable copies of hundreds of API documentation sets.
 
-### related notes
+### References
 - [[public/2026-08-19 AI tool research]] — review of Herdr, Roo Code, Devstral, and agent harnesses.
 - [[public/offline GPU embeddings with incremental cache]] — local vector search over markdown files.
 - [[public/how can we get value out of public notes]] — discovery and retrieval across external vaults.

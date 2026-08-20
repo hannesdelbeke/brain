@@ -37,7 +37,7 @@ For how to discover and query external vaults, see [[public/how can we get value
 - 🟢 [lyz-code/blue-book](https://github.com/lyz-code/blue-book) ⭐969 — systems thinking, life management, and open-source infrastructure.
 - 🟢 [XXIIVV/oscean](https://github.com/XXIIVV/oscean) ⭐559 — permacomputing, philosophy, and off-grid living systems.
 
-### related notes
+### References
 - [[agent-friendly documentation tools]] — scrapers, MCP servers, and markdown exporters for AI agents.
 - [[public zettelkasten repos on high level concepts]] — broad survey of public conceptual vaults.
 - [[public/how can we get value out of public notes]] — strategies and discovery workflows for public gardens.
