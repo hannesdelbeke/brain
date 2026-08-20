@@ -4,30 +4,25 @@ tags:
   - digital-garden
   - research
 ---
-Strategies to extract value from public [[Obsidian note|notes]] and [[digital garden|digital gardens]], like
-- [[public zettelkasten repos on high level concepts|high level public zettelkasten repos]]
-- [[digital garden examples]]
+Strategies and practicality reality check for extracting value from public [[Obsidian note|notes]] and [[digital garden|digital gardens]] (like [[public zettelkasten repos on high level concepts|public zettelkasten repos]]):
 
-### high-signal research
-- bypass SEO clickbait and AI-generated fluff with human-tested workflows, book notes, and configs.
-- treat curated gardens as primary sources before browsing broad web results.
+### high-signal use cases
+- **bypass web slop:** use curated gardens as primary sources for human-tested configs, book notes, and systems thinking.
+- **vault architecture inspiration:** adopt conventions like [[public/learnings from public zettelkasten vaults|principle-based naming]], maturity stages, and Maps of Content (MOCs).
 
-### local semantic retrieval
-- clone high-signal vaults locally and index with [[public/offline GPU embeddings with incremental cache|offline GPU embeddings]].
-- search third-party notes from CLI or [[AI agent|AI agents]] without polluting your personal graph.
+### practicality reality check: what works vs what fails
+- **curated seed notes (high ROI):** keep a 1-page index of 5–10 authoritative links (see [[2026-08-20 domain masters hub]]). Zero upkeep, gives agents an instant high-trust starting point.
+- **on-demand agent fetching (high ROI):** let agents query `llms.txt`, GitHub code search, or Jina Reader (`r.jina.ai`) on the fly. Zero local disk footprint or sync maintenance.
+- **local multi-vault embeddings (low ROI):** cloning 10+ vaults to disk creates sync debt and dilutes search results with someone else's unfinished drafts. Only worth it for 1–2 massive, daily-use technical references.
+- **federated graphs & git submodules (avoid):** submodules create [[public/submodule wikilink clashes|wikilink collisions]] (e.g. conflicting `index.md` or `python.md`), detached HEADs, and ghost backlinks. Keep external notes as isolated reference docs, never linked into your primary graph.
 
-### vault architecture inspiration
-- adopt naming conventions like [[public/learnings from public zettelkasten vaults|principle-based note titles]] and maturity stages.
-- borrow working Maps of Content (MOCs) and visual canvas layouts.
+### credibility & survival filter
+Most public vaults on GitHub are abandoned stubs or course-note dumps. Before trusting a public vault:
+- verify multi-year commit history or active maintenance.
+- ensure author is a working practitioner in that specific domain.
+- prefer finished reference wikis over raw, unedited streams of consciousness.
 
-### federated graphs
-- link across peer vaults with Git submodules or URI schemes.
-- adopt the Agora model to build distributed knowledge webs across creators.
-- [[interwikilinks plugin]] discusses similar interwiki link concepts
-
-### discovery: how to find the right vault
-- **manual lookup doesn't scale:** you won't remember which niche vault holds a specific fix.
-- **automated agent GitHub search:** agents query GitHub code search directly filtered by markdown paths (`path:notes/`, `path:content/`, `extension:md`) when solving questions.
-- **local multi-vault embedding index:** clone top gardens into a local `references/` folder and embed them with [[public/offline GPU embeddings with incremental cache|offline GPU embeddings]]. The agent queries your vault and third-party references simultaneously in milliseconds.
-- **curated specialist seeds:** maintain a small list of domain masters (e.g. graphics tech art, nix, knowledge architecture) as default search targets for agents before falling back to noisy web searches.
-example: [[2026-08-20 domain masters hub]]
+### related notes
+- [[2026-08-20 domain masters hub]] — curated seed list of authoritative domain vaults.
+- [[agent-friendly documentation tools]] — tools for agents to ingest markdown without browsers.
+- [[public/submodule wikilink clashes]] — why merging external vault graphs breaks wikilink resolution.
