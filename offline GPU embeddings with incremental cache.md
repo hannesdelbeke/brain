@@ -6,6 +6,7 @@ tags:
   - technical
   - pkm
   - gpu
+origin-sha: 4e7e95b2a
 ---
 How to run local vector embeddings across thousands of [[Markdown]] notes in your [[Obsidian]] vault on an RTX [[graphics processing unit|GPU]] with persistent [[cache|caching]], ensuring subsequent runs only process modified or newly added notes.
 

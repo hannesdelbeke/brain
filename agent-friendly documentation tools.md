@@ -5,6 +5,7 @@ tags:
   - technical
   - mcp
   - pkm
+origin-sha: f0156f1
 ---
 Tools that expose documentation, codebases, and web content as plain [[Markdown]] or MCP endpoints for [[AI agent|AI agents]] without requiring a full browser.
 

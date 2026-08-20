@@ -2,3 +2,4 @@
 aliases:
   - learn
 ---
+[[study]]

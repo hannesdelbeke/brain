@@ -3,6 +3,7 @@ tags:
   - learning
   - mental-models
   - productivity
+origin-sha: 1f30097ed
 ---
 A framework for deep understanding: test whether you actually understand an idea by explaining it in plain language without jargon, as if teaching a child.
 

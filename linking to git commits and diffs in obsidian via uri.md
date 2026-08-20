@@ -5,6 +5,7 @@ tags:
   - git
   - obsidian
   - pkm
+origin-sha: 5c842fe4b
 ---
 How to link to past Git revisions, commits, and diff views from within [[Obsidian note|Obsidian notes]], comparing offline, [[Uniform Resource Identifier|URI]], and snapshot approaches.
 

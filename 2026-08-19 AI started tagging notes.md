@@ -1,3 +1,6 @@
+---
+origin-sha: 05d3d3cb3
+---
 AI started tagging notes
 it looks clean in the frontmatter.
 some old concerns about tags could be addressed by AI
