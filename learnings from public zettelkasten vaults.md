@@ -30,7 +30,7 @@ Core patterns and structural lessons from high-signal public [[digital garden|di
 - Small, opinionated, deeply linked vaults consistently outperform bloated vaults filled with unread highlights.
 - Dense, curated graph topology provides better context for human thinking and agent retrieval.
 
-### related notes
+### References
 - [[public/examples of public evergreen gardens]] — curated directory of notable public gardens.
 - [[public/digital garden examples]] — list of public digital garden sites and wikis.
 - [[are wikilinks legacy with embedded vector]] — balancing explicit graph links with semantic retrieval.
