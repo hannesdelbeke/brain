@@ -5,35 +5,30 @@ tags:
   - obsidian
   - pkm
 ---
-How temporal integrity solves context drift across evolving notes by resolving target note states at the time a link was written, without cluttering Markdown with manual commit hashes.
+Notes change constantly, but the reasons we link them don't. When you link to a note, you're referencing how it looked *right then*, not how it might look three years later.
 
-### Core Problem
-Traditional [[wikilinks|wikilinks]] are living pointers that always resolve to `HEAD` (the latest note state).
+### The Problem: Links Break as Notes Improve
+Standard [[wikilinks|wikilinks]] always point to the latest version of a note (`HEAD`). This creates subtle context bugs:
 
-- **Day 1:** Note A references `[[Note B]]` as an example of a messy draft.
+- **Day 1:** You write a note and link `[[Note B]]` as an example of a messy, unfinished draft.
 - **Day 2:** You rewrite and polish `[[Note B]]`.
-- **Result:** Note A now points to a clean note, breaking the original context and making the reference nonsensical.
+- **The bug:** The original note now points to a finished masterpiece, making your original reference look confused or wrong.
 
-Temporal integrity preserves standard clean wikilink syntax (`[[Note B]]`), but uses Git history to resolve the target note's state at the moment the link was committed.
+### The Idea: Resolve Links at the Date They Were Written
+Instead of littering Markdown with ugly commit hashes (`[[Note B@abc1234]]`), keep standard clean wikilinks (`[[Note B]]`). Use Git in the background to figure out what the target note looked like when you actually wrote the link.
 
-### Authoring UX
-- **Pure Markdown:** Type standard wikilinks (`[[Note B]]`) without looking up commit SHAs or inserting anchors.
-- **Clean text:** Notes remain portable and readable across all Markdown editors.
+**Human reading**
+- Clicking a link opens the current note as normal.
+- If the target note changed since you made the link, Obsidian shows a subtle indicator (like a tiny clock icon `[[Note B 🕒]]` or hover note).
+- Alt-clicking opens a diff showing how the note looked on the day you linked it.
 
-### Reading & Navigation UX
-- **Default click:** Navigates to the live `HEAD` version of the note.
-- **Visual drift badge:** Displays a subtle indicator (e.g. `[[Note B 🕒]]` or underline) if the target note has changed since link creation.
-- **Hover preview:** Displays a header notice: *"Target note modified 3 times since this link was created (View snapshot at Link Date)"*.
-- **Alt + Click:** Opens the historical version of the target note at the link's creation date using `obsidian-git` diff views.
+**AI agents**
+When an [[AI agent|AI agent]] reads an older note, it checks `git blame` to see when the link was created. If the linked note was heavily edited later, the agent reads the historical snapshot from that commit instead of hallucinating based on modern edits.
 
-### AI Agent Workflow
-When an [[AI agent|AI agent]] reads `Note A`, it checks when the line containing `[[Note B]]` was committed via `git blame`.
-If `git log --since="<link_date>" -- Note_B.md` returns commits, the agent reads `git show <commit_at_link_date>:Note_B.md` to ensure reasoning reflects the author's original context.
-
-### Comparison to Manual Hash Links
-- **Zero effort:** Keeps standard `[[note]]` syntax rather than manually hunting for commit SHAs (`[[note@sha]]`).
-- **Markdown purity:** Avoids polluting notes with ephemeral hashes.
-- **Active drift awareness:** Highlights when context has drifted over time, rather than leaving links silently outdated.
+### Why This Beats Manual Hash Links
+- **Zero extra typing:** You just write normal `[[notes]]`. No copying commit SHAs or custom anchors.
+- **Clean Markdown:** If you switch editors in 10 years, your notes are standard plain text with no broken vendor syntax.
+- **Active drift warning:** It warns you when a linked concept evolved, instead of silently going stale.
 
 ### References
 - [[linking to git commits and diffs in obsidian via uri]] — Manual commit URIs (`[[note@sha]]`) that temporal integrity replaces.
