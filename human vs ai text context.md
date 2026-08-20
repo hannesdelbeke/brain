@@ -65,10 +65,6 @@ git commit -m "add: note" --author="Hannes <...>"
 - **[[2026-08-11 laptop research]]:** Hybrid note (human specific pricing/used market constraints on ThinkPad X1 Yoga Gen 7/8 vs Razer Blade 15, structured by Gemini). Origin SHA: `645baa21b`.
 
 ### References
-- [[maintain git history between submodules]] — Deep dive into submodule Git boundaries, recent commit examples, and migration trade-offs.
 - [[human vs AI git history transfers between notes]] — How `git blame -C` detects extractions within a repo vs across submodules.
 - [[linking to git commits and diffs in obsidian via uri]] — Linking directly to historical SHAs across repository boundaries.
-- [[wikilink temporal integrity]] — Resolving historical links via preserved Git commit timestamps.
 - [[2026-07-31 historic obsidian links]] — Mining Git history diffs to reconstruct graph evolution.
-
-

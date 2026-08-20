@@ -36,6 +36,3 @@ Most public vaults on [[GitHub]] are abandoned stubs or course-note dumps. Befor
 - **curated structure:** prefer finished reference wikis over raw, unedited streams of consciousness.
 
 ### References
-- [[2026-08-20 domain masters hub]] — curated seed list of authoritative domain vaults.
-- [[agent-friendly documentation tools]] — tools for agents to ingest markdown without browsers.
-- [[public/submodule wikilink clashes]] — why merging external vault graphs breaks wikilink resolution.
