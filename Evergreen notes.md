@@ -1,13 +1,15 @@
 ---
 sentiment:
-- 5
+  - 5
 sentiment-hash: cc683494
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
-- planning
-- work
+  - technical
+  - planning
+  - work
+aliases:
+  - evergreen note
 ---
 
 Evergreen notes are notes that are meant to be updated over time.

@@ -1,0 +1,5 @@
+---
+aliases:
+  - explicit links
+---
+[[link]]
