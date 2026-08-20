@@ -49,7 +49,7 @@ and handle partial commits like part AI part human or human copy pasting AI.
 > [!ai]- 2. Detecting Specific Legacy Models Heuristically
 > - **Temporal / Date Calibration:** Cross-reference note creation dates against model release windows and active subscription periods in your notes (e.g. Copilot/GPT-4 era in early 2024 vs Claude 3.5 Sonnet mid-2024 vs Gemini 2.5 in 2026).
 > - **Vocabulary & Syntax Fingerprints:** Distinct default markdown artifacts (e.g. Claude's XML artifact markers, ChatGPT's `Certainly!` headers, Copilot CLI command formatting).
-> - **Vault Context Notes:** Check matching daily notes (`day YYYY-MM-DD.md`) where tool experiments were logged (e.g. [[2026-01-19 try CLI LLMs]], [[2026-08-15 claude]]).
+> - **Vault Context Notes:** Check matching daily notes (`day YYYY-MM-DD.md`) where tool experiments were logged (e.g. [[2026-01-19 try CLI LLMs]], [[2026-08-15 claude 1 million research]]).
 
 > [!ai]- 3. Handling Mixed Commits & Copy-Pasted Text
 > - **Granular Git Blame Decomposition:** When scanning mixed historical commits, the classifier splits changes into two synthetic micro-commits:
