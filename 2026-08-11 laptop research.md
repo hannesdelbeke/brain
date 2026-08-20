@@ -65,4 +65,3 @@ Efficient Lunar Lake chip, but thermally limited, capped at 8 cores, missing the
 
 ### References
 - [[razor blade 15 rz09-02705w76 2018]] — Baseline hardware benchmark and existing workstation specs.
-- [[new thin laptop goals]] — Criteria for portable, high-efficiency development laptops.
