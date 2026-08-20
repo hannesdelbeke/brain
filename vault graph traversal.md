@@ -8,7 +8,7 @@ tags:
 Indexing and traversing explicit [[wikilink|wikilinks]] to discover multi-hop conceptual neighborhoods, backlinks, and bridges across notes.
 
 ## How it Works
-Unlike keyword search which treats notes as isolated documents, graph traversal treats the vault as a directed network:
+Unlike keyword search which treats notes as isolated documents, graph traversal treats the vault as a directed network, a [[graph theory|graph]]:
 - **Index:** A lightweight SQLite table (`links: source, target, link_type`) or in-memory `networkx` graph populated from regex matches (`\[\[([^\]|#]+)\]\]`).
 - **Multi-hop expansion:** Queries immediate neighbors ($N=1$) and 2-hop context ($N=2$) to surface related notes that don't share exact keywords with the starting note.
 - **Shortest path:** Finds the shortest chain of reasoning connecting two disparate concepts.

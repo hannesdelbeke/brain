@@ -41,7 +41,8 @@ Instead of calling every team in a company to ask what they do, the agent checks
 
 ### Tier 2: Repo Skeletons & Incremental AST Indexing
 For the selected candidate repos, the agent inspects compact structural skeletons rather than full implementation files:
-- **Outline over full code:** In normal terms, this extracts the **table of contents and book summary** instead of reading all 500 pages. It pulls class names, function signatures (like `def process_payment(amount, user_id)`), and top docstrings while stripping out the internal function bodies.
+- **AST extraction:** Uses `tree-sitter` or `ctags` to extract module docstrings, class declarations, and function signatures.
+  It pulls class names, function signatures (like `def process_payment(amount, user_id)`), and top docstrings while stripping out the internal function bodies.
 - **Commit SHA caching:** Indexes and embeddings are cached against the latest commit SHA (`git rev-parse HEAD`), so only repos with new commits are re-processed.
 
 ### Tier 3: Hierarchical Map-Reduce Rollup
@@ -66,6 +67,7 @@ mcp-org-search rollup --query "audit all OAuth2 callback implementations"
 ```
 
 ### Related
+- [[single-repo vs multi-repo agent search]] — Comparing out-of-the-box CLI capabilities (Claude Code, Gemini Flash) with cross-repo gaps.
 - [[hierarchical map-reduce note rollup]] — The foundational map-reduce compression pattern applied to personal notes.
 - [[agent-friendly documentation tools]] — Specifications like `llms.txt` and `repomix` for packing codebases into token-efficient agent formats.
 - [[vault MCP server for agents]] — Structured MCP server design patterns for AI assistants.
