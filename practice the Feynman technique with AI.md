@@ -27,6 +27,5 @@ How to use an [[AI agent|AI agent]] as an active Socratic sparring partner to te
 3. **Handle the pushback:** When the AI flags jargon or asks a probing question, answer it in plain words without looking up the solution.
 4. **Re-study the stall:** If you can't answer the AI's question, you've found your exact knowledge gap. Go back to your source material, review that specific part, and update your note.
 ### References
-- [[the Feynman technique]] — Core 4-step mental model for testing understanding through simple explanation.
 - [[concern that AI decreases learning]] — Why active struggle and Socratic sparring beats passive answer generation.
 - [[learning]] — Memory consolidation, active recall, and retrieval practice.

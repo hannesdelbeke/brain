@@ -54,7 +54,5 @@ if __name__ == "__main__":
 - **Reorganization detection:** Identify commits with high add/remove churn across multiple source notes.
 
 ### References
-- [[2026-07-31 historic obsidian links]] — research on why historical graph edges improve retrieval and detect conceptual drift.
-- [[wikilink temporal integrity]] — resolves links to their historical snapshot states based on commit timestamps.
 - [[linking to git commits and diffs in obsidian via uri]] — URI protocol schemes to inspect the commit diffs where links were edited.
 - [[human vs ai text context]] — preserving Git commit history when moving notes to `public/`.

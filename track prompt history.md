@@ -29,5 +29,4 @@ A dedicated JSONL log or daily prompt history file that records every interactio
 
 ### Related
 - [[algo to differentiate between AI and human notes]] — Separating human prompt lines from generated responses.
-- [[agent answers in callout]] — Pros and cons of inline callout responses.
 - [[human vs ai text context]] — Maintaining context between human intent and AI generation.
