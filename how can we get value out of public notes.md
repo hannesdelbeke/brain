@@ -30,3 +30,4 @@ Strategies to extract value from public [[Obsidian note|notes]] and [[digital ga
 - **automated agent GitHub search:** agents query GitHub code search directly filtered by markdown paths (`path:notes/`, `path:content/`, `extension:md`) when solving questions.
 - **local multi-vault embedding index:** clone top gardens into a local `references/` folder and embed them with [[public/offline GPU embeddings with incremental cache|offline GPU embeddings]]. The agent queries your vault and third-party references simultaneously in milliseconds.
 - **curated specialist seeds:** maintain a small list of domain masters (e.g. graphics tech art, nix, knowledge architecture) as default search targets for agents before falling back to noisy web searches.
+example: [[domain master hub]]
