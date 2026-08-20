@@ -48,19 +48,20 @@ vault-graph orphans --submodule public
 
 ## Existing Open Source Tools
 
-**Graph & Hybrid Search Engines**
-- [Knowledge Graph Tools](https://github.com/massivelyparallel/knowledge-graph-tools) — Parses Obsidian vaults into SQLite with FTS5 lexical search and embeddings; exposes BFS traversal, shortest path, and bridge detection via CLI and MCP.
-- [Obsidian Hybrid Search](https://github.com/) — Standalone CLI and MCP server combining BM25 keyword matching with local vector embeddings using Reciprocal Rank Fusion (RRF).
-- [Graphify](https://github.com/) — CLI-first tool converting Markdown folder trees into queryable graphs specifically for AI coding agents.
-- [Khoj](https://github.com/khoj-ai/khoj) — Local-first personal search assistant supporting offline embeddings and natural language CLI queries over Obsidian notes.
+**Obsidian MCP Servers for AI Agents**
+- [cyanheads/obsidian-mcp-server](https://github.com/cyanheads/obsidian-mcp-server) — Production MCP server for reading, writing, and searching vault notes directly from AI assistants (Claude, Antigravity, Cursor).
+- [StevenStavrakis/obsidian-mcp](https://github.com/StevenStavrakis/obsidian-mcp) — Lightweight standalone MCP server operating directly on the local Markdown filesystem without needing the Obsidian app running.
+- [coddingtonbear/obsidian-local-rest-api](https://github.com/coddingtonbear/obsidian-local-rest-api) — Exposes Obsidian vault operations via local HTTPS REST API and MCP endpoints.
 
-**Obsidian Plugin MCP Servers**
-- [Obsidian MCP Connector](https://github.com/) — Runs an MCP server inside Obsidian, exposing note reading, active graph traversal, and backlinks directly to external LLMs.
+**Graph Analysis & Knowledge Graphs**
+- [SkepticMystic/graph-analysis](https://github.com/SkepticMystic/graph-analysis) — Advanced graph-theory metrics for Obsidian wikilinks (PageRank, betweenness centrality, community clustering, bridge nodes).
+- [khoj-ai/khoj](https://github.com/khoj-ai/khoj) — Local-first AI personal search assistant indexing markdown notes with offline embeddings and CLI/API query endpoints.
+- [brianpetro/obsidian-smart-connections](https://github.com/brianpetro/obsidian-smart-connections) — Real-time local vector embeddings for semantic neighbor retrieval across note chunks.
 
-**Custom Python Stack**
-- Graph traversal: `networkx` with regex `\[\[([^\]|#]+)\]\]` for fast in-memory shortest path and centrality calculations.
-- Full-text search: Python standard library `sqlite3` with `FTS5`.
-- Semantic search: `sentence-transformers` with local GPU cache.
+**Custom Python Blueprint**
+- Graph traversal: `networkx` parsing `\[\[([^\]|#]+)\]\]` for fast shortest path, centrality, and 2-hop neighborhoods.
+- Full-text search: Standard library `sqlite3` with `FTS5` (BM25).
+- Semantic search: `sentence-transformers` on GPU with persistent hash caching per [[offline GPU embeddings with incremental cache]].
 
 ### Related
 - [[extract historic wikilinks from git]] — Mining link additions and deletions across Git revisions into SQLite.
