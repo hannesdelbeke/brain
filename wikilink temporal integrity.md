@@ -33,7 +33,7 @@ When an [[AI agent|AI agent]] reads an older note, it checks `git blame` to see 
 ### References
 - [[linking to git commits and diffs in obsidian via uri]] — Manual commit URIs (`[[note@sha]]`) that temporal integrity replaces.
 - [[2026-07-31 historic obsidian links]] — Extracting historical graph edge birth/death timestamps from Git.
-- [[how to keep history]] — Preserving Git timestamps required for temporal resolution when moving notes across submodules.
+- [[human vs ai text context]] — Preserving Git timestamps required for temporal resolution when moving notes across submodules.
 - [[agentic note taking]] — AI agents inspecting past revisions based on when a task was formulated.
 - [[differentiate between AI and human notes]] — Distinguishing whether a historical link was created by a human or an AI agent.
 - [[Obsidian plugin - Git]] — Underlying Git engine providing local logs and diff views for temporal resolution.
