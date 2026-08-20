@@ -6,11 +6,11 @@ tags:
 ---
 Extracting value from public [[Obsidian note|notes]] and [[digital garden|digital gardens]] (like [[public zettelkasten repos on high level concepts|public zettelkasten repos]]):
 
-### high-signal use cases
+### High-signal Use Cases
 - **bypass web slop:** use curated gardens as primary sources for human-tested configs, book notes, and systems thinking.
 - **vault architecture inspiration:** adopt conventions like [[public/learnings from public zettelkasten vaults|principle-based naming]], maturity stages, and Maps of Content (MOCs).
 
-### what works vs doesn't
+### What Works vs Doesn't
 
 High ROI
 
@@ -28,7 +28,7 @@ cloning 10+ vaults to disk creates sync debt and dilutes search results with som
 **federated graphs & git submodules**
 submodules create [[public/submodule wikilink clashes|wikilink collisions]] (e.g. conflicting `index.md` or `python.md`), detached HEADs, and ghost backlinks. Keep external notes as isolated reference docs, never linked into your primary graph.
 
-### credibility & survival filter
+### Credibility & Survival Filter
 Most public vaults on [[GitHub]] are abandoned stubs or course-note dumps. Before trusting a public vault:
 - **longevity:** verify multi-year commit history or active maintenance.
 - **practitioner authorship:** ensure author is a working practitioner in that specific domain.
