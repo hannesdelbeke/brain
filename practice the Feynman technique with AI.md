@@ -3,6 +3,7 @@ tags:
   - ai
   - learning
   - prompts
+origin-sha: 1f30097ed
 ---
 How to use an [[AI agent|AI agent]] as an active Socratic sparring partner to test your comprehension, expose knowledge gaps, and practice [[the Feynman technique]].
 

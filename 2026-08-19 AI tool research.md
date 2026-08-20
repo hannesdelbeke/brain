@@ -6,6 +6,7 @@ tags:
   - tools
   - agentic
   - pkm
+origin-sha: da71e78b4
 ---
 
 # Tool Research: Herdr, Roo Code, Devstral, OpenClaw, Hermes Agent

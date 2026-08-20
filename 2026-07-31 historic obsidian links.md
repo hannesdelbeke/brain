@@ -6,6 +6,7 @@ tags:
   - obsidian
   - git
   - pkm
+origin-sha: aa5de66e1
 ---
 > [!question]
 > [[Obsidian]] displays active links, backlinks, and unlinked mentions, but ignores **historic links** that were removed during note refactors. That data still exists in [[git]] history. Does extracting historic links provide value for AI note parsing and knowledge graphs?
