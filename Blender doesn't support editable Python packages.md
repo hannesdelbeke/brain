@@ -54,10 +54,6 @@ You can [[Python packages editable install|editable install]] to the user's modu
 
 ## references
 - [[Python]]'s [site docs](https://docs.python.org/3/library/site.html) explain when `.pth` files are processed
-- [[pass custom sys.paths to subprocess]] discovered that [[Blender]] doesn't use site packages much
 
 These addons I wrote auto add the modules folder to the site packages path on startup: 
-- [[Blender pip addon]]
 - [[Blender pip Qt addon]]
-
-[[Python packages editable install]]

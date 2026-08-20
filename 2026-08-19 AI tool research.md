@@ -92,6 +92,3 @@ skip for now
 ---
 
 ## References
-- [[2026-08-19 open source claude code mobile equivalents]]
-- [[agentic note taking on mobile]]
-- [[algo to differentiate between AI and human notes]]

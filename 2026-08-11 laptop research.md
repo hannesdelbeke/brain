@@ -65,4 +65,3 @@ Efficient Lunar Lake chip, but thermally limited, capped at 8 cores, missing the
 - 🔴 **Skip:** Gens 9 and 10.
 
 ### References
-- [[razor blade 15 rz09-02705w76 2018]] — Baseline hardware benchmark and existing workstation specs.

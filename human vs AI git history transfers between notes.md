@@ -22,6 +22,5 @@ This tracking only works within a single repository. Moving notes across [[git s
 
 ### References
 - [[algo to differentiate between AI and human notes]] — tracking author provenance across vault edits.
-- [[linking to git commits and diffs in obsidian via uri]] — source note where the initial devlog content originated.
 - [[wikilink temporal integrity]] — resolving historical note states by commit timestamp.
 - [[human vs ai text context]] — preserving Git history when moving notes between submodules.
