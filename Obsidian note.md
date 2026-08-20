@@ -9,5 +9,4 @@ sentiment-label:
 tags:
 - technical
 ---
-
-A [[Markdown]] [[note taking|note]] in [[Obsidian]]
+A [[Markdown note]] opened in [[Obsidian]]
