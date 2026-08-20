@@ -8,7 +8,7 @@ tags:
 Review of [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain), a suite of 45+ CLI slash commands that connects [[AI agent|AI agents]] to an [[Obsidian vault]] as autonomous long-term memory.
 
 ### concept
-Extends Karpathy's LLM Wiki idea into an autonomous, self-rewriting vault. Rather than append-only logs, agents ingest media (YouTube, X, audio via Whisper, whiteboard photos) and autonomously update existing entity notes, reconcile contradictions, and rebuild indexes via background cron jobs.
+Extends Karpathy's LLM Wiki idea into an autonomous, self-rewriting vault. Rather than append-only logs, agents ingest media (YouTube, X, audio via [[Whisper]], whiteboard photos) and autonomously update existing entity notes, reconcile contradictions, and rebuild indexes via background cron jobs.
 
 ### pros
 - Solves cross-session amnesia by grounding CLI agents in persistent [[Markdown]] files.
