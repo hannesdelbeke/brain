@@ -18,7 +18,7 @@ How to run local vector embeddings across thousands of [[Markdown]] notes in you
 
 ---
 
-## 1. how incremental caching works
+## How Incremental Caching Works
 
 ```
                   ┌─────────────────────────────────────┐
@@ -44,14 +44,14 @@ How to run local vector embeddings across thousands of [[Markdown]] notes in you
 
 ---
 
-## 2. implementation options
+## Implementation Options
 
-### option A: obsidian plugin (smart connections)
+### Option A: Obsidian Plugin (smart Connections)
 - **Plugin:** Smart Connections
 - **Backend:** Local Ollama (`nomic-embed-text` or `bge-m3`) or local transformers
 - **Caching:** Built-in. Automatically caches vectors in `.obsidian/plugins/smart-connections/` and updates on note save.
 
-### option B: standalone python script (SQLite vector cache)
+### Option B: Standalone Python Script (sqlite Vector Cache)
 A lightweight script using `sentence-transformers` or `fastembed-gpu`:
 
 ```python
@@ -127,7 +127,7 @@ benefits of custom script vs plugin
 
 ---
 
-## 3. quickstart on Razer Blade 15
+## Quickstart on Razer Blade 15
 
 [[razor blade 15 rz09-02705w76 2018|razor blade 15]]
 1. **Install requirements:**

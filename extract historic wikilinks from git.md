@@ -8,12 +8,12 @@ tags:
 ---
 Proposal and script to extract added and removed [[wikilink|wikilinks]] from Git history into SQLite, generating data for [[2026-07-31 historic obsidian links|temporal graph analysis]] and [[wikilink temporal integrity]].
 
-### implementation plan
+### Implementation Plan
 1. **Reuse native diffs:** Use `git log -p --follow -M -- '*.md'` to handle file renames and deletions without custom diff tracking.
 2. **Standard library:** Pure Python with `subprocess`, `re`, and `sqlite3`.
 3. **Parse diff chunks:** Match lines starting with `+` or `-` for wikilink regex `\[\[([^\]|#]+)`.
 
-### extraction script
+### Extraction Script
 ```python
 import subprocess, re, sqlite3, sys
 
@@ -48,7 +48,7 @@ if __name__ == "__main__":
     build_db(sys.argv[1], sys.argv[2])
 ```
 
-### querying capabilities
+### Querying Capabilities
 - **Edge birth and death:** `MIN(date)` and `MAX(date)` grouped by `(source, target)` where last event is `remove`.
 - **Edge weights & decay:** Count `add` events or total survival duration for RAG ranking.
 - **Reorganization detection:** Identify commits with high add/remove churn across multiple source notes.

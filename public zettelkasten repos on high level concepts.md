@@ -9,7 +9,7 @@ indexed from [[2026-08-20 domain masters hub]], which covers authoritative seeds
 > [!info] Reference
 > 🟢 pushed this quarter, 🟡 quiet for months, 🔴 finished, abandoned or the author is gone. ⭐ is stars as of 2026-08-20.
 
-## becoming a better human
+## Becoming a Better Human
 
 🔴 [busterbenson/public](https://github.com/busterbenson/public) ⭐871. the single best one. `book-of-beliefs.md` is a [codex vitae](https://busterbenson.com/piles/codex-vitae/), a versioned statement of everything he believes with confidence levels attached, rewritten each year, with git history as the record of how a person's mind changed. the repo also holds `cognitive-bias-cheat-sheet.json`, the source data behind the [cognitive bias codex](https://en.wikipedia.org/wiki/List_of_cognitive_biases). the idea spawned dozens of forks that are all abandoned after one or two commits ([dehowell](https://github.com/dehowell/codex-vitae), [ryanramage](https://github.com/ryanramage/codex-vitae) "a living and dying record of my beliefs", [rd825](https://github.com/rd825/codexvitae)), which is itself the finding: the format is easy to start and hard to keep, so the interesting question is what makes a belief worth restating a year later.
 
@@ -19,7 +19,7 @@ indexed from [[2026-08-20 domain masters hub]], which covers authoritative seeds
 
 🟢 [brennanbrown/enjoyment-work](https://github.com/brennanbrown/enjoyment-work) ⭐113. jekyll site split into `_notes`, `_journals` and `_posts`, so you can watch a raw journal entry turn into a permanent note. subjects are getting unstuck, humility and false pretension, and information hazards in what you choose to consume.
 
-## thinking about thinking
+## Thinking About Thinking
 
 🟢 [jackyzha0/jackyzha0.github.io](https://github.com/jackyzha0/jackyzha0.github.io) ⭐189. the closest match to the ask, and the [quartz](https://github.com/jackyzha0/quartz) author's own garden. note titles include chesterton's fence, hedonic treadmill, epistemic injustice, intentional arrangement, communities, play, craft, meditation, seeing like a state, the purpose of a system is what it does. his rhizome research log opens by saying research logs focus too much on what one did rather than what one felt, and sets out to mix both.
 
@@ -33,7 +33,7 @@ indexed from [[2026-08-20 domain masters hub]], which covers authoritative seeds
 
 🟡 [martijnaslander/luhmann-zettelkasten](https://github.com/martijnaslander/luhmann-zettelkasten) ⭐3. the original, all 73,715 cards of [niklas luhmann's](https://en.wikipedia.org/wiki/Niklas_Luhmann) physical slip box mapped as a network from the [digitised archive](https://niklas-luhmann-archiv.de). useful for seeing how sparse the real link graph is compared to what people claim to build. andy matuschak's [evergreen notes](https://notes.andymatuschak.org) have no official repo, only unofficial mirrors like 🟡 [XQZmeSIR/AndyNotes](https://github.com/XQZmeSIR/AndyNotes).
 
-## one life, catalogued
+## One Life, Catalogued
 
 the vibe here is not ideas but inventory. a person deciding their own taste is worth version control.
 
@@ -45,7 +45,7 @@ the vibe here is not ideas but inventory. a person deciding their own taste is w
 
 🔴 [RichardLitt/knowledge](https://github.com/RichardLitt/knowledge) ⭐265. the least programmer-shaped vault in this list despite the author being a maintainer by trade. birds and bird quotes, an overnight birding checklist, plants, a cafe list, songs, game theory, and a fitness glossary sat next to github processes.
 
-## art, politics and the weird internet
+## Art, Politics and the Weird Internet
 
 🟢 [XXIIVV/oscean](https://github.com/XXIIVV/oscean) ⭐559. devine lu linvega's lifelong wiki, written from a sailboat: art, philosophy, longtermism, conlangs, off-grid living and [permacomputing](https://permacomputing.net). the content sits in a custom uxntal format so the [rendered site](https://wiki.xxiivv.com) reads better than the repo. the strongest example of a knowledge base that is also an aesthetic.
 
@@ -55,7 +55,7 @@ the vibe here is not ideas but inventory. a person deciding their own taste is w
 
 🔴 [joearms/joearms.github.io](https://github.com/joearms/joearms.github.io) ⭐67, and [joearms/old.blog](https://github.com/joearms/old.blog) ⭐72. joe armstrong died in 2019. erlang is the surface topic, but the posts underneath are about why software gets complicated, how to write so people understand you, and what it takes to stay on one idea for thirty years.
 
-## machines reading your vault
+## Machines Reading Your Vault
 
 tools rather than note collections, but they are the ones arguing the concept.
 
@@ -65,7 +65,7 @@ tools rather than note collections, but they are the ones arguing the concept.
 
 🟢 [Zettelgarden/Zettelgarden](https://github.com/Zettelgarden/Zettelgarden) ⭐168. a zettelkasten where agents handle capture, processing and recall, so the vault is maintained by something other than the person who owns it.
 
-## technical vaults with a high level half
+## Technical Vaults with a High Level Half
 
 🟢 [lyz-code/blue-book](https://github.com/lyz-code/blue-book) ⭐969. huge and mostly tooling, but `life_management.md`, `systems_thinking.md`, `knowledge_management.md`, `gardening.md` and the activism and feminism notes carry a serious non-technical side. one of the few where the author writes about politics and self-hosting in the same voice.
 
@@ -79,7 +79,7 @@ tools rather than note collections, but they are the ones arguing the concept.
 
 🟢 [lextoumbourou/notes](https://github.com/lextoumbourou/notes) ⭐63. advertises the zettelkasten method and pushes regularly, but the permanent notes are gram-schmidt, relu and nyquist-shannon. a clean example of the low level bucket this search was trying to get out of.
 
-## lists to keep digging through
+## Lists to Keep Digging Through
 
 🟢 [lyz-code/best-of-digital-gardens](https://github.com/lyz-code/best-of-digital-gardens) ⭐590. a ranked list of 100 gardens with topic tags, so you can filter for productivity, health or philosophy over programming. it scores by github activity though, which sorts tools above vaults and ranks a maintained plugin over a finished body of thought.
 
