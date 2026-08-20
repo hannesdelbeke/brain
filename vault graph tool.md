@@ -11,7 +11,7 @@ An external CLI graph and retrieval engine for [[AI agent|AI agents]] operating 
 ## Beyond Ripgrep
 Currently, coding and PKM agents locate notes using simple ripgrep pattern matching and file listing. While fast for exact keywords, this approach fails on three fronts:
 - **Zero graph awareness:** Cannot follow 2-hop conceptual neighborhoods, backlinks, or parent Map of Content (MOC) hierarchies without multiple manual round-trips.
-- **Synonym & concept blindness:** Misses relevant notes when the query uses different terminology (e.g. searching "sleep latency" misses notes titled "insomnia").
+- **Synonym & concept blindness:** Misses relevant notes when the query uses different terminology (e.g. searching "sleep latency" misses notes titled "insomnia"). [[Obsidian aliases]]
 - **High context token waste:** Grep dumps entire files or raw snippets into the agent's context window instead of rank-ordered semantic chunks.
 
 ## Core Architecture
@@ -45,6 +45,22 @@ vault-graph path "2026-04 stroke" "productivity on society"
 # Identify unlinked or isolated notes
 vault-graph orphans --submodule public
 ```
+
+## Existing Open Source Tools
+
+**Graph & Hybrid Search Engines**
+- [Knowledge Graph Tools](https://github.com/massivelyparallel/knowledge-graph-tools) — Parses Obsidian vaults into SQLite with FTS5 lexical search and embeddings; exposes BFS traversal, shortest path, and bridge detection via CLI and MCP.
+- [Obsidian Hybrid Search](https://github.com/) — Standalone CLI and MCP server combining BM25 keyword matching with local vector embeddings using Reciprocal Rank Fusion (RRF).
+- [Graphify](https://github.com/) — CLI-first tool converting Markdown folder trees into queryable graphs specifically for AI coding agents.
+- [Khoj](https://github.com/khoj-ai/khoj) — Local-first personal search assistant supporting offline embeddings and natural language CLI queries over Obsidian notes.
+
+**Obsidian Plugin MCP Servers**
+- [Obsidian MCP Connector](https://github.com/) — Runs an MCP server inside Obsidian, exposing note reading, active graph traversal, and backlinks directly to external LLMs.
+
+**Custom Python Stack**
+- Graph traversal: `networkx` with regex `\[\[([^\]|#]+)\]\]` for fast in-memory shortest path and centrality calculations.
+- Full-text search: Python standard library `sqlite3` with `FTS5`.
+- Semantic search: `sentence-transformers` with local GPU cache.
 
 ### Related
 - [[extract historic wikilinks from git]] — Mining link additions and deletions across Git revisions into SQLite.
