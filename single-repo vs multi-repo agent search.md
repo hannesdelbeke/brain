@@ -27,8 +27,7 @@ Standard tools lack an automated directory listing repository descriptions, tech
 
 **3. No Automated Multi-Repo Map-Reduce**
 Agents do not automatically spin up parallel search runners across 50 remote repositories to extract per-repo summaries and reduce them into a unified audit report.
-
 ### Related
+- [[simple options for multi-repo agent search]] — Low-infrastructure options and workarounds for the 3 major multi-repo gaps.
 - [[multi-repo agentic search architecture]] — 3-tier catalog, AST outline, and map-reduce pipeline for GitHub orgs.
 - [[vault MCP server for agents]] — Designing structured tool interfaces over raw file dumps.
-- [[easiest way to support agentic map reduce]]

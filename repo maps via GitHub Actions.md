@@ -74,3 +74,4 @@ jobs:
 - [[multi-repo agentic search architecture]] — 3-tier catalog and rollup strategy for multi-repo organizations.
 - [[agent-friendly documentation tools]] — Standardized summary formats like `llms.txt` and `repomix`.
 - [[hierarchical map-reduce note rollup]] — Theoretical map-reduce pattern applied to Markdown vaults.
+- [[CICD]]
