@@ -25,4 +25,4 @@ In a way it's like the question is a seed for a [[hash function]], where the (an
 [[chat GPT|chatGPT]]
 [[large language model|LLM]]
 [[AI slop]]
-- [[human vs ai text context]]
+- [[public/human vs ai text context]]
