@@ -59,7 +59,7 @@ if Notion links to an asset, that exists in 1 branch, and is deleted in another.
 If Notion links to the correct asset in the past, but now we merged the asset with another asset, so we should update the link in Notion to another asset.
 If we update Notion, it will be incorrect when we roll back in git for testing.
 We only will have good "flow" for the current state of the project, not past states.
-- [[temporal integrity]]
+- [[Temporal integrity]]
 #### A [[monorepo]] leads to automatic link integrity
 If instead the link data lived in the editor, it would be saved in git, and it still could be different between branches, but it would auto follow the right asset, and always show the right info for the asset at that state in time. (different state between branches, past vs present state)
 

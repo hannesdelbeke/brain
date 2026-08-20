@@ -18,7 +18,7 @@ This can easily be achieved if your tool manifest lives in the same repo as the 
 
 However, source files often don't live in the same [[repository|repo]] as the game.
 E.g. [[Perforce]] is more complex: artists can manually roll back a single asset.
-Tere's no [[temporal integrity]], since the tool manifest hasn't rolled back. It's now up to the user to do this manually.
+Tere's no [[Temporal integrity]], since the tool manifest hasn't rolled back. It's now up to the user to do this manually.
 
 ---
 LLM feedback
