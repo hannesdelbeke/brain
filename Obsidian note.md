@@ -1,12 +1,13 @@
 ---
 aliases:
-- note
+  - note
+  - Obsidian notes
 sentiment:
-- 5
+  - 5
 sentiment-hash: a89b114b
 sentiment-label:
-- unclear
+  - unclear
 tags:
-- technical
+  - technical
 ---
 A [[Markdown note]] opened in [[Obsidian]]
