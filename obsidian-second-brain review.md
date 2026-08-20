@@ -5,7 +5,7 @@ tags:
   - obsidian
   - review
 ---
-Review of [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain), a suite of 45+ CLI slash commands that connects [[AI agent|AI agents]] to an [[Obsidian]] vault as autonomous long-term memory.
+Review of [eugeniughelbur/obsidian-second-brain](https://github.com/eugeniughelbur/obsidian-second-brain), a suite of 45+ CLI slash commands that connects [[AI agent|AI agents]] to an [[Obsidian vault]] as autonomous long-term memory.
 
 ### concept
 Extends Karpathy's LLM Wiki idea into an autonomous, self-rewriting vault. Rather than append-only logs, agents ingest media (YouTube, X, audio via Whisper, whiteboard photos) and autonomously update existing entity notes, reconcile contradictions, and rebuild indexes via background cron jobs.
@@ -30,3 +30,5 @@ Good source of architectural ideas, but don't install the full automated suite. 
 - [[public/offline GPU embeddings with incremental cache]] — lightweight local embedding alternative without API dependencies.
 - [[agentic note taking]] — patterns for agent-assisted note generation.
 - [[differentiate between AI and human notes]] — preserving authorship attribution in hybrid vaults.
+
+[[agentic note taking]]
