@@ -59,7 +59,7 @@ But I could use it to color notes with many views, or recentlly viewed notes.
 this works quite well
 few issues
 clutter
-- clutter git history everytime i view a file
+- clutter [[git history]] everytime i view a file
 - when i start writing in a new note, i
 
 ---

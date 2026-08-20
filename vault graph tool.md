@@ -62,7 +62,7 @@ Solves **zero graph awareness** and **synonym blindness**. Graph analyzers compu
 - [khoj-ai/khoj](https://github.com/khoj-ai/khoj) — Local-first AI personal search assistant indexing markdown notes with offline embeddings and CLI/API query endpoints.
 - [brianpetro/obsidian-smart-connections](https://github.com/brianpetro/obsidian-smart-connections) — Real-time local vector embeddings for semantic neighbor retrieval across note chunks.
 
-### Custom Python Blueprint
+### Custom Python
 Solves **all three problems** in a lightweight, single-script CLI without external server dependencies. It combines in-memory graph traversal with fast SQLite BM25 and GPU-cached vector embeddings.
 
 - Graph traversal: `networkx` parsing `\[\[([^\]|#]+)\]\]` for fast shortest path, centrality, and 2-hop neighborhoods.

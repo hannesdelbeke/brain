@@ -22,7 +22,7 @@ it also shows `unlinked mentiones`.
 it would be nice if a wikilink was auto created on all words in all notes.
 but instead of typing `[[]]` around the word to make the link.
 the view auto adds a link if the wikilink exists.
-so no source data is changed, no git history clutter.
+so no source data is changed, no [[git history]] clutter.
 user can still override and add manual links.
 but if there is no link, we can rely on auto link.
 
