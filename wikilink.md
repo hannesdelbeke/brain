@@ -11,6 +11,7 @@ sentiment-label:
 tags:
 - technical
 ---
+a wikilink is an [[explicit link]]
 
 - not compatible with GitHub md preview / default markdown [[public/link]]s
 - compatible with GitHub wiki

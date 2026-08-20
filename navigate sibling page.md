@@ -30,3 +30,4 @@ The mkdocs material theme [describes](https://squidfunk.github.io/mkdocs-materia
 [[browser]]
 [[UX]]
 [[personal knowledge management|PKM]]
+[[note navigation]]
