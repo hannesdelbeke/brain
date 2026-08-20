@@ -14,7 +14,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 1. Herdr (`github.com/herdrdev/herdr`)
+## Herdr (`github.com/herdrdev/herdr`)
 - What it is: A Rust terminal multiplexer built specifically for AI coding agents.
 - What it solves: Unlike tmux or Zellij, Herdr is agent-aware. It tracks background CLI sessions (Claude Code, Codex, Aider) and shows their real-time state (working, idle, blocked on permission) in a sidebar.
 - Could you use it: Yes. Especially when running multiple CLI agents simultaneously or driving sessions remotely from phone via SSH or CCGram.
@@ -22,7 +22,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 2. Roo Code (`github.com/RooCodeInc/Roo-Code`)
+## Roo Code (`github.com/roocodeinc/roo-code`)
 - What it is: An open-source autonomous coding extension for VS Code and Cursor (fork/evolution of Roo Cline).
 - What it solves: Gives an in-editor AI agent full filesystem and terminal access with custom modes (Architect, Code, Ask, Custom roles) and MCP server integration.
 - Could you use it: Yes, inside VS Code / Cursor when you prefer an in-editor GUI sidebar over pure CLI terminals.
@@ -30,7 +30,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 3. Devstral
+## Devstral
 - What it is: Mistral AI's family of open-weight models trained specifically for agentic software engineering (24B Small and 123B large).
 - What it solves: Standard LLMs often write isolated functions; Devstral is trained to navigate repositories, edit multiple files, and solve real GitHub issues. The 24B version runs locally on an RTX GPU via Ollama.
 - Could you use it: Yes. Good candidate for local/offline agent runs on your PC when API tokens run out or for privacy-sensitive work.
@@ -38,7 +38,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 4. OpenClaw (`github.com/openclaw/openclaw`)
+## Openclaw (`github.com/openclaw/openclaw`)
 - What it is: A self-hosted personal AI assistant gateway bridging LLMs to messaging apps (Telegram, WhatsApp, Discord) with local tool use.
 - What it solves: Turns chat apps into a remote control hub for your PC. It can run shell commands, manage files, and interact with GitHub from your phone.
 - Could you use it: Yes, directly relates to your Telegram PKM bot and mobile control experiments, though security/permissions need careful sandboxing.
@@ -46,7 +46,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 5. Hermes Agent (Nous Research, `github.com/NousResearch/hermes-agent`)
+## Hermes Agent (nous Research, `github.com/NousResearch/hermes-agent`)
 - What it is: A self-improving AI agent framework focused on long-term learning loops.
 - What it solves: Most agents forget lessons between sessions. Hermes evaluates task outcomes, extracts reusable reasoning patterns, and saves them as markdown skill files so it gets faster and smarter over time.
 - Could you use it: Yes. Highly relevant to your goal of letting AI learn from vault history and human feedback.
@@ -54,7 +54,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 6. OpenHands (`github.com/All-Hands-AI/OpenHands`, formerly OpenDevin)
+## Openhands (`github.com/all-hands-ai/openhands`, Formerly Opendevin)
 - What it is: A fully open-source autonomous software engineering platform running in Docker containers with web UI, terminal, and browser control.
 - What it solves: Full-scale autonomous execution across entire codebases, repository issues, and cloud/browser tasks without manual intervention on every step.
 - Community reality check (r/LocalLLaMA):
@@ -66,7 +66,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 
 ---
 
-## 7. gptme
+## Gptme
 www.github.com/ErikBjare/gptme
 - What it is: A lightweight, terminal-native personal AI agent designed to execute shell commands, run Python code, edit local files, and browse the web directly in your CLI.
 - What it solves: Gives an agent direct execution access inside terminals, tmux panes, and SSH sessions without bloated UI or heavy Docker setups. Supports local LLMs (`llama.cpp`) alongside cloud providers (OpenAI, Anthropic, Gemini, OpenRouter).

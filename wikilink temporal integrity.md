@@ -8,7 +8,7 @@ tags:
 Notes change constantly, but the reasons we link them don't. When you link to a note, you're referencing how it looked *right then*, not how it might look three years later.
 
 ### The Problem: Links Break as Notes Improve
-Standard [[wikilinks|wikilinks]] always point to the latest version of a note (`HEAD`). This creates subtle context bugs:
+Standard [[wikilink|wikilinks]] always point to the latest version of a note (`HEAD`). This creates subtle context bugs:
 
 - **Day 1:** You write a note and link `[[Note B]]` as an example of a messy, unfinished draft.
 - **Day 2:** You rewrite and polish `[[Note B]]`.
