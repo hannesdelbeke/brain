@@ -66,32 +66,8 @@ mcp-org-search symbols --repos "billing-service,api-gateway" --query "process_pa
 mcp-org-search rollup --query "audit all OAuth2 callback implementations"
 ```
 
-## Cost & Latency ROI (100 Engineers, 200 Repos)
-
-For an organization of 500 people with 100 engineers generating ~15 agent prompts/day (1,500 total queries/day: 225 multi-repo, 1,275 single-repo):
-
-**1. Claude Sonnet Tier ($3.00 / 1M input)**
-- **Naive context dumping / raw grepping:** ~54.4M input tokens/day = **~$43,000 / year**.
-- **Pre-computed maps & catalog routing:** ~9.1M input tokens/day = **~$7,200 / year**.
-- **Annual API savings:** **~$35,800 / year (83% reduction)**.
-
-**2. Claude Opus / Flagship Tier ($15.00 / 1M input)**
-- **Naive dumping into Opus:** 54.4M input tokens/day = **~$215,000 / year**.
-- **Hierarchical map-reduce (Haiku map $\rightarrow$ Opus reduce):** Cheap models scan repos, Opus only reads summaries = **~$35,000 / year**.
-- **Annual API savings:** **~$180,000 / year (84% reduction)**.
-
-**3. Engineering Wait Latency Recovered**
-- Developers save 30–60 seconds of directory-crawling latency per prompt $\rightarrow$ **~2,800 engineering hours / year** saved.
-- At an average rate of $60/hr ($120k/yr): **~$168,000 / year in recovered engineering productivity**.
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  Claude Sonnet Total Value (API + Dev Time): ~$203,800/year │
-│  Claude Opus Total Value   (API + Dev Time): ~$348,000/year │
-└─────────────────────────────────────────────────────────────┘
-```
-
 ### Related
+- [[multi-repo agent search cost and ROI]] — Detailed financial and developer time savings model for 100 engineers and 200 repos.
 - [[single-repo vs multi-repo agent search]] — Comparing out-of-the-box CLI capabilities (Claude Code, Gemini Flash) with cross-repo gaps.
 - [[hierarchical map-reduce note rollup]] — The foundational map-reduce compression pattern applied to personal notes.
 - [[agent-friendly documentation tools]] — Specifications like `llms.txt` and `repomix` for packing codebases into token-efficient agent formats.
