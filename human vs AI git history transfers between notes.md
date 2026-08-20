@@ -26,5 +26,4 @@ Tracing Line Provenance Across Note Extractions (Verified on Vault History)
     - Adding a footer/backlink like `extracted-from: [[linking to git commits and diffs in obsidian via uri]]` allows instant static link traversal without needing to run `git log -C`.
 
 we want to maintain [[human vs ai text context]]
-
 this doesn't apply if we transfer a note between 2 [[git submodule]]s.
