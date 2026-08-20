@@ -21,7 +21,7 @@ but should we use it?
    - Use **wikilinks** for conceptual topics and relations (`topics: ["[[AI]]", "[[git]]"]`).
    - This gives clean YAML presentation while preserving Obsidian graph connectivity.
 
-## Related Notes
+## References
 - [[use wikilinks instead of hashtags]]
 - [[note types]]
 - [[no hashtag support in obsidian link]]
