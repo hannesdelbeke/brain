@@ -50,7 +50,7 @@ Brief overview of five tools, what they solve, whether you can use them in your 
 - What it is: A self-improving AI agent framework focused on long-term learning loops.
 - What it solves: Most agents forget lessons between sessions. Hermes evaluates task outcomes, extracts reusable reasoning patterns, and saves them as markdown skill files so it gets faster and smarter over time.
 - Could you use it: Yes. Highly relevant to your goal of letting AI learn from vault history and human feedback.
-- Related notes: [[differentiate between AI and human notes]], [[2026-07-31 historic obsidian links]], [[agentic note taking]].
+- Related notes: [[algo to differentiate between AI and human notes]], [[2026-07-31 historic obsidian links]], [[agentic note taking]].
 
 ---
 
@@ -93,4 +93,4 @@ skip for now
 ## References
 - [[2026-08-19 open source claude code mobile equivalents]]
 - [[agentic note taking on mobile]]
-- [[differentiate between AI and human notes]]
+- [[algo to differentiate between AI and human notes]]
