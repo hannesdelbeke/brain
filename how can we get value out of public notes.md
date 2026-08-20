@@ -4,18 +4,45 @@ tags:
   - digital-garden
   - research
 ---
-Extracting value from public [[Obsidian note|notes]] and [[digital garden|digital gardens]] (like [[public zettelkasten repos on high level concepts|public zettelkasten repos]]) requires separating high-signal curation from low-ROI maintenance traps.
+Extracting value from public [[Obsidian note|notes]] and [[digital garden|digital gardens]] (like [[public zettelkasten repos on high level concepts|public zettelkasten repos]]):
 
 ### high-signal use cases
-Public gardens bypass web slop by providing human-tested configurations, book syntheses, and mental models without SEO fluff. They also serve as architectural inspiration for personal vaults, showcasing patterns like [[public/learnings from public zettelkasten vaults|principle-based note naming]], progressive maturity stages, and Maps of Content.
 
-### what works vs what fails
-The highest return on effort comes from lightweight, on-demand patterns. Maintaining a 1-page curated seed index of authoritative links (such as [[2026-08-20 domain masters hub]]) requires zero upkeep while giving [[AI agent|AI agents]] an instant high-trust starting point. When agents need specific docs, fetching them on-demand via `llms.txt`, GitHub code search, or Jina Reader (`r.jina.ai`) avoids local disk clutter and sync overhead. See [[agent-friendly documentation tools]].
+**bypass web slop**
+use curated gardens as primary sources for human-tested configs, book notes, and systems thinking.
 
-Conversely, heavy infrastructure yields poor ROI. Cloning dozens of third-party vaults locally creates sync debt, requires constant maintenance, and dilutes semantic search results with someone else's unfinished drafts. Federated graphs and Git submodules cause [[public/submodule wikilink clashes|wikilink collisions]] across common filenames like `index.md` or `python.md`, alongside detached HEAD states and dead backlinks. External notes should remain isolated reference docs rather than nodes in your primary graph.
+**vault architecture inspiration**
+adopt conventions like [[public/learnings from public zettelkasten vaults|principle-based naming]], maturity stages, and Maps of Content (MOCs).
+
+### what works vs doesn't
+
+High ROI
+
+**curated seed notes**
+keep a 1-page index of 5–10 authoritative links (see [[2026-08-20 domain masters hub]]). Zero upkeep, gives agents an instant high-trust starting point.
+
+**on-demand agent fetching**
+let agents query `llms.txt`, GitHub code search, or Jina Reader (`r.jina.ai`) on the fly. Zero local disk footprint or sync maintenance. See [[agent-friendly documentation tools]].
+
+Low ROI
+
+**local multi-vault embeddings**
+cloning 10+ vaults to disk creates sync debt and dilutes search results with someone else's unfinished drafts. Only worth it for 1–2 massive, daily-use technical references.
+
+**federated graphs & git submodules**
+submodules create [[public/submodule wikilink clashes|wikilink collisions]] (e.g. conflicting `index.md` or `python.md`), detached HEADs, and ghost backlinks. Keep external notes as isolated reference docs, never linked into your primary graph.
 
 ### credibility & survival filter
-Most public vaults on [[GitHub]] are abandoned after a few weeks or consist of raw course copy-pastes. A public vault is worth consulting only if it has a multi-year commit history or active maintenance, is written by a working practitioner in that domain, and reads as a finished reference wiki rather than an unedited stream of consciousness.
+Most public vaults on [[GitHub]] are abandoned stubs or course-note dumps. Before trusting a public vault:
+
+**longevity**
+verify multi-year commit history or active maintenance.
+
+**practitioner authorship**
+ensure author is a working practitioner in that specific domain.
+
+**curated structure**
+prefer finished reference wikis over raw, unedited streams of consciousness.
 
 ### References
 - [[2026-08-20 domain masters hub]] — curated seed list of authoritative domain vaults.
