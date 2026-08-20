@@ -48,17 +48,20 @@ vault-graph orphans --submodule public
 
 ## Existing Open Source Tools
 
-**Obsidian MCP Servers for AI Agents**
+**Obsidian MCP Servers (Agent Integration & Context Budgeting)**
+Solves **high context token waste** by replacing raw ripgrep dumps with structured tool calls. Agents query notes, retrieve backlinks, or read specific sections on demand rather than loading entire raw files into context.
 - [cyanheads/obsidian-mcp-server](https://github.com/cyanheads/obsidian-mcp-server) — Production MCP server for reading, writing, and searching vault notes directly from AI assistants (Claude, Antigravity, Cursor).
 - [StevenStavrakis/obsidian-mcp](https://github.com/StevenStavrakis/obsidian-mcp) — Lightweight standalone MCP server operating directly on the local Markdown filesystem without needing the Obsidian app running.
 - [coddingtonbear/obsidian-local-rest-api](https://github.com/coddingtonbear/obsidian-local-rest-api) — Exposes Obsidian vault operations via local HTTPS REST API and MCP endpoints.
 
-**Graph Analysis & Knowledge Graphs**
+**Graph Analysis & Semantic Tools (Graph Traversal & Synonym Matching)**
+Solves **zero graph awareness** and **synonym blindness**. Graph analyzers compute PageRank, bridge nodes, and 2-hop clusters across wikilinks, while embedding tools match related concepts even when exact keywords or [[Obsidian aliases|aliases]] differ.
 - [SkepticMystic/graph-analysis](https://github.com/SkepticMystic/graph-analysis) — Advanced graph-theory metrics for Obsidian wikilinks (PageRank, betweenness centrality, community clustering, bridge nodes).
 - [khoj-ai/khoj](https://github.com/khoj-ai/khoj) — Local-first AI personal search assistant indexing markdown notes with offline embeddings and CLI/API query endpoints.
 - [brianpetro/obsidian-smart-connections](https://github.com/brianpetro/obsidian-smart-connections) — Real-time local vector embeddings for semantic neighbor retrieval across note chunks.
 
-**Custom Python Blueprint**
+**Custom Python Blueprint (Full Local Control & Hybrid Search)**
+Solves **all three problems** in a lightweight, single-script CLI without external server dependencies. It combines in-memory graph traversal with fast SQLite BM25 and GPU-cached vector embeddings.
 - Graph traversal: `networkx` parsing `\[\[([^\]|#]+)\]\]` for fast shortest path, centrality, and 2-hop neighborhoods.
 - Full-text search: Standard library `sqlite3` with `FTS5` (BM25).
 - Semantic search: `sentence-transformers` on GPU with persistent hash caching per [[offline GPU embeddings with incremental cache]].
