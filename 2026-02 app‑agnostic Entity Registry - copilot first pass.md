@@ -287,7 +287,7 @@ A **local, open-source, structured database** that stores:
 - **URIs** for each entity across multiple apps
 - **Metadata** (names, timestamps, tags, relationships)
 - **Backlinks** (entity-to-entity links)
-- **Source provenance** (which plugin created/updated what)
+- **Source [[provenance]]** (which plugin created/updated what)
 
 It is _not_ a sync engine, not a file store, not a knowledge graph.  
 It is a **resolver + index + link registry**.

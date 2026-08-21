@@ -6,7 +6,7 @@ tags:
   - python
   - pkm
 ---
-Proposal and script to extract added and removed [[wikilink|wikilinks]] from Git history into SQLite, generating data for [[2026-07-31 historic obsidian links|temporal graph analysis]] and [[wikilink temporal integrity]].
+Proposal and script to extract added and removed [[wikilink|wikilinks]] from [[git history|Git history]] into SQLite, generating data for [[2026-07-31 historic obsidian links|temporal graph analysis]] and [[wikilink temporal integrity]].
 
 ### Implementation Plan
 1. **Reuse native diffs:** Use `git log -p --follow -M -- '*.md'` to handle file renames and deletions without custom diff tracking.

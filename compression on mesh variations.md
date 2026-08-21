@@ -33,7 +33,7 @@ To save data, we could save mesh variations as diffs / deltas in our project.
 
 A file **reference with override capabilities** can handle this, but runs into issues if the original file changes.
 
-Git solves this by never changing the *original file* in the git history.
+Git solves this by never changing the *original file* in the [[git history]].
 
 Only Maya has support for this, Unity, unreal, and blender don't. See [[dcc referencing comparison]]
 

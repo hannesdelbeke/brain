@@ -74,7 +74,7 @@ Both dates carry distinct semantic meaning:
 Can we backdate the initial Git commit of a retrospective rollup to match the historical period?
 - **Option A (Backdated Creation Commit):** Create the rollup file and commit it using a backdated author timestamp:
   `GIT_AUTHOR_DATE="2024-06-30 23:59:59" git commit -m "docs: generate rollup for 2024-06"`
-  Future edits and updates then commit normally with current timestamps. This aligns Git history queries (`git log --before="2024-07-01"`) without requiring a complex Git rebase.
+  Future edits and updates then commit normally with current timestamps. This aligns [[git history|Git history]] queries (`git log --before="2024-07-01"`) without requiring a complex Git rebase.
 - **Option B (Frontmatter Anchoring):** Record the source commit range in frontmatter (`source_range: "a1b2c3..d4e5f6"`). This links the summary directly to the exact point-in-time state of the vault without altering Git timestamps.
 - **Best Practice:** Use frontmatter `period` as the permanent machine-readable source of truth (as Git timestamps can reset when moving files across submodules per [[moving files across submodules loses created date]]), and optionally backdate the initial Git author timestamp on creation.
 
@@ -86,7 +86,7 @@ Can we backdate the initial Git commit of a retrospective rollup to match the hi
 > 2. **DAG Cache Protection:** Rollups for 2021, 2022, 2023, and 2024 remain cached and are untouched (0 token spend).
 > 3. **2025 Authoring Rollup (`rollup 2025.md`):** Tracks the *act of remembering* as reflection activity: *"In mid-2025: Active journaling period reflecting on past 2020 life events."*
 > 
-> **Why this beats relying on raw Git history alone:**
+> **Why this beats relying on raw [[git history|Git history]] alone:**
 > - **Semantic synthesis vs raw text diffs:** Git only knows lines were added or deleted; it cannot detect emotional shifts, recurring themes, or summarize life arcs.
 > - **Immunity to submodule moves:** Moving notes across folders or submodules resets Git creation dates (per [[moving files across submodules loses created date]]), whereas frontmatter `period` preserves the event era permanently.
 > - **Token efficiency:** Reading 5 years of monthly rollups takes ~30k tokens; crawling 5 years of raw Git commit diffs takes millions of tokens and dozens of API roundtrips.
