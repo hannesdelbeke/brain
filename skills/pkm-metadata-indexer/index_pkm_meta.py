@@ -338,6 +338,8 @@ def table_columns(connection: sqlite3.Connection, table_name: str) -> set[str]:
 
 
 def ensure_schema(connection: sqlite3.Connection):
+    connection.execute("PRAGMA journal_mode=WAL;")
+    connection.execute("PRAGMA busy_timeout=60000;")
     connection.execute(
         """
         CREATE TABLE IF NOT EXISTS notes (
@@ -556,7 +558,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
     database_file.parent.mkdir(parents=True, exist_ok=True)
     started_at = datetime.now(timezone.utc).isoformat()
 
-    connection = sqlite3.connect(database_file)
+    connection = sqlite3.connect(database_file, timeout=60.0)
     try:
         ensure_schema(connection)
         connection.commit()
@@ -731,7 +733,7 @@ def search_index(
         print(f"Index database not found at {database_file}. Run indexing first.")
         return []
 
-    connection = sqlite3.connect(database_file)
+    connection = sqlite3.connect(database_file, timeout=60.0)
     try:
         cursor = connection.cursor()
         lexical_results = {}
@@ -851,17 +853,22 @@ def check_duplicate(title: str, vault_path: str | None = None, db_path: str | No
         candidates[path] = {"title_rank": rank, "semantic": None}
     for result in semantic_results:
         candidate = candidates.setdefault(result["path"], {"title_rank": None, "semantic": None})
-        if candidate["semantic"] is None or result["raw_sim"] > candidate["semantic"]["raw_sim"]:
+        raw_sim = result.get("raw_sim") or -1.0
+        current_sim = (candidate["semantic"].get("raw_sim") or -1.0) if candidate["semantic"] else -1.0
+        if candidate["semantic"] is None or raw_sim > current_sim:
             candidate["semantic"] = result
 
-    ordered = sorted(
-        candidates.items(),
-        key=lambda item: (
-            item[1]["title_rank"] is None,
-            item[1]["title_rank"] or 999,
-            -(item[1]["semantic"] or {"raw_sim": -1})["raw_sim"],
-        ),
-    )[:5]
+    def sort_key(item):
+        title_rank = item[1]["title_rank"]
+        sem = item[1]["semantic"]
+        sim = (sem.get("raw_sim") or -1.0) if sem else -1.0
+        return (
+            title_rank is None,
+            title_rank or 999,
+            -sim,
+        )
+
+    ordered = sorted(candidates.items(), key=sort_key)[:5]
     print(f"\nPossible existing notes for: {title!r}")
     if not ordered:
         print("No lexical title or semantic candidates found.")
