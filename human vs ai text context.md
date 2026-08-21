@@ -8,12 +8,12 @@ aliases:
   - human vs AI authorship
 ---
 ## Summary
-- **Cross-submodule migration problem:** Moving notes across submodule boundaries drops Git history, birth dates, and author attribution.
+- **Cross-submodule migration problem:** Moving notes across submodule boundaries drops [[git history|Git history]], birth dates, and author attribution.
 - **Privacy vs. provenance solution:** Use an anonymous `origin-sha: <sha>` pointer in frontmatter (0 repo name leaks) and record true human vs. AI authorship directly in the native Git commit author.
 - **Workflow & audits:** 4-step detection plan applied to test cases ([[2025-12-02 laptop research]], [[2026-08-11 laptop research]]).
 
 ## Problem: Metadata Loss Across Submodules
-Moving notes from [[private notes|private vault]] to [[public notes]] severs native Git history, dropping commit timestamps and author attribution. This metadata is essential to establish human vs AI text context and maintain [[wikilink temporal integrity|temporal integrity]].
+Moving notes from [[private notes|private vault]] to [[public notes]] severs native [[git history|Git history]], dropping commit timestamps and author attribution. This metadata is essential to establish human vs AI text context and maintain [[wikilink temporal integrity|temporal integrity]].
 
 ## Restoring Earliest Creation Dates
 To fix severed timestamps on migrated notes:
@@ -67,4 +67,4 @@ git commit -m "add: note" --author="Hannes <...>"
 ### References
 - [[human vs AI git history transfers between notes]] — How `git blame -C` detects extractions within a repo vs across submodules.
 - [[linking to git commits and diffs in obsidian via uri]] — Linking directly to historical SHAs across repository boundaries.
-- [[2026-07-31 historic obsidian links]] — Mining Git history diffs to reconstruct graph evolution.
+- [[2026-07-31 historic obsidian links]] — Mining [[git history|Git history]] diffs to reconstruct graph evolution.
