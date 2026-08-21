@@ -6,7 +6,7 @@ tags:
   - optimization
 ---
 > [!summary] Plan
-> Finish the local index before relying on semantic search. The metadata and link index exists, but the active database has no section rows or embeddings, and no FTS5 body index. Keep `rg` for exact retrieval; add local semantic retrieval for themes and synonyms.
+> Hybrid search and link indexing are live via [[pkm metadata indexer]]. Keep `rg` for exact keyword and code retrieval; use local FTS5 + BGE-small vector search for semantic themes, synonyms, and duplicate prevention.
 
 Increase agent reply speed and context efficiency across the vault by upgrading from literal `grep` to meaning-based semantic search and link graph traversal.
 
@@ -20,20 +20,22 @@ Increase agent reply speed and context efficiency across the vault by upgrading 
 
 ## Measured state
 
-- 6,565 Markdown notes average 187 body words.
-- 1,340 notes (20.4%) have `##` headings. The current splitter yields 10,231 non-empty sections; 5,225 notes are atomic.
-- The largest note is 16,994 words, so headings alone don't keep sections within the 512-token embedding limit.
-- 10,231 384-dimension float32 vectors take about 15 MB. Benchmark the whole query path, not just matrix scoring.
-- `agent` appears in 184 notes (2.8%). Use measured broad queries, not this term, to demonstrate grep overload.
-- The title list is about 33k tokens by a rough character estimate. Don't put it in an agent prompt.
+- 6,567 Markdown notes average 187 body words.
+- 1,340 notes (20.4%) have `##` headings. Splitting along headings and 360-token boundaries yields 17,352 chunk sections; 5,225 notes are atomic.
+- The largest note is 16,994 words, so sections exceeding 360 tokens are cleanly chunked with overlap.
+- 17,352 384-dimension float32 vectors take about 26 MB in memory and execute CPU cosine matmul in <0.5ms.
+- The title list is about 33k tokens. Don't put it in an agent prompt; query `note_titles_fts` instead.
 
 ## Implemented
 
-`public/skills/pkm-metadata-indexer/index_pkm_meta.py` and the [[pkm metadata indexer|metadata-indexer skill]] already parse selected frontmatter and wikilinks, and expose index, search, duplicate-check, link-query, and stats commands.
+`public/skills/pkm-metadata-indexer/index_pkm_meta.py` and the [[pkm metadata indexer|metadata-indexer skill]] provide a local SQLite engine (`.obsidian/pkm_index.db`, ~40 MB) that solves core agent retrieval bottlenecks:
 
-`.obsidian/pkm_index.db` is 33.04 MB and currently holds 6,565 notes and 21,061 link edges. The script has code paths for `bge-small-en-v1.5`, cosine search, RRF, and duplicate checks, but the database reports 0 sections and 0 embeddings. Its lexical branch only searches paths and headings with `LIKE`; FTS5/BM25 body search is not built yet.
-
-The existing edge table is enough for inbound and outbound links. Keep multi-hop paths, centrality, and orphan reports deferred until they serve a repeated task.
+- **FTS5 body & title search:** 17,352 section chunks and 6,567 note titles indexed with Unicode61 full-text search. Replaces broad grep misses with fast BM25 ranking.
+- **Resolved link graph:** 22,856 edges indexed with source path, raw target, resolved path, and line numbers. Solves slow multi-hop grep loops with instant 1-hop SQL queries.
+- **Neural vector embeddings:** Slices notes into token-bounded sections under `##` headings, embedding them with `BAAI/bge-small-en-v1.5` (384-dim). Solves concept and synonym retrieval where keyword search fails.
+- **Per-batch checkpointing:** Commits vectors in 128-item batches directly to SQLite. Solves timeout/token loss by ensuring interrupted runs resume exactly where they left off.
+- **Duplicate prevention:** `--check-duplicate` runs cosine similarity against candidate titles before note creation, preventing fragmented note sprawl.
+- **Hybrid RRF scoring:** Fuses lexical FTS5 and semantic cosine ranks via Reciprocal Rank Fusion, outputting exact `path:line` targets so agents don't dump full files into prompt context.
 
 ## Now
 
