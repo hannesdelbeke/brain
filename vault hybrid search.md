@@ -4,7 +4,7 @@ tags:
   - search
   - pkm
 ---
-Combining lexical keyword matching (BM25) and dense semantic vector similarity using Reciprocal Rank Fusion (RRF) for Markdown note retrieval.
+Combining lexical keyword matching (BM25) and dense [[vector embedding|semantic vector similarity]] using [[reciprocal rank fusion|Reciprocal Rank Fusion (RRF)]] for Markdown note retrieval.
 
 ## The Dual Search Problem
 - **Lexical search alone (BM25 / FTS5):** Excels at finding exact function names, hardware models (e.g. `i7-1360P`), acronyms, and unique tags, but fails when queries use synonyms or conceptual phrasing.
@@ -12,8 +12,8 @@ Combining lexical keyword matching (BM25) and dense semantic vector similarity u
 
 ## Hybrid Pipeline (RRF)
 1. **Lexical pass:** Run query against SQLite FTS5 index to score exact text matches via BM25.
-2. **Vector pass:** Compute cosine similarity against local sentence-transformers embeddings cached on GPU per [[offline GPU embeddings with incremental cache]].
-3. **Rank fusion:** Merge results using Reciprocal Rank Fusion:
+2. **Vector pass:** Compute cosine similarity against local sentence-transformers [[vector embedding|embeddings]] cached on GPU per [[offline GPU embeddings with incremental cache]].
+3. **Rank fusion:** Merge results using [[reciprocal rank fusion|Reciprocal Rank Fusion]]:
    $$RRF\_Score(d) = \sum_{m \in \{BM25, Vector\}} \frac{1}{k + rank_m(d)}$$
    (where $k \approx 60$).
 

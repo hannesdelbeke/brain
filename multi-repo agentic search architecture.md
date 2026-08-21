@@ -33,7 +33,7 @@ When an [[AI agent|AI agent]] answers questions spanning an entire organization 
 ```
 
 ### Tier 1: Org Repository Catalog (Repo Routing)
-Before touching any code files, the agent queries a lightweight organization catalog:
+Before touching any code files, the agent queries a lightweight [[repository catalog|organization catalog]]:
 - **Index:** A cached table of repository names, README summaries, tech stacks, and top-level exported packages or services.
 - **Repo routing:** The agent identifies the 2–5 candidate repositories relevant to the prompt, filtering out 90%+ of irrelevant codebases at zero token cost.
 
@@ -41,7 +41,7 @@ Instead of calling every team in a company to ask what they do, the agent checks
 
 ### Tier 2: Repo Skeletons & Incremental AST Indexing
 For the selected candidate repos, the agent inspects compact structural skeletons rather than full implementation files:
-- **AST extraction:** Uses `tree-sitter` or `ctags` to extract module docstrings, class declarations, and function signatures.
+- **AST extraction:** Uses [[tree-sitter]] or `ctags` to extract module docstrings, class declarations, and function signatures.
   It pulls class names, function signatures (like `def process_payment(amount, user_id)`), and top docstrings while stripping out the internal function bodies.
 - **Commit SHA caching:** Indexes and embeddings are cached against the latest commit SHA (`git rev-parse HEAD`), so only repos with new commits are re-processed.
 
@@ -50,7 +50,7 @@ When answering complex multi-repo queries across multiple services:
 1. **Map (Per-Repo Extraction):** A fast, low-cost model (e.g. Gemini Flash or Claude Haiku) inspects targeted code chunks within each candidate repo and outputs a concise structured summary (~2k–5k tokens per repo).
 2. **Reduce (Org-Wide Synthesis):** A deep reasoning model (Gemini Pro or Claude Opus) receives those per-repo summaries and synthesizes the unified answer (~10k tokens).
 
-The expensive reasoning model (the lead architect) delegates reading individual repos to cheap, fast models (the interns), then combines their findings into a single coherent answer.
+The expensive reasoning model (the lead architect) delegates reading individual repos to cheap, fast models (the interns), then combines their findings into a single coherent answer via [[map-reduce]].
 
 ## Agent MCP Tool Interface
 Exposes structured multi-repo query primitives via Model Context Protocol:
