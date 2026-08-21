@@ -7,8 +7,8 @@ tags:
   - optimization
 origin-sha: 062084521
 ---
-> [!summary] Conclusion
-> **Partially implemented.** Flat SQLite metadata indexing is live via the [[pkm metadata indexer]], but complex vector caching and hierarchical map-reduce rollups are not needed right now. A flat structure remains sufficient for the current vault size.
+> [!summary] Status
+> **Phased Adoption:** Flat SQLite metadata indexing is live via the [[pkm metadata indexer]], and local GPU vector caching is targeted for fuzzy search (Phase 1). Native graph traversal and hierarchical map-reduce rollups remain deferred for future scaling (Phase 2). See [[agentic tooling upgrades over grep]].
 
 An agent-native architecture for indexing, searching, and synthesizing 10,000+ Markdown notes with minimal API token consumption.
 
