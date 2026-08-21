@@ -5,6 +5,9 @@ tags:
   - mcp
   - pkm
 ---
+> [!summary] Conclusion
+> **Not needed right now.** Directly passing file paths to agents or letting them run local grep/Python scripts is currently frictionless enough. An MCP server adds unnecessary abstraction overhead for a single-user local vault.
+
 Exposing Markdown vault reading, search, and graph traversal tools to AI assistants via the Model Context Protocol (MCP) to reduce context token waste.
 
 ## Why MCP Beats Raw Ripgrep

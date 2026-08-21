@@ -5,6 +5,9 @@ tags:
   - obsidian
   - pkm
 ---
+> [!summary] Conclusion
+> **Not needed right now.** Obsidian's native graph view and local backlinks provide enough navigation utility. Maintaining an external graph database or networkx index introduces maintenance overhead for marginal gains.
+
 Indexing and traversing explicit [[wikilink|wikilinks]] to discover multi-hop conceptual neighborhoods, backlinks, and bridges across notes.
 
 ## How it Works
