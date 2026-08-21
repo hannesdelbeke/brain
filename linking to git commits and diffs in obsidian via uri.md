@@ -12,6 +12,7 @@ How to link to past Git revisions, commits, and diff views from within [[Obsidia
 ### Core Constraint
 [[wikilinks|Wikilinks]] only resolve to files currently active in the [[Obsidian vault|vault]]. Linking to a historical version requires either leaving the vault (URI protocol/URL) or materializing the old version as a file.
 
+## Suggestions
 ### Materialize Snapshot
 Save a copy of the old note as a brand new file in your vault (like "Note Name (old version).md"). This guarantees the old version never changes and works everywhere, even on your phone.
 
@@ -23,6 +24,8 @@ Use a standard web link pointing to the exact past version of the file on GitHub
 
 ### Local Shell Command URI
 Create a special Obsidian link that, when clicked, runs a background command to instantly pop open a visual comparison (diff) between the old version and the current version right on your computer.
+
+- could [[URI link to obsidian git diff - RnD]]
 
 
 ### Technical implementations
@@ -75,7 +78,6 @@ Create a special Obsidian link that, when clicked, runs a background command to 
 
 ### References
 - [[wikilink temporal integrity]] — Resolves links via Git timestamps automatically without manual commit URIs.
-- [[obsidian-git historical diff internals]] — Hands-on testing of URI schemes and Obsidian Git internals.
 - [[human vs ai text context]] — Preserving commit SHAs when moving notes between submodules.
 - [[human vs AI git history transfers between notes]] — How diffs preserve author provenance across extractions.
 - [[Obsidian plugin - Git]] — Target integration for extending obsidian-git with diff URIs.
