@@ -69,3 +69,4 @@ The `obsidian-git` plugin does not accept commit SHAs via URI. To trigger a loca
 - [[human vs AI git history transfers between notes]] — How diffs preserve author provenance across extractions.
 - [[Obsidian plugin - Git]] — Target integration for extending obsidian-git with diff URIs.
 - [[agentic note taking]] — AI agents following commit URIs to learn from historical revisions.
+- [[URI link to obsidian git diff - RnD]]
