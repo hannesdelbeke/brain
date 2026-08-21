@@ -95,6 +95,5 @@ keep context from this note in mind when planning [[git history]]:
 [[human vs AI git history transfers between notes]]
 
 ### Related
-- [[moving files across submodules loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
 - [[wikilink temporal integrity]] — Preserving link validity across chronological revisions.
 - [[token efficient PKM analysis architecture]] — Overview of vault retrieval and batch analysis economics.
