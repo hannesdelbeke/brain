@@ -1,22 +1,19 @@
-"""
-PKM Metadata, Section Embeddings & Graph Indexer.
-Extracts:
-1. Note-level YAML frontmatter (energy, sentiment, tags) & snippets -> `notes` table
-2. Heading-level sections (^## ) with bge-small-en-v1.5 embeddings & SHA256 cache -> `sections` table
-3. Wikilink graph edges [[target]] -> `edges` table
-"""
+"""Local metadata, section, link, and hybrid search index for a Markdown vault."""
 
-import os
-import sys
-import re
-import json
-import sqlite3
-import hashlib
 import argparse
-import numpy as np
-from pathlib import Path
+import hashlib
+import json
+import os
+import re
+import sqlite3
+import sys
+from collections import defaultdict
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path, PurePosixPath
 
-# Ensure UTF-8 output on Windows consoles
+import numpy as np
+
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
@@ -24,54 +21,94 @@ if hasattr(sys.stderr, "reconfigure"):
 
 try:
     from fastembed import TextEmbedding
+
     HAS_FASTEMBED = True
 except ImportError:
     HAS_FASTEMBED = False
 
-def find_vault_root():
+
+EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+EMBEDDING_DIMENSIONS = 384
+CHUNKING_VERSION = "heading-estimate-v1"
+MAX_CHUNK_ESTIMATED_TOKENS = 360
+CHUNK_OVERLAP_ESTIMATED_TOKENS = 40
+SCHEMA_VERSION = "2"
+IGNORED_DIRS = {".obsidian", ".git", ".trash", "node_modules", ".venv", "__pycache__"}
+FRONTMATTER_RE = re.compile(r"^---\s*\r?\n(.*?)\r?\n---\s*(?:\r?\n|$)", re.DOTALL)
+WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
+TOKEN_RE = re.compile(r"\w+|[^\w\s]", re.UNICODE)
+
+
+@dataclass(frozen=True)
+class Section:
+    section_id: str
+    path: str
+    heading: str
+    start_line: int
+    chunk_index: int
+    sha256: str
+    text: str
+
+
+@dataclass(frozen=True)
+class Link:
+    source_path: str
+    raw_target: str
+    resolved_target_path: str | None
+    start_line: int
+
+
+def find_vault_root() -> Path:
     current = Path.cwd().resolve()
     for parent in [current, *current.parents]:
         if (parent / ".obsidian").exists() or (parent / ".git").exists():
             return parent
     return current
 
+
 def get_sha256(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8", errors="ignore")).hexdigest()
 
-def parse_frontmatter(content):
+
+def parse_frontmatter(content: str) -> tuple[dict, str, int]:
+    """Return selected metadata, body text, and the body's absolute first line."""
     meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": []}
-    fm_match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
-    if not fm_match:
-        return meta, content
-    
-    fm_text = fm_match.group(1)
-    body = content[fm_match.end():]
-    
-    # Extract energy
-    energy_m = re.search(r"^energy:\s*(\d+)", fm_text, re.MULTILINE)
-    if energy_m:
-        meta["energy"] = int(energy_m.group(1))
-        
-    # Extract sentiment
-    sent_m = re.search(r"^sentiment:\s*\n((?:\s*-\s*\d+\s*\n?)+)", fm_text, re.MULTILINE)
-    if sent_m:
-        scores = re.findall(r"\d+", sent_m.group(1))
+    match = FRONTMATTER_RE.match(content)
+    if not match:
+        return meta, content, 1
+
+    frontmatter = match.group(1)
+    body = content[match.end() :]
+    body_start_line = content[: match.end()].count("\n") + 1
+
+    energy_match = re.search(r"^energy:\s*(\d+)", frontmatter, re.MULTILINE)
+    if energy_match:
+        meta["energy"] = int(energy_match.group(1))
+
+    sentiment_match = re.search(
+        r"^sentiment:\s*\n((?:\s*-\s*\d+\s*\n?)+)", frontmatter, re.MULTILINE
+    )
+    if sentiment_match:
+        scores = [int(score) for score in re.findall(r"\d+", sentiment_match.group(1))]
         if scores:
-            meta["sentiment"] = sum(int(s) for s in scores) / len(scores)
+            meta["sentiment"] = sum(scores) / len(scores)
 
-    # Extract sentiment labels
-    label_m = re.search(r"^sentiment-label:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", fm_text, re.MULTILINE)
-    if label_m:
-        meta["sentiment_label"] = [l.strip("- ").strip() for l in label_m.group(1).strip().splitlines()]
+    label_match = re.search(
+        r"^sentiment-label:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", frontmatter, re.MULTILINE
+    )
+    if label_match:
+        meta["sentiment_label"] = [
+            label.strip("- ").strip() for label in label_match.group(1).strip().splitlines()
+        ]
 
-    # Extract tags
-    tag_m = re.search(r"^tags:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", fm_text, re.MULTILINE)
-    if tag_m:
-        meta["tags"] = [t.strip("- ").strip() for t in tag_m.group(1).strip().splitlines()]
-        
-    return meta, body
+    tag_match = re.search(r"^tags:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", frontmatter, re.MULTILINE)
+    if tag_match:
+        meta["tags"] = [tag.strip("- ").strip() for tag in tag_match.group(1).strip().splitlines()]
 
-def extract_key_lines(body, max_lines=15):
+    return meta, body, body_start_line
+
+
+def extract_key_lines(body: str, max_lines: int = 15) -> str:
     extracted = []
     for line in body.splitlines():
         line_clean = line.strip()
@@ -85,446 +122,901 @@ def extract_key_lines(body, max_lines=15):
                 break
     return "\n".join(extracted)
 
-def extract_wikilinks(content):
-    """Extract clean target note titles from [[target|alias]] or [[target#heading]]."""
-    matches = re.findall(r"\[\[([^\]]+)\]\]", content)
-    targets = set()
-    for m in matches:
-        target = m.split("|")[0].split("#")[0].strip()
-        if target:
-            targets.add(target)
-    return list(targets)
 
-def parse_sections(file_stem, body):
-    """
-    Split note into sections.
-    If note has '## ' headings, splits on them.
-    If atomic without '## ' headings, returns 1 section using file_stem as heading.
-    """
+def iter_wikilinks(content: str):
+    """Yield raw wikilinks and their absolute source lines."""
+    for match in WIKILINK_RE.finditer(content):
+        raw_target = match.group(1).strip()
+        if not raw_target:
+            continue
+        start_line = content.count("\n", 0, match.start()) + 1
+        yield raw_target, start_line
+
+
+def clean_link_target(raw_target: str) -> str:
+    return raw_target.split("|", 1)[0].split("#", 1)[0].strip().replace("\\", "/")
+
+
+def normalise_note_key(value: str) -> str:
+    clean = value.strip().replace("\\", "/")
+    if clean.lower().endswith(".md"):
+        clean = clean[:-3]
+    return clean.lstrip("/").casefold()
+
+
+def make_note_lookup(paths: list[str]) -> tuple[dict[str, str], dict[str, list[str]]]:
+    by_path = {}
+    by_stem = defaultdict(list)
+    for path in paths:
+        by_path[normalise_note_key(path)] = path
+        by_stem[Path(path).stem.casefold()].append(path)
+    return by_path, by_stem
+
+
+def resolve_wikilink(
+    raw_target: str, source_path: str, by_path: dict[str, str], by_stem: dict[str, list[str]]
+) -> str | None:
+    target = clean_link_target(raw_target)
+    if not target:
+        return None
+
+    direct = by_path.get(normalise_note_key(target))
+    if direct:
+        return direct
+
+    if "/" in target:
+        source_dir = PurePosixPath(source_path).parent
+        relative_target = str(source_dir / target)
+        resolved = by_path.get(normalise_note_key(relative_target))
+        if resolved:
+            return resolved
+
+    candidates = by_stem.get(Path(target).name.casefold(), [])
+    return candidates[0] if len(candidates) == 1 else None
+
+
+def parse_sections(file_stem: str, body: str, body_start_line: int) -> list[tuple[str, int, str]]:
+    """Split on H2 headings while keeping absolute source locations."""
     lines = body.splitlines()
+    heading_positions = [index for index, line in enumerate(lines) if line.startswith("## ")]
+    if not heading_positions:
+        text = body.strip()
+        return [(file_stem, body_start_line, text)] if text else []
+
     sections = []
-    current_heading = file_stem
-    current_lines = []
-    start_line = 1
-    
-    for idx, line in enumerate(lines, start=1):
-        if line.startswith("## "):
-            if current_lines:
-                sec_text = "\n".join(current_lines).strip()
-                if sec_text:
-                    sections.append((current_heading, start_line, sec_text))
-            current_heading = line[3:].strip()
-            current_lines = [line]
-            start_line = idx
-        else:
-            current_lines.append(line)
-            
-    if current_lines:
-        sec_text = "\n".join(current_lines).strip()
-        if sec_text:
-            sections.append((current_heading, start_line, sec_text))
-            
+    preamble = "\n".join(lines[: heading_positions[0]]).strip()
+    if preamble:
+        sections.append((file_stem, body_start_line, preamble))
+
+    for position_index, heading_position in enumerate(heading_positions):
+        next_position = (
+            heading_positions[position_index + 1]
+            if position_index + 1 < len(heading_positions)
+            else len(lines)
+        )
+        heading = lines[heading_position][3:].strip() or file_stem
+        text = "\n".join(lines[heading_position + 1 : next_position]).strip() or heading
+        sections.append((heading, body_start_line + heading_position, text))
+
     return sections
 
-def build_index(vault_path=None, db_path=None, skip_embeddings=False):
-    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
-    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
-    database_file.parent.mkdir(parents=True, exist_ok=True)
-    
-    print(f"Indexing PKM vault at: {vault_dir}")
-    print(f"Database location: {database_file}")
-    
-    conn = sqlite3.connect(database_file)
-    cur = conn.cursor()
-    
-    # 1. Notes table
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS notes (
-            path TEXT PRIMARY KEY,
-            filename TEXT,
-            category TEXT,
-            energy INTEGER,
-            sentiment REAL,
-            sentiment_labels TEXT,
-            tags TEXT,
-            summary_snippet TEXT,
-            word_count INTEGER
-        )
-    """)
-    
-    # 2. Sections table (with vector blob)
-    cur.execute("DROP TABLE IF EXISTS sections")
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS sections (
-            id TEXT PRIMARY KEY,
-            path TEXT,
-            heading TEXT,
-            start_line INTEGER,
-            sha256 TEXT,
-            vector BLOB
-        )
-    """)
-    cur.execute("CREATE INDEX IF NOT EXISTS idx_sections_path ON sections(path)")
-    cur.execute("CREATE INDEX IF NOT EXISTS idx_sections_sha ON sections(sha256)")
-    
-    # 3. Edges table (link graph)
-    cur.execute("DROP TABLE IF EXISTS edges")
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS edges (
-            source TEXT,
-            target TEXT,
-            PRIMARY KEY (source, target)
-        )
-    """)
-    cur.execute("CREATE INDEX IF NOT EXISTS idx_edges_source ON edges(source)")
-    cur.execute("CREATE INDEX IF NOT EXISTS idx_edges_target ON edges(target)")
-    
-    # Load existing section hashes for incremental caching
-    cur.execute("SELECT id, sha256 FROM sections WHERE vector IS NOT NULL")
-    existing_hashes = dict(cur.fetchall())
-    
-    ignored_dirs = {".obsidian", ".git", ".trash", "node_modules", ".venv", "__pycache__"}
-    seen_paths = set()
-    seen_section_ids = set()
-    
-    notes_batch = []
-    edges_batch = []
-    sections_to_embed = [] # list of (sec_id, rel_path, heading, start_line, sec_hash, sec_text)
-    unchanged_sections_count = 0
-    
-    for root, dirs, files in os.walk(vault_dir):
-        dirs[:] = [d for d in dirs if d not in ignored_dirs]
-        for file in files:
-            if not file.endswith(".md"):
-                continue
-            
-            full_path = Path(root) / file
-            rel_path = full_path.relative_to(vault_dir).as_posix()
-            file_stem = full_path.stem
-            seen_paths.add(rel_path)
-            
-            category = "general"
-            if file.startswith("day "):
-                category = "daily"
-            elif file.startswith("review "):
-                category = "review"
-            elif rel_path.startswith("work/"):
-                parts = rel_path.split("/")
-                category = f"work/{parts[1]}" if len(parts) > 2 else "work"
-                
-            try:
-                with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
-                    content = f.read()
-                    
-                meta, body = parse_frontmatter(content)
-                snippet = extract_key_lines(body)
-                word_count = len(body.split())
-                
-                notes_batch.append((
-                    rel_path,
-                    file,
-                    category,
+
+def estimate_tokens(text: str) -> int:
+    """Use a conservative local estimate when the model tokenizer is unavailable."""
+    estimate = 0
+    for token in TOKEN_RE.findall(text):
+        if token.isalnum() or token == "_":
+            estimate += max(1, (len(token) + 3) // 4)
+        else:
+            estimate += 1
+    return estimate
+
+
+def chunk_section(heading: str, text: str) -> list[str]:
+    """Return heading-aware chunks within a conservative embedding budget."""
+    clean_text = " ".join(text.split())
+    prefix = heading.strip() or "Untitled"
+    if estimate_tokens(prefix + " " + clean_text) <= MAX_CHUNK_ESTIMATED_TOKENS:
+        return [f"{prefix}\n{clean_text}"]
+
+    words = clean_text.split()
+    chunks = []
+    start = 0
+    prefix_cost = estimate_tokens(prefix) + 1
+
+    while start < len(words):
+        end = start
+        budget = prefix_cost
+        while end < len(words):
+            word_cost = estimate_tokens(words[end]) + 1
+            if end > start and budget + word_cost > MAX_CHUNK_ESTIMATED_TOKENS:
+                break
+            budget += word_cost
+            end += 1
+
+        chunks.append(f"{prefix}\n{' '.join(words[start:end])}")
+        if end >= len(words):
+            break
+
+        next_start = end
+        overlap_cost = 0
+        while next_start > start + 1:
+            previous_cost = estimate_tokens(words[next_start - 1]) + 1
+            if overlap_cost + previous_cost > CHUNK_OVERLAP_ESTIMATED_TOKENS:
+                break
+            overlap_cost += previous_cost
+            next_start -= 1
+        start = next_start
+
+    return chunks
+
+
+def category_for(path: str) -> str:
+    filename = PurePosixPath(path).name
+    if filename.startswith("day "):
+        return "daily"
+    if filename.startswith("review "):
+        return "review"
+    if path.startswith("work/"):
+        parts = path.split("/")
+        return f"work/{parts[1]}" if len(parts) > 2 else "work"
+    return "general"
+
+
+def markdown_paths(vault_dir: Path) -> list[Path]:
+    paths = []
+    for root, directories, files in os.walk(vault_dir):
+        directories[:] = [directory for directory in directories if directory not in IGNORED_DIRS]
+        for filename in files:
+            if filename.endswith(".md"):
+                paths.append(Path(root) / filename)
+    return sorted(paths)
+
+
+def collect_index_data(vault_dir: Path):
+    file_paths = markdown_paths(vault_dir)
+    relative_paths = [path.relative_to(vault_dir).as_posix() for path in file_paths]
+    by_path, by_stem = make_note_lookup(relative_paths)
+
+    notes = []
+    sections = []
+    links = []
+    errors = []
+
+    for full_path, relative_path in zip(file_paths, relative_paths):
+        try:
+            content = full_path.read_text(encoding="utf-8", errors="ignore")
+            meta, body, body_start_line = parse_frontmatter(content)
+            notes.append(
+                (
+                    relative_path,
+                    full_path.name,
+                    category_for(relative_path),
                     meta["energy"],
                     meta["sentiment"],
                     json.dumps(meta["sentiment_label"]),
                     json.dumps(meta["tags"]),
-                    snippet,
-                    word_count
-                ))
-                
-                # Wikilinks
-                targets = extract_wikilinks(content)
-                for t in targets:
-                    edges_batch.append((file_stem, t))
-                    
-                # Sections
-                parsed_sec = parse_sections(file_stem, body)
-                for heading, start_line, sec_text in parsed_sec:
-                    sec_id = f"{rel_path}#{heading}"
-                    seen_section_ids.add(sec_id)
-                    sec_hash = get_sha256(sec_text)
-                    
-                    if skip_embeddings:
-                        if sec_id not in existing_hashes:
-                            sections_to_embed.append((sec_id, rel_path, heading, start_line, sec_hash, sec_text))
-                    else:
-                        if sec_id in existing_hashes and existing_hashes[sec_id] == sec_hash:
-                            unchanged_sections_count += 1
-                        else:
-                            # Needs embedding
-                            sections_to_embed.append((sec_id, rel_path, heading, start_line, sec_hash, sec_text))
-                            
-            except Exception:
-                pass
+                    extract_key_lines(body),
+                    len(body.split()),
+                )
+            )
 
-    # Save notes
-    cur.executemany("""
-        INSERT OR REPLACE INTO notes 
-        (path, filename, category, energy, sentiment, sentiment_labels, tags, summary_snippet, word_count)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, notes_batch)
-    
-    # Save edges
-    cur.execute("DELETE FROM edges")
-    cur.executemany("INSERT OR IGNORE INTO edges (source, target) VALUES (?, ?)", edges_batch)
-    
-    # Cleanup deleted sections
-    if seen_section_ids:
-        cur.execute("SELECT id FROM sections")
-        all_db_sec = [r[0] for r in cur.fetchall()]
-        stale_sec = [sid for sid in all_db_sec if sid not in seen_section_ids]
-        if stale_sec:
-            cur.executemany("DELETE FROM sections WHERE id = ?", [(sid,) for sid in stale_sec])
-            print(f"Pruned {len(stale_sec)} deleted sections from index.")
-            
-    conn.commit()
-    print(f"Indexed {len(notes_batch)} notes and {len(edges_batch)} graph edges.")
-    print(f"Sections: {unchanged_sections_count} cached/unchanged, {len(sections_to_embed)} new or modified.")
+            for raw_target, start_line in iter_wikilinks(content):
+                links.append(
+                    Link(
+                        source_path=relative_path,
+                        raw_target=raw_target,
+                        resolved_target_path=resolve_wikilink(raw_target, relative_path, by_path, by_stem),
+                        start_line=start_line,
+                    )
+                )
 
-    # Embed new/modified sections or save placeholders
-    if sections_to_embed:
-        if skip_embeddings or not HAS_FASTEMBED:
-            save_sec_batch = [(s[0], s[1], s[2], s[3], s[4], None) for s in sections_to_embed]
-            cur.executemany("""
-                INSERT OR REPLACE INTO sections (id, path, heading, start_line, sha256, vector)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, save_sec_batch)
-            conn.commit()
-            print(f"Recorded {len(save_sec_batch)} section metadata records.")
-        else:
-            print(f"Computing embeddings for {len(sections_to_embed)} sections with BAAI/bge-small-en-v1.5...")
-            model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
-            texts = [s[5] for s in sections_to_embed]
-            
-            # Embed in batches
-            embeddings = list(model.embed(texts, batch_size=128))
-            
-            save_sec_batch = []
-            for (sec_id, rel_path, heading, start_line, sec_hash, _), vec in zip(sections_to_embed, embeddings):
-                vec_np = np.array(vec, dtype=np.float32)
-                # Normalize vector to unit length for fast dot product cosine similarity
-                norm = np.linalg.norm(vec_np)
-                if norm > 0:
-                    vec_np = vec_np / norm
-                save_sec_batch.append((sec_id, rel_path, heading, start_line, sec_hash, vec_np.tobytes()))
-                
-            cur.executemany("""
-                INSERT OR REPLACE INTO sections (id, path, heading, start_line, sha256, vector)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, save_sec_batch)
-            conn.commit()
-            print(f"Successfully saved {len(save_sec_batch)} section embeddings.")
+            for section_ordinal, (heading, start_line, section_text) in enumerate(
+                parse_sections(full_path.stem, body, body_start_line)
+            ):
+                for chunk_index, chunk_text in enumerate(chunk_section(heading, section_text)):
+                    section_id = f"{relative_path}::{section_ordinal}:{chunk_index}"
+                    sections.append(
+                        Section(
+                            section_id=section_id,
+                            path=relative_path,
+                            heading=heading,
+                            start_line=start_line,
+                            chunk_index=chunk_index,
+                            sha256=get_sha256(chunk_text),
+                            text=chunk_text,
+                        )
+                    )
+        except Exception as error:
+            errors.append((relative_path, "parse", str(error)))
 
-    conn.close()
-    print("Indexing complete.")
+    return notes, sections, links, errors
 
-def search_index(query, vault_path=None, db_path=None, limit=10):
+
+def table_columns(connection: sqlite3.Connection, table_name: str) -> set[str]:
+    return {row[1] for row in connection.execute(f"PRAGMA table_info({table_name})")}
+
+
+def ensure_schema(connection: sqlite3.Connection):
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS notes (
+            path TEXT PRIMARY KEY,
+            filename TEXT NOT NULL,
+            category TEXT NOT NULL,
+            energy INTEGER,
+            sentiment REAL,
+            sentiment_labels TEXT NOT NULL,
+            tags TEXT NOT NULL,
+            summary_snippet TEXT NOT NULL,
+            word_count INTEGER NOT NULL
+        )
+        """
+    )
+
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS sections (
+            id TEXT PRIMARY KEY,
+            path TEXT NOT NULL,
+            heading TEXT NOT NULL,
+            start_line INTEGER NOT NULL,
+            chunk_index INTEGER NOT NULL DEFAULT 0,
+            sha256 TEXT NOT NULL,
+            embedding_model TEXT,
+            chunking_version TEXT,
+            vector BLOB
+        )
+        """
+    )
+    section_columns = table_columns(connection, "sections")
+    for column, definition in (
+        ("chunk_index", "INTEGER NOT NULL DEFAULT 0"),
+        ("embedding_model", "TEXT"),
+        ("chunking_version", "TEXT"),
+    ):
+        if column not in section_columns:
+            connection.execute(f"ALTER TABLE sections ADD COLUMN {column} {definition}")
+
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_sections_path ON sections(path)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_sections_sha ON sections(sha256)")
+
+    edge_columns = table_columns(connection, "edges")
+    required_edge_columns = {"source_path", "raw_target", "resolved_target_path", "start_line"}
+    if edge_columns and not required_edge_columns.issubset(edge_columns):
+        connection.execute("DROP TABLE edges")
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS edges (
+            source_path TEXT NOT NULL,
+            raw_target TEXT NOT NULL,
+            resolved_target_path TEXT,
+            start_line INTEGER NOT NULL,
+            PRIMARY KEY (source_path, raw_target, start_line)
+        )
+        """
+    )
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_edges_source ON edges(source_path)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_edges_resolved_target ON edges(resolved_target_path)")
+
+    fts_columns = table_columns(connection, "sections_fts")
+    if fts_columns and fts_columns != {"section_id", "content"}:
+        connection.execute("DROP TABLE sections_fts")
+    title_fts_columns = table_columns(connection, "note_titles_fts")
+    if title_fts_columns and title_fts_columns != {"path", "title"}:
+        connection.execute("DROP TABLE note_titles_fts")
+
+    try:
+        connection.execute(
+            """
+            CREATE VIRTUAL TABLE IF NOT EXISTS sections_fts USING fts5(
+                section_id UNINDEXED,
+                content,
+                tokenize='unicode61'
+            )
+            """
+        )
+        connection.execute(
+            """
+            CREATE VIRTUAL TABLE IF NOT EXISTS note_titles_fts USING fts5(
+                path UNINDEXED,
+                title,
+                tokenize='unicode61'
+            )
+            """
+        )
+    except sqlite3.OperationalError as error:
+        raise RuntimeError("This SQLite build needs FTS5 support.") from error
+
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS index_runs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            started_at TEXT NOT NULL,
+            completed_at TEXT NOT NULL,
+            vault_path TEXT NOT NULL,
+            status TEXT NOT NULL,
+            note_count INTEGER NOT NULL,
+            section_count INTEGER NOT NULL,
+            embedding_count INTEGER NOT NULL,
+            error_count INTEGER NOT NULL
+        )
+        """
+    )
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS index_errors (
+            run_id INTEGER NOT NULL,
+            path TEXT NOT NULL,
+            stage TEXT NOT NULL,
+            message TEXT NOT NULL,
+            FOREIGN KEY (run_id) REFERENCES index_runs(id)
+        )
+        """
+    )
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_index_errors_run ON index_errors(run_id)")
+    connection.execute("CREATE TABLE IF NOT EXISTS index_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL)")
+    connection.execute(
+        "INSERT INTO index_meta(key, value) VALUES ('schema_version', ?) "
+        "ON CONFLICT(key) DO UPDATE SET value = excluded.value",
+        (SCHEMA_VERSION,),
+    )
+
+
+def load_vector_cache(connection: sqlite3.Connection):
+    by_id = {}
+    by_hash = {}
+    rows = connection.execute(
+        "SELECT id, sha256, embedding_model, chunking_version, vector FROM sections"
+    ).fetchall()
+    for section_id, sha256, model, chunking_version, vector in rows:
+        vector_bytes = bytes(vector) if vector is not None else None
+        value = (sha256, model, chunking_version, vector_bytes)
+        by_id[section_id] = value
+        if vector_bytes is not None:
+            by_hash[(sha256, model, chunking_version)] = vector_bytes
+    return by_id, by_hash
+
+
+def create_embeddings(sections: list[Section], connection: sqlite3.Connection | None = None) -> dict[str, bytes]:
+    if not sections:
+        return {}
+    if not HAS_FASTEMBED:
+        raise RuntimeError("fastembed is required for embeddings. Use --skip-embeddings for metadata-only indexing.")
+
+    model = TextEmbedding(model_name=EMBEDDING_MODEL)
+    vectors = {}
+    batch_size = 128
+    for batch_start in range(0, len(sections), batch_size):
+        batch = sections[batch_start : batch_start + batch_size]
+        batch_rows = []
+        for section, vector in zip(batch, model.embed([section.text for section in batch], batch_size=batch_size)):
+            vector_array = np.asarray(vector, dtype=np.float32)
+            if vector_array.size != EMBEDDING_DIMENSIONS:
+                raise RuntimeError(
+                    f"Expected {EMBEDDING_DIMENSIONS} dimensions from {EMBEDDING_MODEL}, got {vector_array.size}."
+                )
+            norm = np.linalg.norm(vector_array)
+            if norm > 0:
+                vector_array = vector_array / norm
+            vec_bytes = vector_array.tobytes()
+            vectors[section.section_id] = vec_bytes
+            batch_rows.append((
+                section.section_id,
+                section.path,
+                section.heading,
+                section.start_line,
+                section.chunk_index,
+                section.sha256,
+                EMBEDDING_MODEL,
+                CHUNKING_VERSION,
+                vec_bytes,
+            ))
+        
+        # Per-batch checkpoint to SQLite so progress is never lost on interruption/timeout
+        if connection is not None and batch_rows:
+            with connection:
+                connection.executemany(
+                    """
+                    INSERT INTO sections
+                    (id, path, heading, start_line, chunk_index, sha256, embedding_model, chunking_version, vector)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(id) DO UPDATE SET
+                        path = excluded.path,
+                        heading = excluded.heading,
+                        start_line = excluded.start_line,
+                        chunk_index = excluded.chunk_index,
+                        sha256 = excluded.sha256,
+                        embedding_model = excluded.embedding_model,
+                        chunking_version = excluded.chunking_version,
+                        vector = excluded.vector
+                    """,
+                    batch_rows,
+                )
+
+        completed = min(batch_start + batch_size, len(sections))
+        if completed % 512 == 0 or completed == len(sections):
+            print(f"Embedded {completed:,}/{len(sections):,} sections.", flush=True)
+    return vectors
+
+
+def remove_missing_rows(cursor: sqlite3.Cursor, table: str, key_column: str, seen_values: set[str]) -> int:
+    existing_values = {row[0] for row in cursor.execute(f"SELECT {key_column} FROM {table}")}
+    stale_values = existing_values - seen_values
+    if stale_values:
+        cursor.executemany(
+            f"DELETE FROM {table} WHERE {key_column} = ?", ((value,) for value in stale_values)
+        )
+    return len(stale_values)
+
+
+def build_index(vault_path: str | None = None, db_path: str | None = None, skip_embeddings: bool = False):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
-    
+    database_file.parent.mkdir(parents=True, exist_ok=True)
+    started_at = datetime.now(timezone.utc).isoformat()
+
+    connection = sqlite3.connect(database_file)
+    try:
+        ensure_schema(connection)
+        connection.commit()
+        existing_by_id, vectors_by_hash = load_vector_cache(connection)
+        notes, sections, links, errors = collect_index_data(vault_dir)
+
+        vectors_by_id = {}
+        sections_to_embed = []
+        unchanged_vectors = 0
+        reused_vectors = 0
+        for section in sections:
+            existing = existing_by_id.get(section.section_id)
+            if (
+                existing
+                and existing[:3] == (section.sha256, EMBEDDING_MODEL, CHUNKING_VERSION)
+                and existing[3] is not None
+            ):
+                vectors_by_id[section.section_id] = existing[3]
+                unchanged_vectors += 1
+                continue
+
+            cached_vector = vectors_by_hash.get((section.sha256, EMBEDDING_MODEL, CHUNKING_VERSION))
+            if cached_vector is not None:
+                vectors_by_id[section.section_id] = cached_vector
+                reused_vectors += 1
+            elif not skip_embeddings:
+                sections_to_embed.append(section)
+
+        generated_vectors = create_embeddings(sections_to_embed, connection=connection) if sections_to_embed else {}
+        vectors_by_id.update(generated_vectors)
+
+        section_rows = [
+            (
+                section.section_id,
+                section.path,
+                section.heading,
+                section.start_line,
+                section.chunk_index,
+                section.sha256,
+                EMBEDDING_MODEL,
+                CHUNKING_VERSION,
+                vectors_by_id.get(section.section_id),
+            )
+            for section in sections
+        ]
+        completed_at = datetime.now(timezone.utc).isoformat()
+        status = "metadata-only" if skip_embeddings else "complete"
+
+        with connection:
+            cursor = connection.cursor()
+            cursor.executemany(
+                """
+                INSERT INTO notes
+                (path, filename, category, energy, sentiment, sentiment_labels, tags, summary_snippet, word_count)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(path) DO UPDATE SET
+                    filename = excluded.filename,
+                    category = excluded.category,
+                    energy = excluded.energy,
+                    sentiment = excluded.sentiment,
+                    sentiment_labels = excluded.sentiment_labels,
+                    tags = excluded.tags,
+                    summary_snippet = excluded.summary_snippet,
+                    word_count = excluded.word_count
+                """,
+                notes,
+            )
+            removed_notes = remove_missing_rows(cursor, "notes", "path", {note[0] for note in notes})
+
+            cursor.executemany(
+                """
+                INSERT INTO sections
+                (id, path, heading, start_line, chunk_index, sha256, embedding_model, chunking_version, vector)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                    path = excluded.path,
+                    heading = excluded.heading,
+                    start_line = excluded.start_line,
+                    chunk_index = excluded.chunk_index,
+                    sha256 = excluded.sha256,
+                    embedding_model = excluded.embedding_model,
+                    chunking_version = excluded.chunking_version,
+                    vector = excluded.vector
+                """,
+                section_rows,
+            )
+            removed_sections = remove_missing_rows(
+                cursor, "sections", "id", {section.section_id for section in sections}
+            )
+
+            cursor.execute("DELETE FROM sections_fts")
+            cursor.executemany(
+                "INSERT INTO sections_fts(section_id, content) VALUES (?, ?)",
+                ((section.section_id, section.text) for section in sections),
+            )
+
+            cursor.execute("DELETE FROM note_titles_fts")
+            cursor.executemany(
+                "INSERT INTO note_titles_fts(path, title) VALUES (?, ?)",
+                ((note[0], Path(note[1]).stem) for note in notes),
+            )
+
+            cursor.execute("DELETE FROM edges")
+            cursor.executemany(
+                """
+                INSERT OR IGNORE INTO edges(source_path, raw_target, resolved_target_path, start_line)
+                VALUES (?, ?, ?, ?)
+                """,
+                (
+                    (link.source_path, link.raw_target, link.resolved_target_path, link.start_line)
+                    for link in links
+                ),
+            )
+
+            cursor.execute(
+                """
+                INSERT INTO index_runs
+                (started_at, completed_at, vault_path, status, note_count, section_count, embedding_count, error_count)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    started_at,
+                    completed_at,
+                    str(vault_dir),
+                    status,
+                    len(notes),
+                    len(sections),
+                    sum(vector is not None for vector in vectors_by_id.values()),
+                    len(errors),
+                ),
+            )
+            run_id = cursor.lastrowid
+            if errors:
+                cursor.executemany(
+                    "INSERT INTO index_errors(run_id, path, stage, message) VALUES (?, ?, ?, ?)",
+                    ((run_id, path, stage, message) for path, stage, message in errors),
+                )
+
+        print(f"Indexed {len(notes):,} notes, {len(sections):,} sections, and {len(links):,} links.")
+        print(
+            f"Vectors: {unchanged_vectors:,} unchanged, {reused_vectors:,} reused by hash, "
+            f"{len(generated_vectors):,} generated."
+        )
+        print(f"Removed {removed_notes:,} notes and {removed_sections:,} sections no longer in the vault.")
+        if errors:
+            print(f"Completed with {len(errors)} parse errors. See --stats for the latest run.")
+        else:
+            print(f"Indexing complete ({status}).")
+        return {
+            "notes": len(notes),
+            "sections": len(sections),
+            "links": len(links),
+            "vectors": sum(vector is not None for vector in vectors_by_id.values()),
+            "errors": len(errors),
+            "run_id": run_id,
+        }
+    finally:
+        connection.close()
+
+
+def fts_query(query: str) -> str:
+    terms = re.findall(r"\w+", query, flags=re.UNICODE)
+    return " OR ".join(f'"{term}"' for term in terms)
+
+
+def search_index(
+    query: str, vault_path: str | None = None, db_path: str | None = None, limit: int = 10
+) -> list[dict]:
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
     if not database_file.exists():
         print(f"Index database not found at {database_file}. Run indexing first.")
         return []
 
-    conn = sqlite3.connect(database_file)
-    cur = conn.cursor()
-
-    # 1. Lexical search across notes and sections
-    clean_q = re.sub(r"[^\w\s]", "", query).strip()
-    lex_results = {}
-    if clean_q:
-        words = clean_q.split()
-        like_clauses = " AND ".join(["(path LIKE ? OR heading LIKE ?)" for _ in words])
-        like_params = []
-        for w in words:
-            like_params.extend([f"%{w}%", f"%{w}%"])
-            
-        cur.execute(f"""
-            SELECT path, heading, start_line, sha256
-            FROM sections
-            WHERE {like_clauses}
-            LIMIT 50
-        """, like_params)
-        for rank, row in enumerate(cur.fetchall(), 1):
-            key = f"{row[0]}#{row[1]}"
-            lex_results[key] = {
-                "path": row[0],
-                "heading": row[1],
-                "start_line": row[2],
-                "lex_rank": rank
-            }
-
-    # 2. Vector Cosine Search (In-Memory CPU Matmul)
-    vec_results = {}
-    if HAS_FASTEMBED:
-        cur.execute("SELECT path, heading, start_line, vector FROM sections WHERE vector IS NOT NULL")
-        rows = cur.fetchall()
-        if rows:
-            matrix = np.array([np.frombuffer(row[3], dtype=np.float32) for row in rows])
-            model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
-            q_emb = np.array(list(model.embed([query]))[0], dtype=np.float32)
-            norm = np.linalg.norm(q_emb)
-            if norm > 0:
-                q_emb = q_emb / norm
-                
-            scores = matrix @ q_emb
-            top_indices = np.argsort(-scores)[:50]
-            
-            for rank, idx in enumerate(top_indices, 1):
-                row = rows[idx]
-                key = f"{row[0]}#{row[1]}"
-                vec_results[key] = {
-                    "path": row[0],
-                    "heading": row[1],
-                    "start_line": row[2],
-                    "score": float(scores[idx]),
-                    "vec_rank": rank
+    connection = sqlite3.connect(database_file)
+    try:
+        cursor = connection.cursor()
+        lexical_results = {}
+        query_expression = fts_query(query)
+        if query_expression:
+            rows = cursor.execute(
+                """
+                SELECT sections.id, sections.path, sections.heading, sections.start_line,
+                       snippet(sections_fts, 1, '[', ']', '...', 24)
+                FROM sections_fts
+                JOIN sections ON sections.id = sections_fts.section_id
+                WHERE sections_fts MATCH ?
+                ORDER BY bm25(sections_fts)
+                LIMIT 50
+                """,
+                (query_expression,),
+            ).fetchall()
+            for rank, row in enumerate(rows, 1):
+                lexical_results[row[0]] = {
+                    "path": row[1],
+                    "heading": row[2],
+                    "start_line": row[3],
+                    "lex_rank": rank,
+                    "snippet": row[4],
                 }
 
-    # 3. Reciprocal Rank Fusion (RRF)
-    all_keys = set(lex_results.keys()).union(vec_results.keys())
-    fused = []
-    
-    for key in all_keys:
-        lex_item = lex_results.get(key)
-        vec_item = vec_results.get(key)
-        
-        path = (vec_item or lex_item)["path"]
-        heading = (vec_item or lex_item)["heading"]
-        start_line = (vec_item or lex_item)["start_line"]
-        
-        # RRF formula: 1 / (60 + rank)
-        score = 0.0
-        if lex_item:
-            score += 1.0 / (60.0 + lex_item["lex_rank"])
-        if vec_item:
-            score += 1.0 / (60.0 + vec_item["vec_rank"])
-            
-        fused.append({
-            "path": path,
-            "heading": heading,
-            "start_line": start_line,
-            "score": score,
-            "raw_sim": vec_item["score"] if vec_item else None
-        })
+        vector_results = {}
+        vector_rows = cursor.execute(
+            """
+            SELECT id, path, heading, start_line, vector
+            FROM sections
+            WHERE vector IS NOT NULL AND embedding_model = ? AND chunking_version = ?
+            """,
+            (EMBEDDING_MODEL, CHUNKING_VERSION),
+        ).fetchall()
+        if vector_rows:
+            if not HAS_FASTEMBED:
+                print("fastembed is unavailable; returning lexical results only.")
+            else:
+                matrix = np.vstack([np.frombuffer(row[4], dtype=np.float32) for row in vector_rows])
+                model = TextEmbedding(model_name=EMBEDDING_MODEL)
+                query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
+                norm = np.linalg.norm(query_vector)
+                if norm > 0:
+                    query_vector = query_vector / norm
+                scores = matrix @ query_vector
+                for rank, index in enumerate(np.argsort(-scores)[:50], 1):
+                    row = vector_rows[index]
+                    vector_results[row[0]] = {
+                        "path": row[1],
+                        "heading": row[2],
+                        "start_line": row[3],
+                        "vec_rank": rank,
+                        "raw_sim": float(scores[index]),
+                    }
 
-    fused.sort(key=lambda x: -x["score"])
-    results = fused[:limit]
-    conn.close()
-    return results
+        results = []
+        for section_id in set(lexical_results) | set(vector_results):
+            lexical = lexical_results.get(section_id)
+            semantic = vector_results.get(section_id)
+            source = semantic or lexical
+            score = 0.0
+            if lexical:
+                score += 1.0 / (60 + lexical["lex_rank"])
+            if semantic:
+                score += 1.0 / (60 + semantic["vec_rank"])
+            results.append(
+                {
+                    "path": source["path"],
+                    "heading": source["heading"],
+                    "start_line": source["start_line"],
+                    "score": score,
+                    "lex_rank": lexical["lex_rank"] if lexical else None,
+                    "vec_rank": semantic["vec_rank"] if semantic else None,
+                    "raw_sim": semantic["raw_sim"] if semantic else None,
+                    "snippet": lexical["snippet"] if lexical else None,
+                }
+            )
+        return sorted(results, key=lambda result: -result["score"])[:limit]
+    finally:
+        connection.close()
 
-def check_duplicate(title, vault_path=None, db_path=None):
-    """Check nearest neighbors before creating a new note to prevent duplicates."""
-    results = search_index(title, vault_path=vault_path, db_path=db_path, limit=5)
-    print(f"\nDuplicate Check for proposed note: '{title}'")
-    if not results:
-        print("No similar notes found. Clear to create new note.")
-        return
-    
-    print("Found potential existing matches in vault:")
-    for idx, r in enumerate(results, 1):
-        sim_str = f" (cosine: {r['raw_sim']:.3f})" if r['raw_sim'] else ""
-        print(f"  {idx}. [{r['path']}:{r['start_line']}] #{r['heading']}{sim_str}")
-    
-    top = results[0]
-    if top["raw_sim"] and top["raw_sim"] > 0.82:
-        print(f"\nRecommendation: High semantic overlap (>0.82) with '{top['path']}'. Consider updating/appending instead of creating a duplicate.")
-    else:
-        print("\nRecommendation: Moderate/low overlap. Safe to create note or link to top matches.")
 
-def query_links(note_title, vault_path=None, db_path=None):
-    """Query inbound backlinks and outbound links for a note."""
+def title_matches(cursor: sqlite3.Cursor, title: str, limit: int = 5) -> list[str]:
+    expression = fts_query(title)
+    if not expression:
+        return []
+    rows = cursor.execute(
+        """
+        SELECT path
+        FROM note_titles_fts
+        WHERE note_titles_fts MATCH ?
+        ORDER BY bm25(note_titles_fts)
+        LIMIT ?
+        """,
+        (expression, limit),
+    ).fetchall()
+    return [row[0] for row in rows]
+
+
+def check_duplicate(title: str, vault_path: str | None = None, db_path: str | None = None):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
-    
     if not database_file.exists():
         print("Index database not found. Run indexing first.")
-        return
+        return []
 
-    conn = sqlite3.connect(database_file)
-    cur = conn.cursor()
-    
-    # Strip potential .md or brackets
-    clean_title = note_title.replace(".md", "").strip("[]")
-    
-    cur.execute("SELECT target FROM edges WHERE source = ? ORDER BY target", (clean_title,))
-    outbound = [row[0] for row in cur.fetchall()]
-    
-    cur.execute("SELECT source FROM edges WHERE target = ? ORDER BY source", (clean_title,))
-    inbound = [row[0] for row in cur.fetchall()]
-    
-    print(f"\nLink Graph for: [[{clean_title}]]")
-    print(f"Outbound links ({len(outbound)}):")
-    for link in outbound[:20]:
-        print(f"  -> [[{link}]]")
-    if len(outbound) > 20:
-        print(f"  ... (+{len(outbound) - 20} more)")
-        
-    print(f"\nInbound backlinks ({len(inbound)}):")
-    for link in inbound[:20]:
-        print(f"  <- [[{link}]]")
-    if len(inbound) > 20:
-        print(f"  ... (+{len(inbound) - 20} more)")
-        
-    conn.close()
+    connection = sqlite3.connect(database_file)
+    try:
+        title_paths = title_matches(connection.cursor(), title)
+    finally:
+        connection.close()
 
-def print_stats(vault_path=None, db_path=None):
+    semantic_results = search_index(title, vault_path=vault_dir, db_path=database_file, limit=10)
+    candidates = {}
+    for rank, path in enumerate(title_paths, 1):
+        candidates[path] = {"title_rank": rank, "semantic": None}
+    for result in semantic_results:
+        candidate = candidates.setdefault(result["path"], {"title_rank": None, "semantic": None})
+        if candidate["semantic"] is None or result["raw_sim"] > candidate["semantic"]["raw_sim"]:
+            candidate["semantic"] = result
+
+    ordered = sorted(
+        candidates.items(),
+        key=lambda item: (
+            item[1]["title_rank"] is None,
+            item[1]["title_rank"] or 999,
+            -(item[1]["semantic"] or {"raw_sim": -1})["raw_sim"],
+        ),
+    )[:5]
+    print(f"\nPossible existing notes for: {title!r}")
+    if not ordered:
+        print("No lexical title or semantic candidates found.")
+        return []
+    for index, (path, evidence) in enumerate(ordered, 1):
+        parts = []
+        if evidence["title_rank"] is not None:
+            parts.append(f"title rank {evidence['title_rank']}")
+        if evidence["semantic"] is not None and evidence["semantic"]["raw_sim"] is not None:
+            parts.append(f"cosine {evidence['semantic']['raw_sim']:.3f}")
+        print(f"  {index}. {path} ({', '.join(parts)})")
+    print("Review the candidates before deciding to append, link, merge, or create a distinct note.")
+    return ordered
+
+
+def find_note_paths(cursor: sqlite3.Cursor, note_reference: str) -> list[str]:
+    clean_reference = normalise_note_key(note_reference)
+    paths = [row[0] for row in cursor.execute("SELECT path FROM notes")]
+    exact = [path for path in paths if normalise_note_key(path) == clean_reference]
+    if exact:
+        return exact
+    return [path for path in paths if Path(path).stem.casefold() == Path(clean_reference).name.casefold()]
+
+
+def query_links(note_reference: str, vault_path: str | None = None, db_path: str | None = None):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
-    
+    if not database_file.exists():
+        print("Index database not found. Run indexing first.")
+        return None
+
+    connection = sqlite3.connect(database_file)
+    try:
+        cursor = connection.cursor()
+        matches = find_note_paths(cursor, note_reference)
+        if not matches:
+            print(f"No indexed note matches {note_reference!r}.")
+            return None
+        if len(matches) > 1:
+            print(f"Ambiguous note reference {note_reference!r}:")
+            for path in matches[:20]:
+                print(f"  {path}")
+            return None
+
+        path = matches[0]
+        outbound = cursor.execute(
+            """
+            SELECT raw_target, resolved_target_path, start_line
+            FROM edges WHERE source_path = ? ORDER BY start_line, raw_target
+            """,
+            (path,),
+        ).fetchall()
+        inbound = cursor.execute(
+            """
+            SELECT source_path, raw_target, start_line
+            FROM edges WHERE resolved_target_path = ? ORDER BY source_path, start_line
+            """,
+            (path,),
+        ).fetchall()
+        print(f"\nLinks for: {path}")
+        print(f"Outbound ({len(outbound)}):")
+        for raw_target, resolved_path, start_line in outbound[:20]:
+            target = resolved_path or raw_target
+            print(f"  -> {target} ({path}:{start_line})")
+        if len(outbound) > 20:
+            print(f"  ... (+{len(outbound) - 20} more)")
+        print(f"Inbound ({len(inbound)}):")
+        for source_path, raw_target, start_line in inbound[:20]:
+            print(f"  <- {source_path}:{start_line} via [[{raw_target}]]")
+        if len(inbound) > 20:
+            print(f"  ... (+{len(inbound) - 20} more)")
+        return {"path": path, "outbound": outbound, "inbound": inbound}
+    finally:
+        connection.close()
+
+
+def print_stats(vault_path: str | None = None, db_path: str | None = None):
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
     if not database_file.exists():
         print("Database not found.")
         return
-        
-    conn = sqlite3.connect(database_file)
-    cur = conn.cursor()
-    
-    cur.execute("SELECT COUNT(*) FROM notes")
-    notes_count = cur.fetchone()[0]
-    
-    cur.execute("SELECT COUNT(*), COUNT(vector) FROM sections")
-    sec_row = cur.fetchone()
-    sec_count, vec_count = sec_row[0], sec_row[1]
-    
-    cur.execute("SELECT COUNT(*) FROM edges")
-    edges_count = cur.fetchone()[0]
-    
-    db_size_mb = database_file.stat().st_size / (1024 * 1024)
-    
-    print("\n--- PKM Index Stats ---")
-    print(f"Database location: {database_file}")
-    print(f"Database size:     {db_size_mb:.2f} MB")
-    print(f"Indexed Notes:     {notes_count:,}")
-    print(f"Sections (chunks): {sec_count:,}")
-    print(f"Vector Embeddings: {vec_count:,} (BGE-small 384-dim)")
-    print(f"Link Graph Edges:  {edges_count:,}")
-    print("-----------------------\n")
-    conn.close()
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract PKM metadata, graph edges, and section embeddings.")
-    parser.add_argument("--vault", type=str, default=None, help="Path to vault root")
-    parser.add_argument("--db", type=str, default=None, help="Path to output SQLite database")
-    parser.add_argument("--skip-embeddings", action="store_true", help="Skip generating neural embeddings")
-    parser.add_argument("--search", type=str, default=None, help="Run hybrid semantic search across vault sections")
-    parser.add_argument("--check-duplicate", type=str, default=None, help="Check if candidate note title has existing near-duplicates")
-    parser.add_argument("--links", type=str, default=None, help="Query inbound and outbound links for a note")
-    parser.add_argument("--stats", action="store_true", help="Display indexer database statistics")
-    parser.add_argument("--limit", type=int, default=10, help="Max search results to return")
-    
+    connection = sqlite3.connect(database_file)
+    try:
+        cursor = connection.cursor()
+        note_count = cursor.execute("SELECT COUNT(*) FROM notes").fetchone()[0]
+        section_count, vector_count = cursor.execute("SELECT COUNT(*), COUNT(vector) FROM sections").fetchone()
+        edge_count = cursor.execute("SELECT COUNT(*) FROM edges").fetchone()[0]
+        fts_count = cursor.execute("SELECT COUNT(*) FROM sections_fts").fetchone()[0]
+        title_count = cursor.execute("SELECT COUNT(*) FROM note_titles_fts").fetchone()[0]
+        latest_run = cursor.execute(
+            """
+            SELECT status, completed_at, error_count
+            FROM index_runs ORDER BY id DESC LIMIT 1
+            """
+        ).fetchone()
+
+        print("\n--- PKM Index Stats ---")
+        print(f"Database location: {database_file}")
+        print(f"Database size:     {database_file.stat().st_size / (1024 * 1024):.2f} MB")
+        print(f"Indexed notes:     {note_count:,}")
+        print(f"Sections:          {section_count:,}")
+        print(f"FTS sections:      {fts_count:,}")
+        print(f"Title index rows:  {title_count:,}")
+        print(f"Vector embeddings: {vector_count:,} ({EMBEDDING_MODEL})")
+        print(f"Link graph edges:  {edge_count:,}")
+        if latest_run:
+            print(
+                f"Latest run:        {latest_run[0]} at {latest_run[1]} "
+                f"({latest_run[2]} errors)"
+            )
+        print("-----------------------\n")
+    finally:
+        connection.close()
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Index Markdown metadata, sections, links, and local hybrid search.")
+    parser.add_argument("--vault", type=str, default=None, help="Path to the vault root")
+    parser.add_argument("--db", type=str, default=None, help="Path to the SQLite database")
+    parser.add_argument(
+        "--skip-embeddings", action="store_true", help="Build metadata, FTS, and links without generating vectors"
+    )
+    parser.add_argument("--search", type=str, default=None, help="Run hybrid search across indexed sections")
+    parser.add_argument("--check-duplicate", type=str, default=None, help="Show likely existing notes before creation")
+    parser.add_argument("--links", type=str, default=None, help="Show inbound and outbound links for a note")
+    parser.add_argument("--stats", action="store_true", help="Display database and latest-run stats")
+    parser.add_argument("--limit", type=int, default=10, help="Maximum search results")
     args = parser.parse_args()
-    
+
     if args.stats:
         print_stats(vault_path=args.vault, db_path=args.db)
     elif args.search:
         results = search_index(args.search, vault_path=args.vault, db_path=args.db, limit=args.limit)
-        print(f"\nHybrid Search Results for: '{args.search}'")
-        for idx, r in enumerate(results, 1):
-            sim_str = f" [cos: {r['raw_sim']:.3f}]" if r['raw_sim'] else ""
-            print(f"{idx}. {r['path']}:{r['start_line']} #{r['heading']}{sim_str} (score: {r['score']:.4f})")
+        print(f"\nHybrid search results for: {args.search!r}")
+        for index, result in enumerate(results, 1):
+            ranks = []
+            if result["lex_rank"] is not None:
+                ranks.append(f"lex {result['lex_rank']}")
+            if result["vec_rank"] is not None:
+                ranks.append(f"vec {result['vec_rank']}")
+            print(
+                f"{index}. {result['path']}:{result['start_line']} #{result['heading']} "
+                f"(RRF {result['score']:.4f}; {', '.join(ranks)})"
+            )
+            if result["snippet"]:
+                print(f"   {result['snippet']}")
     elif args.check_duplicate:
         check_duplicate(args.check_duplicate, vault_path=args.vault, db_path=args.db)
     elif args.links:
         query_links(args.links, vault_path=args.vault, db_path=args.db)
     else:
         build_index(vault_path=args.vault, db_path=args.db, skip_embeddings=args.skip_embeddings)
+
+
+if __name__ == "__main__":
+    main()
