@@ -29,4 +29,3 @@ Total cost to analyze years of personal logs drops from hundreds of dollars to u
 
 ### Related
 - [[token efficient PKM analysis architecture]] — Overview of vault retrieval and batch analysis economics.
-- [[ai overview app]] — High-level application architecture for automated personal overviews.
