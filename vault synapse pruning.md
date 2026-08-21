@@ -5,7 +5,7 @@ tags:
   - optimization
   - ai
 ---
-Just as the human brain optimizes itself by pruning dead synapses during sleep, a [[Personal Knowledge Management|PKM]] vault must eventually learn to "forget" to remain efficient. Continually accumulating information without a mechanism for decay leads to a bloated, noisy system.
+Just as the human [[brain]] optimizes itself by pruning dead synapses during [[sleep]], a [[Personal Knowledge Management|PKM]] vault must eventually learn to "forget" to remain efficient. Continually accumulating information without a mechanism for decay leads to a bloated, noisy system.
 
 ## The Goal
 To create a process where outdated data, irrelevant musings, and obsolete technical setups are intentionally removed or decayed, ensuring the vault only surfaces high-signal, relevant thoughts.
@@ -18,8 +18,8 @@ To create a process where outdated data, irrelevant musings, and obsolete techni
 - **Lower Cognitive Load:** Browsing graph views and backlinks becomes easier when you aren't wading through dead conceptual ends.
 
 ### Cons
-- **Loss of Provenance:** You might forget *why* you made a past decision if the underlying research is deleted.
-- **Broken Graph:** Deleting notes creates dead [[wikilink|wikilinks]] across the vault.
+- **Loss of [[provenance]]:** You might forget *why* you made a past decision if the underlying research is deleted.
+- **Broken [[graph theory|Graph]]:** Deleting notes creates dead [[wikilink|wikilinks]] across the vault.
 - **Git History Friction:** If a file is hard-deleted, finding its past contents in [[git history]] requires specialized CLI commands rather than a simple Obsidian search.
 
 ## Implementation Strategies: How to Prune
@@ -33,7 +33,11 @@ Track the "heat" or "energy" of a note. Using an Obsidian view-tracker plugin or
 - How many times a note was opened in the last year.
 - How many active backlinks point to it.
 If a note has **0 views** and **0 links** after 2 years, it is flagged as a "dead synapse".
-
+- [[view count]]
+- [[discover a garden's essence]]
+- manual attempt in obsidian:
+	- [[2026-02-22 Obsidian track note view]]
+	- [[2026-07-22 follow up Obsidian viewcount]]
 ### 3. AI-Assisted Consolidation
 Run a local script (like the [[hierarchical map-reduce note rollup]]) that groups 50 old, low-value daily notes, summarizes their core themes into a single dense note, and then hard-deletes the original 50 files. You keep the wisdom, but shed the bloat.
 
