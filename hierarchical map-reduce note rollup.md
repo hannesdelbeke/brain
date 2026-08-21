@@ -78,6 +78,14 @@ Can we backdate the initial Git commit of a retrospective rollup to match the hi
 - **Option B (Frontmatter Anchoring):** Record the source commit range in frontmatter (`source_range: "a1b2c3..d4e5f6"`). This links the summary directly to the exact point-in-time state of the vault without altering Git timestamps.
 - **Best Practice:** Use frontmatter `period` as the permanent machine-readable source of truth (as Git timestamps can reset when moving files across submodules per [[moving files loses created date]]), and optionally backdate the initial Git author timestamp on creation.
 
+> [!example]- Retrospective Notes: Writing a 2020 memory in 2025
+> **The scenario:** In 2025, you author a note reflecting on a 2020 trip (`period: "2020-05"`, `created: 2025-06-12`).
+> 
+> **How the pipeline resolves it:**
+> 1. **2020 Event Rollup (`rollup 2020-05.md`):** The pipeline routes the note to the 2020 timeline by `period`. It invalidates and regenerates `rollup 2020-05.md` to add the memory with a hindsight tag: *"Traveled to Malta (recorded retrospectively in 2025)"*.
+> 2. **DAG Cache Protection:** Rollups for 2021, 2022, 2023, and 2024 remain cached and are untouched (0 token spend).
+> 3. **2025 Authoring Rollup (`rollup 2025.md`):** The *act of remembering* is tracked as reflection activity: *"In mid-2025: Active journaling period reflecting on past 2020 life events."*
+
 ### Related
 - [[moving files loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
 - [[wikilink temporal integrity]] — Preserving link validity across chronological revisions.
