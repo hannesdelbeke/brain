@@ -21,7 +21,7 @@ the automation that updates [[view count|viewcount]] each note is working but al
 - the auto update each view
 	- breaks my recently edited files view, which now shows recently viewed.
 	- always changes a file when viewing, so triggers a git edit. 
-		- This creates git history clutter.
+		- This creates [[git history]] clutter.
 		- This broke git sync a few times 
 			- [[obsidian git backup can fail]]
 			- [[2026-07-13 vault backup issue]]

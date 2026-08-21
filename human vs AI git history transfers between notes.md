@@ -18,9 +18,9 @@ Running `git blame -C -C -C` detects lines moved across files within the same co
 When parsing history via `git log -p`, scripts pair simultaneous deletions in the source note with additions in the destination note to detect refactors.
 
 **submodule boundary limit**
-This tracking only works within a single repository. Moving notes across [[git submodule|git submodules]] severs Git history tracking unless commits are explicitly migrated with `git format-patch`.
+This tracking only works within a single repository. Moving notes across [[git submodule|git submodules]] severs [[git history|Git history]] tracking unless commits are explicitly migrated with `git format-patch`.
 
 ### References
 - [[algo to differentiate between AI and human notes]] — tracking author provenance across vault edits.
 - [[wikilink temporal integrity]] — resolving historical note states by commit timestamp.
-- [[human vs ai text context]] — preserving Git history when moving notes between submodules.
+- [[human vs ai text context]] — preserving [[git history|Git history]] when moving notes between submodules.
