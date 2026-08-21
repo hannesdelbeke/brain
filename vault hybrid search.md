@@ -4,6 +4,9 @@ tags:
   - search
   - pkm
 ---
+> [!summary] Conclusion
+> **Not needed right now.** Standard lexical search (ripgrep/FTS5) is sufficient for finding specific knowledge blocks in the current vault. Dense vector embeddings introduce maintenance overhead without proportionate retrieval gains for the current note volume.
+
 Combining lexical keyword matching (BM25) and dense [[vector embedding|semantic vector similarity]] using [[reciprocal rank fusion|Reciprocal Rank Fusion (RRF)]] for Markdown note retrieval.
 
 ## The Dual Search Problem
