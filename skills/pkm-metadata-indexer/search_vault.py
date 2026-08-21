@@ -17,6 +17,17 @@ try:
 except ImportError:
     HAS_FASTEMBED = False
 
+def get_embedding_providers() -> list[str]:
+    if not HAS_FASTEMBED:
+        return ["CPUExecutionProvider"]
+    try:
+        import onnxruntime as ort
+        available = set(ort.get_available_providers())
+        providers = [p for p in ["CUDAExecutionProvider", "DmlExecutionProvider", "CPUExecutionProvider"] if p in available]
+        return providers or ["CPUExecutionProvider"]
+    except Exception:
+        return ["CPUExecutionProvider"]
+
 def find_vault_root():
     current = Path.cwd().resolve()
     for parent in [current, *current.parents]:
@@ -29,7 +40,10 @@ def semantic_search(query: str, db_path: Path, top_k: int = 10):
         print("Error: fastembed is required for semantic vector search.")
         return []
         
-    model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
+    model = TextEmbedding(
+        model_name="BAAI/bge-small-en-v1.5",
+        providers=get_embedding_providers(),
+    )
     query_vec = np.array(list(model.embed([query]))[0], dtype=np.float32)
     norm = np.linalg.norm(query_vec)
     if norm > 0:
