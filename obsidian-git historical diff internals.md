@@ -4,6 +4,8 @@ tags:
   - obsidian
   - technical
   - devlog
+origin-sha: 72e8d1a53
+created: 2026-08-19
 ---
 Technical exploration into how the [[Obsidian plugin - Git]] plugin renders historical diff views and how custom URI schemes or UX interactions can link to past revisions.
 
