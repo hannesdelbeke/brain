@@ -4,7 +4,7 @@ tags:
   - pkm
   - optimization
 ---
-A batch compression pattern for synthesizing thousands of daily notes into monthly and multi-year overviews with minimal LLM API token consumption.
+A batch compression pattern based on [[map-reduce]] for synthesizing thousands of daily notes into monthly and multi-year overviews with minimal LLM API token consumption.
 
 ## The Context Window Problem
 Feeding 10,000+ raw markdown files directly into frontier LLM context windows burns millions of tokens on repetitive formatting, boilerplate, and low-signal noise.
