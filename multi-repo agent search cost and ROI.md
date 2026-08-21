@@ -35,9 +35,9 @@ Providing an org-wide catalog and pre-computed router eliminates exploratory sea
 ## Claude Sonnet Tier ($3.00 / 1M input)
 
 Standard default model in tools like [[Claude Code]]:
-- Exploratory grep & re-read loops: ~54.4M input tokens/day $\approx$ $43,000 / year.
-- Pre-computed maps & catalog routing: ~9.1M input tokens/day $\approx$ $7,200 / year.
-- Direct API savings: ~$35,800 / year (83% reduction).
+- Exploratory grep & re-read loops: *~54.4M input tokens/day $\approx$ $43,000 / year.*
+- Pre-computed maps & catalog routing: *~9.1M input tokens/day $\approx$ $7,200 / year.*
+- Direct API savings: *~$35,800 / year (83% reduction).*
 
 ## Claude Opus / Flagship Tier ($15.00 / 1M input)
 
