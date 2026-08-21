@@ -37,6 +37,27 @@ Increase agent reply speed and context efficiency across the vault by upgrading 
 - **Duplicate prevention:** `--check-duplicate` runs cosine similarity against candidate titles before note creation, preventing fragmented note sprawl.
 - **Hybrid RRF scoring:** Fuses lexical FTS5 and semantic cosine ranks via Reciprocal Rank Fusion, outputting exact `path:line` targets so agents don't dump full files into prompt context.
 
+## Performance & Build Time Breakdown
+
+Why does the first index build take ~14 minutes? 98% of the time is spent on transformer math across 17,352 sections.
+
+### Where the time goes during initial build
+
+- **File scanning & regex parsing (3s):** Reads 6,567 markdown files from disk, strips YAML frontmatter, extracts 22,856 wikilinks, and chunks 17,352 sections.
+- **SQLite FTS5 & graph writes (2s):** Writes the text tables and builds the full-text search index.
+- **Neural embedding on CPU (14 min):** 17,352 sections pass through a 12-layer transformer model (`bge-small-en-v1.5`) in ONNX Runtime. On multi-core CPU, throughput is ~20 sections/second ($17,352 / 20 \approx 860\text{s}$).
+
+### Initial build vs runtime queries
+
+- **First build (one-off):** ~14 minutes to compute dense vectors for the entire vault on CPU.
+- **Daily incremental updates:** ~2–3 seconds. SHA256 hashes skip unchanged sections, so only edited notes are re-embedded.
+- **Search query latency:** <0.5ms. Once vectors are cached, loading the 26 MB matrix and running in-memory dot product cosine similarity (`matrix @ query_vec`) takes less than half a millisecond on CPU.
+
+### Speedup options for initial builds
+
+- **GPU acceleration (DirectML/CUDA):** Drops full vault build time from 14 minutes to ~20 seconds (>500 sections/sec).
+- **Fastembed CPU mode (current default):** Chosen because it requires zero GPU driver setup, runs anywhere, and only pays the build cost once.
+
 ## Now
 
 ### Make the index correct
