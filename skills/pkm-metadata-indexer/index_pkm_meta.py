@@ -27,6 +27,18 @@ except ImportError:
     HAS_FASTEMBED = False
 
 
+def get_embedding_providers() -> list[str]:
+    if not HAS_FASTEMBED:
+        return ["CPUExecutionProvider"]
+    try:
+        import onnxruntime as ort
+        available = set(ort.get_available_providers())
+        providers = [p for p in ["CUDAExecutionProvider", "DmlExecutionProvider", "CPUExecutionProvider"] if p in available]
+        return providers or ["CPUExecutionProvider"]
+    except Exception:
+        return ["CPUExecutionProvider"]
+
+
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 EMBEDDING_DIMENSIONS = 384
 CHUNKING_VERSION = "heading-estimate-v1"
@@ -486,7 +498,10 @@ def create_embeddings(sections: list[Section], connection: sqlite3.Connection | 
     if not HAS_FASTEMBED:
         raise RuntimeError("fastembed is required for embeddings. Use --skip-embeddings for metadata-only indexing.")
 
-    model = TextEmbedding(model_name=EMBEDDING_MODEL)
+    model = TextEmbedding(
+        model_name=EMBEDDING_MODEL,
+        providers=get_embedding_providers(),
+    )
     vectors = {}
     batch_size = 128
     for batch_start in range(0, len(sections), batch_size):
@@ -773,12 +788,15 @@ def search_index(
             if not HAS_FASTEMBED:
                 print("fastembed is unavailable; returning lexical results only.")
             else:
-                matrix = np.vstack([np.frombuffer(row[4], dtype=np.float32) for row in vector_rows])
-                model = TextEmbedding(model_name=EMBEDDING_MODEL)
+                model = TextEmbedding(
+                    model_name=EMBEDDING_MODEL,
+                    providers=get_embedding_providers(),
+                )
                 query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
                 norm = np.linalg.norm(query_vector)
                 if norm > 0:
                     query_vector = query_vector / norm
+                matrix = np.vstack([np.frombuffer(row[4], dtype=np.float32) for row in vector_rows])
                 scores = matrix @ query_vector
                 for rank, index in enumerate(np.argsort(-scores)[:50], 1):
                     row = vector_rows[index]
