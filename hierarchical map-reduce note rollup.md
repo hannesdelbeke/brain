@@ -76,7 +76,7 @@ Can we backdate the initial Git commit of a retrospective rollup to match the hi
   `GIT_AUTHOR_DATE="2024-06-30 23:59:59" git commit -m "docs: generate rollup for 2024-06"`
   Future edits and updates then commit normally with current timestamps. This aligns Git history queries (`git log --before="2024-07-01"`) without requiring a complex Git rebase.
 - **Option B (Frontmatter Anchoring):** Record the source commit range in frontmatter (`source_range: "a1b2c3..d4e5f6"`). This links the summary directly to the exact point-in-time state of the vault without altering Git timestamps.
-- **Best Practice:** Use frontmatter `period` as the permanent machine-readable source of truth (as Git timestamps can reset when moving files across submodules per [[moving files loses created date]]), and optionally backdate the initial Git author timestamp on creation.
+- **Best Practice:** Use frontmatter `period` as the permanent machine-readable source of truth (as Git timestamps can reset when moving files across submodules per [[moving files across submodules loses created date]]), and optionally backdate the initial Git author timestamp on creation.
 
 > [!example]- Retrospective Notes: Writing a 2020 memory in 2025
 > **The scenario:** In 2025, you author a note reflecting on a 2020 trip (`period: "2020-05"`, `created: 2025-06-12`).
@@ -88,10 +88,13 @@ Can we backdate the initial Git commit of a retrospective rollup to match the hi
 > 
 > **Why this beats relying on raw Git history alone:**
 > - **Semantic synthesis vs raw text diffs:** Git only knows lines were added or deleted; it cannot detect emotional shifts, recurring themes, or summarize life arcs.
-> - **Immunity to submodule moves:** Moving notes across folders or submodules resets Git creation dates (per [[moving files loses created date]]), whereas frontmatter `period` preserves the event era permanently.
+> - **Immunity to submodule moves:** Moving notes across folders or submodules resets Git creation dates (per [[moving files across submodules loses created date]]), whereas frontmatter `period` preserves the event era permanently.
 > - **Token efficiency:** Reading 5 years of monthly rollups takes ~30k tokens; crawling 5 years of raw Git commit diffs takes millions of tokens and dozens of API roundtrips.
 
+keep context from this note in mind when planning [[git history]]: 
+[[human vs AI git history transfers between notes]]
+
 ### Related
-- [[moving files loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
+- [[moving files across submodules loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
 - [[wikilink temporal integrity]] — Preserving link validity across chronological revisions.
 - [[token efficient PKM analysis architecture]] — Overview of vault retrieval and batch analysis economics.
