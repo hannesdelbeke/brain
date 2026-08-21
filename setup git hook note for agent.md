@@ -17,3 +17,5 @@ The hook is written in Python. Upon running `git commit`, the script:
 4. If duplicate keys are found, it prints the errors indicating the file and line number, and aborts the commit.
 
 This ensures that broken or duplicated frontmatter does not get checked into version control.
+
+- [[Anonymous SHA Pointer]] - this tech triggered the bug that requires this git hook
