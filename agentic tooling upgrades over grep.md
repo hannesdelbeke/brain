@@ -43,7 +43,16 @@ While native CLI tools like `grep` are fast for exact string matches (~5–25ms)
 
 ## How to Know When an Upgrade is Needed
 
-- **Semantic search (Phase 1):** Agent runs 2+ consecutive grep attempts trying synonyms, asks for the exact note title, or fails to find notes asked by vibe, theme, or feeling.
-- **Graph traversal:** Agent loops reading notes and grepping their backlinks just to map 2-hop connections or find common links between two topics.
-- **MCP server:** Agent hits shell or path escaping errors running bash commands, or needs live Obsidian workspace state and plugin interactions.
-- **Map-reduce rollup:** Longitudinal timeline requests over years of daily notes blow past context limits or cost excessive prompt tokens.
+Look for these everyday friction points to know when to pull an upgrade off the shelf:
+
+- **Semantic search (Phase 1 — vector embeddings):**
+  You search by concept, mood, or vague memory (e.g. *"notes where I felt stuck on projects"*), but the agent keeps guessing synonyms, asks you for the exact title, or fails to find it because the note used different wording.
+
+- **Graph traversal (multi-hop links):**
+  You ask *"how are these two topics connected?"* or *"find notes linking to topic A and B"*, and the agent gets stuck in a slow loop: opening a note, grepping its links, opening the next note, and grepping again.
+
+- **Obsidian MCP server (native app API):**
+  The agent trips over Windows terminal syntax, path escaping, or needs to interact with Obsidian directly (triggering plugin commands, checking active workspace tabs, or live note state).
+
+- **Map-reduce rollups (batch synthesis):**
+  You ask for big-picture historical overviews across hundreds of daily notes (e.g. *"summarize how my focus shifted over 3 years"*), and loading all the raw notes blows past context limits or costs too much.
