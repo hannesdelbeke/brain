@@ -8,8 +8,8 @@ tags:
   - gpu
 origin-sha: 4e7e95b2a
 ---
-> [!summary] Conclusion
-> **Not needed right now.** Running local vector embeddings introduces unnecessary complexity and dependency management. Flat lexical search over the current vault is fast and accurate enough without semantic vector caches.
+> [!summary] Status
+> **Phase 1 Implementation.** Lightweight GPU embeddings (`all-MiniLM-L6-v2`) with persistent SQLite SHA256 caching provide instant fuzzy/thematic search for agents without ongoing API cost. See [[agentic tooling upgrades over grep]].
 
 How to run local vector embeddings across thousands of [[Markdown]] notes in your [[Obsidian]] vault on an RTX [[graphics processing unit|GPU]] with persistent [[cache|caching]], ensuring subsequent runs only process modified or newly added notes.
 
