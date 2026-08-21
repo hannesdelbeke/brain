@@ -87,3 +87,9 @@ Build an Obsidian MCP server only when an agent needs live panes, tabs, or a plu
 Run map-reduce only when date or project filtering plus targeted section retrieval still overflows context, or when the same longitudinal question repeats enough to justify a cached rollup.
 
 Use an ANN index such as FAISS or sqlite-vec only when measured in-memory retrieval becomes a bottleneck. At the current density, a million sections is roughly 640k notes, so the trigger should be latency and memory measurements rather than note count alone.
+
+## References
+- [[cross-agent session indexing architecture]]
+- [[pkm metadata indexer]]
+- [[vault hybrid search]]
+- [[multi-repo agentic search architecture]]
