@@ -44,4 +44,4 @@ Inside `createMergeView()`, the plugin fetches historical text directly from loc
 Because Obsidian exposes `app.workspace.getLeaf().setViewState({ type: "split-diff-view", state: { aFile: "note.md", aRef: "abc1234" } })`, a lightweight plugin or custom URI handler (e.g. `obsidian://open-git-diff?path=...&sha=...`) can trigger native diff tabs directly.
 
 ### References
-- [[obsidian git diff ux proposals]]
+- [[URI link to obsidian git diff - RnD]]
