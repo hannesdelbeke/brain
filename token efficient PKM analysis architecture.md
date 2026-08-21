@@ -17,7 +17,7 @@ An agent-native architecture for indexing, searching, and synthesizing 10,000+ M
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Local Storage & Index                    │
-│   - SQLite Metadata (`_scripts/index_pkm_meta.py`)          │
+│   - SQLite Metadata ([[pkm metadata indexer|index_pkm_meta.py]]) │
 │   - Persistent GPU Vector Cache (`nomic` / `bge-m3`)        │
 └──────────────────────────────┬──────────────────────────────┘
                                │

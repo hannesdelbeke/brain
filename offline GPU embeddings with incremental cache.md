@@ -19,7 +19,7 @@ How to run local vector embeddings across thousands of [[Markdown]] notes in you
 > - **Full vault build (17,356 sections):** **~22 seconds** on GPU vs ~14 minutes on CPU.
 > - **VRAM footprint:** < 300 MB out of 6 GB VRAM (< 5% usage).
 > - **Incremental updates:** **< 0.05 seconds** per modified note via SQLite SHA256 caching.
-> - **Active tooling:** [[pkm metadata indexer]] (`public/skills/pkm-metadata-indexer/index_pkm_meta.py`) and `search_vault.py`.
+> - **Active tooling:** [[pkm metadata indexer|index_pkm_meta.py]] and [[pkm metadata indexer|search_vault.py]].
 
 ---
 

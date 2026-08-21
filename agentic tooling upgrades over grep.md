@@ -28,7 +28,7 @@ Increase agent reply speed and context efficiency across the vault by upgrading 
 
 ## Implemented
 
-`public/skills/pkm-metadata-indexer/index_pkm_meta.py` and the [[pkm metadata indexer|metadata-indexer skill]] provide a local SQLite engine (`.obsidian/pkm_index.db`, ~40 MB) that solves core agent retrieval bottlenecks:
+[[pkm metadata indexer|index_pkm_meta.py]] provides a local SQLite engine (`.obsidian/pkm_index.db`, ~40 MB) that solves core agent retrieval bottlenecks:
 
 - **FTS5 body & title search:** 17,352 section chunks and 6,567 note titles indexed with Unicode61 full-text search. Replaces broad grep misses with fast BM25 ranking.
 - **Resolved link graph:** 22,856 edges indexed with source path, raw target, resolved path, and line numbers. Solves slow multi-hop grep loops with instant 1-hop SQL queries.
