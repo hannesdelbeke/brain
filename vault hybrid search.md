@@ -4,8 +4,8 @@ tags:
   - search
   - pkm
 ---
-> [!summary] Conclusion
-> **Not needed right now.** Standard lexical search (ripgrep/FTS5) is sufficient for finding specific knowledge blocks in the current vault. Dense vector embeddings introduce maintenance overhead without proportionate retrieval gains for the current note volume.
+> [!summary] Status
+> **Phase 1 Target.** Standard lexical search handles exact keywords well, but combining it with local GPU vector embeddings via RRF solves fuzzy and thematic queries in a single agent turn, saving ~10–12s per search. See [[agentic tooling upgrades over grep]].
 
 Combining lexical keyword matching (BM25) and dense [[vector embedding|semantic vector similarity]] using [[reciprocal rank fusion|Reciprocal Rank Fusion (RRF)]] for Markdown note retrieval.
 
