@@ -24,16 +24,18 @@ Use a standard web link pointing to the exact past version of the file on GitHub
 ### Local Shell Command URI
 Create a special Obsidian link that, when clicked, runs a background command to instantly pop open a visual comparison (diff) between the old version and the current version right on your computer.
 
-> [!example]- Technical Implementations
-> **Materialize Snapshot**
+
+### Technical implementations
+
+> [!example]- Materialize Snapshot
 > Extract an old version into the vault as its own permanent note:
 > ```bash
 > git show <sha>:path/to/note.md > "History/2026-07-31 historic obsidian links (v1).md"
 > ```
 > - **Pros:** Zero plugins required, works natively on mobile, searchable in Obsidian, immune to URL breakages.
 > - **Cons:** Minor file duplication; requires manual creation unless scripted.
-> 
-> **Portable Wikilink Convention**
+
+> [!example]- Portable Wikilink Convention
 > Use a structured wikilink syntax with the commit hash for tool-agnostic plain text:
 > ```markdown
 > [[2026-07-31 historic obsidian links@abc1234]]
@@ -42,16 +44,16 @@ Create a special Obsidian link that, when clicked, runs a background command to 
 > ```
 > - **Tool-agnostic:** Scripts and agents can regex-match `\[\[([^@\]]+)@([a-f0-9]+)\]\]` and run `git show <sha>:<path>` or trigger diffs.
 > - **Graceful fallback:** In Obsidian, standard link navigation still opens the active note.
-> 
-> **Remote Git Permalinks**
+
+> [!example]- Remote Git Permalinks
 > Link directly to the exact commit SHA on GitHub:
 > ```markdown
 > [View Historical Commit on GitHub](https://github.com/<user>/<repo>/blob/<commit-sha>/path/to/note.md)
 > ```
 > - **Pros:** Zero setup, renders syntax highlighting, diffs, and blame view on web and mobile.
 > - **Cons:** Requires active internet and that commits are pushed to remote.
-> 
-> **Local Shell Command URI**
+
+> [!example]- Local Shell Command URI
 > The `obsidian-git` plugin does not accept commit SHAs via URI. To trigger a local Git diff for an exact commit, use the [Obsidian Shell Commands](https://github.com/Taitava/obsidian-shellcommands) plugin:
 > - **URI format:**
 >   ```markdown
