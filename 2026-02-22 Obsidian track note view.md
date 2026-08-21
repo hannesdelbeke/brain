@@ -1,17 +1,18 @@
 ---
 energy: 6
 sentiment:
-- 7
-- 4
+  - 7
+  - 4
 sentiment-hash: 261daae1
 sentiment-label:
-- pleased
-- annoyed
+  - pleased
+  - annoyed
 tags:
-- journal
-- technical
-- self-reflection
-- hobby
+  - journal
+  - technical
+  - self-reflection
+  - hobby
+  - archive
 ---
 
 > [!warning]
