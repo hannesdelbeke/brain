@@ -26,8 +26,14 @@ python public/skills/pkm-metadata-indexer/index_pkm_meta.py
 python public/skills/pkm-metadata-indexer/index_pkm_meta.py --skip-embeddings
 ```
 
-### 2. Hybrid Semantic Search
-Searches vault sections using combined lexical matching and neural vector cosine similarity (via in-memory CPU matrix multiplication):
+### 2. Fast Semantic Search Tool
+Run fast CLI semantic search directly:
+```bash
+python public/skills/pkm-metadata-indexer/search_vault.py "notes on feeling overwhelmed by projects"
+```
+
+### 3. In-Indexer Hybrid Search
+Searches vault sections using combined lexical matching and neural vector cosine similarity (via in-memory GPU/CPU matrix multiplication):
 ```bash
 python public/skills/pkm-metadata-indexer/index_pkm_meta.py --search "notes on feeling overwhelmed by projects"
 ```
