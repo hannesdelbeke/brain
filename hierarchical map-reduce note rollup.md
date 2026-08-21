@@ -4,7 +4,10 @@ tags:
   - pkm
   - optimization
 ---
-A batch compression pattern based on [[map-reduce]] for synthesizing thousands of [[daily notes]] into inspectable monthly and multi-year overviews with bounded LLM API use.
+A batch compression pattern based on [[map-reduce]] for recursively synthesizing thousands of [[daily notes]] into cached monthly and multi-year overviews with bounded LLM API usage.
+
+> [!summary] Conclusion
+> **Not needed right now.** The current vault (~6.5k notes) is efficiently handled with local search and flat SQLite metadata indexing. Build this only when full-vault longitudinal synthesis or top-down timeline overviews exceed context window limits.
 
 ## When to Build It
 
