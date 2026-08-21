@@ -16,8 +16,6 @@ Most [[note taking|notes]] used to be hand-authored. Now tools like [[Claude Cod
 
 Older notes often contain AI answers that show up as manual commits because they were pasted in or committed without bot author metadata. Differentiating legacy notes allows Git commit metadata to reflect true authorship.
 
-Updating historical Git commits via force push is viable as a one-off migration, provided downstream consumers like the [[2026-08-18 pkm voice agent addon install|telegram bot]] reset cleanly.
-
 ## Detection Heuristics & Modern Limitations
 
 **Legacy / Older Models (Copilot, GPT-3.5/4 era)**
@@ -29,13 +27,6 @@ Updating historical Git commits via force push is viable as a one-off migration,
 - **Why naive heuristics fail:** Modern web-grounded agents generate hyper-specific used-market pricing, regional currency (£/€), and detailed spec comparisons, mimicking human domain notes.
 - **True human markers:** Stream-of-consciousness fragments, idiosyncratic abbreviations, personal emotional reactions, typo fixes, unstructured notes to self.
 - **True AI markers:** High synthesis density, uniform tone across sections, structured comparison matrices, and clean formatting passes.
-
-## One-Off Git History Migration Strategy
-A Python script using `git log -p` and `git-filter-repo` can scan past commits and rewrite history:
-1. Scan historical commits and identify generated blocks.
-2. Split mixed commits into a human commit (prompt and notes) followed by an AI commit (generated response).
-3. Preserve submodule pointers so child repositories remain untouched.
-4. Downstream servers (like the Telegram bot) perform a single `git reset --hard origin/main` after the rewrite.
 
 ## Model Distinction in Git Authorship
 Direct agent edits triggered by a human prompt should use the model identity as the primary [[git author]] and append the human as a co-author. This shows a human initiated the change, preventing the misconception that the AI acted entirely autonomously:
@@ -59,7 +50,8 @@ Using native Git author metadata eliminates the need for `#ai-generated` [[tag|t
 
 
 ### Related
-- [[human vs AI git history transfers between notes]] — Detecting text extractions across notes via `git blame -C`.
+- [[rewrite git history for ai authorship migration]] - The technical Git strategy for applying these heuristics.
+- [[human vs AI git history transfers between notes]] - Detecting text extractions across notes via `git blame -C`.
 - [[2026-07-31 historic obsidian links]] — Learning from past commit patterns.
 - [[track prompt history]] — Dedicated log or browser-like history for prompts.
 
