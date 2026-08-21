@@ -1,4 +1,3 @@
-# Setup Git Hook Note for Agent
 
 A git pre-commit hook has been set up to validate the YAML frontmatter in markdown files before committing. 
 
