@@ -43,10 +43,5 @@ Inside `createMergeView()`, the plugin fetches historical text directly from loc
 **4. Custom URI Integration**
 Because Obsidian exposes `app.workspace.getLeaf().setViewState({ type: "split-diff-view", state: { aFile: "note.md", aRef: "abc1234" } })`, a lightweight plugin or custom URI handler (e.g. `obsidian://open-git-diff?path=...&sha=...`) can trigger native diff tabs directly.
 
-## UX Workflow Options in Obsidian
-See [[UX Workflow Options in Obsidian]]
-
 ### References
-- [[linking to git commits and diffs in obsidian via uri]] — Synthesis of URI schemes, snapshots, and permalinks.
-- [[wikilink temporal integrity]] — Automated background temporal resolution without manual commit hashes.
-- [[2026-07-31 historic obsidian links]] — Mining Git commit diffs to discover historical link changes.
+- [[UX Workflow Options in Obsidian]]
