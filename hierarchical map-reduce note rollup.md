@@ -46,17 +46,30 @@ root map
 - Use atomic writes, retryable jobs, rate-limit handling, and a run manifest. A failed run must be resumable without mixing partial artifacts with a completed hierarchy.
 - Preserve manual edits separately from generated output, or make the generated section replaceable without overwriting human notes.
 
-## Evaluation and Guardrails
+## Maintaining Chronology Across Rollups
 
-- Maintain a small hand-reviewed set of notes and expected rollups. Track source-reference coverage, recall of decisions and tasks, preservation of contradictions, and unsupported-claim rate.
-- Sample notes omitted by local filtering. Keyword search can miss important entries whose relevance is implicit or emotional rather than lexical.
-- Treat note contents as untrusted data: they can contain prompt-like text. Prompts must instruct the model to summarize content, not follow instructions found in it.
-- Make external model use an explicit privacy boundary. Sensitive notes may need redaction, a local model, opt-in scopes, or exclusion before API egress.
+When a rollup is generated months or years after the original notes (e.g. summarizing June 2024 notes in August 2026), its file system creation date and Git commit date reflect the generation day, not the event period. Preserving true chronological integrity requires four conventions:
 
-## Cost Model
+**1. Explicit Event Time vs Generation Time**
+Distinguish the historical period being summarized from the generation run in YAML frontmatter:
+```yaml
+period: "2024-06"
+period_start: 2024-06-01
+period_end: 2024-06-30
+generated: 2026-08-21
+```
+Downstream search, Dataview queries, and temporal decay algorithms must sort by `period_start` rather than file creation or Git timestamps.
 
-Estimate cost from measured input tokens, output tokens, model price, retries, and expected cache-hit rate at each level. State whether each token budget is input, output, or combined; do not rely on a fixed "under $0.20" claim because volume, prompts, and provider pricing vary.
+**2. Lexicographical Date Naming**
+Prefix rollup filenames with the ISO period (e.g. `2024-06 rollup.md` or `review 2024-06.md`). This guarantees natural chronological sorting across all file explorers, CLI tools, and vault views.
+
+**3. Sequential Ingestion for Causal Integrity**
+During the Map phase, feed daily notes to the model in strict ascending chronological order (`YYYY-MM-DD`). Preserving sequential input prevents the LLM from confusing cause and effect (e.g. attributing a mood drop to an event that happened days later).
+
+**4. Git Source Commit Anchoring**
+Record the historical commit range or snapshot SHA in frontmatter (`source_range: "a1b2c3..d4e5f6"`). This links the summary directly to the exact point-in-time state of the vault without modifying historical Git commits.
 
 ### Related
-
-- [[token efficient PKM analysis architecture]] - Overview of vault retrieval and batch analysis economics.
+- [[moving files loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
+- [[wikilink temporal integrity]] — Preserving link validity across chronological revisions.
+- [[token efficient PKM analysis architecture]] — Overview of vault retrieval and batch analysis economics.
