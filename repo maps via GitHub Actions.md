@@ -65,6 +65,10 @@ jobs:
           git push
 ```
 
+## Lightweight Summaries vs. Monolithic Map Bloat
+- **The monolithic trap:** Generating full AST dumps or XML skeletons on large repos can produce 30k–80k token files. Loading an entire skeleton upfront on every prompt burns context unnecessarily.
+- **The lightweight solution:** Keep CI-generated maps concise (e.g. `llms.txt` or a 1–2 page architecture overview listing module purposes and entry points). The agent uses the lightweight map to locate the right file, then uses targeted local tools (ripgrep / file slices) to inspect implementation details.
+
 ## Why This is the Easiest Path
 - **Zero infrastructure:** No background databases, vector servers, or custom daemon processes to host and maintain.
 - **Zero query latency:** The map is already sitting on disk when the agent starts; no runtime scanning delay.
