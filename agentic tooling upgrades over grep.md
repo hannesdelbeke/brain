@@ -55,8 +55,8 @@ Why does the first index build take ~14 minutes? 98% of the time is spent on tra
 
 ### Speedup options for initial builds
 
-- **GPU acceleration (DirectML/CUDA):** Drops full vault build time from 14 minutes to ~20 seconds (>500 sections/sec).
-- **Fastembed CPU mode (current default):** Chosen because it requires zero GPU driver setup, runs anywhere, and only pays the build cost once.
+- **GPU acceleration (DirectML/CUDA):** Verified on [[razor blade 15 rz09-02705w76 2018|Razer Blade 15]] (GTX 1060 6GB) at **764.0 chunks/sec** (1.31s per 1,000 chunks), dropping full vault build time from 14 minutes to **~22 seconds**.
+- **Fastembed CPU mode:** Fallback for environments without GPU runtimes, paying the build cost once and using SHA256 incremental cache thereafter.
 
 ## Now
 
