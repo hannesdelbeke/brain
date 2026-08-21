@@ -61,7 +61,7 @@ Using native Git author metadata eliminates the need for `#ai-generated` [[tag|t
 ### Related
 - [[human vs AI git history transfers between notes]] — Detecting text extractions across notes via `git blame -C`.
 - [[2026-07-31 historic obsidian links]] — Learning from past commit patterns.
-- [[link to git historic notes devlog]] — Tracking prompt commits and history.
+- [[obsidian-git historical diff internals]] — Tracking prompt commits and history.
 - [[track prompt history]] — Dedicated log or browser-like history for prompts.
 
 LLM text watermarks:
