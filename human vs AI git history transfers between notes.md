@@ -19,6 +19,7 @@ When parsing history via `git log -p`, scripts pair simultaneous deletions in th
 
 **submodule boundary limit**
 This tracking only works within a single repository. Moving notes across [[git submodule|git submodules]] severs [[git history|Git history]] tracking unless commits are explicitly migrated with `git format-patch`.
+- see [[moving files across submodules loses created date]]
 
 ### References
 - [[algo to differentiate between AI and human notes]] — tracking author provenance across vault edits.

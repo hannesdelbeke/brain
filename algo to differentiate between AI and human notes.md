@@ -38,9 +38,11 @@ A Python script using `git log -p` and `git-filter-repo` can scan past commits a
 4. Downstream servers (like the Telegram bot) perform a single `git reset --hard origin/main` after the rewrite.
 
 ## Model Distinction in Git Authorship
-Direct agent edits should use the model identity as the primary [[git author]]:
+Direct agent edits triggered by a human prompt should use the model identity as the primary [[git author]] and append the human as a co-author. This shows a human initiated the change, preventing the misconception that the AI acted entirely autonomously:
 ```bash
-git commit -m "add: note" --author="gemini-3-7-flash <gemini@google.com>"
+git commit -m "add: note
+
+Co-authored-by: Hannes <hannesdelbeke@gmail.com>" --author="gemini-3-7-flash <gemini@google.com>"
 ```
 
 For human commits incorporating AI drafts or assistance, keep the human author and append standard Git trailers:
