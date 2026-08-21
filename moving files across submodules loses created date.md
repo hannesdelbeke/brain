@@ -40,5 +40,4 @@ OS-level timestamps (`Date Created`) change whenever a folder is archived, unzip
 
 ### Related
 - [[maintain git history between submodules]] — Technical trade-offs between patch preservation and origin SHA pointers.
-- [[2026-08-18 Git history alignment and vault sync]] — Audit log aligning historical note birth dates across repositories.
 - [[wikilink temporal integrity]] — How link resolution depends on preserved creation timestamps.
