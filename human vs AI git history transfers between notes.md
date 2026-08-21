@@ -5,9 +5,9 @@ tags:
   - pkm
 origin-sha: 5c842fe4b
 ---
-When alternating commits between human and AI on [[linking to git commits and diffs in obsidian via uri]], authorship is tracked via [[git author]].
+When alternating commits between human and AI on [[linking to git commits and diffs in obsidian via uri]], authorship [[provenance]] is tracked via [[git author]].
 
-When extracting content from an existing note into a new note ([[link to git historic notes devlog]]), the new commit initially appears as a single creation event by whoever performed the extraction. However, Git can still trace the original line-by-line provenance.
+When extracting content from an existing note into a new note ([[obsidian-git historical diff internals]]), the new commit initially appears as a single creation event by whoever performed the extraction. However, Git can still trace the original line-by-line provenance.
 
 ### Line Provenance Across Extractions
 
