@@ -10,6 +10,12 @@ tags:
 
 Increase agent reply speed and context efficiency across the vault by upgrading from literal `grep` to meaning-based semantic search and link graph traversal.
 
+## Expected Time Savings
+
+- **Thematic & fuzzy search:** Cuts multi-turn synonym guessing (15s over 2–3 agent turns) to a single turn (~3–4s), saving **~10–12s per thematic query** and reducing prompt token waste.
+- **Link & backlink lookups:** Cuts multi-hop connection queries from multiple grep loops (~20–30s) to an instant SQLite edge lookup (<0.1s), saving **~20–25s per graph query**.
+- **Duplicate prevention:** Catches existing similar notes during note creation in a single check (<0.2s), avoiding manual duplicate cleanups later.
+
 [[hierarchical map-reduce note rollup]] stays on demand. It is for repeated long-range questions that retrieval and focused reads can't answer.
 
 ## Measured state
