@@ -4,19 +4,15 @@ tags:
   - tools
   - agent
 ---
-An open-source runtime framework released by DeepSeek based on the formula: $\text{Agent} = \text{Model} + \text{Harness}$.
+A toolkit for programmers who want to build their own AI assistant from scratch.
 
-## What it is
-A scaffolding framework built on the Cordis TypeScript kernel that treats every agent capability (models, tools, memory, sandboxes, UI) as modular, swappable plugins.
+## Do we need it?
+**No.**
 
-## Do we need it for our agents?
-**No.** 
+The agent already has its "body" and "hands" via [[antigravity]] (terminal commands, file reading and editing, vault search, subagents, and web browsing).
 
-It is designed for developers building standalone AI assistants from scratch. Coding agents (like [[antigravity]] or Claude Code) already provide their own complete harness—including terminal execution, file manipulation, subagents, background scheduling, and tool calling.
-
-Adding DeepSeek Harness to an existing agent environment is redundant.
+Adding DeepSeek Harness to our setup would just be putting an extra engine inside a car that already has one. You can safely ignore it.
 
 ### Related
 - [[AI agent]]
 - [[agentic note taking]]
-- [[agentic tooling upgrades over grep]]
