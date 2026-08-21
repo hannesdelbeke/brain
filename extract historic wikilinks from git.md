@@ -6,6 +6,9 @@ tags:
   - python
   - pkm
 ---
+> [!summary] Conclusion
+> **Not needed right now.** Real-time Git diff parsing or basic Obsidian graph analysis provides enough insight. Maintaining a historic SQLite graph introduces unnecessary maintenance overhead unless we build advanced temporal graph visualization tooling.
+
 Proposal and script to extract added and removed [[wikilink|wikilinks]] from [[git history|Git history]] into SQLite, generating data for [[2026-07-31 historic obsidian links|temporal graph analysis]] and [[wikilink temporal integrity]].
 
 ### Implementation Plan
