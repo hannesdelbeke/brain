@@ -24,9 +24,7 @@ Use a standard web link pointing to the exact past version of the file on GitHub
 
 ### Local Shell Command URI
 Create a special Obsidian link that, when clicked, runs a background command to instantly pop open a visual comparison (diff) between the old version and the current version right on your computer.
-
-- could [[URI link to obsidian git diff - RnD]]
-
+- [[URI link to obsidian git diff - RnD]] discuss approach for URI in Obsidian
 
 ### Technical implementations
 
