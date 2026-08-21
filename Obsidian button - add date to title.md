@@ -1,6 +1,4 @@
 ---
-origin-sha: "e589e3e"
-created: 2026-05-26
 energy: 6
 sentiment:
   - 6
@@ -11,7 +9,7 @@ tags:
   - technical
   - plugin
   - workflow
-origin-sha: e589e3e96e99213b8ac89244244ad2c9257fc531
+origin-sha: "e589e3e"
 created: 2026-05-26
 ---
 

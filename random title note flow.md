@@ -1,6 +1,4 @@
 ---
-origin-sha: "e4fe1b5"
-created: 2026-04-29
 energy: 7
 sentiment:
   - 7
@@ -12,7 +10,7 @@ tags:
   - planning
   - self-reflection
   - hobby
-origin-sha: e4fe1b5c9327b6ff168db7992fc212f031cb8107
+origin-sha: "e4fe1b5"
 created: 2026-04-29
 ---
 
