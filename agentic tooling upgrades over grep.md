@@ -5,85 +5,56 @@ tags:
   - pkm
   - optimization
 ---
-> [!summary] Action Plan (Vault Review & Roadmap)
-> **Active Implementation (Phased):**
-> - **Now (Hybrid Search & Graph Index):** Extend the [[pkm metadata indexer]] with section-level embeddings (`bge-small-en-v1.5`, split on `^## `) and an `edges(src, dst)` link table on the same walk. Query via in-memory CPU `matmul` (~17 MB for ~11k sections, <0.2ms) without external vector databases.
->   - **Core Benefit:** Bridges [[semantic search]] and [[notes fuzzy search]] gaps, fixing grep recall failure at scale (e.g. `agent` matching 40% of the vault vs synonym mismatch returning 0).
->   - **Write-path Protection:** Searches candidate titles before note creation to prevent near-duplicate note sprawl.
-> - **Later (On-Demand Triggers):** Obsidian MCP server (triggered only by live workspace UI state) and on-demand map-reduce rollups (fan-out subagents cached on repeat requests).
+> [!summary] Plan
+> Finish the local index before relying on semantic search. The metadata and link index exists, but the active database has no section rows or embeddings, and no FTS5 body index. Keep `rg` for exact retrieval; add local semantic retrieval for themes and synonyms.
 
-At scale (5k–10k+ notes), literal `grep` fails on recall in both directions: broad terms match thousands of files (e.g. `agent` matching 40% of notes), while thematic or synonym queries return zero. Injecting raw title lists also breaks (~38k tokens today, passing 50k at 10k notes). 
+Increase agent reply speed and context efficiency across the vault by upgrading from literal `grep` to meaning-based semantic search and link graph traversal.
 
-Upgrading the vault search index requires getting row granularity and query architecture right.
+[[hierarchical map-reduce note rollup]] stays on demand. It is for repeated long-range questions that retrieval and focused reads can't answer.
 
-## Vault Empirical Measurements (August 2026)
+## Measured state
 
-Checking this architecture against our actual 6,572-note vault yields clear baselines:
-- **Mean note size:** 188 words (~250 tokens).
-- **Heading distribution:** 68.5% (4,502 notes) are atomic notes without `##` headings; 31.5% (2,070 notes) contain multiple sections (with outliers up to 16k words).
-- **Section total:** ~11,000 total sections across the vault.
-- **In-memory matrix:** 11,000 sections at 384 dimensions (float32) takes only **~17 MB RAM**, executing numpy `matmul` in **< 0.2ms on CPU**.
+- 6,565 Markdown notes average 187 body words.
+- 1,340 notes (20.4%) have `##` headings. The current splitter yields 10,231 non-empty sections; 5,225 notes are atomic.
+- The largest note is 16,994 words, so headings alone don't keep sections within the 512-token embedding limit.
+- 10,231 384-dimension float32 vectors take about 15 MB. Benchmark the whole query path, not just matrix scoring.
+- `agent` appears in 184 notes (2.8%). Use measured broad queries, not this term, to demonstrate grep overload.
+- The title list is about 33k tokens by a rough character estimate. Don't put it in an agent prompt.
 
-## Upgrade Roadmap
+## Implemented
 
-### Phase 1: What to do Now
+`public/skills/pkm-metadata-indexer/index_pkm_meta.py` and the [[pkm metadata indexer|metadata-indexer skill]] already parse selected frontmatter and wikilinks, and expose index, search, duplicate-check, link-query, and stats commands.
 
-#### 1. Heading-Level Section Embeddings (`^## `)
-- **Granularity:** Notes with `##` headings split on `^## ` (~288 tokens/section). Atomic notes without headings (68.5% of vault) are indexed as a single section using the note title as heading (~250 tokens).
-- **Model Choice:** Use `bge-small-en-v1.5` (512-token context window, 384 dimensions). This comfortably holds our mean note/section size while preventing truncation on longer sections.
-- **Section-Level SHA256:** Key `sections(path, heading, start_line, sha256, vector)` by section content hash so editing one heading re-embeds only that section, not the whole note.
-- *Simple explanation: Instead of reading a whole note at once, the system slices it into bite-sized chunks under each heading. This lets you pinpoint the exact paragraph you need without loading the rest of the page.*
-- **Related:** [[vault hybrid search]], [[offline GPU embeddings with incremental cache]], [[pkm metadata indexer]], [[semantic search]]
+`.obsidian/pkm_index.db` is 33.04 MB and currently holds 6,565 notes and 21,061 link edges. The script has code paths for `bge-small-en-v1.5`, cosine search, RRF, and duplicate checks, but the database reports 0 sections and 0 embeddings. Its lexical branch only searches paths and headings with `LIKE`; FTS5/BM25 body search is not built yet.
 
-#### 2. In-Memory CPU Matmul (No Vector DB)
-- **Architecture:** Load the ~17 MB vector matrix directly into memory and run a single numpy `matmul` (`sims = mat @ query_vec`) in **< 0.2ms on CPU**.
-- **Simplicity:** No FAISS, sqlite-vec, or background GPU daemons needed until ~1M sections (~300k notes). GPU is used solely for one-time bulk indexing.
-- *Simple explanation: The index is so small that standard computer memory compares meanings instantly, without needing bulky database software.*
-- **Related:** [[single-repo vs multi-repo agent search]]
+The existing edge table is enough for inbound and outbound links. Keep multi-hop paths, centrality, and orphan reports deferred until they serve a repeated task.
 
-#### 3. Return Locations and Keep Grep
-- **Snippet Output:** Search returns `path`, `line_number`, and `heading` (~150 tokens total), never raw note bodies. The agent reads target sections using standard line offsets without wasting context.
-- **Hybrid Fusion:** Union exact grep (for names, commit hashes, code identifiers, tags) with cosine vector matches.
-- *Simple explanation: Search gives you a page and line number instead of reciting the whole book. We keep exact word search for code and names, and use smart meaning-based search for general topics.*
-- **Related:** [[notes fuzzy search]]
+## Now
 
-#### 4. Extract Link Graph on the Same Walk
-- **Free Graph Index:** Because the indexing pass already reads every file body, extracting `[[wikilinks]]` into an `edges(src, dst)` table costs ~10 lines of code with zero marginal crawl overhead.
-- **Enables:** Instant multi-hop graph traversal and orphan detection via recursive SQL queries without running multiple agent grep loops.
-- *Simple explanation: While indexing the notes, we also sketch a quick roadmap of which notes link to each other, giving us an instant connection map for almost zero extra effort.*
-- **Related:** [[vault graph traversal]]
+### Make the index correct
 
-#### 5. Duplicate Prevention on Write Path
-- **The Problem:** Near-duplicate note pairs scale quadratically with note count when agents lack cross-session memory.
-- **The Fix:** Embed candidate note titles before creation to search nearest neighbors, prompting the agent to append to existing notes rather than creating fragmented duplicates.
-- *Simple explanation: Before creating a new note, the system checks if you already wrote something similar in the past so you can update the old note instead of cluttering the vault with duplicates.*
+Don't drop `sections` before reading its hashes. Migrate and upsert rows, then remove only deleted sections. Store section text, or a synchronized FTS5 table, with path, heading, absolute line, content hash, and embedding version. Calculate the line before stripping frontmatter, and log per-file failures instead of swallowing them.
 
----
+### Chunk for the embedding model
 
-### Phase 2: What to do Later (Deferred)
+Keep `##` as a boundary, then split long sections into token-bounded chunks with a little overlap and repeated heading context. Give chunks stable identities from path, heading, ordinal, and content hash. The cache key also needs the chunking policy and model version, so only affected rows rebuild.
 
-#### 6. Obsidian MCP Server
-- **When to build:** Only when tasks require live Obsidian workspace state (active tab, open pane context, triggering plugin commands with no filesystem equivalent).
-- **Not for:** Shell errors or file reading (handled cleaner via Python scripts).
-- *Simple explanation: A direct remote control for Obsidian. Only needed if an AI assistant needs to click buttons inside the app or see which note tab you currently have open.*
-- **Related:** [[vault MCP server for agents]]
+### Add hybrid retrieval
 
-#### 7. On-Demand Map-Reduce Rollup
-- **When to build:** Run on demand with parallel subagents over date-filtered SQLite sets for longitudinal multi-year queries. Cache date ranges only after being queried repeatedly, avoiding expensive unread precomputed rollups.
-- *Simple explanation: For giant questions covering years of daily entries, helper assistants split the years up, summarize each year, and hand a compact summary back to the main assistant.*
-- **Related:** [[hierarchical map-reduce note rollup]], [[token efficient PKM analysis architecture]], [[multi-repo agent search cost and ROI]]
+Use FTS5/BM25 for exact candidates and cosine similarity for semantic candidates, then combine ranks with [[reciprocal rank fusion|RRF]]. Return a path, absolute line, heading, score components, and a short local snippet. Keep `rg` as the quick exact tool and fallback when the database is stale.
 
----
+Test this against a small hand-picked set: identifiers, aliases, concepts without shared terms, and the problem in [[notes fuzzy search]]. Ship only when it improves useful recall over `rg` alone and indexing reports no unhandled failures.
 
-## Countable Triggers for Upgrades
+### Keep links and note creation simple
 
-- **Semantic Section Index:** A common search term matches > 50 files, or full vault title listing exceeds 50k tokens (currently at ~38k tokens).  
-  *Simple explanation: When searching a word brings up way too many files, or when listing all note titles becomes too long for memory.*
-- **Edges Table:** Built simultaneously on Phase 1 walk (zero marginal cost).  
-  *Simple explanation: Built right away because it takes almost no extra work during the initial scan.*
-- **Obsidian MCP Server:** An agent workflow explicitly requires live Obsidian UI/workspace context.  
-  *Simple explanation: When an assistant actually needs to control the Obsidian app window, not just edit files.*
-- **Map-Reduce Rollups:** A longitudinal multi-year query fails date-filtered fan-out or overflows prompt context limits.  
-  *Simple explanation: When a big multi-year overview contains too much text to fit in a single prompt.*
-- **ANN Vector Index (FAISS/sqlite-vec):** Total section count exceeds 1,000,000 (~300k notes).  
-  *Simple explanation: When you have hundreds of thousands of notes and basic in-memory math starts to lag.*
+Extract links on the same walk, but store source path, raw target, resolved target when unambiguous, and link location. Filename alone is unsafe when titles repeat. One-hop context is enough for now.
+
+Before creating a note, search a title index and nearby semantic matches. Show the evidence, but don't block creation or impose one similarity threshold; the agent or user decides whether to append, link, merge, or keep a distinct note.
+
+## Later
+
+Build an Obsidian MCP server only when an agent needs live panes, tabs, or a plugin command that has no filesystem equivalent. File reads and index queries don't need it.
+
+Run map-reduce only when date or project filtering plus targeted section retrieval still overflows context, or when the same longitudinal question repeats enough to justify a cached rollup.
+
+Use an ANN index such as FAISS or sqlite-vec only when measured in-memory retrieval becomes a bottleneck. At the current density, a million sections is roughly 640k notes, so the trigger should be latency and memory measurements rather than note count alone.
