@@ -1,6 +1,6 @@
 ---
 name: pkm-metadata-indexer
-description: Fast local metadata and summary extractor for Markdown notes into SQLite
+description: Fast local metadata, neural section embeddings, link graph, and hybrid search for Markdown notes in SQLite.
 aliases:
   - pkm metadata indexer
   - pkm-metadata-indexer
@@ -11,25 +11,57 @@ tags:
   - pkm
   - skill
 ---
-Fast local metadata and summary extractor for Markdown notes. Parses YAML frontmatter (energy, sentiment, tags) and top-level headings/task items directly into a SQLite database (`.obsidian/pkm_index.db`).
 
-## How to run
+Fast local metadata, neural section embedding, link graph, and hybrid search tool for Markdown notes. 
+
+Parses frontmatter, heading-level sections (`^## `), wikilinks, and vector embeddings (`bge-small-en-v1.5`) directly into a local SQLite database (`.obsidian/pkm_index.db`).
+
+## Commands & Usage
+
+### 1. Build / Update Index
+Scans the vault, caches frontmatter, extracts wikilink edges, and embeds new or modified sections:
 ```bash
-python skills/pkm-metadata-indexer/index_pkm_meta.py
-# or specify a custom vault directory
-python skills/pkm-metadata-indexer/index_pkm_meta.py --vault /path/to/vault
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py
+# Fast build skipping neural embeddings (metadata + links only):
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py --skip-embeddings
+```
+
+### 2. Hybrid Semantic Search
+Searches vault sections using combined lexical matching and neural vector cosine similarity (via in-memory CPU matrix multiplication):
+```bash
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py --search "notes on feeling overwhelmed by projects"
+```
+
+### 3. Duplicate Note Prevention
+Checks for semantic overlap before creating a new note to prevent note sprawl:
+```bash
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py --check-duplicate "Obsidian link graph complexity"
+```
+
+### 4. Link Graph Queries
+Instant lookup of inbound backlinks and outbound connections:
+```bash
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py --links "Obsidian"
+```
+
+### 5. Index Stats
+View database size, note count, indexed sections, and graph edge counts:
+```bash
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py --stats
 ```
 
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
-- **Structural snippets:** First 15 high-signal headings and markdown checkboxes (`- [ ]`, `- [x]`).
-- **Metrics:** Note word count, category (daily, review, work, general), and relative file path.
+- **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
+- **Neural Embeddings:** 384-dimensional dense vectors (`BAAI/bge-small-en-v1.5`) stored as float32 blobs.
+- **Link Graph (`edges`):** All source-to-target `[[wikilinks]]` for instant traversal without grepping files.
 
 ## Why use this
-Enables instant SQL aggregations across thousands of notes (energy trends, burnout queries, emotion counts) with zero API token costs, serving as a lightweight pre-filter before feeding notes to LLMs.
+Enables instant SQL aggregations and single-turn semantic search across thousands of notes with zero ongoing API costs, serving as an intelligent pre-filter for agents.
 
 ### Related
+- [[agentic tooling upgrades over grep]]
 - [[vault hybrid search]]
 - [[offline GPU embeddings with incremental cache]]
+- [[vault graph traversal]]
 - [[token efficient PKM analysis architecture]]
-- [[agentic tooling upgrades over grep]]
