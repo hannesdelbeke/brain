@@ -29,12 +29,12 @@ Instead of forcing interactive coding agents to crawl and map repositories on de
 **1. GitHub Action on Push**
 A lightweight workflow triggers on `push` to `main`:
 - Detects changed files using `git diff --name-only HEAD~1`.
-- Extracts class and function signatures using AST tools (`tree-sitter`, `repomix`, or a fast Gemini Flash prompt).
+- Extracts class and function signatures using AST tools ([[tree-sitter]], `repomix`, or a fast Gemini Flash prompt).
 - Updates a concise summary file: `llms.txt` or `.agent/repo_map.md`.
 
 **2. Storage Strategy**
 - **Single-repo:** Commit the updated map directly to repository root (e.g. `llms.txt`) or an `.agent/` folder.
-- **Multi-repo org:** Push the per-repo map fragment into a central `org-index` repository or GitHub Pages catalog.
+- **Multi-repo org:** Push the per-repo map fragment into a central [[repository catalog|org-index repository]] or GitHub Pages catalog.
 
 **3. Agent Steering via AGENTS.md**
 Add a single steering rule to the repo's agent prompt file (`AGENTS.md`, `CLAUDE.md`, or `GEMINI.md`):

@@ -10,7 +10,7 @@ Quantifying the direct API token savings and engineering time recovered by repla
 
 ## The Real Token Cost Driver: Cache Persistence
 
-In modern coding agents with prompt caching (e.g. [[Claude Code]]), a tool result or file read of $N$ tokens is written into cache once ($1.25\times$) and re-read at ($0.1\times$) on every remaining turn of the session:
+In modern coding agents with [[prompt caching]] (e.g. [[Claude Code]]), a tool result or file read of $N$ tokens is written into cache once ($1.25\times$) and re-read at ($0.1\times$) on every remaining turn of the session:
 
 $$\text{Effective Cost} = N \times (1.25 + 0.1 \times \text{remaining\_turns})$$
 
@@ -24,7 +24,7 @@ Early exploratory search calls (blind grepping across multiple repositories or r
 
 Agents rarely dump entire 500k-line codebases at once. Instead, they suffer from **re-read redundancy**: subagents repeatedly re-read the same architectural and routing files (often 6x–10x across a task) because the initial brief lacked explicit file targets.
 
-Providing an org-wide catalog and pre-computed router eliminates exploratory search turns and cuts redundant file reads upfront.
+Providing an org-wide [[repository catalog]] and pre-computed router eliminates exploratory search turns and cuts redundant file reads upfront.
 
 ## Baseline Organization Model
 
@@ -36,14 +36,14 @@ Providing an org-wide catalog and pre-computed router eliminates exploratory sea
 
 Standard default model in tools like [[Claude Code]]:
 - Exploratory grep & re-read loops: *~54.4M input tokens/day $\approx$ $43,000 / year.*
-- Pre-computed maps & catalog routing: *~9.1M input tokens/day $\approx$ $7,200 / year.*
+- Pre-computed maps & [[repository catalog|catalog routing]]: *~9.1M input tokens/day $\approx$ $7,200 / year.*
 - Direct API savings: *~$35,800 / year (83% reduction).*
 
 ## Claude Opus / Flagship Tier ($15.00 / 1M input)
 
 Flagship frontier models used for complex refactors and reasoning:
 - Exploratory crawl in Opus: 54.4M input tokens/day $\approx$ $215,000 / year.
-- Hierarchical map-reduce (cheap map $\rightarrow$ Opus reduce): Cheap models scan candidate repos, Opus only reads structured summaries $\approx$ $35,000 / year.
+- Hierarchical [[map-reduce]] (cheap map $\rightarrow$ Opus reduce): Cheap models scan candidate repos, Opus only reads structured summaries $\approx$ $35,000 / year.
 - Direct API savings: ~$180,000 / year (84% reduction).
 
 ## Engineering Wait Latency Recovered
