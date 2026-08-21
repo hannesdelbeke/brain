@@ -60,14 +60,23 @@ generated: 2026-08-21
 ```
 Downstream search, Dataview queries, and temporal decay algorithms must sort by `period_start` rather than file creation or Git timestamps.
 
-**2. Lexicographical Date Naming**
-Prefix rollup filenames with the ISO period (e.g. `2024-06 rollup.md` or `review 2024-06.md`). This guarantees natural chronological sorting across all file explorers, CLI tools, and vault views.
+**2. Lexicographical Naming Convention**
+Prefix rollup filenames with the standard schema (`rollup 2024-06.md` or `review 2024-06.md`). This guarantees natural chronological sorting across file explorers, Dataview tables, and CLI tools.
 
-**3. Sequential Ingestion for Causal Integrity**
-During the Map phase, feed daily notes to the model in strict ascending chronological order (`YYYY-MM-DD`). Preserving sequential input prevents the LLM from confusing cause and effect (e.g. attributing a mood drop to an event that happened days later).
+**3. Balancing Note Event Date vs Git Author Date**
+Both dates carry distinct semantic meaning:
+- **Event Date (`period` / title date):** Tells the AI what era of your life the note describes.
+- **Commit Date (`GIT_AUTHOR_DATE`):** Tells the AI when the text was actually authored or modified.
+- **Why both matter:** If you write about a 2020 memory in 2024, the event date provides historical placement, while the commit date proves you wrote it with four years of hindsight.
+- In the Map phase, feed daily notes to the model in strict chronological order by event date, but preserve author timestamps in metadata to maintain hindsight context and causality.
 
-**4. Git Source Commit Anchoring**
-Record the historical commit range or snapshot SHA in frontmatter (`source_range: "a1b2c3..d4e5f6"`). This links the summary directly to the exact point-in-time state of the vault without modifying historical Git commits.
+**4. Backdating Initial Rollup Commits vs Frontmatter Anchoring**
+Can we backdate the initial Git commit of a retrospective rollup to match the historical period?
+- **Option A (Backdated Creation Commit):** Create the rollup file and commit it using a backdated author timestamp:
+  `GIT_AUTHOR_DATE="2024-06-30 23:59:59" git commit -m "docs: generate rollup for 2024-06"`
+  Future edits and updates then commit normally with current timestamps. This aligns Git history queries (`git log --before="2024-07-01"`) without requiring a complex Git rebase.
+- **Option B (Frontmatter Anchoring):** Record the source commit range in frontmatter (`source_range: "a1b2c3..d4e5f6"`). This links the summary directly to the exact point-in-time state of the vault without altering Git timestamps.
+- **Best Practice:** Use frontmatter `period` as the permanent machine-readable source of truth (as Git timestamps can reset when moving files across submodules per [[moving files loses created date]]), and optionally backdate the initial Git author timestamp on creation.
 
 ### Related
 - [[moving files loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
