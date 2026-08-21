@@ -82,9 +82,14 @@ Can we backdate the initial Git commit of a retrospective rollup to match the hi
 > **The scenario:** In 2025, you author a note reflecting on a 2020 trip (`period: "2020-05"`, `created: 2025-06-12`).
 > 
 > **How the pipeline resolves it:**
-> 1. **2020 Event Rollup (`rollup 2020-05.md`):** The pipeline routes the note to the 2020 timeline by `period`. It invalidates and regenerates `rollup 2020-05.md` to add the memory with a hindsight tag: *"Traveled to Malta (recorded retrospectively in 2025)"*.
+> 1. **2020 Event Rollup (`rollup 2020-05.md`):** Routes the note to the 2020 timeline by `period`. It invalidates and regenerates `rollup 2020-05.md` to add the memory with a hindsight tag: *"Traveled to Malta (recorded retrospectively in 2025)"*.
 > 2. **DAG Cache Protection:** Rollups for 2021, 2022, 2023, and 2024 remain cached and are untouched (0 token spend).
-> 3. **2025 Authoring Rollup (`rollup 2025.md`):** The *act of remembering* is tracked as reflection activity: *"In mid-2025: Active journaling period reflecting on past 2020 life events."*
+> 3. **2025 Authoring Rollup (`rollup 2025.md`):** Tracks the *act of remembering* as reflection activity: *"In mid-2025: Active journaling period reflecting on past 2020 life events."*
+> 
+> **Why this beats relying on raw Git history alone:**
+> - **Semantic synthesis vs raw text diffs:** Git only knows lines were added or deleted; it cannot detect emotional shifts, recurring themes, or summarize life arcs.
+> - **Immunity to submodule moves:** Moving notes across folders or submodules resets Git creation dates (per [[moving files loses created date]]), whereas frontmatter `period` preserves the event era permanently.
+> - **Token efficiency:** Reading 5 years of monthly rollups takes ~30k tokens; crawling 5 years of raw Git commit diffs takes millions of tokens and dozens of API roundtrips.
 
 ### Related
 - [[moving files loses created date]] — Why filesystem and Git timestamps drift and why frontmatter is the permanent source of truth.
