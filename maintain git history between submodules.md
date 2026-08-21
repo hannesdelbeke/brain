@@ -7,7 +7,7 @@ tags:
 origin-sha: e292143a2af13162fcbababd58789a7138cfc2d5
 created: 2026-08-20
 ---
-moving notes across [[git submodule|Git submodule]] boundaries severs [[git history|commit history]], and how to balance privacy against author provenance.
+moving notes across [[git submodule|Git submodule]] boundaries severs [[git history|commit history]], and how to balance privacy against author and date [[provenance]].
 
 ### Submodules Don't Share History
 A Git submodule is an independent `.git` repository. When a note moves across submodule boundaries (such as from root `pkm` to `public/` or from `work/vault-b/` to `public/`), standard file operations record a deletion in the source repo and a fresh file creation in the destination repo.
@@ -22,6 +22,11 @@ Preserving [[git history]] across [[git submodule|submodule]] boundaries involve
 
 - **Migrating full [[git history|Git history]]** keeps line-by-line author attribution and timestamps, but risks leaking private commit messages, early unredacted drafts, or internal notes into a public repository.
 - **A single clean commit** guarantees zero privacy leaks, but loses the historical human vs AI trail in the new repo.
+
+we use this provenance in 
+- [[human vs AI git history transfers between notes]]
+
+
 
 ### Hybrid Workflows to Keep Human vs AI Context
 
