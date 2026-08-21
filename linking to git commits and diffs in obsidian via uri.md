@@ -62,10 +62,13 @@ Create a special Obsidian link that, when clicked, runs a background command to 
 >   ```
 
 ### Summary Recommendation
-- **Permanent offline access:** Materialize snapshot (`git show <sha>:file > History/file.md`).
-- **Scriptable reference:** Portable wikilink convention (`[[note@sha]]`).
-- **Quick web sharing:** GitHub SHA permalink.
-- **Automated local tool:** Obsidian Shell Commands URI.
+
+| Need | Solution |
+| --- | --- |
+| Permanent offline access | Materialize snapshot (`git show <sha>:file > History/file.md`) |
+| Scriptable reference | Portable wikilink convention (`[[note@sha]]`) |
+| Quick web sharing | GitHub SHA permalink |
+| Automated local tool | Obsidian Shell Commands URI |
 
 ### References
 - [[wikilink temporal integrity]] — Resolves links via Git timestamps automatically without manual commit URIs.
