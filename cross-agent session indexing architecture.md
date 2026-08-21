@@ -64,7 +64,7 @@ Instead of vault heading chunking (`^## `), session indexing chunks by **turn in
 
 ## 3. High-Value Retrieval Capabilities
 
-- **Cross-Agent Concept Search:** Search *"DirectML embedding benchmark"* and instantly receive the exact Claude Code turn, Antigravity task ID, or Codex rollout that ran the benchmark.
+- **Cross-Agent Concept Search:** Search *"DirectML embedding benchmark"* and instantly receive the exact [[Claude Code]] turn, [[antigravity]] task ID, or Codex rollout that ran the benchmark.
 - **File Provenance & Blame Traversal:** Query any file path to retrieve every session turn from every agent that ever edited or debugged it.
 - **Failure Recovery:** Filter turns by `error` status to find past workarounds for identical compiler or runtime exceptions across projects.
 
