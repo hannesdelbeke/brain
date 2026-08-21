@@ -11,12 +11,12 @@ A batch compression pattern based on [[map-reduce]] for recursively synthesizing
 
 ## When to Build It
 
-Start lazy. A flat, searchable leaf index may be sufficient: one short summary and structured metadata per note is small enough for local search even when it is too large to read in one model context. 
+Start lazy. A flat, searchable leaf index may be sufficient: one short summary and structured metadata per note is small enough for local search even when it is too large to read in one model context (see [[agentic tooling upgrades over grep]]). 
 Build the recursive hierarchy only when a human needs top-down navigation or a parent node must fit in a model context.
 
 ## The Context Window Problem
 
-Feeding 10,000+ raw [[Markdown]] files directly into an [[large language model|LLM]] [[session context|context window]] spends tokens on repeated formatting and low-signal material. Compression is useful only if the resulting artifacts retain provenance, chronology, and unresolved conflicts.
+Feeding 10,000+ raw [[Markdown]] files directly into an [[large language model|LLM]] [[session context|context window]] spends tokens on repeated formatting and low-signal material. Compression is useful only if the resulting artifacts retain provenance, chronology, and unresolved conflicts, preventing runaway [[vault graph complexity]].
 
 ## Pipeline
 
@@ -95,8 +95,13 @@ Can we backdate the initial Git commit of a retrospective rollup to match the hi
 > - **Token efficiency:** Reading 5 years of monthly rollups takes ~30k tokens; crawling 5 years of raw Git commit diffs takes millions of tokens and dozens of API roundtrips.
 
 keep context from this note in mind when planning [[git history]]: 
-[[human vs AI git history transfers between notes]]
+- [[human vs AI git history transfers between notes]] — Rules for preserving author intent across notes.
+- [[rewrite git history for ai authorship migration]] — Rewriting commit metadata when attributing generated summaries.
+- [[algo to differentiate between AI and human notes]] — Classifying machine vs human authorship in historical commits.
 
 ### Related
 - [[wikilink temporal integrity]] — Preserving link validity across chronological revisions.
 - [[token efficient PKM analysis architecture]] — Overview of vault retrieval and batch analysis economics.
+- [[vault synapse pruning]] — Managing link decay and graph density across aging notes.
+- [[vault hybrid search]] — Combining lexical FTS5 and semantic retrieval.
+- [[extract historic wikilinks from git]] — Reconstructing graph references from past commit states.

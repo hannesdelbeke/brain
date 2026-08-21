@@ -5,6 +5,9 @@ tags:
   - pkm
   - optimization
 ---
+> [!summary] Conclusion
+> **Not needed right now.** This note outlines the theoretical upgrade roadmap when scaling beyond grep. For the current vault (~6.5k notes), flat SQLite metadata indexing and fast ripgrep are sufficient without adding embedding or MCP server maintenance overhead.
+
 While native CLI tools like `grep` are fast for exact string matches, they are highly inefficient for [[AI agent|AI agents]] navigating a large [[Personal Knowledge Management|PKM]] vault. `grep` forces the agent into iterative guessing, wasting API tokens and execution time. 
 
 To maximize an agent's speed and context efficiency, we need tools that understand meaning, relationships, and structure rather than just raw text.
