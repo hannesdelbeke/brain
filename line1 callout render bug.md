@@ -1,14 +1,14 @@
-Can we solve the problem where a [[Obsidian callouts|callout]] on first line in obsidian doesn't render if we open note, and cursor is on first line?
-
-### Cause
-In Obsidian Live Preview (CodeMirror 6), markdown syntax unmasks on the active cursor line. Opening a note places the cursor at line 1 position 0 by default, forcing line 1 `> [!NOTE]` into raw edit mode instead of rendering the widget box until you click away.
+---
+tags:
+  - obsidian
+  - bug
+---
+When opening a note in Obsidian Live Preview (CodeMirror 6), a [[Obsidian callouts|callout]] placed on line 1 stays unrendered in raw markdown edit mode because the cursor defaults to line 1 (`pos: 0`). Markdown widgets only render when the cursor leaves that line.
 
 ### Solutions
-- **Blank line / frontmatter buffer:** Start note with `---` frontmatter or a blank line on line 1 so the cursor lands above the callout.
-- **Reading view (`Ctrl + E`):** Disables active-line unmasking completely.
-- **[[Obsidian plugin - Remember cursor position|Remember cursor position plugin]]:** Restores cursor to last position (or end of note) instead of defaulting to line 1.
-- Deselect cursor from any lines when opening a note.
+- [[Obsidian plugin - Remember cursor position]]: restores cursor position or places it at the end, preventing automatic line 1 unmasking.
+- Start note with frontmatter (`---`) or a blank top line so the cursor lands above the callout.
+- Switch to reading view (`Ctrl + E`) which never unmasks active lines.
+- Unfocus the editor upon opening.
 
-relates
-- [[Obsidian improve callout formatting]]
-- [[Obsidian plugin - Remember cursor position]]
+For general layout and list issues within callout blocks, see [[Obsidian improve callout formatting]].
