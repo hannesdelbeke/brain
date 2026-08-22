@@ -9,7 +9,7 @@ tags:
 origin-sha: da71e78b4
 ---
 
-# Tool Research: Herdr, Roo Code, Devstral, OpenClaw, Hermes Agent
+# Tool Research: Herdr, Roo Code, Devstral, OpenClaw, [[Hermes Agent]]
 
 Brief overview of five tools, what they solve, whether you can use them in your workflow, and links to related PKM notes.
 
@@ -81,7 +81,7 @@ www.github.com/ErikBjare/gptme
 - Herdr: Terminal multiplexer with agent state tracking. Solves multi-agent terminal clutter.
 - Devstral: Mistral's open coding model (24B/123B). Solves offline/local agent execution.
 - OpenClaw: Self-hosted messaging-to-PC agent bridge. Solves remote mobile chat.
-- Hermes Agent: Self-improving agent saving markdown skills. Solves persistent learning from feedback.
+- [[Hermes Agent]]: Self-improving agent saving markdown skills. Solves persistent learning from feedback.
 	- [[how does hermes self improve]]
 - OpenHands: Docker-sandboxed autonomous engineering platform. Solves async whole-repo tasks.
 - gptme: terminal for agents. SSH allows remote access.
