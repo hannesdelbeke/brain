@@ -78,7 +78,7 @@ Test this against a small hand-picked set: identifiers, aliases, concepts withou
 
 Extract links on the same walk, but store source path, raw target, resolved target when unambiguous, and link location. Filename alone is unsafe when titles repeat. One-hop context is enough for now.
 
-Before creating a note, search a title index and nearby semantic matches. Show the evidence, but don't block creation or impose one similarity threshold; the agent or user decides whether to append, link, merge, or keep a distinct note.
+Before creating a note, search a title index and nearby semantic matches. Show the evidence, but don't block creation or impose one similarity threshold; the agent or user decides whether to append, link, merge, or keep a distinct note. For resolving homonyms and suppressing false duplicate merges, see [[anti link RnD]].
 
 ## Later
 
@@ -89,6 +89,7 @@ Run map-reduce only when date or project filtering plus targeted section retriev
 Use an ANN index such as FAISS or sqlite-vec only when measured in-memory retrieval becomes a bottleneck. At the current density, a million sections is roughly 640k notes, so the trigger should be latency and memory measurements rather than note count alone.
 
 ## References
+- [[anti link RnD]]
 - [[cross-agent session indexing architecture]]
 - [[pkm metadata indexer]]
 - [[vault hybrid search]]
