@@ -3,6 +3,7 @@ aliases:
   - caret
   - insertion point
   - editor cursor
+  - cursor
 tags:
   - concept
   - ui

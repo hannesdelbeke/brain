@@ -9,7 +9,7 @@ tags:
 - work
 ---
 
-Often, problems are already optimally solved by millions of years of evolution.
+Often, problems are already optimally solved by millions of years of [[evolution]].
 Some examples below:
 ### Optimal caching prediction
 In computer caching prediction, the most optimal solution is using the most recent used data. The human brain follows a similar concept for memory usage. 
