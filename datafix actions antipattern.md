@@ -8,6 +8,10 @@ tags:
 - technical
 - planning
 - work
+- coding
+- software
+- anti-pattern
+- todo
 ---
 
 atm, we add instanced actions to `self.actions`

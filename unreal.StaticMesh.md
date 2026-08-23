@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- python
+- unreal
+- material
+- mesh
 ---
 
 inherits from [[unreal.StreamableRenderAsset]]

@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - journal
 - home
+- house
+- building
+- street
 ---
 
 [[house]]

@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - work
+- dcc_dependent
+- tool
+- application
+- development
 ---
 
 the opposite of [[dcc independent]]

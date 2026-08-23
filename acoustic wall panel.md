@@ -8,6 +8,10 @@ tags:
 - technical
 - home
 - hobby
+- acoustics
+- diy
+- sound treatment
+- sound absorption
 ---
 
 Acoustic wall panels absorb sound instead of bounce it back, eliminating echos.

@@ -8,6 +8,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- source control
+- git
+- perforce
+- version control
 ---
 
 An older and less commonly used centralized version control

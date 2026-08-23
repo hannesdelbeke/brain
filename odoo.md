@@ -6,6 +6,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- apps
+- odoo
 ---
 
 https://www.odoo.com/

@@ -8,6 +8,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- grid
+- infrastructure
 ---
 
 not relying on, or being connected to a grid. (e.g. [[electrical grid]], or water or gas)

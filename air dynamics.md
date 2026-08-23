@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - home
+- science
+- physics
+- ventilation
 ---
 
 Moist air is lighter and less dense than dry air with the same [[temperature]] and pressure

@@ -7,6 +7,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- task
+- script
 ---
 
 something you run, or do

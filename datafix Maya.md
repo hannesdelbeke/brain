@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- github
+- repository
+- datafix_maya
 ---
 
 https://github.com/hannesdelbeke/datafix_maya

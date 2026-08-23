@@ -8,6 +8,8 @@ tags:
 - technical
 - planning
 - work
+- python
+- unreal engine
 ---
 
 ```python

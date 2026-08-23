@@ -9,6 +9,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- console
+- cli
 ---
 
 - console window is usually an app window with [[command line interface|CLI]]

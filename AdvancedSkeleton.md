@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - work
+- unity
+- rigging
+- maya
 ---
 
 [[Unity]]

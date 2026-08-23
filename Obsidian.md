@@ -26,8 +26,6 @@ Obsidian let's you type [[Markdown]] and uses [[WYSIWYG]] to instantly show you 
 
 Obsidian is an [[Electron]] app which basically provides a [[Chromium]] window as the application UI
 
-
-
 [[personal knowledge management|PKM]]
 [[own your data]]
 [[writing]]

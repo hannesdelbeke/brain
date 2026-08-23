@@ -1,12 +1,20 @@
 ---
+energy: 5
 sentiment:
-- 5
-sentiment-hash: 4e0a083b
+- 6
+sentiment-hash: 5b36f394
 sentiment-label:
-- factual
+- neutral
 tags:
 - technical
 - self-reflection
+- cognitive
+- memory
+- chunking
+- habit
+- brain
+- education
+- psychology
 ---
 
 Your brain can only hold so much info at a time, so it uses tricks to do more.

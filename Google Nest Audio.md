@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - home
+- chromecast
+- electricity
+- power consumption
+- standby
 ---
 
 [[Chromecast]]

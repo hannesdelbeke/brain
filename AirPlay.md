@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- device
+- apple
+- chromecast
+- comparison
 ---
 
 like [[Chromecast]] but from [[Apple]]

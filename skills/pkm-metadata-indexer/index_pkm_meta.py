@@ -7,6 +7,7 @@ import os
 import re
 import sqlite3
 import sys
+import time
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -457,6 +458,17 @@ def ensure_schema(connection: sqlite3.Connection):
         )
         """
     )
+    run_columns = table_columns(connection, "index_runs")
+    for column, definition in (
+        ("duration_seconds", "REAL"),
+        ("scan_seconds", "REAL"),
+        ("embed_seconds", "REAL"),
+        ("db_seconds", "REAL"),
+        ("provider", "TEXT"),
+    ):
+        if column not in run_columns:
+            connection.execute(f"ALTER TABLE index_runs ADD COLUMN {column} {definition}")
+
     connection.execute(
         """
         CREATE TABLE IF NOT EXISTS index_errors (
@@ -492,22 +504,33 @@ def load_vector_cache(connection: sqlite3.Connection):
     return by_id, by_hash
 
 
-def create_embeddings(sections: list[Section], connection: sqlite3.Connection | None = None) -> dict[str, bytes]:
+def create_embeddings(
+    sections: list[Section], connection: sqlite3.Connection | None = None
+) -> tuple[dict[str, bytes], str]:
     if not sections:
-        return {}
+        return {}, "None"
     if not HAS_FASTEMBED:
         raise RuntimeError("fastembed is required for embeddings. Use --skip-embeddings for metadata-only indexing.")
 
+    providers = get_embedding_providers()
+    active_provider = providers[0] if providers else "CPUExecutionProvider"
     model = TextEmbedding(
         model_name=EMBEDDING_MODEL,
-        providers=get_embedding_providers(),
+        providers=providers,
     )
     vectors = {}
-    batch_size = 128
+    batch_size = 32
     for batch_start in range(0, len(sections), batch_size):
         batch = sections[batch_start : batch_start + batch_size]
         batch_rows = []
-        for section, vector in zip(batch, model.embed([section.text for section in batch], batch_size=batch_size)):
+        try:
+            raw_vectors = list(model.embed([section.text for section in batch], batch_size=batch_size))
+        except Exception:
+            active_provider = "CPUExecutionProvider (Fallback)"
+            fallback_model = TextEmbedding(model_name=EMBEDDING_MODEL, providers=["CPUExecutionProvider"])
+            raw_vectors = list(fallback_model.embed([section.text for section in batch], batch_size=16))
+
+        for section, vector in zip(batch, raw_vectors):
             vector_array = np.asarray(vector, dtype=np.float32)
             if vector_array.size != EMBEDDING_DIMENSIONS:
                 raise RuntimeError(
@@ -554,7 +577,7 @@ def create_embeddings(sections: list[Section], connection: sqlite3.Connection | 
         completed = min(batch_start + batch_size, len(sections))
         if completed % 512 == 0 or completed == len(sections):
             print(f"Embedded {completed:,}/{len(sections):,} sections.", flush=True)
-    return vectors
+    return vectors, active_provider
 
 
 def remove_missing_rows(cursor: sqlite3.Cursor, table: str, key_column: str, seen_values: set[str]) -> int:
@@ -568,6 +591,7 @@ def remove_missing_rows(cursor: sqlite3.Cursor, table: str, key_column: str, see
 
 
 def build_index(vault_path: str | None = None, db_path: str | None = None, skip_embeddings: bool = False):
+    t_start = time.perf_counter()
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
     database_file.parent.mkdir(parents=True, exist_ok=True)
@@ -578,8 +602,12 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         ensure_schema(connection)
         connection.commit()
         existing_by_id, vectors_by_hash = load_vector_cache(connection)
-        notes, sections, links, errors = collect_index_data(vault_dir)
 
+        t_scan_start = time.perf_counter()
+        notes, sections, links, errors = collect_index_data(vault_dir)
+        scan_seconds = time.perf_counter() - t_scan_start
+
+        t_cache_start = time.perf_counter()
         vectors_by_id = {}
         sections_to_embed = []
         unchanged_vectors = 0
@@ -601,9 +629,16 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                 reused_vectors += 1
             elif not skip_embeddings:
                 sections_to_embed.append(section)
+        cache_seconds = time.perf_counter() - t_cache_start
 
-        generated_vectors = create_embeddings(sections_to_embed, connection=connection) if sections_to_embed else {}
+        t_embed_start = time.perf_counter()
+        active_provider = "Skipped" if skip_embeddings else "None"
+        if sections_to_embed and not skip_embeddings:
+            generated_vectors, active_provider = create_embeddings(sections_to_embed, connection=connection)
+        else:
+            generated_vectors = {}
         vectors_by_id.update(generated_vectors)
+        embed_seconds = time.perf_counter() - t_embed_start
 
         section_rows = [
             (
@@ -622,6 +657,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         completed_at = datetime.now(timezone.utc).isoformat()
         status = "metadata-only" if skip_embeddings else "complete"
 
+        t_db_start = time.perf_counter()
         with connection:
             cursor = connection.cursor()
             cursor.executemany(
@@ -688,11 +724,13 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                 ),
             )
 
+            total_duration = time.perf_counter() - t_start
             cursor.execute(
                 """
                 INSERT INTO index_runs
-                (started_at, completed_at, vault_path, status, note_count, section_count, embedding_count, error_count)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                (started_at, completed_at, vault_path, status, note_count, section_count, embedding_count, error_count,
+                 duration_seconds, scan_seconds, embed_seconds, db_seconds, provider)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     started_at,
@@ -703,6 +741,11 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     len(sections),
                     sum(vector is not None for vector in vectors_by_id.values()),
                     len(errors),
+                    total_duration,
+                    scan_seconds,
+                    embed_seconds,
+                    time.perf_counter() - t_db_start,
+                    active_provider,
                 ),
             )
             run_id = cursor.lastrowid
@@ -711,6 +754,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     "INSERT INTO index_errors(run_id, path, stage, message) VALUES (?, ?, ?, ?)",
                     ((run_id, path, stage, message) for path, stage, message in errors),
                 )
+        db_seconds = time.perf_counter() - t_db_start
+        total_duration = time.perf_counter() - t_start
 
         print(f"Indexed {len(notes):,} notes, {len(sections):,} sections, and {len(links):,} links.")
         print(
@@ -718,6 +763,25 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             f"{len(generated_vectors):,} generated."
         )
         print(f"Removed {removed_notes:,} notes and {removed_sections:,} sections no longer in the vault.")
+        
+        # Performance timing breakdown
+        notes_per_sec = len(notes) / max(scan_seconds, 0.001)
+        links_per_sec = len(links) / max(scan_seconds, 0.001)
+        embed_rate = len(generated_vectors) / max(embed_seconds, 0.001) if generated_vectors else 0.0
+        
+        print("\n--- Performance Timing ---")
+        print(f"  Vault Scan & Parse:   {scan_seconds:6.2f}s  ({notes_per_sec:,.0f} notes/s, {links_per_sec:,.0f} links/s)")
+        print(f"  Vector Cache & Diff:  {cache_seconds:6.2f}s  ({unchanged_vectors + reused_vectors:,} cached)")
+        if generated_vectors:
+            print(f"  Embedding Generation: {embed_seconds:6.2f}s  ({len(generated_vectors):,} generated, {embed_rate:.1f} vec/s [{active_provider}])")
+        elif skip_embeddings:
+            print(f"  Embedding Generation:  skipped (metadata-only)")
+        else:
+            print(f"  Embedding Generation:   0.00s (all vectors up to date)")
+        print(f"  SQLite & FTS5 Commit: {db_seconds:6.2f}s  ({len(notes) + len(sections) + len(links):,} records written)")
+        print(f"  Total Run Duration:   {total_duration:6.2f}s")
+        print("--------------------------\n")
+        
         if errors:
             print(f"Completed with {len(errors)} parse errors. See --stats for the latest run.")
         else:
@@ -972,18 +1036,20 @@ def print_stats(vault_path: str | None = None, db_path: str | None = None):
 
     connection = sqlite3.connect(database_file)
     try:
+        ensure_schema(connection)
         cursor = connection.cursor()
         note_count = cursor.execute("SELECT COUNT(*) FROM notes").fetchone()[0]
         section_count, vector_count = cursor.execute("SELECT COUNT(*), COUNT(vector) FROM sections").fetchone()
         edge_count = cursor.execute("SELECT COUNT(*) FROM edges").fetchone()[0]
         fts_count = cursor.execute("SELECT COUNT(*) FROM sections_fts").fetchone()[0]
         title_count = cursor.execute("SELECT COUNT(*) FROM note_titles_fts").fetchone()[0]
-        latest_run = cursor.execute(
+        runs = cursor.execute(
             """
-            SELECT status, completed_at, error_count
-            FROM index_runs ORDER BY id DESC LIMIT 1
+            SELECT id, status, completed_at, note_count, section_count, embedding_count,
+                   duration_seconds, scan_seconds, embed_seconds, db_seconds, provider
+            FROM index_runs ORDER BY id DESC LIMIT 5
             """
-        ).fetchone()
+        ).fetchall()
 
         print("\n--- PKM Index Stats ---")
         print(f"Database location: {database_file}")
@@ -994,12 +1060,21 @@ def print_stats(vault_path: str | None = None, db_path: str | None = None):
         print(f"Title index rows:  {title_count:,}")
         print(f"Vector embeddings: {vector_count:,} ({EMBEDDING_MODEL})")
         print(f"Link graph edges:  {edge_count:,}")
-        if latest_run:
-            print(
-                f"Latest run:        {latest_run[0]} at {latest_run[1]} "
-                f"({latest_run[2]} errors)"
-            )
-        print("-----------------------\n")
+        print(f"Hardware provider: {get_embedding_providers()[0] if HAS_FASTEMBED else 'fastembed unavailable'}")
+        
+        if runs:
+            print("\n--- Recent Indexing Runs & Performance History ---")
+            print(f"{'Run ID':<7} | {'Status':<13} | {'Completed At':<20} | {'Duration':<9} | {'Scan/Parse':<10} | {'Embed Time':<10} | {'DB Commit':<10}")
+            print("-" * 92)
+            for run in runs:
+                run_id, status, completed_at, n_cnt, s_cnt, e_cnt, dur, scan_t, emb_t, db_t, prov = run
+                dur_str = f"{dur:.2f}s" if dur is not None else "N/A"
+                scan_str = f"{scan_t:.2f}s" if scan_t is not None else "N/A"
+                emb_str = f"{emb_t:.2f}s" if emb_t is not None else "N/A"
+                db_str = f"{db_t:.2f}s" if db_t is not None else "N/A"
+                ts = completed_at[:19].replace("T", " ") if completed_at else "N/A"
+                print(f"{run_id:<7} | {status:<13} | {ts:<20} | {dur_str:<9} | {scan_str:<10} | {emb_str:<10} | {db_str:<10}")
+        print("--------------------------------------------------\n")
     finally:
         connection.close()
 
@@ -1014,7 +1089,7 @@ def main():
     parser.add_argument("--search", type=str, default=None, help="Run hybrid search across indexed sections")
     parser.add_argument("--check-duplicate", type=str, default=None, help="Show likely existing notes before creation")
     parser.add_argument("--links", type=str, default=None, help="Show inbound and outbound links for a note")
-    parser.add_argument("--stats", action="store_true", help="Display database and latest-run stats")
+    parser.add_argument("--stats", "--perf", action="store_true", help="Display database and indexing performance benchmarks")
     parser.add_argument("--limit", type=int, default=10, help="Maximum search results")
     args = parser.parse_args()
 

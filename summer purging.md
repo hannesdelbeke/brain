@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - planning
 - home
+- ventilation
+- house
+- energy efficiency
+- mvhr
 ---
 
 Open windows at night to let the cool air in and reduce indoor temperatures.  

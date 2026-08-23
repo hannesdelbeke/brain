@@ -7,6 +7,12 @@ sentiment-label:
 tags:
 - technical
 - planning
+- google docs
+- google keep
+- sync
+- python
+- obsidian
+- repo
 ---
 
 [google docs](https://docs.google.com/) & google sheets now supports [google keep](https://www.google.com/keep/)

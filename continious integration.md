@@ -8,6 +8,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- github
+- ci
 ---
 
 - local [[GitHub]] CI https://github.com/basecamp/gh-signoff

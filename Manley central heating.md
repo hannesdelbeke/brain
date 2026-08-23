@@ -8,6 +8,9 @@ tags:
 - technical
 - planning
 - home
+- central heating
+- heatmiser
+- neostat
 ---
 
 [[central heating]]

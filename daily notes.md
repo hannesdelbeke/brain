@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - planning
+- note_taking
+- productivity
+- organization
 ---
 
 Daily [[note taking|notes]] are meant for status reports, updates, or emotional [[journaling]].

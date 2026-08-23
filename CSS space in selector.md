@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- css
 ---
 
 Consider the two scenarios `div > span { }` vs. `div span { }`

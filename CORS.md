@@ -7,6 +7,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- web
+- cors
+- security
 ---
 
 ## CORS

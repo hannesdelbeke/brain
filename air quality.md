@@ -8,6 +8,8 @@ tags:
 - technical
 - health
 - home
+- environment
+- air_quality
 ---
 
 To get good air quality, you should monitor 

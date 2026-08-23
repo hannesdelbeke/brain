@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- ai
+- machine learning
+- glm
+- opencode zen
 ---
 
 [[OpenCode]] Zen

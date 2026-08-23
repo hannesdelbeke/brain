@@ -1,2 +1,5 @@
-
+---
+links:
+  - "[[boardgame]]"
+---
 [[party game]]

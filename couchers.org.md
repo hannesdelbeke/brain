@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - travel
+- personal
+- accommodation
+- couchsurfing
 ---
 
 like [[couchsurfing.com]]

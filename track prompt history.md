@@ -24,6 +24,8 @@ Prompt: "compare thinkpad x1 yoga gen 7 vs gen 8 used pricing"
 **2. Callout Blocks**
 Placing the prompt in a quote block above a collapsible agent response per [[agent answers in callout]]. Good for short Q&A, but adds visual friction to long documents.
 
+I did the opposite [[model weights vs vector embeddings vs map-reduce|here]], the prompt in a callout. 
+
 **3. External Prompt Log**
 A dedicated JSONL log or daily prompt history file that records every interaction timestamp, model name, and prompt string.
 

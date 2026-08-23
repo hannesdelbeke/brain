@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- web development
+- html
+- css
 ---
 
 An element takes up space (width & height)

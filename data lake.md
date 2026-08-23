@@ -1,15 +1,18 @@
 ---
+aliases:
+- datalake
+- data lakes
+- datalakes
 sentiment:
-  - 5
+- 5
 sentiment-hash: fe93dd8e
 sentiment-label:
-  - factual
+- factual
 tags:
-  - technical
-aliases:
-  - datalake
-  - data lakes
-  - datalakes
+- technical
+- data lake
+- big data
+- it
 ---
 
 A data lake is a [[centralized]] [[repository]] that stores [[data]] in its raw, original format, both structured and unstructured

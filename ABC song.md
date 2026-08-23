@@ -10,6 +10,9 @@ tags:
 - technical
 - creative
 - hobby
+- sheet music
+- piano
+- educational
 ---
 
 https://www.kidsplaymusic.com/wp-content/uploads/2024/05/Alphabet-Song-Piano-Sheet-Music.pdf

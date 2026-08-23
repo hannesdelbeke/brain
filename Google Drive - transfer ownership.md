@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- google drive
+- file management
+- ownership transfer
 ---
 
 To transfer ownership of a file in [[Google Drive]]. This can be used to free up storage space.

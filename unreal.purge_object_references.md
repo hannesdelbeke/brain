@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- python
+- unreal
+- mesh
+- asset
 ---
 
 ```python

@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- heat
+- biology
+- penguins
 ---
 
 A counterflow mechanism that enables fluids at different temperatures flowing in channels in opposite directions to exchange their heat content without mixing. 

@@ -7,6 +7,11 @@ sentiment-label:
 tags:
 - technical
 - hobby
+- manga
+- reader
+- desktop
+- mobile
+- github
 ---
 
 desktop and mobile [[manga reader]]

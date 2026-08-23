@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- vector graphics
+- svg
+- adobe express
+- optimization
 ---
 
 [[vector image|vectorize]] your images

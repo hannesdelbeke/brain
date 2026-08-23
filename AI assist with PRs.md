@@ -7,6 +7,11 @@ sentiment-label:
 tags:
 - technical
 - work
+- llm
+- github
+- copilot
+- coding
+- ai
 ---
 
 There now are [[large language model|LLMs]] (e.g. [[Grok]]) that can integrate with a [[Github]] project.

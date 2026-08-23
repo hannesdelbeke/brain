@@ -1,1 +1,5 @@
+---
+links:
+  - "[[boardgame]]"
+---
 [[engine builder]]

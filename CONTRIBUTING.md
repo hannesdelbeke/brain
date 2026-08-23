@@ -6,6 +6,11 @@ sentiment-label:
 - factual
 tags:
 - technical
+- documentation
+- github
+- obsidian
+- workflow
+- wiki
 ---
 
 You can edit any page on GitHub or your favorite text program, but for the best preview use [Obsidian](https://obsidian.md/)

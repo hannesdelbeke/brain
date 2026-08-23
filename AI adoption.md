@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - work
+- ai adoption
+- sql
+- python
+- coding
 ---
 
 this article talks about AI adoption in companies.

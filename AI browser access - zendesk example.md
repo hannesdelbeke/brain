@@ -8,6 +8,12 @@ tags:
 - technical
 - planning
 - work
+- ai
+- browser
+- zendesk
+- automation
+- mcp
+- agent skill
 ---
 
 ### Use case example
