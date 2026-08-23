@@ -1,29 +1,43 @@
-autonomous agent tool use and memory
+---
+tags:
+  - ai
+  - tools
+  - architecture
+  - agents
+---
+By default, AI agents don't have long-term memory. Asked to build a chart, they'll write it from scratch rather than searching past sessions.
 
-by default, ai agents operate fast and confidently. if asked to build a chart, they will usually write it from scratch rather than searching past sessions.
+Agents will autonomously reach for a session search tool when:
+- **Debugging:** code fails and the agent searches past sessions for that specific error
+- **Missing context:** you reference "a chart like the sleep one from last week" and it needs to look that up
+- **Explicit rules:** `AGENTS.md` includes "always search past sessions when building [[Mermaid vs DataviewJS for Obsidian Charts|Dataview charts]]"
 
-they will autonomously use a session search tool when:
-- debugging: if code fails, the agent searches past sessions to see if it solved that specific error before.
-- missing context: if you ask for "a chart like the sleep one from last week", it realizes it lacks context and searches for it.
-- explicit rules: if `AGENTS.md` includes a rule to "always search past sessions before writing new scripts".
+The interesting question isn't whether agents *can* search — it's whether making them *always* search is worth the cost.
 
-## time balance of manual tool rules
-enforcing an "always search" rule via an agent tool is generally a net time loss.
+## The latency trap
 
-cost: every request incurs 10-30 seconds of latency to run the search, read results, and evaluate them. for simple or novel tasks, this burns tokens and time for no return.
-benefit: when tasks overlap with past work, the agent skips 10+ minutes of trial-and-error by reusing proven code.
+Enforcing "always search" via a tool rule is generally a net time loss.
 
-balance: a blanket rule wastes too much time on basic tasks. a better approach is targeted rules (e.g. "always search past sessions when building dataview charts") or relying on the agent's natural instinct to search only when it hits a wall.
+**Cost:** 10–30s per request — Python script cold-boots, agent spends a model turn deciding to call it, reads results, evaluates relevance. For simple or novel tasks, this burns tokens for zero return.
+**Benefit:** when tasks overlap past work, the agent skips 10+ minutes of trial-and-error by reusing proven code.
 
-## optimizing search to <1 second
-the 10-30s delay comes from the python script cold-booting and the agent spending a turn deciding to call the tool. to drop this under 1 second:
-1. mcp server: keeps the sqlite db and embedding models hot in ram, dropping execution time to <50ms.
-2. pre-prompt hook: instead of forcing the agent to decide to use a tool, an antigravity hook intercepts the user's prompt, hits the mcp server instantly, and injects the top past session into the context before the agent even sees it. zero round-trips.
+Blanket rules waste too much on basic tasks. Targeted rules or relying on the agent's heuristic to search only when stuck work better, but still carry the cold-boot penalty when triggered.
 
-## time balance of MCP + hooks
-if the search is optimized via mcp + hooks, the math flips entirely:
+## Dropping below the decision threshold
 
-cost: near zero. injecting a past snippet adds almost no latency (<50ms) and minimal token overhead.
-benefit: the agent passively has your entire history as context without needing to "decide" to search.
+The 10–30s cost has two components — script cold-boot and agent decision latency. Both are eliminable.
 
-balance: when search is this fast, an "always search" background hook becomes a massive net win. the agent will seamlessly reuse past code styles and solutions on every prompt without the 30-second penalty.
+**MCP server:** keep the SQLite index and embedding model hot in RAM, dropping query time to <50ms. Same architecture as [[pkm metadata indexer]] applied to session logs — see [[cross-agent session indexing architecture]] for schema and pipeline.
+
+**Pre-prompt hook:** skip the agent deciding to search entirely. An [[how to inspect antigravity cli sessions|Antigravity]] hook intercepts the user's prompt, queries the warm MCP server, and injects the top matching past session into context before the agent starts reasoning. Zero round-trips.
+
+This follows the [[Obsidian CLI + Agent Context at Scale|query, don't ingest]] principle — don't dump history into context, surface only what's relevant to the current prompt.
+
+## When search is free, always-search wins
+
+With MCP + hooks, the math flips:
+
+**Cost:** near zero. <50ms latency, a few hundred tokens for the top match.
+**Benefit:** the agent passively has relevant history on every prompt — reusing past code styles, workarounds, and solutions without deciding to search.
+
+The 30-second penalty that made blanket rules wasteful disappears. The agent effectively gains long-term memory across sessions, approaching what dedicated systems like Codex's `memories_1.sqlite` or [[how hermes agent self improves|Hermes' three-tier memory]] provide, but grounded in actual execution history rather than curated summaries.
