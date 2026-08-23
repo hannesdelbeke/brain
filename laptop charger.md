@@ -7,6 +7,5 @@ sentiment-label:
 tags:
 - technical
 ---
-
-[[2026-08-12 laptop]]s with [[USB-C Power Delivery]] can instead of a charger, charge over USB-C
+laptops with [[USB-C Power Delivery]] can instead of a charger, charge over USB-C
 [[electricity]]
