@@ -19,6 +19,8 @@ in order of fastest
 
 **[[thunderbolt 3 vs 4|Thunderbolt]] 3/4** — 40 Gbps theoretical, ~2–3 GB/s real. Fastest common option for direct device-to-device or external SSD. TB5 doubles to 80 Gbps (~5–6 GB/s). Bottleneck is usually the SSD, not the bus.
 
+You need a Thunderbolt-certified cable for full speed — a random USB-C cable won't do it. They look identical but many USB-C cables only carry USB 2.0 (480 Mbps). Look for the ⚡ lightning bolt logo. Passive TB cables work up to ~0.8m, active cables for longer. TB3 had both 20 and 40 Gbps cables; TB4 mandates 40 Gbps on all cables.
+
 **USB 3.2 Gen 2** — 10 Gbps theoretical, ~800–1000 MB/s real. Most external drives ship with this. Gen 2x2 (20 Gbps) exists but rare. USB 3.0 (Gen 1) caps at 5 Gbps, ~350–400 MB/s real.
 
 **Ethernet** — common tiers for local file transfer:
