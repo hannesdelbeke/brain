@@ -5,6 +5,12 @@ tags:
 ---
 Real-world [[file transfer]] speeds for common interfaces. Theoretical max is rarely hit — protocol overhead, drive speed, and signal quality all eat into it.
 
+in order of fastest
+- Thunderbolt 4
+- USB 3.2 Gen 2
+- 2.5 GbE
+- 1 GbE
+- WiFi 6
 ## Wired
 
 **[[thunderbolt 3 vs 4|Thunderbolt]] 3/4** — 40 Gbps theoretical, ~2–3 GB/s real. Fastest common option for direct device-to-device or external SSD. TB5 doubles to 80 Gbps (~5–6 GB/s). Bottleneck is usually the SSD, not the bus.
@@ -15,7 +21,9 @@ Real-world [[file transfer]] speeds for common interfaces. Theoretical max is ra
 
 ## Wireless
 
-**WiFi 6 (ax)** — 1.2–2.4 Gbps theoretical on 5 GHz, ~100–200 MB/s real depending on range and interference. WiFi 6E/7 push theoretical higher but real-world gains depend heavily on environment. Never as reliable as wired for sustained transfers.
+**WiFi 7 (be)** — 46 Gbps theoretical, ~3–5 Gbps real at close range (~375–625 MB/s). Multi-Link Operation (MLO) bonds 2.4/5/6 GHz bands simultaneously for better stability. 320 MHz channels double WiFi 6E's width. Degrades fast through walls — at range expect closer to WiFi 6 speeds. Needs WiFi 7 on both router and client.
+
+**WiFi 6 (ax)** — 1.2–2.4 Gbps theoretical on 5 GHz, ~100–200 MB/s real depending on range and interference. Never as reliable as wired for sustained transfers.
 
 **WiFi 5 (ac)** — ~50–100 MB/s real in good conditions. Drops fast through walls.
 
@@ -25,6 +33,7 @@ For moving a 100 GB folder:
 
 - Thunderbolt 4: ~40–50s
 - USB 3.2 Gen 2: ~1.5–2 min
+- WiFi 7 (close range): ~2.5–4.5 min
 - 2.5 GbE: ~6 min
 - 1 GbE: ~15 min
 - WiFi 6 (good signal): ~8–15 min
