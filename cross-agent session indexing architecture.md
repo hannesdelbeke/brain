@@ -88,6 +88,8 @@ Apply top-500 candidate pre-filtering before RRF to avoid O(N log N) sorting bot
 
 **Storage scaling:** The [[pkm metadata indexer]] is ~114 MB for 6,599 notes with 17,567 chunks. Session indexing accumulates faster — a heavy user generating 50–100 sessions/week across three agents could reach 100k+ turns within months. Per [[agentic tooling upgrades over grep]] scaling milestones: FP16 matrix compression at >100k chunks, FAISS/sqlite-vec ANN at >500k if matmul exceeds 15ms.
 
-**MCP integration:** Natural extension is exposing the index as an MCP server (`mcp-session-search`) so agents can query past sessions mid-conversation, similar to the MCP primitives in [[multi-repo agentic search architecture]].
+**Agent Integration (MCP vs Skill):** The index must be exposed so agents can query past sessions mid-conversation (similar to the primitives in [[multi-repo agentic search architecture]]). There are two primary paths to build this:
+- **As a Skill:** Best for prototyping. A simple Python CLI script (e.g. `python skills/session-indexer/search.py "query"`) paired with a `SKILL.md` instruction file. It's much simpler to build initially as it avoids the MCP protocol overhead, though it suffers from slower "cold boot" times since models must be loaded into memory on every single search execution.
+- **As an MCP Server (`mcp-session-search`):** Best for performance. The database connection and embedding models stay loaded in background memory for instant (<50ms) replies, and it provides a clean, native tool directly to the agent.
 
 **Implementation phasing:** Start with Antigravity (most structured JSONL, clearest step types). Add Claude Code second (requires dedup handling). Codex last (multiple SQLite DBs + event stream joins).
