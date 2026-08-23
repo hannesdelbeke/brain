@@ -50,10 +50,12 @@ Instant lookup of inbound backlinks and outbound connections:
 python public/skills/pkm-metadata-indexer/index_pkm_meta.py --links "Obsidian"
 ```
 
-### 5. Index Stats
-View database size, note count, indexed sections, and graph edge counts:
+### 5. Index Stats & Performance Profiling
+View database size, note count, indexed sections, graph edge counts, and run execution performance history:
 ```bash
 python public/skills/pkm-metadata-indexer/index_pkm_meta.py --stats
+# Or view performance benchmarks directly:
+python public/skills/pkm-metadata-indexer/index_pkm_meta.py --perf
 ```
 
 ## What it extracts

@@ -1,1 +1,5 @@
+---
+links:
+  - "[[Obsidian]]"
+---
 [[Obsidian plugin]]

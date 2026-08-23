@@ -11,6 +11,8 @@ tags:
 - planning
 - home
 - health
+- diy
+- air filter
 ---
 
 uses a [[table fan]] and some [[air filter]]s

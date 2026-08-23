@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - work
+- python
+- pip
+- install
+- stubs
 ---
 
 stubs are `pyi` files, to enable code completion

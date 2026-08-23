@@ -13,6 +13,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- ai
+- llm
+- technology
 ---
 
 https://skillwiki.ai/

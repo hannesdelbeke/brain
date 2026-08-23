@@ -8,6 +8,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- programming
+- documentation
+- contract
+- cognitive
 ---
 
 a contract defines what to expect. 

@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - medical
+- biochemistry
+- amino_acid
+- chemical
 ---
 
 Cysteine is a nonpolar [[amino acid]] containing a thiol (-SH) functional group.

@@ -7,6 +7,16 @@ sentiment-label:
 tags:
 - medical
 - health
+- biochemistry
+- bilirubin
+- hemoglobin
+- oxygen
+- liver
+- gallbladder
+- intestine
+- bowel
+- urine
+- faeces
 ---
 
 Bilirubin is produced by the breakdown of [[hemoglobin]] (which

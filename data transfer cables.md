@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- cable
+- data transfer
+- hardware
+- electronics
 ---
 
 | Cable Type      | Data Transfer? | Typical Use                  |

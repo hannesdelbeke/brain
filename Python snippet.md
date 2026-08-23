@@ -7,6 +7,8 @@ sentiment-label:
 tags:
 - technical
 - work
+- python
+- snippet
 ---
 
 often used for sample [[Python]] code

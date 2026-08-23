@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- gaming
+- web3
+- companies
+- industry
 ---
 
 15 Traditional Gaming Companies Building in [[Web3]]

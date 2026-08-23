@@ -1,16 +1,17 @@
 ---
 aliases:
-- local server
-- self hosted server
-- selfhosted
+  - local server
+  - self hosted server
+  - selfhosted
+  - home server
 sentiment:
-- 5
+  - 5
 sentiment-hash: 15de20e4
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
-- work
+  - technical
+  - work
 ---
 
 [[Web hosting]]

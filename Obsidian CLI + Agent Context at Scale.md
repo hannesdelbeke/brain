@@ -10,8 +10,9 @@ tags:
 ---
 
 ## The official Obsidian CLI (v1.12, 2026)
-Obsidian shipped an **official CLI** in v1.12 (early access 2026-02-10, GA in v1.12.4 2026-02-27, ~100+ commands). It is **not** a file-scraper — it connects to a **running Obsidian instance over IPC**, so it reads the app's live link graph and metadata cache, not just raw text.
-### Relevant commands (all support `format=json`)
+Obsidian shipped an **official [[obsidian CLI]]** in v1.12 (early access 2026-02-10, GA in v1.12.4 2026-02-27, ~100+ commands). It is **not** a file-scraper — it connects to a **running Obsidian instance over IPC**, so it reads the app's live link graph and metadata cache, not just raw text.
+### Relevant commands 
+(all support `format=json`)
 - `obsidian backlinks file="…"` — linked backlinks (`counts`, `total`, `path=` too)
 - `obsidian links file="…"` — outgoing links
 - `obsidian search query="…"` — full-text; `path=` scoping, `limit=`, `matches` for context; JSON/TSV/CSV

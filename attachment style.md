@@ -1,1 +1,5 @@
+---
+links:
+  - "[[psychology]]"
+---
 - [[anxious attachment]]

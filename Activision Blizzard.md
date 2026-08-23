@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - work
+- business
+- gaming
+- company
 ---
 
 Activision Blizzard, Inc. business units

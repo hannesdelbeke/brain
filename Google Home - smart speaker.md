@@ -10,6 +10,10 @@ sentiment-label:
 tags:
 - technical
 - home
+- google home
+- audio
+- chromecast
+- speaker group
 ---
 
 [[Google Home charger]]

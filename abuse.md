@@ -1,13 +1,18 @@
 ---
+energy: 4
 sentiment:
-- 5
+- 3
 sentiment-hash: 0dda0bd7
 sentiment-label:
-- factual
+- negative
 tags:
 - technical
 - relationship
 - social
+- abuse
+- legal
+- human rights
+- definition
 ---
 
 Abuse is when someone causes us harm or distress. 

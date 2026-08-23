@@ -10,6 +10,10 @@ tags:
 - technical
 - planning
 - home
+- hvac
+- heat_pump
+- installation
+- energy_efficiency
 ---
 
 most air to air heatpumps are reversible [[air conditioning]] systems

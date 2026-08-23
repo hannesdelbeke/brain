@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - work
+- python
+- perforce
+- api
 ---
 
 a pure [[Python]] [[Perforce]] [[API]]

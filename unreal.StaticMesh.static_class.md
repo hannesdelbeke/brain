@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- python
+- unreal
+- class
 ---
 
 ```python

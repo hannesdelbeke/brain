@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - work
+- maya
+- python
+- software development
+- r&d
 ---
 
 When you add a menu item to a default Maya menu (e.g. `Windows`, `Mesh`, `File`, ...) on startup, it overwrites the whole menu.

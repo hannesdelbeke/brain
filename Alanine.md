@@ -10,6 +10,11 @@ sentiment-label:
 tags:
 - technical
 - health
+- chemistry
+- amino acid
+- l-alanine
+- beta-alanine
+- stereochemistry
 ---
 
 L-alanine is different than [[beta-alanine]] (β-alanine)

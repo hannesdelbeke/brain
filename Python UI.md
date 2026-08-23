@@ -7,6 +7,12 @@ sentiment-label:
 tags:
 - technical
 - work
+- python
+- ui
+- qt
+- pyside
+- dearpygui
+- kivy
 ---
 
 - [[Qt]] PyQt & PySide

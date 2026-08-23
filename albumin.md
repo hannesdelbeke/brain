@@ -7,6 +7,11 @@ sentiment-label:
 tags:
 - medical
 - health
+- biology
+- liver
+- albumin
+- protein
+- transport
 ---
 
 albumin is the main protein produced by the liver. 

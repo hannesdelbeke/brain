@@ -1,14 +1,19 @@
 ---
+energy: 7
 sentiment:
-- 5
+- 6
 sentiment-hash: 5b6d77fa
 sentiment-label:
-- factual
+- optimistic
 tags:
 - technical
 - planning
 - self-reflection
 - work
+- productivity
+- obsidian
+- workflow
+- knowledge
 ---
 
 Often a [[single source of truth]] is seen as the perfect case.

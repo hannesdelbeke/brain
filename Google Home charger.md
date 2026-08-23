@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - home
+- google home
+- charger
+- specs
+- voltage
 ---
 
 # Google Home charger

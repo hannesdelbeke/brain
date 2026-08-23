@@ -9,6 +9,9 @@ sentiment-label:
 tags:
 - technical
 - home
+- acoustics
+- sound treatment
+- article
 ---
 
 [article](https://www.9wood.com/blog/what-are-the-types-of-suspended-acoustic-ceilings/)with good examples

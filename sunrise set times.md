@@ -6,6 +6,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- sun
+- calendar
 ---
 
 https://sunsetsunrisetime.com/sun/manchester_(united_kingdom)

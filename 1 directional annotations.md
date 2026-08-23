@@ -1,11 +1,19 @@
 ---
+energy: 7
 sentiment:
-- 5
+- 4
+- 6
 sentiment-hash: edc0d37a
 sentiment-label:
-- factual
+- frustrated
+- hopeful
 tags:
 - technical
+- slack
+- obsidian
+- plugin
+- workflow
+- productivity
 ---
 
 ### Scenario

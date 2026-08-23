@@ -7,6 +7,8 @@ sentiment-label:
 tags:
 - medical
 - health
+- exercise
+- aerobic
 ---
 
 2 types

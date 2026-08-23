@@ -7,6 +7,8 @@ sentiment-label:
 tags:
 - technical
 - home
+- instructions
+- bluetooth
 ---
 
 - hold the 1 2 3 button on the bottom for 3 seconds untill it blinks

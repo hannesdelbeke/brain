@@ -10,6 +10,9 @@ sentiment-label:
 tags:
 - technical
 - work
+- python
+- env
+- sys-path
 ---
 
 Usually [[site-packages]] adds its paths on startup to the sys path

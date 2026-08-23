@@ -8,6 +8,9 @@ tags:
 - technical
 - outdoors
 - home
+- gardening
+- soil
+- agriculture
 ---
 
 Adding gypsum to clay soil can improve [[drainage]] in the [[garden]]

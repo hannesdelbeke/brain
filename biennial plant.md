@@ -10,6 +10,11 @@ tags:
 - technical
 - hobby
 - outdoors
+- botany
+- plant
+- life cycle
+- annual
+- perennial
 ---
 
 These [[plant|plants]] have a two-year life cycle

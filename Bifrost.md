@@ -8,6 +8,15 @@ tags:
 - technical
 - work
 - hobby
+- software
+- node editor
+- vfx
+- arnold
+- maya
+- autodesk
+- 3ds max
+- bifrost
+- tyflow
 ---
 
 Bifrost is a [[node editor]] that lets you build reusable graphs for procedural effects (VFX)

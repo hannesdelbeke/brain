@@ -1,15 +1,17 @@
 ---
 aliases:
-  - AI agents
-  - agent
-  - agents
+- AI agents
+- agent
+- agents
 sentiment:
-  - 5
+- 5
 sentiment-hash: 0a47ba5f
 sentiment-label:
-  - factual
+- factual
 tags:
-  - technical
+- technical
+- ai
+- label
 ---
 
 [[Artificial intelligence|AI]]

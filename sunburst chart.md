@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- chart
+- data visualization
+- categorize
+- icicle chart
 ---
 
 A circular [[chart]] that visualizes [[categorize|categories]].

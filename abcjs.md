@@ -7,6 +7,10 @@ sentiment-label:
 tags:
 - technical
 - hobby
+- music
+- api
+- javascript
+- abc notation
 ---
 
 https://paulrosen.github.io/abcjs/

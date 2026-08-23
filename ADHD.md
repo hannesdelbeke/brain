@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - medical
 - health
+- mental health
+- neurodevelopmental
+- adhd
 ---
 
 [[attention]] deficit [[hyperactive]] disorder

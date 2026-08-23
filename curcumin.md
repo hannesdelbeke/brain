@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - medical
 - health
+- supplement
+- curcumin
+- turmeric
 ---
 
 PROS

@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - home
+- drainage
+- plumbing
+- driveway
 ---
 
 [[drainage]] pipes, e.g. for at driveway

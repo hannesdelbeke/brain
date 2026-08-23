@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- python
+- unreal
+- object
 ---
 
 inherits from [[unreal.Object]]

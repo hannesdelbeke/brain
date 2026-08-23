@@ -8,6 +8,9 @@ sentiment-label:
 tags:
 - technical
 - home
+- energy
+- heat pump
+- uk
 ---
 
 - most heat pumps in the UK are air to water.

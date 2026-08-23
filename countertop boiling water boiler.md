@@ -9,6 +9,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- home
+- boiler
+- central heating
 ---
 
 don't confuse with a [[boiler]] used in [[central heating]]

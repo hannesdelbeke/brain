@@ -6,6 +6,11 @@ sentiment-label:
 - factual
 tags:
 - technical
+- informational
+- traffic
+- off-peak
+- restaurant
+- grid
 ---
 
 during non popular times.

@@ -6,6 +6,8 @@ sentiment-label:
 - factual
 tags:
 - technical
+- chemistry
+- offgassing
 ---
 
 airborne release of a chemical, a chemical in vapor form. 

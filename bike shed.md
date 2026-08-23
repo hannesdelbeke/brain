@@ -8,6 +8,12 @@ tags:
 - planning
 - home
 - outdoors
+- technical
+- storage
+- bicycle
+- bike
+- rain
+- protection
 ---
 
 [[storage]] to protect [[bicycle|bike]] from [[rain]]

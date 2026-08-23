@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - work
+- adobe
+- community
+- documentation
 ---
 
 [[adobe]] cc extensibilit directory

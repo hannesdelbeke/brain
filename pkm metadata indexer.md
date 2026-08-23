@@ -3,3 +3,4 @@ hybrid search (FTS5 + neural vector embeddings), link graph, and frontmatter ind
 - [[SKILL|Skill Documentation]]
 - [[index_pkm_meta.py]]
 - [[search_vault.py]]
+- [[PKM indexer performance log]]

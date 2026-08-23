@@ -7,6 +7,9 @@ sentiment-label:
 tags:
 - technical
 - planning
+- gpu
+- programming language
+- cuda
 ---
 
 learn cuda https://github.com/srush/GPU-Puzzles

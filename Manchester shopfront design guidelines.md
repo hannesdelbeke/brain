@@ -6,6 +6,9 @@ sentiment-label:
 - factual
 tags:
 - technical
+- shopfront
+- design
+- guide
 ---
 
 see 

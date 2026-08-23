@@ -7,6 +7,12 @@ sentiment-label:
 tags:
 - technical
 - hobby
+- hardiness
+- usda
+- zone
+- plant
+- united kingdom
+- city
 ---
 
 a [[hardiness ratings]] of H4

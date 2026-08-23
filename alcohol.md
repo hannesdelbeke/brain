@@ -1,12 +1,19 @@
 ---
 sentiment:
-- 5
+- 4
+- 6
 sentiment-hash: 08524b14
 sentiment-label:
-- factual
+- negative
+- positive
 tags:
 - medical
 - health
+- alcohol
+- cons
+- pros
+- public health
+- nutrition
 ---
 
 drinking alcohol has more cons than pros, don't start or limit intake.

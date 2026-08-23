@@ -8,6 +8,9 @@ tags:
 - technical
 - home
 - hobby
+- cooking
+- food
+- kitchen
 ---
 
 an air fryer is a small convection (fan) oven. 

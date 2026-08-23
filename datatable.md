@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- comparison
+- spreadsheets
+- tool
+- metaphor
 ---
 
 like a little brother of [[spreadsheets]]

@@ -9,6 +9,11 @@ sentiment-label:
 - factual
 tags:
 - technical
+- android
+- windows
+- usb debugging
+- scrcpy
+- phone
 ---
 
 https://github.com/Genymobile/scrcpy

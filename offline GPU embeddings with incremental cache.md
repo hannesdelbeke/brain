@@ -150,5 +150,6 @@ Tested on [[razor blade 15 rz09-02705w76 2018|Razer Blade 15]]:
 
 ## References
 - [[token efficient PKM analysis architecture]]
+- [[PKM indexer performance log]]
 - [[2026-08-17 PKM review]]
 - [[what AI models can razor blade run]]

@@ -6,6 +6,10 @@ sentiment-label:
 - factual
 tags:
 - technical
+- authentication
+- okta
+- 2fa
+- mobile
 ---
 
 Okta is a [[2 factor authentication|2FA]] service that confirms all logins on your mobile device

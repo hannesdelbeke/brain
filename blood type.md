@@ -1,1 +1,5 @@
+---
+links:
+  - "[[biology]]"
+---
 [[blood]]

@@ -1,6 +1,8 @@
 ---
 aliases:
   - ICP
+links:
+  - "[[finance]]"
 ---
 
 [[marketing]]
