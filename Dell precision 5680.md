@@ -24,7 +24,6 @@ Usually a restart fixes it.
 
 dell optimizer sets [[fan]] speed
 
-[[2026-08-12 laptop]]
 2 x microphone
 [[infrared camera]] ([[Windows Hello]])
 camera
