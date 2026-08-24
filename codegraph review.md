@@ -43,10 +43,9 @@ CodeGraph is a 100% local code intelligence engine and MCP server designed to el
 - **Single-Tool MCP Steering:** CodeGraph measured that exposing one comprehensive tool (`codegraph_explore`) resulted in 88% fewer tool calls and prevented agents from picking the wrong narrow tool or spawning wasteful exploratory sub-agents.
 - **Explicit Staleness Signaling:** Injecting an in-band ⚠️ banner when a file edit is pending inside the debounce window prevents agent hallucinations between save and re-index.
 - **Framework & Route Awareness:** Emitting synthetic route nodes for web handlers and cross-language bridges is a clean pattern for unifying multi-language codebases.
-- **Tree-Sitter for Code Snippets in PKM:** As noted in [[2026-08-22 Groq review pass on advanced PKM indexing plan]], adopting tree-sitter tokenization for code fences inside Markdown notes would fix FTS5 syntax splitting on operators (`=>`, `::`, `<>`).
+- **Tree-Sitter for Code Snippets in PKM:** Adopting tree-sitter tokenization for code fences inside Markdown notes would fix FTS5 syntax splitting on operators (`=>`, `::`, `<>`).
 
 ## References
 - [[pkm metadata indexer]]
 - [[agentic tooling upgrades over grep]]
-- [[2026-08-22 Groq review pass on advanced PKM indexing plan]]
 - [[PKM indexer performance log]]
