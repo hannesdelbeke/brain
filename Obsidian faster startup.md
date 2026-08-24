@@ -18,5 +18,6 @@ I increased startup from 2.2 sec to 0.3 sec by disabling and delaying plugins
 - use [[obsidian-plugin-groups]]
 ## other
 No noticeable impact. [[always set process priority to high]]
+- [[Obsidian Windows Defender exclusion]]: exclude vault folder and process from real-time antivirus scans to eliminate indexing I/O latency
 
 [[Obsidian]]
