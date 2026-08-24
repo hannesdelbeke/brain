@@ -96,6 +96,5 @@ Run map-reduce only when date or project filtering plus targeted section retriev
 - [[cross-agent session indexing architecture]]
 - [[pkm metadata indexer]]
 - [[PKM indexer performance log]]
-- [[2026-08-22 Groq review pass on advanced PKM indexing plan]]
 - [[vault hybrid search]]
 - [[multi-repo agentic search architecture]]
