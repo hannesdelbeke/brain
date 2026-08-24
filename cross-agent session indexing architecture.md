@@ -1,4 +1,8 @@
 ---
+aliases:
+  - semantic search on pkm session data
+  - cross-agent session indexing architecture
+  - session indexing architecture
 tags:
   - ai
   - tools
