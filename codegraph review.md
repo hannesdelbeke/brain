@@ -15,10 +15,15 @@ Review of [colbymchenry/codegraph](https://github.com/colbymchenry/codegraph)—
 CodeGraph is a 100% local code intelligence engine and MCP server designed to eliminate agent discovery loops (ripgrep/globbing/reading one file at a time).
 
 - **Native Rust Kernel & Tree-Sitter:** Compiles tree-sitter grammars directly into a native Rust binary, extracting AST nodes (classes, methods, functions) and edges (calls, imports, inheritance) across 20 languages.
+	- *ELI5:* Instead of reading code like plain text, a high-speed engine breaks your code down like LEGO bricks so the AI instantly knows which piece snaps into what.
 - **SQLite + FTS5 Storage:** Persists symbols, relationships, and file metadata in `.codegraph/codegraph.db`.
+	- *ELI5:* Saves that entire LEGO blueprint into a local, searchable phonebook on your SSD so looking up any function takes less than a millisecond.
 - **Cross-Boundary & Framework Resolution:** Resolves dynamic web routes (Django, FastAPI, Express, Spring) and mixed-language native bridges (Swift/Obj-C, React Native native modules).
+	- *ELI5:* Connects the dots when a website URL triggers backend code, or when JavaScript talks to native iPhone/Android code without losing the trail.
 - **Single-Tool MCP Design (`codegraph_explore`):** Rather than giving agents a fragmented menu of granular tools, it exposes one primary entry point that returns verbatim source, call paths, and blast radius in a single payload.
+	- *ELI5:* Gives the AI one all-in-one button that hands over the exact code, who calls it, and what might break in one shot, rather than making the AI ask 20 separate questions.
 - **Live Auto-Sync & Staleness Signaling:** Uses native OS file watchers (`ReadDirectoryChangesW`/`inotify`/`FSEvents`) with debounced auto-sync. During the debounce window, it injects a ⚠️ staleness banner so agents know to read modified files directly.
+	- *ELI5:* Watches your files while you type and updates the map in the background. If you ask a question before the map finishes saving, it raises a flag saying "check the file directly, I'm still updating!"
 
 ## 2. Architecture Comparison: CodeGraph vs Our Solutions
 
