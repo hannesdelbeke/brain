@@ -12,16 +12,17 @@ tags:
 - [ ] [[install apps winget]]
 	- [ ] [[Monitorian]]
 - [ ] [[check ssh github connection]]
-- [ ] [[Barrier]]
+- [ ] install gh cli
+- [ ] [[Barrier]] to control other pcs
 - [ ] [[Windows 11 - unpin start menu icons]]
 - [ ] [[Windows dark theme]]
 - [ ] right click on start menu. edit.  show most used apps
 - [ ] windows update all
-- [ ] [[schedule Monitorian brightness]]
+- [ ] [[Obsidian Windows Defender exclusion]]
 
 optional
 - [ ] [[change windows 11 default storage]] if saving space on main drive
-
+- [ ] WIP [[schedule Monitorian brightness]]
 
 see [[xd-AntiSpy]]
 [[Windows]]

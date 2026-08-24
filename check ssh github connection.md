@@ -1,11 +1,11 @@
 ---
 sentiment:
-- 5
+  - 5
 sentiment-hash: 0fed9803
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
+  - technical
 ---
 
 to check if the ssh connection on your pc is setup correctly, run in cmd
