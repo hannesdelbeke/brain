@@ -78,3 +78,5 @@ this [article](https://elizabethbutlermd.com/5-reasons-why-markdown-could-be-you
 
 great discussion https://news.ycombinator.com/item?id=29996714
 see https://toolfinder.co/lists/best-pkm-apps
+
+the same apps judged as a corpus to index rather than as an editor to write in: [[pkm vault indexing landscape]]
