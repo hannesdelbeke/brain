@@ -46,6 +46,7 @@ CodeGraph is a 100% local code intelligence engine and MCP server designed to el
 - **Tree-Sitter for Code Snippets in PKM:** Adopting tree-sitter tokenization for code fences inside Markdown notes would fix FTS5 syntax splitting on operators (`=>`, `::`, `<>`).
 
 ## References
+- Equivalents for Markdown vaults, and what to steal from each: [[pkm vault indexing landscape]]
 - [[pkm metadata indexer]]
 - [[agentic tooling upgrades over grep]]
 - [[PKM indexer performance log]]
