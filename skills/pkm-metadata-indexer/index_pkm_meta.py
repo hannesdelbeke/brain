@@ -51,6 +51,27 @@ FRONTMATTER_RE = re.compile(r"^---\s*\r?\n(.*?)\r?\n---\s*(?:\r?\n|$)", re.DOTAL
 WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 TOKEN_RE = re.compile(r"\w+|[^\w\s]", re.UNICODE)
 
+# Encoding one short query is dispatch-bound, not compute-bound. Measured on this
+# machine: 57-100ms per query on DirectML against 4-38ms on CPU, because a batch of
+# one never fills the GPU. Bulk indexing keeps the GPU, where batches are large and
+# DirectML runs at 165 vec/s. Set to None to use whatever provider indexing uses.
+QUERY_PROVIDERS = ["CPUExecutionProvider"]
+
+_MODEL_CACHE: dict[tuple[str, ...], object] = {}
+
+
+def get_embedding_model(providers: list[str] | None = None):
+    """Load the embedding model once per process.
+
+    Loading costs about 2.9s and encoding one query costs milliseconds, so a
+    long-lived process (searchd.py) must never pay that twice. A one-shot CLI
+    call is unaffected, it only ever asks once.
+    """
+    key = tuple(providers or get_embedding_providers())
+    if key not in _MODEL_CACHE:
+        _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key))
+    return _MODEL_CACHE[key]
+
 
 @dataclass(frozen=True)
 class Section:
@@ -514,10 +535,7 @@ def create_embeddings(
 
     providers = get_embedding_providers()
     active_provider = providers[0] if providers else "CPUExecutionProvider"
-    model = TextEmbedding(
-        model_name=EMBEDDING_MODEL,
-        providers=providers,
-    )
+    model = get_embedding_model(providers)
     vectors = {}
     batch_size = 32
     for batch_start in range(0, len(sections), batch_size):
@@ -527,7 +545,7 @@ def create_embeddings(
             raw_vectors = list(model.embed([section.text for section in batch], batch_size=batch_size))
         except Exception:
             active_provider = "CPUExecutionProvider (Fallback)"
-            fallback_model = TextEmbedding(model_name=EMBEDDING_MODEL, providers=["CPUExecutionProvider"])
+            fallback_model = get_embedding_model(["CPUExecutionProvider"])
             raw_vectors = list(fallback_model.embed([section.text for section in batch], batch_size=16))
 
         for section, vector in zip(batch, raw_vectors):
@@ -803,8 +821,35 @@ def fts_query(query: str) -> str:
     return " OR ".join(f'"{term}"' for term in terms)
 
 
+def load_vectors(cursor: sqlite3.Cursor):
+    """Read every stored vector into one matrix, with the row metadata beside it.
+
+    On a 6.5k section vault this is 10 MB, 22ms of SQLite and 10ms of stacking,
+    which is most of the cost of a warm query. A one-shot CLI call pays it once
+    and does not care; a daemon should hand in the result instead (see
+    `searchd.py`), which is why this is a separate function.
+    """
+    rows = cursor.execute(
+        """
+        SELECT id, path, heading, start_line, vector
+        FROM sections
+        WHERE vector IS NOT NULL AND embedding_model = ? AND chunking_version = ?
+        """,
+        (EMBEDDING_MODEL, CHUNKING_VERSION),
+    ).fetchall()
+    if not rows:
+        return [], None
+    meta = [(row[0], row[1], row[2], row[3]) for row in rows]
+    matrix = np.vstack([np.frombuffer(row[4], dtype=np.float32) for row in rows])
+    return meta, matrix
+
+
 def search_index(
-    query: str, vault_path: str | None = None, db_path: str | None = None, limit: int = 10
+    query: str,
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    limit: int = 10,
+    vectors: tuple | None = None,
 ) -> list[dict]:
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
@@ -840,34 +885,23 @@ def search_index(
                 }
 
         vector_results = {}
-        vector_rows = cursor.execute(
-            """
-            SELECT id, path, heading, start_line, vector
-            FROM sections
-            WHERE vector IS NOT NULL AND embedding_model = ? AND chunking_version = ?
-            """,
-            (EMBEDDING_MODEL, CHUNKING_VERSION),
-        ).fetchall()
-        if vector_rows:
+        meta, matrix = vectors if vectors is not None else load_vectors(cursor)
+        if matrix is not None:
             if not HAS_FASTEMBED:
                 print("fastembed is unavailable; returning lexical results only.")
             else:
-                model = TextEmbedding(
-                    model_name=EMBEDDING_MODEL,
-                    providers=get_embedding_providers(),
-                )
+                model = get_embedding_model(QUERY_PROVIDERS)
                 query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
                 norm = np.linalg.norm(query_vector)
                 if norm > 0:
                     query_vector = query_vector / norm
-                matrix = np.vstack([np.frombuffer(row[4], dtype=np.float32) for row in vector_rows])
                 scores = matrix @ query_vector
                 for rank, index in enumerate(np.argsort(-scores)[:50], 1):
-                    row = vector_rows[index]
-                    vector_results[row[0]] = {
-                        "path": row[1],
-                        "heading": row[2],
-                        "start_line": row[3],
+                    section_id, path, heading, start_line = meta[index]
+                    vector_results[section_id] = {
+                        "path": path,
+                        "heading": heading,
+                        "start_line": start_line,
                         "vec_rank": rank,
                         "raw_sim": float(scores[index]),
                     }
