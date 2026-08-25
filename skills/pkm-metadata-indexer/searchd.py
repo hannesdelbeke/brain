@@ -61,10 +61,11 @@ LOCK = threading.Lock()
 
 
 class Vault:
-    def __init__(self, name: str, root: Path, db: Path):
+    def __init__(self, name: str, root: Path, db: Path, collect=None):
         self.name = name
         self.root = root
         self.db = db
+        self.collect = collect  # None scans markdown, otherwise a corpus scanner
         self.queries = 0
         self.vectors = None
         self.vectors_version = None
@@ -205,7 +206,7 @@ def do_links(vault: Vault, note: str) -> dict:
 def do_reindex(vault: Vault) -> dict:
     began = time.perf_counter()
     with LOCK:
-        pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db))
+        pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect)
     return {"vault": vault.name, "took_s": round(time.perf_counter() - began, 2), **vault.counts()}
 
 
@@ -292,19 +293,21 @@ class Handler(BaseHTTPRequestHandler):
         print(f"{self.address_string()} {fmt % args}", flush=True)
 
 
-def parse_vault(spec: str, db_override: str | None = None) -> Vault:
+def parse_vault(spec: str, db_override: str | None = None, collect=None) -> Vault:
     name, _, raw_path = spec.partition("=")
     if not raw_path:
         name, raw_path = "", name
     root = Path(raw_path).expanduser().resolve()
-    db = Path(db_override).resolve() if db_override else root / ".obsidian" / "pkm_index.db"
-    return Vault(name or root.name, root, db)
+    db = Path(db_override).resolve() if db_override else pkm.default_db_path(root)
+    return Vault(name or root.name, root, db, collect)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--vault", action="append", default=[],
                         help="Vault as PATH or NAME=PATH, repeatable. Defaults to the nearest vault above cwd")
+    parser.add_argument("--sessions", action="append", default=[],
+                        help="Agent transcript root as PATH or NAME=PATH, repeatable. Indexed as turns, not notes")
     parser.add_argument("--db", default=None, help="Database for a single vault, otherwise <vault>/.obsidian/pkm_index.db")
     parser.add_argument("--bind", default=HOST, help="Interface to listen on, loopback unless a token is set")
     parser.add_argument("--port", type=int, default=PORT)
@@ -317,11 +320,14 @@ def main():
 
     if args.bind not in LOOPBACK and not args.token:
         parser.error("a non-loopback --bind needs --token, otherwise the vault is served to the network unauthenticated")
-    if args.db and len(args.vault) > 1:
+    if args.db and len(args.vault) + len(args.sessions) > 1:
         parser.error("--db applies to a single vault, give each vault its own .obsidian/pkm_index.db instead")
 
-    specs = args.vault or [str(pkm.find_vault_root())]
+    specs = args.vault or ([] if args.sessions else [str(pkm.find_vault_root())])
     vaults = [parse_vault(spec, args.db) for spec in specs]
+    if args.sessions:
+        import index_sessions
+        vaults += [parse_vault(spec, collect=index_sessions.scan_sessions) for spec in args.sessions]
 
     global STATE
     STATE = State(vaults, args.token)
