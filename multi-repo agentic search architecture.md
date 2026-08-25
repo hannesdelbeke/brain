@@ -72,3 +72,4 @@ mcp-org-search rollup --query "audit all OAuth2 callback implementations"
 - [[hierarchical map-reduce note rollup]] — The foundational map-reduce compression pattern applied to personal notes.
 - [[agent-friendly documentation tools]] — Specifications like `llms.txt` and `repomix` for packing codebases into token-efficient agent formats.
 - [[vault MCP server for agents]] — Structured MCP server design patterns for AI assistants.
+- [[semantic index as a git extension]] — The tier below this one: the same index installed into a single repository and travelling with it, rather than held centrally for the org.

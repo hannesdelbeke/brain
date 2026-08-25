@@ -118,6 +118,7 @@ def index_git_history(repo_path, db_path):
 - [[pkm metadata indexer]] — local SQLite indexer for vault hybrid search and embeddings
 - [[URI link to obsidian git diff - RnD]] — opening historical commit diffs directly in Obsidian via URI
 - [[extract historic wikilinks from git]] — tracking link births and deaths in Git history
+- [[semantic index as a git extension]] — the same idea generalised into a repo-level capability, keyed by blob SHA instead of by commit
 [[semantic search]]
 [[Semantic Versioning]]
 [[semantic search online notes]]

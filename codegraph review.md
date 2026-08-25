@@ -72,3 +72,4 @@ Setup notes worth keeping:
 - [[pkm metadata indexer]]
 - [[agentic tooling upgrades over grep]]
 - [[PKM indexer performance log]]
+- [[semantic index as a git extension]] — where a structural index and a semantic one would sit if both installed into a repo the way `git lfs install` does, and why `.codegraph/` staying local is the norm rather than the exception

@@ -7,7 +7,10 @@ sentiment-label:
 tags:
 - technical
 - planning
+- solved
 ---
+
+Closed as won't do (2026-08-25). The build still works when triggered by hand, and the log items below are deprecation warnings plus one search-plugin crash on a single page. Fixing them buys nothing that the manual workflow run does not already give. The error log stays as a record in case the build breaks for real later.
 
 ## review
 - [[premature optimization]] causes bugs
