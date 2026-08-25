@@ -112,7 +112,7 @@ Per-stage cost of one hybrid query against the 6,550 vector index, which is what
 | Encode one query | 57–100ms DirectML, 4–38ms CPU | a batch of one never fills the GPU |
 | Read + stack every vector | 22ms + 10ms | 10.1 MB, cached in the daemon and rebuilt only when `PRAGMA data_version` moves |
 | Cosine + argsort over 6,550 | 0.4ms | the part that sounds expensive and is not |
-| FTS5 BM25 with `snippet()` | 1–40ms | grows with how many rows the OR-expanded query matches |
+| FTS5 BM25 with `snippet()` | 0.6–17.6ms | grows with how many rows the OR-expanded query matches |
 
 Three findings, in order of how much they moved the number.
 
@@ -122,7 +122,20 @@ Three findings, in order of how much they moved the number.
 
 **Re-reading the vectors was the largest fixable cost.** `search_index` loaded and stacked all 10.1 MB per call. Holding the matrix resident took brain queries from ~100ms to ~21ms; `load_vectors` was split out so the daemon can hand one in and the CLI keeps its old behaviour.
 
-What remains is FTS5. `fts_query` joins every term with `OR`, so a common word matches thousands of rows and `snippet()` runs over the top 50, which is the whole gap between a 20ms miss and a 60ms hit.
+**The gap between a 20ms query and a 60ms one was idleness, not FTS5.** The FTS5 line above reads as the remaining cost and it is not: measured per operator, `battery` costs 0.7ms and the worst natural-language query in the vault costs 12.4ms. What actually moved was the encode, which costs 3.6ms while the pipeline is saturated and 9.5–34.5ms one second later. A keepalive thread encoding `"."` every 250ms holds it at 3.6–3.8ms for about 1.5% of one core, and it skips a tick whenever a real query just ran so it never queues ahead of a user. Idle gaps of 0s, 1s and 2s now return the same number.
+
+**Dropping common terms is worth more than the AND that looks obvious.** Rewriting the OR into an AND is the reflex and it is wrong, because a natural-language query then matches nothing at all. Term frequencies do the same job without the recall cliff: an `fts5vocab` shadow table over the existing index gives a document count per term in 0.1–0.4ms, and anything appearing in more than 10% of sections is dropped before the query is built.
+
+| Query | Full OR | Common terms dropped |
+| :--- | :--- | :--- |
+| `notes on feeling overwhelmed by projects` | 11.5ms | **3.4ms** (`on`, `by` dropped) |
+| `how do i keep the index up to date` | 17.6ms | **2.4ms** (kept `keep index date`) |
+| `obsidian plugin search` | 3.8ms | 4.1ms (nothing common enough to drop) |
+| `battery` | 0.6ms | 0.7ms (a single term is never pruned) |
+
+Ranking improves alongside the timing, since the dropped words were contributing BM25 noise. If every term is common the rarest one survives, so no query is left with an empty expression.
+
+**Where a query stands now.** 13–22ms server-side against the 6,550 section vault, flat across idle gaps. A shell call through `search_vault.py` is 0.61s, of which roughly 0.5s is Python starting up: it is a daemon client first, so `numpy` and `fastembed` are imported only when it has to fall back to searching in-process.
 
 ---
 

@@ -64,6 +64,23 @@ class MetadataIndexerTest(unittest.TestCase):
         self.assertEqual(links["path"], "folder/beta.md")
         self.assertEqual(links["inbound"][0][0], "alpha.md")
 
+    def test_common_terms_are_pruned_from_the_fts_expression(self):
+        self.build_metadata_only()
+        connection = sqlite3.connect(self.db)
+        try:
+            cursor = connection.cursor()
+            # 9 sections, "word" is in 7 of them and "distinctivephrase" in 1.
+            self.assertEqual(
+                INDEXER.fts_query("distinctivephrase word", cursor), '"distinctivephrase"'
+            )
+            # Every term too common leaves the rarest one rather than nothing.
+            self.assertEqual(INDEXER.fts_query("word a", cursor), '"a"')
+            # A single term is never pruned, and no cursor means no pruning.
+            self.assertEqual(INDEXER.fts_query("word", cursor), '"word"')
+            self.assertEqual(INDEXER.fts_query("distinctivephrase word"), '"distinctivephrase" OR "word"')
+        finally:
+            connection.close()
+
     def test_unchanged_section_keeps_cached_vector(self):
         self.build_metadata_only()
         connection = sqlite3.connect(self.db)
