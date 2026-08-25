@@ -1,3 +1,9 @@
+---
+tags:
+- obsidian
+- bug
+- solved
+---
 
 properties in obsidian add [[visual clutter]]
 hiding them with a toggle resolves this.

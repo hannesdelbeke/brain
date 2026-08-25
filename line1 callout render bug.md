@@ -2,6 +2,7 @@
 tags:
   - obsidian
   - bug
+  - solved
 links: "[[Obsidian improvements]]"
 ---
 When opening a note in [[Obsidian]] Live Preview (CodeMirror 6), a [[Obsidian callouts|callout]] placed on line 1 stays unrendered in raw markdown edit mode because the [[text cursor|cursor]] defaults to line 1 (`pos: 0`). Markdown widgets only render when the cursor leaves that line.
