@@ -14,7 +14,7 @@ tags:
 > [!quote] User Prompt
 > *add the log updates to the indexers to a sep ntote*
 
-Empirical performance telemetry, per-phase timing breakdown, throughput benchmarks, and historical execution logs for the **[[pkm metadata indexer]]** (`public/skills/pkm-metadata-indexer/index_pkm_meta.py`).
+Empirical performance telemetry, per-phase timing breakdown, throughput benchmarks, and historical execution logs for the **[[pkm metadata indexer]]** (`skills/pkm-metadata-indexer/index_pkm_meta.py`).
 
 ---
 
@@ -77,12 +77,61 @@ The indexer automatically records each run into the `index_runs` table in `.obsi
 
 ---
 
+## 2b. Cold Build on a Fresh Clone (2026-08-24, second machine)
+
+A full build of this vault from a fresh `git clone`, every section embedded because the DB does not travel with the repo:
+
+| Notes | Sections embedded | Records written | Total | Embedding | Throughput | Provider |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 3,228 | 6,550 | 19,044 | **41.79s** | 39.50s | **165.8 vec/sec** | `DmlExecutionProvider` |
+
+That is the number to compare a cold build against, and it makes the "~3 hours initial background build" above (roughly 1.6 vec/sec) diagnostic rather than expected: at that rate the embedding ran on CPU.
+
+**The DirectML clobber.** `onnxruntime-directml` and plain `onnxruntime` install into the same package directory and overwrite each other's `onnxruntime.dll`. `fastembed` depends on plain `onnxruntime`, so installing or repairing fastembed *after* the DirectML build silently replaces the GPU runtime with the CPU one, leaving an orphaned `DirectML.dll` behind as the only trace. Providers then report as `['AzureExecutionProvider', 'CPUExecutionProvider']` and everything still works, only a hundred times slower. Check and repair:
+
+```bash
+python -c "import onnxruntime; print(onnxruntime.__version__, onnxruntime.get_available_providers())"
+# want: 1.24.4 ['DmlExecutionProvider', 'CPUExecutionProvider']
+python -m pip uninstall -y onnxruntime onnxruntime-directml
+python -m pip install --no-cache-dir onnxruntime-directml
+```
+
+Order matters: DirectML last. Any later `pip install fastembed` re-pulls the CPU wheel and clobbers it again.
+
+**Query cold start.** A single `search_vault.py` call takes 3.0s end to end on a warm DB, and nearly all of it is loading the embedding model to encode one query string. The per-call cost is fixed, so it does not improve with a smaller vault or a narrower query, and it is the measurement behind keeping the model resident in the [[lightning-fast unified search plugin for obsidian|search daemon]].
+
+---
+
+## 2c. Where a Query Actually Spends Its Time (searchd.py)
+
+Per-stage cost of one hybrid query against the 6,550 vector index, which is what turned a 3.0s CLI call into a 20-60ms HTTP call:
+
+| Stage | Cost | Notes |
+| :--- | :--- | :--- |
+| Model load | 2.17s DirectML, 0.24s CPU | once, at daemon startup |
+| Encode one query | 57–100ms DirectML, 4–38ms CPU | a batch of one never fills the GPU |
+| Read + stack every vector | 22ms + 10ms | 10.1 MB, cached in the daemon and rebuilt only when `PRAGMA data_version` moves |
+| Cosine + argsort over 6,550 | 0.4ms | the part that sounds expensive and is not |
+| FTS5 BM25 with `snippet()` | 1–40ms | grows with how many rows the OR-expanded query matches |
+
+Three findings, in order of how much they moved the number.
+
+**The GPU is the wrong device for a single query.** Encoding one short string costs 57–100ms on `DmlExecutionProvider` against 4–38ms on `CPUExecutionProvider`, because dispatch dominates when the batch is one row. Bulk indexing keeps the GPU, where batches are 32 and DirectML runs at 165 vec/sec. The split lives in `QUERY_PROVIDERS`.
+
+**Beware the warm-loop benchmark.** Timing the encode in a tight five-iteration loop reported 3.6ms, roughly twenty times better than the same call makes in a real request, because the loop kept the pipeline saturated. Insert an idle gap between iterations or the measurement flatters the GPU.
+
+**Re-reading the vectors was the largest fixable cost.** `search_index` loaded and stacked all 10.1 MB per call. Holding the matrix resident took brain queries from ~100ms to ~21ms; `load_vectors` was split out so the daemon can hand one in and the CLI keeps its old behaviour.
+
+What remains is FTS5. `fts_query` joins every term with `OR`, so a common word matches thousands of rows and `snippet()` runs over the top 50, which is the whole gap between a 20ms miss and a 60ms hit.
+
+---
+
 ## 3. How to Check Live Index Telemetry & Stats
 
 ### View Performance History via CLI
 Run the `--perf` or `--stats` flag to display database metrics and the latest run performance log:
 ```bash
-python public/skills/pkm-metadata-indexer/index_pkm_meta.py --perf
+python skills/pkm-metadata-indexer/index_pkm_meta.py --perf
 ```
 
 ### Direct SQLite Query for Performance Trends
@@ -106,8 +155,8 @@ LIMIT 10;
 ---
 
 ## Top Relevant Notes
-- [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer SKILL]] — architecture documentation for the SQLite hybrid search engine.
-- [[public/pkm metadata indexer|pkm metadata indexer]] — hub note for search scripts and tools.
+- [[skills/pkm-metadata-indexer/SKILL|pkm metadata indexer SKILL]] — architecture documentation for the SQLite hybrid search engine.
+- [[pkm metadata indexer]] — hub note for search scripts and tools.
 - [[offline GPU embeddings with incremental cache]] — GPU compute implementation for local vector indexing.
-- [[public/agentic tooling upgrades over grep|agentic tooling upgrades over grep]] — benchmarking vector and FTS5 search against standard ripgrep.
+- [[agentic tooling upgrades over grep]] — benchmarking vector and FTS5 search against standard ripgrep.
 - [[token efficient PKM analysis architecture]] — optimizing local compute pipelines for autonomous coding agents.
