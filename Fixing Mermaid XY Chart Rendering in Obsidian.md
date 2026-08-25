@@ -7,6 +7,7 @@ sentiment-label:
 tags:
   - ai-generated
   - technical
+  - solved
 origin-sha: 4e01ac96c
 created: 2025-05-29
 ---

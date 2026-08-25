@@ -108,10 +108,13 @@ The daemon listens on localhost (`127.0.0.1:44771` or named pipe/Unix socket):
 
 The modal's prefix routing shipped as planned, with `?` and `~` both meaning semantic: `MODES = { "/": "regex", "?": "semantic", "~": "semantic", "#": "tag", "@": "date" }`, on `Ctrl+Shift+K`. Semantic queries hit the daemon and fall back to the CLI, and the plugin spawns the daemon detached if nothing answers.
 
+A fifth endpoint arrived after this table, `GET /unlinked?note=`, which serves unlinked mentions from the same index and drops the ones the built-in pane gets wrong. It is written up in [[unlinked mentions from the vault index]].
+
 Query cost, and the two measurements that were counter-intuitive, are in [[PKM indexer performance log]].
 
 ## References
 - Core indexer backend: [[pkm metadata indexer]], [[PKM indexer performance log]]
 - Hybrid search architecture: [[vault hybrid search]], [[agentic tooling upgrades over grep]]
 - Performance & exclusions: [[obsidian search and index slow on 5k notes]], [[Obsidian Windows Defender exclusion]], [[Obsidian faster startup]]
+- Unlinked mentions: [[unlinked mentions from the vault index]]
 - Architecture review of a similar tool: [[codegraph review]]
