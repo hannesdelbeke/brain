@@ -114,4 +114,4 @@ Query cost, and the two measurements that were counter-intuitive, are in [[PKM i
 - Core indexer backend: [[pkm metadata indexer]], [[PKM indexer performance log]]
 - Hybrid search architecture: [[vault hybrid search]], [[agentic tooling upgrades over grep]]
 - Performance & exclusions: [[obsidian search and index slow on 5k notes]], [[Obsidian Windows Defender exclusion]], [[Obsidian faster startup]]
-- Architecture review: [[codegraph review]]
+- Architecture review of a similar tool: [[codegraph review]]
