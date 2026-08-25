@@ -7,6 +7,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 If you try export FBX while the fbx plugin is not active in Maya, you'll get the Error:

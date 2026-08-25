@@ -9,6 +9,7 @@ tags:
 - technical
 - journal
 - hobby
+- solved
 ---
 
 ### Problem

@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- solved
 ---
 
 Instead of toggle, we can use callouts in [[Obsidian]].

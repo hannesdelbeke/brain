@@ -12,6 +12,7 @@ tags:
 - technical
 - self-reflection
 - work
+- solved
 ---
 
 describe the wrapping of an existing mel plugin, and the issues i ran in.

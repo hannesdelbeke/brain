@@ -7,6 +7,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 - [ ] these are research notes that could use a cleanup #todo

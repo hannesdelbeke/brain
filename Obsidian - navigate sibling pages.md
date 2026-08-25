@@ -10,6 +10,7 @@ tags:
 - technical
 - planning
 - hobby
+- solved
 ---
 
 ## Obsidian plugin ✅

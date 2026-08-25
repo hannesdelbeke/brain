@@ -8,6 +8,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 take this sample node
