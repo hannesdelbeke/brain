@@ -7,6 +7,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 common [[Blender]] errors

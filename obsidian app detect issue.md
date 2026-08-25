@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- solved
 ---
 
 [[Obsidian]] doesn't show up in the expected paths in the [[Windows registry]]

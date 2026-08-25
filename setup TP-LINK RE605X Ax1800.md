@@ -8,6 +8,7 @@ tags:
 - journal
 - technical
 - home
+- solved
 ---
 
 Set upp my extender, to receive [[WiFi]], and forward it over [[ethernet]] to my pc-s.

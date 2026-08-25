@@ -7,6 +7,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 to get the version in Maya, don't use 

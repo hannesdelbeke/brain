@@ -8,6 +8,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 [[Unity]]'s [[UX]] doesn't support navigating back to the previous [[most recent]] selected asset, with mouse back/forward buttons.
