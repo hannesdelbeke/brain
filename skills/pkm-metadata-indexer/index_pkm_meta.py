@@ -980,6 +980,71 @@ def search_index(
         connection.close()
 
 
+def find_similar_notes(
+    note_reference: str,
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    limit: int = 10,
+    vectors: tuple | None = None,
+) -> list[dict] | None:
+    """Nearest notes to a note that is already indexed, without encoding a query.
+
+    `search_index` spends ~220ms encoding its query string on the CPU provider,
+    which dwarfs the comparison itself. A note in the index already has vectors:
+    pool its own sections into one vector and compare that against the matrix.
+    Returns None when the reference does not resolve to exactly one note, so the
+    caller can tell "unknown note" apart from "no neighbours".
+    """
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
+    if not database_file.exists():
+        return None
+
+    connection = sqlite3.connect(f"file:{database_file}?mode=ro", uri=True, timeout=60.0)
+    try:
+        cursor = connection.cursor()
+        matches = find_note_paths(cursor, note_reference)
+        if len(matches) != 1:
+            return None
+        path = matches[0]
+        meta, matrix = vectors if vectors is not None else load_vectors(cursor)
+        if matrix is None:
+            return []
+        own = [index for index, row in enumerate(meta) if row[1] == path]
+        if not own:
+            return []
+        query_vector = matrix[own].mean(axis=0)
+        norm = np.linalg.norm(query_vector)
+        if norm == 0:
+            return []
+        scores = matrix @ (query_vector / norm)
+
+        results = []
+        seen = {path}  # a note is never its own neighbour
+        for rank, index in enumerate(np.argsort(-scores), 1):
+            _, row_path, heading, start_line = meta[index]
+            if row_path in seen:
+                continue
+            seen.add(row_path)  # one row per note, its best-matching section
+            results.append(
+                {
+                    "path": row_path,
+                    "heading": heading,
+                    "start_line": start_line,
+                    "score": float(scores[index]),
+                    "lex_rank": None,
+                    "vec_rank": rank,
+                    "raw_sim": float(scores[index]),
+                    "snippet": None,
+                }
+            )
+            if len(results) >= limit:
+                break
+        return results
+    finally:
+        connection.close()
+
+
 def title_matches(cursor: sqlite3.Cursor, title: str, limit: int = 5) -> list[str]:
     expression = fts_query(title)
     if not expression:
@@ -1104,6 +1169,191 @@ def query_links(note_reference: str, vault_path: str | None = None, db_path: str
         if len(inbound) > 20:
             print(f"  ... (+{len(inbound) - 20} more)")
         return {"path": path, "outbound": outbound, "inbound": inbound}
+    finally:
+        connection.close()
+
+
+# Unlinked mentions. Every candidate section costs one file read, so the FTS
+# candidate set is capped well above anything a pane shows.
+UNLINKED_CANDIDATES = 200
+SNIPPET_CHARS = 120
+INLINE_CODE_RE = re.compile(r"`+[^`\n]*`+")
+
+
+def parse_aliases(content: str) -> list[str]:
+    """Return frontmatter `aliases`, in block, inline-list, or scalar form.
+
+    The index does not store aliases, so a query reads the one target note from
+    disk. That is a single file read against an FTS5 query over 6,550 sections,
+    which does not show up in the timing; storing them would cost a schema
+    change and a reindex to save nothing measurable.
+    """
+    match = FRONTMATTER_RE.match(content)
+    if not match:
+        return []
+    found = re.search(
+        r"^aliases:[ \t]*([^\n]*)\n((?:[ \t]*-[ \t]*[^\n]+\n?)*)",
+        match.group(1) + "\n",
+        re.MULTILINE,
+    )
+    if not found:
+        return []
+    inline = found.group(1).strip().strip("[]")
+    raw = (
+        inline.split(",")
+        if inline
+        else [re.sub(r"^-\s*", "", line.strip()) for line in found.group(2).splitlines()]
+    )
+    return [value.strip().strip("'\"") for value in raw if value.strip()]
+
+
+def fenced_lines(lines: list[str]) -> set[int]:
+    """Absolute line numbers inside a ``` fence, the toggle `urgent_tasks.py` uses."""
+    inside = False
+    marked = set()
+    for number, line in enumerate(lines, 1):
+        if line.lstrip().startswith("```"):
+            inside = not inside
+            marked.add(number)
+        elif inside:
+            marked.add(number)
+    return marked
+
+
+def mark_snippet(line: str, span: tuple[int, int]) -> str:
+    """Trim a line around the match and bracket it, the way `snippet()` does."""
+    start, end = span
+    head = line[max(0, start - SNIPPET_CHARS // 2) : start]
+    tail = line[end : end + SNIPPET_CHARS // 2]
+    lead = "..." if start > len(head) else ""
+    trail = "..." if end + len(tail) < len(line) else ""
+    return f"{lead}{head.lstrip()}[{line[start:end]}]{tail.rstrip()}{trail}"
+
+
+def find_unlinked_mentions(
+    note_reference: str,
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    limit: int = 20,
+) -> list[dict] | None:
+    """Sections naming a note without linking to it.
+
+    Obsidian's own pane rescans the cached text of every note for the title and
+    each alias whenever a note is opened, so its cost is the whole vault. This
+    asks FTS5 for the candidate sections first and reads only the files behind
+    them. Matching is an FTS5 phrase, so it is token-based: "covariance" does
+    not match "covariances", which is the behaviour the pane's substring match
+    gets wrong. Returns None when the reference names no single note.
+    """
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
+    if not database_file.exists():
+        print("Index database not found. Run indexing first.")
+        return None
+
+    connection = sqlite3.connect(database_file)
+    try:
+        cursor = connection.cursor()
+        matches = find_note_paths(cursor, note_reference)
+        if len(matches) != 1:
+            print(f"No single indexed note matches {note_reference!r}.")
+            return None
+
+        target = matches[0]
+        target_file = vault_dir / target
+        names = [Path(target).stem]
+        if target_file.exists():
+            names += parse_aliases(target_file.read_text(encoding="utf-8", errors="ignore"))
+        # Longest first, so an alias containing the title wins the alternation.
+        names = sorted({name.strip() for name in names if re.search(r"\w", name)}, key=len, reverse=True)
+        if not names:
+            return []
+
+        expression = " OR ".join('"{}"'.format(name.replace('"', '""')) for name in names)
+        rows = cursor.execute(
+            """
+            SELECT sections.path, sections.heading, sections.start_line, bm25(sections_fts)
+            FROM sections_fts
+            JOIN sections ON sections.id = sections_fts.section_id
+            WHERE sections_fts MATCH ? AND sections.path <> ?
+            ORDER BY bm25(sections_fts)
+            LIMIT ?
+            """,
+            (expression, target, UNLINKED_CANDIDATES),
+        ).fetchall()
+
+        pattern = re.compile(
+            r"(?<!\w)(" + "|".join(re.escape(name) for name in names) + r")(?!\w)", re.IGNORECASE
+        )
+        keys = {name.casefold() for name in names}
+        files: dict[str, tuple[list[str], set[int]]] = {}
+        seen = set()
+        hits = []
+        for path, heading, start_line, score in rows:
+            if len(hits) >= limit:
+                break
+            if (path, start_line) in seen:  # one section can be several chunks
+                continue
+            seen.add((path, start_line))
+
+            if path not in files:
+                note_file = vault_dir / path
+                lines = (
+                    note_file.read_text(encoding="utf-8", errors="ignore").splitlines()
+                    if note_file.exists()
+                    else []
+                )
+                files[path] = (lines, fenced_lines(lines))
+            lines, fenced = files[path]
+
+            following = cursor.execute(
+                "SELECT MIN(start_line) FROM sections WHERE path = ? AND start_line > ?",
+                (path, start_line),
+            ).fetchone()[0]
+            body = lines[start_line - 1 : (following or len(lines) + 1) - 1]
+
+            # A section that already links the target is a linked mention.
+            if any(
+                Path(clean_link_target(raw)).name.casefold() in keys
+                for raw, _ in iter_wikilinks("\n".join(body))
+            ):
+                continue
+
+            for offset, line in enumerate(body):
+                number = start_line + offset
+                if number in fenced:
+                    continue
+                # Two more places a mention cannot become a link: inside a
+                # `code span`, for the same reason a fence is skipped, and
+                # inside a [[link]] to some other note, because
+                # `[[Obsidian faster startup]]` is not a mention of `Obsidian`
+                # anyone can act on.
+                spans = [
+                    span.span()
+                    for span in list(WIKILINK_RE.finditer(line)) + list(INLINE_CODE_RE.finditer(line))
+                ]
+                found = next(
+                    (
+                        match
+                        for match in pattern.finditer(line)
+                        if not any(begin <= match.start() and match.end() <= close for begin, close in spans)
+                    ),
+                    None,
+                )
+                if not found:
+                    continue
+                hits.append(
+                    {
+                        "path": path,
+                        "heading": heading,
+                        "start_line": number,
+                        "score": score,
+                        "term": found.group(0),
+                        "snippet": mark_snippet(line, found.span()),
+                    }
+                )
+                break
+        return hits
     finally:
         connection.close()
 
