@@ -1,86 +1,74 @@
-"""
-Search PKM notes using vector semantic similarity, hybrid search, or graph traversal.
+"""Search vault notes from the shell, through the daemon when one is running.
+
+This used to load the embedding model itself, which cost about 3.0s per call
+and ranked with a second, cosine-only implementation that could drift from the
+one in `index_pkm_meta.search_index`. Both are gone. The daemon answers in tens
+of milliseconds, and when it is not running the same `search_index` runs here
+in-process, so the ranking exists once no matter who asks.
+
+    python search_vault.py "notes on feeling overwhelmed by projects"
+    python search_vault.py "battery mode" --vault work --top 5
+    python search_vault.py "battery mode" --direct    # skip the daemon
 """
 
-import sys
-import sqlite3
 import argparse
-import numpy as np
+import json
+import sys
+import urllib.error
+import urllib.request
 from pathlib import Path
+from urllib.parse import urlencode
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-try:
-    from fastembed import TextEmbedding
-    HAS_FASTEMBED = True
-except ImportError:
-    HAS_FASTEMBED = False
+DEFAULT_DAEMON = "http://127.0.0.1:44771"
 
-def get_embedding_providers() -> list[str]:
-    if not HAS_FASTEMBED:
-        return ["CPUExecutionProvider"]
+
+def daemon_search(base: str, query: str, top: int, vault: str | None, timeout: float = 2.0):
+    params = {"q": query, "limit": top}
+    if vault:
+        params["vault"] = vault
+    url = f"{base.rstrip('/')}/search?{urlencode(params)}"
     try:
-        import onnxruntime as ort
-        available = set(ort.get_available_providers())
-        providers = [p for p in ["CUDAExecutionProvider", "DmlExecutionProvider", "CPUExecutionProvider"] if p in available]
-        return providers or ["CPUExecutionProvider"]
-    except Exception:
-        return ["CPUExecutionProvider"]
+        with urllib.request.urlopen(url, timeout=timeout) as response:
+            return json.load(response).get("results", [])
+    except (urllib.error.URLError, OSError, ValueError, TimeoutError):
+        return None
 
-def find_vault_root():
-    current = Path.cwd().resolve()
-    for parent in [current, *current.parents]:
-        if (parent / ".obsidian").exists() or (parent / ".git").exists():
-            return parent
-    return current
 
-def semantic_search(query: str, db_path: Path, top_k: int = 10):
-    if not HAS_FASTEMBED:
-        print("Error: fastembed is required for semantic vector search.")
-        return []
-        
-    model = TextEmbedding(
-        model_name="BAAI/bge-small-en-v1.5",
-        providers=get_embedding_providers(),
-    )
-    query_vec = np.array(list(model.embed([query]))[0], dtype=np.float32)
-    norm = np.linalg.norm(query_vec)
-    if norm > 0:
-        query_vec /= norm
+def direct_search(query: str, top: int, db: str | None):
+    import index_pkm_meta as pkm  # numpy and fastembed cost ~1.3s to import, skip them for a daemon hit
 
-    conn = sqlite3.connect(db_path)
-    cur = conn.cursor()
-    rows = cur.execute("SELECT path, heading, start_line, vector FROM sections WHERE vector IS NOT NULL").fetchall()
-    conn.close()
+    return [
+        {"path": row["path"], "heading": row["heading"],
+         "line": row["start_line"], "score": row["score"]}
+        for row in pkm.search_index(query, db_path=db, limit=top)
+    ]
 
-    if not rows:
-        print("No embedded sections found in index.")
-        return []
-
-    results = []
-    for path, heading, start_line, vec_blob in rows:
-        vec = np.frombuffer(vec_blob, dtype=np.float32)
-        score = float(np.dot(vec, query_vec))
-        results.append((score, path, heading, start_line))
-
-    results.sort(key=lambda x: x[0], reverse=True)
-    return results[:top_k]
 
 def main():
-    parser = argparse.ArgumentParser(description="Query vault notes via semantic vector search.")
-    parser.add_argument("query", type=str, help="Search query or vibe")
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("query", help="Search query or vibe")
     parser.add_argument("--top", type=int, default=10, help="Number of results to return")
-    parser.add_argument("--db", type=str, default=None, help="Path to SQLite database")
+    parser.add_argument("--db", default=None, help="Path to SQLite database, for a direct search")
+    parser.add_argument("--vault", default=None, help="Vault name registered with the daemon")
+    parser.add_argument("--daemon", default=DEFAULT_DAEMON, help="Daemon base URL")
+    parser.add_argument("--direct", action="store_true", help="Never use the daemon, load the model here")
     args = parser.parse_args()
 
-    vault_root = find_vault_root()
-    db_file = Path(args.db).resolve() if args.db else vault_root / ".obsidian" / "pkm_index.db"
+    results = None if args.direct else daemon_search(args.daemon, args.query, args.top, args.vault)
+    source = "daemon"
+    if results is None:
+        results = direct_search(args.query, args.top, args.db)
+        source = "direct"
 
-    results = semantic_search(args.query, db_file, top_k=args.top)
-    print(f"\n--- Semantic Search Results for: \"{args.query}\" ---")
-    for idx, (score, path, heading, line) in enumerate(results, 1):
-        print(f"{idx}. [{score:.3f}] {path} (line {line}) -> {heading}")
+    print(f'\n--- Semantic Search Results for: "{args.query}" ({source}) ---')
+    for index, row in enumerate(results, 1):
+        print(f"{index}. [{row['score']:.3f}] {row['path']} (line {row['line']}) -> {row['heading']}")
+
 
 if __name__ == "__main__":
     main()

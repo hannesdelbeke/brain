@@ -51,6 +51,7 @@ PORT = 44771
 DEFAULT_LIMIT = 20
 MAX_LIMIT = 100
 LOOPBACK = {"127.0.0.1", "localhost", "[::1]", "::1"}
+KEEPALIVE_S = 0.25
 
 # ponytail: one lock over the whole query path. The ONNX session is shared and
 # queries are tens of milliseconds once warm, so serialising them costs nothing
@@ -115,6 +116,7 @@ class State:
         self.token = token
         self.warm = False
         self.started = time.time()
+        self.last_query = 0.0
 
     def pick(self, name: str) -> Vault:
         if not name:
@@ -140,8 +142,26 @@ def warm_up():
           f"({(pkm.QUERY_PROVIDERS or pkm.get_embedding_providers())[0]})", flush=True)
 
 
+def keepalive():
+    """Encode a throwaway string on a timer so the model never goes cold.
+
+    Warm, one encode costs 3.6-3.8ms. After a single idle second the same call
+    costs 9.5-34.5ms, which was the largest remaining variance in a query, so
+    the pipeline is kept saturated for about 4ms of one core every 250ms. Skips
+    a tick when a real query just ran, so it never makes a user wait.
+    """
+    model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS)
+    while True:
+        time.sleep(KEEPALIVE_S)
+        if time.time() - STATE.last_query < KEEPALIVE_S:
+            continue
+        with LOCK:
+            list(model.embed(["."]))
+
+
 def do_search(vault: Vault, query: str, limit: int) -> dict:
     began = time.perf_counter()
+    STATE.last_query = time.time()
     with LOCK:
         rows = pkm.search_index(query, db_path=str(vault.db), limit=limit, vectors=vault.matrix())
         vault.queries += 1
@@ -291,6 +311,8 @@ def main():
     parser.add_argument("--token", default=os.environ.get("PKM_SEARCHD_TOKEN"),
                         help="Shared secret required as X-PKM-Token, needed for any non-loopback bind")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
+    parser.add_argument("--no-keepalive", action="store_true",
+                        help="Let the model go cold between queries, saving ~1.5%% of one core")
     args = parser.parse_args()
 
     if args.bind not in LOOPBACK and not args.token:
@@ -309,6 +331,8 @@ def main():
             print(f"  warning: no index yet, POST /reindex?vault={vault.name}", flush=True)
     if not args.no_warm:
         warm_up()
+    if STATE.warm and not args.no_keepalive:
+        threading.Thread(target=keepalive, daemon=True).start()
 
     server = ThreadingHTTPServer((args.bind, args.port), Handler)
     print(f"listening on http://{args.bind}:{args.port}"
