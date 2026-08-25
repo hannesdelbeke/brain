@@ -3,15 +3,49 @@ tags:
   - ai
   - pkm
   - optimization
+  - solved
 ---
 A batch compression pattern based on [[map-reduce]] for recursively synthesizing thousands of [[daily notes]] into cached monthly and multi-year overviews with bounded LLM API usage.
 
 > [!summary] Conclusion
-> **Not needed right now.** The current vault (~6.5k notes) is efficiently handled with local search and flat SQLite metadata indexing via the [[pkm metadata indexer]]. Build this only when full-vault longitudinal synthesis or top-down timeline overviews exceed context window limits.
+> **Not needed as designed.** The current vault (3,228 notes, 6,550 sections) is handled by local search and flat SQLite metadata indexing via the [[pkm metadata indexer]]. Measured against that index the recursive hierarchy has no level to insert and no time axis to group by; what is worth building is the leaf layer alone. See the Answer section below.
+
+## Answer
+
+The open question is whether to build the recursive hierarchy for this vault and on what unit. Do not build it. Build the leaf layer only, store it in the existing index keyed to the section sha256 that is already there, and run the reduce on demand instead of materialising rollup nodes.
+
+Measured on 2026-08-25 from `--stats` and a pass over the vault root: 3,228 notes, 6,550 sections, 9,256 link edges, 425,987 body words, 3.4 MB of Markdown, roughly 850k tokens raw with frontmatter included. Filename, tags, headings and the `summary_snippet` already sitting in the `notes` table serialise to 720 KB for the entire vault, about 180k tokens, at zero API cost. That fits in one call on any current model. There is no intermediate level to insert, because a reducer with a 1M-token context takes the whole leaf layer as a single batch.
+
+The time axis does not exist here either. 18 notes carry a `created` field, 10 carry `date`, 35 have a date-prefixed filename. This is a vault of atomic topic notes, not [[daily notes]], so a monthly rollup has almost nothing to group. The units that do exist are tags (396 distinct, 22 of them covering 20 or more notes, `technical` covering 1,944) and the link graph (9,256 edges). Scope a reduce by tag, by a [[vault hybrid search]] result set, or by a link neighbourhood.
+
+Regenerate on read, not on write. Writes happen daily; whole-vault syntheses happen a few times a year. A materialised `technical` rollup spans 1,944 notes, costs about $0.24 to regenerate on Sonnet 5, and is invalidated by an edit to any one of those 1,944 notes, so a maintained tree pays that repeatedly for an artifact nobody read. On demand the same reduce costs the same $0.24, once, when someone asks. The maintained tree also has to live outside the vault under the artifact rules above, which removes the only thing it was good for, being browsable in Obsidian. It loses on cost and on the one benefit it had.
+
+Invalidation needs no DAG and no run manifest. `sections.sha256` is recomputed on every index run. Store the summary beside it with the hash it was generated from; a summary is stale exactly when `summary_sha != sha256`. Renamed and deleted notes fall out on their own because their section rows do.
+
+```sql
+ALTER TABLE sections ADD COLUMN summary TEXT;
+ALTER TABLE sections ADD COLUMN summary_sha TEXT;
+ALTER TABLE sections ADD COLUMN summary_model TEXT;
+-- work queue for one incremental pass; IS NOT is null-safe, so an
+-- unsummarised row and a changed row are the same case
+SELECT id, path, heading FROM sections WHERE summary_sha IS NOT sha256;
+```
+
+Cost of an LLM leaf pass, if the free digest in step 1 turns out too thin: 6,550 sections grouped one call per note is 3,228 calls, roughly 1.0M input and 260k output tokens, about $2.30 on Haiku 4.5 at $1/$5 per MTok, or $1.15 through the Batch API at its 50% discount. An incremental run is the changed sections only, around $0.0005 each, so a normal editing day costs under a cent. A reduce over the leaf layer is a 200k-token input: $0.20 on Haiku 4.5, $0.40 on Sonnet 5, $1.00 on Opus 5.
+
+## Plan
+
+1. Zero-cost digest first. Add `--digest` to `index_pkm_meta.py`, printing one line per note straight out of the DB: filename, tags, headings, `summary_snippet`. No API key, no schema change, about 30 lines of query and print. The whole vault is 180k tokens; a tag scope like `pkm` is about 2k.
+   `python skills/pkm-metadata-indexer/index_pkm_meta.py --digest --tag pkm`
+2. Ask the actual synthesis questions against that digest and see what breaks. The snippet is the first 133 characters of a note, not a summary, so the likely failure is notes whose opening line does not describe them.
+3. Only if step 2 fails, add the three `sections` columns above and a `--summarize` pass over the stale-row query, with `--limit` so the first run costs cents rather than $2.30. One call per note, output capped at about 80 tokens, Batch API for the cold pass.
+4. Call `--summarize` at the end of a normal index run, after embedding, driven by the same `summary_sha != sha256` test. A summary then cannot outlive the text it came from.
+5. Serve it as `GET /digest?vault=brain&tag=pkm` on the existing daemon alongside `/search` and `/links`. The reduce itself stays in the agent's context; nothing is written back into the vault.
+6. Reach for the recursion in the pipeline above only when a single scope stops fitting the reducer's context, which needs roughly a 5x larger vault. It is the fallback, not the design.
 
 ## When to Build It
 
-Start lazy. A flat, searchable leaf index may be sufficient: one short summary and structured metadata per note is small enough for local search even when it is too large to read in one model context (see [[agentic tooling upgrades over grep]]). 
+Start lazy. A flat, searchable leaf index may be sufficient: one short summary and structured metadata per note is small enough for local search even when it is too large to read in one model context (see [[agentic tooling upgrades over grep]]). Measured on this vault that leaf layer is about 180k tokens, which does fit one model context, so the "too large to read" case has not arrived. 
 Build the recursive hierarchy only when a human needs top-down navigation or a parent node must fit in a model context.
 
 ## The Context Window Problem
@@ -38,7 +72,7 @@ root map
 
 1. **Local intake (no LLM):** Parse Markdown, YAML frontmatter, headings, links, and dates. Retain meaningful metadata rather than stripping all frontmatter. Remove only known boilerplate. Index the normalized text with SQLite / FTS5, but use FTS5 for retrieval and ranking rather than as the sole exclusion rule.
 2. **Leaf map:** Produce one versioned JSONL artifact per note or semantic chunk. Keep a short human-readable summary plus typed fields for events, decisions, tasks, themes, entities, tags, outlinks, and open questions. Every extracted item must include a source path, heading or block reference, date, and uncertainty where relevant.
-3. **Hierarchical reduce:** Group leaves deterministically by time, folder, project, or a deliberately chosen link cluster. Reduce at a bounded fan-in (for example, 40 inputs), recurse as needed, and preserve contradictory claims instead of averaging them into one story. Date windows can be monthly, but token limits and semantic boundaries should determine the actual batches.
+3. **Hierarchical reduce:** Group leaves deterministically by time, folder, project, or a deliberately chosen link cluster. Bound the fan-in by the reducer's context window rather than by a fixed count; a fixed 40 is a leftover from 8k-context models. At a 1M-token context this vault's whole leaf layer is one batch and the recursion never fires. Recurse only when a scope does not fit, and preserve contradictory claims instead of averaging them into one story. Date windows can be monthly, but token limits and semantic boundaries should determine the actual batches.
 4. **Root synthesis:** Give the final model structured intermediate artifacts, not detached prose alone. Require it to cite source notes, distinguish evidence from inference, retain unresolved questions, and state material gaps in coverage. Do not use it to diagnose health or psychological conditions or make unsupported causal claims.
 
 ## Artifact and Execution Rules

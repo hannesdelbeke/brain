@@ -24,6 +24,7 @@ impact: Low
 	- The comments suggest a workaround: avoid short namespaces. Instead of `covariance`, use `covariance (statistics)`. However, this wouldn't work for aliases, since `covariance` would be an alias meant to help with [[discovery]] of [[unlinked notes]]. 
 		- [[when a few links help but many overwhelm]]
 - I could consider using data view or query control plugin to create my own backlinks view. advanced, complex to setup, and relies on third party plugins. For now its not worth it, and having found - and rejected - this solution, it's clear I don't really need this, so I'll stop writing this note.
+	- 2026-08-25, what changed: the reasoning above assumed Dataview or Query Control plus a plugin build, and for that route it still holds. That is not what got built. The vault now has an FTS5 section index and a resident search daemon, so unlinked mentions are one endpoint, `GET /unlinked`, plus `search_vault.py --unlinked`, and skipping fenced code is a rule in the query rather than a feature to wish for. The "not worth it" conclusion is retired; the cost it was weighing no longer exists. See [[unlinked mentions from the vault index]].
 
 2025-11-16
 
