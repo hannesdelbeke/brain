@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- solved
 ---
 
 In [[unimenu]], I ran into an issue with pyside6 ( [[Qt]]), actions are moved from `QtWidgets` to `QtGui`, so pyside6 apps didn't work.

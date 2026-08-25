@@ -10,6 +10,7 @@ sentiment-label:
 tags:
 - technical
 - hobby
+- solved
 ---
 
 ## Problem
