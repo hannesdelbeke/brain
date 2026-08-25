@@ -32,6 +32,7 @@ silently publishing the vault.
 
 import argparse
 import hmac
+import importlib
 import json
 import os
 import sqlite3
@@ -308,6 +309,9 @@ def main():
                         help="Vault as PATH or NAME=PATH, repeatable. Defaults to the nearest vault above cwd")
     parser.add_argument("--sessions", action="append", default=[],
                         help="Agent transcript root as PATH or NAME=PATH, repeatable. Indexed as turns, not notes")
+    parser.add_argument("--corpus", action="append", default=[],
+                        help="Any other corpus as MODULE:FUNCTION=NAME=PATH, repeatable. The function "
+                             "takes a root and returns collect_index_data's tuple; its module must be importable")
     parser.add_argument("--db", default=None, help="Database for a single vault, otherwise <vault>/.obsidian/pkm_index.db")
     parser.add_argument("--bind", default=HOST, help="Interface to listen on, loopback unless a token is set")
     parser.add_argument("--port", type=int, default=PORT)
@@ -320,14 +324,24 @@ def main():
 
     if args.bind not in LOOPBACK and not args.token:
         parser.error("a non-loopback --bind needs --token, otherwise the vault is served to the network unauthenticated")
-    if args.db and len(args.vault) + len(args.sessions) > 1:
+    others = args.sessions + args.corpus
+    if args.db and len(args.vault) + len(others) > 1:
         parser.error("--db applies to a single vault, give each vault its own .obsidian/pkm_index.db instead")
 
-    specs = args.vault or ([] if args.sessions else [str(pkm.find_vault_root())])
+    specs = args.vault or ([] if others else [str(pkm.find_vault_root())])
     vaults = [parse_vault(spec, args.db) for spec in specs]
     if args.sessions:
         import index_sessions
         vaults += [parse_vault(spec, collect=index_sessions.scan_sessions) for spec in args.sessions]
+    for spec in args.corpus:
+        # Split on the first `=` only, because a Windows path holds the `:` that
+        # would otherwise be the obvious separator.
+        scanner, _, vault_spec = spec.partition("=")
+        module_name, _, function_name = scanner.partition(":")
+        if not (vault_spec and function_name):
+            parser.error(f"--corpus wants MODULE:FUNCTION=NAME=PATH, got {spec!r}")
+        module = importlib.import_module(module_name)
+        vaults.append(parse_vault(vault_spec, collect=getattr(module, function_name)))
 
     global STATE
     STATE = State(vaults, args.token)
