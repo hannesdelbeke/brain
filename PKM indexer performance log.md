@@ -77,6 +77,31 @@ The indexer automatically records each run into the `index_runs` table in `.obsi
 
 ---
 
+## 2b. Cold Build on a Fresh Clone (2026-08-24, second machine)
+
+A full build of this vault from a fresh `git clone`, every section embedded because the DB does not travel with the repo:
+
+| Notes | Sections embedded | Records written | Total | Embedding | Throughput | Provider |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 3,228 | 6,550 | 19,044 | **41.79s** | 39.50s | **165.8 vec/sec** | `DmlExecutionProvider` |
+
+That is the number to compare a cold build against, and it makes the "~3 hours initial background build" above (roughly 1.6 vec/sec) diagnostic rather than expected: at that rate the embedding ran on CPU.
+
+**The DirectML clobber.** `onnxruntime-directml` and plain `onnxruntime` install into the same package directory and overwrite each other's `onnxruntime.dll`. `fastembed` depends on plain `onnxruntime`, so installing or repairing fastembed *after* the DirectML build silently replaces the GPU runtime with the CPU one, leaving an orphaned `DirectML.dll` behind as the only trace. Providers then report as `['AzureExecutionProvider', 'CPUExecutionProvider']` and everything still works, only a hundred times slower. Check and repair:
+
+```bash
+python -c "import onnxruntime; print(onnxruntime.__version__, onnxruntime.get_available_providers())"
+# want: 1.24.4 ['DmlExecutionProvider', 'CPUExecutionProvider']
+python -m pip uninstall -y onnxruntime onnxruntime-directml
+python -m pip install --no-cache-dir onnxruntime-directml
+```
+
+Order matters: DirectML last. Any later `pip install fastembed` re-pulls the CPU wheel and clobbers it again.
+
+**Query cold start.** A single `search_vault.py` call takes 3.0s end to end on a warm DB, and nearly all of it is loading the embedding model to encode one query string. The per-call cost is fixed, so it does not improve with a smaller vault or a narrower query, and it is the measurement behind keeping the model resident in the [[lightning-fast unified search plugin for obsidian|search daemon]].
+
+---
+
 ## 3. How to Check Live Index Telemetry & Stats
 
 ### View Performance History via CLI
