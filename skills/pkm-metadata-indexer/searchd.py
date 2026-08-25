@@ -23,6 +23,7 @@ Endpoints, all accepting `?vault=name`:
     GET  /health           registered vaults, counts, provider, warm state
     GET  /search?q=&limit= hybrid FTS5 + vector results with RRF scores
     GET  /links?note=      inbound and outbound wikilink edges for one note
+    GET  /unlinked?note=   sections naming a note without linking to it
     POST /reindex          incremental rebuild, blocks until done
 
 Off this machine, pass `--bind 0.0.0.0 --token <secret>` and send the secret as
@@ -205,6 +206,58 @@ def do_links(vault: Vault, note: str) -> dict:
     }
 
 
+def do_similar(vault: Vault, note: str, limit: int) -> dict:
+    began = time.perf_counter()
+    STATE.last_query = time.time()
+    with LOCK:
+        rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=limit, vectors=vault.matrix())
+        vault.queries += 1
+    if rows is None:
+        return {"error": f"no single indexed note matches {note!r}"}
+    return {
+        "vault": vault.name,
+        "note": note,
+        "took_ms": round((time.perf_counter() - began) * 1000, 1),
+        "results": [
+            {
+                "path": row["path"],
+                "heading": row["heading"],
+                "line": row["start_line"],
+                "score": round(row["score"], 6),
+                "raw_sim": row["raw_sim"],
+                "snippet": row["snippet"],
+            }
+            for row in rows
+        ],
+    }
+
+
+def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
+    began = time.perf_counter()
+    with LOCK:
+        found = pkm.find_unlinked_mentions(
+            note, vault_path=str(vault.root), db_path=str(vault.db), limit=limit
+        )
+    if found is None:
+        return {"error": f"no single indexed note matches {note!r}"}
+    return {
+        "vault": vault.name,
+        "note": note,
+        "took_ms": round((time.perf_counter() - began) * 1000, 1),
+        "results": [
+            {
+                "path": row["path"],
+                "heading": row["heading"],
+                "line": row["start_line"],
+                "score": round(row["score"], 6),
+                "term": row["term"],
+                "snippet": row["snippet"],
+            }
+            for row in found
+        ],
+    }
+
+
 def do_reindex(vault: Vault) -> dict:
     began = time.perf_counter()
     with LOCK:
@@ -274,6 +327,20 @@ class Handler(BaseHTTPRequestHandler):
                     self.reply(400, {"error": "note is required"})
                     return
                 self.reply(200, do_links(vault, note))
+            elif url.path == "/similar" and method == "GET":
+                note = first("note")
+                if not note:
+                    self.reply(400, {"error": "note is required"})
+                    return
+                limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
+                self.reply(200, do_similar(vault, note, limit))
+            elif url.path == "/unlinked" and method == "GET":
+                note = first("note")
+                if not note:
+                    self.reply(400, {"error": "note is required"})
+                    return
+                limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
+                self.reply(200, do_unlinked(vault, note, limit))
             elif url.path == "/reindex" and method == "POST":
                 self.reply(200, do_reindex(vault))
             else:

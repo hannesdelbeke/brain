@@ -19,18 +19,32 @@ def load(name: str):
 SEARCHD = load("searchd")
 
 
+def fetch(port: int, path: str, headers: dict | None = None, method: str = "GET"):
+    request = urllib.request.Request(
+        f"http://127.0.0.1:{port}{path}", headers=headers or {}, method=method
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            return response.status, json.loads(response.read())
+    except urllib.error.HTTPError as error:
+        return error.code, json.loads(error.read())
+
+
+def build_vault(root: Path, name: str, notes: dict[str, str]):
+    (root / ".obsidian").mkdir(parents=True)
+    for filename, text in notes.items():
+        (root / filename).write_text(text, encoding="utf-8")
+    db = root / ".obsidian" / "pkm_index.db"
+    SEARCHD.pkm.build_index(vault_path=str(root), db_path=str(db), skip_embeddings=True)
+    return SEARCHD.Vault(name, root, db)
+
+
 class SearchDaemonTest(unittest.TestCase):
     """Runs against a real index built without embeddings, so no model is loaded."""
 
     @classmethod
     def build_vault(cls, name: str, notes: dict[str, str]):
-        root = Path(cls.temp_dir.name) / name
-        (root / ".obsidian").mkdir(parents=True)
-        for filename, text in notes.items():
-            (root / filename).write_text(text, encoding="utf-8")
-        db = root / ".obsidian" / "pkm_index.db"
-        SEARCHD.pkm.build_index(vault_path=str(root), db_path=str(db), skip_embeddings=True)
-        return SEARCHD.Vault(name, root, db)
+        return build_vault(Path(cls.temp_dir.name) / name, name, notes)
 
     @classmethod
     def setUpClass(cls):
@@ -54,14 +68,7 @@ class SearchDaemonTest(unittest.TestCase):
         cls.temp_dir.cleanup()
 
     def get(self, path: str, headers: dict | None = None, method: str = "GET"):
-        request = urllib.request.Request(
-            f"http://127.0.0.1:{self.port}{path}", headers=headers or {}, method=method
-        )
-        try:
-            with urllib.request.urlopen(request, timeout=30) as response:
-                return response.status, json.loads(response.read())
-        except urllib.error.HTTPError as error:
-            return error.code, json.loads(error.read())
+        return fetch(self.port, path, headers, method)
 
     def test_health_reports_every_vault(self):
         status, body = self.get("/health")
@@ -100,6 +107,15 @@ class SearchDaemonTest(unittest.TestCase):
         _, inbound = self.get("/links?note=beta")
         self.assertEqual([edge["source"] for edge in inbound["inbound"]], ["alpha.md"])
 
+    def test_similar_needs_a_note_that_resolves(self):
+        # this fixture is indexed without embeddings, so the route is checked
+        # here and the ranking itself in test_index_pkm_meta
+        self.assertEqual(self.get("/similar")[0], 400)
+        self.assertIn("no single indexed note", self.get("/similar?note=nosuchnote")[1]["error"])
+        status, body = self.get("/similar?note=alpha")
+        self.assertEqual(status, 200)
+        self.assertEqual(body["results"], [])
+
     def test_a_browser_page_cannot_reach_it(self):
         # a cross-site fetch always carries Origin, a real client never does
         self.assertEqual(self.get("/search?q=a", {"Origin": "https://evil.example"})[0], 403)
@@ -118,6 +134,93 @@ class SearchDaemonTest(unittest.TestCase):
     def test_unknown_routes_and_methods(self):
         self.assertEqual(self.get("/nope")[0], 404)
         self.assertEqual(self.get("/search?q=a", method="POST")[0], 404)
+
+
+class UnlinkedMentionsTest(unittest.TestCase):
+    """The four exclusions the built-in pane gets wrong or does not offer."""
+
+    NOTES = {
+        "covariance.md": (
+            "---\naliases:\n  - covar shorthand\ntags:\n  - stats\n---\n\n"
+            "## Definition\nCovariance measures joint variability.\n"
+        ),
+        "aliased.md": "## Notes\nThe covar shorthand turns up in this sentence.\n",
+        "linked.md": "## Notes\nSee [[covariance]], and covariance again in the same section.\n",
+        "fenced.md": "## Code\nNothing plain in this prose.\n\n```python\ncovariance = 1\n```\n",
+        "plural.md": "## Stats\nWe computed covariances for the sample.\n",
+        "inline.md": "## Notes\nThe `covariance` field of the struct, in prose about nothing else.\n",
+        "other link.md": "## Notes\nSee [[covariance matrix]], which is a different note entirely.\n",
+        "plain.md": "## Prose\nThe covariance term shows up here with no link.\n",
+    }
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        vault = build_vault(Path(cls.temp_dir.name) / "stats", "stats", cls.NOTES)
+        cls.previous_state = SEARCHD.STATE
+        SEARCHD.STATE = SEARCHD.State([vault])
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+        cls.port = cls.server.server_address[1]
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        SEARCHD.STATE = cls.previous_state
+        cls.temp_dir.cleanup()
+
+    def mentions(self, note: str = "covariance"):
+        status, body = fetch(self.port, f"/unlinked?note={note}")
+        self.assertEqual(status, 200)
+        return body
+
+    def test_an_alias_counts_as_a_mention(self):
+        body = self.mentions()
+        rows = {row["path"]: row for row in body["results"]}
+        self.assertIn("aliased.md", rows)
+        self.assertEqual(rows["aliased.md"]["term"], "covar shorthand")
+        self.assertIn("[covar shorthand]", rows["aliased.md"]["snippet"])
+        self.assertEqual(rows["aliased.md"]["heading"], "Notes")
+        self.assertEqual(rows["aliased.md"]["line"], 2)
+
+    def test_a_linked_mention_is_not_unlinked(self):
+        paths = [row["path"] for row in self.mentions()["results"]]
+        self.assertIn("plain.md", paths)
+        self.assertNotIn("linked.md", paths)
+
+    def test_a_mention_inside_a_fence_is_skipped(self):
+        paths = [row["path"] for row in self.mentions()["results"]]
+        self.assertNotIn("fenced.md", paths)
+
+    def test_a_mention_nobody_could_link_is_skipped(self):
+        # a code span, and a mention sitting inside a link to another note
+        paths = [row["path"] for row in self.mentions()["results"]]
+        self.assertNotIn("inline.md", paths)
+        self.assertNotIn("other link.md", paths)
+
+    def test_the_target_note_is_not_its_own_mention(self):
+        paths = [row["path"] for row in self.mentions()["results"]]
+        self.assertNotIn("covariance.md", paths)
+
+    def test_a_phrase_match_is_token_based(self):
+        # "covariance" must not match "covariances"
+        paths = [row["path"] for row in self.mentions()["results"]]
+        self.assertNotIn("plural.md", paths)
+
+    def test_a_missing_or_unknown_note(self):
+        self.assertEqual(fetch(self.port, "/unlinked")[0], 400)
+        self.assertIn("no single indexed note", self.mentions("nosuchnote")["error"])
+
+    def test_the_cli_path_returns_the_same_rows(self):
+        client = load("search_vault")
+        vault = SEARCHD.STATE.vaults["stats"]
+        direct = client.direct_unlinked("covariance", 20, str(vault.db))
+        self.assertEqual(
+            sorted(row["path"] for row in direct),
+            sorted(row["path"] for row in self.mentions()["results"]),
+        )
 
 
 if __name__ == "__main__":
