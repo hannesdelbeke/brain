@@ -25,7 +25,7 @@ Extracts sentiment, energy, and tags — stored as YAML frontmatter.
 
 ## How to run
 ```bash
-python public/skills/notes-sentiment-analysis/analyze_sentiment.py
+python skills/notes-sentiment-analysis/analyze_sentiment.py
 ```
 
 ### Options
@@ -45,7 +45,7 @@ python public/skills/notes-sentiment-analysis/analyze_sentiment.py
 - **Run:**
   ```powershell
   $env:GROQ_API="your-groq-api-key"
-  python public/skills/notes-sentiment-analysis/analyze_sentiment.py --workers 3 --batch-size 10
+  python skills/notes-sentiment-analysis/analyze_sentiment.py --workers 3 --batch-size 10
   ```
 
 #### 2. Gemini API (Pay-As-You-Go / Free Tier)
@@ -54,7 +54,7 @@ python public/skills/notes-sentiment-analysis/analyze_sentiment.py
 - **Run:**
   ```powershell
   $env:GEMINI_API_KEY="your-gemini-api-key"
-  python public/skills/notes-sentiment-analysis/analyze_sentiment.py --workers 5 --batch-size 20
+  python skills/notes-sentiment-analysis/analyze_sentiment.py --workers 5 --batch-size 20
   ```
 
 ---

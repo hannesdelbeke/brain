@@ -12,6 +12,8 @@ tags:
 ---
 Applying the hybrid search, vector embeddings, and SQLite indexing optimizations from [[pkm metadata indexer]] to unified session logs across Antigravity, Codex, and Claude Code.
 
+**Status, 2026-08-25: the engine this note proposes already exists.** `searchd.py` holds the model resident and answers a hybrid query in 13-22ms over any number of registered corpora, per [[lightning-fast unified search plugin for obsidian]]. Nothing below needs a new index, a new ranker or a new daemon. What is missing is one adapter that turns transcripts into the documents the indexer already stores, so the sections that proposed a parallel schema and a separate service have been rewritten to say so.
+
 ## Problem: The Multi-Gigabyte Transcript Grep Bottleneck
 
 Developers and autonomous workflows run multiple agent CLIs across projects:
@@ -23,7 +25,7 @@ When an agent needs past context (e.g. *"how did we resolve the Unity build fail
 
 ## Core Proposal: Unified Agent Session Indexer
 
-Adapt the three-tier retrieval engine from [[vault hybrid search]] to index agent execution histories into a centralized SQLite database (`~/.agent_index.db`):
+Point the existing engine from [[vault hybrid search]] at agent execution histories, writing to a database beside the transcripts rather than inside any repository:
 
 ```
 ┌────────────────────────────────────────────────────────┐
@@ -52,15 +54,35 @@ Adapt the three-tier retrieval engine from [[vault hybrid search]] to index agen
 
 ## Schema Normalization Across Agents
 
-Each tool formats turns differently, but all boil down to standard agent primitives:
+Each tool formats turns differently, but all boil down to standard agent primitives, and those primitives are the ones the vault indexer already stores. A session is a document, a turn is a section, and a subagent spawn is a link, so the existing `notes` / `sections` / `edges` tables take sessions with no schema of their own:
 
-- **`sessions` table:** `session_id`, `parent_session_id` (nullable FK → `sessions`, for subagent trees), `agent_type` (`antigravity` | `codex` | `claude`), `project_path`, `started_at`, `total_tokens`, `cost_estimate` (nullable — not all agents expose cost).
-- **`turns` table:** `turn_id`, `session_id`, `turn_index`, `status` (`success` | `error` | `partial`), `user_prompt`, `assistant_response`, `thinking` (nullable), `tools_called` (JSON array), `files_touched` (JSON array), `token_count`.
-- **`token_breakdown` table:** `turn_id`, `input_tokens`, `output_tokens`, `cache_read_tokens`, `cache_creation_tokens` — raw counts for recomputing cost when pricing changes.
-- **`vectors` table:** `turn_id`, `embedding_model`, `chunk_sha256`, `vector` (384-dim float32 blob).
-- **`file_edges` table:** `session_id`, `turn_id`, `file_path`, `action` (`view` | `search` | `edit` | `create` | `delete` | `execute`), `tool_name` (raw tool identifier for fine-grained filtering).
+| Session concept | Existing column | Note |
+| :--- | :--- | :--- |
+| session file | `notes.path`, `notes.mtime` | the transcript path is the document identity |
+| `agent_type`, `project_path`, `started_at` | `notes` frontmatter columns | already a generic metadata bag |
+| turn | `sections` row with `heading` and `start_line` | line number points at the jsonl line, so a result opens where it happened |
+| turn text | `sections_fts` + `sections.vector` | same BM25, same 384-dim blob, same RRF |
+| unchanged turn | `sections.content_sha256` | the incremental cache works unmodified on an append-only log |
+| `parent_session_id`, files touched | `edges` | subagent trees and file provenance are both edges, so `query_links` answers both |
+
+The one thing the vault schema does not carry is the token counts, which is fine: cost auditing already parses the same files for `message.usage` and is a different job with a different output. Indexing for recall and accounting for spend should not share a table just because they share a source.
+
+**The reuse seam.** Split `build_index` into `scan_markdown_vault(root)` and `index_documents(documents, db_path)`, where a document is `{uri, title, mtime, meta, chunks: [{heading, start_line, text}], links: [(target, line)]}`. Everything after the scan is already source-agnostic: schema, SHA256 cache, `load_vectors`, `fts_query` pruning, RRF `search_index`. A transcript adapter is then a generator, not a subsystem.
 
 ## Chunking & Caching Strategy
+
+**Measure the corpus before sizing anything.** 751 Claude Code transcripts on this machine, 1.49 GB, sampled 25 files and totalled every content block by type:
+
+| Block | Share |
+| :--- | :--- |
+| `tool_result` | 80.8% |
+| attachments | 6.5% |
+| `thinking` | 6.0% |
+| `tool_use` | 4.3% |
+| user prose | 1.2% |
+| assistant prose | 1.0% |
+
+Four fifths of the corpus is tool output: file dumps, command output, search results. It is the least worth embedding, because the file it came from is still on disk and searchable in place, and it is where the API keys and private code are. Indexing prose and `tool_use` arguments only takes 1.49 GB to about 95 MB, roughly 30k chunks, which is one three-minute embedding pass at the measured 165 vec/sec rather than the multi-hour job the raw size implies. The 100k+ chunk scaling worry below is what the raw number causes and the composition removes.
 
 Instead of vault heading chunking (`^## `), session indexing chunks by **turn intent**:
 
@@ -88,12 +110,16 @@ Apply top-500 candidate pre-filtering before RRF to avoid O(N log N) sorting bot
 
 ## Open Concerns
 
-**Security:** Agent transcripts routinely contain API keys, access tokens, and private code. A centralized `~/.agent_index.db` is a high-value target. Minimum: restrict file permissions to owner-only. Consider sensitive content filtering during ingest, encryption at rest if exposed over network.
+**Security:** Agent transcripts routinely contain API keys, access tokens, and private code, so a single index over all of them is a high-value target. Dropping `tool_result` bodies for size reasons removes most of that exposure as a side effect, since the env dumps and file contents live there rather than in prose. What remains: keep the database beside the transcripts rather than inside any repository, because the transcripts already carry whatever the repositories separate, and owner-only permissions. Serving it over the network needs the daemon's token, never a bare bind.
 
-**Storage scaling:** The [[pkm metadata indexer]] is ~114 MB for 6,599 notes with 17,567 chunks. Session indexing accumulates faster — a heavy user generating 50–100 sessions/week across three agents could reach 100k+ turns within months. Per [[agentic tooling upgrades over grep]] scaling milestones: FP16 matrix compression at >100k chunks, FAISS/sqlite-vec ANN at >500k if matmul exceeds 15ms.
+**Storage scaling:** The [[pkm metadata indexer]] is ~114 MB for 6,599 notes with 17,567 chunks, and the measured session corpus is ~30k chunks once tool output is dropped, so this sits inside the range the current matmul already handles at 0.4ms. Per [[agentic tooling upgrades over grep]] scaling milestones the next moves are FP16 compression at >100k chunks and sqlite-vec or HNSW at >500k, neither of which is close.
 
-**Agent Integration (MCP vs Skill):** The index must be exposed so agents can query past sessions mid-conversation (similar to the primitives in [[multi-repo agentic search architecture]]). There are two primary paths to build this:
-- **As a Skill:** Best for prototyping. A simple Python CLI script (e.g. `python skills/session-indexer/search.py "query"`) paired with a `SKILL.md` instruction file. It's much simpler to build initially as it avoids the MCP protocol overhead, though it suffers from slower "cold boot" times since models must be loaded into memory on every single search execution.
-- **As an MCP Server (`mcp-session-search`):** Best for performance. The database connection and embedding models stay loaded in background memory for instant (<50ms) replies, and it provides a clean, native tool directly to the agent.
+**Agent integration:** answered by the daemon, so this is no longer a fork in the road. The index is a registered corpus on `127.0.0.1:44771` and any consumer can query it over HTTP with the model already resident, which is what made the skill-versus-MCP tradeoff a tradeoff. A skill is still the cheap surface for an agent that prefers a command, and MCP becomes a thin wrapper worth adding when an agent needs a native tool rather than a shell call. Neither owns the engine.
 
-**Implementation phasing:** Start with Antigravity (most structured JSONL, clearest step types). Add Claude Code second (requires dedup handling). Codex last (multiple SQLite DBs + event stream joins).
+**Implementation phasing:** Claude Code first, not Antigravity as originally planned. Its transcripts are the largest corpus by far, its dedupe trap is already solved by the parsers written for cost auditing, and reusing them is the step that pays for itself whether or not the indexing lands. Antigravity second, Codex last (multiple SQLite databases plus event stream joins).
+
+1. **Extract the transcript reader.** One `iter_events(root)` yielding deduplicated records. The cost-audit scripts each re-implement that loop today and re-parse minutes of disk per run.
+2. **Split `build_index`** into a scanner and `index_documents`, then write the transcript scanner against that contract.
+3. **Register it:** `--vault sessions=<transcript root>`, falling back to `<root>/.pkm_index.db` when the root has no `.obsidian` directory. Plugin, CLI and agents get it with `?vault=sessions` and no client changes.
+
+First slice is FTS5-only. `search_index` already degrades to lexical when a corpus has no vectors, so embedding is a later flag rather than a prerequisite.

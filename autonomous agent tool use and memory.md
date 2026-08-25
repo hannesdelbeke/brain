@@ -27,7 +27,7 @@ Blanket rules waste too much on basic tasks. Targeted rules or relying on the ag
 
 The 10–30s cost has two components — script cold-boot and agent decision latency. Both are eliminable.
 
-**MCP server:** keep the SQLite index and embedding model hot in RAM, dropping query time to <50ms. Same architecture as [[pkm metadata indexer]] applied to session logs — see [[cross-agent session indexing architecture]] for schema and pipeline.
+**Resident daemon:** keep the SQLite index and embedding model hot in RAM, dropping query time to 13-22ms measured. Built as HTTP rather than MCP, since every consumer can already speak it — [[lightning-fast unified search plugin for obsidian]]. Same architecture applied to session logs in [[cross-agent session indexing architecture]].
 
 **Pre-prompt hook:** skip the agent deciding to search entirely. An [[how to inspect antigravity cli sessions|Antigravity]] hook intercepts the user's prompt, queries the warm MCP server, and injects the top matching past session into context before the agent starts reasoning. Zero round-trips.
 
