@@ -126,6 +126,56 @@ class MetadataIndexerTest(unittest.TestCase):
             connection.close()
         self.assertIsNone(updated_vector)
 
+    def test_similar_notes_come_from_stored_vectors(self):
+        """Vectors are handed in, so this exercises the maths without a model."""
+        import numpy as np
+
+        self.build_metadata_only()
+        meta = [
+            (1, "alpha.md", "Planned", 6),
+            (2, "alpha.md", "Long", 9),
+            (3, "folder/beta.md", "Result", 1),
+            (4, "folder/beta.md", "Aside", 5),
+            (5, "gamma.md", "Other", 1),
+        ]
+        matrix = np.array(
+            [
+                [1.0, 0.0, 0.0],  # alpha, pooled into the query vector
+                [0.0, 1.0, 0.0],
+                [0.6, 0.8, 0.0],  # beta's better section
+                [1.0, 0.0, 0.0],  # beta's weaker section
+                [0.0, 0.0, 1.0],  # unrelated
+            ],
+            dtype=np.float32,
+        )
+        rows = INDEXER.find_similar_notes(
+            "alpha", vault_path=str(self.vault), db_path=str(self.db), vectors=(meta, matrix)
+        )
+        # the note itself is excluded, each neighbour appears once, best section first
+        self.assertEqual([row["path"] for row in rows], ["folder/beta.md", "gamma.md"])
+        self.assertEqual(rows[0]["heading"], "Result")
+        self.assertGreater(rows[0]["score"], 0.98)
+        self.assertAlmostEqual(rows[1]["score"], 0.0, places=6)
+
+        self.assertEqual(
+            len(INDEXER.find_similar_notes(
+                "alpha", vault_path=str(self.vault), db_path=str(self.db), limit=1,
+                vectors=(meta, matrix),
+            )),
+            1,
+        )
+        # an unknown note is None, which is not the same as a note with no neighbours
+        self.assertIsNone(INDEXER.find_similar_notes(
+            "nosuchnote", vault_path=str(self.vault), db_path=str(self.db), vectors=(meta, matrix)
+        ))
+        self.assertEqual(
+            INDEXER.find_similar_notes(
+                "alpha", vault_path=str(self.vault), db_path=str(self.db),
+                vectors=([], None),
+            ),
+            [],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
