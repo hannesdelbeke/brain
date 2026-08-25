@@ -14,7 +14,7 @@ tags:
 ---
 
 > [!NOTE] 
-> unresolved
+> partly resolved. The scoring rule and the query below are decided. Pulling in tasks that live outside this vault is still open, see Not covered.
 
 ## Context
 some tasks, e.g. tax return, are only for a year from now.
