@@ -10,7 +10,9 @@ tags:
 origin-sha: e14817ef
 created: 2026-08-24
 ---
-Architectural blueprint for building a decoupled, zero-lag search engine: a standalone local search daemon (`pkm-searchd`) paired with a lightweight [[Obsidian plugin]] UI modal, terminal CLI, and AI agent MCP server.
+Architectural blueprint for a decoupled, zero-lag search engine: a standalone local search daemon paired with a lightweight [[Obsidian plugin]] UI modal, terminal CLI, and AI agent MCP server.
+
+**This was built.** The daemon is `skills/pkm-metadata-indexer/searchd.py` and the shape below survived contact; the parts that changed are in [[#What was actually built]] at the bottom, which is the section to trust where the two disagree.
 
 ## Architecture Overview
 
@@ -89,6 +91,24 @@ The daemon listens on localhost (`127.0.0.1:44771` or named pipe/Unix socket):
 ### 4. External Consumers
 - **System-Wide Spotlight Search:** Trigger vault searches from anywhere in the OS via Raycast, Flow Launcher, or PowerToys Run plugins calling `GET /search`.
 - **AI Agent MCP Server:** Exposes a unified `pkm_search` tool over Model Context Protocol (MCP) so Claude Code, Antigravity, or Cursor can search the vault effortlessly without parsing raw Markdown trees.
+
+## What was actually built
+
+`searchd.py` plus a thin plugin, both against the existing SQLite index. Where the plan above was wrong or optimistic:
+
+| Planned | Built | Why |
+| :--- | :--- | :--- |
+| Rust engine, `nucleo-matcher`, `notify` watcher | Python daemon on stdlib `ThreadingHTTPServer` | The work is ONNX C++, SQLite C and BLAS. Python is a few milliseconds of glue around them, so a rewrite buys nothing until the vault is ~10x larger, and then `sqlite-vec` or HNSW beats a language change |
+| 1–3ms per query | **13–22ms**, flat | The estimate ignored encoding the query, which is the largest single stage even warm |
+| Fuzzy matching in the daemon | In the plugin, via Obsidian's `prepareFuzzySearch` | Titles and tags are already in the editor's metadata cache, so shipping them to a daemon to rank would be slower than ranking them where they sit |
+| File watcher, incremental on save | `POST /reindex`, run manually | An incremental run is ~11s and the index is never far behind. Worth adding when that stops being true |
+| MCP server for agents | HTTP and `search_vault.py` | Agents can already curl or shell out; MCP is a wrapper to add when an agent needs it as a tool rather than a command |
+| One daemon, one vault | One daemon, **many vaults**, `?vault=name` | The resident model is the expensive part and it is vault-independent, so a second daemon per vault pays for it twice |
+| Localhost bind is the security model | Loopback `Host` check, any `Origin` refused, optional `X-PKM-Token` | Binding to 127.0.0.1 keeps nothing out: any page the browser visits can POST to it, and DNS rebinding can point a hostile name here |
+
+The modal's prefix routing shipped as planned, with `?` and `~` both meaning semantic: `MODES = { "/": "regex", "?": "semantic", "~": "semantic", "#": "tag", "@": "date" }`, on `Ctrl+Shift+K`. Semantic queries hit the daemon and fall back to the CLI, and the plugin spawns the daemon detached if nothing answers.
+
+Query cost, and the two measurements that were counter-intuitive, are in [[PKM indexer performance log]].
 
 ## References
 - Core indexer backend: [[pkm metadata indexer]], [[PKM indexer performance log]]

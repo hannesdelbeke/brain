@@ -141,11 +141,11 @@ Tested on [[razor blade 15 rz09-02705w76 2018|Razer Blade 15]]:
    ```
 2. **Run full-vault GPU indexing:**
    ```bash
-   python public/skills/pkm-metadata-indexer/index_pkm_meta.py
+   python skills/pkm-metadata-indexer/index_pkm_meta.py
    ```
 3. **Run sub-second semantic search:**
    ```bash
-   python public/skills/pkm-metadata-indexer/search_vault.py "query or vibe"
+   python skills/pkm-metadata-indexer/search_vault.py "query or vibe"
    ```
 
 ## References
