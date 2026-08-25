@@ -84,7 +84,43 @@ python skills/pkm-metadata-indexer/find_open_problems.py --self-test
 ```
 It scans markdown directly rather than the index, so a stale or missing database does not matter; a full pass over 3200 notes takes about 2s. Score comes from a problem-shaped heading with no solution-shaped heading (+3), a `TODO ` title prefix (+3), open task checkboxes (+1 each, capped at 3), and body markers such as "unresolved", "doesn't work" or "can't figure out" (+2). Notes carrying the `solved` tag score zero and drop off the list permanently, which is how a finished problem gets retired. See [[finding unsolved problems in my vault]].
 
-### 8. Agent Session Index (`index_sessions.py`)
+### 8. Urgent Task Ranking (`urgent_tasks.py`)
+Orders open `- [ ]` tasks by a time-based urgency score, for tasks whose importance changes with the calendar rather than with their wording:
+```bash
+python skills/pkm-metadata-indexer/urgent_tasks.py
+python skills/pkm-metadata-indexer/urgent_tasks.py --top 40 --min-score 0
+python skills/pkm-metadata-indexer/urgent_tasks.py --selfcheck
+```
+Score is `100 / max(3, days_until_due + 3) + days_since_created / 3`, so a deadline term that stays near zero until the last weeks then climbs to 33 on the due date, plus a rot term of one point per three days a task has sat. Dates come from `[due:: YYYY-MM-DD]` and `[created:: YYYY-MM-DD]` inline fields or the equivalent 📅 and ➕ emoji. Like the open problem finder it reads markdown directly, ignores fenced code blocks so documented examples do not rank, and skips tasks with neither date. See [[TODO how to highlight urgent tasks]].
+
+### 9. Mention Heatmap (`mention_heatmap.py`)
+Ranks wikilink targets by how often they were newly written over time, so a subject that keeps coming back surfaces above one that is merely linked from many old notes:
+```bash
+python skills/pkm-metadata-indexer/mention_heatmap.py
+python skills/pkm-metadata-indexer/mention_heatmap.py --days 30 --top 40
+python skills/pkm-metadata-indexer/mention_heatmap.py --selfcheck
+```
+Score is `sum over distinct days a target was mentioned of 0.5 ** (age_days / 30)`, so a mention written today is worth 1 and one written 30 days ago is worth 0.5. Each day counts once however many times the link appears that day. It reads `git log -p` rather than the `edges` table, because `edges` holds the current graph with no dates, and in-degree over the whole vault ranks hubs such as Obsidian and Python instead of live work. A 180 day window costs about 1.7s. Output is a sorted list with a block bar. See [[Priority heatmap]].
+
+### 10. Unlinked Mentions (`GET /unlinked`)
+Sections that name a note without linking to it, served from the index instead of Obsidian's own pane:
+```bash
+curl "http://127.0.0.1:44771/unlinked?note=Zettelkasten&limit=20"
+python skills/pkm-metadata-indexer/search_vault.py "Zettelkasten" --unlinked
+python skills/pkm-metadata-indexer/search_vault.py "Zettelkasten" --unlinked --direct
+```
+Matching is an FTS5 phrase over `sections_fts`, so it is token-based: `covariance` does not match `covariances`, which the pane's substring match does. Frontmatter `aliases` count as titles and are read from the target file at query time, one file read per query, because the index does not store them. Five things are excluded: the note itself; sections already holding a `[[wikilink]]` to it under any alias; matches inside a fenced code block (the complaint in [[Obsidian unlinked mentions include code snippets]], using the same fence toggle as `urgent_tasks.py`); matches inside a code span, for the same reason; and matches sitting inside a link to some other note. Results are ordered by bm25 and carry path, heading, line number and a snippet with the term in brackets. The endpoint and the CLI call one `find_unlinked_mentions`, so they cannot drift.
+
+Measured over 3,228 notes and 6,550 sections at `limit=20`: a narrow title (`Zettelkasten`, 7 hits) costs 20ms in the daemon and 34ms over HTTP; a hub title (`Obsidian`, `Python`, both capped at 20 hits) costs 41-48ms and 57-59ms, because bm25 ranks every section holding the word before the top 200 is taken. A first call against a freshly started daemon costs the same, since this endpoint keeps no resident state, unlike `/search` and its model. Through the CLI a call is 0.38s against the daemon and 1.53s with `--direct`, both Python startup. Limits: one hit per section, the first; a mention inside a URL or a markdown link label still counts; an unclosed fence marks the rest of the file as code. No plugin calls this yet. See [[unlinked mentions from the vault index]].
+
+### 11. Nearest Notes (`GET /similar`)
+Notes closest to one note, ranked by cosine against the vectors already in the index:
+```bash
+curl "http://127.0.0.1:44771/similar?note=Obsidian%20graph%20view&limit=12&vault=brain"
+```
+`/search` spends about 220ms encoding the query string on `CPUExecutionProvider`, which is most of the cost of a call and is pure waste when the note is already indexed. `find_similar_notes` mean-pools the note's own section vectors instead, normalises, and multiplies the resident matrix, so no model runs: 11-26ms over HTTP at `limit=36` on 3,228 notes and 6,550 sections, against 228-541ms for the same note through `/search`. The note itself is excluded and each other note appears once, at its best-matching section. Response shape matches `/search`, so a caller only changes the URL. An unresolvable or ambiguous note reference returns `{"error": ...}` rather than an empty list, which is how a caller tells "not indexed yet" apart from "no neighbours" and decides whether to fall back to `/search`. That fallback is what the Semantic Local Graph plugin does for a note written since the last reindex. See [[core Obsidian features to rework on the vault index]].
+
+### 12. Agent Session Index (`index_sessions.py`)
 Indexes agent transcripts into the same tables as notes, so past sessions are searchable by the same query path:
 ```bash
 python skills/pkm-metadata-indexer/index_sessions.py --root ~/.claude/projects
