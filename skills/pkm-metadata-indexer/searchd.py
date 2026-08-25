@@ -33,6 +33,7 @@ silently publishing the vault.
 import argparse
 import hmac
 import importlib
+import importlib.util
 import json
 import os
 import sqlite3
@@ -303,6 +304,26 @@ def parse_vault(spec: str, db_override: str | None = None, collect=None) -> Vaul
     return Vault(name or root.name, root, db, collect)
 
 
+def load_module(name: str):
+    """Import a scanner module by dotted name, or by path to its file.
+
+    A corpus scanner usually lives in the repository holding the corpus rather
+    than beside the daemon, and taking a path there is one argument where an
+    importable name is a `PYTHONPATH` the caller has to remember to set.
+    """
+    if not name.endswith(".py"):
+        return importlib.import_module(name)
+    path = Path(name).expanduser().resolve()
+    spec = importlib.util.spec_from_file_location(path.stem, path)
+    if spec is None or spec.loader is None:
+        raise SystemExit(f"cannot load a scanner from {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[path.stem] = module  # so the scanner can import its own siblings
+    sys.path.insert(0, str(path.parent))
+    spec.loader.exec_module(module)
+    return module
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--vault", action="append", default=[],
@@ -310,8 +331,9 @@ def main():
     parser.add_argument("--sessions", action="append", default=[],
                         help="Agent transcript root as PATH or NAME=PATH, repeatable. Indexed as turns, not notes")
     parser.add_argument("--corpus", action="append", default=[],
-                        help="Any other corpus as MODULE:FUNCTION=NAME=PATH, repeatable. The function "
-                             "takes a root and returns collect_index_data's tuple; its module must be importable")
+                        help="Any other corpus as MODULE:FUNCTION=NAME=PATH, repeatable, where MODULE is an "
+                             "importable name or a path to a .py file. The function "
+                             "takes a root and returns collect_index_data's tuple")
     parser.add_argument("--db", default=None, help="Database for a single vault, otherwise <vault>/.obsidian/pkm_index.db")
     parser.add_argument("--bind", default=HOST, help="Interface to listen on, loopback unless a token is set")
     parser.add_argument("--port", type=int, default=PORT)
@@ -334,14 +356,13 @@ def main():
         import index_sessions
         vaults += [parse_vault(spec, collect=index_sessions.scan_sessions) for spec in args.sessions]
     for spec in args.corpus:
-        # Split on the first `=` only, because a Windows path holds the `:` that
-        # would otherwise be the obvious separator.
+        # First `=` and last `:`, so that `C:/x/scan.py:scan` parses as well as
+        # `scan:scan` does.
         scanner, _, vault_spec = spec.partition("=")
-        module_name, _, function_name = scanner.partition(":")
-        if not (vault_spec and function_name):
+        module_name, _, function_name = scanner.rpartition(":")
+        if not (vault_spec and function_name and module_name):
             parser.error(f"--corpus wants MODULE:FUNCTION=NAME=PATH, got {spec!r}")
-        module = importlib.import_module(module_name)
-        vaults.append(parse_vault(vault_spec, collect=getattr(module, function_name)))
+        vaults.append(parse_vault(vault_spec, collect=getattr(load_module(module_name), function_name)))
 
     global STATE
     STATE = State(vaults, args.token)
