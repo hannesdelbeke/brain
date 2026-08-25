@@ -1,11 +1,12 @@
 ---
 sentiment:
-- 5
+  - 5
 sentiment-hash: d0a49b61
 sentiment-label:
-- factual
+  - factual
 tags:
-- technical
+  - technical
+  - solved
 ---
 
 ## Issue starting strava sync
