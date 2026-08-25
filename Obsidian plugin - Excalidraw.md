@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- solved
 ---
 
 ### Edit SVG saving

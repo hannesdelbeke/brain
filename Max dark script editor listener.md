@@ -7,6 +7,7 @@ sentiment-label:
 tags:
 - technical
 - work
+- solved
 ---
 
 https://github.com/hannesdelbeke/dark-listener-max

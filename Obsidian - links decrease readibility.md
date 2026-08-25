@@ -13,6 +13,7 @@ tags:
 - planning
 - self-reflection
 - hobby
+- solved
 ---
 
 > [!success] solved

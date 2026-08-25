@@ -11,6 +11,7 @@ tags:
 - planning
 - work
 - home
+- solved
 ---
 
 my modern work pc gets [[wifi]] speeds of 500mb/s

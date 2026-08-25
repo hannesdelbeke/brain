@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- solved
 ---
 
 by default you can't pin a BAT file to the [[Windows task bar]]

@@ -6,6 +6,7 @@ sentiment-label:
 - factual
 tags:
 - technical
+- solved
 ---
 
 Markdown links don't support spaces in Obsidian.

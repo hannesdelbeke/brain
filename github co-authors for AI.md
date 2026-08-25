@@ -4,6 +4,7 @@ tags:
 - git
 - github
 - ai
+- solved
 ---
 
 # GitHub Co-Authors for AI Models
