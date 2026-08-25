@@ -74,6 +74,15 @@ A keepalive thread encodes a throwaway string every 250ms, because the model goi
 
 Tests: `python -m unittest test_searchd test_index_pkm_meta`.
 
+### 7. Open Problem Finder (`find_open_problems.py`)
+Ranks notes by how likely they still describe an unsolved problem, so an agent can pick work without reading the vault:
+```bash
+python skills/pkm-metadata-indexer/find_open_problems.py --top 30
+python skills/pkm-metadata-indexer/find_open_problems.py --min-score 5
+python skills/pkm-metadata-indexer/find_open_problems.py --self-test
+```
+It scans markdown directly rather than the index, so a stale or missing database does not matter; a full pass over 3200 notes takes about 2s. Score comes from a problem-shaped heading with no solution-shaped heading (+3), a `TODO ` title prefix (+3), open task checkboxes (+1 each, capped at 3), and body markers such as "unresolved", "doesn't work" or "can't figure out" (+2). Notes carrying the `solved` tag score zero and drop off the list permanently, which is how a finished problem gets retired. See [[finding unsolved problems in my vault]].
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.

@@ -45,6 +45,28 @@ CodeGraph is a 100% local code intelligence engine and MCP server designed to el
 - **Framework & Route Awareness:** Emitting synthetic route nodes for web handlers and cross-language bridges is a clean pattern for unifying multi-language codebases.
 - **Tree-Sitter for Code Snippets in PKM:** Adopting tree-sitter tokenization for code fences inside Markdown notes would fix FTS5 syntax splitting on operators (`=>`, `::`, `<>`).
 
+## 4. Adopted, 2026-08-25
+
+Installed and wired to every agent on this machine. It answers a different question than the [[pkm metadata indexer]] rather than competing with it: that one finds notes by meaning, this one resolves symbols by structure, and neither does the other's job.
+
+Where it earns its keep is large codebases, so the rule is a size and activity threshold rather than everything:
+
+| Repository | Files indexed | Nodes | Edges | Index time | DB |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 618k LOC C# Unity client | 4,853 | 111,463 | 253,840 | 17.4s | 251 MB |
+| 305k LOC TypeScript game | 1,241 | 25,092 | 83,783 | 5.2s | 91 MB |
+| 145k LOC Python tooling | 426 | 12,290 | 25,873 | 2.0s | — |
+
+Below roughly 15k LOC nothing was indexed. A grep plus a read already answers the question there, and an index is one more thing to keep fresh for no gain.
+
+Setup notes worth keeping:
+
+- `npm i -g @colbymchenry/codegraph`, then `codegraph telemetry off` **before** anything else. It is anonymous by the documented field list, but proprietary work is not the place to find out.
+- `codegraph install -y` wires the MCP server into every agent it detects and also appends a block to the global `CLAUDE.md` and an `mcp__codegraph__*` entry to the permission allow-list. Both are reversible and both are worth knowing about rather than discovering later.
+- It honours `.gitignore` and skips `node_modules`, `dist`, `target` and friends by default, so a Unity repository indexes its own code and not `Library/`.
+- The `.codegraph/` directory holds a database of a few hundred MB. It self-ignores its contents but still shows as untracked, so it belongs in the global excludes file (`~/.config/git/ignore`), not in each repository's `.gitignore` — nothing gets committed to a repository just because a local tool was installed.
+- A shell `codegraph explore` takes ~1.7s, most of it process start. The MCP server keeps it resident, which is the same argument the [[lightning-fast unified search plugin for obsidian|search daemon]] makes for the vault.
+
 ## References
 - Equivalents for Markdown vaults, and what to steal from each: [[pkm vault indexing landscape]]
 - [[pkm metadata indexer]]
