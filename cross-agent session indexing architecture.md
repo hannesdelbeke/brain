@@ -12,7 +12,9 @@ tags:
 ---
 Applying the hybrid search, vector embeddings, and SQLite indexing optimizations from [[pkm metadata indexer]] to unified session logs across Antigravity, Codex, and Claude Code.
 
-**Status, 2026-08-25: the engine this note proposes already exists.** `searchd.py` holds the model resident and answers a hybrid query in 13-22ms over any number of registered corpora, per [[lightning-fast unified search plugin for obsidian]]. Nothing below needs a new index, a new ranker or a new daemon. What is missing is one adapter that turns transcripts into the documents the indexer already stores, so the sections that proposed a parallel schema and a separate service have been rewritten to say so.
+**Status, 2026-08-25: built for Claude Code.** `index_sessions.py` is the adapter, 766 transcripts and 1.49 GB index to 70,418 sections and 8,524 edges in 2m05s, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Lexical-only queries run 30-58ms. What follows is the design and what measurement changed about it; Antigravity and Codex are still unwritten.
+
+The engine needed no new index, ranker or daemon. `build_index` gained one `collect=` parameter naming the scanner, the markdown scanner stayed the default, and everything after the scan was already source-agnostic.
 
 ## Problem: The Multi-Gigabyte Transcript Grep Bottleneck
 
@@ -67,7 +69,9 @@ Each tool formats turns differently, but all boil down to standard agent primiti
 
 The one thing the vault schema does not carry is the token counts, which is fine: cost auditing already parses the same files for `message.usage` and is a different job with a different output. Indexing for recall and accounting for spend should not share a table just because they share a source.
 
-**The reuse seam.** Split `build_index` into `scan_markdown_vault(root)` and `index_documents(documents, db_path)`, where a document is `{uri, title, mtime, meta, chunks: [{heading, start_line, text}], links: [(target, line)]}`. Everything after the scan is already source-agnostic: schema, SHA256 cache, `load_vectors`, `fts_query` pruning, RRF `search_index`. A transcript adapter is then a generator, not a subsystem.
+**The reuse seam, as built.** The split the note asked for was already there: `collect_index_data(root)` returns `(notes, sections, links, errors)` and nothing downstream cares where those came from. So the change was `build_index(..., collect=None)` defaulting to the markdown scanner, and `scan_sessions(root)` returning the same four lists. No document dataclass, no `index_documents`, no code moved. A transcript adapter is a generator, not a subsystem, and the seam it needed was one parameter.
+
+Two things fell out of reusing the note schema rather than designing a session schema. `notes.filename` feeds `note_titles_fts`, so putting the session's first real prompt there makes a session findable by what it was about; the same string becomes the chunk heading, which carries the session subject into turns that never restate it, at the cost of labelling every turn by its session rather than by itself. And `edges` took file provenance for free: every `file_path` a tool touched is an edge from the session, so "which session last edited this file" is a graph query rather than a git archaeology session.
 
 ## Chunking & Caching Strategy
 
@@ -82,7 +86,11 @@ The one thing the vault schema does not carry is the token counts, which is fine
 | user prose | 1.2% |
 | assistant prose | 1.0% |
 
-Four fifths of the corpus is tool output: file dumps, command output, search results. It is the least worth embedding, because the file it came from is still on disk and searchable in place, and it is where the API keys and private code are. Indexing prose and `tool_use` arguments only takes 1.49 GB to about 95 MB, roughly 30k chunks, which is one three-minute embedding pass at the measured 165 vec/sec rather than the multi-hour job the raw size implies. The 100k+ chunk scaling worry below is what the raw number causes and the composition removes.
+Four fifths of the corpus is tool output: file dumps, command output, search results. It is the least worth embedding, because the file it came from is still on disk and searchable in place, and it is where the API keys and private code are. Indexing prose and `tool_use` arguments only takes 1.49 GB to about 95 MB, which is one embedding pass of a few minutes at the measured 165 vec/sec rather than the multi-hour job the raw size implies. The 100k+ chunk scaling worry below is what the raw number causes and the composition removes.
+
+The chunk estimate was low. 70,418 sections, not 30k, because a `tool_use` is a section of its own and a working session is mostly tool calls. That is still inside the range the current matmul handles, and it is 7 minutes of embedding rather than 3.
+
+One filter had to be added that the composition table does not show. The client writes its own slash commands, hook output, `isMeta` caveats and task notifications into the transcript as user turns, and they are formulaic enough to dominate both titles and BM25. Dropping any user text opening with one of those tags, plus anything under 30 characters, is what separates a session titled `make the widget stop crashing` from one titled `<command-name>/clear</command-name>`.
 
 Instead of vault heading chunking (`^## `), session indexing chunks by **turn intent**:
 
@@ -118,8 +126,12 @@ Apply top-500 candidate pre-filtering before RRF to avoid O(N log N) sorting bot
 
 **Implementation phasing:** Claude Code first, not Antigravity as originally planned. Its transcripts are the largest corpus by far, its dedupe trap is already solved by the parsers written for cost auditing, and reusing them is the step that pays for itself whether or not the indexing lands. Antigravity second, Codex last (multiple SQLite databases plus event stream joins).
 
-1. **Extract the transcript reader.** One `iter_events(root)` yielding deduplicated records. The cost-audit scripts each re-implement that loop today and re-parse minutes of disk per run.
-2. **Split `build_index`** into a scanner and `index_documents`, then write the transcript scanner against that contract.
-3. **Register it:** `--vault sessions=<transcript root>`, falling back to `<root>/.pkm_index.db` when the root has no `.obsidian` directory. Plugin, CLI and agents get it with `?vault=sessions` and no client changes.
+1. **Extract the transcript reader.** `iter_events(path)` yields deduplicated events, keyed on `(message.id, text)` because the client writes a line per content block and reuses the id. It streams, which matters when the largest transcript here is 79 MB.
+2. **Write the scanner against the seam.** `scan_sessions(root)` matches `collect_index_data`'s contract, and `build_index(collect=...)` takes it.
+3. **Register it:** `searchd.py --sessions claude=<root>`, a separate flag rather than a `--vault` prefix so the scanner choice is explicit. `default_db_path` falls back to `<root>/.pkm_index.db` when the root has no `.obsidian`, which also deduplicated the six copies of that path expression in the indexer.
 
 First slice is FTS5-only. `search_index` already degrades to lexical when a corpus has no vectors, so embedding is a later flag rather than a prerequisite.
+
+What step 1 did not buy: the cost-audit parsers still re-implement their own loop. They need `message.usage`, which `iter_events` deliberately drops, so sharing the reader would mean widening it back out to the thing it exists to avoid. Indexing for recall and accounting for spend read the same files and want different halves of them.
+
+Left for later: no watcher, so the index is as fresh as the last `--reindex`, and an append-only log deserves a byte-offset resume rather than the full 102-second reparse. Embeddings are a flag nobody has turned on yet.

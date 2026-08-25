@@ -92,6 +92,15 @@ class Link:
     start_line: int
 
 
+def default_db_path(root: Path) -> Path:
+    """Keep the index out of sight in a vault, beside the corpus anywhere else.
+
+    A transcript root has no `.obsidian` to hide in, so it gets a dotfile rather
+    than a directory nobody else would look in.
+    """
+    return root / ".obsidian" / "pkm_index.db" if (root / ".obsidian").is_dir() else root / ".pkm_index.db"
+
+
 def find_vault_root() -> Path:
     current = Path.cwd().resolve()
     for parent in [current, *current.parents]:
@@ -608,10 +617,11 @@ def remove_missing_rows(cursor: sqlite3.Cursor, table: str, key_column: str, see
     return len(stale_values)
 
 
-def build_index(vault_path: str | None = None, db_path: str | None = None, skip_embeddings: bool = False):
+def build_index(vault_path: str | None = None, db_path: str | None = None, skip_embeddings: bool = False,
+                collect=None):
     t_start = time.perf_counter()
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
-    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
     database_file.parent.mkdir(parents=True, exist_ok=True)
     started_at = datetime.now(timezone.utc).isoformat()
 
@@ -622,7 +632,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         existing_by_id, vectors_by_hash = load_vector_cache(connection)
 
         t_scan_start = time.perf_counter()
-        notes, sections, links, errors = collect_index_data(vault_dir)
+        notes, sections, links, errors = (collect or collect_index_data)(vault_dir)
         scan_seconds = time.perf_counter() - t_scan_start
 
         t_cache_start = time.perf_counter()
@@ -889,7 +899,7 @@ def search_index(
     vectors: tuple | None = None,
 ) -> list[dict]:
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
-    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
     if not database_file.exists():
         print(f"Index database not found at {database_file}. Run indexing first.")
         return []
@@ -989,7 +999,7 @@ def title_matches(cursor: sqlite3.Cursor, title: str, limit: int = 5) -> list[st
 
 def check_duplicate(title: str, vault_path: str | None = None, db_path: str | None = None):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
-    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
     if not database_file.exists():
         print("Index database not found. Run indexing first.")
         return []
@@ -1048,7 +1058,7 @@ def find_note_paths(cursor: sqlite3.Cursor, note_reference: str) -> list[str]:
 
 def query_links(note_reference: str, vault_path: str | None = None, db_path: str | None = None):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
-    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
     if not database_file.exists():
         print("Index database not found. Run indexing first.")
         return None
@@ -1100,7 +1110,7 @@ def query_links(note_reference: str, vault_path: str | None = None, db_path: str
 
 def print_stats(vault_path: str | None = None, db_path: str | None = None):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
-    database_file = Path(db_path).resolve() if db_path else vault_dir / ".obsidian" / "pkm_index.db"
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
     if not database_file.exists():
         print("Database not found.")
         return
