@@ -86,7 +86,7 @@ Across the entire ThinkPad ecosystem (X1 Carbon, X1 Yoga, T-series, X-series), *
 
 ## Bottom Line
 
-- 🟢 **Purchased Budget Option:** ThinkPad X1 Yoga Gen 7 (£240 used) — functional 2-in-1 with garaged pen, but requires "Best Power Efficiency" mode to tame fan spin-ups.
+- 🟢 **Purchased Budget Option:** [[Lenovo ThinkPad X1 Yoga Gen 7|ThinkPad X1 Yoga Gen 7]] (£240 used) — functional 2-in-1 with garaged pen, but requires "Best Power Efficiency" mode to tame fan spin-ups.
 - 🟢 **Top Silent Windows ThinkPads:** ThinkPad T14s Gen 6 (Snapdragon ARM) or T14s Gen 4/5 (AMD) — **no pen, but perfectly acceptable** for dead-silent, cool-running developer workflows.
 - 🟢 **Top Fanless / Dead Silent Pick:** MacBook Air M2/M3 (16GB, £650–850 used) for 100% silent mobile coding.
 - 🟢 **Top Silent Windows 2-in-1:** Surface Pro 11 (Snapdragon ARM) for silent tablet + pen workflows.
