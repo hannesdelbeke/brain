@@ -8,6 +8,7 @@ tags:
 origin-sha: e14817ef
 created: 2026-08-24
 ---
+
 Why [[Obsidian]] search and indexing slows down on large vaults (5,000–10,000+ notes) and how to restore sub-100ms instant search.
 
 ## Current Vault Audit & Implementation Status
@@ -22,6 +23,8 @@ Audit recommendations for vault performance:
 | **Workspace Open Tabs** | 🟢 **Cleaned** | Keep open tab count minimal to eliminate DOM hydration freeze. |
 | **Windows Defender Exclusion** | 🟢 **Implemented** | Exclude vault folder and Obsidian executable per [[Obsidian Windows Defender exclusion]]. |
 
+---
+
 ## Why It Slows Down at 5,000+ Notes
 
 Pure Markdown text parsing in Obsidian is lightweight (5k notes ≈ 20–50 MB text, which Electron can index in memory in under 2 seconds). When search or indexing crawls or freezes the UI, it is almost always caused by one of five bottlenecks:
@@ -31,6 +34,8 @@ Pure Markdown text parsing in Obsidian is lightweight (5k notes ≈ 20–50 MB t
 3. **Windows Defender / Antivirus Scanning:** Real-time protection intercepting thousands of small file reads during initial vault indexing.
 4. **Unscoped Dataview Queries:** Live `dataview` or `query` blocks running across the entire vault on every keystroke.
 5. **Corrupted Metadata Cache:** Fragmented local cache causing Obsidian to repeatedly drop and rebuild its index.
+
+---
 
 ## Step-by-step Fixes
 
@@ -64,6 +69,8 @@ If indexing remains stuck or shows a black screen:
 3. Delete or rename the cache databases: `workspace.json` and the `Cache/` folder.
 4. Re-open Obsidian to force a clean, unfragmented re-index.
 
+---
+
 ## External Alternative: Lightning-fast CLI Search
 
 For instant full-vault searching across 10,000+ notes without opening Obsidian search:
@@ -76,7 +83,11 @@ For instant full-vault searching across 10,000+ notes without opening Obsidian s
   fzf --walker-root=/path/to/vault
   ```
 
+---
+
 ## References
+- [[pkm metadata indexer]] — standalone SQLite FTS5 + neural embedding indexer with resident daemon (`searchd.py`).
+- [[vault hybrid search]]
 - [[lightning-fast unified search plugin for obsidian]]
 - [[Obsidian Windows Defender exclusion]]
 - [[Obsidian faster startup]]
