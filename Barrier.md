@@ -48,4 +48,11 @@ But you can connect first to barrier, and then the VPN. And your barrier connect
 1. open Barrier's settings
 2. change elevated from `as needed`(default) to `always`.
 
+### Mouse stuck in corner on client (DPI Scaling bug)
+When Windows display scaling on the **Server** (or Client) is set above 100% (e.g. 125% or 150%), Barrier's virtual screen coordinate boundary calculation fails, causing the cursor to get trapped / stuck in the bottom corner of the client screen.
+
+Fix:
+1. Set Windows display scaling on the **Server** to **100%** (Settings > Display > Scale: 100%).
+2. Alternatively: Right-click `barrier.exe` (and `barrierc.exe` / `barriers.exe`) > **Properties** > **Compatibility** > **Change high DPI settings** > Check **"Override high DPI scaling behavior"** > Set to **"Application"**.
+
 [[virtual solution]]
