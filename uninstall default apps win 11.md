@@ -63,5 +63,3 @@ winget uninstall {2397CAD4-2263-4CD0-96BE-E43A980B9C9A}_is1
 REM Futuremark SystemInfo
 winget uninstall {63C33A87-484C-4D23-BAA4-5658DD908D8E}
 ```
-
-#winget
