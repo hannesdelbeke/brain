@@ -22,8 +22,9 @@ The **ThinkPad X1 Yoga Gen 7** is a 2-in-1 convertible [[laptop]] with touchscre
 - **OS:** [[Windows 11]] Pro
 
 ## Notes & Review
-- Overall a good [[laptop]] and relatively quiet under normal load.
-- Louder [[fan noise]] than expected under sudden CPU spikes or updates. was expecting fan to shut off.
+- **Acoustics & Thermals:** Louder and warmer than expected. It is tolerable, but **not dead silent** when doing basic tasks like running a single AI session or compiling metadata.
+- **Fan Behavior:** Rather than remaining passive (0 RPM) during sustained light work, the Intel 12th Gen i5-1245U spins up the fans noticeably under light burst loads.
+- **Form Factor & Daily Use:** Good overall 2-in-1 convertible build, solid touchscreen, and light portability compared to the Razer Blade 15.
 
 ## References & Past Research
 - [[2026-08-11 laptop research]] — purchasing evaluation for ThinkPad X1 Yoga generations.
