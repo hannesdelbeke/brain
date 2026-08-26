@@ -40,8 +40,11 @@ winget uninstall Microsoft.OutlookForWindows_8wekyb3d8bbwe
 winget uninstall Microsoft.PowerAutomateDesktop_8wekyb3d8bbwe 
 winget uninstall Microsoft.WindowsCamera_8wekyb3d8bbwe 
 winget uninstall Microsoft.WindowsSoundRecorder_8wekyb3d8bbwe 
-winget uninstall Microsoft.YourPhone_8wekyb3d8bbwe
 ```
+
+evaluating this
+winget uninstall Microsoft.YourPhone_8wekyb3d8bbwe
+
 
 uninstall MT 2022 laptop [[bloatware]]
 ```
