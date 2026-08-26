@@ -71,7 +71,9 @@ curl http://127.0.0.1:44771/links?note=Obsidian
 curl -X POST "http://127.0.0.1:44771/reindex?vault=brain"
 curl http://127.0.0.1:44771/health
 ```
-A keepalive thread encodes a throwaway string every 250ms, because the model going cold for one second triples the cost of the next query; `--no-keepalive` turns that off and gives back about 1.5% of one core. Every consumer speaks the same HTTP contract, so an agent, an editor plugin, a launcher and a shell alias all share one index and one model. Requests carrying an `Origin` header are refused and the `Host` must be loopback, which keeps a web page in the browser from reading the vault. To reach it from another machine, pass `--bind 0.0.0.0 --token <secret>` and send `X-PKM-Token`; a non-loopback bind without a token is refused rather than silently publishing the vault.
+By default, the daemon idles near zero CPU and answers warm queries in 10-35ms. Running a periodic keepalive loop is discouraged on multi-core systems because ONNX Runtime's intra-op thread pool defaults to busy-spinning (`allow_spinning = 1`), which burns full CPU cores continuously between pings. Keeping the thread pool parked at idle maintains sub-35ms response times with zero background CPU overhead.
+
+Every consumer speaks the same HTTP contract, so an agent, an editor plugin, a launcher and a shell alias all share one index and one model. Requests carrying an `Origin` header are refused and the `Host` must be loopback, which keeps a web page in the browser from reading the vault. To reach it from another machine, pass `--bind 0.0.0.0 --token <secret>` and send `X-PKM-Token`; a non-loopback bind without a token is refused rather than silently publishing the vault.
 
 Tests: `python -m unittest test_searchd test_index_pkm_meta test_index_sessions`.
 
