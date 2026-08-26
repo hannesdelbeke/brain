@@ -58,11 +58,28 @@ Lenovo dropped the pen garage for a side magnetic pen and shifted to lower-power
 Efficient Lunar Lake chip, but thermally limited, capped at 8 cores, missing the pen garage, and £1,400+ used.
 🔴 **Verdict: Skip.** Overpriced for an 8-core machine with no garaged pen.
 
+## Acoustic & Thermal Reality: Which Laptops are Actually Dead Silent?
+
+Real-world testing on the **ThinkPad X1 Yoga Gen 7 (i5-1245U)** showed it is **louder and warmer than expected**. Intel 12th Gen ("Alder Lake" 10nm) voltage spikes under light developer bursts (such as a single AI agent tool call or Python script) ramp package power to 35W+, triggering audible 3,000+ RPM fan noise rather than staying passive (0 RPM).
+
+To achieve **dead silence (0 dB / 0 RPM) and cool-to-touch operation** during note-taking and AI sessions:
+
+| Architecture / Laptop | Fan Acoustic Profile | Thermal Behavior | AI / Dev Fit |
+| :--- | :--- | :--- | :--- |
+| 🥇 **Apple MacBook Air (M2 / M3 / M4)** | **0.0 dB (100% Fanless)**. No fan exists. | Ice-cold / lukewarm (4–10W draw). | Unified memory runs local embeddings (`fastembed`) and Python/Node agents instantly with zero noise. (Trade-off: macOS, clamshell only). |
+| 🥈 **Surface Pro 11 (Snapdragon X Plus/Elite)** | **Dead silent (0 RPM floor)** for light/medium loads. | TSMC 4nm ARM runs cool in hands (5–12W). | Best Windows 2-in-1 with touchscreen & Slim Pen 2; 45 TOPS NPU; 12–15h battery. |
+| 🥉 **Lenovo Yoga Slim 7x (Snapdragon X Elite)** | **Virtually inaudible**. Fan off during AI turns. | Cool in lap; premium 1.28 kg OLED build. | Excellent Windows ARM ultraportable. |
+| 💻 **ThinkPad T14s Gen 4/5 (AMD Ryzen 7840U/8840U)** | **Significantly quieter** than Intel 12th/13th Gen. | TSMC 4nm x86; low idle leakage. | Native x86 compatibility without ARM translation. |
+| 💻 **Asus Zenbook S 14 / X1 Gen 10 (Intel Lunar Lake)** | **0 RPM idle/light load** (TSMC 3nm x86). | Fixes Alder Lake power leaks; idles <2W. | Premium price (£1,200+). |
+
 ## Bottom Line
 
-- 🟢 **Buy now:** ThinkPad X1 Yoga Gen 8 at £350–550 (or Gen 7 at £300–400).
-- 🟡 **Wait & revisit:** Gen 11 around 2028; Surface Pro 11 once X2 Elite refresh discounts used units.
-- 🔴 **Skip:** Gens 9 and 10.
+- 🟢 **Purchased Budget Option:** ThinkPad X1 Yoga Gen 7 (£240 used) — functional 2-in-1 with garaged pen, but requires "Best Power Efficiency" mode to tame fan spin-ups.
+- 🟢 **Top Fanless / Dead Silent Pick:** MacBook Air M2/M3 (16GB, £650–850 used) for 100% silent mobile coding.
+- 🟢 **Top Silent Windows 2-in-1:** Surface Pro 11 (Snapdragon ARM) for silent tablet + pen workflows.
+- 🟡 **Wait & Revisit:** Gen 11 (Panther Lake) around 2028 when off-lease prices drop.
 
 ### References
-[[Lenovo ThinkPad X1 Yoga Gen 7]]
+- [[Lenovo ThinkPad X1 Yoga Gen 7]] — specs and real-world acoustic review.
+- [[GPU comparison - Razer Blade 15 vs ThinkPad X1 Yoga]] — comparison against gaming dGPU.
+- [[public/linux dev likes quiet pc|linux dev likes quiet pc]] — why acoustic silence is critical for flow state.
