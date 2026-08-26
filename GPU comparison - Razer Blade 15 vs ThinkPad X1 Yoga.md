@@ -10,6 +10,7 @@ tags:
 > *a while ago i wrote about laptops with gen 6 or gen 8 thinkpad i think. the one i concluded on or considered. write a comparison similar to "GPU comparison - Razer Blade 15 vs Dell Precision 5680" compare with razor*
 
 Side-by-side comparison of graphics architecture, compute performance, VRAM throughput, local AI inference, thermals, and daily usability between the **[[razor blade 15 rz09-02705w76 2018|Razer Blade 15 (2018)]]** (Dedicated dGPU) and the **[[2026-08-11 laptop research|Lenovo ThinkPad X1 Yoga Gen 7 / Gen 8]]** (Integrated iGPU).
+[[Lenovo ThinkPad X1 Yoga Gen 7]]
 
 ---
 

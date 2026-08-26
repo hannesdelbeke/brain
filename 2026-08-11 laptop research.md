@@ -65,3 +65,4 @@ Efficient Lunar Lake chip, but thermally limited, capped at 8 cores, missing the
 - 🔴 **Skip:** Gens 9 and 10.
 
 ### References
+[[Lenovo ThinkPad X1 Yoga Gen 7]]
