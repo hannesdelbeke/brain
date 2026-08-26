@@ -1,0 +1,12 @@
+#!/bin/sh
+# Mass deletion guard: Refuses automated commits deleting >20 files at once
+# Prevents uninitialized submodule clones or background auto-backup plugins from wiping vaults.
+DELETED_COUNT=$(git diff --cached --diff-filter=D --name-only | wc -l)
+if [ "$DELETED_COUNT" -gt 20 ] && [ "$PKM_ALLOW_MASS_DELETE" != "1" ]; then
+    echo "================================================================="
+    echo "ERROR: Attempted to delete $DELETED_COUNT files in a single commit."
+    echo "Commit BLOCKED to prevent accidental vault / submodule wipes."
+    echo "If this mass deletion is intentional, set PKM_ALLOW_MASS_DELETE=1"
+    echo "================================================================="
+    exit 1
+fi
