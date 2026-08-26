@@ -20,3 +20,6 @@ might have to run this the first time
 git submodule init
 git submodule update --recursive --remote --merge
 ```
+
+To set a unique author identity per device (e.g. `Obsidian ThinkPad`), see [[Obsidian Git - device author identity]].
+
