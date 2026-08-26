@@ -38,7 +38,3 @@ Verify settings:
 git config --local --get user.name
 ```
 
-## Relevant Notes
-- [[public/new Win pc setup list|new Win pc setup list]]
-- [[2026-08-26 new PC setup log]]
-- [[ThinkPad X1 Yoga Gen 7]]
