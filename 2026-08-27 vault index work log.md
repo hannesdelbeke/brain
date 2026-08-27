@@ -53,6 +53,12 @@ A transcript only grows, so each run records the byte it stopped at and the next
 
 A shrunk file, a moved prefix hash, or a section count that disagrees with the index reads in full, and the bookmark file carries a hash of the scanner's source, so editing the parser invalidates every offset instead of serving rows the old parser wrote. Written up in [[2026-08-27 tail reads, resuming an index at the byte it stopped at]].
 
+## The competitor, installed and run
+
+A survey found an Obsidian plugin shipping the same design, so it was installed and both engines were pointed at the same 3,264 notes. Cold index 57.86s for ours against about half an hour for theirs, which is mostly DirectML against CPU. A reindex with nothing changed 2.57s against 47s, which is not the device. Databases 28.4 MB against 25.7 MB, a query from a cold process 1.5s against 2.2s, and both answer in tens of milliseconds once a process is warm.
+
+Relevance was not measured and one query each proves nothing, except incidentally: neither vault-only index can answer "how did we stop the laptop overheating", because the answer is in a transcript. A library would replace about 300 of the 2,382 non-test lines. The full accounting is in [[2026-08-27 build or install, measuring the engine against the plugin that already exists]]; what gets taken from it is `watchfiles` for the watcher and `fastembed`'s `TextCrossEncoder`, which is already installed, for the rerank.
+
 ## Open
 
 - A watcher per corpus, now that a reindex is fast enough to run on every write. Every index is as fresh as the last manual reindex today.
