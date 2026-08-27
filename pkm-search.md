@@ -58,16 +58,19 @@ aliases:
 When running `searchd.py` as an always-on background daemon on multi-core laptops or workstations:
 
 ### 1. ONNX Intra-Op Thread Pool Configuration
-By default, ONNX Runtime can busy-spin its worker threads waiting for jobs, which can saturate multiple CPU cores even when idle.
+By default, ONNX Runtime's thread pool can busy-spin between keepalive encodes (every 250ms), causing elevated CPU consumption on multi-core machines even with no active queries.
 
-To ensure zero-CPU idle consumption:
-```python
-import onnxruntime as ort
+Reachable configuration levers to ensure true 0% CPU idle:
+* **FastEmbed Thread Cap:** Pass `threads=2` directly to `TextEmbedding(..., threads=2)`.
+* **Environment Level:** Set `OMP_WAIT_POLICY=PASSIVE` to prevent worker thread spinning.
+* **Direct ONNX Session Options:**
+  ```python
+  import onnxruntime as ort
 
-session_options = ort.SessionOptions()
-session_options.add_session_config_entry("session.intra_op.allow_spinning", "0")
-session_options.intra_op_num_threads = 2
-```
+  session_options = ort.SessionOptions()
+  session_options.add_session_config_entry("session.intra_op.allow_spinning", "0")
+  session_options.intra_op_num_threads = 2
+  ```
 
 ### 2. Heading-Level (`##`) Section Indexing
 * Rather than chunking notes by arbitrary token windows, `pkm-search` splits on Markdown heading boundaries (`^## `).
