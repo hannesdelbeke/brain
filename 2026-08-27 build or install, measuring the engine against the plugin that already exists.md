@@ -55,7 +55,7 @@ A second survey asked the same question without Obsidian in it. [txtai](https://
 
 Keep the engine. Both recommendations shipped the same day: `searchd --watch` runs one `watchfiles` thread per corpus, and `--rerank` reorders the fused top 20 with the cross-encoder that was already on disk, at about 22ms per candidate. On the sample query the rerank moved the two sections that answer it from fused rank 9 and 11 to rank 1 and 2, which is the first sign that the ranking gap the plugin's cross-encoder implied was real.
 
-What is still not measured is relevance across a question set rather than one query, and that is the only number that would justify a rewrite rather than an addition.
+Relevance across a question set has since been measured, for the rerank rather than for the two engines: 39% precision@10 against 32% over thirteen hold-out questions, which is the addition paying for itself. What is still unmeasured is the two engines' rankings against each other, and that is the only number that would justify a rewrite rather than an addition.
 
 ## How it was run
 
