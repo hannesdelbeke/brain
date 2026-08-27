@@ -82,7 +82,7 @@ Each record is timestamped, has a status, and links to source notes. Simple, gre
 
 The most powerful thing a second brain could do is work while you're asleep. Not generating content — **distilling knowledge**.
 
-Every day, you produce raw material: daily logs, health metrics, code commits, conversations, half-formed thoughts. Right now that material sits where it landed until you manually write an overnote. That overnote process is valuable — the [[2026-08-19 weekly notes overnote]] is proof — but it's manual, infrequent, and inconsistent.
+Every day, you produce raw material: daily logs, health metrics, code commits, conversations, half-formed thoughts. Right now that material sits where it landed until you manually write an overnote. That overnote process is valuable — manual weekly synthesis is proof — but it's manual, infrequent, and inconsistent.
 
 Automated consolidation operates on three timescales:
 
@@ -240,11 +240,11 @@ This is a higher bar than any current AI system meets. But the building blocks a
 Build the nightly consolidation agent first. Everything else follows from having good distilled memory.
 
 ## Related
-- [[AI-native knowledge formats beyond markdown and git]] — the original storage-focused architecture note (good on dual-layer indexing and trust decay, over-engineered on everything else)
-- [[2026-08-20 PKM workflow and architecture review]] — the three-pillar vault architecture (Git as truth, multi-vault privacy, readability)
-- [[2026-08-19 agentic note taking learnings]] — early thinking on raw data vs structured notes
-- [[2026-08-19 weekly notes overnote]] — manual consolidation that should be automated
-- [[pkm metadata indexer]] — the existing sqlite indexer that forms the retrieval layer
-- [[2026-08-18 empirical note generation experiments]] — what makes AI-generated notes actually valuable
-- [[2026-08-27 AI - 7 Cognitive Sparring Lenses]]
-- [[2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution]]
+- [[public/AI-native knowledge formats beyond markdown and git|AI-native knowledge formats beyond markdown and git]] — the original storage-focused architecture note (good on dual-layer indexing and trust decay, over-engineered on everything else)
+- [[public/pkm metadata indexer|pkm metadata indexer]] — the existing sqlite indexer that forms the retrieval layer
+- [[public/pkm-search|pkm-search]] — resident search daemon and fast hybrid query engine
+- [[public/2026-08-27 AI - 7 Cognitive Sparring Lenses|2026-08-27 AI - 7 Cognitive Sparring Lenses]]
+- [[public/2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution|2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution]]
+- [[public/2026-08-27 synapse links vs wikilinks and semantic links|2026-08-27 synapse links vs wikilinks and semantic links]]
+- [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|2026-08-27 fearless note consolidation - using git history as the deep memory layer]]
+- [[public/2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy|2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy]]
