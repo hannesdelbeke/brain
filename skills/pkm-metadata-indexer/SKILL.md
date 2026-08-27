@@ -24,6 +24,8 @@ Scans the vault, caches frontmatter, extracts wikilink edges, and embeds new or 
 python skills/pkm-metadata-indexer/index_pkm_meta.py
 # Fast build skipping neural embeddings (metadata + links only):
 python skills/pkm-metadata-indexer/index_pkm_meta.py --skip-embeddings
+# Target a specific named corpus:
+python skills/pkm-metadata-indexer/index_pkm_meta.py --corpus brain
 ```
 
 ### 2. Fast Semantic Search Tool
