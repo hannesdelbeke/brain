@@ -6,7 +6,7 @@ tags:
   - pkm
   - research
 ---
-Written after a survey, because the engine in [[pkm-search]] was starting to feel like something nobody else had built, and that feeling is usually wrong. It was wrong. Five searches across the plugin ecosystem, local search engines, agent-transcript tools, log shippers and the retrieval literature. What follows is what exists, what it does better, and the two things left that nothing found does.
+Written after a survey, because the engine in [[pkm-search]] was starting to feel like something nobody else had built, and that feeling is usually wrong. It was wrong. Eight searches across the plugin ecosystem, local search engines with no Obsidian in them, embeddable retrieval libraries, agent-transcript tools, log shippers and the retrieval literature. What follows is what exists, what it does better, and the two things left that nothing found does.
 
 ## The vault half is a crowded, solved problem
 
@@ -26,11 +26,45 @@ Others in the same shape:
 
 Reciprocal rank fusion over BM25 and vectors is textbook rather than clever: [Vespa](https://docs.vespa.ai/en/learn/tutorials/hybrid-search.html), [Meilisearch](https://www.meilisearch.com/blog/hybrid-search) and [Typesense](https://typesense.org/docs/30.2/api/vector-search.html) all ship it as a documented feature. The embedded-vector layer has a dozen options: [sqlite-vec](https://github.com/asg017/sqlite-vec), [LanceDB](https://github.com/lancedb/lancedb), [DuckDB VSS](https://duckdb.org/docs/lts/core_extensions/vss), [usearch](https://www.unum.cloud/usearch). Brute-force NumPy under 300,000 sections remains a defensible choice, but it is a choice among many rather than an absence of options.
 
+## Outside the plugin ecosystem
+
+The plugins are one shelf. A second survey looked at local search engines with no Obsidian in them, and the same architecture is there too.
+
+| Tool | Lexical | Vector | Fusion | Shape |
+| --- | --- | --- | --- | --- |
+| [txtai](https://github.com/neuml/txtai) | BM25 sparse index | local Hugging Face models | sparse and dense indexes in one embeddings database | Python library, in process, FastAPI and MCP servers optional |
+| [SeekStorm](https://github.com/SeekStorm/SeekStorm) | BM25F | ANN, Model2Vec embeddings | reciprocal rank fusion, built in | Rust, library or REST server, incremental indexing |
+| [khoj](https://github.com/khoj-ai/khoj) | no | local sentence-transformers through ONNX | none, vector only | self-hosted daemon, needs Postgres and pgvector |
+| [Typesense](https://github.com/typesense/typesense) | yes | built-in S-BERT and E5 | weighted, an `alpha` between the two | single binary server |
+| [Meilisearch](https://github.com/meilisearch/meilisearch) | yes | yes | documented as hybrid, fusion method not stated | server, MCP server exists |
+| [Recoll](https://www.recoll.org) | Xapian | no | none | desktop index with a real-time file monitor |
+| [RAGFlow](https://github.com/infiniflow/ragflow) | full text | external embedding services since the slim build | fused re-ranking | Docker platform on Elasticsearch |
+| [privateGPT](https://github.com/zylon-ai/private-gpt) | no | local through Ollama | none | RAG API, Chroma store |
+
+The closest of these to what we built are txtai and SeekStorm. Both are libraries rather than applications, both do the whole lexical-plus-vector-plus-fusion stack locally, and neither knows anything about markdown structure, heading-level chunking, a link graph, or a location payload of `(path, line, heading)`.
+
 ## The transcript half has fewer players
 
-[SpecStory](https://github.com/specstoryai/getspecstory) indexes agent sessions into a local SQLite database and searches them full-text across projects. [claude-history](https://github.com/raine/claude-history) does fuzzy search over the same JSONL from a terminal. [claude-code-log](https://github.com/daaain/claude-code-log) renders transcripts to HTML and does not search them.
+[claude-history](https://github.com/raine/claude-history) is the closest thing to the transcript half of this engine: MIT, a terminal interface over Claude Code JSONL, and its search is hybrid rather than fuzzy, embedding conversation chunks locally with a downloaded model and fusing that conversation-level ranking with lexical evidence. It indexes tool results, thinking and subagent content, and it embeds a compact routing passage per conversation rather than every chunk, which is the opposite trade from section-level vectors: cheaper to build, coarser to point at.
+
+[SpecStory](https://github.com/specstoryai/getspecstory) indexes agent sessions from ten or more coding tools into `.specstory/history/` and searches them full text, local first with optional cloud sync. [claude-history-explorer](https://github.com/adewale/claude-history-explorer) does regex over the same JSONL. [claude-code-log](https://github.com/daaain/claude-code-log) renders transcripts to HTML and does not search them. [Cursor History](https://github.com/S2thend/cursor-history) does keyword search over Cursor's chat SQLite. Chat interfaces have their own: [Open WebUI](https://docs.openwebui.com/features/chat-conversations/chat-features/history-search/) searches its SQLite lexically, and [LibreChat](https://www.librechat.ai/docs/configuration/meilisearch) bolts on Meilisearch. Further out, [Atuin](https://github.com/atuinsh/atuin) does this for shell history and [OpenRecall](https://github.com/openrecall/openrecall) does it for screenshots by OCR.
+
+Neither survey found a tool that indexes a personal notes corpus and agent transcripts in one ranked index, which is the claim this engine rests on.
 
 The agent-memory systems are a different animal wearing similar clothes. [Zep](https://www.getzep.com/) builds a temporal knowledge graph with invalidation, [mem0](https://mem0.ai/) does multi-signal retrieval over extracted memories, [Letta](https://github.com/letta-ai/letta) tiers core against archival memory, [Cognee](https://www.cognee.ai/) builds a graph through an extract-cognify-load pipeline. All of them index what a model decided to remember. None index the transcript as a document you can search.
+
+## What you would install instead of writing the retrieval math
+
+The retrieval math here is an FTS5 query, a dot product over a float32 matrix and a reciprocal rank fusion, about 300 lines. What replaces exactly that, in process, offline:
+
+- [txtai](https://github.com/neuml/txtai) replaces all three in one install, at the cost of its own storage and its own document model.
+- [LanceDB](https://github.com/lancedb/lancedb) has full text, vectors and a reranker API in an embedded columnar store.
+- [Infinity](https://github.com/infiniflow/infinity) has an embedded Python mode with dense and sparse vectors, full text, and a choice of reciprocal rank fusion, weighted sum or ColBERT reranking.
+- [sqlite-vec](https://github.com/asg017/sqlite-vec) is vectors only, in SQLite, meant to be paired with FTS5 and fused by hand. [vectorlite](https://github.com/1yefuwang1/vectorlite) is the approximate version of the same idea on hnswlib. [sqlite-vss](https://github.com/asg017/sqlite-vss) is its retired predecessor.
+- [bm25s](https://github.com/xhluca/bm25s) plus [FAISS](https://github.com/facebookresearch/faiss) plus [ranx](https://github.com/AmenRa/ranx) is the minimal trio if the parts stay separate; ranx alone is twenty-five fusion algorithms including reciprocal rank fusion, and [rerankers](https://github.com/AnswerDotAI/rerankers) is the same idea for the cross-encoder layer.
+- [DuckDB](https://duckdb.org/docs/current/core_extensions/full_text_search) with its full text and vector extensions is the embedded database that gets closest to SQLite plus FTS5 plus vectors without leaving SQL.
+
+What every one of them costs is the same thing: storage stops being one SQLite file the rest of the tool already reads, and chunk boundaries stop being ours. That is the whole reason the accounting in [[2026-08-27 build or install, measuring the engine against the plugin that already exists]] comes out where it does.
 
 ## Usage-based edges are old research and no shipped product
 

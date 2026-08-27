@@ -21,7 +21,7 @@ aliases:
 > **Goal:** Build and maintain an ultra-fast, local-first search daemon (`pkm-search`) combining ONNX neural embeddings with SQLite FTS5 / Ripgrep, providing sub-5ms location payloads to AI agents while operating 100% offline with zero idle CPU overhead.
 
 > [!todo] next
-> - **next:** A cross-encoder rerank on the fused list, using the `TextCrossEncoder` already shipped in the installed `fastembed`.
+> - **next:** Judge the rerank against a question set, with and without, before trusting it beyond the one query it was tried on.
 > - **blocked:** Nothing.
 
 ---
@@ -44,7 +44,8 @@ aliases:
 - [x] **One Copy of the Engine:** `skills/pkm-metadata-indexer/` is the only copy, and the standalone repo is a `README.md` pointing at it. Keepalive is on by default, `--no-keepalive` turns it off.
 - [x] **Tail Reads on the Transcripts:** A reindex parses only the bytes appended since the last run, taking the rest of the rows out of the index. Parsing 859 transcripts costs 0.78s against 12.46s, and the metadata-only pass 7.78s against 19.24s, leaving the 6.6s FTS rebuild as the floor. Safety is a prefix hash, a section count and a fingerprint of the scanner's own source, so a parser change cannot serve rows the old parser wrote ([[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]]).
 - [x] **Watch Each Corpus:** `searchd --watch` runs one `watchfiles` thread per corpus and reindexes that corpus when its files change, batched over a 2s debounce. The indexer's own writes are filtered out, or a reindex would trigger the next one. Measured: 0.02s for a two-file batch, and the 2.57s full pass is the ceiling on a vault of 3,264 notes.
-- [ ] **Cross-Encoder Rerank:** `fastembed` 0.8.0 already ships `TextCrossEncoder`, so reranking the fused top of the list needs an import rather than a download.
+- [x] **Cross-Encoder Rerank:** `--rerank` and `&rerank=1` reorder the fused top 20 with `Xenova/ms-marco-MiniLM-L-6-v2` out of the installed `fastembed`, loaded lazily. About 22ms per candidate, so 533ms at 20 against a 26ms query, which is why it is opt-in. On the sample query it moved the two answering sections from fused rank 9 and 11 to 1 and 2.
+- [ ] **Measure the Rerank Against a Question Set:** One query is an anecdote. The A/B harness that judged the summaries is the tool for this.
 - [ ] **Section-Level SHA256 Invalidation:** Update `index_pkm_meta.py` schema from note-level SHA256 to section-level SHA256 so editing a single heading doesn't re-embed all 6.8 sections of a note.
 - [ ] **Write-Path Near-Neighbor Gate:** Wire title embeddings to the note-creation path to detect near-duplicates before writing new notes.
 - [ ] **Prove the Scanner Seam Is Vendor-Neutral:** Write a second transcript scanner for another agent CLI returning the same `(notes, sections, links, errors)` tuple. Until a second one exists, "one scanner among several" is a claim rather than a fact. Any summarisation added later posts plain JSON to a generate endpoint named by an environment variable, with no SDK and no key in the source, so the same code runs against a local model or a hosted one; and what the model wrote is committed as data, so the index rebuilds with no model running at all. Done once already on a non-vault corpus, where a model rewrote 572 thin one-line summaries; a blind-judge A/B against the old text put precision@10 at 21% against 22%, so the sentences read better and rank the same.
