@@ -92,3 +92,4 @@ session_options.intra_op_num_threads = 2
 - [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]] — Using fast indexers alongside Git history
 - [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] — Hebbian co-retrieval and dynamic edge weighting
 - [[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]] — Reindexing an append-only corpus by parsing only what was appended
+- [[public/2026-08-27 what already exists, prior art for a local hybrid search engine|what already exists]] — The plugins, engines and log shippers that got here first, and the two things left
