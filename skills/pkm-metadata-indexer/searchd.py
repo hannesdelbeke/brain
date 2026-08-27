@@ -29,6 +29,11 @@ Endpoints, all accepting `?vault=name`:
 Off this machine, pass `--bind 0.0.0.0 --token <secret>` and send the secret as
 `X-PKM-Token`. A non-loopback bind without a token is refused rather than
 silently publishing the vault.
+
+Every `/search` and `/similar` call appends a row to `~/.pkm/queries.jsonl`,
+which is what makes a ranking change judgeable and a co-retrieval edge
+derivable. `--query-log` moves it, `--no-query-log` turns it off, and a caller
+can name where a search came from with `&origin=<note>`.
 """
 
 import argparse
@@ -55,12 +60,49 @@ DEFAULT_LIMIT = 20
 MAX_LIMIT = 100
 LOOPBACK = {"127.0.0.1", "localhost", "[::1]", "::1"}
 KEEPALIVE_S = 0.25
+QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
 # ponytail: one lock over the whole query path. The ONNX session is shared and
 # queries are tens of milliseconds once warm, so serialising them costs nothing
 # a single user can notice. Give the model its own lock if that stops being true.
 LOCK = threading.Lock()
 
+# Set by main(), None disables logging. The lock is separate from LOCK so a write
+# never sits inside the query path.
+LOG_PATH = None
+LOG_LOCK = threading.Lock()
+
+
+def log_query(kind: str, vault: str, subject: str, limit: int, took_ms: float,
+              results: list, origin: str = ""):
+    """Append one line per query, so ranking changes can be judged after the fact.
+
+    JSON Lines rather than a table, because the index database is rebuilt by
+    reindex and a log that a reindex deletes is not a log. Results are paths
+    only: the scores are reproducible from the query, the paths are what a
+    co-retrieval edge needs.
+    """
+    if LOG_PATH is None:
+        return
+    row = {
+        "t": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        "kind": kind,
+        "vault": vault,
+        "q": subject,
+        "limit": limit,
+        "took_ms": took_ms,
+        "results": [result["path"] for result in results],
+    }
+    if origin:
+        row["origin"] = origin
+    line = json.dumps(row, ensure_ascii=False)
+    try:
+        with LOG_LOCK:
+            LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+            with LOG_PATH.open("a", encoding="utf-8") as handle:
+                handle.write(line + "\n")
+    except OSError as error:  # a full or read-only disk must not fail the query
+        print(f"query log write failed: {error}", flush=True)
 
 
 class Vault:
@@ -167,13 +209,13 @@ def keepalive():
             list(model.embed(["."]))
 
 
-def do_search(vault: Vault, query: str, limit: int) -> dict:
+def do_search(vault: Vault, query: str, limit: int, origin: str = "") -> dict:
     began = time.perf_counter()
     STATE.last_query = time.time()
     with LOCK:
         rows = pkm.search_index(query, db_path=str(vault.db), limit=limit, vectors=vault.matrix())
         vault.queries += 1
-    return {
+    payload = {
         "vault": vault.name,
         "query": query,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
@@ -189,6 +231,8 @@ def do_search(vault: Vault, query: str, limit: int) -> dict:
             for row in rows
         ],
     }
+    log_query("search", vault.name, query, limit, payload["took_ms"], payload["results"], origin)
+    return payload
 
 
 def do_links(vault: Vault, note: str) -> dict:
@@ -218,7 +262,7 @@ def do_similar(vault: Vault, note: str, limit: int) -> dict:
         vault.queries += 1
     if rows is None:
         return {"error": f"no single indexed note matches {note!r}"}
-    return {
+    payload = {
         "vault": vault.name,
         "note": note,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
@@ -234,6 +278,10 @@ def do_similar(vault: Vault, note: str, limit: int) -> dict:
             for row in rows
         ],
     }
+    # The note is both the query and the origin here, which is the co-retrieval
+    # edge this log exists to collect.
+    log_query("similar", vault.name, note, limit, payload["took_ms"], payload["results"], note)
+    return payload
 
 
 def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
@@ -324,7 +372,7 @@ class Handler(BaseHTTPRequestHandler):
                     self.reply(400, {"error": "q is required"})
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
-                self.reply(200, do_search(vault, query, limit))
+                self.reply(200, do_search(vault, query, limit, first("origin")))
             elif url.path == "/links" and method == "GET":
                 note = first("note")
                 if not note:
@@ -415,7 +463,16 @@ def main():
                         help="Let the model go cold between queries, trading ~30ms on the first "
                              "query after idle. Keepalive costs ~0.00 cores now the ONNX pool is "
                              "capped at QUERY_THREADS, so there is rarely a reason to pass this")
+    parser.add_argument("--query-log", default=str(QUERY_LOG),
+                        help="JSON Lines file recording one row per /search and /similar: "
+                             "the query text, the vault and the result paths")
+    parser.add_argument("--no-query-log", action="store_true",
+                        help="Record nothing. The log holds query strings and result paths in "
+                             "plain text, which is the reason to turn it off")
     args = parser.parse_args()
+
+    global LOG_PATH
+    LOG_PATH = None if args.no_query_log else Path(args.query_log).expanduser()
 
     if args.bind not in LOOPBACK and not args.token:
         parser.error("a non-loopback --bind needs --token, otherwise the vault is served to the network unauthenticated")
@@ -447,6 +504,8 @@ def main():
         warm_up()
     if STATE.warm and not args.no_keepalive:
         threading.Thread(target=keepalive, daemon=True).start()
+
+    print(f"query log {LOG_PATH or 'off'}", flush=True)
 
     server = ThreadingHTTPServer((args.bind, args.port), Handler)
     print(f"listening on http://{args.bind}:{args.port}"

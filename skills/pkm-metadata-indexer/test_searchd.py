@@ -85,6 +85,22 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual([row["path"] for row in body["results"]], ["alpha.md"])
         self.assertIn("distinctivephrase", body["results"][0]["snippet"])
 
+    def test_a_query_is_logged_with_its_results(self):
+        log = Path(self.temp_dir.name) / "queries.jsonl"
+        SEARCHD.LOG_PATH = log
+        try:
+            self.get("/search?q=distinctivephrase&origin=beta.md")
+        finally:
+            SEARCHD.LOG_PATH = None
+        rows = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()]
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["q"], "distinctivephrase")
+        self.assertEqual(rows[0]["vault"], "first")
+        self.assertEqual(rows[0]["results"], ["alpha.md"])
+        self.assertEqual(rows[0]["origin"], "beta.md")
+        self.get("/search?q=distinctivephrase")  # log off again
+        self.assertEqual(len(log.read_text(encoding="utf-8").splitlines()), 1)
+
     def test_each_vault_only_sees_its_own_notes(self):
         _, wrong = self.get("/search?q=separatephrase")
         self.assertEqual(wrong["results"], [])

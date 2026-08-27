@@ -77,6 +77,11 @@ A keepalive thread encodes a throwaway string every 250ms so the model never goe
 
 Every consumer speaks the same HTTP contract, so an agent, an editor plugin, a launcher and a shell alias all share one index and one model. Requests carrying an `Origin` header are refused and the `Host` must be loopback, which keeps a web page in the browser from reading the vault. To reach it from another machine, pass `--bind 0.0.0.0 --token <secret>` and send `X-PKM-Token`; a non-loopback bind without a token is refused rather than silently publishing the vault.
 
+Every `/search` and `/similar` call appends one JSON Lines row to `~/.pkm/queries.jsonl`: timestamp, vault, query text, limit, latency and the result paths. It is a file rather than a table in the index because a reindex rebuilds the index, and a log a reindex deletes is not a log. Scores are left out, since they are reproducible from the query, while the paths are what a co-retrieval edge needs. A caller can say where a search came from with `&origin=<note>`, and `/similar` records the note as its own origin. `--query-log` moves the file and `--no-query-log` turns it off, which is the switch to reach for given it holds query strings in plain text.
+```bash
+tail -3 ~/.pkm/queries.jsonl
+```
+
 Tests: `python -m unittest test_searchd test_index_pkm_meta test_index_sessions`.
 
 ### 7. Open Problem Finder (`find_open_problems.py`)
