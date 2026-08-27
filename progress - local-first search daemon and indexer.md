@@ -20,6 +20,10 @@ aliases:
 
 > **Goal:** Build and maintain an ultra-fast, local-first search daemon (`pkm-search`) combining ONNX neural embeddings with SQLite FTS5 / Ripgrep, providing sub-5ms location payloads to AI agents while operating 100% offline with zero idle CPU overhead.
 
+> [!todo] next
+> - **next:** Merge the vault copy of `pkm-metadata-indexer` into the standalone repo, taking the vault side for every feature.
+> - **blocked:** Whether keepalive stays on by default in the standalone copy or becomes opt-in like the vault copy.
+
 ---
 
 ## 🟢 Current State (What Works Now)
