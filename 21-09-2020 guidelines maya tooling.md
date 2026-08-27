@@ -81,6 +81,6 @@ we should do code reviews, not only to catch errors but also to learn from each 
 
 ## note
 2025 observations:
-I wrote this when I still was a Lead [[technical artist]] at a studio.
+I wrote this when working as a Lead [[technical artist]].
 It could use some better formatting.
 [[tooldev]]

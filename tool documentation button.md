@@ -33,7 +33,7 @@ CONs
 - less consistent, harder to update tools in bulk
 
 > [!NOTE]- sample hardcoded docs button
-> At game studio, [[VuCity]], and game studio we had a docs button always in the same place. So artists always know where to find the documentation.
+> In studio pipelines, having a docs button always in the same place ensures artists always know where to find documentation.
 > ![[documentation button-1676646504645.jpeg|300]]
 
 ### Dependency approach
