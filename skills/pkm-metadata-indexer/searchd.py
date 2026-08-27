@@ -411,9 +411,10 @@ def main():
     parser.add_argument("--token", default=os.environ.get("PKM_SEARCHD_TOKEN"),
                         help="Shared secret required as X-PKM-Token, needed for any non-loopback bind")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
-    parser.add_argument("--keepalive", action="store_true",
-                        help="Periodically encode throwaway strings to keep the model hot, "
-                             "costing ~0.00 cores idle now the ONNX pool is capped at QUERY_THREADS")
+    parser.add_argument("--no-keepalive", action="store_true",
+                        help="Let the model go cold between queries, trading ~30ms on the first "
+                             "query after idle. Keepalive costs ~0.00 cores now the ONNX pool is "
+                             "capped at QUERY_THREADS, so there is rarely a reason to pass this")
     args = parser.parse_args()
 
     if args.bind not in LOOPBACK and not args.token:
@@ -444,7 +445,7 @@ def main():
             print(f"  warning: no index yet, POST /reindex?vault={vault.name}", flush=True)
     if not args.no_warm:
         warm_up()
-    if STATE.warm and args.keepalive:
+    if STATE.warm and not args.no_keepalive:
         threading.Thread(target=keepalive, daemon=True).start()
 
     server = ThreadingHTTPServer((args.bind, args.port), Handler)
