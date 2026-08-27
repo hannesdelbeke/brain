@@ -183,6 +183,28 @@ class MetadataIndexerTest(unittest.TestCase):
             [],
         )
 
+    def test_query_path_caps_the_onnx_thread_pool(self):
+        """The idle CPU burn comes back if the query path stops passing threads."""
+        calls = []
+
+        class FakeModel:
+            def __init__(self, **kwargs):
+                calls.append(kwargs)
+
+        original_model, original_cache = INDEXER.TextEmbedding, INDEXER._MODEL_CACHE
+        INDEXER.TextEmbedding, INDEXER._MODEL_CACHE = FakeModel, {}
+        try:
+            INDEXER.get_embedding_model(INDEXER.QUERY_PROVIDERS, INDEXER.QUERY_THREADS)
+            INDEXER.get_embedding_model(INDEXER.QUERY_PROVIDERS)  # the indexing path
+            INDEXER.get_embedding_model(INDEXER.QUERY_PROVIDERS, INDEXER.QUERY_THREADS)  # cached
+        finally:
+            INDEXER.TextEmbedding, INDEXER._MODEL_CACHE = original_model, original_cache
+
+        self.assertEqual(INDEXER.QUERY_THREADS, 1)
+        self.assertEqual(len(calls), 2, "threads must be part of the cache key")
+        self.assertEqual(calls[0].get("threads"), 1)
+        self.assertNotIn("threads", calls[1], "bulk embedding keeps the full pool")
+
 
 if __name__ == "__main__":
     unittest.main()

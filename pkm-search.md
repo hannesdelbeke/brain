@@ -58,14 +58,19 @@ aliases:
 When running `searchd.py` as an always-on background daemon on multi-core laptops or workstations:
 
 ### 1. ONNX Intra-Op Thread Pool Configuration
-By default, ONNX Runtime's thread pool can busy-spin between keepalive encodes (every 250ms), causing elevated CPU consumption on multi-core machines even with no active queries.
+By default, ONNX Runtime's thread pool busy-spins between keepalive encodes (every 250ms), burning CPU on multi-core machines with no active queries. Fixed: `get_embedding_model()` takes a `threads` argument, part of the model cache key, and the query path passes `QUERY_THREADS = 1`. Bulk embedding leaves it unset and keeps the full pool, where the parallelism is real work.
 
-None of this is applied in the repo yet. Two levers are reachable as the code stands:
+Measured on a 12-core laptop, encoding one string every 250ms the way the keepalive loop does:
 
-* **FastEmbed Thread Cap:** pass `threads=2` to `TextEmbedding(...)` in `get_embedding_model()`.
-* **Environment Level:** export `OMP_WAIT_POLICY=passive` in the daemon's environment.
+| threads | idle cores | per encode |
+| --- | --- | --- |
+| unset | 11.93 | 3.8ms |
+| 2 | 0.96 | 5.1ms |
+| 1 | 0.05 | 8.6ms |
 
-The session-level switch below is the direct fix, but `fastembed.TextEmbedding` accepts no `SessionOptions`, so reaching it means building the ONNX Runtime session yourself instead of going through fastembed:
+The extra 4.8ms per encode is invisible inside a 13-22ms query. End to end the daemon now measures 0.000 cores over 20s idle with warm queries at 17ms.
+
+The session-level switch below looks like the direct fix, but `fastembed.TextEmbedding` accepts no `SessionOptions`, so that route means building the ONNX Runtime session yourself instead of going through fastembed. Its `threads=` argument reaches the same pool, which is why the one-line version wins:
 
 ```python
 import onnxruntime as ort

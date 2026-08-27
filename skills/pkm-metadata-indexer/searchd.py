@@ -139,7 +139,7 @@ def warm_up():
         print("fastembed unavailable, lexical results only", flush=True)
         return
     began = time.perf_counter()
-    model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS)
+    model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS, pkm.QUERY_THREADS)
     list(model.embed(["warm"]))  # the first encode allocates, do it before a user waits
     STATE.warm = True
     print(f"model warm in {time.perf_counter() - began:.2f}s "
@@ -149,12 +149,16 @@ def warm_up():
 def keepalive():
     """Encode a throwaway string on a timer so the model never goes cold.
 
-    Warm, one encode costs 3.6-3.8ms. After a single idle second the same call
-    costs 9.5-34.5ms, which was the largest remaining variance in a query, so
-    the pipeline is kept saturated for about 4ms of one core every 250ms. Skips
-    a tick when a real query just ran, so it never makes a user wait.
+    Warm, one encode costs 8.6ms at QUERY_THREADS. After a single idle second
+    the same call costs 9.5-34.5ms, which was the largest remaining variance in
+    a query, so the pipeline is kept saturated every 250ms. Skips a tick when a
+    real query just ran, so it never makes a user wait.
+
+    This loop is what made the idle burn visible: with the default ONNX pool it
+    left 11.93 cores spinning between ticks. Capped, the daemon measures 0.00
+    cores idle over 20s. See QUERY_THREADS in index_pkm_meta.
     """
-    model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS)
+    model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS, pkm.QUERY_THREADS)
     while True:
         time.sleep(KEEPALIVE_S)
         if time.time() - STATE.last_query < KEEPALIVE_S:
@@ -408,7 +412,8 @@ def main():
                         help="Shared secret required as X-PKM-Token, needed for any non-loopback bind")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--keepalive", action="store_true",
-                        help="Periodically encode throwaway strings to keep model hot (warning: can trigger ONNX thread pool busy-spinning)")
+                        help="Periodically encode throwaway strings to keep the model hot, "
+                             "costing ~0.00 cores idle now the ONNX pool is capped at QUERY_THREADS")
     args = parser.parse_args()
 
     if args.bind not in LOOPBACK and not args.token:
