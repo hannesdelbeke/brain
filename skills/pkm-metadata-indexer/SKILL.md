@@ -73,7 +73,7 @@ curl http://127.0.0.1:44771/links?note=Obsidian
 curl -X POST "http://127.0.0.1:44771/reindex?vault=brain"
 curl http://127.0.0.1:44771/health
 ```
-By default, the daemon idles near zero CPU and answers warm queries in 10-35ms. Running a periodic keepalive loop is discouraged on multi-core systems because ONNX Runtime's intra-op thread pool defaults to busy-spinning (`allow_spinning = 1`), which burns full CPU cores continuously between pings. Keeping the thread pool parked at idle maintains sub-35ms response times with zero background CPU overhead.
+A keepalive thread encodes a throwaway string every 250ms so the model never goes cold, and it is on by default; `--no-keepalive` turns it off and trades about 30ms on the first query after idle. Keepalive used to be discouraged because ONNX Runtime's intra-op pool busy-spins between pings (`allow_spinning = 1`) and burned 11.93 of 12 cores; capping the query path at `QUERY_THREADS = 1` brings a warm idle daemon to 0.000 cores, so the reason to avoid it is gone. Warm queries answer in 10-35ms either way.
 
 Every consumer speaks the same HTTP contract, so an agent, an editor plugin, a launcher and a shell alias all share one index and one model. Requests carrying an `Origin` header are refused and the `Host` must be loopback, which keeps a web page in the browser from reading the vault. To reach it from another machine, pass `--bind 0.0.0.0 --token <secret>` and send `X-PKM-Token`; a non-loopback bind without a token is refused rather than silently publishing the vault.
 
