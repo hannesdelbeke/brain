@@ -138,6 +138,8 @@ python skills/pkm-metadata-indexer/searchd.py --sessions claude=~/.claude/projec
 ```
 A transcript is a note, a turn is a section, and a subagent spawn is an edge back to the session that spawned it, so `search_index`, `query_links` and the SHA256 cache work unchanged. Every file a tool touched is also an edge, which answers "which session last edited this file" from the graph rather than from git. `build_index` takes a `collect=` scanner for this, and the markdown scanner is still the default, so there is one index format and two front ends rather than two systems.
 
+A reindex is a tail read. A transcript only ever grows, so each run records the byte it stopped at, the line number there and a hash of the 4 KB before it in `<root>/.pkm_scan_state.json`, and the next run seeks to that byte instead of parsing from the top. Rows for the untouched part come back out of the index itself, which already stores every section with its text, so nothing is cached twice. A file that shrank, whose prefix hash moved, or whose section count disagrees with the index is read in full, and any edit to `index_sessions.py` or to `CHUNKING_VERSION` changes a fingerprint in the state file that invalidates every offset — so a scanner change can never leave stale rows behind. Measured over 859 transcripts: parsing drops from 12.46s to 0.78s and the whole metadata-only pass from 19.24s to 7.78s, of which 6.6s is the FTS rebuild. A half-written last line has no newline yet, so it is left for the next run. `--full` reparses everything.
+
 Only prose and a whitelist of tool arguments are indexed. Tool results are about 80% of the corpus by size, they hold whatever secrets and file dumps passed through the session, and the files they read are still on disk; thinking blocks are another 6% and are skipped for now. Client-generated user turns (slash commands, hook output, `isMeta` caveats, task notifications) are dropped before they can become the session title, and text under 30 characters never gets a vector.
 
 Measured at `~/.claude/projects/.pkm_index.db`: a metadata-only pass over 766 transcripts and 1.49 GB takes 2m05s (102s parsing JSON Lines, 21s committing) for 70,418 sections and 8,524 edges in 101 MB, and `--with-embeddings` over 858 transcripts adds 298.86s at 265.5 vec/s on DirectML for 79,359 vectors, 320.92s and 222 MB in total. Warm queries run 34-62ms with vectors and 30-58ms without, against 13-22ms for the vault index at a tenth the sections; the vector matrix is 122 MB resident in the daemon. Embeddings stay a flag rather than a prerequisite, because `search_index` degrades to lexical when a corpus has none. Chunk headings carry the session's first real prompt, which labels a turn by its session rather than by itself. See [[cross-agent session indexing architecture]].
@@ -153,7 +155,7 @@ def scan_my_corpus(root):
 
 pkm.build_index(vault_path=str(root), collect=scan_my_corpus)
 ```
-`index_sessions.py` is the worked example, in 226 lines. The daemon takes the same scanner by import path, so a corpus living in another repository needs no code here:
+`index_sessions.py` is the worked example, in 380 lines. The daemon takes the same scanner by import path, so a corpus living in another repository needs no code here:
 ```bash
 python skills/pkm-metadata-indexer/searchd.py --corpus /path/to/that/repo/my_scanner.py:scan_my_corpus=name=/path/to/corpus
 ```
