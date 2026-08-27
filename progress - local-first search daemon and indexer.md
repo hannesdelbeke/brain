@@ -43,7 +43,7 @@ aliases:
 ## 🔴 Blockers & Open Questions
 
 * **DirectML GPU Initialization Latency:** On initial cold startup on Windows, DirectX 12 driver compilation takes 3–5 seconds before the model enters memory.
-* **No Query Logging:** `searchd.py` records neither queries nor result sets, so every retrieval-driven idea downstream (co-retrieval weighting, synaptic edges, ranking evaluation) has no data to run on.
+* **No Query Logging:** `searchd.py` records neither queries nor result sets, so every retrieval-driven idea downstream (co-retrieval weighting, synaptic edges, ranking evaluation) has no data to run on. Designed out in [[public/2026-08-27 every read is a write - co-retrieval as synapse strength|every read is a write]], whose v0 is an `origin` parameter on `/search` and one batched insert per result.
 
 ---
 
