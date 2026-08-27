@@ -44,6 +44,10 @@ Over 859 transcripts: parsing drops from 12.46s to 0.78s, and a whole metadata-o
 
 The reason to care is not the seconds. A 55 second reindex is something a person runs occasionally and then stops running, so the index is as fresh as the last time someone remembered. A sub-second parse is something a file watcher can run on every write, which is the difference between a search index and a search index that is true.
 
+## Who did it first
+
+Every log shipper, and Splunk in this exact shape: its fishbucket stores a CRC of a file's first 256 bytes as identity, a byte offset, and a CRC of the content at that offset, and treats a mismatch as a rewrite. Filebeat, Logstash, Fluentd and Vector all keep the same kind of record, and all of them additionally identify a file by inode or by a hash of its head, so a rotated or renamed file is followed rather than reread. That part does not apply to a corpus where every file is named by a session uuid and never rotated, but it is the first thing to add if that ever changes. Surveyed in [[2026-08-27 what already exists, prior art for a local hybrid search engine]].
+
 ## Where it applies
 
 Any corpus whose files only grow: transcripts, logs, append-only exports, chat histories. Not markdown notes, which get edited in the middle, and which is why the vault index still reads every file and invalidates by hash instead. See [[cross-agent session indexing architecture]] for what a transcript scanner does with the bytes once it has them, and [[offline GPU embeddings with incremental cache]] for the same argument one layer down, where the expensive thing is the vector rather than the parse.
