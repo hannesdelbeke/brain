@@ -21,7 +21,7 @@ aliases:
 > **Goal:** Build and maintain an ultra-fast, local-first search daemon (`pkm-search`) combining ONNX neural embeddings with SQLite FTS5 / Ripgrep, providing sub-5ms location payloads to AI agents while operating 100% offline with zero idle CPU overhead.
 
 > [!todo] next
-> - **next:** Turn on session embeddings. The transcript corpus is lexical only, the pass is about seven minutes, and with the query log in place the before and after are comparable.
+> - **next:** Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 > - **blocked:** Nothing.
 
 ---
@@ -39,6 +39,7 @@ aliases:
 
 ## 🟡 Active Experiments & Next Steps
 
+- [x] **Session Embeddings:** The transcript corpus carries vectors: 79,359 sections over 858 transcripts, generated in 298.86s at 265.5 vec/s on DirectML, 320.92s for the whole pass, database 222 MB. Warm hybrid queries answer in 34-62ms, against 30-58ms lexical, so the ranking is free at query time; the cost is the 122 MB vector matrix the daemon holds resident. A paraphrase now works — "how did we stop the laptop overheating" returns the session that diagnosed it first, with no shared keyword.
 - [x] **Query Logging:** Every `/search` and `/similar` appends a row to `~/.pkm/queries.jsonl` with the query text, the vault, the latency, the result paths and an optional caller-supplied `origin`. A file rather than a table, because a reindex rebuilds the index. This is the producer the co-retrieval and ranking-evaluation work had none of.
 - [x] **One Copy of the Engine:** `skills/pkm-metadata-indexer/` is the only copy, and the standalone repo is a `README.md` pointing at it. Keepalive is on by default, `--no-keepalive` turns it off.
 - [ ] **Section-Level SHA256 Invalidation:** Update `index_pkm_meta.py` schema from note-level SHA256 to section-level SHA256 so editing a single heading doesn't re-embed all 6.8 sections of a note.
