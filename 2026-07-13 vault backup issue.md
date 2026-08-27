@@ -19,7 +19,7 @@ especially after [[2026-02-22 Obsidian track note view]]
 
 ## Evidence
 
-Investigated 2026-08-25 from a clone of the brain repo. The clone is not the live vault: it was cloned that morning, `.obsidian/` is gitignored so it holds no plugin config, and Obsidian's vault registry on that machine (`%APPDATA%\obsidian\obsidian.json`) lists only the WorkPKM vault. The plugin settings below are read from WorkPKM's `.obsidian/plugins/obsidian-git/data.json` (obsidian-git 2.38.6) as a proxy for how the plugin is normally configured here, not from the vault that failed.
+Investigated 2026-08-25 from a clone of the repository. The clone is not the live vault: it was cloned that morning, `.obsidian/` is gitignored so it holds no plugin config. The plugin settings below are read from a reference `.obsidian/plugins/obsidian-git/data.json` (obsidian-git 2.38.6) as a proxy for how the plugin is normally configured, not from the vault that failed.
 
 What the commit history proves:
 
