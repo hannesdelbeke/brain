@@ -62,6 +62,7 @@ aliases:
 
 ## 📚 Connected Research & Tools
 
+* **What Already Exists:** [[public/2026-08-27 what already exists, prior art for a local hybrid search engine|prior art survey]] — an Obsidian plugin ships the same FTS5 plus local vectors plus RRF over MCP, with the watcher we have not built; what is left as ours is the two corpora in one index and tool-touched files as edges
 * **Cross-Initiative Plan:** [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]]
 * **Core Tool Repository:** [[public/pkm-search|pkm-search]]
 * **Metadata Indexer & Skill:** [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]
