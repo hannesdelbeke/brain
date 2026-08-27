@@ -29,7 +29,7 @@ Checked on 2026-08-27 against `pkm-search` (working tree) and the `brain` vault.
 | Claim in notes | Actual state | Consequence |
 |:---|:---|:---|
 | Idle CPU burn: levers "identified", one of them a direct `ort.SessionOptions` with `session.intra_op.allow_spinning=0` | `pkm-search` has no thread or spin config anywhere. Embeddings run through `fastembed.TextEmbedding` in `index_pkm_meta.get_embedding_model()`, constructed with `providers=` only, and fastembed accepts no `SessionOptions` — that lever is unreachable without building the ORT session directly | Nothing is applied, so the 12-core idle burn still runs. Highest-cost open item |
-| `urgent_tasks.py` documented in the pkm-metadata-indexer skill (section 8) | Present in the `brain` skill copy, absent from the `pkm-search` repo | Two copies of one tool have drifted: 7 shared files differ, and `urgent_tasks.py` + `mention_heatmap.py` exist only in `brain` |
+| `urgent_tasks.py` documented in the pkm-metadata-indexer skill (section 8) | Present in the skill, which is now the only copy of the tool | Resolved. The `pkm-search` repo it was missing from is a README pointing at the skill |
 | `python _scripts/check_dead_links.py <note>` is a mandatory pre-publish step | Script now exists (`_scripts/check_dead_links.py`, added 2026-08-27) | Resolved. Run it in the promotion SOP rather than describing it |
 | Public notes link as `[[public/<note>]]` | `brain` is mounted at `public/` inside a private parent vault by directory junction, not as a submodule — a submodule would commit a pointer to `brain` into the private repo's history. Opened standalone there is no parent, so every `public/`-prefixed link (90 notes) resolves to nothing | Fine inside the parent vault, broken for standalone/published browsing. Decide which context is authoritative before mass-editing links |
 | `profile.md` (living user profile) and `memory.md` (episodic log) | Neither file exists in either vault | Phase 1 of the AI-buddy architecture is unstarted; everything downstream depends on it |
@@ -56,11 +56,8 @@ The buddy architecture is five capabilities deep on paper and zero deep on disk.
 * **Acceptance:** seven consecutive days of entries written without hand-holding, and one instance where the digest surfaced something forgotten.
 * **Owner note:** [[public/progress - agentic biomimetic vault|agentic biomimetic vault progress]].
 
-### 3. Reconcile the two copies of the indexer
-`skills/pkm-metadata-indexer/` in `brain` and the `pkm-search` repo are the same tool published twice, and they have diverged: `SKILL.md`, `searchd.py`, `index_pkm_meta.py`, `search_vault.py`, `find_open_problems.py` and two test files all differ, and `urgent_tasks.py` and `mention_heatmap.py` exist only in `brain`.
-
-* **What:** pick the repo as source of truth, port the `brain`-only files and the diffs into it, then make the `brain` copy a sync target rather than a second working copy.
-* **Acceptance:** `diff -rq` between the two directories reports only `.git`, `.gitignore` and `README.md`, and every command in `SKILL.md` runs from a clean shell.
+### 3. ~~Reconcile the two copies of the indexer~~
+Done 2026-08-27: `skills/pkm-metadata-indexer/` is the only copy, and the `pkm-search` repo is a README pointing at it.
 
 ---
 
