@@ -5,3 +5,6 @@ __pycache__/
 Thumbs.db
 .obsidian/
 *.db
+*.db-shm
+*.db-wal
+.pkm_index*
