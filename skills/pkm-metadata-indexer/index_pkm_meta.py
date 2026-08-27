@@ -64,7 +64,18 @@ QUERY_PROVIDERS = ["CPUExecutionProvider"]
 # Indexing leaves threads unset, where the pool is doing real parallel work.
 QUERY_THREADS = 1
 
+# A cross-encoder reads the query and one section together instead of comparing
+# two vectors made apart, which is the standard accuracy step after fusion. It
+# ships with fastembed, so it costs no new dependency, and it is off by default
+# because it costs time: about 22ms per candidate on this machine, so 227ms over
+# 10, 533ms over 20 and 706ms over 30, against a 26ms query. Twenty is the
+# default because the sections that answered the sample query sat at fused rank
+# 9 and 11, so a top-10 rerank would have found one of them and missed the other.
+RERANK_MODEL = "Xenova/ms-marco-MiniLM-L-6-v2"
+RERANK_CANDIDATES = 20
+
 _MODEL_CACHE: dict[tuple, object] = {}
+_RERANK_CACHE: dict[str, object] = {}
 
 
 def get_embedding_model(providers: list[str] | None = None, threads: int | None = None):
@@ -82,6 +93,43 @@ def get_embedding_model(providers: list[str] | None = None, threads: int | None 
         kwargs = {"threads": threads} if threads is not None else {}
         _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key[0]), **kwargs)
     return _MODEL_CACHE[key]
+
+
+def get_cross_encoder():
+    """Load the reranking model once per process, on first use.
+
+    Loading costs about 1s warm and the first ever call downloads roughly 90 MB,
+    so it is never loaded until a query asks to rerank. Left on the default ONNX
+    thread pool, which is the fast setting here: capping it made a 20-candidate
+    rerank 106ms to 256ms. The pool spins for about two seconds afterwards, which
+    is tolerable for an opt-in call and is why the daemon's keepalive does not
+    touch this model.
+    """
+    if "model" not in _RERANK_CACHE:
+        from fastembed.rerank.cross_encoder import TextCrossEncoder
+        _RERANK_CACHE["model"] = TextCrossEncoder(model_name=RERANK_MODEL,
+                                                  providers=QUERY_PROVIDERS)
+    return _RERANK_CACHE["model"]
+
+
+def rerank_results(query: str, results: list[dict], cursor: sqlite3.Cursor) -> list[dict]:
+    """Reorder fused results by reading each section against the query.
+
+    Fusion ranks a section by how two independent lists ranked it. A cross-encoder
+    reads the pair, so it can tell a section that answers the question from one
+    that shares its vocabulary. Sections without indexed text fall back to their
+    heading, which is what a vector-only hit for an image or an empty section has.
+    """
+    section_ids = [result["section_id"] for result in results]
+    placeholders = ",".join("?" * len(section_ids))
+    texts = dict(cursor.execute(
+        f"SELECT section_id, content FROM sections_fts WHERE section_id IN ({placeholders})",
+        section_ids,
+    ).fetchall())
+    documents = [texts.get(result["section_id"]) or result["heading"] or "" for result in results]
+    for result, score in zip(results, get_cross_encoder().rerank(query, documents)):
+        result["rerank_score"] = float(score)
+    return sorted(results, key=lambda result: -result["rerank_score"])
 
 
 @dataclass(frozen=True)
@@ -917,6 +965,7 @@ def search_index(
     db_path: str | None = None,
     limit: int = 10,
     vectors: tuple | None = None,
+    rerank: bool = False,
 ) -> list[dict]:
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
@@ -985,6 +1034,7 @@ def search_index(
                 score += 1.0 / (60 + semantic["vec_rank"])
             results.append(
                 {
+                    "section_id": section_id,
                     "path": source["path"],
                     "heading": source["heading"],
                     "start_line": source["start_line"],
@@ -995,7 +1045,13 @@ def search_index(
                     "snippet": lexical["snippet"] if lexical else None,
                 }
             )
-        return sorted(results, key=lambda result: -result["score"])[:limit]
+        ranked = sorted(results, key=lambda result: -result["score"])
+        if rerank and ranked:
+            if not HAS_FASTEMBED:
+                print("fastembed is unavailable; returning fused results unranked.")
+            else:
+                ranked = rerank_results(query, ranked[:RERANK_CANDIDATES], cursor)
+        return ranked[:limit]
     finally:
         connection.close()
 
@@ -1442,12 +1498,16 @@ def main():
     parser.add_argument("--links", type=str, default=None, help="Show inbound and outbound links for a note")
     parser.add_argument("--stats", "--perf", action="store_true", help="Display database and indexing performance benchmarks")
     parser.add_argument("--limit", type=int, default=10, help="Maximum search results")
+    parser.add_argument("--rerank", action="store_true",
+                        help="Reorder the fused top with a cross-encoder, about 533ms over "
+                             "20 candidates and a 90 MB model download the first time")
     args = parser.parse_args()
 
     if args.stats:
         print_stats(vault_path=args.vault, db_path=args.db)
     elif args.search:
-        results = search_index(args.search, vault_path=args.vault, db_path=args.db, limit=args.limit)
+        results = search_index(args.search, vault_path=args.vault, db_path=args.db,
+                               limit=args.limit, rerank=args.rerank)
         print(f"\nHybrid search results for: {args.search!r}")
         for index, result in enumerate(results, 1):
             ranks = []
@@ -1455,6 +1515,8 @@ def main():
                 ranks.append(f"lex {result['lex_rank']}")
             if result["vec_rank"] is not None:
                 ranks.append(f"vec {result['vec_rank']}")
+            if "rerank_score" in result:
+                ranks.append(f"ce {result['rerank_score']:.2f}")
             print(
                 f"{index}. {result['path']}:{result['start_line']} #{result['heading']} "
                 f"(RRF {result['score']:.4f}; {', '.join(ranks)})"
