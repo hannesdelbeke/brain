@@ -27,7 +27,7 @@ Related: [[public/2026-08-27 biomimetic AI - stealing from brains, immune system
 
 | Link Paradigm | Mechanism | Weighting | Directionality | Temporal Dynamics | Plasticity / Adaptation | Primary Failure Mode |
 |:---|:---|:---|:---|:---|:---|:---|
-| **1. Wikilink (`[[target]]`)** | Explicit text token in markdown | Binary (`0` or `1`) | Undirected / Weakly Directed | Static forever | Zero (Static text) | Cluttered "spaghetti graph" of unpruned links |
+| **1. Wikilink (`"[[target]]"`)** | Explicit text token in markdown | Binary (`0` or `1`) | Undirected / Weakly Directed | Static forever | Zero (Static text) | Cluttered "spaghetti graph" of unpruned links |
 | **2. SQL Foreign Key** | Relational schema constraint | Binary / Typed | Strictly Directed | Static until migrated | Zero (Brittle schema) | Brittle; rejects emergent, unmodeled thought |
 | **3. Vector Cosine (RAG)** | Dense embedding angle | Continuous float (`0.0`–`1.0`) | Undirected similarity | Dynamic per query | Implicit | Semantic hallucinations & false-positive noise |
 | **4. Knowledge Graph Triple** | Explicit RDF `(S)-[P]->(O)` | Discrete label + weight | Directed & Typed | Static | Low (Manual curation) | Heavy maintenance overhead & authoring friction |
@@ -86,7 +86,7 @@ Graph topology in biology exists on a knife's edge between chaos and rigidity. W
 
 1. **Epileptic Seizures (Runaway Positive Feedback):**
    * *In the Brain:* When inhibitory GABA circuits fail or synaptic density is too high, a single sensory pulse triggers an uncontrolled, recursive cascade that consumes the entire cortex.
-   * *In PKM / Obsidian:* When a user links every generic word (`[[apple]]`, `[[AI]]`, `[[script]]`, `[[system]]`), the Obsidian graph view turns into a solid ball of yarn. An AI agent doing multi-hop graph retrieval gets trapped in a combinatorial explosion, retrieving 500 irrelevant notes for every question.
+   * *In PKM / Obsidian:* When a user links every generic word (`"[[apple]]"`, `"[[AI]]"`, `"[[script]]"`, `"[[system]]"`), the Obsidian graph view turns into a solid ball of yarn. An AI agent doing multi-hop graph retrieval gets trapped in a combinatorial explosion, retrieving 500 irrelevant notes for every question.
 2. **Signal-to-Noise Collapse & Apophenia (False Meaning):**
    * If every concept is strongly linked to every other concept, the system loses the ability to prioritize. The AI treats a casual throwaway remark with the same associative weight as a core architectural principle.
 3. **Autism & Synaptic Pruning Deficits:**

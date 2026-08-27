@@ -43,7 +43,7 @@ but in future i might not even read comments since AI coding is taking over.
 	- [x] I backed up [[Google Drive]] by [[embed Google Drive folder in Obsidian]]
 		- so now i have a cloud backup, and a local backup
 	- There's not much left I care about on my [[dropbox]], i moved some game repos on [[github]]
-	- [[backup my github projects]]
+	- Backing up my GitHub projects locally
 	- [ ] still need to back up many photos. Some live on [[Google Photos]] only so no backup.
 	- [ ] what about my old hard drives from (pre) uni? haven't touched them since.
 
@@ -80,7 +80,7 @@ integrate instagram into my data lake:
 - [[TODO localize instagram memory posts]]
 - [[2025 - Instagram as a diary]]
 
-also see [[ontology]]
+also see ontology and categorization models
 consider how [[encryption]] and security would affect everything
 ### tags
 [[data lake]]
