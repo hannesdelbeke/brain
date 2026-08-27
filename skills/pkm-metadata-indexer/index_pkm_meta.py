@@ -57,19 +57,30 @@ TOKEN_RE = re.compile(r"\w+|[^\w\s]", re.UNICODE)
 # DirectML runs at 165 vec/s. Set to None to use whatever provider indexing uses.
 QUERY_PROVIDERS = ["CPUExecutionProvider"]
 
-_MODEL_CACHE: dict[tuple[str, ...], object] = {}
+# One intra-op thread on the query path. Measured on a 12-core laptop encoding
+# one string every 250ms, the way searchd's keepalive does: the default pool
+# busy-spins 11.93 cores, threads=2 burns 0.96, threads=1 burns 0.05. A query
+# encode goes 3.8ms to 8.6ms in exchange, invisible inside a 13-22ms query.
+# Indexing leaves threads unset, where the pool is doing real parallel work.
+QUERY_THREADS = 1
+
+_MODEL_CACHE: dict[tuple, object] = {}
 
 
-def get_embedding_model(providers: list[str] | None = None):
+def get_embedding_model(providers: list[str] | None = None, threads: int | None = None):
     """Load the embedding model once per process.
 
     Loading costs about 2.9s and encoding one query costs milliseconds, so a
     long-lived process (searchd.py) must never pay that twice. A one-shot CLI
     call is unaffected, it only ever asks once.
+
+    `threads` caps the ONNX Runtime intra-op pool. Leave it None for bulk
+    embedding and pass QUERY_THREADS on the query path, see the note above.
     """
-    key = tuple(providers or get_embedding_providers())
+    key = (tuple(providers or get_embedding_providers()), threads)
     if key not in _MODEL_CACHE:
-        _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key))
+        kwargs = {"threads": threads} if threads is not None else {}
+        _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key[0]), **kwargs)
     return _MODEL_CACHE[key]
 
 
@@ -946,7 +957,7 @@ def search_index(
             if not HAS_FASTEMBED:
                 print("fastembed is unavailable; returning lexical results only.")
             else:
-                model = get_embedding_model(QUERY_PROVIDERS)
+                model = get_embedding_model(QUERY_PROVIDERS, QUERY_THREADS)
                 query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
                 norm = np.linalg.norm(query_vector)
                 if norm > 0:
