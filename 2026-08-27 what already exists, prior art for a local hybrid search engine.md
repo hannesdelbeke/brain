@@ -64,3 +64,5 @@ Neither is a large invention. Both are consequences of the `collect=` seam, whic
 - Inverse propensity scoring before co-retrieval edges are trusted, because the ranker's own ordering will otherwise be measured as relevance.
 - Decay by path distance from the spreading activation model, rather than counting co-occurrences flat.
 - Filebeat's head fingerprint as file identity, if the transcript corpus ever gains rotation.
+
+Whether to stop building and install one of these instead was then measured on the same vault: [[2026-08-27 build or install, measuring the engine against the plugin that already exists]].
