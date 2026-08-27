@@ -21,8 +21,8 @@ aliases:
 > **Goal:** Build and maintain an ultra-fast, local-first search daemon (`pkm-search`) combining ONNX neural embeddings with SQLite FTS5 / Ripgrep, providing sub-5ms location payloads to AI agents while operating 100% offline with zero idle CPU overhead.
 
 > [!todo] next
-> - **next:** Merge the vault copy of `pkm-metadata-indexer` into the standalone repo, taking the vault side for every feature.
-> - **blocked:** Whether keepalive stays on by default in the standalone copy or becomes opt-in like the vault copy.
+> - **next:** Query logging in `searchd.py`, one row per query with the result ids, which nothing produces today and which every ranking and co-retrieval idea downstream needs.
+> - **blocked:** Nothing.
 
 ---
 
@@ -39,10 +39,10 @@ aliases:
 
 ## 🟡 Active Experiments & Next Steps
 
-- [ ] **Sync the Two Copies:** `skills/pkm-metadata-indexer/` here and the standalone repo still diverge. The vault copy is ahead on features: `urgent_tasks.py`, `mention_heatmap.py`, `find_similar_notes` and `/similar`, `find_unlinked_mentions` and `/unlinked` with its `--unlinked` CLI flag, plus the tests and SKILL.md sections for all of it. The standalone copy is ahead only on defaults and packaging: keepalive is on by default there (`--no-keepalive`) against opt-in `--keepalive` here, and it carries a `README.md` the vault copy has no use for. `find_open_problems.py` differs by line endings only. The thread-pool fix is now applied on both sides. Direction of the merge is vault → standalone for everything except the keepalive default, which needs a decision.
+- [x] **One Copy of the Engine:** `skills/pkm-metadata-indexer/` is the only copy, and the standalone repo is a `README.md` pointing at it. Keepalive is on by default, `--no-keepalive` turns it off.
 - [ ] **Section-Level SHA256 Invalidation:** Update `index_pkm_meta.py` schema from note-level SHA256 to section-level SHA256 so editing a single heading doesn't re-embed all 6.8 sections of a note.
 - [ ] **Write-Path Near-Neighbor Gate:** Wire title embeddings to the note-creation path to detect near-duplicates before writing new notes.
-- [ ] **Prove the Scanner Seam Is Vendor-Neutral:** Write a second transcript scanner for another agent CLI returning the same `(notes, sections, links, errors)` tuple. Until a second one exists, "one scanner among several" is a claim rather than a fact. Any summarisation added later posts plain JSON to a generate endpoint named by an environment variable, with no SDK and no key in the source, so the same code runs against a local model or a hosted one; and what the model wrote is committed as data, so the index rebuilds with no model running at all. Done once already on a non-vault corpus, where a model rewrote 572 thin one-line summaries and the retrieval measurably improved.
+- [ ] **Prove the Scanner Seam Is Vendor-Neutral:** Write a second transcript scanner for another agent CLI returning the same `(notes, sections, links, errors)` tuple. Until a second one exists, "one scanner among several" is a claim rather than a fact. Any summarisation added later posts plain JSON to a generate endpoint named by an environment variable, with no SDK and no key in the source, so the same code runs against a local model or a hosted one; and what the model wrote is committed as data, so the index rebuilds with no model running at all. Done once already on a non-vault corpus, where a model rewrote 572 thin one-line summaries; a blind-judge A/B against the old text put precision@10 at 21% against 22%, so the sentences read better and rank the same.
 - [ ] **Rework Obsidian Core Features on the Index:** Semantic quick switcher, a local graph that draws meaning as well as links, a duplicate warning on note creation, tag suggestion, orphan-biased random note, and the 1,780 dead wikilinks as a query. Each is listed with its acceptance in [[public/core Obsidian features to rework on the vault index|core Obsidian features to rework on the vault index]].
 - [ ] **Derive Edges Outside the Vault:** The link half of the index does not need markdown or Obsidian. One scanner over one repository emitting edges for markdown links, relative path references and image embeds answers "what documents reference this file" and "which images are referenced by nothing", neither of which is answerable today. Designed in [[public/2026-08-27 a link graph over code, docs and assets|a link graph over code, docs and assets]].
 - [ ] **Evaluate `sqlite-vec`:** Benchmark native C-extension `sqlite-vec` against in-process NumPy matrix multiplication for cold queries.
