@@ -139,7 +139,7 @@ Measured over 766 transcripts and 1.49 GB: a metadata-only pass takes 2m05s (102
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
 - **Neural Embeddings:** 384-dimensional dense vectors (`BAAI/bge-small-en-v1.5`) stored as float32 blobs.
-- **Link Graph (`edges`):** All source-to-target `[[wikilinks]]` for instant traversal without grepping files.
+- **Link Graph (`edges`):** All source-to-target [[wikilink|wikilinks]] for instant traversal without grepping files.
 
 ## Why use this
 Enables instant SQL aggregations and single-turn semantic search across thousands of notes with zero ongoing API costs, serving as an intelligent pre-filter for agents.
