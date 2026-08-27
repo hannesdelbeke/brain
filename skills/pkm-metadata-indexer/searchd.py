@@ -26,6 +26,11 @@ Endpoints, all accepting `?vault=name`:
     GET  /unlinked?note=   sections naming a note without linking to it
     POST /reindex          incremental rebuild, blocks until done
 
+`--watch` starts one watcher thread per corpus, so a write reindexes that
+corpus a couple of seconds later instead of waiting for someone to POST
+/reindex. Changes are batched by debounce and the indexer's own writes are
+filtered out, or the reindex would trigger the next one.
+
 Off this machine, pass `--bind 0.0.0.0 --token <secret>` and send the secret as
 `X-PKM-Token`. A non-loopback bind without a token is refused rather than
 silently publishing the vault.
@@ -54,12 +59,20 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import index_pkm_meta as pkm
 
+try:
+    import watchfiles
+except ImportError:  # only --watch needs it
+    watchfiles = None
+
 HOST = "127.0.0.1"
 PORT = 44771
 DEFAULT_LIMIT = 20
 MAX_LIMIT = 100
 LOOPBACK = {"127.0.0.1", "localhost", "[::1]", "::1"}
 KEEPALIVE_S = 0.25
+WATCH_DEBOUNCE_MS = 2000
+WATCH_STEP_MS = 200
+INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
 # ponytail: one lock over the whole query path. The ONNX session is shared and
@@ -317,6 +330,43 @@ def do_reindex(vault: Vault) -> dict:
     return {"vault": vault.name, "took_s": round(time.perf_counter() - began, 2), **vault.counts()}
 
 
+def index_writes(path: str) -> bool:
+    """True for a path the indexer itself writes.
+
+    Without this a reindex writes the database inside the watched root, the
+    watcher sees it and reindexes again, forever. Dotfiles go with it: the scan
+    state file is one, and no note is named that way.
+    """
+    name = Path(path).name
+    return name.startswith(".") or name.endswith(INDEX_SUFFIXES)
+
+
+def watch_vault(vault: Vault, stream=None):
+    """Reindex one corpus whenever its files change.
+
+    A pass is seconds now, so the index can follow writes instead of waiting
+    for someone to remember. `watchfiles` batches by debounce, so a save that
+    touches five files is one reindex. Errors print and the loop continues: a
+    half-written file that fails to parse must not stop the watcher.
+    """
+    if stream is None:
+        stream = watchfiles.watch(
+            vault.root,
+            watch_filter=lambda change, path: watchfiles.DefaultFilter()(change, path)
+            and not index_writes(path),
+            debounce=WATCH_DEBOUNCE_MS,
+            step=WATCH_STEP_MS,
+        )
+    for batch in stream:
+        try:
+            result = do_reindex(vault)
+            print(f"watch {vault.name}: {len(batch)} change(s), reindexed in "
+                  f"{result['took_s']}s", flush=True)
+        except Exception as error:
+            print(f"watch {vault.name}: reindex failed, {type(error).__name__}: {error}",
+                  flush=True)
+
+
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -458,6 +508,9 @@ def main():
     parser.add_argument("--port", type=int, default=PORT)
     parser.add_argument("--token", default=os.environ.get("PKM_SEARCHD_TOKEN"),
                         help="Shared secret required as X-PKM-Token, needed for any non-loopback bind")
+    parser.add_argument("--watch", action="store_true",
+                        help="Reindex a corpus when its files change, one watcher per corpus. "
+                             "Needs watchfiles")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--no-keepalive", action="store_true",
                         help="Let the model go cold between queries, trading ~30ms on the first "
@@ -500,10 +553,16 @@ def main():
         print(f"vault {vault.name}\n  root {vault.root}\n  db   {vault.db}", flush=True)
         if not vault.db.exists():
             print(f"  warning: no index yet, POST /reindex?vault={vault.name}", flush=True)
+    if args.watch and watchfiles is None:
+        parser.error("--watch needs watchfiles, pip install watchfiles")
     if not args.no_warm:
         warm_up()
     if STATE.warm and not args.no_keepalive:
         threading.Thread(target=keepalive, daemon=True).start()
+    if args.watch:
+        for vault in vaults:
+            threading.Thread(target=watch_vault, args=(vault,), daemon=True).start()
+        print(f"watching {len(vaults)} corpus root(s)", flush=True)
 
     print(f"query log {LOG_PATH or 'off'}", flush=True)
 
