@@ -17,7 +17,7 @@ aliases:
 
 # pkm-search
 
-**[pkm-search on GitHub](https://github.com/hannesdelbeke/pkm-search)** is a lightweight, local-first search daemon and CLI utility designed to provide sub-5ms hybrid (lexical + semantic vector) retrieval across large personal knowledge management (PKM) vaults, code repositories, and agent session logs.
+**[pkm-search on GitHub](https://github.com/hannesdelbeke/brain/tree/main/skills/pkm-metadata-indexer)**, published as the `pkm-metadata-indexer` skill in this vault, is a lightweight, local-first search daemon and CLI utility designed to provide sub-5ms hybrid (lexical + semantic vector) retrieval across large personal knowledge management (PKM) vaults, code repositories, and agent session logs.
 
 ---
 
