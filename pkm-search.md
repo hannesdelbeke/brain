@@ -60,17 +60,20 @@ When running `searchd.py` as an always-on background daemon on multi-core laptop
 ### 1. ONNX Intra-Op Thread Pool Configuration
 By default, ONNX Runtime's thread pool can busy-spin between keepalive encodes (every 250ms), causing elevated CPU consumption on multi-core machines even with no active queries.
 
-Reachable configuration levers to ensure true 0% CPU idle:
-* **FastEmbed Thread Cap:** Pass `threads=2` directly to `TextEmbedding(..., threads=2)`.
-* **Environment Level:** Set `OMP_WAIT_POLICY=PASSIVE` to prevent worker thread spinning.
-* **Direct ONNX Session Options:**
-  ```python
-  import onnxruntime as ort
+None of this is applied in the repo yet. Two levers are reachable as the code stands:
 
-  session_options = ort.SessionOptions()
-  session_options.add_session_config_entry("session.intra_op.allow_spinning", "0")
-  session_options.intra_op_num_threads = 2
-  ```
+* **FastEmbed Thread Cap:** pass `threads=2` to `TextEmbedding(...)` in `get_embedding_model()`.
+* **Environment Level:** export `OMP_WAIT_POLICY=passive` in the daemon's environment.
+
+The session-level switch below is the direct fix, but `fastembed.TextEmbedding` accepts no `SessionOptions`, so reaching it means building the ONNX Runtime session yourself instead of going through fastembed:
+
+```python
+import onnxruntime as ort
+
+session_options = ort.SessionOptions()
+session_options.add_session_config_entry("session.intra_op.allow_spinning", "0")
+session_options.intra_op_num_threads = 2
+```
 
 ### 2. Heading-Level (`##`) Section Indexing
 * Rather than chunking notes by arbitrary token windows, `pkm-search` splits on Markdown heading boundaries (`^## `).
