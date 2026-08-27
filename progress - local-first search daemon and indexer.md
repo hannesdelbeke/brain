@@ -25,7 +25,7 @@ aliases:
 ## 🟢 Current State (What Works Now)
 
 * **Resident Search Daemon (`pkm-search`):** ONNX embedding model kept resident in memory via `searchd.py`, eliminating the 2–5s PyTorch import cold start ([[public/pkm-search|pkm-search]]).
-* **Zero-CPU Idle Fix:** Identified and patched the 12-core busy-spin bug in ONNX Runtime via `session.intra_op.allow_spinning=0` and `intra_op_num_threads=2`.
+* **CPU Idle Levers Identified:** Identified root cause of keepalive thread-pool burn (ONNX thread spinning) with actionable levers: `threads=2` in FastEmbed constructor, `OMP_WAIT_POLICY=PASSIVE` in daemon env, and direct `SessionOptions` configuration.
 * **Heading-Level Indexing (`##`):** Section-level chunking proven mathematically superior to arbitrary token window slicing, saving 95%+ context tokens by returning lean location payloads `(path, line, heading)` ([[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]]).
 * **In-Memory NumPy Search:** Proved that brute-force dot product over float32 blobs in NumPy executes in <1ms across 68,000 sections, eliminating the need for heavy vector databases below 300,000 notes.
 
