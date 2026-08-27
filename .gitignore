@@ -3,6 +3,7 @@ __pycache__/
 *$py.class
 .DS_Store
 Thumbs.db
+*.stackdump
 .obsidian/
 *.db
 *.db-shm
