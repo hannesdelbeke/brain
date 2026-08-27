@@ -137,6 +137,25 @@ Only prose and a whitelist of tool arguments are indexed. Tool results are about
 
 Measured over 766 transcripts and 1.49 GB: a metadata-only pass takes 2m05s (102s parsing JSON Lines, 21s committing) and produces 70,418 sections and 8,524 edges in a 101 MB database at `~/.claude/projects/.pkm_index.db`. Lexical-only queries over that run 30-58ms, against 13-22ms for the hybrid vault index at a tenth the sections. Embeddings are a later flag rather than a prerequisite, because `search_index` degrades to lexical when a corpus has no vectors. Chunk headings carry the session's first real prompt, which labels a turn by its session rather than by itself. See [[cross-agent session indexing architecture]].
 
+### 13. Adding a Corpus
+`build_index` is source-agnostic after the scan. Pass `collect=` a function taking a root and returning `(notes, sections, links, errors)` and everything downstream — chunking, hashing, FTS, embedding, RRF, the daemon — works unchanged:
+```python
+import index_pkm_meta as pkm
+
+def scan_my_corpus(root):
+    ...
+    return notes, sections, links, errors
+
+pkm.build_index(vault_path=str(root), collect=scan_my_corpus)
+```
+`index_sessions.py` is the worked example, in 226 lines. The daemon takes the same scanner by import path, so a corpus living in another repository needs no code here:
+```bash
+python skills/pkm-metadata-indexer/searchd.py --corpus /path/to/that/repo/my_scanner.py:scan_my_corpus=name=/path/to/corpus
+```
+`MODULE` is a path to a `.py` file or an importable dotted name, `FUNCTION` is the scanner in it, and the rest is the usual `NAME=PATH` vault spec.
+
+Embedding uses CUDA or DirectML when either is present and falls back to CPU. Query embedding is a single vector either way, so the daemon is fast without a GPU; indexing is where the device matters.
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
