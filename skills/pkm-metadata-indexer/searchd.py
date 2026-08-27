@@ -128,6 +128,7 @@ class Vault:
         self.queries = 0
         self.vectors = None
         self.vectors_version = None
+        self.reader = None
 
     def matrix(self):
         """Keep the vector matrix resident, rebuilt only when the database changes.
@@ -135,19 +136,32 @@ class Vault:
         Re-reading 10 MB of blobs per query was the largest remaining cost. SQLite
         bumps `data_version` on any commit made through another connection, which
         is exactly how a reindex reaches us, so it is the invalidation signal.
+
+        The connection has to outlive the call. A fresh connection reads 2 and
+        keeps reading 2 no matter what any other connection commits, so opening
+        one per query pinned the cache for the life of the daemon and a reindex
+        never reached a search. Every caller holds LOCK, so one connection shared
+        across the handler threads is safe, but sqlite3 has to be told that.
         """
         if not self.db.exists():
             return [], None
-        connection = sqlite3.connect(f"file:{self.db}?mode=ro", uri=True)
-        try:
-            cursor = connection.cursor()
-            version = cursor.execute("PRAGMA data_version").fetchone()[0]
-            if self.vectors is None or version != self.vectors_version:
-                self.vectors = pkm.load_vectors(cursor)
-                self.vectors_version = version
-            return self.vectors
-        finally:
-            connection.close()
+        if self.reader is None:
+            self.reader = sqlite3.connect(
+                f"file:{self.db}?mode=ro", uri=True, check_same_thread=False
+            )
+        cursor = self.reader.cursor()
+        version = cursor.execute("PRAGMA data_version").fetchone()[0]
+        if self.vectors is None or version != self.vectors_version:
+            self.vectors = pkm.load_vectors(cursor)
+            self.vectors_version = version
+        return self.vectors
+
+    def close(self):
+        """Release the read connection. Only a test needs this: Windows refuses to
+        delete a database file while a handle is open, and the daemon never exits."""
+        if self.reader is not None:
+            self.reader.close()
+            self.reader = None
 
     def counts(self) -> dict:
         if not self.db.exists():
