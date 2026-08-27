@@ -65,9 +65,17 @@ Relevance was not measured and one query each proves nothing, except incidentall
 
 The one thing that had to be got right is that a reindex writes the database inside the root it is watching, which would trigger the next reindex forever. The filter drops the database, its journals and every dotfile, none of which a note is ever named. Measured live: a two-file batch reindexes in 0.02s, and the whole-vault pass with nothing to re-embed is 2.57s, so the ceiling is a couple of seconds either way.
 
+## The rerank, and the first sign the ranking was leaving something behind
+
+`--rerank` on the CLI and `&rerank=1` on the daemon reorder the fused top 20 with `Xenova/ms-marco-MiniLM-L-6-v2`, which ships inside the `fastembed` already installed, so it cost no dependency and a 90 MB download on first use. The model is loaded lazily and never touched otherwise.
+
+It is opt-in because it is slow: about 22ms per candidate, so 227ms at 10 candidates, 533ms at 20 and 706ms at 30, against a 26ms query. Twenty is the default because of what the sample query showed. "how did we stop the laptop overheating" put the two sections that actually answer it at fused rank 9 and 11, under notes about laptop hardware and building ventilation; the rerank put both first, at 5.9 and 5.4 against -5.2 for the next one. A top-10 rerank would have found one and missed the other.
+
+One query is not an evaluation, and the honest next step is the same question set discipline used on the summaries: judge a set of questions with and without the rerank before believing it in general.
+
 ## Open
 
-- A cross-encoder rerank, now that the model ships with the `fastembed` already installed.
+- Relevance measured across a question set, with and without the rerank.
 - Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 - The write-path near-duplicate gate, still unstarted.
 - A second transcript scanner for another agent CLI, which is what turns "one scanner among several" from a claim into a fact.

@@ -43,13 +43,19 @@ Nothing, for the reranker, because `fastembed` is already installed and 0.8.0 sh
 
 `sqlite-vec` stays on the shelf until brute force stops being under a millisecond, which it is not close to being at 79,000 sections.
 
+## Outside the plugin shelf
+
+A second survey asked the same question without Obsidian in it. [txtai](https://github.com/neuml/txtai) and [SeekStorm](https://github.com/SeekStorm/SeekStorm) are the closest, both libraries doing lexical, vector and fusion locally in process, and [Infinity](https://github.com/infiniflow/infinity) and [LanceDB](https://github.com/lancedb/lancedb) are the embedded databases with the same three layers plus reranking. On the transcript side, [claude-history](https://github.com/raine/claude-history) turns out to be hybrid rather than fuzzy, with local embeddings over conversation-level routing passages. None of them index a notes corpus and agent transcripts in one ranked index. The full list is in [[2026-08-27 what already exists, prior art for a local hybrid search engine]].
+
 ## The other close competitor
 
 `@oomkapwn/enquire-mcp` is the same shape again, BM25 and embeddings fused by reciprocal rank fusion with a BGE reranker, HNSW and int8 quantisation, aimed at Obsidian as agent memory. Two independent projects converging on the same architecture is the useful signal here: the design is right, and being second to it is not a reason to stop.
 
-## The decision
+## The decision, and what came of it
 
-Keep the engine. Install `watchfiles` and wire the watcher. Use the cross-encoder that is already on disk. Measure relevance head to head before considering anything larger, because the only number that would justify a rewrite is a ranking one, and that number does not exist yet.
+Keep the engine. Both recommendations shipped the same day: `searchd --watch` runs one `watchfiles` thread per corpus, and `--rerank` reorders the fused top 20 with the cross-encoder that was already on disk, at about 22ms per candidate. On the sample query the rerank moved the two sections that answer it from fused rank 9 and 11 to rank 1 and 2, which is the first sign that the ranking gap the plugin's cross-encoder implied was real.
+
+What is still not measured is relevance across a question set rather than one query, and that is the only number that would justify a rewrite rather than an addition.
 
 ## How it was run
 
