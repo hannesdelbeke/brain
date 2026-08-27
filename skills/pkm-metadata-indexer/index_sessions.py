@@ -38,12 +38,19 @@ TOOL_ARG_CHARS = 300
 FILE_ARG_KEYS = ("file_path", "notebook_path")
 # "yes", "continue" and "do it" cost a vector and return nothing.
 MIN_PROSE_CHARS = 30
+# A user turn is the one place a short line carries the subject: "who is logged
+# in gh" is 19 characters and is what someone would search for, while everything
+# an assistant writes that short is "Now the tests." Measured over 120
+# transcripts, 15% of user prose sits under 30 characters against 6% of the
+# assistant's, and the assistant's half is all filler.
+MIN_USER_PROSE_CHARS = 10
 # The client writes slash commands, hook output and its own notifications into
 # the transcript as user turns. They are the loudest thing in the file and none
 # of it was said by anyone, so it is dropped before it can become a title.
 SYNTHETIC_PROSE = re.compile(
-    r"^<(local-command|command-(name|message|args|contents|stdout|stderr)"
+    r"^(<(local-command|command-(name|message|args|contents|stdout|stderr)"
     r"|bash-(input|stdout|stderr)|task-notification|system-reminder|user-prompt-submit-hook)"
+    r"|\[Request interrupted by user)"
 )
 TITLE_CHARS = 80
 SNIPPET_CHARS = 240
@@ -74,7 +81,8 @@ def event_for(role: str, block, line: int) -> Event | None:
     kind = block.get("type")
     if kind == "text":
         text = (block.get("text") or "").strip()
-        if len(text) < MIN_PROSE_CHARS or SYNTHETIC_PROSE.match(text):
+        floor = MIN_USER_PROSE_CHARS if role == "user" else MIN_PROSE_CHARS
+        if len(text) < floor or SYNTHETIC_PROSE.match(text):
             return None
         return Event(line, role, text)
     if kind == "tool_use":
