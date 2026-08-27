@@ -12,7 +12,7 @@ tags:
 ---
 Applying the hybrid search, vector embeddings, and SQLite indexing optimizations from [[pkm metadata indexer]] to unified session logs across Antigravity, Codex, and Claude Code.
 
-**Status, 2026-08-25: built for Claude Code.** `index_sessions.py` is the adapter, 766 transcripts and 1.49 GB index to 70,418 sections and 8,524 edges in 2m05s, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Lexical-only queries run 30-58ms. What follows is the design and what measurement changed about it; Antigravity and Codex are still unwritten.
+**Status, 2026-08-27: built for Claude Code.** `index_sessions.py` is the adapter, 859 transcripts and 1.49 GB index to 79,489 sections and 9,738 edges, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Queries run 34-62ms with vectors and 30-58ms without. A first pass costs 19.24s of metadata plus 298.86s of embedding; after it, a transcript only grows, so a reindex parses the appended bytes and finishes in 7.78s ([[2026-08-27 tail reads, resuming an index at the byte it stopped at]]). What follows is the design and what measurement changed about it; Antigravity and Codex are still unwritten.
 
 The engine needed no new index, ranker or daemon. `build_index` gained one `collect=` parameter naming the scanner, the markdown scanner stayed the default, and everything after the scan was already source-agnostic.
 
