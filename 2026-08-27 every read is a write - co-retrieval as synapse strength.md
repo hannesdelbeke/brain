@@ -31,7 +31,7 @@ The action plan puts `synaptic_edges`, Hebbian weighting and nightly decay in P2
 
 > Needs co-retrieval data that nothing logs yet. Log queries and their result sets in `searchd.py` first; weighting an empty table is theatre.
 
-That is this note. The design in [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] describes the consumer — a weighted edge table, LTP on co-activation, LTD on disuse, pruning below threshold. It never named the producer. `searchd.py` already sees every query and every result set; it just throws them away after serialising the response. Adding one parameter and one insert turns the daemon into the write path for the entire synaptic layer, and unblocks every P2 item that depends on it.
+That is this note. The design in [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] describes the consumer — a weighted edge table, LTP on co-activation, LTD on disuse, pruning below threshold. It never named the producer. `searchd.py` is now it: since 2026-08-27 every `/search` and `/similar` appends the query, the vault, the result paths and an optional caller-supplied `origin` to `~/.pkm/queries.jsonl`. A result set in one row is a co-activation, which is the raw material every P2 item here waits on. What is still missing is the consumer: nothing reads that file yet.
 
 Nothing else in the stack is in a position to do this. The indexer only sees files. Obsidian only sees human clicks ([[public/view count|view count]], [[public/2026-02-22 Obsidian track note view|track note view]], [[public/2026-07-22 follow up Obsidian viewcount|follow up on viewcount]]) and misses everything an agent reads, which is now the majority of reads.
 
