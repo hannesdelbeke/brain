@@ -59,9 +59,15 @@ A survey found an Obsidian plugin shipping the same design, so it was installed 
 
 Relevance was not measured and one query each proves nothing, except incidentally: neither vault-only index can answer "how did we stop the laptop overheating", because the answer is in a transcript. A library would replace about 300 of the 2,382 non-test lines. The full accounting is in [[2026-08-27 build or install, measuring the engine against the plugin that already exists]]; what gets taken from it is `watchfiles` for the watcher and `fastembed`'s `TextCrossEncoder`, which is already installed, for the rerank.
 
+## The index follows writes now
+
+`searchd --watch` runs one `watchfiles` thread per corpus, so a save reindexes that corpus a couple of seconds later. Changes batch over a 2s debounce, so five files saved together are one pass, and a pass that throws prints and leaves the watcher running.
+
+The one thing that had to be got right is that a reindex writes the database inside the root it is watching, which would trigger the next reindex forever. The filter drops the database, its journals and every dotfile, none of which a note is ever named. Measured live: a two-file batch reindexes in 0.02s, and the whole-vault pass with nothing to re-embed is 2.57s, so the ceiling is a couple of seconds either way.
+
 ## Open
 
-- A watcher per corpus, now that a reindex is fast enough to run on every write. Every index is as fresh as the last manual reindex today.
+- A cross-encoder rerank, now that the model ships with the `fastembed` already installed.
 - Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 - The write-path near-duplicate gate, still unstarted.
 - A second transcript scanner for another agent CLI, which is what turns "one scanner among several" from a claim into a fact.

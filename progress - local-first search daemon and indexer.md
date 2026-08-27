@@ -21,7 +21,7 @@ aliases:
 > **Goal:** Build and maintain an ultra-fast, local-first search daemon (`pkm-search`) combining ONNX neural embeddings with SQLite FTS5 / Ripgrep, providing sub-5ms location payloads to AI agents while operating 100% offline with zero idle CPU overhead.
 
 > [!todo] next
-> - **next:** A watcher per corpus, so the index follows writes instead of waiting for a manual reindex.
+> - **next:** A cross-encoder rerank on the fused list, using the `TextCrossEncoder` already shipped in the installed `fastembed`.
 > - **blocked:** Nothing.
 
 ---
@@ -43,7 +43,7 @@ aliases:
 - [x] **Query Logging:** Every `/search` and `/similar` appends a row to `~/.pkm/queries.jsonl` with the query text, the vault, the latency, the result paths and an optional caller-supplied `origin`. A file rather than a table, because a reindex rebuilds the index. This is the producer the co-retrieval and ranking-evaluation work had none of.
 - [x] **One Copy of the Engine:** `skills/pkm-metadata-indexer/` is the only copy, and the standalone repo is a `README.md` pointing at it. Keepalive is on by default, `--no-keepalive` turns it off.
 - [x] **Tail Reads on the Transcripts:** A reindex parses only the bytes appended since the last run, taking the rest of the rows out of the index. Parsing 859 transcripts costs 0.78s against 12.46s, and the metadata-only pass 7.78s against 19.24s, leaving the 6.6s FTS rebuild as the floor. Safety is a prefix hash, a section count and a fingerprint of the scanner's own source, so a parser change cannot serve rows the old parser wrote ([[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]]).
-- [ ] **Watch Each Corpus:** A sub-second parse is cheap enough to run on every write, which is what makes the index true rather than as fresh as the last manual reindex. Use `watchfiles`, the one dependency the build-or-install review recommends adding.
+- [x] **Watch Each Corpus:** `searchd --watch` runs one `watchfiles` thread per corpus and reindexes that corpus when its files change, batched over a 2s debounce. The indexer's own writes are filtered out, or a reindex would trigger the next one. Measured: 0.02s for a two-file batch, and the 2.57s full pass is the ceiling on a vault of 3,264 notes.
 - [ ] **Cross-Encoder Rerank:** `fastembed` 0.8.0 already ships `TextCrossEncoder`, so reranking the fused top of the list needs an import rather than a download.
 - [ ] **Section-Level SHA256 Invalidation:** Update `index_pkm_meta.py` schema from note-level SHA256 to section-level SHA256 so editing a single heading doesn't re-embed all 6.8 sections of a note.
 - [ ] **Write-Path Near-Neighbor Gate:** Wire title embeddings to the note-creation path to detect near-duplicates before writing new notes.
