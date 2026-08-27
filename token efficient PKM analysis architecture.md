@@ -44,5 +44,6 @@ Exposes structured retrieval tools (`search_notes`, `get_neighborhood`, `read_se
 Compresses years of daily notes through multi-stage summaries (Daily $\rightarrow$ Monthly $\rightarrow$ Multi-Year), analyzing decades of logs for under $0.20.
 
 ### Related
-- [[ai overview app]] — High-level application architecture for automated personal overviews.
-- [[offline GPU embeddings with incremental cache]] — Local vector cache mechanics on RTX GPUs.
+- [[public/pkm-search|pkm-search]] — resident search daemon and fast hybrid query engine
+- [[public/offline GPU embeddings with incremental cache|offline GPU embeddings with incremental cache]] — Local vector cache mechanics on RTX GPUs.
+- [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]] — Distilling working memory alongside Git history.

@@ -149,7 +149,7 @@ Tested on [[razor blade 15 rz09-02705w76 2018|Razer Blade 15]]:
    ```
 
 ## References
-- [[token efficient PKM analysis architecture]]
-- [[PKM indexer performance log]]
-- [[2026-08-17 PKM review]]
-- [[what AI models can razor blade run]]
+- [[public/pkm-search|pkm-search]] — resident search daemon and fast hybrid query engine
+- [[public/token efficient PKM analysis architecture|token efficient PKM analysis architecture]]
+- [[public/PKM indexer performance log|PKM indexer performance log]]
+- [[public/what AI models can razor blade run|what AI models can razor blade run]]

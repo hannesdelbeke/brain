@@ -46,5 +46,7 @@ Actually pressing `Delete`.
 * **Verdict:** Rely on Git for the ultimate safety net. If a note is truly useless, delete it. If you ever desperately need it, you can run `git log --all --full-history -- <path>` to resurrect it.
 
 ## Related
-- [[note types]] (See the Archive vs Delete lifecycle)
-- [[token efficient PKM analysis architecture]]
+- [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks and semantic links]] — comparative analysis of biological synaptic pruning vs. wikilinks
+- [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]] — using Git history as the deep memory layer
+- [[public/2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution|biomimetic AI]] — sleep consolidation and forgetting curves
+- [[public/token efficient PKM analysis architecture|token efficient PKM analysis architecture]]
