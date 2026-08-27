@@ -7,7 +7,7 @@ tags:
 Autism is a neurotype defined by distinct cognitive architecture—how information is processed, filtered, and prioritized—rather than a list of social deficits. Modern research frames it through several core mechanisms:
 
 ### Monotropism
-The brain allocates deep processing power to one interest channel at a time, filtering out everything else. This isn't just [[hyperfocus]]—it's the underlying architecture that makes hyperfocus possible. When the channel is active, peripheral life (tidiness, physical needs, secondary conversations) genuinely drops from awareness. Monotropic flow vs fragmented context switching directly affects nervous system regulation.
+The brain allocates deep processing power to one interest channel at a time, filtering out everything else. This isn't just hyperfocus—it's the underlying architecture that makes hyperfocus possible. When the channel is active, peripheral life (tidiness, physical needs, secondary conversations) genuinely drops from awareness. Monotropic flow vs fragmented context switching directly affects nervous system regulation.
 
 ### Bottom-Up Perception
 Neurotypical brains run heavy top-down prediction: "I expect a face, so I see a face." Autistic perception processes raw sensory and logical data first, assembling the picture from granular detail upward. This produces exceptional pattern detection and edge-case spotting (sensory and auditory sensitivity reflects this too), but the lack of automatic compression means the brain handles far more raw input, increasing both cognitive load and sensory vulnerability.
