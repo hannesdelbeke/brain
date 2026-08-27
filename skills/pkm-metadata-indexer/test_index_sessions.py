@@ -108,6 +108,72 @@ class SessionIndexerTest(unittest.TestCase):
         finally:
             connection.close()
 
+    def build(self):
+        pkm.build_index(vault_path=str(self.root), db_path=str(self.db), skip_embeddings=True,
+                        collect=lambda root: index_sessions.scan_sessions(root, self.db))
+
+    def sections_for(self, path):
+        connection = sqlite3.connect(self.db)
+        try:
+            return dict(connection.execute(
+                "SELECT sections.id, sections_fts.content FROM sections"
+                " JOIN sections_fts ON sections_fts.section_id = sections.id"
+                " WHERE sections.path = ?", (path,)))
+        finally:
+            connection.close()
+
+    def test_an_appended_transcript_is_read_from_the_last_offset(self):
+        transcript = self.root / "some-project" / "aaa.jsonl"
+        self.build()
+        before = self.sections_for("some-project/aaa.jsonl")
+        state = json.loads((self.root / index_sessions.STATE_NAME).read_text())["files"]
+        self.assertEqual(state["some-project/aaa.jsonl"]["offset"], transcript.stat().st_size)
+
+        with transcript.open("a", encoding="utf-8") as handle:
+            handle.write(user("and now the appendedphrase turns up in a later turn"))
+        self.build()
+
+        after = self.sections_for("some-project/aaa.jsonl")
+        # The rows already indexed survive untouched, and only the new turn is added.
+        self.assertEqual(before, {key: after[key] for key in before})
+        self.assertEqual(len(after), len(before) + 1)
+        rows = pkm.search_index("appendedphrase", db_path=str(self.db), limit=5, vectors=([], None))
+        self.assertEqual(rows[0]["start_line"], 9)
+
+    def test_a_rewritten_transcript_is_read_in_full(self):
+        transcript = self.root / "some-project" / "aaa.jsonl"
+        self.build()
+        transcript.write_text(user("a different session about the rewrittenphrase entirely")
+                              + user("padding so the file is longer than the one it replaced" * 5),
+                              encoding="utf-8")
+        self.build()
+
+        texts = list(self.sections_for("some-project/aaa.jsonl").values())
+        self.assertTrue(any("rewrittenphrase" in text for text in texts))
+        self.assertFalse(any("distinctivephrase" in text for text in texts))
+
+    def test_a_half_written_last_line_waits_for_the_rest_of_itself(self):
+        transcript = self.root / "some-project" / "aaa.jsonl"
+        with transcript.open("a", encoding="utf-8") as handle:
+            handle.write(user("the halfwrittenphrase turn is still being written").rstrip("\n"))
+        self.build()
+        self.assertEqual(pkm.search_index("halfwrittenphrase", db_path=str(self.db), limit=5,
+                                          vectors=([], None)), [])
+
+        with transcript.open("a", encoding="utf-8") as handle:
+            handle.write("\n")
+        self.build()
+        rows = pkm.search_index("halfwrittenphrase", db_path=str(self.db), limit=5, vectors=([], None))
+        self.assertEqual(rows[0]["start_line"], 9)
+
+    def test_editing_the_scanner_invalidates_every_offset(self):
+        state_file = self.root / index_sessions.STATE_NAME
+        self.build()
+        state = json.loads(state_file.read_text())
+        state["scanner"] = "not-this-scanner"
+        state_file.write_text(json.dumps(state), encoding="utf-8")
+        self.assertEqual(index_sessions.read_state(state_file), {})
+
     def test_default_db_sits_beside_a_corpus_that_is_not_a_vault(self):
         self.assertEqual(pkm.default_db_path(self.root), self.root / ".pkm_index.db")
         vault = self.root / "vault"
