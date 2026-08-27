@@ -76,6 +76,17 @@ class SessionIndexerTest(unittest.TestCase):
         self.assertEqual([event.line for event in events], [5, 6, 6, 6])
         self.assertEqual(events[-1].files, ("src/loader.py",))
 
+    def test_a_short_user_turn_is_kept_and_a_short_assistant_turn_is_not(self):
+        transcript = self.root / "some-project" / "bbb.jsonl"
+        transcript.write_text(
+            user("who is logged in gh")
+            + assistant("msg_2", [{"type": "text", "text": "Now the tests."}])
+            + user("[Request interrupted by user]"),
+            encoding="utf-8",
+        )
+        texts = [event.text for event in index_sessions.iter_events(transcript)]
+        self.assertEqual(texts, ["who is logged in gh"])
+
     def test_index_is_searchable_and_carries_the_session_graph(self):
         pkm.build_index(
             vault_path=str(self.root),
