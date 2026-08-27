@@ -18,6 +18,9 @@ def load(name: str):
 
 SEARCHD = load("searchd")
 
+# closed before a temp dir is removed, Windows will not delete an open database
+VAULTS: list = []
+
 
 def fetch(port: int, path: str, headers: dict | None = None, method: str = "GET"):
     request = urllib.request.Request(
@@ -36,7 +39,9 @@ def build_vault(root: Path, name: str, notes: dict[str, str]):
         (root / filename).write_text(text, encoding="utf-8")
     db = root / ".obsidian" / "pkm_index.db"
     SEARCHD.pkm.build_index(vault_path=str(root), db_path=str(db), skip_embeddings=True)
-    return SEARCHD.Vault(name, root, db)
+    vault = SEARCHD.Vault(name, root, db)
+    VAULTS.append(vault)
+    return vault
 
 
 class SearchDaemonTest(unittest.TestCase):
@@ -65,6 +70,8 @@ class SearchDaemonTest(unittest.TestCase):
     def tearDownClass(cls):
         cls.server.shutdown()
         cls.server.server_close()
+        for vault in VAULTS:
+            vault.close()
         cls.temp_dir.cleanup()
 
     def get(self, path: str, headers: dict | None = None, method: str = "GET"):
@@ -254,6 +261,7 @@ class WatcherTest(unittest.TestCase):
     def test_each_batch_of_changes_reindexes_once(self):
         temp_dir = tempfile.TemporaryDirectory()
         self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [v.close() for v in VAULTS])
         vault = build_vault(Path(temp_dir.name) / "watched", "watched",
                             {"alpha.md": "## One\nText.\n"})
         (vault.root / "beta.md").write_text("## Two\nMore text.\n", encoding="utf-8")
@@ -263,6 +271,25 @@ class WatcherTest(unittest.TestCase):
     def test_a_failing_reindex_leaves_the_watcher_running(self):
         vault = SEARCHD.Vault("gone", Path("no such root"), Path("no such root/x.db"))
         SEARCHD.watch_vault(vault, stream=[{("added", "a.md")}, {("added", "b.md")}])
+
+
+class MatrixCacheTest(unittest.TestCase):
+    """A reindex has to reach a search, or the daemon serves the vault it started with."""
+
+    def test_a_reindex_invalidates_the_resident_matrix(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [v.close() for v in VAULTS])
+        vault = build_vault(Path(temp_dir.name) / "cached", "cached",
+                            {"alpha.md": "## One\nText.\n"})
+        vault.matrix()
+        warm = vault.vectors_version
+        (vault.root / "beta.md").write_text("## Two\nMore text.\n", encoding="utf-8")
+        SEARCHD.do_reindex(vault)
+        vault.matrix()
+        # a fresh connection per call reads the same data_version forever, which
+        # pinned the cache for the life of the daemon
+        self.assertNotEqual(vault.vectors_version, warm)
 
 
 if __name__ == "__main__":
