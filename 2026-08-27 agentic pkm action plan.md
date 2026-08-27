@@ -28,7 +28,7 @@ Checked on 2026-08-27 against `pkm-search` (working tree) and the `brain` vault.
 
 | Claim in notes | Actual state | Consequence |
 |:---|:---|:---|
-| Idle CPU burn: levers "identified", one of them a direct `ort.SessionOptions` with `session.intra_op.allow_spinning=0` | `pkm-search` has no thread or spin config anywhere. Embeddings run through `fastembed.TextEmbedding` in `index_pkm_meta.get_embedding_model()`, constructed with `providers=` only, and fastembed accepts no `SessionOptions` — that lever is unreachable without building the ORT session directly | Nothing is applied, so the 12-core idle burn still runs. Highest-cost open item |
+| Idle CPU burn: levers "identified", one of them a direct `ort.SessionOptions` with `session.intra_op.allow_spinning=0` | That lever was unreachable: embeddings run through `fastembed.TextEmbedding`, which accepts no `SessionOptions`. Its own `threads=` argument reaches the same pool | Fixed 2026-08-27. `get_embedding_model()` takes `threads`, part of the model cache key, and the query path passes 1; bulk indexing keeps the full pool. Warm idle daemon reads 0.000 cores, pinned by a test |
 | `urgent_tasks.py` documented in the pkm-metadata-indexer skill (section 8) | Present in the skill, which is now the only copy of the tool | Resolved. The `pkm-search` repo it was missing from is a README pointing at the skill |
 | `python _scripts/check_dead_links.py <note>` is a mandatory pre-publish step | Script now exists (`_scripts/check_dead_links.py`, added 2026-08-27) | Resolved. Run it in the promotion SOP rather than describing it |
 | Public notes link as `[[public/<note>]]` | `brain` is mounted at `public/` inside a private parent vault by directory junction, not as a submodule — a submodule would commit a pointer to `brain` into the private repo's history. Opened standalone there is no parent, so every `public/`-prefixed link (90 notes) resolves to nothing | Fine inside the parent vault, broken for standalone/published browsing. Decide which context is authoritative before mass-editing links |
@@ -40,10 +40,10 @@ Checked on 2026-08-27 against `pkm-search` (working tree) and the `brain` vault.
 
 ## 🥇 P0 — Do these before writing another architecture note
 
-### 1. Actually fix the idle CPU burn
-* **Where:** `pkm-search/index_pkm_meta.py`, `get_embedding_model()`.
-* **What:** pass a thread cap into `TextEmbedding(...)` (fastembed exposes `threads=`). If ONNX Runtime still busy-spins, set the spin config on the session or export `OMP_WAIT_POLICY=passive` in the daemon's environment — the session-config entry named in the notes is not reachable through the fastembed constructor, which is why it was never applied.
-* **Acceptance:** daemon warm and idle for 60s, total process CPU under 1% of one core, measured, before the note is updated to say "fixed".
+### 1. Actually fix the idle CPU burn — done 2026-08-27
+* **Where:** `skills/pkm-metadata-indexer/index_pkm_meta.py`, `get_embedding_model()`.
+* **What:** `threads` argument passed into `TextEmbedding(...)` and made part of the model cache key. The query path sets `QUERY_THREADS = 1`; bulk indexing leaves it unset and keeps the full pool. No `SessionOptions` and no `OMP_WAIT_POLICY` needed — the fastembed argument reaches the same pool, which is why the session-config entry the earlier notes named was never applied.
+* **Acceptance, met:** warm daemon idle over 20s reads 0.000 cores against 11.93 before, at 3.8ms to 8.6ms per encode inside a 13-22ms query. `python -m unittest test_index_pkm_meta test_searchd` fails if the query path stops passing it.
 * **Owner note:** [[public/progress - local-first search daemon and indexer|search daemon progress]].
 
 ### 2. Build the nightly consolidation agent, v0

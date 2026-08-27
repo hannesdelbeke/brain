@@ -69,7 +69,7 @@ This is different from "search your notes." Searching finds documents by content
 Concretely, this looks like an append-only log of "memory records":
 
 ```
-2026-08-26 23:52 — User set up new ThinkPad. Key finding: searchd.py ONNX keepalive was burning 12 cores. Fix: set allow_spinning=0 and intra_op_num_threads=2. Status: documented, not yet applied.
+2026-08-26 23:52 — User set up new ThinkPad. Key finding: searchd.py ONNX keepalive was burning 12 cores. Fix: cap the query path at threads=1 through fastembed. Status: applied 2026-08-27, pinned by a test.
 
 2026-08-26 23:38 — Reviewed trending GitHub repos. Removed hallucinated awesome-ai-agents-2026. Identified sqlite-vec as potential replacement for NumPy search in pkm indexer. Status: noted, not started.
 
