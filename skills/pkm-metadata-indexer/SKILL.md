@@ -145,6 +145,7 @@ Measured over 766 transcripts and 1.49 GB: a metadata-only pass takes 2m05s (102
 Enables instant SQL aggregations and single-turn semantic search across thousands of notes with zero ongoing API costs, serving as an intelligent pre-filter for agents.
 
 ### Related
+- [[public/pkm-search|pkm-search]]
 - [[agentic tooling upgrades over grep]]
 - [[vault hybrid search]]
 - [[offline GPU embeddings with incremental cache]]
