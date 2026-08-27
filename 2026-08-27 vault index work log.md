@@ -81,11 +81,20 @@ Over the thirteen hold-out questions precision@10 is 39% with the rerank against
 
 Two things the numbers say that the anecdote did not. The rerank often pushes the first useful section from rank 1 to rank 2 while adding useful sections further down, which is what a reorder over a twenty-candidate pool does: it trades the top of the list for the body of it. And it can lose a question outright, as it did on the audit question, going from one useful section to none.
 
-The question the rerank was built on, "how did we stop the laptop overheating", scores zero on both arms here, because the sections that answer it are in the transcript corpus and this run was against the vault. Measuring it on the transcripts means sending private session text to a judge model, which is a separate decision and is why it was not run.
+The question the rerank was built on, "how did we stop the laptop overheating", scores zero on both arms here, because the sections that answer it are in the transcript corpus and this run was against the vault.
+
+## The transcripts, measured without handing over the private parts
+
+The transcript corpus is where the rerank was supposed to matter most and it is also the corpus a judge running elsewhere should not read in full. What a run would have sent was counted first: 145 sections, 77,831 characters, over 66 transcripts, holding home paths, work repository and channel names, a home automation server address and a personal email, and no keys, no tokens, no LAN addresses and no phone numbers.
+
+So `--withhold-private` keeps a section here rather than sending it, on patterns for home paths, credentials, LAN addresses, contact details, house automation and health or money words. It held back 63 of the 145, 55 of them for a home path alone, because a transcript is mostly shell commands. A withheld section counts as not useful in both runs, which keeps the comparison fair and pushes the absolute numbers down, so the report also scores over the sections a judge actually saw.
+
+Over the same thirteen hold-out questions, 859 transcripts and 79,645 sections: precision@10 28% with the rerank against 22% without, 46% against 34% over judged sections, first useful section at mean rank 2.9 against 3.9, and eleven of thirteen questions answered against ten. The margin is wider than on the vault, which is the corpus argument in one line: the longer and more repetitive the documents, the more a reorder that reads the query and the passage together is worth.
+
+The question the rerank was built on lands differently under a blind judge than it did by eye: three useful sections with the rerank against one without, but the first useful one at rank 4 rather than rank 1. The reorder wins the list and loses the top of it, the same trade the vault run showed.
 
 ## Open
 
-- The same question set against the transcript corpus, once there is a judge that can read private text.
 - Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 - The write-path near-duplicate gate, still unstarted.
 - A second transcript scanner for another agent CLI, which is what turns "one scanner among several" from a claim into a fact.
