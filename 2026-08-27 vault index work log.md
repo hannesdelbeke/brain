@@ -71,11 +71,21 @@ The one thing that had to be got right is that a reindex writes the database ins
 
 It is opt-in because it is slow: about 22ms per candidate, so 227ms at 10 candidates, 533ms at 20 and 706ms at 30, against a 26ms query. Twenty is the default because of what the sample query showed. "how did we stop the laptop overheating" put the two sections that actually answer it at fused rank 9 and 11, under notes about laptop hardware and building ventilation; the rerank put both first, at 5.9 and 5.4 against -5.2 for the next one. A top-10 rerank would have found one and missed the other.
 
-One query is not an evaluation, and the honest next step is the same question set discipline used on the summaries: judge a set of questions with and without the rerank before believing it in general.
+One query is not an evaluation, and the next step was the same question set discipline used on the summaries.
+
+## The rerank, measured
+
+`eval_rerank.py` asks one question set of one corpus twice, with the rerank and without, and a model judges each returned section from the section text alone, never seeing which run produced it or at what rank. Fourteen questions written before any result was looked at, one of them the query the rerank was built on, 3,228 notes, 178 judgements, ten minutes.
+
+Over the thirteen hold-out questions precision@10 is 39% with the rerank against 32% without, 51 useful sections against 41, and the first useful section sits at mean rank 1.6 against 1.9. Seven questions improve, three get worse, three are unchanged. So the rerank is worth its 533ms, and the size of the win is a couple of extra useful sections in ten rather than a different result list.
+
+Two things the numbers say that the anecdote did not. The rerank often pushes the first useful section from rank 1 to rank 2 while adding useful sections further down, which is what a reorder over a twenty-candidate pool does: it trades the top of the list for the body of it. And it can lose a question outright, as it did on the audit question, going from one useful section to none.
+
+The question the rerank was built on, "how did we stop the laptop overheating", scores zero on both arms here, because the sections that answer it are in the transcript corpus and this run was against the vault. Measuring it on the transcripts means sending private session text to a judge model, which is a separate decision and is why it was not run.
 
 ## Open
 
-- Relevance measured across a question set, with and without the rerank.
+- The same question set against the transcript corpus, once there is a judge that can read private text.
 - Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 - The write-path near-duplicate gate, still unstarted.
 - A second transcript scanner for another agent CLI, which is what turns "one scanner among several" from a claim into a fact.
