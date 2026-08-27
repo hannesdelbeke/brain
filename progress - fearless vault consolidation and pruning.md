@@ -40,6 +40,7 @@ aliases:
 
 ## 🔴 Blockers & Open Questions
 
+* **No Pruning Has Happened Yet:** The vault is at 3,253 notes and still growing. The architecture is written; no note has been merged or deleted under it. See [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]] — do one manual multi-stub merge before automating the merger.
 * **Obsidian In-Memory Tab Clashes:** Obsidian autosave re-creates deleted root files if an open tab isn't closed before disk deletion (`Ctrl + W` protocol required).
 
 ---
