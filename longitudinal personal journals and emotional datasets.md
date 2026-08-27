@@ -17,112 +17,140 @@ aliases:
 
 # Longitudinal Personal Journals & Single-Author Emotional Datasets
 
-A curated index of **public, single-person personal journals, digital gardens, and historical daily diary corpora** spanning months, years, or decades.
+An index of sources where **one person records their inner life over months, years or decades**: web journals, public-domain diary corpora, and published diaries in book form.
 
-Unlike generic multi-author NLP sentiment benchmarks (e.g. Kaggle surveys or scraped Reddit comments), these datasets track a **single human mind over time**—allowing researchers and AI models to study authentic emotional arcs, belief revisions, cognitive reframing, and psychological resilience.
+Inclusion rule: the source has to be the journal itself, written by one identifiable person, tracking emotional state over time. Software for publishing notes, tooling repos, and multi-author sentiment benchmarks are out of scope — see [Excluded](#excluded-and-why) at the bottom.
 
----
-
-## 🌿 Modern Single-Author Open Repositories & Gardens (5–15+ Years)
-
-### 1. [Jacky Zhao's Digital Garden](https://github.com/jackyzha0) ([jzhao.xyz](https://jzhao.xyz))
-* **Author:** Jacky Zhao (creator of Quartz)
-* **Timespan:** 2019 – Present (5+ years)
-* **Format:** Markdown / Quartz digital garden
-* **Source Repository:** [jackyzha0/quartz](https://github.com/jackyzha0/quartz) & [jackyzha0/site](https://github.com/jackyzha0)
-* **Emotional & Psychological Core:** Longitudinal coming-of-age trajectory of a young technologist dealing with burnout, ambition, and identity.
-* **Verified Sample Entries:**
-  * 📄 [Burnout & Creative Exhaustion](https://jzhao.xyz/thoughts/burnout) — raw reflection on losing creative motivation and overwork.
-  * 📄 [Loneliness & Solitude](https://jzhao.xyz/thoughts/loneliness) — reflection on moving cities, solitude, and friendship.
-  * 📄 [Annual Retrospective on Growth](https://jzhao.xyz/posts/reflecting-on-2023) — yearly synthesis on personal relationships, shifting definitions of success, and mental health.
-
-### 2. [gwern/gwern.net](https://github.com/gwern/gwern.net)
-* **Author:** Gwern Branwen
-* **Timespan:** 2009 – Present (15+ years)
-* **Format:** Git-versioned Hakyll/Markdown site source
-* **Source Repository:** [gwern/gwern.net](https://github.com/gwern/gwern.net)
-* **Emotional & Psychological Core:** Rigorous quantified-self, blind mood trials, and long-term epistemic tracking.
-* **Verified Sample Entries:**
-  * 📄 [Longitudinal Sleep & Mood Tracking (Zeo Trials)](https://gwern.net/zeo) — 10+ years of daily sleep and subjective wellbeing data.
-  * 📄 [Melatonin Blind Self-Experiments](https://gwern.net/melatonin) — longitudinal double-blind self-trials.
-  * 📄 [Epistemic Calibration](https://gwern.net/calibration) — historical log tracking how his confidence on personal and philosophical beliefs evolved across 15 years.
-
-### 3. [Derek Sivers Life Archive](https://github.com/sivers) ([sive.rs](https://sive.rs))
-* **Author:** Derek Sivers (founder of CD Baby)
-* **Timespan:** 1998 – Present (25+ years)
-* **Format:** Plaintext / static website repository
-* **Source Repository:** [sivers/sivers.com](https://github.com/sivers)
-* **Emotional & Psychological Core:** Two decades of high-stakes life decisions and emotional reckonings.
-* **Verified Sample Entries:**
-  * 📄 [Why I gave away my company (Trust)](https://sive.rs/trust) — emotional aftermath of betrayal and giving away $22M to a music education trust.
-  * 📄 [There's no speed limit (Kimo)](https://sive.rs/kimo) — transformative personal mentorship and overcoming self-imposed limits.
-  * 📄 [Avoid drama](https://sive.rs/drama) — emotional boundary setting and lifestyle simplification.
-  * 📄 [300+ Book Summaries & Ratings](https://sive.rs/book) — personal emotional takeaways and ratings for every book read over 20 years.
-
-### 4. [Buster Benson (15-Year Life Question Logs)](https://busterbenson.com)
-* **Author:** Buster Benson (creator of 750words & Cognitive Bias Codex)
-* **Timespan:** 2010 – Present (15+ years)
-* **Format:** Long-term personal daily logs and belief tracking
-* **Emotional & Psychological Core:** Systematic tracking of discarded beliefs and emotional self-inquiries.
-* **Verified Sample Entries:**
-  * 📄 [Things I used to believe that I no longer believe](https://busterbenson.com/beliefs/) — 15-year longitudinal record of belief revisions and emotional pivots.
-  * 📄 [Reflections on Praise, Criticism, and Vulnerability](https://busterbenson.com/praise/) — dealing with external feedback and public vulnerability.
-
-### 5. [jethrokuan/braindump](https://github.com/jethrokuan/braindump)
-* **Author:** Jethro Kuan
-* **Timespan:** 2018 – Present (6+ years)
-* **Format:** 1,000+ interconnected `org-mode` / Markdown notes
-* **Source Repository:** [jethrokuan/braindump](https://github.com/jethrokuan/braindump)
-* **Emotional & Psychological Core:** Psychological arc through undergraduate education into PhD research.
-* **Verified Sample Entries:**
-  * 📄 [Habits & Mental Models](https://braindump.jethro.dev) — notes tracking academic imposter syndrome, research anxiety, and cognitive habits.
+Every link below was checked and returns the described page (last checked 2026-08-27).
 
 ---
 
-## 📜 Historical Single-Author Complete Diary Datasets (Public Domain)
+## Web journals by one author
 
-For long-term longitudinal datasets spanning historical crises and complete lifetimes:
+### Aaron Swartz — Raw Thought (2002–2012)
+* **URL:** [aaronsw.com/weblog](http://www.aaronsw.com/weblog/) · [full archive index](http://www.aaronsw.com/weblog/archive)
+* **Span:** 10 years, closed corpus — the author died in 2013, so the arc is complete rather than ongoing.
+* **Why it fits:** public writing about depression, illness, shame and motivation alongside the technical posts, with dates on everything.
+* **Entries:**
+  * [Sick](http://www.aaronsw.com/weblog/verysick) — first-person account of depression as a physical illness.
+  * [Life in the Hospital](http://www.aaronsw.com/weblog/hospitallife) and [Alone in the Hospital](http://www.aaronsw.com/weblog/hospitalbabies) — 2007 hospitalisation.
+  * [The Book That Changed My Life](http://www.aaronsw.com/weblog/epiphany) — belief revision, named and dated.
 
-### 1. [philgyford/pepysdiary](https://github.com/philgyford/pepysdiary) (Samuel Pepys: 1660–1669)
-* **Format:** Complete day-by-day GitHub repo / database of 10 consecutive years of raw diary entries.
-* **Source Repository:** [philgyford/pepysdiary](https://github.com/philgyford/pepysdiary)
-* **Emotional Core:** The quintessential historical lifelog of London life during crisis:
-* **Verified Sample Entries:**
-  * 📄 [June 15, 1665: The Great Plague](https://www.pepysdiary.com/diary/1665/06/15/) — raw fear, tracking dead neighbors, and psychological denial.
-  * 📄 [September 2, 1666: The Great Fire of London](https://www.pepysdiary.com/diary/1666/09/02/) — acute panic, waking up to the fire, burying belongings in the garden.
-  * 📄 [October 25, 1668: Domestic Vulnerability](https://www.pepysdiary.com/diary/1668/10/25/) — marital fights, jealousy, and shame.
+### Nick Cave — The Red Hand Files (2018–present)
+* **URL:** [theredhandfiles.com](https://www.theredhandfiles.com/)
+* **Span:** 7+ years, numbered issues, no moderator between question and answer.
+* **Why it fits:** sustained public working-through of the death of his son. Grief tracked issue by issue rather than in one retrospective.
+* **Shape of the data:** reader question + long personal reply, every issue numbered and dated.
 
-### 2. Marcus Aurelius — *Meditations* (170–180 AD)
-* **Format:** 12 books of private notes written to himself during war and the Antonine Plague.
-* **Source:** [Project Gutenberg: Meditations](https://www.gutenberg.org/ebooks/2680)
-* **Emotional Core:** Pure real-time cognitive reframing: overcoming anger at untrustworthy subordinates, coping with physical exhaustion, confronting mortality, and active emotional regulation.
+### Derek Sivers — sive.rs (1998–present)
+* **URL:** [sive.rs](https://sive.rs)
+* **Span:** 25+ years.
+* **Entries:**
+  * [Why I gave away my company](https://sive.rs/trust) — aftermath of betrayal and of giving away the proceeds of CD Baby.
+  * [There's no speed limit](https://sive.rs/kimo) — mentorship and self-imposed limits.
+  * [Avoid drama](https://sive.rs/drama) — boundary setting.
+  * [Book notes](https://sive.rs/book) — 300+ books with personal reactions and ratings, dated, 20 years deep.
 
-### 3. Leo Tolstoy's Diaries (1847–1910 — 63 Continuous Years)
-* **Format:** 63 continuous years from age 18 to his death at 82.
-* **Source:** [Project Gutenberg: The Diaries of Leo Tolstoy](https://www.gutenberg.org/ebooks/24816)
-* **Emotional Core:** One of the longest personal psychological logs in history: agonizing self-criticism, creative torment during *War and Peace*, marriage breakdown, and late-life spiritual crisis.
+### Buster Benson — Codex Vitae (2010–present)
+* **URL:** [github.com/busterbenson/public](https://github.com/busterbenson/public) · [busterbenson.com](https://busterbenson.com/)
+* **Entries:**
+  * [book-of-beliefs.md](https://github.com/busterbenson/public/blob/master/book-of-beliefs.md) — his beliefs as a git-versioned file. The **git history is the dataset**: every revision is a dated belief change with a diff.
+* **Why it fits:** the only source here where belief drift is machine-readable by construction.
+* Note: earlier drafts of this note linked `busterbenson.com/beliefs/` and `/praise/`. Both 404. Use the repo.
 
-### 4. Franz Kafka's Diaries (1910–1923)
-* **Format:** 13 years of raw psychological stream-of-consciousness.
-* **Source:** [Archive.org: The Diaries of Franz Kafka](https://archive.org/details/the-diaries-of-franz-kafka-1910-1923)
-* **Emotional Core:** Severe creative blocks, feelings of social and familial alienation, insomnia, and the perpetual struggle between artistic compulsion and self-doubt.
+### Gwern Branwen — gwern.net (2009–present)
+* **URL:** [gwern.net](https://gwern.net)
+* **Why it fits:** quantified rather than narrative. Mood as numbers, self-blinded.
+* **Entries:**
+  * [Zeo sleep experiments](https://gwern.net/zeo) — years of daily sleep and subjective mood, [downloadable data](https://gwern.net/zeo#data).
+  * [Melatonin](https://gwern.net/melatonin) — blinded self-trials with mood outcomes.
+  * [Calibration](https://gwern.net/calibration) — tracked confidence against outcomes over time.
 
-### 5. Virginia Woolf — *A Writer's Diary* (1918–1941)
-* **Format:** 23 years of continuous private journaling.
-* **Source:** [Archive.org: A Writer's Diary](https://archive.org/details/in.ernet.dli.2015.499153)
-* **Emotional Core:** The manic highs and paralyzing depressive crashes of the creative cycle, dread of criticism, aging, and surviving the London Blitz.
+### Jacky Zhao — jzhao.xyz (2019–present)
+* **URL:** [jzhao.xyz](https://jzhao.xyz)
+* **Entries:** [burnout](https://jzhao.xyz/thoughts/burnout), [pain](https://jzhao.xyz/thoughts/pain), [self-confidence](https://jzhao.xyz/thoughts/self-confidence), [agency](https://jzhao.xyz/thoughts/agency), [dappled light](https://jzhao.xyz/posts/dappled-light).
+* Note: the notes are undated on the page, which limits them for time-series work. Earlier drafts linked `/thoughts/loneliness` and `/posts/reflecting-on-2023`; both 404.
+
+### David Cain — Raptitude (2009–present)
+* **URL:** [raptitude.com](https://www.raptitude.com/)
+* **Span:** 16 years of dated first-person essays on mood, avoidance, habit and attention, written by one person about their own experience.
 
 ---
 
-## 🔬 AI Analysis Framework: Tracking Emotional Evolution
+## Public-domain diary corpora (full text, downloadable)
 
-When analyzing these single-author corpora with an LLM agent, run the following longitudinal extraction pipeline across chronological epochs (e.g. quarterly or yearly slices):
+These are the ones worth pointing a pipeline at: complete, dated, day-by-day, no licence problem.
+
+### Samuel Pepys, 1660–1669
+* **Text:** [Project Gutenberg — The Diary of Samuel Pepys, Complete](https://www.gutenberg.org/ebooks/4200)
+* **Browsable:** [pepysdiary.com](https://www.pepysdiary.com/) — one entry per day with annotations.
+* **Entries:** [15 June 1665, plague](https://www.pepysdiary.com/diary/1665/06/15/) · [2 September 1666, Great Fire](https://www.pepysdiary.com/diary/1666/09/02/) · [25 October 1668, marriage crisis](https://www.pepysdiary.com/diary/1668/10/25/)
+* 10 consecutive years, written without an audience in mind, in shorthand.
+
+### Marcus Aurelius, *Meditations*, c. 170–180 AD
+* **Text:** [Project Gutenberg 2680](https://www.gutenberg.org/ebooks/2680)
+* Private notes to self. No dates and no chronology, so it reads as emotional regulation technique rather than as a time series.
+
+### Leo Tolstoy, diaries
+* **1895–1899:** [Project Gutenberg 46272 — The Journal of Leo Tolstoi, First Volume](https://www.gutenberg.org/ebooks/46272)
+* **1847–1852:** [archive.org — The Diaries of Leo Tolstoy (Hogarth trans., 1917)](https://archive.org/details/diariesofleotols00tols)
+* Tolstoy kept diaries from 18 to his death at 82. Only fragments of that are in public-domain English translation — the two above, not the full 63 years.
+
+### Henry David Thoreau, Journal 1837–1861
+* **Text:** [The Walden Woods Project — The Journal of Henry David Thoreau](https://www.walden.org/collection/journals/)
+* 24 years, near-daily, ~2 million words. Long enough for seasonal and multi-year mood structure.
+
+### George Orwell, diaries 1938–1942
+* **URL:** [orwelldiaries.wordpress.com](https://orwelldiaries.wordpress.com/) — republished one entry per day, 70 years to the day after writing. Example: [28 June 1940](https://orwelldiaries.wordpress.com/2010/06/28/28-6-40/).
+* Domestic and war diaries mixed; emotionally flat by design, useful as a contrast case.
+
+### Virginia Woolf, *A Writer's Diary* (1918–1941)
+* **Scan:** [archive.org — A Writer's Diary](https://archive.org/details/in.ernet.dli.2015.509772)
+* 23 years of the creative cycle: elation, dread of reviews, depressive collapse, the Blitz, ending weeks before her suicide.
+
+### Franz Kafka, diaries 1910–1923
+* **Scan (borrow only, not downloadable):** [archive.org — The Diaries of Franz Kafka 1910–1913](https://archive.org/details/diariesoffranzka0000maxb_c9u3); the 1914–1923 volume is catalogued separately.
+* The `the-diaries-of-franz-kafka-1910-1923` identifier used in an earlier draft does not exist.
+
+---
+
+## Book-length single-person journals
+
+Not free, not machine-readable, listed because each one is a sustained emotional record by one person and several have no online equivalent.
+
+* **Marion Milner, *A Life of One's Own* (1934)** — seven years of diary kept as an experiment to find out what actually made her happy. The closest thing in print to a deliberately designed single-subject emotional dataset.
+* **May Sarton, *Journal of a Solitude* (1973)** — one year, solitude, depression, aging, written against her own earlier idealised account of the same life.
+* **Sylvia Plath, *The Unabridged Journals* (1950–1962)** — 12 years, ends shortly before her death.
+* **Etty Hillesum, *An Interrupted Life* (1941–1943)** — diaries and letters, Amsterdam through deportation.
+* **Anne Frank, *The Diary of a Young Girl* (1942–1944)** — two years, adolescent emotional development under confinement. Still in copyright in most territories.
+* **C.S. Lewis, *A Grief Observed* (1961)** — four notebooks kept during bereavement; short, and the closest thing to a raw grief log.
+* **John Steinbeck, *Journal of a Novel* (1951)** — a daily entry written before each day's work on *East of Eden*: self-doubt tracked against measurable output.
+* **Sarah Manguso, *Ongoingness* (2015)** — about keeping a 25-year, 800,000-word diary; a source on the practice, not the diary itself.
+
+---
+
+## Excluded, and why
+
+Removed from earlier versions of this note:
+
+* **jackyzha0/quartz** — static site generator. Software, not a journal. The journal is [jzhao.xyz](https://jzhao.xyz), kept above.
+* **jethrokuan/braindump** — technical study notes (algorithms, Emacs, ML). No emotional content.
+* **philgyford/pepysdiary** — the Django code that runs pepysdiary.com. The text is Gutenberg 4200, linked above.
+* **Hallucinated links**, verified dead: `jzhao.xyz/thoughts/loneliness`, `jzhao.xyz/posts/reflecting-on-2023`, `busterbenson.com/beliefs/`, `busterbenson.com/praise/`, `archive.org/details/the-diaries-of-franz-kafka-1910-1923`. Two Gutenberg/archive IDs pointed at unrelated books: `gutenberg.org/ebooks/24816` is *Life at Puget Sound*, not Tolstoy; `archive.org/details/in.ernet.dli.2015.499153` is *Colour and Colour Theories*, not Woolf.
+
+Also out of scope: multi-author corpora (Blog Authorship Corpus, Mass Observation, scraped Reddit), and quantified-self projects with no emotional variable (Feltron annual reports, step and sleep exports).
+
+---
+
+## AI Analysis Framework: Tracking Emotional Evolution
+
+When analysing one of these corpora with an LLM agent, run the extraction across chronological slices (quarterly or yearly):
 
 ```
 ┌───────────────────────────────────────────────────────────┐
 │              LONGITUDINAL EXTRACTION PIPELINE             │
 ├───────────────────────────────────────────────────────────┤
-│ 1. Emotional Baseline:                                     │
+│ 1. Emotional Baseline:                                    │
 │    Identify the dominant emotional state (e.g., anxiety,  │
 │    striving, grief, flow, contentment).                   │
 │                                                           │
@@ -131,7 +159,7 @@ When analyzing these single-author corpora with an LLM agent, run the following 
 │    belief or behavior?                                    │
 │                                                           │
 │ 3. Reframing Half-Life:                                   │
-│    How long did it take the author to reframe the event?   │
+│    How long did it take the author to reframe the event?  │
 │    (Compare emotional tone at +1 week, +3 months, +2 yrs).│
 │                                                           │
 │ 4. Locus of Control Shift:                                │
@@ -142,6 +170,8 @@ When analyzing these single-author corpora with an LLM agent, run the following 
 │    Which core values remained constant vs. inverted?      │
 └───────────────────────────────────────────────────────────┘
 ```
+
+Corpora that support this directly, in order of how little cleanup they need: Pepys (dated, complete, plain text), Thoreau (dated, complete), Gwern's Zeo data (numeric), Buster Benson's git history (diffs are the signal), Aaron Swartz (dated, complete, closed).
 
 ---
 
