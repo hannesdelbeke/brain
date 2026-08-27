@@ -19,6 +19,10 @@ aliases:
 
 > **Goal:** Evolve the vault from a static repository of Markdown files into an active, biologically-inspired thought partner that consolidates memories during idle periods, prunes obsolete noise, tracks belief confidence, and challenges human assumptions through cognitive sparring.
 
+> [!todo] next
+> - **next:** Build the nightly consolidation agent that reads the day's scratchpad and git commits and writes atomic facts into `memory.md` and `profile.md`.
+> - **blocked:** nothing
+
 ---
 
 ## 🟢 Current State (What Works Now)
