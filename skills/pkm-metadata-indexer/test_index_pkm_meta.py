@@ -37,6 +37,13 @@ class MetadataIndexerTest(unittest.TestCase):
             vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True
         )
 
+    def test_a_repo_nested_in_the_vault_is_left_to_its_own_index(self):
+        nested = self.vault / "public"
+        (nested / ".git").mkdir(parents=True)
+        (nested / "borrowed.md").write_text("## Elsewhere", encoding="utf-8")
+        found = {path.name for path in INDEXER.markdown_paths(self.vault)}
+        self.assertEqual(found, {"alpha.md", "beta.md"})
+
     def test_metadata_fts_chunks_and_links(self):
         result = self.build_metadata_only()
         self.assertEqual(result["notes"], 2)

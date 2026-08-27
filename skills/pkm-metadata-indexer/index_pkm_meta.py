@@ -307,9 +307,18 @@ def category_for(path: str) -> str:
 
 
 def markdown_paths(vault_dir: Path) -> list[Path]:
+    """Every markdown file in the vault, skipping any repository nested inside it.
+
+    A vault that mounts another vault, as a clone or a junction, is two corpora
+    sharing a folder rather than one large one. Indexing them together lets the
+    larger one swamp the smaller in every ranking, so a directory holding its own
+    `.git` is left for its own index.
+    """
     paths = []
     for root, directories, files in os.walk(vault_dir):
-        directories[:] = [directory for directory in directories if directory not in IGNORED_DIRS]
+        directories[:] = [directory for directory in directories
+                          if directory not in IGNORED_DIRS
+                          and not (Path(root) / directory / ".git").exists()]
         for filename in files:
             if filename.endswith(".md"):
                 paths.append(Path(root) / filename)
