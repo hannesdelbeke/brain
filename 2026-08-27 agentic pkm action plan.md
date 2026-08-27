@@ -81,7 +81,7 @@ Pick one: keep `public/`-prefixed links and treat the private parent vault as th
 
 | Idea | Why it waits |
 |:---|:---|
-| `synaptic_edges` table, Hebbian weighting, nightly decay | Needs co-retrieval data that nothing logs yet. Log queries and their result sets in `searchd.py` first; weighting an empty table is theatre |
+| `synaptic_edges` table, Hebbian weighting, nightly decay | Needs co-retrieval data that nothing logs yet. Log queries and their result sets in `searchd.py` first; weighting an empty table is theatre. [[public/2026-08-27 every read is a write - co-retrieval as synapse strength|every read is a write]] designs that producer and its v0, which is the thing to build before any of this |
 | Inhibitory / `contradicts` edges | Same dependency, plus no contradiction detector exists |
 | `sqlite-vec` migration | The vault's own measurements say NumPy is under 1ms and no vector DB is warranted below ~300k notes. Revisit at 300k or when a cold query is measurably slow |
 | Local Mem0 evaluation | [[public/2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy|the Mem0 note]] already concludes local-first. A 200-line append-only `memory.md` is the cheaper test of the same idea. Revisit only if v0 extraction quality is the bottleneck |
