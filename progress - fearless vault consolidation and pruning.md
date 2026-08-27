@@ -19,6 +19,10 @@ aliases:
 
 > **Goal:** Transition the vault from an append-only digital graveyard into a high-signal neocortical surface. Enable ruthless refactoring, merging, and pruning of active notes while relying on Git history as the permanent, forensic hippocampal deep tape that AI agents can query on demand.
 
+> [!todo] next
+> - **next:** Run the agent pass that merges a cluster of 3–5 fragmented exploratory notes into one definitive note and deletes the stubs.
+> - **blocked:** One manual multi-stub merge has to happen first, so the human can approve what the automated pass is allowed to delete.
+
 ---
 
 ## 🟢 Current State (What Works Now)
