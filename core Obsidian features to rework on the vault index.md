@@ -60,6 +60,11 @@ Measured from `.obsidian/pkm_index.db` on 2026-08-25:
 > The `edges` table already stores every link with its source file and line number, so the list of broken links is one SQL query away, and each one can be shown with enough context to fix or delete it. This is the note [[note-link-janitor]], which is still on the unsolved list.
 > Related: [[renaming notes breaks links]], [[wikilink temporal integrity]]
 
+> [!todo] 7. Take the link half outside Obsidian
+> Every feature above is the index serving one vault. The link database underneath it is not tied to Obsidian, or to markdown, or to one vault: anything that references anything can fill the same `edges` table, so the same queries answer "what points at this source file", "which docs does nothing reference", "which images are dead weight" across a repository or a whole organisation.
+> The work is a scanner that derives edges instead of parsing `[[...]]`, plus a `corpus:path` node key so references can cross corpora. Designed in [[2026-08-27 a link graph over code, docs and assets]].
+> Related: [[simple options for multi-repo agent search]], [[vault graph complexity]]
+
 ## Already done or in progress
 
 - Core search is already replaced by the unified search modal over the daemon.
