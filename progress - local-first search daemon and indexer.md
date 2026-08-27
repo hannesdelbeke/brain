@@ -43,6 +43,8 @@ aliases:
 - [ ] **Section-Level SHA256 Invalidation:** Update `index_pkm_meta.py` schema from note-level SHA256 to section-level SHA256 so editing a single heading doesn't re-embed all 6.8 sections of a note.
 - [ ] **Write-Path Near-Neighbor Gate:** Wire title embeddings to the note-creation path to detect near-duplicates before writing new notes.
 - [ ] **Prove the Scanner Seam Is Vendor-Neutral:** Write a second transcript scanner for another agent CLI returning the same `(notes, sections, links, errors)` tuple. Until a second one exists, "one scanner among several" is a claim rather than a fact. Any summarisation added later goes through an OpenAI-compatible endpoint (Ollama serves one locally) so the same code runs against a local or hosted model.
+- [ ] **Rework Obsidian Core Features on the Index:** Semantic quick switcher, a local graph that draws meaning as well as links, a duplicate warning on note creation, tag suggestion, orphan-biased random note, and the 1,780 dead wikilinks as a query. Each is listed with its acceptance in [[public/core Obsidian features to rework on the vault index|core Obsidian features to rework on the vault index]].
+- [ ] **Derive Edges Outside the Vault:** The link half of the index does not need markdown or Obsidian. One scanner over one repository emitting edges for markdown links, relative path references and image embeds answers "what documents reference this file" and "which images are referenced by nothing", neither of which is answerable today. Designed in [[public/2026-08-27 a link graph over code, docs and assets|a link graph over code, docs and assets]].
 - [ ] **Evaluate `sqlite-vec`:** Benchmark native C-extension `sqlite-vec` against in-process NumPy matrix multiplication for cold queries.
 
 ---
@@ -62,3 +64,5 @@ aliases:
 * **Retrieval Economics:** [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]]
 * **Vault Performance Benchmarks:** [[public/obsidian search and index slow on 5k notes|obsidian search and index slow on 5k notes]]
 * **Offline GPU Vector Caching:** [[public/offline GPU embeddings with incremental cache|offline GPU embeddings with incremental cache]]
+* **What the Index Should Replace in Obsidian:** [[public/core Obsidian features to rework on the vault index|core Obsidian features to rework on the vault index]]
+* **The Link Half, Outside the Vault:** [[public/2026-08-27 a link graph over code, docs and assets|a link graph over code, docs and assets]]
