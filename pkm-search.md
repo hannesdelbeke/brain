@@ -91,3 +91,4 @@ session_options.intra_op_num_threads = 2
 - [[public/obsidian search and index slow on 5k notes|obsidian search and index slow on 5k notes]] — Benchmarking retrieval bottlenecks in large vaults
 - [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]] — Using fast indexers alongside Git history
 - [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] — Hebbian co-retrieval and dynamic edge weighting
+- [[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]] — Reindexing an append-only corpus by parsing only what was appended
