@@ -47,9 +47,15 @@ Two things are worth keeping from that. The harness, which serves two corpora ov
 
 The other lesson was procedural and expensive: the first measurement was run against a stale index. The daemon imports its scanner at startup, so `POST /reindex` rebuilt with the pre-edit scanner and the new text was never in the queried database. A daemon restart is part of changing a scanner.
 
+## Reindexing the transcripts is a tail read now
+
+A transcript only grows, so each run records the byte it stopped at and the next one parses what was appended, taking the rest of the rows back out of the index rather than a second copy on disk. Parsing 859 transcripts drops from 12.46s to 0.78s and the whole metadata-only pass from 19.24s to 7.78s, of which 6.6s is the search tables being rebuilt from scratch, which is the floor now.
+
+A shrunk file, a moved prefix hash, or a section count that disagrees with the index reads in full, and the bookmark file carries a hash of the scanner's source, so editing the parser invalidates every offset instead of serving rows the old parser wrote. Written up in [[2026-08-27 tail reads, resuming an index at the byte it stopped at]].
+
 ## Open
 
-- Byte-offset resume on the append-only transcripts, so a reindex is a tail read rather than a 102 second reparse, then a watcher per corpus. Every index is as fresh as the last manual reindex today.
+- A watcher per corpus, now that a reindex is fast enough to run on every write. Every index is as fresh as the last manual reindex today.
 - Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 - The write-path near-duplicate gate, still unstarted.
 - A second transcript scanner for another agent CLI, which is what turns "one scanner among several" from a claim into a fact.
