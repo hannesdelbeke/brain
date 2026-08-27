@@ -49,8 +49,8 @@ What's needed is a **living user profile** — not a static bio, but a continuou
 - **Facts**: senior software engineer and systems architect, based in Europe, background in graphics pipelines and local-first tooling, active marathon runner
 - **Preferences**: keyboard-first navigation, dark mode, local-first tooling, dislikes bloatware, prefers flowing prose over rigid AI template patterns
 - **Working style**: hyperfocuses for 4+ hours, builds meta-tools compulsively, energy dips mid-week, peak cognitive flow afternoon and late night
-- **Active projects and goals**: PKM system, incubator game projects, DCC / Maya / procedural tooling, smart home BLE automation, health telemetry
-- **Recurring failure modes**: forgets to eat/move during hyperfocus, lets medical follow-ups slip, spends time on tool-building that should go to tool-using, trusts AI output without verification
+- **Active projects and goals**: PKM hybrid search daemon, local smart home automation, open-source graphics toolkit, training telemetry
+- **Recurring failure modes**: forgets to take breaks during deep flow, lets long-term administrative tasks slip, spends time on tool-building that should go to core project delivery, trusts AI output without empirical verification
 
 This profile gets injected into every AI interaction as high-priority context. The model doesn't need to be fine-tuned on your data — it just needs to read a good briefing document before every conversation.
 
@@ -60,7 +60,7 @@ The profile should be **human-readable and human-editable**. A markdown file, no
 
 ### 2. It Remembers Conversations (Episodic Continuity)
 
-Right now every AI session is amnesiac. You discussed an database migration strategy last week. You discussed your ONNX daemon burning 12 cores yesterday. You brainstormed BLE proxy architectures this morning. None of those sessions know about each other.
+Right now every AI session is amnesiac. You discussed a database migration strategy last week. You discussed your ONNX daemon burning 12 cores yesterday. You brainstormed BLE proxy architectures this morning. None of those sessions know about each other.
 
 Episodic memory means: after every significant AI interaction, a background process extracts key decisions, new facts, and open questions, and writes them to a structured memory store. The next conversation starts with those memories loaded.
 
@@ -116,12 +116,12 @@ Triggers that should cause the system to surface information unprompted:
 
 **Temporal triggers:**
 - "Your open-source release milestone deadline is in 5 days."
-- "A documentation audit was scheduled for this week."
 - "You haven't committed to your active tooling repository in 8 days despite marking it as high-priority."
+- "A documentation audit was scheduled for this week."
 
 **Pattern triggers:**
-- "Your step count has dropped below baseline for three consecutive days. The last time this happened, your subjective energy scores dropped sharply mid-week. Today is Tuesday."
-- "You've spent 6 hours today on tool-building (pkm indexer, BLE skill, searchd optimisation) and 0 hours on the studio deliverables you listed as priorities (engine milestone, pipeline release)."
+- "Your daily activity has dropped below baseline for three consecutive days. The last time this happened, your subjective focus scores dropped sharply mid-week."
+- "You've spent 6 hours today on meta-tooling (pkm indexer, BLE skill, searchd optimisation) and 0 hours on the core project deliverables you listed as priorities (engine milestone, pipeline release)."
 
 **Connection triggers:**
 - "The sqlite-vec repo you bookmarked would replace the NumPy matrix multiplication in your search daemon — and might fix the 12-core burn problem, since sqlite-vec's C implementation doesn't spawn an ONNX thread pool."
@@ -137,7 +137,7 @@ That last category is uncomfortable but it's what separates a sycophantic assist
 
 The old note's trust decay table is actually good here, but it needs to be active rather than decorative:
 
-**Confidence tracking:** When the system stores a fact, it records how it knows it. "Server uses ARM64 architecture" comes from a clinical specialist letter (confidence: 1.0). "Battery lasts 6 months" comes from an AI synthesis of a product page (confidence: 0.6). "Ava is an ESPHome-compatible Android BLE proxy app" came from a fast model hallucinating (confidence: turned out to be 0.0).
+**Confidence tracking:** When the system stores a fact, it records how it knows it. "Server uses ARM64 architecture" comes from system hardware logs (confidence: 1.0). "Battery lasts 6 months" comes from an AI synthesis of a product page (confidence: 0.6). "Ava is an ESPHome-compatible Android BLE proxy app" came from a fast model hallucinating (confidence: turned out to be 0.0).
 
 **Contradiction detection:** When new information conflicts with existing beliefs, flag it rather than silently overwriting. The old note identifies this ("AI can't tell 'researched a solution' from 'implemented it'") but doesn't propose a mechanism. The mechanism is simple: before writing a claim, search existing memory for conflicting claims. If found, present both to the human.
 
@@ -231,7 +231,7 @@ The risk with AI second brains is that they become a mirror rather than a lens. 
 
 A genuine second brain would:
 - **Challenge your frames**, not just execute within them. "You keep writing PKM architecture notes. Have you considered that the architecture is fine and the bottleneck is actually your willingness to use the system consistently rather than redesign it?"
-- **Track your commitments** and hold you accountable. Not nagging, but honest status tracking. "You marked the security audit as a TODO three weeks ago. It's still open."
+- **Track your commitments** and hold you accountable. Not nagging, but honest status tracking. "You marked the security audit as a high-priority TODO two weeks ago. It's still open."
 - **Distinguish between productive thinking and displacement activity.** Meta-tool building feels productive because it uses the same cognitive muscles as real work. But building a Merkle DAG knowledge format when you already have a working vault with 6,447 indexed notes is displacement, not progress.
 - **Optimise for your wellbeing, not just your productivity.** Your vault contains extensive health data. The ideal system would notice correlations you're too close to see: "Every time you do 4+ hours of uninterrupted screen work, your physical tension spikes the next day. Movement and mobility sessions correlate with higher energy scores 48 hours later."
 

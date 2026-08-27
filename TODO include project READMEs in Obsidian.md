@@ -37,14 +37,14 @@ Idea 2, read-only, as a local copy: a script copies every repo README into a git
 
 Facts this is built on:
 - `%USERPROFILE%\Documents\GitHub` holds 28 repos, 26 with a README, and the vault is one of them (sibling, not parent).
-- This vault's git remote `hannesdelbeke/brain` is public. Many siblings are WorkspaceRepos repos and private.
+- This vault's git remote is public. Many sibling repos are private repositories.
 - The [[Obsidian plugin - Git]] auto-backup commits everything that is not ignored (`auto backup: <date>` commits).
 - The vault is flat, one folder deep only for `image/` and `skills/`.
 
 Trade-off accepted: `projects/` is gitignored, so the mirror only exists on this machine. On another machine or on mobile the `[[<repo> README]]` links resolve to nothing until the script runs there. That is the price of not pushing private work READMEs into a public repo, and READMEs are dev-machine context anyway.
 
 Why the others lose:
-- Idea 1, cloning repos into the vault: puts private WorkspaceRepos code inside a public vault repo where a plugin runs `git add -A` on a timer. Also 26 files all named `README.md`, the clash described in [[submodule wikilink clashes]], and Obsidian indexing 28 working trees.
+- Idea 1, cloning repos into the vault: puts private code inside a public vault repo where a plugin runs `git add -A` on a timer. Also 26 files all named `README.md`, the clash described in [[submodule wikilink clashes]], and Obsidian indexing 28 working trees.
 - Junction or symlink per repo with the target gitignored ([[mklink windows - soft & hard link]]): same `README.md` name clash, same private-content-in-a-public-repo exposure if the ignore line is ever dropped, and Obsidian walks the whole working tree.
 - Hard link per README, renamed on the vault side: this is the only option that gives real two-way editing, but a `git checkout` in the repo replaces the file and silently breaks the link, so the vault copy goes stale without a signal.
 - Separate vault plus `obsidian://` URI: covered in [[TODO include project wikis in Obsidian]], it needs a `.obsidian` folder in every repo and the links break outside Obsidian.
@@ -62,7 +62,7 @@ Steps:
    ```python
    from pathlib import Path
 
-   ROOTS = [Path(r"%USERPROFILE%\Documents\GitHub")]
+   ROOTS = [Path.home() / "Documents" / "GitHub"]
    VAULT = Path(__file__).parent.parent
    OUT = VAULT / "projects"
 
