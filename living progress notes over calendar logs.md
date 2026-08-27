@@ -20,7 +20,7 @@ aliases:
 
 Why personal knowledge management (PKM) and AI agents should organize active work around **Living Progress Notes** rather than fragmented calendar logs—evolving persistent initiative hubs in-place while relying on **Git history** for chronological provenance.
 
-Related: [[public/grow memory|grow memory]], [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]], [[public/2026-08-27 what an AI buddy actually needs|what an AI buddy actually needs]]
+Related: [[public/grow memory|grow memory]], [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]], [[public/2026-08-27 what an AI buddy actually needs|what an AI buddy actually needs]], [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]]
 
 ---
 
