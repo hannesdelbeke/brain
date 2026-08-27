@@ -239,5 +239,31 @@ class UnlinkedMentionsTest(unittest.TestCase):
         )
 
 
+class WatcherTest(unittest.TestCase):
+    """The watcher itself is `watchfiles`; what is ours is the filter and the loop."""
+
+    def test_the_indexers_own_writes_are_ignored(self):
+        # a reindex writes these inside the watched root, so seeing them would
+        # start a loop that never ends
+        for path in ("vault/.obsidian/pkm_index.db", "root/.pkm_scan_state.json",
+                     "vault/.obsidian/pkm_index.db-wal"):
+            self.assertTrue(SEARCHD.index_writes(path), path)
+        for path in ("vault/note.md", "root/2026-08-27 a note.md"):
+            self.assertFalse(SEARCHD.index_writes(path), path)
+
+    def test_each_batch_of_changes_reindexes_once(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        vault = build_vault(Path(temp_dir.name) / "watched", "watched",
+                            {"alpha.md": "## One\nText.\n"})
+        (vault.root / "beta.md").write_text("## Two\nMore text.\n", encoding="utf-8")
+        SEARCHD.watch_vault(vault, stream=[{("added", "beta.md")}])
+        self.assertEqual(vault.counts()["notes"], 2)
+
+    def test_a_failing_reindex_leaves_the_watcher_running(self):
+        vault = SEARCHD.Vault("gone", Path("no such root"), Path("no such root/x.db"))
+        SEARCHD.watch_vault(vault, stream=[{("added", "a.md")}, {("added", "b.md")}])
+
+
 if __name__ == "__main__":
     unittest.main()
