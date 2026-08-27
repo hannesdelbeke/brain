@@ -68,8 +68,8 @@ in device manager we can see
 | Realtek Gaming 2.5GbE Family Controller             | has WOL, shows up in BIOS with MAC address |
 turns out I was looking at wrong one (Intel(R) Ethernet) but `Realtek Gaming 2.5GbE Family Controller` is the one I need.
 
-[[Windows - get mac addresses ]]
-Confirm the NIC is actually armed for wake
+Get MAC address via `Get-NetAdapter | Select-Object Name, MacAddress`.
+Confirm the NIC is actually armed for wake:
 
 ```powershell
 powercfg -devicequery wake_armed
