@@ -206,5 +206,52 @@ class MetadataIndexerTest(unittest.TestCase):
         self.assertNotIn("threads", calls[1], "bulk embedding keeps the full pool")
 
 
+class RerankTest(unittest.TestCase):
+    """The model is fastembed's; what is ours is the text it is handed and the order out."""
+
+    class FakeCrossEncoder:
+        def __init__(self):
+            self.documents = None
+
+        def rerank(self, query, documents):
+            self.documents = list(documents)
+            # scores rising down the list, so the order flips and a passthrough fails
+            return [float(index) for index in range(1, len(self.documents) + 1)]
+
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp_dir.cleanup)
+        self.vault = Path(self.temp_dir.name) / "vault"
+        (self.vault / ".obsidian").mkdir(parents=True)
+        self.db = self.vault / ".obsidian" / "pkm_index.db"
+        (self.vault / "alpha.md").write_text(
+            "## First\nA distinctivephrase about batteries.\n"
+            "## Second\nAnother distinctivephrase, this time about solar.\n",
+            encoding="utf-8",
+        )
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+        self.fake = self.FakeCrossEncoder()
+        INDEXER._RERANK_CACHE["model"] = self.fake
+        self.addCleanup(INDEXER._RERANK_CACHE.pop, "model", None)
+
+    def search(self, rerank):
+        return INDEXER.search_index("distinctivephrase", db_path=str(self.db),
+                                    limit=5, rerank=rerank)
+
+    def test_the_cross_encoder_decides_the_order(self):
+        fused = [row["path"] + row["heading"] for row in self.search(False)]
+        reranked = [row["path"] + row["heading"] for row in self.search(True)]
+        self.assertEqual(reranked, list(reversed(fused)))
+        self.assertTrue(all("rerank_score" in row for row in self.search(True)))
+
+    def test_it_reranks_the_section_text_not_the_snippet(self):
+        self.search(True)
+        self.assertTrue(any("solar" in document for document in self.fake.documents),
+                        "the indexed section content is what the model has to read")
+
+    def test_fusion_alone_leaves_no_rerank_score(self):
+        self.assertTrue(all("rerank_score" not in row for row in self.search(False)))
+
+
 if __name__ == "__main__":
     unittest.main()

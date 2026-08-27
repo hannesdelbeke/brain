@@ -21,7 +21,8 @@ registered is the default when a request omits `vault`.
 
 Endpoints, all accepting `?vault=name`:
     GET  /health           registered vaults, counts, provider, warm state
-    GET  /search?q=&limit= hybrid FTS5 + vector results with RRF scores
+    GET  /search?q=&limit= hybrid FTS5 + vector results with RRF scores,
+                           `&rerank=1` reorders the top with a cross-encoder
     GET  /links?note=      inbound and outbound wikilink edges for one note
     GET  /unlinked?note=   sections naming a note without linking to it
     POST /reindex          incremental rebuild, blocks until done
@@ -222,11 +223,12 @@ def keepalive():
             list(model.embed(["."]))
 
 
-def do_search(vault: Vault, query: str, limit: int, origin: str = "") -> dict:
+def do_search(vault: Vault, query: str, limit: int, origin: str = "", rerank: bool = False) -> dict:
     began = time.perf_counter()
     STATE.last_query = time.time()
     with LOCK:
-        rows = pkm.search_index(query, db_path=str(vault.db), limit=limit, vectors=vault.matrix())
+        rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
+                                vectors=vault.matrix(), rerank=rerank)
         vault.queries += 1
     payload = {
         "vault": vault.name,
@@ -240,6 +242,7 @@ def do_search(vault: Vault, query: str, limit: int, origin: str = "") -> dict:
                 "score": round(row["score"], 6),
                 "raw_sim": row["raw_sim"],
                 "snippet": row["snippet"],
+                **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {}),
             }
             for row in rows
         ],
@@ -422,7 +425,8 @@ class Handler(BaseHTTPRequestHandler):
                     self.reply(400, {"error": "q is required"})
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
-                self.reply(200, do_search(vault, query, limit, first("origin")))
+                self.reply(200, do_search(vault, query, limit, first("origin"),
+                                          first("rerank") in {"1", "true", "yes"}))
             elif url.path == "/links" and method == "GET":
                 note = first("note")
                 if not note:
