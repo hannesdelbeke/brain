@@ -135,3 +135,7 @@ First slice is FTS5-only. `search_index` already degrades to lexical when a corp
 What step 1 did not buy: the cost-audit parsers still re-implement their own loop. They need `message.usage`, which `iter_events` deliberately drops, so sharing the reader would mean widening it back out to the thing it exists to avoid. Indexing for recall and accounting for spend read the same files and want different halves of them.
 
 Left for later: no watcher, so the index is as fresh as the last `--reindex`, and an append-only log deserves a byte-offset resume rather than the full 102-second reparse. Embeddings are a flag nobody has turned on yet.
+
+---
+
+Related Evolution: [[public/proposal - self-learning agent supervisor and continuous prompt failure distillation|Proposal: Self-Learning Agent Supervisor & Continuous Prompt Failure Distillation]]
