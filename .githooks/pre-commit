@@ -1,12 +1,30 @@
 #!/bin/sh
-# Mass deletion guard: Refuses automated commits deleting >20 files at once
-# Prevents uninitialized submodule clones or background auto-backup plugins from wiping vaults.
-DELETED_COUNT=$(git diff --cached --diff-filter=D --name-only | wc -l)
-if [ "$DELETED_COUNT" -gt 20 ] && [ "$PKM_ALLOW_MASS_DELETE" != "1" ]; then
-    echo "================================================================="
-    echo "ERROR: Attempted to delete $DELETED_COUNT files in a single commit."
-    echo "Commit BLOCKED to prevent accidental vault / submodule wipes."
-    echo "If this mass deletion is intentional, set PKM_ALLOW_MASS_DELETE=1"
-    echo "================================================================="
+# brain pre-commit. Active only when core.hooksPath is set to .githooks,
+# 
+
+# --- mass deletion guard ---------------------------------------------------
+#
+# On 2026-08-26 the obsidian-git plugin's scheduled auto-backup ran in a clone
+# whose working tree was empty and committed 215 deletions, wiping the vault.
+# The plugin stages everything it sees and cannot tell "the user deleted these"
+# from "these files are not here right now".
+#
+# Set PKM_ALLOW_MASS_DELETE=1 to commit a genuine bulk removal.
+
+LIMIT=20
+
+if [ -z "$PKM_ALLOW_MASS_DELETE" ] && git rev-parse --verify HEAD >/dev/null 2>&1; then
+  deleted=$(git diff --cached --name-only --diff-filter=D HEAD | wc -l)
+  if [ "$deleted" -gt "$LIMIT" ]; then
+    echo "pre-commit: refusing to commit $deleted deletions (limit $LIMIT)." >&2
+    echo "" >&2
+    echo "This is the signature of an auto-backup running against an empty or" >&2
+    echo "unsynced working tree. Check that the vault files are actually on disk" >&2
+    echo "before letting this through." >&2
+    echo "" >&2
+    echo "If the removal is intentional:  PKM_ALLOW_MASS_DELETE=1 git commit ..." >&2
     exit 1
+  fi
 fi
+
+exit 0
