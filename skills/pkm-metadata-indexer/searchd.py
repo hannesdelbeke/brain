@@ -17,12 +17,21 @@ pay for it twice for nothing. Register vaults by name and select one per query:
     curl -X POST "http://127.0.0.1:44771/reindex?vault=brain"
 
 A bare `--vault /path/to/brain` names it after the folder, and the first vault
-registered is the default when a request omits `vault`.
+registered is the default when a request omits `vault`. `/search` also takes
+`vault=all` or a comma-separated list and merges the rankings, for a vault split
+across repositories that an agent reads as one.
+
+Every `/search` reports the files each corpus holds that its index has not read,
+under `stale`, and starts a reindex behind the answer rather than making the
+caller wait for one. A search that ranks well over a stale index is
+indistinguishable from one that works, which is the failure this exists to make
+visible.
 
 Endpoints, all accepting `?vault=name`:
     GET  /health           registered vaults, counts, provider, warm state
     GET  /search?q=&limit= hybrid FTS5 + vector results with RRF scores,
-                           `&rerank=1` reorders the top with a cross-encoder
+                           `&rerank=1` reorders the top with a cross-encoder,
+                           `&vault=all` searches every registered corpus
     GET  /links?note=      inbound and outbound wikilink edges for one note
     GET  /unlinked?note=   sections naming a note without linking to it
     POST /reindex          incremental rebuild, blocks until done
@@ -71,6 +80,8 @@ DEFAULT_LIMIT = 20
 MAX_LIMIT = 100
 LOOPBACK = {"127.0.0.1", "localhost", "[::1]", "::1"}
 KEEPALIVE_S = 0.25
+STALE_TTL_S = 30
+WATCHED_STALE_TTL_S = 300
 WATCH_DEBOUNCE_MS = 2000
 WATCH_STEP_MS = 200
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
@@ -80,6 +91,9 @@ QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 # queries are tens of milliseconds once warm, so serialising them costs nothing
 # a single user can notice. Give the model its own lock if that stops being true.
 LOCK = threading.Lock()
+
+# Guards the one-reindex-per-corpus flag only, never held across a reindex.
+REINDEX_LOCK = threading.Lock()
 
 # Set by main(), None disables logging. The lock is separate from LOCK so a write
 # never sits inside the query path.
@@ -129,6 +143,27 @@ class Vault:
         self.vectors = None
         self.vectors_version = None
         self.reader = None
+        self.watched = False  # set when a watcher thread takes this corpus
+        self.reindexing = False
+        self.stale_cache = None
+        self.stale_at = 0.0
+
+    def stale(self) -> dict:
+        """Which files this corpus holds that its index has not read.
+
+        A search is the only thing that will notice a watcher that died, so the
+        check runs on the query path rather than on a timer. It costs a walk and
+        a stat per file, 0.09s over 3,272 notes, which is several times a warm
+        query, so the answer is cached: briefly when nothing is watching, and for
+        minutes when something is, since a live watcher already reindexes within
+        seconds and the check is then only there to catch it dying.
+        """
+        ttl = WATCHED_STALE_TTL_S if self.watched else STALE_TTL_S
+        now = time.time()
+        if self.stale_cache is None or now - self.stale_at > ttl:
+            self.stale_cache = pkm.stale_paths(self.root, self.db)
+            self.stale_at = now
+        return self.stale_cache
 
     def matrix(self):
         """Keep the vector matrix resident, rebuilt only when the database changes.
@@ -180,7 +215,8 @@ class Vault:
 
     def describe(self) -> dict:
         return {"name": self.name, "root": str(self.root), "db": str(self.db),
-                "queries": self.queries, **self.counts()}
+                "queries": self.queries, "watched": self.watched,
+                "indexed_at": pkm.last_index_run(self.db), **self.counts()}
 
 
 class State:
@@ -192,12 +228,28 @@ class State:
         self.started = time.time()
         self.last_query = 0.0
 
-    def pick(self, name: str) -> Vault:
+    def pick_many(self, name: str) -> list[Vault]:
+        """Resolve a vault parameter, which may name several.
+
+        The vault on this machine is two repositories by design: notes that stay
+        private and notes that are published, kept apart so their histories are.
+        An agent looking for a note does not care which half it is in, so `all`
+        or a comma-separated list searches them together, while everything that
+        writes still addresses one corpus by name.
+        """
         if not name:
-            return self.vaults[self.default]
-        if name not in self.vaults:
-            raise KeyError(f"unknown vault {name!r}, have {sorted(self.vaults)}")
-        return self.vaults[name]
+            return [self.vaults[self.default]]
+        if name == "all":
+            return list(self.vaults.values())
+        names = [part.strip() for part in name.split(",") if part.strip()]
+        unknown = [part for part in names if part not in self.vaults]
+        if unknown or not names:
+            raise KeyError(f"unknown vault {(unknown or [name])[0]!r}, have {sorted(self.vaults)}")
+        return [self.vaults[part] for part in names]
+
+    def pick(self, name: str) -> Vault:
+        """One corpus, for the routes that only make sense against one."""
+        return self.pick_many(name)[0]
 
 
 STATE: State | None = None
@@ -237,31 +289,85 @@ def keepalive():
             list(model.embed(["."]))
 
 
-def do_search(vault: Vault, query: str, limit: int, origin: str = "", rerank: bool = False) -> dict:
-    began = time.perf_counter()
-    STATE.last_query = time.time()
+def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dict]:
     with LOCK:
         rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
                                 vectors=vault.matrix(), rerank=rerank)
         vault.queries += 1
+    return [
+        {
+            "vault": vault.name,
+            "path": row["path"],
+            "heading": row["heading"],
+            "line": row["start_line"],
+            "score": round(row["score"], 6),
+            "raw_sim": row["raw_sim"],
+            "snippet": row["snippet"],
+            **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {}),
+        }
+        for row in rows
+    ]
+
+
+def kick_reindex(vault: Vault) -> bool:
+    """Start a reindex behind the search that noticed, at most one per corpus.
+
+    The search itself is answered from the index as it stands rather than made
+    to wait: a stale answer plus a list of what is missing is useful now, and
+    the next query a minute later is complete. Two searches finding the same
+    corpus stale must not start two passes over it, hence the flag.
+    """
+    with REINDEX_LOCK:
+        if vault.reindexing:
+            return True
+        vault.reindexing = True
+
+    def run():
+        try:
+            result = do_reindex(vault)
+            print(f"stale {vault.name}: reindexed in {result['took_s']}s", flush=True)
+        except Exception as error:
+            print(f"stale {vault.name}: reindex failed, {type(error).__name__}: {error}", flush=True)
+        finally:
+            vault.stale_at = 0.0  # recheck rather than trust a cache the reindex invalidated
+            vault.reindexing = False
+
+    threading.Thread(target=run, daemon=True).start()
+    return True
+
+
+def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
+              rerank: bool = False, reindex: bool = True) -> dict:
+    """Search one corpus or several, and say which files the answer could not see.
+
+    Merging across corpora sorts on the fused score. Those scores are sums of
+    `1/(k + rank)` on both sides, so sorting them interleaves the two rankings by
+    rank, which is the only comparison between two separate indexes that means
+    anything: a bm25 score from one corpus and a bm25 score from another are not
+    on the same scale, their positions are.
+    """
+    began = time.perf_counter()
+    STATE.last_query = time.time()
+    results, stale, indexed_at = [], {}, {}
+    for vault in vaults:
+        results += rank(vault, query, limit, rerank)
+        missing = vault.stale()
+        indexed_at[vault.name] = missing["indexed_at"]
+        if missing["count"] or missing.get("no_index"):
+            stale[vault.name] = {**missing, "reindexing": reindex and kick_reindex(vault)}
+    if len(vaults) > 1:
+        results.sort(key=lambda row: row["score"], reverse=True)
+        results = results[:limit]
+    name = ",".join(vault.name for vault in vaults)
     payload = {
-        "vault": vault.name,
+        "vault": name,
         "query": query,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
-        "results": [
-            {
-                "path": row["path"],
-                "heading": row["heading"],
-                "line": row["start_line"],
-                "score": round(row["score"], 6),
-                "raw_sim": row["raw_sim"],
-                "snippet": row["snippet"],
-                **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {}),
-            }
-            for row in rows
-        ],
+        "indexed_at": indexed_at,
+        "stale": stale,
+        "results": results,
     }
-    log_query("search", vault.name, query, limit, payload["took_ms"], payload["results"], origin)
+    log_query("search", name, query, limit, payload["took_ms"], payload["results"], origin)
     return payload
 
 
@@ -344,6 +450,7 @@ def do_reindex(vault: Vault) -> dict:
     began = time.perf_counter()
     with LOCK:
         pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect)
+    vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
     return {"vault": vault.name, "took_s": round(time.perf_counter() - began, 2), **vault.counts()}
 
 
@@ -453,16 +560,19 @@ class Handler(BaseHTTPRequestHandler):
                     "vaults": [vault.describe() for vault in STATE.vaults.values()],
                 })
                 return
-            vault = STATE.pick(first("vault"))
             if url.path == "/search" and method == "GET":
                 query = first("q")
                 if not query:
                     self.reply(400, {"error": "q is required"})
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
-                self.reply(200, do_search(vault, query, limit, first("origin"),
-                                          first("rerank") in {"1", "true", "yes"}))
-            elif url.path == "/links" and method == "GET":
+                self.reply(200, do_search(STATE.pick_many(first("vault")), query, limit,
+                                          first("origin"),
+                                          first("rerank") in {"1", "true", "yes"},
+                                          first("reindex") not in {"0", "false", "no"}))
+                return
+            vault = STATE.pick(first("vault"))
+            if url.path == "/links" and method == "GET":
                 note = first("note")
                 if not note:
                     self.reply(400, {"error": "note is required"})
@@ -601,6 +711,7 @@ def main():
     if args.watch:
         catch_up(vaults)
         for vault in vaults:
+            vault.watched = True
             threading.Thread(target=watch_vault, args=(vault,), daemon=True).start()
         print(f"watching {len(vaults)} corpus root(s)", flush=True)
 
