@@ -136,6 +136,63 @@ When running consolidation passes, write clear, searchable commit messages:
 * ✅ `Consolidate: Merge 4 BLE blind exploration notes into single reverse-engineering skill`
 * ❌ `update notes`
 
+### Rule 5: Preserving Aliases to Prevent Broken Graph Connections
+When deleting stubs, always add their exact titles into the `aliases:` list of the consolidated overnote's YAML frontmatter. This ensures that internal Obsidian searches, backlinks, and graph edges continue to resolve seamlessly to the new overnote rather than breaking into dead links.
+
+---
+
+## ⚡ Concrete Case Study: The Barrier Stubs Consolidation (2026-08-28)
+
+On **2026-08-28 at 09:37:14 +01:00**, the first live multi-stub consolidation pass was executed on the vault:
+
+* **Commit:** `e0998acace925357497cd4dfd09cf7e77a87ae28` (`e0998aca`)
+* **Author:** `Gemini 3.7 Flash <gemini@antigravity.ai>`
+* **Consolidated Note:** [[Barrier]] (Expanded with a dedicated `## Network Setup: Eliminating WiFi Lag via Dedicated LAN` section)
+* **Pruned Stubs:** Deleted `Barrier WiFi lag.md` (1 sentence) and `Barrier Ethernet setup.md` (3 bullet points).
+* **Backlink Fix:** Repointed [[setup TP-LINK RE605X Ax1800]] to `[[Barrier#Low-Latency Wired Configuration|Barrier Ethernet setup]]`.
+* **Forensic Verification:**
+  ```powershell
+  # Query the exact commit where the stubs were pruned and retrieve their verbatim original content
+  git log -S "Barrier WiFi lag" -p
+  ```
+
+---
+
+## ⚠️ The External Vault Boundary: Broken Cross-Vault Wikilinks
+
+A critical challenge in multi-vault architectures (such as when `brain` is mounted via directory junction or submodule inside a private parent vault):
+
+**When a stub note in `brain` is deleted, wikilinks in external/parent vaults that reference that deleted note will break.**
+
+For example, if `private-vault/work-setup.md` references `[[Barrier Ethernet setup]]`, deleting `Barrier Ethernet setup.md` from `brain` leaves an unresolved link in the private vault.
+
+### Protocols for Managing Cross-Vault References:
+
+1. **Mandatory Alias Preservation in Public Overnotes:**
+   When consolidating stubs in `brain`, add all deleted filenames to `aliases:` in the overnote frontmatter:
+   ```yaml
+   aliases:
+     - Barrier Ethernet setup
+     - Barrier WiFi lag
+   ```
+   Obsidian’s vault index will continue to suggest and resolve `[[Barrier Ethernet setup]]` directly to `Barrier.md`.
+
+2. **Pre-Pruning Cross-Vault Grep:**
+   Before deleting any file in `brain`, agents should scan both `brain` and the parent private vault:
+   ```powershell
+   # Scan parent private vault for references before deleting a stub
+   git grep "\[\[Barrier Ethernet setup" ../
+   ```
+   Update external references to explicitly target the overnote section: `[[Barrier#Low-Latency Wired Configuration|Barrier Ethernet setup]]`.
+
+3. **Agent Archaeology Fallback on Dead Links:**
+   When an AI agent in any vault encounters a broken link `[[Some Deleted Note]]`, it must not assume the knowledge is lost. It executes an archaeological lookup in `brain`'s Git DAG:
+   ```powershell
+   git -C path/to/brain log --diff-filter=D --summary | Select-String "Some Deleted Note.md"
+   git -C path/to/brain log -S "Some Deleted Note" -n 1 -p
+   ```
+   This retrieves the exact commit message, showing which overnote absorbed the deleted knowledge.
+
 ---
 
 ## 📊 Comparison: Bloated Vault vs. Git-Backed Consolidated Vault
