@@ -93,7 +93,7 @@ The database stores pointers, `(transcript path, line)` and commit SHA, not copi
 
 ## walkthrough, lossy compaction of a journal note
 
-The incident. An agent ran a condensing pass over the 2026-08-28 day note and replaced verbatim dialogue, *"Food brought to you, isn't it nice?"*, with generic psychological summary. The correction prompt came back the same session: *"i feel a lot of my original notes were lost compared to original first pass note written by me. ai came to a few conclusions or summaries i m unsure about."*
+The incident, which happened on another machine, so the note and the commits below are not reachable from this vault. An agent ran a condensing pass over the 2026-08-28 day note and replaced verbatim dialogue, *"Food brought to you, isn't it nice?"*, with generic psychological summary. The correction prompt came back the same session: *"i feel a lot of my original notes were lost compared to original first pass note written by me. ai came to a few conclusions or summaries i m unsure about."*
 
 Ingest and detection. Two signals fire together, which is what makes this a high-confidence correction rather than a phrasing guess. The prompt carries *"lost"* and *"unsure about"* and lands immediately after an agent edit, and the diff between the human entry at `21a223cc` and the agent edit at `77bb3586` is a 50% line reduction with the quoted dialogue gone.
 
@@ -105,16 +105,22 @@ The second archetype shows the same split more sharply. The co-author collision 
 
 ## what would have to be true
 
-The detector needs precision, not recall. A correction feed with a third false positives becomes something nobody reads, and the cost of a missed correction is that it stays a manual fix, which is the status quo, so erring toward silence is cheap.
+The detector needs precision, not recall. A feed where one in three entries is a false positive becomes something nobody reads, and the cost of a missed correction is that it stays a manual fix, which is the status quo, so erring toward silence is cheap.
+
+No rule reaches an agent without a human approving it. An automatically written rule that is subtly wrong degrades every session after it and is close to untraceable, because the symptom appears in unrelated work weeks later. Stage 4 proposes, a human merges, and that stays true however good the clustering gets.
 
 Archetypes have to be earned from counts. Below some threshold of incidents, an archetype is one bad day, and encoding it as a rule taxes every future session for a one-off.
 
 The rules have to be removable. Rules synthesized automatically accumulate, and the deletion path matters more than the write path, per [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]].
 
-Cross-machine sessions are a sync problem before they are an analysis problem. Transcripts live on the machine that produced them, and there is no sync layer today.
+Cross-machine sessions are a sync problem before they are an analysis problem. Transcripts live on the machine that produced them, and there is no sync layer today. The git half has no such problem, because a clone of the remote carries every machine's commits already, so a git-only detector covers all hardware on day one and the transcripts are what has to wait.
+
+The corpus is biased toward failures that were noticed. It only contains mistakes a human saw and bothered to type a correction for, so a wrong-but-plausible summary that got committed and never questioned is invisible to it. That is a ceiling on the word self-learning: the system automates distilling the corrections, not noticing them.
 
 ## smallest first step
 
-One script, over Claude Code transcripts already indexed on this machine, that emits every turn where a human prompt directly follows an agent edit and the next commit reverts part of it. No clustering, no rule writing, no schema. Read the output by hand and count how many are real corrections. If that number is small or the list is noise, the rest of this does not get built.
+One script over git alone, no transcripts and no index: walk the log of a repository and emit every pair where a commit authored by a human rewrites lines a commit authored by an agent added within the previous day. Print the pair, nothing else. No clustering, no rule writing, no schema, and nothing that needs a machine other than the one holding the clone.
+
+Read the output by hand. What matters is not the tool, it is the count and the shape of the list: whether the same failure shows up ten times or once each. Ten times is a hook worth writing that afternoon, whatever else gets built. A list with no repetition in it means the archetypes are already all known, and the rest of this note is a pipeline for producing four rules a year.
 
 Related: [[cross-agent session indexing architecture]], [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]], [[autocommit leftover changes]], [[human vs AI git history transfers between notes]], [[token efficient PKM analysis architecture]]
