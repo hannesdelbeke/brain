@@ -268,9 +268,54 @@ class WatcherTest(unittest.TestCase):
         SEARCHD.watch_vault(vault, stream=[{("added", "beta.md")}])
         self.assertEqual(vault.counts()["notes"], 2)
 
+    def test_startup_catches_up_on_what_changed_while_it_was_down(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [v.close() for v in VAULTS])
+        vault = build_vault(Path(temp_dir.name) / "restarted", "restarted",
+                            {"alpha.md": "## One\nText.\n"})
+        # the edit lands with no watcher running, which is every reboot
+        (vault.root / "beta.md").write_text("## Two\nMore text.\n", encoding="utf-8")
+        SEARCHD.catch_up([vault])
+        self.assertEqual(vault.counts()["notes"], 2)
+
+    def test_catch_up_skips_a_corpus_with_no_index_and_survives_a_bad_one(self):
+        missing = SEARCHD.Vault("gone", Path("no such root"), Path("no such root/x.db"))
+        SEARCHD.catch_up([missing])  # skipped, not an error
+
     def test_a_failing_reindex_leaves_the_watcher_running(self):
-        vault = SEARCHD.Vault("gone", Path("no such root"), Path("no such root/x.db"))
-        SEARCHD.watch_vault(vault, stream=[{("added", "a.md")}, {("added", "b.md")}])
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [v.close() for v in VAULTS])
+        root = Path(temp_dir.name) / "flaky"
+        vault = build_vault(root, "flaky", {"alpha.md": "## One\nText.\n"})
+        # a plain file where the database's parent directory has to be, so the
+        # mkdir(parents=True) at the top of build_index raises and no index is
+        # ever written. A missing root does not fail: build_index creates it.
+        blocker = root / ".obsidian" / "blocker"
+        blocker.write_text("", encoding="utf-8")
+        healthy_db, vault.db = vault.db, blocker / "x.db"
+
+        failed, served, release = [], threading.Event(), threading.Event()
+
+        def stream():
+            yield {("added", "beta.md")}  # this reindex cannot succeed
+            failed.append(vault.db.exists())
+            vault.db = healthy_db
+            (root / "beta.md").write_text("## Two\nMore text.\n", encoding="utf-8")
+            yield {("added", "beta.md")}  # and the watcher is still here for it
+            served.set()
+            release.wait(30)
+
+        watcher = threading.Thread(target=SEARCHD.watch_vault, args=(vault,),
+                                   kwargs={"stream": stream()}, daemon=True)
+        watcher.start()
+        self.assertTrue(served.wait(60), "the watcher died on the failing reindex")
+        self.assertEqual(failed, [False], "the reindex wrote an index, it did not fail")
+        self.assertTrue(watcher.is_alive())
+        self.assertEqual(vault.counts()["notes"], 2)
+        release.set()
+        watcher.join(10)
 
 
 class MatrixCacheTest(unittest.TestCase):
