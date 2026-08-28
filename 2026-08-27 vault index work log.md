@@ -65,6 +65,18 @@ Relevance was not measured and one query each proves nothing, except incidentall
 
 The one thing that had to be got right is that a reindex writes the database inside the root it is watching, which would trigger the next reindex forever. The filter drops the database, its journals and every dotfile, none of which a note is ever named. Measured live: a two-file batch reindexes in 0.02s, and the whole-vault pass with nothing to re-embed is 2.57s, so the ceiling is a couple of seconds either way.
 
+## Except it did not, until the cache was fixed
+
+Added 2026-08-28. The watcher above was written and correct and no reindex it ran ever reached a search. Nor did a manual one: `POST /reindex` returned `{"notes": 816, "sections": 3265}` and the next query answered out of the pre-edit index. The database was right; the daemon's resident vector matrix was stale.
+
+`Vault.matrix()` opened a fresh SQLite connection per call and used `PRAGMA data_version` as the invalidation signal. A fresh connection reads 2 and keeps reading 2 no matter what any other connection commits — the counter only moves for a connection that was already open when the write landed. Measured: three fresh connections read 2, 2, 2 across two external commits, while one long-lived connection went 2 to 3. So the cache was pinned for the life of the process and every watcher pass, every manual reindex and every plugin write was invisible.
+
+The connection now lives on the `Vault` with `check_same_thread=False`, which is safe because every caller already holds `LOCK`, and a `close()` came with it because Windows will not delete a database file a test still has open. `test_searchd.py` asserts a reindex changes `vectors_version`.
+
+Two things generalise. A cache whose invalidation is never exercised by a test is a cache that is always warm and always wrong, and this one sat behind a docstring that described the mechanism accurately while using it incorrectly. And it is the second time in two days that the daemon served a stale answer with a correct database behind it, after the scanner-restart trap above — the pattern is that the process is the cache, so anything measured against a long-running daemon needs a restart or a proven invalidation before the number means anything.
+
+Also worth separating a written feature from a running one. `--watch` is a flag, and the daemons on this machine were started without it, so the index was as fresh as the last reindex somebody remembered. Detecting staleness at query time was considered instead and rejected: it puts a stat walk of the whole root on the latency path of a 13-22ms query, and reindexing in the background after answering means learning the answer was stale only after giving it.
+
 ## The rerank, and the first sign the ranking was leaving something behind
 
 `--rerank` on the CLI and `&rerank=1` on the daemon reorder the fused top 20 with `Xenova/ms-marco-MiniLM-L-6-v2`, which ships inside the `fastembed` already installed, so it cost no dependency and a 90 MB download on first use. The model is loaded lazily and never touched otherwise.
