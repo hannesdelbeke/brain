@@ -13,8 +13,10 @@ aliases:
   - self learning agent supervisor
   - prompt failure distillation
 ---
+Relies on knowledge [[provenance]] and accurate [[git author]] attribution (including [[github co-authors for AI|AI co-authors]] and [[autocommit leftover changes|human autocommits]]). Tracking prompt intent connects to [[track prompt history]] and [[human vs AI git history transfers between notes]].
 
 A supervisor that reads agent session transcripts and git history, finds the turns where a human had to correct the agent, clusters the recurring ones, and writes the result back as guards and rules instead of leaving it in chat logs.
+
 
 The name is bigger than the machine. What it automates is distilling corrections a human already made, not noticing failures nobody caught, and the thing it should emit is a hook rather than a paragraph.
 
