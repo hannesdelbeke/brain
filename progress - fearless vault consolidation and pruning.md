@@ -32,6 +32,8 @@ aliases:
 * **Private-to-Public Promotion SOP:** Established strict upward-only link hierarchy rules and the Diff-First approval loop to ensure zero private data leakage when promoting notes ([[public/skills/private-to-public-note-promotion/SKILL|private to public note promotion]]).
 * **Semantic Synapse Pruning Model:** Modeled note decay on biological sleep homeostasis (Tononi's SHY), providing a scientific foundation for pruning weak links and archiving low-heat notes ([[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]], [[public/vault synapse pruning|vault synapse pruning]]).
 
+* **First Live Multi-Stub Consolidation Shipped:** Executed the first live consolidation pass on 2026-08-28 at 09:37:14 +01:00 (commit `e0998aca`), merging `Barrier WiFi lag.md` and `Barrier Ethernet setup.md` into [[Barrier]] with alias preservation and backlink updates.
+
 ---
 
 ## 🟡 Active Experiments & Next Steps
@@ -44,7 +46,7 @@ aliases:
 
 ## 🔴 Blockers & Open Questions
 
-* **No Pruning Has Happened Yet:** The vault is at 3,253 notes and still growing. The architecture is written; no note has been merged or deleted under it. See [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]] — do one manual multi-stub merge before automating the merger.
+* **Manual Merge Gate Cleared:** The first manual merge pattern is established (commit `e0998aca`). Next step is running an agent-assisted pass over remaining fragmented tool/log clusters.
 * **Obsidian In-Memory Tab Clashes:** Obsidian autosave re-creates deleted root files if an open tab isn't closed before disk deletion (`Ctrl + W` protocol required).
 
 ---
