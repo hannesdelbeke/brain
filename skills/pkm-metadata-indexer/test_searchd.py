@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import sys
 import tempfile
 import threading
 import time
@@ -313,6 +314,26 @@ class WatcherTest(unittest.TestCase):
         missing = SEARCHD.Vault("gone", Path("no such root"), Path("no such root/x.db"))
         SEARCHD.catch_up([missing])  # skipped, not an error
 
+    def test_a_watched_source_runs_its_command(self):
+        # a corpus that is not searched itself but produces notes that are
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        made = Path(temp_dir.name) / "derived.md"
+        command = [sys.executable, "-c", f"open({str(made)!r}, 'w').write('## Note\\n')"]
+        SEARCHD.watch_command(Path(temp_dir.name), command, 10, stream=[{("added", "x")}])
+        self.assertEqual(made.read_text(encoding="utf-8"), "## Note\n")
+
+    def test_a_failing_command_leaves_the_watcher_running(self):
+        # the extractor reads someone else's transcripts, so it can fail on a
+        # half-written one, and a watcher that dies on that is silent
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        command = [sys.executable, "-c", "import sys; sys.exit(3)"]
+        SEARCHD.watch_command(Path(temp_dir.name), command, 10,
+                              stream=[{("added", "x")}, {("added", "y")}])
+        SEARCHD.watch_command(Path(temp_dir.name), ["no such executable at all"], 10,
+                              stream=[{("added", "x")}])
+
     def test_a_failing_reindex_leaves_the_watcher_running(self):
         temp_dir = tempfile.TemporaryDirectory()
         self.addCleanup(temp_dir.cleanup)
@@ -399,6 +420,22 @@ class StaleIndexTest(unittest.TestCase):
         self.assertEqual(self.vault.counts()["notes"], 2)
         self.assertEqual(self.vault.stale()["count"], 0)
         self.assertEqual(SEARCHD.do_search([self.vault], "unindexed text", 5)["stale"], {})
+
+    def test_a_search_answers_while_a_reindex_is_running(self):
+        """The pass held the query lock, so a search that arrived during one waited it out.
+
+        Fifteen seconds over two corpora, past the CLI's timeout, and the CLI
+        reads a timeout as no daemon: it fell back to a direct search of one
+        corpus and printed that as the answer.
+        """
+        answered = []
+        with SEARCHD.INDEX_LOCK:  # as if a pass were halfway through
+            worker = threading.Thread(target=lambda: answered.append(
+                SEARCHD.do_search([self.vault], "indexed text", 5, reindex=False)), daemon=True)
+            worker.start()
+            worker.join(30)
+        self.assertTrue(answered, "the search waited for the reindex to finish")
+        self.assertEqual([row["path"] for row in answered[0]["results"]], ["alpha.md"])
 
     def test_reindex_can_be_asked_for_the_report_without_the_pass(self):
         self.unindexed()
