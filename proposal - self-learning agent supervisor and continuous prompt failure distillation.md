@@ -14,7 +14,9 @@ aliases:
   - prompt failure distillation
 ---
 
-A supervisor that reads agent session transcripts and git history, finds the turns where a human had to correct the agent, clusters the recurring ones, and writes the result back as rules and skills instead of leaving it in chat logs.
+A supervisor that reads agent session transcripts and git history, finds the turns where a human had to correct the agent, clusters the recurring ones, and writes the result back as guards and rules instead of leaving it in chat logs.
+
+The name is bigger than the machine. What it automates is distilling corrections a human already made, not noticing failures nobody caught, and the thing it should emit is a hook rather than a paragraph.
 
 **Status, 2026-08-28: nothing built, this is a design.** The ingest half of it exists as [[cross-agent session indexing architecture]], which indexes Claude Code transcripts today and has no Antigravity or Codex adapter. Everything downstream of ingest, the correction detector, the clustering and the rule writer, is unwritten. The numbers below are targets, not measurements.
 
@@ -116,6 +118,14 @@ The rules have to be removable. Rules synthesized automatically accumulate, and 
 Cross-machine sessions are a sync problem before they are an analysis problem. Transcripts live on the machine that produced them, and there is no sync layer today. The git half has no such problem, because a clone of the remote carries every machine's commits already, so a git-only detector covers all hardware on day one and the transcripts are what has to wait.
 
 The corpus is biased toward failures that were noticed. It only contains mistakes a human saw and bothered to type a correction for, so a wrong-but-plausible summary that got committed and never questioned is invisible to it. That is a ceiling on the word self-learning: the system automates distilling the corrections, not noticing them.
+
+## assessment, 2026-08-28
+
+The guards are the product. Stages 1 to 3 are a ranking function whose only job is to say which guard to write next, and if the four known archetypes are most of what exists, four hooks written by hand this week capture most of the value the whole pipeline would ever return. Build them first and let the pipeline argue for itself afterwards.
+
+Drop the transcript half from the first version. Git carries the highest-precision signal, a human rewriting lines an agent just added, it is already synced to every machine through the remote, and it needs no index, no daemon, no Antigravity or Codex adapter. The transcript pipeline adds correction phrasing, which is the weakest of the three signals, over the corpus that does not sync. That is most of the engineering for the least reliable input.
+
+What decides this is a count, not an architecture. The same failure appearing fourteen times is what turns a hook from a preference into an obvious afternoon's work, and a human reading fifty candidate pairs gets that number in ten minutes. Forty distinct one-offs and no clustering will help, in which case the honest outcome is a pipeline producing four rules a year, and it should not be built.
 
 ## smallest first step
 
