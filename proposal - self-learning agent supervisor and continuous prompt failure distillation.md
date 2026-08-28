@@ -22,6 +22,35 @@ The name is bigger than the machine. What it automates is distilling corrections
 
 > *Every prompt is a call to action: write new idea, fix an issue, make a thing. We now have some kind of session tracker or reader. Also relates to tracking prompt history and the automated daily logger. Go through all prompts on this machine, and identify what went wrong. Check the summary if there is one for the session (I know Claude has a recap, unsure if AGY does), then see if the prompt was resolved: what work or note it created, and then in future what issues it caused, or mistakes it made, or things it missed. Then link it to skills we extracted from this. How would this work? Would we store data, store SQL only, links only? Git history and session will be main source of truth (session data distributed across development hardware). End goal: by identifying where we went wrong and where we introduced bugs or shortcomings, we can come up with a system that can be self-learning—an external thing that watches our process day to day, and identifies issues. Nearly every prompt is me spotting an issue and asking AI to fix it. There might be patterns in things AI often breaks. I'd like you to find those patterns, and for that we might need a system.*
 
+> [!todo] next
+> **next:** write the four `.githooks` guards for the archetypes already known, starting with `commit-msg` rejecting any `Co-Authored-By` address outside `users.noreply.github.com`, then run the git-only correction walk over a month of repositories and count the pairs
+> **blocked:** nothing for steps 1 and 2, a human has to pick which repositories the walk covers before step 3 has a number worth reading
+
+## in short
+
+- the deliverable of learning is a guard, a git hook or a threshold check, not a paragraph in `AGENTS.md` that an agent may or may not read
+- the pipeline of ingest, detection and clustering exists to rank which guard to write next, and nothing else
+- git alone carries the strongest signal and already syncs across every machine, so the first version needs no transcripts, no index and no daemon
+- what decides whether the full system is worth building is a count of repeated failures, obtainable in an afternoon
+- the corpus can only ever hold failures a human noticed and corrected, so this distils corrections rather than discovering them
+
+## plan, in priority order
+
+1. **Write the known guards by hand.** Four archetypes are already named and need no pipeline to justify. Start with the `commit-msg` hook for co-author trailers, then a link checker, then a deletion threshold on journal notes, then a polling-loop check. Pays off immediately whether or not anything below gets built. *Blocked: nothing.*
+2. **Build the git-only correction walk.** One script over a repository log emitting pairs where a human commit rewrites lines an agent commit added within a day. No index, no schema, no transcripts. *Blocked: nothing.*
+3. **Count and decide.** Read fifty pairs by hand, count repeats per failure kind. Repetition means build stage 3, no repetition means stop here and keep writing hooks by hand. *Blocked: a human picks the repositories to walk.*
+4. **Add the transcript detector, if step 3 says yes.** Claude Code transcripts only, reusing the existing index, correlating correction prompts with the commits they followed. *Blocked: step 3.*
+5. **Frequency table before archetypes.** Emit incident counts with no labels attached and read them, to find the archetypes nobody has named. *Blocked: step 4.*
+6. **Rule synthesis with a human merge step.** Draft the guard and the rule line, never apply either unreviewed. *Blocked: step 5.*
+7. **Antigravity and Codex adapters, and transcript sync across machines.** Last, because it is the largest build and the least certain payoff. *Blocked: no sync layer exists.*
+
+> [!warning] concerns
+> **coverage:** the corpus holds only failures a human noticed and typed a correction for, so a wrong-but-plausible edit that shipped unchallenged is permanently invisible to the system
+> **untraceable rules:** an automatically written rule that is subtly wrong degrades every later session and surfaces as unrelated breakage weeks on, which is why no rule reaches an agent without a human merging it
+> **detector precision:** the correction-phrasing signal is the weakest of the three and will produce a feed nobody reads if it runs without the git-diff signal beside it
+> **payoff:** if the step 3 count shows forty one-off failures rather than a few repeated ones, the full pipeline produces roughly four rules a year and should not be built
+> **sync:** transcripts never leave the machine that wrote them, so any transcript-based stage covers one machine until a sync layer exists, where the git-based stages cover all of them today
+
 ## the correction tax
 
 A large share of prompts to a coding agent are not new work, they are the human catching the same mistake again: an un-namespaced commit trailer that hands authorship to a stranger ([[github co-author email collision with third-party accounts]]), a clone whose submodules got wiped, a wikilink that points at nothing, a background loop that eats twelve cores, half a journal note condensed into summary and the quotes dropped.
@@ -119,15 +148,7 @@ Cross-machine sessions are a sync problem before they are an analysis problem. T
 
 The corpus is biased toward failures that were noticed. It only contains mistakes a human saw and bothered to type a correction for, so a wrong-but-plausible summary that got committed and never questioned is invisible to it. That is a ceiling on the word self-learning: the system automates distilling the corrections, not noticing them.
 
-## assessment, 2026-08-28
-
-The guards are the product. Stages 1 to 3 are a ranking function whose only job is to say which guard to write next, and if the four known archetypes are most of what exists, four hooks written by hand this week capture most of the value the whole pipeline would ever return. Build them first and let the pipeline argue for itself afterwards.
-
-Drop the transcript half from the first version. Git carries the highest-precision signal, a human rewriting lines an agent just added, it is already synced to every machine through the remote, and it needs no index, no daemon, no Antigravity or Codex adapter. The transcript pipeline adds correction phrasing, which is the weakest of the three signals, over the corpus that does not sync. That is most of the engineering for the least reliable input.
-
-What decides this is a count, not an architecture. The same failure appearing fourteen times is what turns a hook from a preference into an obvious afternoon's work, and a human reading fifty candidate pairs gets that number in ten minutes. Forty distinct one-offs and no clustering will help, in which case the honest outcome is a pipeline producing four rules a year, and it should not be built.
-
-## smallest first step
+## the git-only walk, in detail
 
 One script over git alone, no transcripts and no index: walk the log of a repository and emit every pair where a commit authored by a human rewrites lines a commit authored by an agent added within the previous day. Print the pair, nothing else. No clustering, no rule writing, no schema, and nothing that needs a machine other than the one holding the clone.
 
