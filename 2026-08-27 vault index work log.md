@@ -105,8 +105,13 @@ Over the same thirteen hold-out questions, 859 transcripts and 79,645 sections: 
 
 The question the rerank was built on lands differently under a blind judge than it did by eye: three useful sections with the rerank against one without, but the first useful one at rank 4 rather than rank 1. The reorder wins the list and loses the top of it, the same trade the vault run showed.
 
+## Section-level invalidation was already in
+
+Editing one heading does not re-embed the whole note, and has not since commit `f50d2ce8` on 2026-08-21. `index_pkm_meta.py` hashes each `##` section into `Section.sha256`, `load_vector_cache()` keys reuse on `(sha256, embedding_model, chunking_version)`, and `test_unchanged_section_keeps_cached_vector` fails if an untouched section loses its vector or an edited one keeps it. It was carried on the open list here and in [[public/progress - local-first search daemon and indexer|the progress note]] for a week after it shipped, because it landed inside a commit named for per-batch SQLite checkpointing.
+
+What that leaves is a different floor than the one the open item assumed. On 859 notes and 5,169 sections an incremental run is 1.74s: 1.20s scanning and parsing every file, 0.45s in SQLite including the whole-table `DELETE FROM sections_fts`, `note_titles_fts` and `edges` rebuild, and embedding at effectively zero. Cutting the FTS and edges rebuild to a delta wins at most 0.45s of that, so the lever worth pulling first is skipping unchanged files on the scan.
+
 ## Open
 
-- Section-level SHA256 invalidation, so editing one heading does not re-embed the whole note.
 - The write-path near-duplicate gate, still unstarted.
 - A second transcript scanner for another agent CLI, which is what turns "one scanner among several" from a claim into a fact.

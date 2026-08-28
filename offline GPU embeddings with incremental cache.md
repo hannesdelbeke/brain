@@ -9,7 +9,7 @@ tags:
 origin-sha: 4e7e95b2a
 ---
 > [!summary] Status
-> **Phase 1 Implementation.** Lightweight GPU embeddings (`all-MiniLM-L6-v2`) with persistent SQLite SHA256 caching provide instant fuzzy/thematic search for agents without ongoing API cost. See [[agentic tooling upgrades over grep]].
+> **Built and running.** Lightweight GPU embeddings (`BAAI/bge-small-en-v1.5`, 384-dim) with persistent SQLite SHA256 caching at the `##` section grain provide instant fuzzy/thematic search for agents without ongoing API cost. See [[agentic tooling upgrades over grep]].
 
 How to run local vector embeddings across thousands of [[Markdown]] notes in your [[Obsidian]] vault on an RTX [[graphics processing unit|GPU]] with persistent [[cache|caching]], ensuring subsequent runs only process modified or newly added notes.
 
@@ -31,11 +31,12 @@ How to run local vector embeddings across thousands of [[Markdown]] notes in you
                   └──────────────────┬──────────────────┘
                                      ▼
                   ┌─────────────────────────────────────┐
-                  │ Has file hash or mtime changed vs   │
-                  │        the SQLite Cache?            │
+                  │  Has this ## section's SHA256, model │
+                  │  or chunking version changed vs the  │
+                  │           SQLite Cache?              │
                   └─────────┬─────────────────┬─────────┘
                             │                 │
-                      NO    │                 │   YES (New / Edited Note)
+                      NO    │                 │   YES (New / Edited Section)
                             ▼                 ▼
              ┌────────────────────────┐   ┌───────────────────────────┐
              │ Skip (0s, 0 GPU work)  │   │  Run Fast GPU Embedding   │
@@ -44,7 +45,7 @@ How to run local vector embeddings across thousands of [[Markdown]] notes in you
 ```
 
 1. **Initial Indexing (One-Time):** Processes ~3,000+ notes on GPU in ~30–60 seconds.
-2. **Incremental Runs:** Checks content SHA256 / modification timestamps in < 0.2 seconds. Only newly edited files trigger GPU embedding.
+2. **Incremental Runs:** The cache is keyed on `(sha256, embedding_model, chunking_version)` per `##` section, so editing one heading re-embeds one section rather than the whole note, and a model or chunker swap invalidates everything on purpose. Measured on 859 notes and 5,169 sections: 1.74s for the pass, of which 1.20s is scanning and parsing every file, 0.45s is SQLite and the FTS rebuild, and embedding is effectively zero when nothing changed.
 3. **Storage footprint:** 3,000 document vectors (768 dimensions) take **~5–10 MB** of disk space in SQLite or ChromaDB.
 
 ---
