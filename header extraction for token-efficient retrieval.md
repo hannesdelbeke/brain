@@ -20,7 +20,6 @@ aliases:
 
 **Header extraction** is the architectural practice of parsing a Markdown document's structural hierarchy (headings `#`, `##`, `###`, line numbers, YAML frontmatter metadata, and lead thesis) into a compact semantic skeleton, rather than loading the entire note body into an LLM context window.
 
-Related: [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]], [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]], [[public/pkm-search|pkm-search]], [[public/progress - local-first search daemon and indexer|progress - local-first search daemon and indexer]], [[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]
 
 ---
 
@@ -96,7 +95,8 @@ sections:
   - heading: "Central Takeaway: Happiness Emerges from Receptive Attention, Not Achievement" (lines 40-42)
 ```
 
----
+cons. 
+these are a lot less readable for humans compared to the first ones.
 
 ## 4. Why Assertion Headers Are Superior for AI & Humans
 
@@ -121,3 +121,5 @@ sections:
 
 ### The Compounding Efficiency Gain
 With assertion headers, **90% of retrieval queries are satisfied by the header skeleton alone**. The agent only incurs the secondary cost of fetching a section (e.g. lines 21–27, ~90 tokens) when it needs raw source quotes or detailed implementation steps.
+
+Related: [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]], [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]], [[public/pkm-search|pkm-search]], [[public/progress - local-first search daemon and indexer|progress - local-first search daemon and indexer]], [[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]
