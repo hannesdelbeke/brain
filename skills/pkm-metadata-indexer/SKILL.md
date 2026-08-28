@@ -203,6 +203,22 @@ python skills/pkm-metadata-indexer/searchd.py --corpus /path/to/that/repo/my_sca
 
 Embedding uses CUDA or DirectML when either is present and falls back to CPU. Query embedding is a single vector either way, so the daemon is fast without a GPU; indexing is where the device matters.
 
+### 16. Repository Link Graph (`index_repo.py`)
+A repository has no wikilinks and is full of references anyway, so the same `edges` table works on one once the references are derived rather than parsed:
+```bash
+python skills/pkm-metadata-indexer/index_repo.py --root /path/to/repo
+python skills/pkm-metadata-indexer/index_repo.py --root /path/to/repo --with-embeddings
+python skills/pkm-metadata-indexer/index_repo.py --selfcheck
+python skills/pkm-metadata-indexer/searchd.py --corpus skills/pkm-metadata-indexer/index_repo.py:scan_repo=myrepo=/path/to/repo
+```
+Every file that is not ignored becomes a note, but only markdown gets sections. A png with no sections is searchable by nothing and is still a row, which is what makes "every image nothing references" one query — the unreferenced side of it is a node no edge points at, not a file nobody listed. `category` is `doc`, `code` or `asset`, so the two acceptance queries are `SELECT source_path FROM edges WHERE resolved_target_path = ?` and `SELECT path FROM notes n WHERE n.category='asset' AND NOT EXISTS (SELECT 1 FROM edges e WHERE e.resolved_target_path = n.path)`. No schema change.
+
+Three reference kinds become edges, all of them read out of markdown: links `[text](path)`, image embeds `![alt](path)`, and bare relative paths in prose such as `see src/auth/token.py`. A target resolves against the source file's directory first, then the repository root, and `resolved_target_path` stays null when neither exists on disk, which is what makes a broken reference queryable instead of absent. Urls are skipped. A bare path needs a slash and an extension starting with a letter, or every ratio in the prose reads as a broken reference.
+
+File discovery is `git ls-files --cached --others --exclude-standard`, so `.gitignore` is applied by git rather than by a second half-implementation of it; a directory that is not a checkout falls back to a walk that skips `dist`, `build`, `node_modules` and the rest of `SKIP_DIRS`.
+
+Measured on a 773-file repository with 87 markdown docs, 241 source files and 445 images: the scan takes 0.62s and the whole metadata-only pass 0.74s, for 1,852 sections and 831 edges in 3.7 MB, of which 693 resolve to a real file and 138 do not. 435 of the 445 images are unreferenced, which is the scope showing rather than the repository being untidy: an asset loaded from source code has no markdown reference to find, and imports are not parsed. Two other systematic misses — a partial path such as `lib/parser.ts` where the file is at `src/lib/parser.ts`, which a unique-basename fallback would fix for 38 of the 138 broken edges, and an `org/repo.git` slug, which is the cross-repo case. Imports, cross-corpus resolution and stem fallback are deliberately out of v0. See [[2026-08-27 a link graph over code, docs and assets]].
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
