@@ -48,7 +48,7 @@ Transform daily human corrections into a continuous, automated learning loop:
                              │
                              ▼
                [Session Transcript Harvester]
-             (Antigravity + Claude + vault-b Logs)
+             (Antigravity + Claude + CLI Logs)
                              │
                              ▼
               [Correction & Failure Extractor]
@@ -69,8 +69,8 @@ Transform daily human corrections into a continuous, automated learning loop:
 
 ### Stage 1: Ingestion & Transcript Normalization
 * **Antigravity CLI:** Transcripts in `~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript.jsonl`.
-* **Claude Code:** Transcripts in `~/.claude/projects/` (cross-synced across machines including vault-b Dell hardware).
-* **Nightly Auto-Logger:** `private-vault` nightly session reader that ingests day logs and session transcripts.
+* **Claude Code:** Transcripts in `~/.claude/projects/` (cross-synced across developer machines).
+* **Nightly Auto-Logger:** Background daily runner that ingests day logs and session transcripts.
 * **Git Repository History:** Line-by-line diffs, commit messages, and author trailers (`git log -p`, `git blame -C -C -C`).
 
 ### Stage 2: Prompt-to-Correction Correlation Engine
@@ -144,11 +144,11 @@ A hybrid architecture balancing structured querying, deep memory, and human revi
 ## 6. Integration with Existing PKM Infrastructure
 
 * **`searchd.py` & Metadata Indexer:** Reuses the existing session scanning engine from [[public/cross-agent session indexing architecture|cross-agent session indexing architecture]] to parse transcripts with zero extra daemon overhead.
-* **vault-b Nightly Ingest:** Hooks into the 06:00 nightly session reader to run automated daily reflection and failure clustering.
+* **Nightly Batch Reflection:** Hooks into scheduled daily maintenance runs to execute automated failure clustering and rule distillation.
 * **Modular Skills System:** Directly updates JSON/YAML skill manifests per [[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|modular agent instruction synthesis]].
 
 ---
 
 ## 7. Original Proposal Prompt (Historical Provenance)
 
-> *Every prompt is a call to action: write new idea, fix an issue, make a thing. We now have some kind of session tracker or reader. Also relates to track prompt history and to the auto logger in private-vault from today. Go through all prompts on this machine, and identify what went wrong. Check the summary if there is one for the session (I know Claude has a recap, unsure if AGY does), then see if the prompt was resolved: what work or note it created, and then in future what issues it caused, or mistakes it made, or things it missed. Then link it to skills we extracted from this. How would this work? Would we store data, store SQL only, links only? Git history and session will be main source of truth (some session data lives on vault-b Dell laptop). End goal: by identifying where we went wrong and where we introduced bugs or shortcomings, we can come up with a system that can be self-learning—an external thing that watches our process day to day, and identifies issues. Nearly every prompt is me spotting an issue and asking AI to fix it. There might be patterns in things AI often breaks. I'd like you to find those patterns, and for that we might need a system.*
+> *Every prompt is a call to action: write new idea, fix an issue, make a thing. We now have some kind of session tracker or reader. Also relates to tracking prompt history and the automated daily logger. Go through all prompts on this machine, and identify what went wrong. Check the summary if there is one for the session (I know Claude has a recap, unsure if AGY does), then see if the prompt was resolved: what work or note it created, and then in future what issues it caused, or mistakes it made, or things it missed. Then link it to skills we extracted from this. How would this work? Would we store data, store SQL only, links only? Git history and session will be main source of truth (session data distributed across development hardware). End goal: by identifying where we went wrong and where we introduced bugs or shortcomings, we can come up with a system that can be self-learning—an external thing that watches our process day to day, and identifies issues. Nearly every prompt is me spotting an issue and asking AI to fix it. There might be patterns in things AI often breaks. I'd like you to find those patterns, and for that we might need a system.*
