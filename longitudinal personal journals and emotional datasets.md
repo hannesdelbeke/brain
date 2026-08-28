@@ -118,7 +118,7 @@ These are the ones worth pointing a pipeline at: complete, dated, day-by-day, no
 
 Not free, not machine-readable, listed because each one is a sustained emotional record by one person and several have no online equivalent.
 
-* **Marion Milner, *A Life of One's Own* (1934)** — seven years of diary kept as an experiment to find out what actually made her happy. The closest thing in print to a deliberately designed single-subject emotional dataset.
+* **Marion Milner, *A Life of One's Own* (1934)** — seven years of diary kept as an experiment to find out what actually made her happy. The closest thing in print to a deliberately designed single-subject emotional dataset. See [[Marion Milner - A Life of One's Own|A Life of One's Own summary]].
 * **May Sarton, *Journal of a Solitude* (1973)** — one year, solitude, depression, aging, written against her own earlier idealised account of the same life.
 * **Sylvia Plath, *The Unabridged Journals* (1950–1962)** — 12 years, ends shortly before her death.
 * **Etty Hillesum, *An Interrupted Life* (1941–1943)** — diaries and letters, Amsterdam through deportation.
