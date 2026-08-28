@@ -169,7 +169,22 @@ Edges live in `~/.pkm/co_retrieval.db`, beside the log rather than in the vault 
 
 Nothing reads these edges yet. Wiring them into ranking is a separate change and it goes through `eval_rerank.py` first, or it is an opinion rather than an improvement.
 
-### 14. Adding a Corpus
+### 14. Query Misses (`query_misses.py`)
+The query log is the only record of a search that went nowhere, and nothing read it for that. This reads the same `~/.pkm/queries.jsonl` and prints what search did not find:
+```bash
+python skills/pkm-metadata-indexer/query_misses.py
+python skills/pkm-metadata-indexer/query_misses.py --vault brain --window 600
+python skills/pkm-metadata-indexer/query_misses.py --selfcheck
+```
+Three signals. `empty` is a query that returned nothing. `narrow` is a result set that is fewer than four distinct notes: the daemon fills the limit whatever the query, so the row count says nothing about how much was found and the count of distinct notes after deduplication is the only measure there is. `reformulated` groups near-same queries in one vault inside a window, matched on a `difflib` ratio of 0.6 and defaulting to ten minutes, since asking again is the searcher saying the first answer was wrong; `drift` is the Jaccard overlap between the first and last result set of a run, where 1.00 means the rephrase changed nothing and 0.00 means search returned a different set of notes for the same question. A row joins any open run rather than only the previous row, because two questions asked alternately are two reformulations interleaved.
+
+A fourth signal, a top score far under the corpus median, is not built: `log_query` stores result paths and no scores, so the number does not exist to read. It needs a writer change first.
+
+The reader is read-only and replays the whole log from offset 0 each run. It shares `read_new` with `co_retrieval.py`, and so the same tolerance for a half-written last line, but not that module's stored offset, which stays where co-retrieval left it.
+
+Measured on a log of 12 queries over two days, 6 of them distinct: 0 empty, 3 narrow, and 4 reformulation runs covering 10 of the 12. That is a log written almost entirely by daemon tests and watcher probes rather than by anyone searching, so the counts measure the tool and not the index. There is not enough real traffic yet to say what search misses.
+
+### 15. Adding a Corpus
 `build_index` is source-agnostic after the scan. Pass `collect=` a function taking a root and returning `(notes, sections, links, errors)` and everything downstream — chunking, hashing, FTS, embedding, RRF, the daemon — works unchanged:
 ```python
 import index_pkm_meta as pkm
