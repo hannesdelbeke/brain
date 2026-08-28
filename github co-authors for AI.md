@@ -85,6 +85,12 @@ Co-Authored-By: Google DeepMind <google-deepmind@users.noreply.github.com>
 
 This guarantees GitHub links directly to `https://github.com/claude` and `https://github.com/google-deepmind`.
 
-[[git]]
-[[github]]
-[[git cheatsheet]]
+## Uncommitted Changes & Automated Sweeps
+
+When an AI agent automatically commits uncommitted human edits left in the working tree, the commit author is set to the human user, with the active AI model appended as a `Co-Authored-By:` trailer to preserve accurate attribution. See [[public/autocommit leftover changes|autocommit leftover changes]].
+
+[[public/git|git]]
+[[public/github|github]]
+[[public/git author|git author]]
+[[public/git cheatsheet|git cheatsheet]]
+[[public/autocommit leftover changes|autocommit leftover changes]]
