@@ -1138,54 +1138,133 @@ def title_matches(cursor: sqlite3.Cursor, title: str, limit: int = 5) -> list[st
     return [row[0] for row in rows]
 
 
-def check_duplicate(title: str, vault_path: str | None = None, db_path: str | None = None):
+# The cosine at which two notes are treated as the same note. Measured over 80
+# vault notes by re-querying each note's own title: it scores >= 0.85 against
+# its own sections for 59% of them, while the best *unrelated* note clears 0.85
+# for 4%. Lower catches more rewrites (0.80: 80% caught) but blocks far more
+# good notes (35% false), and a gate whose block is usually wrong gets disabled.
+DUPLICATE_THRESHOLD = 0.85
+
+
+def duplicate_matches(
+    inputs: list[str],
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    limit: int = 5,
+    vectors: tuple | None = None,
+) -> dict[str, list[dict]] | None:
+    """Best cosine per note for each input title or note path. None = cannot check.
+
+    Ranked on raw cosine alone. `title_rank` is carried for display only: title
+    FTS fires on common words, so ranking on it puts five same-word notes above
+    the note that is actually the same note, and a threshold read off that order
+    is meaningless. It also scores the whole matrix rather than `search_index`'s
+    top-50 cut, so a candidate cannot fall off the end before it is compared.
+
+    Every input is embedded in one batch, so a caller with ten new notes pays
+    the ~2s model load once. An input ending in `.md` is a path: its title is
+    the filename stem and a note with that same stem is skipped, because a note
+    already in the index is not its own duplicate.
+    """
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
-    if not database_file.exists():
-        print("Index database not found. Run indexing first.")
-        return []
+    if not database_file.exists() or not HAS_FASTEMBED:
+        return None
 
-    connection = sqlite3.connect(database_file)
+    connection = sqlite3.connect(database_file, timeout=60.0)
     try:
-        title_paths = title_matches(connection.cursor(), title)
+        cursor = connection.cursor()
+        meta, matrix = vectors if vectors is not None else load_vectors(cursor)
+        if matrix is None:
+            return None
+
+        titles = [Path(value).stem if value.casefold().endswith(".md") else value for value in inputs]
+        model = get_embedding_model(QUERY_PROVIDERS, QUERY_THREADS)
+        queries = np.asarray(list(model.embed(titles)), dtype=np.float32)
+        queries /= np.maximum(np.linalg.norm(queries, axis=1, keepdims=True), 1e-12)
+        scores = matrix @ queries.T  # sections x inputs
+
+        found = {}
+        for column, (value, title) in enumerate(zip(inputs, titles)):
+            ranks = {path: rank for rank, path in enumerate(title_matches(cursor, title), 1)}
+            skip_stem = title if value.casefold().endswith(".md") else None
+            best: dict[str, dict] = {}
+            for row, (_, path, heading, start_line) in enumerate(meta):
+                if Path(path).stem == skip_stem:
+                    continue
+                cosine = float(scores[row, column])
+                if path not in best or cosine > best[path]["cosine"]:
+                    best[path] = {
+                        "path": path,
+                        "cosine": cosine,
+                        "heading": heading,
+                        "start_line": start_line,
+                        "title_rank": ranks.get(path),
+                    }
+            found[value] = sorted(best.values(), key=lambda match: -match["cosine"])[:limit]
+        return found
     finally:
         connection.close()
 
-    semantic_results = search_index(title, vault_path=vault_dir, db_path=database_file, limit=10)
-    candidates = {}
-    for rank, path in enumerate(title_paths, 1):
-        candidates[path] = {"title_rank": rank, "semantic": None}
-    for result in semantic_results:
-        candidate = candidates.setdefault(result["path"], {"title_rank": None, "semantic": None})
-        raw_sim = result.get("raw_sim") or -1.0
-        current_sim = (candidate["semantic"].get("raw_sim") or -1.0) if candidate["semantic"] else -1.0
-        if candidate["semantic"] is None or raw_sim > current_sim:
-            candidate["semantic"] = result
 
-    def sort_key(item):
-        title_rank = item[1]["title_rank"]
-        sem = item[1]["semantic"]
-        sim = (sem.get("raw_sim") or -1.0) if sem else -1.0
-        return (
-            title_rank is None,
-            title_rank or 999,
-            -sim,
-        )
+def check_duplicate(
+    title: str,
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    threshold: float = DUPLICATE_THRESHOLD,
+    as_json: bool = False,
+    vectors: tuple | None = None,
+) -> int:
+    return check_duplicate_batch([title], vault_path, db_path, threshold, as_json, vectors)
 
-    ordered = sorted(candidates.items(), key=sort_key)[:5]
-    print(f"\nPossible existing notes for: {title!r}")
-    if not ordered:
-        print("No lexical title or semantic candidates found.")
-        return []
-    for index, (path, evidence) in enumerate(ordered, 1):
-        parts = []
-        if evidence["title_rank"] is not None:
-            parts.append(f"title rank {evidence['title_rank']}")
-        if evidence["semantic"] is not None and evidence["semantic"]["raw_sim"] is not None:
-            parts.append(f"cosine {evidence['semantic']['raw_sim']:.3f}")
-        print(f"  {index}. {path} ({', '.join(parts)})")
-    print("Review the candidates before deciding to append, link, merge, or create a distinct note.")
-    return ordered
+
+def check_duplicate_batch(
+    inputs: list[str],
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    threshold: float = DUPLICATE_THRESHOLD,
+    as_json: bool = False,
+    vectors: tuple | None = None,
+) -> int:
+    """Report likely existing notes and return a process exit code.
+
+    0 clean, 1 at least one match at or above `threshold`, 2 the check could not
+    run because the index is missing or holds no vectors. A gate has to tell a
+    duplicate from a broken check: one asks the writer to merge, the other asks
+    the owner to reindex, and a hook that confuses them blocks every commit.
+    """
+    found = duplicate_matches(inputs, vault_path=vault_path, db_path=db_path, vectors=vectors)
+    if found is None:
+        print("Index database not found or holds no vectors. Run indexing first.", file=sys.stderr)
+        if as_json:
+            print(json.dumps({"threshold": threshold, "error": "index unavailable", "results": []}, indent=2))
+        return 2
+
+    results = [
+        {
+            "input": value,
+            "duplicate": bool(matches) and matches[0]["cosine"] >= threshold,
+            "matches": matches,
+        }
+        for value, matches in found.items()
+    ]
+    if as_json:
+        print(json.dumps({"threshold": threshold, "results": results}, indent=2))
+    else:
+        for result in results:
+            print(f"\nPossible existing notes for: {result['input']!r}")
+            if not result["matches"]:
+                print("No semantic candidates found.")
+                continue
+            for index, match in enumerate(result["matches"], 1):
+                parts = [f"cosine {match['cosine']:.3f}"]
+                if match["title_rank"] is not None:
+                    parts.append(f"title rank {match['title_rank']}")
+                print(f"  {index}. {match['path']} ({', '.join(parts)})")
+            if result["duplicate"]:
+                print(f"  at or above the {threshold} duplicate threshold")
+        print("Review the candidates before deciding to append, link, merge, or create a distinct note.")
+    return 1 if any(result["duplicate"] for result in results) else 0
 
 
 def find_note_paths(cursor: sqlite3.Cursor, note_reference: str) -> list[str]:
@@ -1495,6 +1574,15 @@ def main():
     )
     parser.add_argument("--search", type=str, default=None, help="Run hybrid search across indexed sections")
     parser.add_argument("--check-duplicate", type=str, default=None, help="Show likely existing notes before creation")
+    parser.add_argument(
+        "--check-duplicate-batch", nargs="+", metavar="NOTE", default=None,
+        help="Check several titles or note paths in one process, paying the model load once",
+    )
+    parser.add_argument(
+        "--threshold", type=float, default=DUPLICATE_THRESHOLD,
+        help=f"Cosine at or above which a duplicate check exits 1 (default {DUPLICATE_THRESHOLD})",
+    )
+    parser.add_argument("--json", action="store_true", help="Emit the duplicate check as JSON on stdout")
     parser.add_argument("--links", type=str, default=None, help="Show inbound and outbound links for a note")
     parser.add_argument("--stats", "--perf", action="store_true", help="Display database and indexing performance benchmarks")
     parser.add_argument("--limit", type=int, default=10, help="Maximum search results")
@@ -1523,13 +1611,17 @@ def main():
             )
             if result["snippet"]:
                 print(f"   {result['snippet']}")
-    elif args.check_duplicate:
-        check_duplicate(args.check_duplicate, vault_path=args.vault, db_path=args.db)
+    elif args.check_duplicate or args.check_duplicate_batch:
+        return check_duplicate_batch(
+            args.check_duplicate_batch or [args.check_duplicate],
+            vault_path=args.vault, db_path=args.db, threshold=args.threshold, as_json=args.json,
+        )
     elif args.links:
         query_links(args.links, vault_path=args.vault, db_path=args.db)
     else:
         build_index(vault_path=args.vault, db_path=args.db, skip_embeddings=args.skip_embeddings)
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
