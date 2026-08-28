@@ -50,4 +50,4 @@ Every log shipper, and Splunk in this exact shape: its fishbucket stores a CRC o
 
 ## Where it applies
 
-Any corpus whose files only grow: transcripts, logs, append-only exports, chat histories. Not markdown notes, which get edited in the middle, and which is why the vault index still reads every file and invalidates by hash instead. See [[cross-agent session indexing architecture]] for what a transcript scanner does with the bytes once it has them, and [[offline GPU embeddings with incremental cache]] for the same argument one layer down, where the expensive thing is the vector rather than the parse.
+Any [[corpus]] whose files only grow: transcripts, logs, append-only exports, chat histories. Not markdown notes, which get edited in the middle, and which is why the vault index still reads every file and invalidates by hash instead. See [[cross-agent session indexing architecture]] for what a transcript scanner does with the bytes once it has them, and [[offline GPU embeddings with incremental cache]] for the same argument one layer down, where the expensive thing is the vector rather than the parse.
