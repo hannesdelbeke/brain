@@ -41,6 +41,11 @@ corpus a couple of seconds later instead of waiting for someone to POST
 /reindex. Changes are batched by debounce and the indexer's own writes are
 filtered out, or the reindex would trigger the next one.
 
+`--refresh PATH=COMMAND` watches something that is not a corpus and runs a
+command when it changes, for a source that produces notes rather than being
+searched itself. Debounced to a minute rather than two seconds, because the
+sources this is for are appended to on every message.
+
 Off this machine, pass `--bind 0.0.0.0 --token <secret>` and send the secret as
 `X-PKM-Token`. A non-loopback bind without a token is refused rather than
 silently publishing the vault.
@@ -57,7 +62,9 @@ import importlib
 import importlib.util
 import json
 import os
+import shlex
 import sqlite3
+import subprocess
 import sys
 import threading
 import time
@@ -84,6 +91,8 @@ STALE_TTL_S = 30
 WATCHED_STALE_TTL_S = 300
 WATCH_DEBOUNCE_MS = 2000
 WATCH_STEP_MS = 200
+REFRESH_DEBOUNCE_MS = 60000
+REFRESH_TIMEOUT_S = 300
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
@@ -91,6 +100,16 @@ QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 # queries are tens of milliseconds once warm, so serialising them costs nothing
 # a single user can notice. Give the model its own lock if that stops being true.
 LOCK = threading.Lock()
+
+# A reindex must not be one of those queries. It ran under LOCK, so a search that
+# arrived during a pass waited the whole pass out: 15s for two corpora against
+# 40ms idle, long enough that the CLI gave up and answered from a direct search
+# of whichever corpus the working directory resolved to. The two do not share
+# state. The query model and the index model are separate ONNX sessions, keyed on
+# different providers, and the database is WAL, so a reader sees the pass's
+# snapshot until it commits. Held across a whole pass, and so also what keeps two
+# corpora from rebuilding on the one GPU at once.
+INDEX_LOCK = threading.Lock()
 
 # Guards the one-reindex-per-corpus flag only, never held across a reindex.
 REINDEX_LOCK = threading.Lock()
@@ -448,7 +467,7 @@ def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
 
 def do_reindex(vault: Vault) -> dict:
     began = time.perf_counter()
-    with LOCK:
+    with INDEX_LOCK:
         pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect)
     vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
     return {"vault": vault.name, "took_s": round(time.perf_counter() - began, 2), **vault.counts()}
@@ -484,6 +503,36 @@ def catch_up(vaults):
             print(f"catch-up {vault.name}: {result['took_s']}s", flush=True)
         except Exception as error:
             print(f"catch-up {vault.name} failed, {type(error).__name__}: {error}", flush=True)
+
+
+def watch_command(root: Path, command: list[str], debounce: int, stream=None):
+    """Run a command whenever a directory changes, on a long debounce.
+
+    For a corpus that is not markdown and is not searched directly, but is the
+    source of notes that are: the agent transcripts hold a recap per session and
+    a script turns them into a note in the vault. Watched, that note carries this
+    morning's work; run daily, it carries yesterday's.
+
+    The debounce is minutes rather than the two seconds a reindex gets, because
+    a transcript is appended on every message and the extractor reads all of
+    them. Errors print and the loop continues, the same as the reindex watcher.
+    """
+    if stream is None:
+        stream = watchfiles.watch(root, debounce=debounce, step=WATCH_STEP_MS)
+    # the script, not the interpreter, and not the tail of a -c one-liner
+    name = next((Path(token).name for token in reversed(command) if token.endswith(".py")),
+                Path(command[0]).name)
+    for batch in stream:
+        began = time.perf_counter()
+        try:
+            result = subprocess.run(command, capture_output=True, text=True, timeout=REFRESH_TIMEOUT_S)
+            status = "ok" if result.returncode == 0 else f"exit {result.returncode}"
+            print(f"refresh {name}: {len(batch)} change(s), {status} in "
+                  f"{time.perf_counter() - began:.2f}s", flush=True)
+            if result.returncode != 0:
+                print((result.stderr or result.stdout).strip()[:500], flush=True)
+        except Exception as error:
+            print(f"refresh {name} failed, {type(error).__name__}: {error}", flush=True)
 
 
 def watch_vault(vault: Vault, stream=None):
@@ -660,6 +709,11 @@ def main():
     parser.add_argument("--watch", action="store_true",
                         help="Reindex a corpus when its files change, one watcher per corpus. "
                              "Needs watchfiles")
+    parser.add_argument("--refresh", action="append", default=[], metavar="PATH=COMMAND",
+                        help="Run COMMAND when PATH changes, repeatable, for a source that is not "
+                             "searched itself but produces notes that are. Debounced to a minute, "
+                             "since the sources this is for are appended to constantly. Write paths "
+                             "with forward slashes, the command is split as a posix shell would")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--no-keepalive", action="store_true",
                         help="Let the model go cold between queries, trading ~30ms on the first "
@@ -702,8 +756,15 @@ def main():
         print(f"vault {vault.name}\n  root {vault.root}\n  db   {vault.db}", flush=True)
         if not vault.db.exists():
             print(f"  warning: no index yet, POST /reindex?vault={vault.name}", flush=True)
-    if args.watch and watchfiles is None:
-        parser.error("--watch needs watchfiles, pip install watchfiles")
+    refreshes = []
+    for spec in args.refresh:
+        raw_path, _, command = spec.partition("=")
+        tokens = shlex.split(command)
+        if not (raw_path and tokens):
+            parser.error(f"--refresh wants PATH=COMMAND, got {spec!r}")
+        refreshes.append((Path(raw_path).expanduser().resolve(), tokens))
+    if (args.watch or refreshes) and watchfiles is None:
+        parser.error("--watch and --refresh need watchfiles, pip install watchfiles")
     if not args.no_warm:
         warm_up()
     if STATE.warm and not args.no_keepalive:
@@ -714,6 +775,10 @@ def main():
             vault.watched = True
             threading.Thread(target=watch_vault, args=(vault,), daemon=True).start()
         print(f"watching {len(vaults)} corpus root(s)", flush=True)
+    for root, command in refreshes:
+        threading.Thread(target=watch_command, args=(root, command, REFRESH_DEBOUNCE_MS),
+                         daemon=True).start()
+        print(f"refresh on change in {root}\n  {' '.join(command)}", flush=True)
 
     print(f"query log {LOG_PATH or 'off'}", flush=True)
 
