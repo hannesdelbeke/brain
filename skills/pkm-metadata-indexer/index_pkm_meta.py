@@ -384,6 +384,48 @@ def markdown_paths(vault_dir: Path) -> list[Path]:
     return sorted(paths)
 
 
+def last_index_run(db_path) -> str | None:
+    """When the index last finished, as the ISO string the run was written with."""
+    if not Path(db_path).exists():
+        return None
+    connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        return connection.execute("SELECT MAX(completed_at) FROM index_runs").fetchone()[0]
+    except sqlite3.DatabaseError:  # no index_runs table yet, or not a database
+        return None
+    finally:
+        connection.close()
+
+
+def stale_paths(vault_dir, db_path, limit: int = 25) -> dict:
+    """Files on disk the index has not read yet, so a search can say what it missed.
+
+    A search that ranks well over a stale index is indistinguishable from one
+    that works. On 2026-08-28 that cost three days: the brain index last ran on
+    the 25th and every note written since matched zero rows, with nothing in the
+    output to say so.
+
+    mtime against the last run rather than a content hash, because reading three
+    thousand files to answer a twenty millisecond query defeats the point. A
+    touched-but-unchanged file costs one reindex that finds nothing to do, and a
+    file written during a run is caught by the next one. Walking 3,272 files and
+    stat-ing each takes 0.09s.
+    """
+    completed_at = last_index_run(db_path)
+    if completed_at is None:
+        return {"count": 0, "paths": [], "indexed_at": None, "no_index": True}
+    root = Path(vault_dir)
+    cutoff = datetime.fromisoformat(completed_at).timestamp()
+    newer = []
+    for path in markdown_paths(root):
+        try:
+            if path.stat().st_mtime > cutoff:
+                newer.append(path.relative_to(root).as_posix())
+        except OSError:  # deleted between the walk and the stat
+            continue
+    return {"count": len(newer), "paths": newer[:limit], "indexed_at": completed_at}
+
+
 def collect_index_data(vault_dir: Path):
     file_paths = markdown_paths(vault_dir)
     relative_paths = [path.relative_to(vault_dir).as_posix() for path in file_paths]

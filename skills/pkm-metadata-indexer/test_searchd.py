@@ -2,6 +2,7 @@ import importlib.util
 import json
 import tempfile
 import threading
+import time
 import unittest
 import urllib.error
 import urllib.request
@@ -117,6 +118,25 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(status, 404)
         self.assertIn("unknown vault", missing["error"])
 
+    def test_one_search_can_span_every_corpus(self):
+        # the vault is two repositories on this machine and an agent looking for
+        # a note does not know which half holds it
+        _, both = self.get("/search?q=separatephrase&vault=all")
+        self.assertEqual([row["path"] for row in both["results"]], ["gamma.md"])
+        self.assertEqual(both["results"][0]["vault"], "second")
+        self.assertEqual(both["vault"], "first,second")
+        self.assertEqual(sorted(both["indexed_at"]), ["first", "second"])
+        _, listed = self.get("/search?q=distinctivephrase&vault=second,first")
+        self.assertEqual([row["vault"] for row in listed["results"]], ["first"])
+        self.assertEqual(self.get("/search?q=a&vault=first,nope")[0], 404)
+
+    def test_a_multi_corpus_result_is_ordered_by_rank_not_by_corpus(self):
+        # both corpora answer, and the merge must not simply concatenate them
+        _, body = self.get("/search?q=phrase+here&vault=all&limit=10")
+        scores = [row["score"] for row in body["results"]]
+        self.assertEqual(scores, sorted(scores, reverse=True))
+        self.assertEqual({row["vault"] for row in body["results"]}, {"first", "second"})
+
     def test_limit_is_clamped_and_validated(self):
         _, body = self.get("/search?q=a&limit=9999")
         self.assertLessEqual(len(body["results"]), SEARCHD.MAX_LIMIT)
@@ -153,6 +173,16 @@ class SearchDaemonTest(unittest.TestCase):
             self.assertEqual(self.get("/health", {"X-PKM-Token": "s3cret"})[0], 200)
         finally:
             SEARCHD.STATE.token = None
+
+    def test_every_registered_corpus_is_newer_than_its_newest_file(self):
+        # the coverage assertion. On 2026-08-28 the real brain corpus failed
+        # this by three days and every search still returned plausible results
+        for vault in SEARCHD.STATE.vaults.values():
+            with self.subTest(vault=vault.name):
+                missing = SEARCHD.pkm.stale_paths(vault.root, vault.db)
+                self.assertEqual(missing["count"], 0,
+                                 f"{vault.name} holds files its index has not read: {missing['paths']}")
+                self.assertIsNotNone(missing["indexed_at"])
 
     def test_unknown_routes_and_methods(self):
         self.assertEqual(self.get("/nope")[0], 404)
@@ -316,6 +346,66 @@ class WatcherTest(unittest.TestCase):
         self.assertEqual(vault.counts()["notes"], 2)
         release.set()
         watcher.join(10)
+
+
+class StaleIndexTest(unittest.TestCase):
+    """A search over a stale index looks exactly like one over a fresh index.
+
+    That cost three days on 2026-08-28: the watcher was never started, notes
+    written after the last run matched nothing, and the ranking looked fine.
+    """
+
+    def setUp(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [vault.close() for vault in VAULTS])
+        self.vault = build_vault(Path(temp_dir.name) / "aging", "aging",
+                                 {"alpha.md": "## One\nIndexed text.\n"})
+        previous, SEARCHD.STATE = SEARCHD.STATE, SEARCHD.State([self.vault])
+        self.addCleanup(setattr, SEARCHD, "STATE", previous)
+
+    def unindexed(self, name: str = "beta.md"):
+        (self.vault.root / name).write_text("## Two\nUnindexed text.\n", encoding="utf-8")
+        self.vault.stale_at = 0.0  # the cache is a TTL, and a test does not wait it out
+
+    def test_a_file_written_after_the_last_run_is_named(self):
+        self.assertEqual(self.vault.stale()["count"], 0)
+        self.unindexed()
+        missing = self.vault.stale()
+        self.assertEqual(missing["paths"], ["beta.md"])
+        self.assertIsNotNone(missing["indexed_at"])
+
+    def test_a_corpus_with_no_index_says_so_rather_than_looking_fresh(self):
+        missing = SEARCHD.pkm.stale_paths(self.vault.root, self.vault.root / "nothing.db")
+        self.assertTrue(missing["no_index"])
+        self.assertIsNone(missing["indexed_at"])
+
+    def test_the_walk_is_cached_between_queries(self):
+        self.vault.stale()
+        self.unindexed("gamma.md")
+        self.vault.stale_at = time.time()  # as if the walk had just run
+        self.assertEqual(self.vault.stale()["count"], 0)
+
+    def test_a_search_reports_what_it_could_not_see_and_reindexes_behind_itself(self):
+        self.unindexed()
+        payload = SEARCHD.do_search([self.vault], "indexed text", 5)
+        self.assertEqual([row["path"] for row in payload["results"]], ["alpha.md"])
+        self.assertEqual(payload["stale"]["aging"]["paths"], ["beta.md"])
+        self.assertTrue(payload["stale"]["aging"]["reindexing"])
+        deadline = time.time() + 180
+        while self.vault.reindexing and time.time() < deadline:
+            time.sleep(0.2)
+        self.assertFalse(self.vault.reindexing, "the background reindex never finished")
+        self.assertEqual(self.vault.counts()["notes"], 2)
+        self.assertEqual(self.vault.stale()["count"], 0)
+        self.assertEqual(SEARCHD.do_search([self.vault], "unindexed text", 5)["stale"], {})
+
+    def test_reindex_can_be_asked_for_the_report_without_the_pass(self):
+        self.unindexed()
+        payload = SEARCHD.do_search([self.vault], "indexed text", 5, reindex=False)
+        self.assertEqual(payload["stale"]["aging"]["paths"], ["beta.md"])
+        self.assertFalse(payload["stale"]["aging"]["reindexing"])
+        self.assertFalse(self.vault.reindexing)
 
 
 class MatrixCacheTest(unittest.TestCase):
