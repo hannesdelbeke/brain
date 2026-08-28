@@ -62,7 +62,7 @@ Done 2026-08-27: `skills/pkm-metadata-indexer/` is the only copy, and the `pkm-s
 Embed the intended title before a note is written and refuse or merge on a close match. Both [[public/2026-08-18 what retrieval costs as a vault grows|retrieval economics]] and the search progress note name this as the failure that scales worst: near-duplicate pairs grow with the square of note count and agents carry nothing between sessions. At 3,253 notes and rising it is cheap now and expensive later.
 
 ### 5. Section-level SHA256 invalidation
-Re-embedding a whole note because one heading changed is the main cost in incremental reindexing. Change the schema in `index_pkm_meta.py` from note-level to section-level hashes.
+Already in, commit `f50d2ce8` on 2026-08-21, before this plan was written. `index_pkm_meta.py` hashes each `##` section into `Section.sha256` and `load_vector_cache()` keys reuse on `(sha256, embedding_model, chunking_version)`, so one edited heading costs one vector. Verified 2026-08-28 against `test_unchanged_section_keeps_cached_vector` and a run over 859 notes and 5,169 sections: 1.74s total, 1.20s scan, 0.45s SQLite, embedding effectively zero. The cost this item named is not in the incremental path any more, and the remaining floor is the scan rather than the embed.
 
 ### 6. Decide the link convention, once
 Pick one: keep `public/`-prefixed links and treat the private parent vault as the only valid reading context, or strip the prefix and make `brain` self-contained. Do not mass-edit 89 notes until that decision is written down. The lazy option is to leave the prefix and fix the *published* view instead, since the prefix is correct where the notes are actually authored.
