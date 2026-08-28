@@ -1,4 +1,7 @@
+import contextlib
 import importlib.util
+import io
+import json
 import sqlite3
 import tempfile
 import unittest
@@ -204,6 +207,98 @@ class MetadataIndexerTest(unittest.TestCase):
         self.assertEqual(len(calls), 2, "threads must be part of the cache key")
         self.assertEqual(calls[0].get("threads"), 1)
         self.assertNotIn("threads", calls[1], "bulk embedding keeps the full pool")
+
+
+class DuplicateCheckTest(unittest.TestCase):
+    """The gate's contract: an exit code a hook can branch on, from cosine alone."""
+
+    class FakeModel:
+        """Query text to vector, so the maths is exercised without a model."""
+
+        VECTORS = {"alpha": [0.3, 0.9539392, 0.0], "clean": [0.0, 0.0, 1.0]}
+
+        def embed(self, texts):
+            import numpy as np
+
+            return iter([np.array(self.VECTORS[text], dtype=np.float32) for text in texts])
+
+    def setUp(self):
+        import numpy as np
+
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp_dir.cleanup)
+        self.vault = Path(self.temp_dir.name) / "vault"
+        (self.vault / ".obsidian").mkdir(parents=True)
+        (self.vault / "folder").mkdir()
+        self.db = self.vault / ".obsidian" / "pkm_index.db"
+        (self.vault / "alpha.md").write_text("## Planned\nGroundwork.\n", encoding="utf-8")
+        (self.vault / "folder" / "beta.md").write_text("## Result\nA destination.\n", encoding="utf-8")
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+
+        # alpha is the only lexical title match, and the weaker cosine of the two
+        self.vectors = (
+            [(1, "alpha.md", "Planned", 1), (2, "folder/beta.md", "Result", 1)],
+            np.array([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0]], dtype=np.float32),
+        )
+        original_flag, original_model = INDEXER.HAS_FASTEMBED, INDEXER.get_embedding_model
+        INDEXER.HAS_FASTEMBED = True
+        INDEXER.get_embedding_model = lambda *args, **kwargs: self.FakeModel()
+
+        def restore():
+            INDEXER.HAS_FASTEMBED, INDEXER.get_embedding_model = original_flag, original_model
+
+        self.addCleanup(restore)
+
+    def check(self, inputs, db=None, **kwargs):
+        """Returns (exit code, stdout)."""
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = INDEXER.check_duplicate_batch(
+                inputs, vault_path=str(self.vault), db_path=str(db or self.db),
+                vectors=self.vectors, **kwargs
+            )
+        return code, buffer.getvalue()
+
+    def test_a_clean_title_exits_zero_and_a_duplicate_exits_one(self):
+        self.assertEqual(self.check(["clean"])[0], 0)
+        self.assertEqual(self.check(["alpha"])[0], 1)
+        # the threshold is the whole decision, so moving it moves the verdict
+        self.assertEqual(self.check(["alpha"], threshold=0.99)[0], 0)
+        self.assertEqual(self.check(["clean"], threshold=-1.0)[0], 1)
+
+    def test_a_missing_index_exits_two(self):
+        code, output = self.check(["alpha"], db=self.vault / ".obsidian" / "absent.db", as_json=True)
+        self.assertEqual(code, 2)
+        self.assertEqual(json.loads(output)["results"], [])
+        self.assertIn("error", json.loads(output))
+
+    def test_cosine_alone_decides_the_order(self):
+        """title_rank ranked first put same-word notes above the same note."""
+        code, output = self.check(["alpha"], as_json=True)
+        payload = json.loads(output)
+        self.assertEqual(payload["threshold"], INDEXER.DUPLICATE_THRESHOLD)
+        self.assertEqual([entry["input"] for entry in payload["results"]], ["alpha"])
+        matches = payload["results"][0]["matches"]
+        self.assertEqual([match["path"] for match in matches], ["folder/beta.md", "alpha.md"])
+        self.assertAlmostEqual(matches[0]["cosine"], 0.9539392, places=6)
+        # the lexical hit is still reported, it just no longer decides anything
+        self.assertEqual(matches[1]["title_rank"], 1)
+        self.assertIsNone(matches[0]["title_rank"])
+        self.assertTrue(payload["results"][0]["duplicate"])
+        self.assertEqual(code, 1)
+
+    def test_a_batch_is_keyed_by_input_and_a_path_is_not_its_own_duplicate(self):
+        code, output = self.check(["alpha.md", "clean"], as_json=True)
+        results = {entry["input"]: entry for entry in json.loads(output)["results"]}
+        self.assertEqual(set(results), {"alpha.md", "clean"})
+        self.assertEqual(code, 1, "one duplicate in the batch fails the batch")
+        self.assertFalse(results["clean"]["duplicate"])
+        self.assertNotIn("alpha.md", [match["path"] for match in results["alpha.md"]["matches"]])
+
+    def test_prose_stays_the_default(self):
+        output = self.check(["alpha"])[1]
+        self.assertIn("Possible existing notes for: 'alpha'", output)
+        self.assertIn("1. folder/beta.md (cosine 0.954)", output)
 
 
 class RerankTest(unittest.TestCase):
