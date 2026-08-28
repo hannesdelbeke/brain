@@ -138,4 +138,4 @@ Left for later: no watcher, so the index is as fresh as the last `--reindex`, an
 
 ---
 
-Related Evolution: [[public/proposal - self-learning agent supervisor and continuous prompt failure distillation|Proposal: Self-Learning Agent Supervisor & Continuous Prompt Failure Distillation]]
+What this could become: [[proposal - self-learning agent supervisor and continuous prompt failure distillation]], which reuses this index to find the turns where a human had to correct the agent.
