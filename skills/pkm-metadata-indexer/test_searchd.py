@@ -323,6 +323,21 @@ class WatcherTest(unittest.TestCase):
         SEARCHD.watch_command(Path(temp_dir.name), command, 10, stream=[{("added", "x")}])
         self.assertEqual(made.read_text(encoding="utf-8"), "## Note\n")
 
+    def test_a_watched_source_runs_its_command_without_a_console_window(self):
+        # the daemon runs under pythonw, so a console child with no flag pops a
+        # window on every refresh, once a minute for as long as an agent is writing
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        seen = {}
+        original = SEARCHD.subprocess.run
+        self.addCleanup(setattr, SEARCHD.subprocess, "run", original)
+        SEARCHD.subprocess.run = lambda *args, **kwargs: seen.update(kwargs) or original(*args, **kwargs)
+        SEARCHD.watch_command(Path(temp_dir.name), [sys.executable, "-c", "pass"], 10,
+                              stream=[{("added", "x")}])
+        self.assertEqual(seen["creationflags"], SEARCHD.NO_WINDOW)
+        if sys.platform == "win32":
+            self.assertEqual(SEARCHD.NO_WINDOW, SEARCHD.subprocess.CREATE_NO_WINDOW)
+
     def test_a_failing_command_leaves_the_watcher_running(self):
         # the extractor reads someone else's transcripts, so it can fail on a
         # half-written one, and a watcher that dies on that is silent
