@@ -40,3 +40,6 @@ When an [[public/AI agent|AI agent]] starts a turn and encounters uncommitted or
 When multiple agents run concurrently in the same repository:
 * **Check for In-Progress Agent Edits:** Ensure in-progress edits from another concurrent agent session are not swept up prematurely.
 * **Preserve Git Provenance:** Avoid committing agent code under human author without AI trailers, as git blame and review history depend on clear attribution.
+
+## issues
+multi agents working in same vault human commit each others work
