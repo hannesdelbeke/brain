@@ -219,6 +219,20 @@ File discovery is `git ls-files --cached --others --exclude-standard`, so `.giti
 
 Measured on a 773-file repository with 87 markdown docs, 241 source files and 445 images: the scan takes 0.62s and the whole metadata-only pass 0.74s, for 1,852 sections and 831 edges in 3.7 MB, of which 693 resolve to a real file and 138 do not. 435 of the 445 images are unreferenced, which is the scope showing rather than the repository being untidy: an asset loaded from source code has no markdown reference to find, and imports are not parsed. Two other systematic misses — a partial path such as `lib/parser.ts` where the file is at `src/lib/parser.ts`, which a unique-basename fallback would fix for 38 of the 138 broken edges, and an `org/repo.git` slug, which is the cross-repo case. Imports, cross-corpus resolution and stem fallback are deliberately out of v0. See [[2026-08-27 a link graph over code, docs and assets]].
 
+### 17. Querying the Link Graph (`link_graph.py`)
+The `edges` table is filled by every scanner and read by nothing else, so this is the query surface over it, for a vault index or a repository one:
+```bash
+python skills/pkm-metadata-indexer/link_graph.py refs src/main.ts
+python skills/pkm-metadata-indexer/link_graph.py orphans --ext .png,.webp
+python skills/pkm-metadata-indexer/link_graph.py broken --db /path/to/.pkm_index.db
+python skills/pkm-metadata-indexer/link_graph.py --selfcheck
+```
+`refs` lists every document referencing a file, matching a full indexed path or any trailing part of one, so `token.py` finds `src/auth/token.py`. `orphans` lists indexed files with an image extension that nothing points at. `broken` lists references that resolved to nothing. The database is opened read-only, and an index whose `edges` table is empty says so rather than printing an empty list, because an empty result and a missing index otherwise look identical.
+
+An image counts as referenced when an edge matches its path or its basename, not only its resolved target. The vault scanner stores image embeds with a null `resolved_target_path`, so the strict join called all 38 images in a vault orphans. The bias is deliberate: a false orphan gets a file deleted and a false reference only leaves one lying around.
+
+Run end to end against a repository index on 2026-08-28: `refs src/main.ts` returns 10 references across six documents in 0.42s whole-process, `orphans` returns 431 of 445, `broken` returns 138. Against the vault indexes, where the edges are wikilinks, `broken` returns 1,780 references on a 3,228-note vault and 238 on an 857-note one, which is the first time those were countable.
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
