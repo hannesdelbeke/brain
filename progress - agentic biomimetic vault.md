@@ -27,8 +27,8 @@ aliases:
 
 ## 🟢 Current State (What Works Now)
 
-*Everything below is design, not running code. Neither `profile.md` nor `memory.md` exists in either vault, and no consolidation agent is scheduled. See [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]] for what ships first.*
-
+* **Living User Profile Initialized:** Created [[profile]] (2026-08-28, commit `60971f39`) capturing technical domain, working preferences, guardrails, and linking to active progress hubs.
+* **Atomic Decision Placement Defined:** Refined memory architecture—permanent architectural decisions live directly in concept/progress notes, while Git DAG serves as the immutable chronological trace (avoiding calendar log fragmentation and dual sources of truth).
 * **First-Principles Architecture Defined:** Replaced over-engineered database proposals with Markdown + Git as ground truth, augmented by an active agentic consolidation layer ([[public/2026-08-27 what an AI buddy actually needs|what an AI buddy actually needs]]).
 * **3-Tier Memory Ladder:** Established explicit tiering from raw machine telemetry (Tier 1) $\rightarrow$ task solutions (Tier 2) $\rightarrow$ permanent concept notes anchored in human intent (Tier 3) ([[public/grow memory|grow memory]]).
 * **7 Cognitive Sparring Lenses:** Formalized sparring tools (frame inversion, contradiction radar, pre-mortems, Occam's triage) to prevent the AI from acting as a passive agreeable mirror ([[public/2026-08-27 AI - 7 Cognitive Sparring Lenses|7 Cognitive Sparring Lenses]]).
