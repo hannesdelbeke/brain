@@ -93,6 +93,7 @@ WATCH_DEBOUNCE_MS = 2000
 WATCH_STEP_MS = 200
 REFRESH_DEBOUNCE_MS = 60000
 REFRESH_TIMEOUT_S = 300
+NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
@@ -525,7 +526,10 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     for batch in stream:
         began = time.perf_counter()
         try:
-            result = subprocess.run(command, capture_output=True, text=True, timeout=REFRESH_TIMEOUT_S)
+            # the daemon runs under pythonw with no console of its own, so a console
+            # child would allocate one and flash a window on every refresh
+            result = subprocess.run(command, capture_output=True, text=True, timeout=REFRESH_TIMEOUT_S,
+                                    creationflags=NO_WINDOW)
             status = "ok" if result.returncode == 0 else f"exit {result.returncode}"
             print(f"refresh {name}: {len(batch)} change(s), {status} in "
                   f"{time.perf_counter() - began:.2f}s", flush=True)
