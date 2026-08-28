@@ -18,18 +18,18 @@ aliases:
 
 # Header Extraction for Token-Efficient Retrieval
 
-**Header extraction** is the architectural practice of parsing a Markdown document's structural hierarchy (headings `#`, `##`, `###`, line numbers, YAML frontmatter metadata, and lead thesis) into a compact semantic skeleton, rather than loading the entire note body into an LLM context window.
+**Header extraction** is the architectural practice of parsing a [[Markdown]] document's structural hierarchy (headings `#`, `##`, `###`, line numbers, YAML frontmatter metadata, and lead thesis) into a compact semantic skeleton, rather than loading the entire note body into an [[AI agent|agent's]] active context window.
 
-Related: [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]], [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]], [[public/pkm-search|pkm-search]], [[public/progress - local-first search daemon and indexer|progress - local-first search daemon and indexer]], [[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]
+Related: [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]], [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]], [[public/pkm-search|pkm-search]], [[public/token efficient PKM analysis architecture|token efficient PKM analysis architecture]], [[public/pkm vault indexing landscape|pkm vault indexing landscape]], [[public/vault hybrid search|vault hybrid search]], [[public/progress - local-first search daemon and indexer|progress - local-first search daemon and indexer]], [[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]
 
 ---
 
 ## 1. The Core Problem: Context Bloat in Vault Scanning
 
-When an AI agent searches a Personal Knowledge Management (PKM) vault, it typically evaluates 10 to 50 candidate notes. 
+When an [[AI agent]] searches a [[personal knowledge management|Personal Knowledge Management (PKM)]] vault for [[retrieval augmented generation|retrieval augmented generation (RAG)]], it typically evaluates 10 to 50 candidate notes. 
 
 Ingesting full note bodies into the active context window triggers two compounding costs:
-1. **Context Window Saturation:** 20 medium-length notes (~1,500 tokens each) consume **30,000 tokens** per turn, pushing context toward early auto-compaction and degrading reasoning quality.
+1. **Context Window Saturation:** 20 medium-length notes (~1,500 [[AI tokens|tokens]] each) consume **30,000 tokens** per turn, pushing context toward early auto-compaction and degrading reasoning quality.
 2. **Economic Waste:** The agent usually needs only a single paragraph or sub-point, making 90%+ of the ingested token payload irrelevant.
 
 Header extraction solves this by projecting the document as an **indexable table of contents with line anchors**, allowing the agent to evaluate relevance and execute targeted offset reads (`view_file` with `StartLine`/`EndLine`) only on the required section.
@@ -38,11 +38,11 @@ Header extraction solves this by projecting the document as an **indexable table
 
 ## 2. Integration in Vault Indexing Architecture
 
-Recent local-first retrieval infrastructure across the vault implements header-level indexing at the database layer:
+Recent local-first retrieval infrastructure across the [[personal knowledge management|PKM]] vault implements header-level indexing at the database layer:
 
-* **SQLite Section Slicing ([[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]):** Parses notes into atomic rows in a `sections` table (`path`, `heading`, `start_line`, `end_line`), generating vector embeddings per section rather than averaging the whole note.
+* **SQLite Section Slicing ([[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]):** Parses [[Markdown]] notes into atomic rows in a `sections` table (`path`, `heading`, `start_line`, `end_line`), generating [[vector embedding|vector embeddings]] per section rather than averaging the whole note.
 * **Retrieval Economics ([[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]]):** Shows that line-offset reads cost zero extra API calls because search indices return exact line boundaries.
-* **Compact Synthesis ([[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]):** Demonstrates how structural outlines prevent instruction dilution.
+* **Compact Synthesis ([[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]):** Demonstrates how structural outlines prevent instruction dilution in multi-agent workflows.
 * **Daemon Query Topology ([[public/pkm-search|pkm-search]] & [[public/progress - local-first search daemon and indexer|progress - local-first search daemon and indexer]]):** Answers search queries in milliseconds by returning lightweight section metadata before any raw disk payload is requested.
 
 ---
@@ -63,7 +63,7 @@ sections:
   - "5. Creative and Reflective Practices"
   - "Her Overall Conclusion"
 ```
-* **Pros:** Fast for human skimming.
+* **Pros:** Fast for human skimming in [[Obsidian]].
 * **Failure Mode:** Zero information density for AI. The agent sees categories (*"Overview"*, *"Creative Practices"*), but cannot know the causal claims without reading the entire body.
 
 ---
@@ -80,7 +80,7 @@ sections:
   - "Central Takeaway: Happiness Emerges from Receptive Attention, Not Achievement" (lines 40-42)
 ```
 * **Pros:** High semantic value for AI; completely answers questions without reading body text.
-* **Cons (Human UX):** Wordy, clumsy in Obsidian outline sidebars, wraps awkwardly on smaller screens, and slows down visual scanning for humans.
+* **Cons (Human UX):** Wordy, clumsy in [[Obsidian]] outline sidebars, wraps awkwardly on smaller screens, and slows down visual scanning for humans.
 
 ---
 
@@ -99,9 +99,9 @@ sections:
   - heading: "Key Takeaway: Receptive Attention over Achievement" (lines 40-42)
 ```
 * **Why V2 Wins:**
-  1. **Human Visual Scannability:** The eye instantly anchors on the bold category label (*Wide Awareness*, *Social Pressure*, *Solitude*).
+  1. **Human Visual Scannability:** The eye instantly anchors on the bold category label (*Wide Awareness*, *Social Pressure*, *Solitude*) in [[Obsidian]].
   2. **AI Zero-Read Completeness:** The sub-clause after the colon supplies the exact causal mechanism (*"Releasing Approval, Prestige, and Productivity"*).
-  3. **High-Signal Vector Embeddings:** Semantic vector search over the heading matches nuanced user queries without dilution.
+  3. **High-Signal Vector Embeddings:** [[vector embedding|Semantic vector search]] over the heading matches nuanced user queries without dilution.
 
 ---
 
@@ -112,8 +112,8 @@ sections:
 | **Human Scannability** | High (punchy, clean) | Low (wordy, wraps in TOC) | **High (anchored prefix)** |
 | **AI Zero-Read Capability** | 0% (must read body) | 100% (complete thesis) | **100% (complete thesis)** |
 | **Vector Match Accuracy** | Low (weak cosine similarity) | High (nuanced matching) | **High (targeted matching)** |
-| **Visual Friction in Obsidian** | Minimal | High visual clutter | **Clean & structured** |
-| **Token Payload (Outline)** | ~50 tokens | ~85 tokens | **~75 tokens** |
+| **Visual Friction in Obsidian** | Minimal | High visual clutter | **Clean & structured in [[Obsidian]]** |
+| **Token Payload (Outline)** | ~50 [[AI tokens|tokens]] | ~85 [[AI tokens|tokens]] | **~75 [[AI tokens|tokens]]** |
 
 ---
 
@@ -123,9 +123,9 @@ sections:
 |:---|:---|:---|:---|
 | **Characters** | 2,750 | 620 | **-77.5%** |
 | **Word Count** | 365 words | 82 words | **-77.5%** |
-| **Token Payload (est.)** | ~688 tokens | ~155 tokens | **77.5% reduction (4.4x compression)** |
+| **Token Payload (est.)** | ~688 [[AI tokens|tokens]] | ~155 [[AI tokens|tokens]] | **77.5% reduction (4.4x compression)** |
 | **Scan Cost (20 Notes)** | ~13,760 tokens | ~3,100 tokens | **10,660 tokens saved per turn** |
 | **Scan Cost (50 Notes)** | ~34,400 tokens | ~7,750 tokens | **26,650 tokens saved per turn** |
 
 ### Summary
-By adopting the **"Label : Core Thesis" hybrid pattern**, PKM notes maintain human elegance and visual clarity in Obsidian while simultaneously serving as high-density, zero-read semantic outlines for AI agents.
+By adopting the **"Label : Core Thesis" hybrid pattern**, [[personal knowledge management|PKM]] notes maintain human elegance and visual clarity in [[Obsidian]] while simultaneously serving as high-density, zero-read semantic outlines for [[AI agent|AI agents]].
