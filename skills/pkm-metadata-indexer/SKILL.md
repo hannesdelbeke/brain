@@ -155,7 +155,21 @@ Only prose and a whitelist of tool arguments are indexed. Tool results are about
 
 Measured at `~/.claude/projects/.pkm_index.db`: a metadata-only pass over 766 transcripts and 1.49 GB takes 2m05s (102s parsing JSON Lines, 21s committing) for 70,418 sections and 8,524 edges in 101 MB, and `--with-embeddings` over 858 transcripts adds 298.86s at 265.5 vec/s on DirectML for 79,359 vectors, 320.92s and 222 MB in total. Warm queries run 34-62ms with vectors and 30-58ms without, against 13-22ms for the vault index at a tenth the sections; the vector matrix is 122 MB resident in the daemon. Embeddings stay a flag rather than a prerequisite, because `search_index` degrades to lexical when a corpus has none. Chunk headings carry the session's first real prompt, which labels a turn by its session rather than by itself. See [[cross-agent session indexing architecture]].
 
-### 13. Adding a Corpus
+### 13. Co-retrieval Edges (`co_retrieval.py`)
+Notes that keep coming back in the same result set are related in a way their text does not say. The query log records the result paths of every `/search` and `/similar` call, so the association is derivable after the fact: read the log, add a point to every pair of notes that shared a result set, let old points fade.
+```bash
+python skills/pkm-metadata-indexer/co_retrieval.py
+python skills/pkm-metadata-indexer/co_retrieval.py --vault brain --top 40
+python skills/pkm-metadata-indexer/co_retrieval.py --rebuild
+python skills/pkm-metadata-indexer/co_retrieval.py --selfcheck
+```
+A run folds in whatever the log gained since the last run and prints the heaviest edges. Weight is a decaying count, `weight = weight * 0.5 ** (days_since_last_seen / 30) + 1`, so a pair seen once today is worth 1, once 30 days ago 0.5, and twice 30 days apart 1.5. Decaying on update from the row's own `last_seen` is what makes an incremental run equal a rebuild: no pass has to touch every row when time passes, and a reader decays from `last_seen` to now the same way. A result set is deduplicated to distinct notes first, since one note matching three sections is one note.
+
+Edges live in `~/.pkm/co_retrieval.db`, beside the log rather than in the vault index, for the reason the log is not in the index either: a reindex rebuilds the index. The table is `(vault, note_a, note_b, weight, last_seen)` keyed on the pair, with `note_a < note_b` so an unordered pair is stored once, and a `log_state` row holding the byte offset already folded in. Byte offset rather than line count because the log is written in text mode, and a half-written last line is left for the next run.
+
+Nothing reads these edges yet. Wiring them into ranking is a separate change and it goes through `eval_rerank.py` first, or it is an opinion rather than an improvement.
+
+### 14. Adding a Corpus
 `build_index` is source-agnostic after the scan. Pass `collect=` a function taking a root and returning `(notes, sections, links, errors)` and everything downstream — chunking, hashing, FTS, embedding, RRF, the daemon — works unchanged:
 ```python
 import index_pkm_meta as pkm
