@@ -35,9 +35,16 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 DEFAULT_DAEMON = "http://127.0.0.1:44771"
+# Long enough to outwait a reindex, because the daemon serialises the model and
+# a write to any watched path starts a pass. At 2s a search landing during one
+# timed out, fell through to a direct search of whichever corpus the working
+# directory resolved to, and printed the answer as if nothing had happened. A
+# missing daemon refuses the connection instantly, so this only costs when there
+# really is one to wait for.
+DAEMON_TIMEOUT_S = 30.0
 
 
-def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: float = 2.0):
+def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: float = DAEMON_TIMEOUT_S):
     """Ask the daemon, returning None only when there is no daemon to ask.
 
     An HTTP error is an answer: the daemon ran and refused. Catching it
