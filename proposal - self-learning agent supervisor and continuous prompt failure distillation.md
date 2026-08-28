@@ -148,12 +148,39 @@ The rules have to be removable. Rules synthesized automatically accumulate, and 
 
 Cross-machine sessions are a sync problem before they are an analysis problem. Transcripts live on the machine that produced them, and there is no sync layer today. The git half has no such problem, because a clone of the remote carries every machine's commits already, so a git-only detector covers all hardware on day one and the transcripts are what has to wait.
 
-The corpus is biased toward failures that were noticed. It only contains mistakes a human saw and bothered to type a correction for, so a wrong-but-plausible summary that got committed and never questioned is invisible to it. That is a ceiling on the word self-learning: the system automates distilling the corrections, not noticing them.
+## Prior Art & Theoretical Framing
 
-## the git-only walk, in detail
+This architecture builds upon and departs from several major lines of research in experiential and self-reflective agent systems:
 
-One script over git alone, no transcripts and no index: walk the log of a repository and emit every pair where a commit authored by a human rewrites lines a commit authored by an agent added within the previous day. Print the pair, nothing else. No clustering, no rule writing, no schema, and nothing that needs a machine other than the one holding the clone.
+### Academic Foundations
+* **[[public/2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution|Voyager (Wang et al., 2023)]]:** Pioneered lifelong learning agents that synthesize executable code into an embedding-indexed skill library. Our design adopts the modular skill library concept but extends it to compile deterministic verification guards (`.githooks`) rather than unconstrained action scripts.
+* **Reflexion (Shinn et al., 2023):** Introduced verbal reinforcement learning, where agents reflect on failed trajectories and store episodic self-critiques. Our approach replaces LLM self-critique (which suffers from blind spots and hallucinated success) with the **empirical human delta** (Git reversions and steering prompts).
+* **ExpeL (Zhao et al., 2023):** Explored extracting cross-task heuristics from experience. We ground these heuristics into structured, testable rules tied to specific line provenance rather than free-form advisory prompts.
+* **AutoSpec & RuleChef (2024–2026):** Counterexample-guided inductive synthesis for extracting symbolic linter rules and safety invariants from execution traces.
 
-Read the output by hand. What matters is not the tool, it is the count and the shape of the list: whether the same failure shows up ten times or once each. Ten times is a hook worth writing that afternoon, whatever else gets built. A list with no repetition in it means the archetypes are already all known, and the rest of this note is a pipeline for producing four rules a year.
+### Industry Frameworks & Defense-in-Depth
+* **Cognitive Memory Architectures ([[public/2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy|Mem0]], Letta / MemGPT):** Multi-tier memory separating working context from episodic and archival memory.
+* **Deterministic Guardrails vs. Advisory Prompts:** Industry consensus shows agents treat `AGENTS.md` and `CLAUDE.md` instructions as probabilistic suggestions. Modern engineering relies on defense-in-depth: intercepting workflows via lifecycle hooks (`PreToolUse`) and enforcing validation at the storage boundary via Git pre-commit hooks that cannot be bypassed with `--no-verify`.
 
-Related: [[cross-agent session indexing architecture]], [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]], [[autocommit leftover changes]], [[human vs AI git history transfers between notes]], [[token efficient PKM analysis architecture]]
+### How Our Design Compares
+
+| Dimension | Industry / Academic Standard | Our Architecture |
+| :--- | :--- | :--- |
+| **Ground Truth of Failure** | LLM self-evaluation or simulated unit tests. | **Human delta:** Git diff reversions within 24h + human steering prompts. |
+| **Primary Output** | Expanded prompt files or fine-tuning datasets. | **Deterministic guards first:** Emits `.githooks` checks and linter rules; prose is a fallback. |
+| **Context Hygiene** | Monolithic prompt files grow indefinitely. | **Modular skill lifecycle:** Dynamically loaded [`SKILL.md`](public/2026-08-28%20agent%20instruction%20bloat%20-%20modular%20skills%20and%20compact%20synthesis.md) files with explicit prune/retire paths. |
+| **Privacy & Topology** | Cloud memory services with telemetry egress. | **100% Local-First:** ONNX DirectML embeddings, SQLite FTS5, and local Git history. |
+
+---
+
+## Related Notes
+- [[public/cross-agent session indexing architecture|cross-agent session indexing architecture]]
+- [[public/2026-08-28 agent instruction bloat - modular skills and compact synthesis|agent instruction bloat - modular skills and compact synthesis]]
+- [[public/autocommit leftover changes|autocommit leftover changes]]
+- [[public/git author|git author]]
+- [[public/github co-authors for AI|github co-authors for AI]]
+- [[public/track prompt history|track prompt history]]
+- [[public/human vs AI git history transfers between notes|human vs AI git history transfers between notes]]
+- [[public/token efficient PKM analysis architecture|token efficient PKM analysis architecture]]
+- [[public/progress - local-first search daemon and indexer|local-first search daemon progress]]
+

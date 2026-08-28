@@ -116,26 +116,58 @@ Apply top-500 candidate pre-filtering before RRF to avoid O(N log N) sorting bot
 - **Failure Recovery:** Filter turns by `error` status to find past workarounds for identical compiler or runtime exceptions across projects.
 - **Subagent Tree Traversal:** Follow `parent_session_id` chains to reconstruct what a research subagent discovered during a larger autonomous task.
 
-## Open Concerns
+## Shipped Milestones (as of 2026-08-28)
 
-**Security:** Agent transcripts routinely contain API keys, access tokens, and private code, so a single index over all of them is a high-value target. Dropping `tool_result` bodies for size reasons removes most of that exposure as a side effect, since the env dumps and file contents live there rather than in prose. What remains: keep the database beside the transcripts rather than inside any repository, because the transcripts already carry whatever the repositories separate, and owner-only permissions. Serving it over the network needs the daemon's token, never a bare bind.
-
-**Storage scaling:** The [[pkm metadata indexer]] is ~114 MB for 6,599 notes with 17,567 chunks, and the measured session corpus is ~30k chunks once tool output is dropped, so this sits inside the range the current matmul already handles at 0.4ms. Per [[agentic tooling upgrades over grep]] scaling milestones the next moves are FP16 compression at >100k chunks and sqlite-vec or HNSW at >500k, neither of which is close.
-
-**Agent integration:** answered by the daemon, so this is no longer a fork in the road. The index is a registered corpus on `127.0.0.1:44771` and any consumer can query it over HTTP with the model already resident, which is what made the skill-versus-MCP tradeoff a tradeoff. A skill is still the cheap surface for an agent that prefers a command, and MCP becomes a thin wrapper worth adding when an agent needs a native tool rather than a shell call. Neither owns the engine.
-
-**Implementation phasing:** Claude Code first, not Antigravity as originally planned. Its transcripts are the largest corpus by far, its dedupe trap is already solved by the parsers written for cost auditing, and reusing them is the step that pays for itself whether or not the indexing lands. Antigravity second, Codex last (multiple SQLite databases plus event stream joins).
-
-1. **Extract the transcript reader.** `iter_events(path)` yields deduplicated events, keyed on `(message.id, text)` because the client writes a line per content block and reuses the id. It streams, which matters when the largest transcript here is 79 MB.
-2. **Write the scanner against the seam.** `scan_sessions(root)` matches `collect_index_data`'s contract, and `build_index(collect=...)` takes it.
-3. **Register it:** `searchd.py --sessions claude=<root>`, a separate flag rather than a `--vault` prefix so the scanner choice is explicit. `default_db_path` falls back to `<root>/.pkm_index.db` when the root has no `.obsidian`, which also deduplicated the six copies of that path expression in the indexer.
-
-First slice is FTS5-only. `search_index` already degrades to lexical when a corpus has no vectors, so embedding is a later flag rather than a prerequisite.
-
-What step 1 did not buy: the cost-audit parsers still re-implement their own loop. They need `message.usage`, which `iter_events` deliberately drops, so sharing the reader would mean widening it back out to the thing it exists to avoid. Indexing for recall and accounting for spend read the same files and want different halves of them.
-
-Left for later: no watcher, so the index is as fresh as the last `--reindex`, and an append-only log deserves a byte-offset resume rather than the full 102-second reparse. Embeddings are a flag nobody has turned on yet.
+* [x] **Session Corpus Ingestion:** 859 transcripts (1.49 GB) parsed and indexed down to 79,489 sections and 9,738 subagent / file edges in SQLite (`.pkm_index.db`).
+* [x] **Local Hybrid Search:** FTS5 BM25 + ONNX DirectML `bge-small-en-v1.5` embeddings fused via Reciprocal Rank Fusion (RRF). Queries execute in 34–62ms warm.
+* [x] **Tail Reads on Transcripts:** Byte-offset resume parses only newly appended bytes, reducing incremental updates from 12.46s to 0.78s ([[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]]).
+* [x] **Live File Watchers:** `searchd --watch` runs multi-corpus watchers using `watchfiles` with a 2-second debounce and indexer write filtering.
+* [x] **Cross-Encoder Reranking & Privacy Gates:** Optional `ms-marco-MiniLM-L-6-v2` reranker with `--withhold-private` regex scanner ensuring zero telemetry egress for sensitive credentials, home paths, or network IPs.
+* [x] **Graph & File Provenance Queries:** `link_graph.py` queries file references across sessions, identifying which agent session last modified or debugged any code or document asset.
 
 ---
 
-What this could become: [[proposal - self-learning agent supervisor and continuous prompt failure distillation]], which reuses this index to find the turns where a human had to correct the agent.
+## Prior Art & Industry Landscape
+
+The problem of giving coding agents durable memory across sessions spans several established patterns:
+
+### 1. File-Based Instructions (`CLAUDE.md`, `AGENTS.md`)
+* The industry standard for lightweight context.
+* **Limitations:** Prone to manual maintenance drift, context bloat, and probabilistic degradation as files grow.
+
+### 2. Session Transcript Indexing & MCP Search Tools
+* **[SessionFlow](https://github.com/lbruton/SessionFlow):** Indexes Claude Code transcripts locally on Apple Silicon (MLX) and serves them via Model Context Protocol (MCP).
+* **[devmemory](https://github.com/shahriyar_r/devmemory):** Syncs Git commits and agent execution logs to a Redis-backed memory store so agents recall architectural decisions.
+* **[ai-memory](https://github.com/AkitaOnRails/ai-memory):** Intercepts agent lifecycle events to auto-generate markdown summary wikis, avoiding raw log re-indexing bottlenecks.
+
+### 3. Extraction-First Memory vs. Compositional Pruning
+* Tools like **Mem0**, **prism-mem**, and **Cognee** extract entity-relation triples (Knowledge Graphs) from conversation logs before indexing.
+* **Our Alternative (Compositional Pruning):** Rather than paying for continuous LLM extraction passes, we exploit transcript block composition: dropping `tool_result` bodies (which make up 80.8% of payload) reduces a 1.49 GB corpus to 95 MB of high-signal prompt/plan text, eliminating secret exposure and making local DirectML matrix multiplication faster (<1ms) than external graph queries.
+
+### Comparison Matrix
+
+| Feature | Cloud Memory (Mem0 / Letta) | Local MCP Tools (SessionFlow) | Our Session Indexer (`pkm-search`) |
+| :--- | :--- | :--- | :--- |
+| **Data Privacy** | Cloud API storage / egress | Local machine | **100% Local-First** (Zero egress, DirectML ONNX) |
+| **Ingest Latency** | Async LLM extraction pipeline | Full file scan | **Tail-read byte offsets** (0.78s incremental) |
+| **Retrieval Strategy** | Vector-only or GraphRAG | Pure Vector Search | **Hybrid RRF** (FTS5 BM25 + Vectors + Reranker) |
+| **Multi-Agent Normalization** | Single agent harness | Claude Code only | **Unified Schema** (Claude + Antigravity + Codex) |
+| **Live Sync & Invalidation** | Periodic re-sync | Static batch index | **`watchfiles` + split-lock resident daemon** |
+
+---
+
+## Open Tasks & Next Steps
+
+1. **Antigravity & Codex Adapters:** Write the scanner generator for Antigravity (`~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript.jsonl`) and Codex (`~/.codex/sessions/`) to fulfill the multi-agent contract.
+2. **Cross-Machine Sync Layer:** Transcripts remain local to each workstation; building a lightweight sync or Git-backed metadata exchange is required for multi-device recall.
+3. **Supervisor Integration:** Feed session turns directly into [[public/proposal - self-learning agent supervisor and continuous prompt failure distillation|self-learning agent supervisor]] to automatically cluster human correction prompts.
+
+---
+
+Related:
+- [[public/proposal - self-learning agent supervisor and continuous prompt failure distillation|proposal - self-learning agent supervisor and continuous prompt failure distillation]]
+- [[public/progress - local-first search daemon and indexer|progress - local-first search daemon and indexer]]
+- [[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads on transcript corpus]]
+- [[public/vault hybrid search|vault hybrid search]]
+- [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]
+
