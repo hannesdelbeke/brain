@@ -38,3 +38,7 @@ Verify settings:
 git config --local --get user.name
 ```
 
+ensure this doesn't clash with ai agent authorship [[github co-authors for AI]]
+
+[[provenance]]
+[[git author]]
