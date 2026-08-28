@@ -66,9 +66,9 @@ The phrasing heuristic is the cheapest and the weakest, and running it alone is 
 
 ## stage 3, clustering
 
-Group incidents into archetypes so a rule is written once rather than per incident. The candidate list today is hand-written from memory, not clustered from data: lossy compaction of human voice, attribution and provenance errors, submodule and wrong-directory traps, resource waste from polling loops.
+Group incidents into archetypes so a rule is written once rather than per incident. Four are known already: lossy compaction of human voice, attribution and provenance errors, submodule and wrong-directory traps, resource waste from polling loops.
 
-That list being hand-written is the weak point of the whole proposal. Four archetypes across a year of sessions is not a clustering result, it is recall bias, and a system that only rediscovers the four failures its author already knows about has not learned anything. The first honest output of stage 3 is a frequency table of correction incidents with no archetypes attached, read by a human, to find out whether recurring structure exists at all.
+Those four are the ones a human noticed repeating, which is a floor rather than a result. The value of clustering is the archetypes nobody named, so the first output of stage 3 is a frequency table of correction incidents with no archetypes attached, read by a human, to see what is in it besides the four.
 
 ## stage 4, distillation
 
@@ -91,15 +91,17 @@ Ordering matters more than it looks. A rule an agent has to read and obey costs 
 
 The database stores pointers, `(transcript path, line)` and commit SHA, not copies of turns. Transcripts routinely carry keys and private code, and a second copy is a second place to leak them.
 
-## walkthrough on a real failure
+## walkthrough, lossy compaction of a journal note
 
-Take the co-author collision, which is documented in full at [[github co-author email collision with third-party accounts]].
+The incident. An agent ran a condensing pass over the 2026-08-28 day note and replaced verbatim dialogue, *"Food brought to you, isn't it nice?"*, with generic psychological summary. The correction prompt came back the same session: *"i feel a lot of my original notes were lost compared to original first pass note written by me. ai came to a few conclusions or summaries i m unsure about."*
 
-An agent committed with `Co-Authored-By: Claude <noreply@anthropic.com>`. GitHub resolves trailers by email, a third-party account had claimed that address, and every such commit was attributed to that stranger. Switching to `Gemini <gemini@google.com>` hit the same account again.
+Ingest and detection. Two signals fire together, which is what makes this a high-confidence correction rather than a phrasing guess. The prompt carries *"lost"* and *"unsure about"* and lands immediately after an agent edit, and the diff between the human entry at `21a223cc` and the agent edit at `77bb3586` is a 50% line reduction with the quoted dialogue gone.
 
-What each stage would have to do with it. Ingest pairs the session turns with the commits they produced. The detector sees the human prompt naming the wrong attribution, and sees the follow-up commits rewriting trailers, which is the diff-reversion signal. Clustering files it under attribution errors alongside any other trailer or identity incident. Distillation writes a `commit-msg` hook that rejects a `Co-Authored-By` line whose address is not under `users.noreply.github.com`, which is the guard, and one line in the git skill, which is the prose.
+Clustering. Filed under `lossy-human-voice-compaction`. The historical scan finds three earlier incidents where the human asked for verbatim quotes to be restored after a summarization pass, which is what takes this over the threshold from one bad day to an archetype.
 
-The hook is the deliverable. The note already exists and did not stop it happening again on the next repository, because a note is only read by whoever goes looking for it.
+Distillation. The rule, written into a journal curation skill: when structuring journal entries, preserve verbatim quotes, dialogue and concrete grounding detail, and summarize only the surrounding context. The guard, which is the part that actually holds: an edit cutting more than 30% of the lines of a human journal note, with no instruction to truncate, stops and asks.
+
+The second archetype shows the same split more sharply. The co-author collision at [[github co-author email collision with third-party accounts]] is written up in full, and the write-up did not prevent the next occurrence, because a note is only read by whoever goes looking for it. What would have prevented it is six lines of `commit-msg` hook rejecting any `Co-Authored-By` address outside `users.noreply.github.com`.
 
 ## what would have to be true
 
