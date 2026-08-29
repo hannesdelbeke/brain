@@ -65,14 +65,17 @@ Anaconda's *"share disk with existing operating system"* mode used the unallocat
 
 ## Getting online after install
 
-Networking is confirmed working. Two things blocked it first, and neither announced itself clearly.
+Both paths work: WiFi, and ethernet through the Dell dock. The dock's Realtek RTL8153 needs no driver work, since `r8152` is in the mainline kernel, and the home SSID's WPA3-Personal (SAE) associates without intervention on Fedora 44's `wpa_supplicant`.
 
-- **DNS resolved nothing while the link was up.** `ip -br addr` showed an interface UP with a lease, but every hostname failed with "could not resolve host". The fix is a nameserver:
-  ```bash
-  sudo bash -c "echo nameserver 1.1.1.1 > /etc/resolv.conf"
-  ```
-  NetworkManager rewrites `/etc/resolv.conf` on reconnect, so make it stick per-connection instead: `nmcli con mod <name> ipv4.dns 1.1.1.1 ipv4.ignore-auto-dns yes`.
-- **The home SSID is WPA3-Personal (SAE), not WPA2.** Clients without SAE support fail with a password prompt loop rather than an error naming the cause. Worth checking `wpa_supplicant -v` (2.9 or newer) before suspecting the password. A WPA2 network next to it is the fastest way to isolate this.
+The only real blocker was DNS, and it presented as a link problem. `ip -br addr` showed an interface UP with a lease and `ping 1.1.1.1` answered, but every hostname failed with "could not resolve host". The fix is a nameserver:
+
+```bash
+sudo bash -c "echo nameserver 1.1.1.1 > /etc/resolv.conf"
+```
+
+NetworkManager rewrites `/etc/resolv.conf` on reconnect, so make it stick per-connection instead: `nmcli con mod <name> ipv4.dns 1.1.1.1 ipv4.ignore-auto-dns yes`.
+
+Worth knowing for the next machine: WPA3-SAE does strand clients whose `wpa_supplicant` predates 2.9, and it fails as a repeating password prompt rather than an error naming the cause. It was not the problem here, but it is the first thing to rule out when a WPA3 network refuses a password that is known good.
 
 ## Installing the Antigravity CLI
 
