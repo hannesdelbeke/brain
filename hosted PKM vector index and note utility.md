@@ -24,7 +24,7 @@ For personal single-user multi-agent workloads (10–50 agent queries daily, ~50
 
 ## Tracking Agent Energy & Note Utility
 
-To identify which notes actively help agents solve tasks versus dead weight, the endpoint logs usage and correlates searches with completed outcomes.
+To identify which notes actively help agents solve tasks versus dead weight, the endpoint logs usage and correlates searches with completed outcomes (see [[note utility and synapse strength from session recaps]]).
 
 **Usage telemetry schema**
 - `query_id`: unique search query identifier
@@ -43,6 +43,7 @@ Notes accumulate a dynamic utility score based on agent task resolution:
 Analyzing this access history reveals high-leverage concept notes, uncovers knowledge gaps where searches return low similarity, and flags outdated notes that lead agents astray.
 
 ## Related Notes
+- [[note utility and synapse strength from session recaps]]
 - [[pkm metadata indexer]]
 - [[agentic tooling upgrades over grep]]
 - [[cross-agent session indexing architecture]]
