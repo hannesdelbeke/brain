@@ -76,6 +76,8 @@ the obsidian features worth rebuilding on the index are listed with their accept
 
 whether the duplicate gate should ever block rather than report is still a decision, and it needs a week of warn-mode output to answer.
 
+anti-links and negative edge constraints are designed in [[anti links]] and [[anti link RnD]]. Ingestion parses `anti-links:` frontmatter into `edges` with `is_negative = 1`, excluding them from `GET /similar`, suppressing `--check-duplicate` false alarms on homonyms, pruning `/unlinked` false matches, and enabling Rocchio negative vector steering during hybrid search.
+
 `sqlite-vec` has not been benchmarked against the in-process numpy multiply. it only matters for cold queries, which is the case the resident daemon exists to avoid, so it stays last.
 
 ## should the engine ship as a package
