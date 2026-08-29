@@ -14,8 +14,9 @@ tags:
 - Packaged and published initial release `1.0.0` on GitHub with all required distribution assets (`manifest.json`, `main.js`, `styles.css`).
 - Researched and benchmarked lazy-loading alternatives in [[2026-08-29 Obsidian lazy loading plugins compared]].
 - Documented the official directory portal submission workflow in [[2026-08-29 Obsidian community plugin submission process]].
-- Submitted the plugin through the developer portal at [community.obsidian.md](https://community.obsidian.md).
+- Submitted the plugin through [the developer portal](https://community.obsidian.md).
 - Resolved all automated linter and guideline checks reported by the community directory and published release `1.0.2`.
+- plugin is now released [Startup Metrics Logger - Obsidian Plugin](https://community.obsidian.md/plugins/startup-metrics-logger)
 
 ### 🤖 Gemini 3.7 Flash Mistakes & Retrospective
 - Appended the plugin to the end of `community-plugins.json`, forgetting that Obsidian loads plugins strictly by array index and requires index 0 to time other plugins on startup.
