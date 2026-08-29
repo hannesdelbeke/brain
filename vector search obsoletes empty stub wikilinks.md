@@ -7,8 +7,6 @@ tags:
 - architecture
 aliases:
 - vector search vs empty stub wikilinks
-- why vector search obsoletes speculative linking
-- death of empty stub notes
 ---
 Why creating speculative `[[empty stub links]]` was a pre-vector manual index hack, how modern vector embeddings and full-text search (FTS5) replace manual backlink aggregation, and why empty links pollute knowledge graphs.
 
@@ -18,9 +16,7 @@ Related: [[2026-08-27 synapse links vs wikilinks and semantic links|synapse link
 
 In early personal knowledge management tools (Roam Research, Obsidian 2020–2023), search was primitive and limited to exact unranked string matching.
 
-To connect ideas across notes, users wrapped unwritten concepts in double brackets (e.g. `[[Gemini Flash 3.7]]` or `[[neuroplasticity]]`):
-- **The Goal:** Turn Obsidian's backlinks panel into a manual inverse index to group future thoughts around an entity.
-- **The Reality:** A manual compensation for the lack of semantic retrieval.
+To connect ideas across notes, users wrapped unwritten concepts in double brackets (e.g. `[[Gemini Flash 3.7]]` or `[[neuroplasticity]]`). The goal was to turn Obsidian's backlinks panel into a hand-built inverse index, so future thoughts about an entity would collect in one place. The bracket was doing the job an index should do, because there was no index.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -36,11 +32,13 @@ To connect ideas across notes, users wrapped unwritten concepts in double bracke
 
 ## Why hybrid search renders stub links obsolete
 
-With local vector embeddings and hybrid SQLite search (e.g. `bge-small-en-v1.5` + FTS5):
+This vault's own indexer ([[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]) is the reference implementation: `BAAI/bge-small-en-v1.5` embeddings and SQLite FTS5 over the same sections, fused, with an optional `Xenova/ms-marco-MiniLM-L-6-v2` cross-encoder rerank over the top 20 candidates.
 
-- **Semantic synonym matching:** A query for *"fast lightweight Google model"* or *"3.7 flash benchmarks"* surfaces mentions across the vault automatically—whether written as `Gemini Flash 3.7`, `gemini-3.7-flash`, or `Google small 3.7 model`.
-- **Instant exact matching:** SQLite FTS5 indexes tokens in sub-millisecond time. Querying any term finds all occurrences without manual bracket tagging.
-- **Zero authoring friction:** Notes flow naturally without stopping to decide if a passing term deserves speculative brackets.
+- Semantic synonym matching: a query for "fast lightweight Google model" or "3.7 flash benchmarks" surfaces mentions across the vault whether they were written as `Gemini Flash 3.7`, `gemini-3.7-flash`, or `Google small 3.7 model`.
+- Exact matching: FTS5 finds every occurrence of a term without manual bracket tagging. A full query on this vault measures 13-26ms, of which the query encode is 3.8-8.6ms; rerank, when asked for, adds about 22ms per candidate.
+- No authoring friction: notes get written without stopping to decide whether a passing term deserves speculative brackets.
+
+Fusion plus rerank is the part that replaces the backlinks panel. A manual inverse index returns whatever was bracketed; a reranked hybrid query returns what actually answers the question, including notes written before the entity had a name.
 
 ## Pathologies of empty stub links
 
@@ -48,22 +46,24 @@ Creating links to non-existent or empty notes degrades knowledge graph utility:
 
 ```
     CLEAN KNOWLEDGE GRAPH               POLLUTED STUB GRAPH
-   (Substantive Concepts)              (Ghost Node Seizure)
+   (substantive concepts)              (stubs as hubs)
 
        ○ ───────── ○                        ○ ─── ◌ ─── ○
        │           │                        │ ╲ ╱ │ ╲ ╱ │
        ○ ───────── ○                        ◌ ─── ○ ─── ◌
-   • High Signal Density                • 70% Nodes are 0-byte Stubs
-   • Meaningful Semantic Edges          • Combinatorial Retrieval Noise
-   • Fast Agent Multi-Hop               • Lost Context Tokens
+   • every node has a body              • ◌ nodes are empty
+   • edges carry meaning                • paths route through nothing
+   • multi-hop lands on content         • multi-hop spends tokens on 0 bytes
 ```
 
-- **Graph view seizures:** As analyzed in [[2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]], empty stub nodes cause hyper-connectivity, collapsing the graph into undifferentiated clutter.
-- **Agent retrieval tax:** When an AI agent traverses links during multi-hop graph retrieval, empty stub links waste token budget and latency fetching 0-byte notes.
-- **Dead link clutter:** Speculative links produce broken edges and trigger unwanted note creation on accidental clicks.
+- Stubs become hubs. A term bracketed in twenty notes and written in none is a node with twenty edges and no body, so every path between those notes routes through an empty file. [[2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] describes the same collapse arriving by the other road, over-linking generic words, and the graph view ends up equally unreadable either way.
+- Agent retrieval tax: an agent doing multi-hop graph retrieval pays a fetch and some token budget to open a 0-byte note and learn nothing.
+- Dead link clutter: speculative links render as broken edges and create unwanted notes on an accidental click.
 
 ## Modern rule of thumb
 
-- **Canonical concept note exists:** Create `[[wikilink]]` to establish an explicit, curated edge between substantive knowledge atoms.
-- **Passing mention or tool:** Write plain text. Vector embeddings and FTS index it automatically without graph pollution.
-- **Emerging cluster discovered:** Once search reveals 5+ notes discussing a recurring theme, create a substantive note and link them.
+- A canonical note already exists: link it, to record an edge search would not infer on its own.
+- Passing mention or tool: plain text. Embeddings and FTS index it either way, and the bracket adds only a node.
+- A cluster emerges: once a search turns up five or so notes circling one theme, write the note that theme deserves, then link them.
+
+[[when to request wikilinks from AI]] turns this into instructions for an agent that is drafting notes.
