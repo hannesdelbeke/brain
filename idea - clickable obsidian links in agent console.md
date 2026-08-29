@@ -45,4 +45,8 @@ Open your Windows Terminal `settings.json` and add a custom link regex to your p
 }
 ```
 
+### 4. Linux `file:///` and MIME Association
+On Linux (GNOME / Flatpak), register a custom opener wrapper (`~/.local/bin/obsidian-open`) that translates incoming `file:///` URLs to `obsidian://open?path=...` and set it as the default MIME handler for `text/markdown`. See [[public/2026-08-30 open markdown file links in Obsidian on Linux|open markdown file links in Obsidian on Linux]].
+
 > **Agent Instruction:** Moving forward, whenever I reference a file in this vault, I will use the `file:///` markdown format (e.g. `[note name](file:///C:/repos/pkm/note_name.md)`), which is universally supported and clickable in the Antigravity console!
+
