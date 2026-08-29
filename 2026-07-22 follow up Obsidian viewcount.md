@@ -1,56 +1,44 @@
 ---
-energy: 7
-sentiment:
-- 3
-- 8
-sentiment-hash: 2f970852
-sentiment-label:
-- frustrated
-- accomplished
+created: 2026-07-22
+energy: 6
 tags:
 - journal
 - technical
-- self-reflection
-- hobby
+- obsidian
+- pkm
 ---
 
-follow up [[2026-02-22 Obsidian track note view]]
+## Problems with frontmatter viewcount tracking
 
-the automation that updates [[view count|viewcount]] each note is working but also causes issues.
-- now that each note auto adds a [[YAML front matter|frontmatter]] on creation to store viewcount in, I have to press arrow down before I paste text, to ensure the cursor is at the bottom of the frontmatter, to prevent breaking the frontmatter.
-- the auto update each view
-	- breaks my recently edited files view, which now shows recently viewed.
-	- always changes a file when viewing, so triggers a git edit. 
-		- This creates [[git history]] clutter.
-		- This broke git sync a few times 
-			- [[obsidian git backup can fail]]
-			- [[2026-07-13 vault backup issue]]
-		  causing potential backup issues. It seems the [[Obsidian plugin - Git]] can't handle too many edits in one go before getting stuck, requiring a manual git sync to get unstuck.
+The original view tracking setup in [[2026-02-22 Obsidian track note view]] used [[obsidian-sentinel]] to increment a `views` field in [[YAML front matter]] on every note open. While functional, it introduced severe side effects:
+- Cursor paste friction: auto-inserted frontmatter forced moving the cursor past line 1 before pasting to avoid corrupting YAML.
+- Broken recently edited lists: opening a note for reading updated its file modified time (`mtime`), masking genuinely modified content.
+- Git history pollution and sync stalls: every note viewed generated a Git file change. During high-traffic reading sessions, rapid file changes restarted the Git timer continuously, starving auto-sync and causing backup failures. See [[2026-07-13 vault backup issue]] and [[obsidian git backup can fail]].
 
-- [ ] what could be a better approach?
+## Core principle: separate analytics from content
 
-Core issue: mixing analytics with content
-analytics polute source content
-Instead of writing to the note, store viewcounts in a single file:
-.obsidian/viewcounts.json
-Challenge, what if a note renames.
-create a hook that runs on file rename
-### alternatives
-i researched alternatives and forks here: [[obsidian viewcount rnd]]
+Telemetry data belongs in dedicated plugin storage (`.obsidian/plugins/.../data.json` or `.obsidian/view-count.json`), completely isolated from note content and Git commits.
 
-https://github.com/tahayigitmelek/note-radar
-does this too, but 0 stars
-data saved in a json in the plugin folder.
+## Research and tool comparison
 
-https://github.com/decaf-dev/obsidian-view-count seems to do this
-⚠️ development is dropped.
-i dont know how the tech works under the hood
-reddit [post](https://www.reddit.com/r/ObsidianMD/comments/120fcuq/plugin_request_note_view_trackercounter/)
-fork https://github.com/Moyf/obsidian-view-count
+### [obsidian-view-count](https://github.com/decaf-dev/obsidian-view-count) and [Moyf fork](https://github.com/Moyf/obsidian-view-count)
+- Tracks view statistics independently in plugin storage.
+- Listens to `vault.on('rename')` events: renaming or moving a note updates the internal path key in `data.json`, preserving view history without touching markdown files.
+- The Moyf fork adds safety checks preventing destructive frontmatter overwrites, fixes Moment.js types, and updates the Svelte toolchain.
 
-forked it
-added feature to import custom frontmatter fields `views`
-imported my old view data successfully, seeing it in obsidian viewcount
-removed rule from [[obsidian-sentinel]] and disabled plugin. 
-	which i setup originally here [[2026-02-22 Obsidian track note view]]
-created PR https://github.com/Moyf/obsidian-view-count/pull/1
+### [note-radar](https://github.com/tahayigitmelek/note-radar)
+- Stores view stats strictly in plugin storage with a full-tab analytics dashboard.
+- Missing rename event handling: renaming a note leaves an orphaned path in `data.json` and resets the renamed note's view count to 1.
+
+## Implementation and migration
+
+1. Forked [Moyf/obsidian-view-count](https://github.com/Moyf/obsidian-view-count) and added an importer to parse existing `views` frontmatter values into the plugin's external JSON cache.
+2. Verified view history transferred cleanly into the new view count panel.
+3. Removed the automated rule in [[obsidian-sentinel]] and purged legacy `views:` frontmatter lines from notes.
+4. Submitted PR [Moyf/obsidian-view-count#1](https://github.com/Moyf/obsidian-view-count/pull/1).
+
+## Related notes
+- [[view count]] — canonical concept note on note view tracking
+- [[2026-02-22 Obsidian track note view]] — archive of initial frontmatter setup
+- [[2026-07-13 vault backup issue]] — detailed post-mortem on Git backup stalls
+- [[Obsidian data worth exposing to AI agents]] — surfacing view frequency to AI agents
