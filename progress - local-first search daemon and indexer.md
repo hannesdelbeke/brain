@@ -82,3 +82,5 @@ aliases:
 * **Offline GPU Vector Caching:** [[public/offline GPU embeddings with incremental cache|offline GPU embeddings with incremental cache]]
 * **What the Index Should Replace in Obsidian:** [[public/core Obsidian features to rework on the vault index|core Obsidian features to rework on the vault index]]
 * **The Link Half, Outside the Vault:** [[public/2026-08-27 a link graph over code, docs and assets|a link graph over code, docs and assets]]
+
+[[dev notes]]
