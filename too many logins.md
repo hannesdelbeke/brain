@@ -29,4 +29,4 @@ how to speed up
 
 are there ways for android?
 - logging in [[Bitwarden]] everytime w fingerprint is slow
-- [[google authenticator]] is faster but less reliable
+- google authenticator is faster but less reliable

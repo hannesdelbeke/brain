@@ -50,7 +50,7 @@ but we might be able to reuse textures between both styles. or maybe we don't wa
 - web
 - [[Unity]]
 - [[Unreal]]
-- [[GoDot]] 
+- GoDot 
 
 a shader might work in unity 2019 but not in unity 2022
 

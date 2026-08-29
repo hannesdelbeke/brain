@@ -10,4 +10,4 @@ tags:
 - technical
 ---
 
-see [[smooth linear interpolation]]
+see smooth linear interpolation

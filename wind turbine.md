@@ -36,4 +36,4 @@ AFAIK better, more modern design
 - horizontal-axis turbine blades kill birds
 - doesn't work on windless day
 
-[[wind energy]]
+wind energy

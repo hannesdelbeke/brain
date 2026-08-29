@@ -9,7 +9,7 @@ tags:
 - work
 ---
 
-[[Palantir Technologies|Palantir]] [[ontology]] is a digital twin, that also can control it's real life twin.
+Palantir [[ontology]] is a digital twin, that also can control it's real life twin.
 
 Imagine your business is a massive box of mismatched LEGO bricks.
 Right now, all your information is scattered. You have piles of spreadsheets, database tables, and random files. It is hard to see how they all fit together.

@@ -36,7 +36,7 @@ I since have had to make 2 or 3 validation systems at other jobs, and fell back 
 Meanwhile I had this working prototype lying around, but since it wasn't finished it didn't feel ready use at work. I don't want to bring unfinished projects in work and end up being biased and coding on my little fun project during work.
 
 > [!NOTE] How could I have prevented this? 
-> Assuming no [[hindsight]], I could have focused more on the goals, the [[objectives and key results|OKRs]] of the enduser. Once they were hit, I should have made a release and gotten test users.
+> Assuming no [[hindsight]], I could have focused more on the goals, the OKRs of the enduser. Once they were hit, I should have made a release and gotten test users.
 ## Things I learned.
 - i was trying to make a [[graph theory|graph]], so researched a bunch of existing solutions and wrote notes.
 - nodes don't need `self.id` since python objects all have an id `id(my_object)`

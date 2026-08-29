@@ -13,7 +13,7 @@ tags:
 ---
 
 Often, when [[modular]] assets are created, they are made to fit on a power of 2 grid size, so they are easy to snap together in the [[game engine]].  
-But when creating curved pieces, it's not easy to bend it to fit [[exact|exactly]] on the grid. It's a manual tweak process, requiring the manual snapping of [[vertex|vertices]] on the grid.
+But when creating curved pieces, it's not easy to bend it to fit exactly on the grid. It's a manual tweak process, requiring the manual snapping of [[vertex|vertices]] on the grid.
 
 A hack that makes this easier, involves the multiplying of the bend modifier pivot with `86.0576519035213`, but nobody understood why this hack worked.
 Let's figure it out

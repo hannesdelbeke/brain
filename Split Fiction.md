@@ -2,4 +2,4 @@
 links:
   - "[[gaming]]"
 ---
-A highly rated [[co-op game]]
+A highly rated co-op game

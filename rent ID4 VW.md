@@ -10,7 +10,7 @@ tags:
 - travel
 ---
 
-[[Volkswagen]]
+Volkswagen
 
 Rent-a-Car Huddersfield
 https://www.vwfsrentacar.co.uk/vehicle-rental/optional-extras

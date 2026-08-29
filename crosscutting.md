@@ -11,5 +11,5 @@ tags:
 - technical
 ---
 
-cutting across the [[wood grain]]
+cutting across the wood grain
 [[saw]]

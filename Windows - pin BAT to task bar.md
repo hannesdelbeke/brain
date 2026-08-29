@@ -17,4 +17,4 @@ A workaround
   to  `cmd /c "c:/path/to/my.bat"`
 - now you can right click the shortcut & pin to start, or pin it to the start bar
 
-[[batch file]]
+batch file

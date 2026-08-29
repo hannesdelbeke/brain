@@ -12,6 +12,6 @@ tags:
 - hardware
 ---
 
-a [[monitor light bar]]
+a monitor light bar
 [[lighting]]
-[[BenQ]]
+BenQ

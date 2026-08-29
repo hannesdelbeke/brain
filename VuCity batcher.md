@@ -31,7 +31,7 @@ It mostly was used to run the [[VuCity validator]] overnight on 100s of scenes, 
 > - [[copy paste|copy]] paths to clipboard 
 > ### run task
 > - process - run the script on all scenes in the same open max instance
-> - process crashfree, opens a new [[maxbatch]] instance for each scene, so a crash doesn't stop the whole batch.
+> - process crashfree, opens a new maxbatch instance for each scene, so a crash doesn't stop the whole batch.
 > - [[qt loading bar]]
 > 
 > each script has 3 stages

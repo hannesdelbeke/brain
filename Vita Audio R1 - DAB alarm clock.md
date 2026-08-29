@@ -40,6 +40,6 @@ when powered off from mains, it forgets the mode (aux) and time
 >     **≈ £0.43/month**
 
 
-[[Ruark|Vita Audio]]
+Vita Audio
 [[audio]]
 [[speakers]]

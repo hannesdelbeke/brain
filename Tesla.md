@@ -16,7 +16,7 @@ a brand of [[electric vehicle|EV]]
 
 ❌ **2023 M3** remove indicator stalks 
 ✅**2021 M3** heated steering whee 
-❌**2021 M3** remove radar ([[ultrasonic sensor|ultrasonic sensor]]), use vision only. 
+❌**2021 M3** remove radar (ultrasonic sensor), use vision only. 
 ✅2021 M3 new voltage battery
 ✅2021 M3 longrange gets new battery
 ✅2020 M3 / 2021 added heatpump, powered trunk, new centre console

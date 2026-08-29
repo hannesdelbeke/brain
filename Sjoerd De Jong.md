@@ -9,6 +9,6 @@ tags:
 - work
 ---
 
-teacher at [[Futuregames]]
+teacher at Futuregames
 
 [[people]]

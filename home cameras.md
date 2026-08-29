@@ -18,5 +18,5 @@ tags:
 - onvif/rtsp cameras, with any onvif software
 - Hikvision
 
-almost any good camera needs [[network video recorder]]
+almost any good camera needs network video recorder
 [[camera]]

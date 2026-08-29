@@ -12,7 +12,7 @@ tags:
 
 it feels [[sad]]
 
-[[classical music]]
+classical music
 [[violin]]
 [[instrumental]]
 good [[yoga music]]

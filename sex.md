@@ -10,5 +10,5 @@ tags:
 ---
 
 [[women]]
-[[men]]
+men
 [[relationship]]

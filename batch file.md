@@ -1,5 +1,0 @@
----
-aliases:
-  - BAT
-  - BAT file
----

@@ -13,5 +13,5 @@ tags:
 
 [[hiking]]
 [[mountain]]
-[[Poland]]
+Poland
 [[holiday]]

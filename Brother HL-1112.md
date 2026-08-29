@@ -1,3 +1,0 @@
-
-[[USB-B]]
-[[printer]]

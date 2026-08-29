@@ -12,11 +12,11 @@ tags:
 - industry
 ---
 
-15 Traditional Gaming Companies Building in [[Web3]]
+15 Traditional Gaming Companies Building in Web3
 
 1. [[TSM]]
 2. [[Zynga]]
-3. [[Ubisoft]]
+3. Ubisoft
 4. [[Playtika]]
 5. [[Scopely]]
 6. [[PlayWay]]

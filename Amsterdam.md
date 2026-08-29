@@ -8,4 +8,4 @@ tags:
 - technical
 ---
 
-the [[capital]] of the [[Netherlands]]
+the capital of the [[Netherlands]]

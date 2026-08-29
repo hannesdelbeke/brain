@@ -11,7 +11,7 @@ tags:
 - health
 ---
 
-Food sources of [[omega-6]] are called LAs, [include](https://www.ncbi.nlm.nih.gov/labs/pmc/articles/PMC7990530/)
+Food sources of omega-6 are called LAs, [include](https://www.ncbi.nlm.nih.gov/labs/pmc/articles/PMC7990530/)
 ### sources
 mostly nuts, seeds, and beans
 - canola oil

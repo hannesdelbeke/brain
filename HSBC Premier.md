@@ -16,6 +16,6 @@ tags:
 	- [policy doc](https://www.hsbc.co.uk/content/dam/hsbc/gb/pdf/Premier-IPID.pdf)
 
 
-[[HSBC]]
+HSBC
 [[premium banking]]
 [[Aviva]]
