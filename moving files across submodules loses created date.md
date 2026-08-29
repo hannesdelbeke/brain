@@ -37,7 +37,9 @@ OS-level timestamps (`Date Created`) change whenever a folder is archived, unzip
   git log --diff-filter=A --follow --format=%aI -- "path/to/note.md"
   ```
   and inject it into the frontmatter `created:` field before or during cross-submodule migrations.
+- **Same-Day / Date-Prefixed Exemption:** If a note was created on the **same day** as the migration or already includes a `YYYY-MM-DD` date in its filename, omit the `created:` frontmatter to avoid redundant clutter. `origin-sha:` alone is sufficient to trace provenance.
 
 ### Related
 - [[maintain git history between submodules]] — Technical trade-offs between patch preservation and origin SHA pointers.
 - [[wikilink temporal integrity]] — How link resolution depends on preserved creation timestamps.
+- [[AGENTS.md]] — Vault-wide rules for agent operations and metadata injections
