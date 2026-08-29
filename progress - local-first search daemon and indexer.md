@@ -1,5 +1,5 @@
 ---
-date: 2026-08-27
+date: 2026-08-29
 created: 2026-08-27
 tags:
   - progress
@@ -9,78 +9,89 @@ tags:
   - python
   - technical
 status: active
-goal: "Deliver sub-5ms local-first hybrid vector + lexical retrieval across 10,000+ notes with zero cloud egress and zero CPU idle overhead."
+goal: "hybrid search over every corpus on this machine, answered by a resident daemon in tens of milliseconds, with nothing leaving the machine and no cost while idle."
 aliases:
-  - progress - local-first search daemon and indexer
-  - search daemon progress
   - pkm search progress
 ---
 
-# Progress: Local-First Search Daemon & Indexer
+> [!summary] eli5
+> the local search engine behind the vault: one background process holds a small language model in memory and answers "where did we write about X" over the notes, the code repositories and the agent transcripts, in about 20 milliseconds, without sending anything to a server.
+> the engine works and is in daily use; what is open is the link graph over code repositories, a second transcript scanner to prove the plugin seam is real, and whether the engine gets published as a package at all.
+> **needs from you:** decide whether the engine ships as an installable package under `h-forts/pkm-search` or stays a skill directory in this vault, which is the section below on shipping.
 
-> **Goal:** Build and maintain an ultra-fast, local-first search daemon (`pkm-search`) combining ONNX neural embeddings with SQLite FTS5 / Ripgrep, providing sub-5ms location payloads to AI agents while operating 100% offline with zero idle CPU overhead.
+> do a pass over the release plan and modular decoupling of the local search daemon and indexer, check the pkm for what we already wrote about decoupling it into a repo, link those notes. feel free to rewrite or rethink the whole note
 
 > [!todo] next
-> - **next:** Derive edges outside the vault, one scanner over one repository, since it is the only open item that is a new capability rather than a gap.
-> - **blocked:** Nothing.
+> **next:** run `index_repo.py` over a repository that has real documentation, since the only run so far was over a repository with three markdown files and no relative links, which produced 0 edges and proved nothing.
+> **blocked:** nothing.
 
-> [!warning] A search that ranks well over a stale index looks exactly like one that works
-> On 2026-08-28 this corpus had not been indexed since the 25th, nothing was watching it, and a hunt for five notes fell back to six `grep -rn` passes and fifty seconds. The ranking was never the problem — 126 files were simply not in the database. Fixed in `9e7f8024`: every `/search` names the files newer than the last `index_runs` row and reindexes behind the answer, and the daemon is a scheduled task rather than something started by hand.
-> Watching brought the same shape back through another door: a reindex held the query lock, a search that arrived during a pass timed out, and the client reads a timeout as no daemon and answers from whatever database the working directory resolves to. Every path that gives up quietly answers from the wrong corpus. The lock is split and every result now carries its corpus as a prefix, which is what makes it visible when it happens again.
+**why:** [[2026-08-27 agentic pkm action plan]]
 
----
+the engine is `skills/pkm-metadata-indexer/` in this vault, described in [[pkm-search]], and the day-by-day record of building it is [[2026-08-25 vault index work log]] and [[2026-08-27 vault index work log]]. this note is the standing state: what works, what is open, and what has been decided so a later session does not reopen it.
 
-## 🟢 Current State (What Works Now)
+> [!warning] a search that ranks well over a stale index looks exactly like one that works
+> on 2026-08-28 this corpus had not been indexed since the 25th, nothing was watching it, and a hunt for five notes fell back to six `grep -rn` passes and fifty seconds. the ranking was never the problem, 126 files were simply not in the database. the same shape came back through another door the same day: a reindex held the query lock, a search arriving mid-pass timed out, and the client reads a timeout as no daemon and answers from whatever database the working directory resolves to. every path that gives up quietly answers from the wrong corpus, so each one now says so out loud instead: a `/search` names the files newer than the index, the locks are split, and every result carries its corpus as a prefix.
 
-* **Resident Search Daemon (`pkm-search`):** ONNX embedding model kept resident in memory via `searchd.py`, eliminating the 2–5s PyTorch import cold start ([[public/pkm-search|pkm-search]]).
-* **Heading-Level Indexing (`##`):** Section-level chunking proven mathematically superior to arbitrary token window slicing, saving 95%+ context tokens by returning lean location payloads `(path, line, heading)` ([[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]]).
-* **In-Memory NumPy Search:** Proved that brute-force dot product over float32 blobs in NumPy executes in <1ms across 68,000 sections, eliminating the need for heavy vector databases below 300,000 notes.
-* **Zero Idle CPU:** The ONNX thread pool spinning between 250ms keepalive encodes cost 11.93 cores on a 12-core laptop. Capping the query path at `QUERY_THREADS = 1` (threads=2 burns 0.96 cores, threads=1 burns 0.05) brings the warm daemon to 0.000 cores over 20s idle with warm queries at 17ms, paying 3.8ms → 8.6ms per encode. Bulk embedding keeps the full pool. Proof: run the keepalive pattern for 20s under `psutil.Process().cpu_percent()` and it reads 0.035 cores over 77 encodes; `python -m unittest test_index_pkm_meta test_searchd` pins the fix so a future edit cannot silently drop it ([[public/pkm-search|pkm-search]]).
+## what it is
 
-* **No Vendor Lock-In:** The engine imports no assistant SDK — `grep -rn anthropic --include=*.py` returns nothing. Embeddings are local `bge-small-en-v1.5` through ONNX, so retrieval never calls a hosted model; the daemon is plain HTTP on `127.0.0.1:44771`, so any client that can issue a GET can query it; the source of truth is markdown in git. The only vendor-shaped part is the session-transcript scanner (`~/.claude/projects`), and it sits behind the `--corpus` seam as one scanner among several.
+one `searchd.py` process on `127.0.0.1:44771` holds the `bge-small-en-v1.5` ONNX model resident, which is what takes the 2 to 5 second pytorch cold start off every query.
 
----
+each corpus keeps its own SQLite database with `notes`, `sections`, `edges` and FTS5 shadow tables, and a query fuses BM25 with a dense vector search by reciprocal rank, see [[corpus]] for what counts as one. vectors are float32 blobs multiplied in numpy rather than a vector database, which answers in under a millisecond across 68,000 sections and stays the right call below about 300,000 notes.
 
-## 🟡 Active Experiments & Next Steps
+chunking is by `##` heading, and a result is a location, `(path, line, heading)`, not a body. that is what keeps retrieval affordable for an agent, measured in [[2026-08-18 what retrieval costs as a vault grows]].
 
-- [x] **Session Embeddings:** The transcript corpus carries vectors: 79,359 sections over 858 transcripts, generated in 298.86s at 265.5 vec/s on DirectML, 320.92s for the whole pass, database 222 MB. Warm hybrid queries answer in 34-62ms, against 30-58ms lexical, so the ranking is free at query time; the cost is the 122 MB vector matrix the daemon holds resident. A paraphrase now works — "how did we stop the laptop overheating" returns the session that diagnosed it first, with no shared keyword.
-- [x] **Query Logging:** Every `/search` and `/similar` appends a row to `~/.pkm/queries.jsonl` with the query text, the vault, the latency, the result paths and an optional caller-supplied `origin`. A file rather than a table, because a reindex rebuilds the index. This is the producer the co-retrieval and ranking-evaluation work had none of.
-- [x] **One Copy of the Engine:** `skills/pkm-metadata-indexer/` is the only copy, and the standalone repo is a `README.md` pointing at it. Keepalive is on by default, `--no-keepalive` turns it off.
-- [x] **Tail Reads on the Transcripts:** A reindex parses only the bytes appended since the last run, taking the rest of the rows out of the index. Parsing 859 transcripts costs 0.78s against 12.46s, and the metadata-only pass 7.78s against 19.24s, leaving the 6.6s FTS rebuild as the floor. Safety is a prefix hash, a section count and a fingerprint of the scanner's own source, so a parser change cannot serve rows the old parser wrote ([[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]]).
-- [x] **Watch Each Corpus:** `searchd --watch` runs one `watchfiles` thread per corpus and reindexes that corpus when its files change, batched over a 2s debounce. The indexer's own writes are filtered out, or a reindex would trigger the next one. Measured: 0.02s for a two-file batch, and the 2.57s full pass is the ceiling on a vault of 3,264 notes.
-- [x] **Cross-Encoder Rerank:** `--rerank` and `&rerank=1` reorder the fused top 20 with `Xenova/ms-marco-MiniLM-L-6-v2` out of the installed `fastembed`, loaded lazily. About 22ms per candidate, so 533ms at 20 against a 26ms query, which is why it is opt-in. On the sample query it moved the two answering sections from fused rank 9 and 11 to 1 and 2.
-- [x] **Measure the Rerank Against a Question Set:** `eval_rerank.py` asks a question set twice, with the rerank and without, and a blind judge reads each returned section without knowing which run produced it. Over 13 hold-out questions on 3,228 notes: precision@10 39% against 32%, first useful section at mean rank 1.6 against 1.9, seven questions better, three worse, three unchanged. The rerank earns its 533ms and trades the top of the list for the body of it. On the transcript corpus, 859 transcripts and 79,645 sections, the margin is wider: 28% against 22%, or 46% against 34% over the sections a judge saw, first useful at mean rank 2.9 against 3.9. `--withhold-private` keeps home paths, credentials, LAN addresses, contact details and house or health text on the machine, 63 of 145 sections held back, counted as not useful in both runs.
-- [x] **Section-Level SHA256 Invalidation:** Shipped in commit `f50d2ce8`, 2026-08-21. `index_pkm_meta.py` hashes each `##` section into `Section.sha256`, indexes it as `idx_sections_sha`, and `load_vector_cache()` keys the reuse on `(sha256, embedding_model, chunking_version)`, so editing one heading re-embeds one section. `test_unchanged_section_keeps_cached_vector` asserts both halves: an untouched section keeps its cached vector and an edited one drops it. Measured on 859 notes and 5,169 sections, an incremental run is 1.74s total — 1.20s scan, 0.45s SQLite and FTS, and embedding at effectively zero because every vector is reused. The remaining floor is the whole-table `DELETE FROM sections_fts` and `edges` rebuild plus the full scan, not embedding, and at 0.45s neither is worth cutting until the vault is several times larger.
-- [x] **Coverage on the Query Path:** `stale_paths()` walks a corpus and returns the files with an mtime later than its last `index_runs.completed_at`, 0.09s over 3,272 files. Every `/search` reports them under `stale`, starts a reindex on a background thread, at most one per corpus, and answers from the index as it stands rather than waiting for the pass. The walk is cached for 30s when nothing watches the corpus and 300s when something does, since a live watcher reindexes within seconds and the check is then only there to catch it dying. Which is the point: a watcher is not enough, because a dead watcher is silent and a search is the only thing that will notice. Pinned by `StaleIndexTest` and by `test_every_registered_corpus_is_newer_than_its_newest_file`.
-- [x] **One Search Over Both Halves of the Vault:** `vault=all`, the default in `search_vault.py`, searches every registered corpus and merges on the fused score, which interleaves by rank because both sides are sums of `1/(k + rank)`. Two indexes rather than one merged one: the private vault and this repo are kept apart so their histories are, this one stays independently searchable, and merging would mean overriding the nested-`.git` skip in `markdown_paths()`. `--db` now implies `--direct` and an HTTP error from the daemon exits non-zero, so a named database and a mistyped vault can no longer be answered from somewhere else. Registered as a logon task by `install_windows.ps1` in the private vault, since only that repo may name both roots.
-- [x] **A Reindex No Longer Blocks a Search:** `do_reindex` holds its own `INDEX_LOCK` rather than the query `LOCK`. Under one lock, a search arriving mid-pass waited the pass out: 14.7s over two corpora against 40ms idle, past the 2.0s the CLI allowed, and the CLI reads a timeout as no daemon, so it answered from a direct search of whichever corpus the working directory resolved to. The two paths share no state — the query model and the index model are separate ONNX sessions keyed on different providers, and the database is WAL, so a reader keeps the pass's snapshot until it commits. `INDEX_LOCK` is still held across a whole pass, which is what keeps two corpora from rebuilding on the one GPU at once. The client timeout went to 30s to match: a missing daemon refuses the connection instantly rather than timing out, so the wait only costs when there is a daemon to wait for. `test_a_search_answers_while_a_reindex_is_running` holds the lock and asserts the search returns anyway.
-- [x] **Run a Command on a Watched Path:** `--refresh PATH=COMMAND`, repeatable, watches a path on a 60s debounce and runs the command when it changes, logging the exit status and leaving the watcher up on a failure. It is for a source that is not a corpus: something outside the vault that a script turns into notes inside it. Registered against the agent transcript directory, an extract that used to run nightly now runs a minute after the transcript is appended to, so what a session recorded this morning is searchable this morning. An extract has to write only when its output changed, or each debounce rewrites the file and the vault watcher reindexes a corpus that did not change.
-- [ ] **Write-Path Near-Neighbor Gate:** Wire title embeddings to the note-creation path to detect near-duplicates before writing new notes.
-- [ ] **Prove the Scanner Seam Is Vendor-Neutral:** Write a second transcript scanner for another agent CLI returning the same `(notes, sections, links, errors)` tuple. Until a second one exists, "one scanner among several" is a claim rather than a fact. Any summarisation added later posts plain JSON to a generate endpoint named by an environment variable, with no SDK and no key in the source, so the same code runs against a local model or a hosted one; and what the model wrote is committed as data, so the index rebuilds with no model running at all. Done once already on a non-vault corpus, where a model rewrote 572 thin one-line summaries; a blind-judge A/B against the old text put precision@10 at 21% against 22%, so the sentences read better and rank the same.
-- [ ] **Rework Obsidian Core Features on the Index:** Semantic quick switcher, a local graph that draws meaning as well as links, a duplicate warning on note creation, tag suggestion, orphan-biased random note, and the 1,780 dead wikilinks as a query. Each is listed with its acceptance in [[public/core Obsidian features to rework on the vault index|core Obsidian features to rework on the vault index]].
-- [ ] **Derive Edges Outside the Vault:** The link half of the index does not need markdown or Obsidian. One scanner over one repository emitting edges for markdown links, relative path references and image embeds answers "what documents reference this file" and "which images are referenced by nothing", neither of which is answerable today. Designed in [[public/2026-08-27 a link graph over code, docs and assets|a link graph over code, docs and assets]].
-- [ ] **Evaluate `sqlite-vec`:** Benchmark native C-extension `sqlite-vec` against in-process NumPy matrix multiplication for cold queries.
+two corpora are registered at logon, this vault and the private one, in one process because the model is corpus-independent and a second process pays for it twice.
 
----
+nothing in the engine imports an assistant SDK. embeddings are local, the interface is plain HTTP, and the source of truth is markdown in git, so any client that can issue a GET can query it.
 
-## 🔴 Blockers & Open Questions
+## what works
 
-* **DirectML GPU Initialization Latency:** On initial cold startup on Windows, DirectX 12 driver compilation takes 3–5 seconds before the model enters memory.
-* **The FTS Rebuild Is the Floor:** Every run deletes and reinserts `sections_fts`, `note_titles_fts` and `edges` whole, 6.6s over 90,000 records, which is now most of an incremental reindex. Rewriting only the paths that changed needs the deletion pass to know which paths a scanner covered.
+the daemon costs nothing while idle. the keepalive encode every 250ms kept ONNX runtime's intra-op pool busy-spinning, one spinner per core, 11.93 of 12 cores on a laptop doing nothing; capping the query path at `QUERY_THREADS = 1` brings a warm idle daemon to 0.000 cores over 20 seconds and costs 3.8ms to 8.6ms per encode, invisible inside a 13 to 22ms query. bulk embedding keeps the whole pool, where the parallelism is real work. a unit test asserts the query path still passes it, because the burn returns silently the moment it stops.
 
----
+a reindex is incremental in three separate ways: each `##` section is keyed by sha256 so editing one heading re-embeds one section, an append-only transcript is read from the byte the last run stopped at rather than from the top, and a `watchfiles` thread per corpus reindexes on write behind a 2 second debounce. an incremental pass over 859 notes and 5,169 sections is 1.74s with every vector reused, parsing 859 transcripts is 0.78s against 12.46s from the top, and a two-file watch batch is 0.02s. the tail read is written up in [[2026-08-27 tail reads, resuming an index at the byte it stopped at]].
 
-## 📚 Connected Research & Tools
+staleness is reported on the query path rather than assumed away. `stale_paths()` walks a corpus in 0.09s over 3,272 files, every `/search` lists what is newer than the last index run, and a reindex starts on a background thread while the answer comes from the index as it stands. a live watcher makes this redundant, which is the point: a dead watcher is silent, and a search is the only thing that will notice.
 
-* **What Already Exists:** [[public/2026-08-27 what already exists, prior art for a local hybrid search engine|prior art survey]] — an Obsidian plugin ships the same FTS5 plus local vectors plus RRF over MCP, with the watcher we have not built; what is left as ours is the two corpora in one index and tool-touched files as edges
-* **Build or Install:** [[public/2026-08-27 build or install, measuring the engine against the plugin that already exists|build or install]] — both engines measured on the same 3,264 notes; a library replaces about 300 of 2,382 lines, so the engine stays and the watcher plus the already-installed cross-encoder are what get added
-* **Cross-Initiative Plan:** [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]]
-* **Core Tool Repository:** [[public/pkm-search|pkm-search]]
-* **Metadata Indexer & Skill:** [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]
-* **Retrieval Economics:** [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]]
-* **Vault Performance Benchmarks:** [[public/obsidian search and index slow on 5k notes|obsidian search and index slow on 5k notes]]
-* **Offline GPU Vector Caching:** [[public/offline GPU embeddings with incremental cache|offline GPU embeddings with incremental cache]]
-* **What the Index Should Replace in Obsidian:** [[public/core Obsidian features to rework on the vault index|core Obsidian features to rework on the vault index]]
-* **The Link Half, Outside the Vault:** [[public/2026-08-27 a link graph over code, docs and assets|a link graph over code, docs and assets]]
+a reindex no longer blocks a search. the index pass holds its own lock, the two paths share no state, and the database is WAL so a reader keeps its snapshot until the pass commits. under one lock a search arriving mid-pass waited 14.7s against 40ms idle, past the client timeout, which is how it ended up answering from the wrong corpus.
 
-[[dev notes]]
+`vault=all` is the default and merges every registered corpus on the fused score. the two vaults stay two indexes so their git histories stay separate and each stays independently searchable; `--db` implies `--direct` and an HTTP error exits non-zero, so a named database can no longer be quietly answered from somewhere else.
+
+the cross-encoder rerank is opt-in and earns its cost when asked for. `Xenova/ms-marco-MiniLM-L-6-v2` reorders the fused top 20 at about 22ms a candidate, 533ms against a 26ms query. `eval_rerank.py` asks a hold-out question set twice and a blind judge reads each section without knowing which run produced it: precision@10 39% against 32% over 13 questions on 3,228 notes, and 28% against 22% on 859 transcripts. `--withhold-private` keeps home paths, credentials, LAN addresses and health text out of the judge's input, counted as not useful in both runs.
+
+every `/search` and `/similar` appends a row to `~/.pkm/queries.jsonl` with the query, corpus, latency, result paths and an optional caller-supplied origin. a file rather than a table, because a reindex rebuilds the index and a log a reindex deletes is not a log. it is the producer that co-retrieval and ranking evaluation had none of; the consumer should not be built until it holds weeks of real use.
+
+`--refresh PATH=COMMAND` watches something that is not a corpus and runs a command when it changes, on a 60 second debounce, leaving the watcher up on failure. pointed at the agent transcript directory, an extract that used to run nightly now runs a minute after a transcript is appended to, so what a session recorded this morning is searchable this morning.
+
+the duplicate check runs itself now. `--check-duplicate` existed for weeks and nothing called it, so it is wired to a `PostToolUse` hook on note writes in the private vault and reports what a new note may be duplicating while the agent still has the context to merge or link. it reports rather than refuses, because a write path that can refuse can wedge an unattended nightly run.
+
+the transcript corpus has been embedded once and measured: 79,359 sections over 858 transcripts, 298.86s at 265.5 vec/s on DirectML, a 222 MB database, warm hybrid queries at 34 to 62ms against 30 to 58ms lexical, so the ranking is free at query time. the cost is the 122 MB matrix the daemon holds resident, which is why it is not one of the corpora registered at logon today.
+
+## what is open
+
+the repository link graph is the live item. `index_repo.py` landed as v0 on 2026-08-28 and turns markdown links, image embeds and bare relative paths into `edges` rows, with the target resolved against the source directory then the repository root and left null when it resolves nowhere, which is what makes a broken reference queryable. it has been run over one repository, which had three markdown files and no relative links, and produced 606 notes and 0 edges. until it runs over a repository with real documentation, neither "what references this file" nor "which images are referenced by nothing" is answered. designed in [[2026-08-27 a link graph over code, docs and assets]].
+
+the scanner seam is a claim rather than a fact until a second transcript scanner exists. one scanner for one agent CLI returning `(notes, sections, links, errors)` is an interface with one implementation; a second one, for another agent's transcripts, is what turns it into a seam. any summarisation added later posts plain JSON to an endpoint named by an environment variable, with no SDK and no key in the source, and what the model wrote is committed as data so the index rebuilds with no model running.
+
+the obsidian features worth rebuilding on the index are listed with their acceptance in [[core Obsidian features to rework on the vault index]]: semantic quick switcher, a graph that draws meaning as well as links, tag suggestion, orphan-biased random note, and the 1,780 dead wikilinks as a query rather than a plugin.
+
+whether the duplicate gate should ever block rather than report is still a decision, and it needs a week of warn-mode output to answer.
+
+`sqlite-vec` has not been benchmarked against the in-process numpy multiply. it only matters for cold queries, which is the case the resident daemon exists to avoid, so it stays last.
+
+## should the engine ship as a package
+
+it was published twice, as this skill directory and as a standalone repository, and the two copies drifted across seven files until a fix landing in one did not reach the other, which is why the idle CPU fix had to be written twice. syncing them holds exactly until the next edit, so on 2026-08-27 one copy was deleted: the standalone repository is a `README.md` pointing here, its git history intact, and consumers find the engine by path through `PKM_SEARCH` or the skill directory.
+
+so the question a release plan reopens is not one copy or two, which is answered, it is whether the one copy gets a distribution channel. if it does, it is generated from this directory by CI and pushed to the empty repository, never hand-maintained beside it, because a hand-maintained second copy is the exact failure already paid for once.
+
+what a release would need that does not exist today: a dependency install that works without the vault around it, the `--corpus` scanner contract documented as the supported extension point rather than as section 13 of a skill file, and the second scanner above, since a plugin interface with one implementation is not one. the tests exist already.
+
+what it would need to be worth doing: someone other than the author installing it. an obsidian plugin already ships FTS5 plus local vectors plus reciprocal rank fusion over MCP, measured against this engine on the same 3,264 notes in [[2026-08-27 build or install, measuring the engine against the plugin that already exists]] and surveyed in [[2026-08-27 what already exists, prior art for a local hybrid search engine]]. what is ours and not theirs is several corpora in one daemon and tool-touched files as edges, so a release that does not lead with those two is a worse version of something already installable.
+
+## blockers
+
+DirectX 12 driver compilation takes 3 to 5 seconds on the first DirectML startup after a cold boot, before the model enters memory. the keepalive exists so this is paid once.
+
+the FTS rebuild is the floor under an incremental pass. every run deletes and reinserts `sections_fts`, `note_titles_fts` and `edges` whole, 6.6s over 90,000 records, which is now most of the cost. rewriting only the changed paths needs the deletion pass to know which paths a scanner covered, which the scanner interface does not currently say.
+
+further reading: [[offline GPU embeddings with incremental cache]] for the vector cache, [[obsidian search and index slow on 5k notes]] for what this replaces.
