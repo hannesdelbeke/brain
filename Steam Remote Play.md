@@ -17,4 +17,4 @@ Play on another PC or laptop
 - there are workarounds to stream whole desktop [thread](https://steamcommunity.com/groups/homestream/discussions/0/540732889255066292/)
 
 similar to [[Moonlight]]
-[[Google Chrome Remote Desktop]]
+Google Chrome Remote Desktop

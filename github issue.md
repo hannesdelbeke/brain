@@ -1,5 +1,0 @@
----
-aliases:
-  - github issues
----
-[[GitHub]]

@@ -77,7 +77,7 @@ This script template might seem simple on the surface, but it leverages principl
 
 In this case, I’m stacking concepts such as:
 
-- [[loss aversion]]: Most people are more sensitive to loss than equivalent gains, so by minimizing what can’t be done, we’re reducing the perception of loss.
+- loss aversion: Most people are more sensitive to loss than equivalent gains, so by minimizing what can’t be done, we’re reducing the perception of loss.
 - Peak-end rule: We’re deliberately engineering the end of the message to focus on your recommended next steps (positive).
 - [[recency effect]]: The “can do” part will be remembered most clearly because it's the last thing your recipient heard, so it’s fresher in their memory.
 - [Inverted but technique](https://newsletter.weskao.com/p/use-but-strategically): This one isn’t a behavioral economics principle, but it’s one of my frameworks. Notice how I put the positive part after the “but.” This is strategic and directs my recipient’s attention to what I want them to think about. More on [how to use “but” strategically](https://newsletter.weskao.com/p/use-but-strategically).

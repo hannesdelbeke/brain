@@ -45,7 +45,7 @@ possible low levels
 - vitamin B
 	- Riboflavin / [[vitamin B2]]
 		- 25% of veggies have a deficiency  [69](https://www.ncbi.nlm.nih.gov/pubmed/1797957), [71](https://www.ernaehrungs-umschau.de/fileadmin/Ernaehrungs-Umschau/pdfs/pdf_2016/04_16/EU04_2016_Special_DGE_eng_final.pdf)
-	- [[vitamin B3]]
+	- vitamin B3
 		- 34% of vegetarians were deficient in niacin [68](https://www.ncbi.nlm.nih.gov/pubmed/26502280)
 	- [[choline]] / vitamin b4
 		- Vegans may be at risk for choline deficiency since most food sources are either meat, dairy, or seafood products [26](https://www.ars.usda.gov/ARSUserFiles/80400525/Data/Choline/Choln02.pdf).

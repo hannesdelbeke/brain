@@ -1,6 +1,0 @@
----
-aliases:
-  - man
-  - boy
-  - boys
----

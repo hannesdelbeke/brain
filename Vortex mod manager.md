@@ -34,4 +34,4 @@ Vortex mod manager is a mod manager for games.
 similar UI to [[Steam]]
 
 a Reddit user:
-> Vortex uses hard links and [[Mod Organizer 2|MO2]] uses a virtual file system. If you're a Linux or Mac user hard links are better, and hard links also mean Vortex doesn't need to be running for your installed mods to work.
+> Vortex uses hard links and MO2 uses a virtual file system. If you're a Linux or Mac user hard links are better, and hard links also mean Vortex doesn't need to be running for your installed mods to work.

@@ -10,7 +10,7 @@ tags:
 
 With HA I've managed to expose my router to it, as well as both my PlayStations, my Roku TV and my 3 Google Home Minis.
 ## detect who is home
-With my Router exposed I can monitor what devices are connected to my WiFi and use that information for automation purposes (for presence detection). That, coupled with information from the HA app and the Life360 app means my presence detection is perfect for my wife's iPhone and my Android phone (Life360 has better [[Global Positioning System|GPS]] monitoring on my wife's iPhone, or at least it did when I set it up 6 months ago).
+With my Router exposed I can monitor what devices are connected to my WiFi and use that information for automation purposes (for presence detection). That, coupled with information from the HA app and the Life360 app means my presence detection is perfect for my wife's iPhone and my Android phone (Life360 has better GPS monitoring on my wife's iPhone, or at least it did when I set it up 6 months ago).
 ## tv
 The Roku and PlayStations means I can have HA react to media playback. It can see when my Roku is "playing" "paused" "standby" and "off" as well as change channel and volume with HA. I can (now) control using Google Home too but that is a recent addition (UK) so I was using HA to control my TV Through Google Assistant before that worked.
 ## child approach alarm

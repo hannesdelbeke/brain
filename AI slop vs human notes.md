@@ -20,7 +20,7 @@ the question shows creativity, curiosity from a human.
 the answer on the other hand should always be the same. It's predictable. 
 Newer models likely have a more polished answer, better formatted etc, but still the same answer.
 
-In a way it's like the question is a seed for a [[hash function]], where the (answer) output is always the "same"(ish)
+In a way it's like the question is a seed for a hash function, where the (answer) output is always the "same"(ish)
 
 [[chat GPT|chatGPT]]
 [[large language model|LLM]]

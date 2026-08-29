@@ -1,5 +1,0 @@
----
-aliases:
-  - UV
----
-[[light waves]]

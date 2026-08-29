@@ -15,7 +15,7 @@ tags:
 - air filter
 ---
 
-uses a [[table fan]] and some [[air filter]]s
+uses a [[table fan]] and some air filters
 
 You'll need a box fan, four air filters (MERV-13 or higher), duct tape, cardboard, and scissors.
 

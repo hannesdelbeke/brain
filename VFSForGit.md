@@ -15,7 +15,7 @@ tags:
 > [!warning]
 > for new deployments, we recommend [[Scalar]] instead of VFS for Git
 
-It appears as a regular working directory (e.g. [[Windows explorer]]) but downloads files on demand
+It appears as a regular working directory (e.g. Windows explorer) but downloads files on demand
 
 https://github.com/microsoft/VFSForGit
 

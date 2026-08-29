@@ -15,5 +15,5 @@ tags:
 - **2029**: February 9–14
 - **2030**: March 1–6
 
-[[Rio de Janeiro]]
+Rio de Janeiro
 [[street festival]]

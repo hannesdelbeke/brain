@@ -9,7 +9,7 @@ tags:
 - solved
 ---
 
-[[Obsidian]] doesn't show up in the expected paths in the [[Windows registry]]
+[[Obsidian]] doesn't show up in the expected paths in the Windows registry
 ```
 HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*
 HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*

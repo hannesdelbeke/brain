@@ -1,3 +1,0 @@
-
-[[monitor]]
-[[lighting]]

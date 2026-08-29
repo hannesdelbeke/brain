@@ -32,7 +32,7 @@ good communicators build trust in a conversation with
 	- [[match energy in a conversation]] (mood & tone)
 	- match emotions: reciprocate when someone shares feelings 
 	- use [[body language]] and tone of voice (energy?)
-- **Always** try to [[reciprocate]] when someone shares personal details and ask [[follow-up question|follow-up questions]].
+- **Always** try to [[reciprocate]] when someone shares personal details and ask follow-up questions.
 - ask others about needs and feelings, and explore identities related to the conversation.
 - be easy to read
 	- Share your goals

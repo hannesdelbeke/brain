@@ -1,2 +1,0 @@
-[[ergonomics]]
-[[monitor]]

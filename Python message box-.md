@@ -8,7 +8,7 @@ tags:
 - technical
 ---
 
-Create a simple [[message dialogue]] in [[Python]] without [[Qt]] or dcc code
+Create a simple message dialogue in [[Python]] without [[Qt]] or dcc code
 
 ```python
 import ctypes  # An included library with Python install.   

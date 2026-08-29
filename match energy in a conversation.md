@@ -18,4 +18,4 @@ To find people who aren't faking it, he created an awkward but funny moment in i
 
 > [!Tip]
 > If they are energetic and positive, respond with laughter and high energy.
-> If they are low energy, respond calmly and [[empathy|empathic]].
+> If they are low energy, respond calmly and empathic.

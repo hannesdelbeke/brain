@@ -10,4 +10,4 @@ tags:
 - work
 ---
 
-In the [[United Kingdom|UK]], [[restricted stock unit|RSU]]s are taxed as income when they vest and you become the legal owner of the shares. At this point, the value of the shares is treated as income and is subject to both [[UK Income Tax]] and [[National Insurance contributions]] If you sell the shares after they have vested, any increase in value from the vesting date to the sale date may be subject to [[UK capital gains tax]]
+In the [[United Kingdom|UK]], [[restricted stock unit|RSU]]s are taxed as income when they vest and you become the legal owner of the shares. At this point, the value of the shares is treated as income and is subject to both [[UK Income Tax]] and National Insurance contributions If you sell the shares after they have vested, any increase in value from the vesting date to the sale date may be subject to [[UK capital gains tax]]

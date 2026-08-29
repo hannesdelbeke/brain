@@ -21,5 +21,5 @@ comment [source](https://www.reddit.com/r/homeassistant/comments/1bu60zn/comment
 
 ## tags
 [[smart home]]
-[[Z-Wave]]
+Z-Wave
 [[smart switch]]

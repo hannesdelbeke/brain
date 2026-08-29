@@ -18,4 +18,4 @@ It reads light and peacefully, and a lot of characters are good people.
 The art is amazing, and is all hand drawn.
 
 [[manga]]
-[[sci-fi]]
+sci-fi

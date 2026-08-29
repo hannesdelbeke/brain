@@ -42,7 +42,7 @@ maybe from **_Thinking, Fast and Slow_ — Daniel Kahneman**
 - everyone wants the maximum emotional experience for themselves, but the most logical for others around them. But people restrain themselves to not be seen as a bad member of society. Emotional control therefor is good for society, since it's what others like from you. 
 
 ---
-- [[No Rules Rules - Netflix and the Culture of Reinvention|netflix book]] 
+- netflix book
 	- give people unlimited holiday, and creative freedom. don't track receipts, trust people. This leads to the best outcomes.
 	- only hire top talent, ensure [[talent density]]
 	- pay top salary to maintain top talent. always pay more than competition.

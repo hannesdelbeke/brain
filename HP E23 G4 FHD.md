@@ -10,7 +10,7 @@ tags:
 
 [[monitor]]
 [[hardware]]
-[[Hewlett-Packard|HP]]
+HP
 ## Specs
 USB
 - USB Type-A ,  4 x USB Type-A 5Gbps 

@@ -1,2 +1,0 @@
-[[accomodation]]
-[[sleep]]

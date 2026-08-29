@@ -12,4 +12,4 @@ tags:
 
 [[ergonomics]]
 [[monitor]]
-[[monitor stand]]
+monitor stand

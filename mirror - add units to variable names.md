@@ -149,4 +149,4 @@ show-transactions --minimum-amount "32 EUR"
 ```
 
 [[naming convention]]
-[[precise]]
+precise

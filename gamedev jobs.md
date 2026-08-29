@@ -15,6 +15,6 @@ tags:
 - [[technical artist]]
 - [[animator]]
 - [[concept artist]]
-- [[3D artist]]
+- 3D artist
 
 [[gamedev]]

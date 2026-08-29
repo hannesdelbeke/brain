@@ -152,7 +152,7 @@ The optimal pattern treats **Markdown as Human Source Code** and **sqlite-vec** 
 
 * **gsplat:**
   * Accelerates 3D Gaussian Splatting for photorealistic environment capture.
-  * Allows converting reference photo scans of physical objects or real-world locations into real-time, interactive 3D assets. [[3d scanning]]
+  * Allows converting reference photo scans of physical objects or real-world locations into real-time, interactive 3D assets. 3d scanning
 * **ComfyUI:**
   * Provides a deterministic, node-based pipeline for generative studio workflows. [[asset pipeline]]
   * Can be driven programmatically via its Python REST API to batch-generate game icons, sprite variations, and texture maps directly into studio game repositories.

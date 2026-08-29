@@ -1,1 +1,1 @@
-comes with [[Hyper V]]
+comes with Hyper V

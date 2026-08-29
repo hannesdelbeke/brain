@@ -17,4 +17,4 @@ Read all buttons in Maya's native menu and make them searchable and executable.
 
 [[tool launcher|command launcher]]
 
-[[Robert Joosten]]
+Robert Joosten

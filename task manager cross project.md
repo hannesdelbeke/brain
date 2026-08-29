@@ -16,7 +16,7 @@ tags:
 
 my [[task management]] systems need to work cross project
 - one project might store tasks in its repo
-- another stores tasks in [[github issue|github issues]]
+- another stores tasks in github issues
 - another uses my [[work]]'s [[task manager]] like [[JIRA]]
 
 AI can hook this all up with [[MCP server|MCP]] or connectors, but you still need to establish some kind of personal overview.
