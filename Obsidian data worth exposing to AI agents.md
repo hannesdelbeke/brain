@@ -53,6 +53,7 @@ Per-plugin initialization milliseconds, layout ready time, and core overhead.
 - AI can analyze latency logs (e.g. [[2026-08-29 Startup Metrics Logger devlog]]) to optimize delay groups and on-demand proxy loaders. See [[ai optimize obsidian plugins]].
 
 ## Related notes
+- [[Obsidian live hook and DOM bridge for AI agents]] — live WebSocket, MCP, and DOM eval bridge for AI
 - [[Obsidian CLI + Agent Context at Scale]] — official CLI IPC vs file-based retrieval
 - [[2026-08-29 Startup Metrics Logger devlog]] — exporting startup latency to structured JSON
 - [[2026-07-22 follow up Obsidian viewcount]] — tracking note views via standalone JSON storage
