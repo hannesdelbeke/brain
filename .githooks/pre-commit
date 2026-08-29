@@ -1,6 +1,5 @@
 #!/bin/sh
-# brain pre-commit. Active only when core.hooksPath is set to .githooks,
-# see "setup after cloning.md" in the private-vault vault that mounts this one.
+# brain pre-commit. Active only when core.hooksPath is set to .githooks.
 
 # --- mass deletion guard ---------------------------------------------------
 #
