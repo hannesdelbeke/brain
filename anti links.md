@@ -15,7 +15,7 @@ Standard [[wikilink|wikilinks]] define positive associations between notes. Anti
 
 ## Use cases
 
-- Homonym disambiguation: distinguishing [[text cursor]] (caret), mouse pointer, and [[Cursor - The AI Code Editor]].
+- Homonym disambiguation: distinguishing [[Windows]] (the Microsoft OS), [[window]] (glass pane in buildings or cars), and [[window (computing)]] (application GUI window). Also separates [[text cursor]] (typing caret) from [[Cursor - The AI Code Editor]].
 - Semantic boundaries: separating similar concepts like Java vs JavaScript, or Python (language) vs python (snake).
 - RAG & search pruning: negative constraints for neural search / [[pkm metadata indexer]] to penalize irrelevant clusters.
 
@@ -29,23 +29,25 @@ Major knowledge graph ontologies and wiki engines already establish formal stand
 
 ## Implementation options
 
-### Frontmatter metadata
+### Frontmatter metadata (canonical)
 Explicit negative edges for indexers and plugins to parse:
 ```yaml
+---
 anti-links:
-  - "[[text cursor]]"
-  - "[[Cursor - The AI Code Editor]]"
+  - "[[Windows]]"
+  - "[[window (computing)]]"
+---
 ```
 *(Accepts aliases `different_from:`, `different-from:`, `is_not:`, or `is-not:`)*
 
 ### Typed inline fields
 Using Dataview or typed link syntax:
-`different_from:: [[Cursor - The AI Code Editor]]`
-`is_not:: [[text cursor]]`
+`different_from:: [[Windows]]`
+`is_not:: [[window (computing)]]`
 
 ### Wikipedia-style hatnote
 A short note at the top of the page for human readers:
-> Not to be confused with [[text cursor]] or [[mouse cursor]].
+> Not to be confused with [[Windows]] (the operating system).
 
 ## References
 - [[anti link RnD]] — SQLite edge schema, vector steering, and indexer integration
