@@ -13,4 +13,4 @@ tags:
 [[pilates]]
 
 [[Manchester]]
-[[Ancoats]]
+Ancoats

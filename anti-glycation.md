@@ -1,5 +1,0 @@
----
-aliases:
-  - antiglycation
-  - anti glycation
----

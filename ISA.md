@@ -1,2 +1,0 @@
-[[investing]]
-[[finance]]

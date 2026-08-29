@@ -9,4 +9,4 @@ tags:
 ---
 
 [[Python]]
-[[code formatting]]
+code formatting

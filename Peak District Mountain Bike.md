@@ -14,4 +14,4 @@ tags:
 https://bikegarage.co.uk/cycle-hire/
 
 [[Peak District]]
-[[mountain bike]]
+mountain bike

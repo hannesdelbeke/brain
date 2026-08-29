@@ -16,6 +16,6 @@ tags:
 someone who manages people at [[work]]
 
 
-see [[coaching]]
+see coaching
 [[leadership]]
 [[team]]

@@ -16,7 +16,7 @@ tags:
 PROS
 - good for [[arthritis]]
 	- Turmeric probably won’t help your arthritis — but curcumin might
-- protect against [[Parkinson's disease]]
+- protect against Parkinson's disease
 - antifungal (turmeric is more effective than using only [[curcumin]])
 - reduce blood sugars in type 2 diabetes
 
@@ -25,4 +25,4 @@ turmeric contains
 
 
 
-[[spice]]
+spice

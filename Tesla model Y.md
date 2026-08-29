@@ -1,2 +1,0 @@
-[[Tesla]]
-[[car model]]

@@ -13,7 +13,7 @@ tags:
 - work
 ---
 
-Datafix used to use [[Python namespace packages]].
+Datafix used to use Python namespace packages.
 During development, I kept running in to issues
 - [[integrated development environment|IDE]] doesn't support and is confused
 - I'm confused, having to track implicit things across projects. [[cognitive load]]

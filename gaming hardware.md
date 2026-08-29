@@ -9,6 +9,6 @@ tags:
 ---
 
 [[desktop]]
-[[gaming console]]
+gaming console
 [[phone|mobile]]
 [[virtual reality|VR]] headsets

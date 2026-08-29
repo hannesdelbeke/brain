@@ -10,7 +10,7 @@ tags:
 - technical
 ---
 
-A [[package]] for [[plugget]]
+A package for [[plugget]]
 
 A plugget package is basically a [[plugget manifest]].
 

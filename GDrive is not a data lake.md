@@ -10,7 +10,7 @@ tags:
 
 Data lakes 
 - are bigger than [[Google Drive]]
-- meant to run [[SQL]] on top
+- meant to run SQL on top
 - flat file structure, no folders
 - more metadata (which can be accessed)
 

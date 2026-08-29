@@ -17,4 +17,4 @@ A hypothetical class of dietary supplements or drug candidates that would, in pr
 
 Since it mimics CR, you could just not have it and eat less calories.
 
-[[metformin]] is used for diabetes treatment. It increased lifespan for cancerous mice. But barely for normal mice and rats.
+metformin is used for diabetes treatment. It increased lifespan for cancerous mice. But barely for normal mice and rats.

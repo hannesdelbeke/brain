@@ -9,7 +9,7 @@ tags:
 - home
 ---
 
-similar to [[recessed light]]
+similar to recessed light
 
 
 [[lighting]]

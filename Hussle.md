@@ -28,4 +28,4 @@ read this online, but can't see it anywhere
 - a person swimming for swimming pool access,
 - or a classes icon
 
-[[multi gym access]]
+multi gym access

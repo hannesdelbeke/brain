@@ -13,9 +13,9 @@ tags:
 
 Plant protein can be sources of complete proteins by combining multiple plant protein sources.
 ### Vegetarian Complete Protein Recipes
-- [[rice]] + [[beans]]
+- rice + [[beans]]
 - Rice + Lentils
-- [[oats]] + Beans
+- oats + Beans
 - Rice + Chickpeas
 - Wheat + Chickpeas
 - Corn + Beans

@@ -31,7 +31,7 @@ crawl your note vault for links, e.g 2 notes both have the link www.example.com
 
 Look into [[annotate websites]], for more discussion on storing notes for a site.
 ### iframe
-Embed the URL in an [[iframe]].
+Embed the URL in an iframe.
 Note in [[Obsidian]], first define height, then width. Else height won't work.  
 ```HTML
 <iframe src="https://www.example.com" height="200" width="800" ></iframe>

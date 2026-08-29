@@ -1,2 +1,0 @@
-[[illness|disease]]
-[[virus]]

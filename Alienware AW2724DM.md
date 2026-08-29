@@ -35,4 +35,4 @@ Typical On Mode: ~25.9 Watts (W)
 Maximum: Up to 72 Watts (W)
 ## Tags
 [[monitor]]
-[[Alienware]]
+Alienware

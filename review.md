@@ -8,4 +8,4 @@ tags:
 - journal
 ---
 
-similar to a [[retrospective]]
+similar to a retrospective

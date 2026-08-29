@@ -1,5 +1,0 @@
----
-aliases:
-  - PIN
----
-[[password]]
