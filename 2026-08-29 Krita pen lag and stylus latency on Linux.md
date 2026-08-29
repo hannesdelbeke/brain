@@ -1,5 +1,4 @@
 ---
-created: 2026-08-29
 origin-sha: bbe6b08e
 tags:
 - technical
