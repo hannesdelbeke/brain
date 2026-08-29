@@ -1,6 +1,5 @@
 #!/bin/sh
-# brain pre-commit. Active only when core.hooksPath is set to .githooks,
-# 
+# brain pre-commit. Active only when core.hooksPath is set to .githooks.
 
 # --- mass deletion guard ---------------------------------------------------
 #
