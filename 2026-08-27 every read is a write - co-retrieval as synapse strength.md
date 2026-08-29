@@ -101,7 +101,7 @@ Three fixes, usable together:
 * **Weight on the scarce signal.** `followed` is orders of magnitude rarer than `retrieved`, which is what makes it informative. Give it the weight.
 * **Normalise by impressions.** Divide by retrievals the way click-through rate does: a note opened 4 times out of 5 retrievals is stronger than one opened 20 times out of 900. This alone breaks the loop, because being retrieved constantly now hurts a note that is never used.
 
-Recording `followed` needs the agent to report back after the fact, which is a second call and a real cost. A cheap approximation: if a note appears as an `origin` on a later query within the same session, something consumed it.
+Recording `followed` needs the agent to report back after the fact, which is a second call and a real cost. A cheap approximation: if a note appears as an `origin` on a later query within the same session, something consumed it. A more robust offline path: evaluate note utility post-session by comparing the prompt, git commit diff, and recap per [[public/note utility and synapse strength from session recaps|note utility from session recaps]].
 
 ---
 
@@ -201,6 +201,7 @@ Then look at the table before designing anything on top of it. The interesting q
 ---
 
 ## 🔗 Related Notes
+- [[public/note utility and synapse strength from session recaps|note utility and synapse strength from session recaps]] — post-session credit assignment evaluating note usefulness against git commits
 - [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] — the consumer design this note supplies the producer for
 - [[public/2026-08-27 agentic pkm action plan|agentic pkm action plan]] — where Hebbian weighting is deferred, and why
 - [[public/pkm-search|pkm-search]] — the daemon the `origin` parameter lands in

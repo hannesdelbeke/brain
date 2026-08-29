@@ -63,5 +63,6 @@ Other vaults and projects can replicate these instructions by compiling them int
 * **External Prompt Log:** Storing raw session transcripts and prompt history in JSONL format.
 
 ### Related
+- [[note utility and synapse strength from session recaps]] — using prompt and commit history to evaluate note usefulness
 - [[algo to differentiate between AI and human notes]] — Separating human prompt lines from generated responses.
 - [[human vs ai text context]] — Maintaining context between human intent and AI generation.
