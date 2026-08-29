@@ -13,7 +13,7 @@ aliases:
 
 Why offline local LLMs on laptop hardware remain practical when calibrated against human reading speed thresholds, and workflow tactics for disconnected environments.
 
-Related: [[popular AI models landscape]], [[how local AI models search the web and stay up to date]], [[Linux for AI and developer workflows]]
+Related: [[lightweight self-questioning models vs monolithic single-shot models]], [[popular AI models landscape]], [[how local AI models search the web and stay up to date]], [[Linux for AI and developer workflows]]
 
 ## The human reading speed threshold
 
