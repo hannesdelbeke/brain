@@ -60,7 +60,7 @@ Before submitting, ensure the plugin repository meets the official standards:
 ---
 
 ## 🔗 Related Notes
-- [[Obsidian plugins in use]]
+- [[2026-08-12 Obsidian plugin startup optimization]]
 - [[2026-08-29 Obsidian lazy loading plugins compared]]
+- [[2026-08-29 Startup Metrics Logger devlog]]
 - [[Obsidian faster startup]]
-- [[Obsidian plugin startup optimization]]
