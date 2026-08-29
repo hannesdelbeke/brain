@@ -115,15 +115,45 @@ Can **Header Extraction**, **Super Fast Lexical Search**, and **Semantic Vector 
 
 ### Package B: Obsidian Community Plugin (`obsidian-hybrid-search`)
 
-* **Target Audience:** Obsidian PKM users seeking sub-5ms semantic search and vault intelligence.
+* **Target Audience:** Obsidian PKM users seeking sub-5ms semantic search, instant backlinks, and vault intelligence without UI freezes.
 * **Distribution:** Obsidian Community Plugins directory (following manifest and review guidelines).
-* **Responsibilities:**
-  - Ultra-lightweight TypeScript frontend (<10ms load time).
-  - Bridges Obsidian UI to `http://127.0.0.1:44771`.
-  - **Semantic Quick Switcher:** Replaces native fuzzy switcher with natural-language concept search.
-  - **Duplicate Note Warning:** Alerts user if a new note conceptually overlaps with an existing note.
-  - **Dead-Link & Orphan Inspector:** High-speed graph queries powered by SQLite `edges` table.
-  - **Daemon Manager:** Status bar widget showing engine connectivity (🟢 *Connected* / 🔴 *Offline*).
+* **Architecture:** Ultra-lightweight TypeScript frontend (<10ms load time) bridging Obsidian UI to `http://127.0.0.1:44771`.
+
+#### 1. 🔗 Remade "Instant Backlinks & Smart Mentions" Leaf
+* **The Problem with Native Backlinks:** Re-scans thousands of notes linearly in memory on active note changes, causing UI freezes and 12s+ startup delays (`collapse-backlinks` trace).
+* **The Daemon Fix:** Single indexed query against the `edges` table in SQLite (`SELECT * FROM edges WHERE target = ?`) executing in **`< 0.2 ms`**.
+* **Smart Unlinked Mentions:** SQLite FTS5 lookup that automatically excludes code blocks (`<pre><code>`) and frontmatter.
+* **Semantic Neighbors ("Soft Backlinks"):** Surfaces top nearest-neighbor notes in embedding space—connecting notes that share concepts even if not explicitly linked.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                 INSTANT BACKLINKS LEAF                      │
+│  [Active Note: "2026-08-29 Obsidian lazy loading"]         │
+│                                                             │
+│  ▼ Linked Backlinks (3) ────────────────────────── [0.1ms]  │
+│    • [[Startup Metrics Logger devlog]]:L15                  │
+│    • [[search suite release plan]]:L8                       │
+│    • [[scoped agent memory]]:L7                             │
+│                                                             │
+│  ▼ Smart Unlinked Mentions (2) ─────────────────── [0.4ms]  │
+│    • [[2026-08-12 Obsidian startup optimization]]:L26       │
+│      "...Move to delay startup group in Plugin Groups..."   │
+│                                                             │
+│  ▼ Graph Distance / Semantic Neighbours (3) ─────── [1.2ms] │
+│    • [[2026-08-18 what retrieval costs as a vault grows]]   │
+│    • [[token efficient PKM analysis architecture]]          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### 2. 🔍 Remade "Unified Hybrid Search & Quick Switcher"
+* **Replaces Core Search & Quick Switcher:** Replaces native search sidebar and quick switcher with a unified search interface that talks to `127.0.0.1:44771/search`.
+* **Search Modes via Prefixes:**
+  * `Default`: Hybrid RRF combining BM25 keyword matching and neural vector similarity.
+  * `? <query>`: Pure semantic meaning search (finds concepts without requiring shared words).
+  * `"..."`: Instant SQLite FTS5 exact phrase search.
+  * `#tag`: Instant tag explorer.
+  * `@heading`: Subheading jumper.
+* **Native Plugin Disabling:** Users can disable native core `Search` and `Backlinks` in Obsidian settings, immediately reclaiming CPU cycles and battery life.
 
 ---
 
@@ -143,7 +173,7 @@ Can **Header Extraction**, **Super Fast Lexical Search**, and **Semantic Vector 
 
 ```
 Phase 1: Core Modularization ──► Phase 2: Session CLI ──► Phase 3: Obsidian Plugin ──► Phase 4: Community Launch
- (Extract 3 primitives)           (Package agent search)    (Build TS Bridge UI)         (PyPI & Obsidian Store)
+ (Extract 3 primitives)           (Package agent search)    (Search + Backlinks UI)      (PyPI & Obsidian Store)
 ```
 
 ### Phase 1: Core Engine Refactoring & Primitives Isolation
@@ -156,9 +186,11 @@ Phase 1: Core Modularization ──► Phase 2: Session CLI ──► Phase 3: O
 - [ ] Build interactive Rich/Textual TUI for terminal browsing.
 - [ ] Publish `agent-session-search` to PyPI and GitHub.
 
-### Phase 3: Obsidian Frontend Bridge & Community Plugin
+### Phase 3: Obsidian Frontend Bridge & UI Remake
 - [ ] Initialize TypeScript repository `obsidian-hybrid-search` using the standard Community Plugin template.
-- [ ] Implement Semantic Quick Switcher modal and status bar indicator.
+- [ ] Implement **Unified Search & Quick Switcher** modal with prefix routing.
+- [ ] Implement **Instant Backlinks & Smart Mentions** custom sidebar leaf.
+- [ ] Implement daemon connectivity indicator in the status bar (🟢 *Connected* / 🔴 *Offline*).
 - [ ] Validate against Obsidian Manifest guidelines and prepare automated GitHub release workflows.
 
 ### Phase 4: Public Distribution & Ecosystem Documentation
