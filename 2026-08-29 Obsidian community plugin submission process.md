@@ -14,7 +14,7 @@ tags:
 Obsidian **deprecated the legacy GitHub Pull Request method** (which previously required creating a PR to `obsidianmd/obsidian-releases/community-plugins.json`). 
 
 All community plugins and themes are now submitted and managed through the official **Obsidian Community Directory Portal**:
-🔗 **[community.obsidian.md](https://community.obsidian.md)**
+🔗 https://community.obsidian.md
 
 ---
 
