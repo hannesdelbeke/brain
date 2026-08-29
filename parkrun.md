@@ -1,5 +1,0 @@
----
-aliases:
-  - park run
----
-[[running]]

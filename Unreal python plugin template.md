@@ -17,7 +17,7 @@ https://github.com/hannesdelbeke/unreal-python-plugin-template
 ### Features
 - this template is ready to plug & play, so just replace the code with your own.
 - the repo includes code for a demo qt widget
-- the included [[Unreal dependencies installer]] auto installs [[dependencies]] on [[Unreal startup]] from `requirements.txt`
+- the included [[Unreal dependencies installer]] auto installs [[dependencies]] on Unreal startup from `requirements.txt`
 - By default, it installs [[unreal-qt]], which installs [[PySide6]], because the demo widget uses it.
 - [[Unreal - add menu with Python|adds the menu item]] `tools/myPlugin` to [[Unreal menu|Unreal's menu]] to launch the widget.
 - easy installation:

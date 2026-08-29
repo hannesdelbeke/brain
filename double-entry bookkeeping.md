@@ -4,4 +4,4 @@ aliases:
 links:
   - "[[finance]]"
 ---
-[[accounting]]
+accounting

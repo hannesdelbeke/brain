@@ -1,5 +1,0 @@
----
-aliases:
-  - Vita Audio
----
-[[speakers]]

@@ -9,6 +9,6 @@ tags:
 - hobby
 ---
 
-[[polarized light]]
+polarized light
 [[glasses]]
 [[sunglasses]]

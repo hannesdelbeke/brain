@@ -17,4 +17,4 @@ tags:
 [[gamedev]]
 [[hackathon]]
 [[videogame]]
-[[polish over originality]]
+polish over originality

@@ -1,2 +1,0 @@
-
-[[Blizzard Entertainment]]

@@ -10,7 +10,7 @@ tags:
 - technical
 ---
 
-it's much better to assign a static IP in your router, else there might be [[Dynamic Host Configuration Protocol|DHCP]] conflicts if multiple devices are assigned the same static IP.
+it's much better to assign a static IP in your router, else there might be DHCP conflicts if multiple devices are assigned the same static IP.
 
 # set static IP on windows
 1. view your current network configuration

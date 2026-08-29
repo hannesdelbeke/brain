@@ -1,5 +1,0 @@
----
-aliases:
-  - Niacin
----
-[[vitamin B]]

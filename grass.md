@@ -1,3 +1,0 @@
-[[garden]]
-[[plant]]
-[[lawn]]

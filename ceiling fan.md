@@ -13,7 +13,7 @@ tags:
 ### Pros
 - A ceiling fan is **quieter** than a portable fan. The bigger blades move the same amount of air with a slower rotation.
 - A cleaner look, integrated in the room, compared to desk fans. 
-  Because it's [[raised of the floor]], cleaning your desk or floor doesn't become harder.
+  Because it's raised of the floor, cleaning your desk or floor doesn't become harder.
 - Save money on air conditioning in the summer
 	- [research](https://www.sciencedirect.com/science/article/abs/pii/S0378778819300039) claims 15% [[alternating current|AC]] reduction
 	- [research](https://www.sciencedirect.com/science/article/pii/S0360132323007011) claims Elevated air movement reduced cooling energy requirements by 32%.

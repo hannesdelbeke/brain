@@ -58,7 +58,7 @@ or you could just put in a few values, generate a quick test LOD and see if it i
 
 # notes
 
-in [[Simplygon]] LODing is straightforward, most settings are self explanatory. 
+in Simplygon LODing is straightforward, most settings are self explanatory. 
 keep in mind when you have the option to decide feature importance
 (ex. silhouet, normals, uv distortion, ...)
 you can not set all to highest. the feature importance is relative to other features. so if everything is highest you will have the same result as everything is medium.

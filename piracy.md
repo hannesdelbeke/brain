@@ -1,7 +1,0 @@
----
-aliases:
-  - pirate
-  - pirating
----
-
-[[download]]

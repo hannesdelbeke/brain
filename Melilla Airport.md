@@ -1,2 +1,0 @@
-[[airport]]
-[[Spain]]

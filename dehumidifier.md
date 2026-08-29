@@ -1,2 +1,0 @@
-[[ventilation]]
-[[humidity]]

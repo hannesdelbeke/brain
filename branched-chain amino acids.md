@@ -11,7 +11,7 @@ tags:
 - health
 ---
 
-The three BCAAs are a special subcategory of the essential amino acids, that serves as nitrogen carriers, which assist muscles in creating other amino acids required for [[anabolism]].
+The three BCAAs are a special subcategory of the essential amino acids, that serves as nitrogen carriers, which assist muscles in creating other amino acids required for anabolism.
 
 - [[valine]]
 - [[leucine]]
