@@ -26,16 +26,16 @@ Lazy loading addresses this by altering when and how plugins initialize:
 
 | Plugin | Mechanism | Granularity | Best Use Case |
 | :--- | :--- | :--- | :--- |
-| **[[Plugin Groups]]** (`obsidian-plugin-groups`) | Group-based delay timers & manual toggle switches | Group | Grouping plugins by workflow or context (e.g., Writing, Development) |
-| **[[Lazy Plugin Loader]]** (`lazy-plugins`) | Direct millisecond delay per plugin | Per-plugin | Fine-grained, independent timer delays (e.g. +3s, +5s) |
-| **[[On-Demand Plugins]]** (`on-demand-plugins`) | Command palette & view proxy | Action / View | Tools only used occasionally via hotkeys or commands |
-| **[[Control Center]]** (`plugins-control`) | Device detection (Mobile vs Desktop) + delay timers | Platform / Device | Multi-device setups where mobile needs to remain lean |
+| **[Plugin Groups](https://github.com/MProjects/obsidian-plugin-groups)** (`obsidian-plugin-groups`) | Group-based delay timers & manual toggle switches | Group | Grouping plugins by workflow or context (e.g., Writing, Development) |
+| **[Lazy Plugin Loader](https://github.com/alangrainger/obsidian-lazy-plugins)** (`lazy-plugins`) | Direct millisecond delay per plugin | Per-plugin | Fine-grained, independent timer delays (e.g. +3s, +5s) |
+| **[On-Demand Plugins](https://github.com/mavam/obsidian-on-demand-plugins)** (`on-demand-plugins`) | Command palette & view proxy | Action / View | Tools only used occasionally via hotkeys or commands |
+| **[Control Center](https://github.com/polyipseity/obsidian-plugins-control)** (`plugins-control`) | Device detection (Mobile vs Desktop) + delay timers | Platform / Device | Multi-device setups where mobile needs to remain lean |
 
 ---
 
 ## 🛠️ Detailed Breakdown of Each Tool
 
-### 1. [[Plugin Groups]] (`obsidian-plugin-groups`)
+### 1. [Plugin Groups](https://github.com/MProjects/obsidian-plugin-groups) (`obsidian-plugin-groups`)
 * **Author:** MProjects
 * **Mechanism:** Allows organizing plugins into named groups. An entire group can be assigned a startup delay timer (e.g., 3s) or manually toggled on/off in batch.
 * **Pros:**
@@ -44,7 +44,7 @@ Lazy loading addresses this by altering when and how plugins initialize:
 * **Cons:**
   * Requires manual group creation and assignment; less direct if you just want to add a quick delay to a single plugin.
 
-### 2. [[Lazy Plugin Loader]] (`lazy-plugins`)
+### 2. [Lazy Plugin Loader](https://github.com/alangrainger/obsidian-lazy-plugins) (`lazy-plugins`)
 * **Author:** Alan Grainger
 * **Mechanism:** Adds a delay configuration column directly to your installed plugins list.
 * **Pros:**
@@ -53,7 +53,7 @@ Lazy loading addresses this by altering when and how plugins initialize:
 * **Cons:**
   * Fixed timers only; does not dynamically load on command.
 
-### 3. [[On-Demand Plugins]] (`on-demand-plugins`)
+### 3. [On-Demand Plugins](https://github.com/mavam/obsidian-on-demand-plugins) (`on-demand-plugins`)
 * **Author:** mavam
 * **Mechanism:** Proxies plugin commands and view registrations while keeping the plugin bundles unloaded. When a command is triggered from the command palette or hotkey, the plugin is loaded dynamically on the fly.
 * **Pros:**
@@ -62,7 +62,7 @@ Lazy loading addresses this by altering when and how plugins initialize:
 * **Cons:**
   * Unsuitable for background indexing plugins (like Dataview or Git) that need to monitor file modifications continuously.
 
-### 4. [[Control Center]] (`plugins-control`)
+### 4. [Control Center](https://github.com/polyipseity/obsidian-plugins-control) (`plugins-control`)
 * **Author:** polyipseity
 * **Mechanism:** Platform-specific rules (Desktop vs Phone vs Tablet), combined with delayed activation.
 * **Pros:**
@@ -90,6 +90,7 @@ When auditing plugins for startup optimization, categorize them into three bucke
 ---
 
 ## 🔗 Related Notes
-- [[Obsidian plugin startup optimization]]
-- [[Obsidian plugins in use]]
+- [[2026-08-12 Obsidian plugin startup optimization]]
 - [[Obsidian faster startup]]
+- [[2026-08-29 Startup Metrics Logger devlog]]
+- [[2026-08-29 Obsidian community plugin submission process]]
