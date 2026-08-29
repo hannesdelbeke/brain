@@ -62,3 +62,39 @@ Anaconda's *"share disk with existing operating system"* mode used the unallocat
   1. Cold boot: Enter LUKS passphrase once to decrypt SSD.
   2. GDM auto-logs in to GNOME with a blanked keyring password (so developer tokens and browsers auto-unlock).
   3. Screen lock (<kbd>Super</kbd>+<kbd>L</kbd>) and `sudo` authenticate via the Synaptics Match-on-Chip fingerprint reader.
+
+## Getting online after install
+
+Networking is confirmed working. Two things blocked it first, and neither announced itself clearly.
+
+- **DNS resolved nothing while the link was up.** `ip -br addr` showed an interface UP with a lease, but every hostname failed with "could not resolve host". The fix is a nameserver:
+  ```bash
+  sudo bash -c "echo nameserver 1.1.1.1 > /etc/resolv.conf"
+  ```
+  NetworkManager rewrites `/etc/resolv.conf` on reconnect, so make it stick per-connection instead: `nmcli con mod <name> ipv4.dns 1.1.1.1 ipv4.ignore-auto-dns yes`.
+- **The home SSID is WPA3-Personal (SAE), not WPA2.** Clients without SAE support fail with a password prompt loop rather than an error naming the cause. Worth checking `wpa_supplicant -v` (2.9 or newer) before suspecting the password. A WPA2 network next to it is the fastest way to isolate this.
+
+## Installing the Antigravity CLI
+
+`agy` is installed and verified on the Fedora side. The bootstrapper is a Go binary installer, no Node or npm:
+
+```bash
+curl -fsSL https://antigravity.google/cli/install.sh | bash
+source ~/.bashrc
+agy --version
+```
+
+It lands in `~/.local/bin/agy` and self-updates with `agy update`. Config lives at `~/.gemini/antigravity-cli/settings.json`.
+
+Two failure modes seen, both symptoms of the DNS problem above rather than the installer:
+
+- Piping a failed download into bash gives `syntax error near unexpected token`, because what arrived was an HTML error page, not a script. Download to a file and check `head -1` says `#!/bin/bash` before running it.
+- `curl -fsSL <url> -o <file>` printing nothing is success, not failure. `-s` silences progress and `-o` sends the body to the file.
+
+When DNS cannot be fixed quickly, serving the installer from another machine on the LAN over plain HTTP sidesteps name resolution entirely, since an IP needs no DNS.
+
+## Keyboard layout trap
+
+The graphical session and the text console read separate keymaps, so a password typed correctly at GDM can fail at a TTY `sudo` prompt when it contains symbols. The tilde is the usual tell: on a UK layout it is <kbd>Shift</kbd>+<kbd>#</kbd>, left of Enter, and if it appears somewhere else the console is on a different map. `localectl status` shows both. Until it is fixed, `$HOME` substitutes for `~` in any command.
+
+Related: the root account is locked by default on Fedora Workstation, so `su` always fails with an authentication error regardless of what is typed. Use `sudo` with the user's own password.
