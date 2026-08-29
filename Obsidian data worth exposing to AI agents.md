@@ -10,9 +10,6 @@ tags:
 - ai
 - pkm
 ---
-after [[2026-08-29 Startup Metrics Logger devlog]]
-i wonder what else we could expose
-
 ## Why expose Obsidian internal state
 
 Obsidian calculates rich metadata and runtime performance traces in memory. Because external agents run in a separate process, they can't see this state unless it's exported to disk or accessed via [[Obsidian CLI + Agent Context at Scale|Obsidian CLI IPC]].
@@ -49,6 +46,7 @@ Console errors and timeouts triggered by broken inline Dataview queries, Datavie
 Unique view counts, open dates, dwell time, and edit recency.
 - Informs smart context retrieval by prioritizing currently relevant notes.
 - Helps identify stale notes for consolidation or archiving.
+- View count tracking setup and standalone JSON storage: see [[2026-02-22 Obsidian track note view]], [[2026-07-22 follow up Obsidian viewcount]], and [[obsidian viewcount rnd]].
 
 ### Startup performance traces
 Per-plugin initialization milliseconds, layout ready time, and core overhead.
@@ -57,5 +55,7 @@ Per-plugin initialization milliseconds, layout ready time, and core overhead.
 ## Related notes
 - [[Obsidian CLI + Agent Context at Scale]] — official CLI IPC vs file-based retrieval
 - [[2026-08-29 Startup Metrics Logger devlog]] — exporting startup latency to structured JSON
+- [[2026-07-22 follow up Obsidian viewcount]] — tracking note views via standalone JSON storage
+- [[2026-02-22 Obsidian track note view]] — initial note view tracking setup
 - [[ai optimize obsidian plugins]] — configuring delayed and on-demand plugins via AI
 - [[Obsidian find dead links]] — tracking and fixing broken links in the vault
