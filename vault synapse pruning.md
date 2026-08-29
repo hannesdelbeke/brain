@@ -29,10 +29,11 @@ Instead of deleting, move dead notes to an `archive/` folder and tag them with `
 * **Verdict:** We already use this for legacy research notes. It keeps links intact and keeps files easily searchable, but it doesn't actually reduce the overall file count or graph size.
 
 ### 2. Algorithmic Synaptic Decay
-Track the "heat" or "energy" of a note. Using an Obsidian view-tracker plugin or an [[algo to differentiate between AI and human notes|agentic script]], we can measure:
-- How many times a note was opened in the last year.
+Track the "heat" or "energy" of a note. Using an Obsidian view-tracker plugin or agentic scoring, we can measure:
+- How many times a note was opened in the last year ([[view count]]).
 - How many active backlinks point to it.
-If a note has **0 views** and **0 links** after 2 years, it is flagged as a "dead synapse".
+- Verified task utility from agent sessions ([[note utility and synapse strength from session recaps]]).
+If a note has **0 views**, **0 links**, and zero agent utility after 2 years, it is flagged as a "dead synapse".
 - [[view count]]
 - [[discover a garden's essence]]
 - manual attempt in obsidian:
@@ -46,6 +47,7 @@ Actually pressing `Delete`.
 * **Verdict:** Rely on Git for the ultimate safety net. If a note is truly useless, delete it. If you ever desperately need it, you can run `git log --all --full-history -- <path>` to resurrect it.
 
 ## Related
+- [[public/note utility and synapse strength from session recaps|note utility and synapse strength from session recaps]] — using post-session credit assignment to identify dead-weight notes
 - [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks and semantic links]] — comparative analysis of biological synaptic pruning vs. wikilinks
 - [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]] — using Git history as the deep memory layer
 - [[public/2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution|biomimetic AI]] — sleep consolidation and forgetting curves

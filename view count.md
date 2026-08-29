@@ -15,7 +15,7 @@ tags:
 
 Tracking view counts helps identify high-traffic crossroads and hub notes across an [[Obsidian vault]]. Frequently viewed notes serve as navigation waypoints and active topic hubs.
 
-However, view counts only measure human navigation frequency, not necessarily deep conceptual value. A lightweight index note might have high views simply because you route through it, while a dense technical synthesis note might have few views but high utility. For agent-driven systems, see [[2026-08-27 every read is a write - co-retrieval as synapse strength]].
+However, view counts only measure human navigation frequency, not necessarily deep conceptual value. A lightweight index note might have high views simply because you route through it, while a dense technical synthesis note might have few views but high utility. For agent-driven systems, see [[2026-08-27 every read is a write - co-retrieval as synapse strength]] and [[note utility and synapse strength from session recaps]].
 
 ## Architecture: never mix analytics with note content
 
@@ -33,6 +33,7 @@ Early setups stored view counts directly in [[YAML front matter]] on each file o
 - Listens to vault rename events so view statistics follow renamed notes automatically without file corruption.
 
 ## Related notes
+- [[note utility and synapse strength from session recaps]] — measuring agent usefulness and task leverage beyond navigation clicks
 - [[2026-07-22 follow up Obsidian viewcount]] — fixing Git backup stalls and migrating off frontmatter
 - [[2026-02-22 Obsidian track note view]] — archive of original frontmatter-based view tracking setup
 - [[Obsidian data worth exposing to AI agents]] — exposing view frequency and recency to agents
