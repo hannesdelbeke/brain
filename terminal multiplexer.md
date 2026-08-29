@@ -31,3 +31,9 @@ For long-running AI coding tools like Claude Code:
 1. Start the agent in a named session on the host: `zellij --session ai` or `tmux new -s ai`.
 2. Detach or close connection (`Ctrl+q` / `Ctrl+b d`).
 3. Reattach over SSH from phone, laptop, or web: `zellij attach ai` or `tmux attach -t ai`.
+
+## Related notes
+- [[command line interface]] — canonical concept note on text-based shell environments
+- [[AI session]] — structuring and managing interactive agent sessions
+- [[how to inspect Claude Code sessions]] — logging and inspecting persistent CLI agent runs
+- [[how to inspect antigravity cli sessions]] — managing background CLI processes and subagents
