@@ -86,6 +86,8 @@ so the question a release plan reopens is not one copy or two, which is answered
 
 what a release would need that does not exist today: a dependency install that works without the vault around it, the `--corpus` scanner contract documented as the supported extension point rather than as section 13 of a skill file, and the second scanner above, since a plugin interface with one implementation is not one. the tests exist already.
 
+the three-package version of that, a core library, an obsidian plugin and a searcher over agent transcripts, is worked through in [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]], which sequences the transcript searcher first because it is the only one with a user today.
+
 what it would need to be worth doing: someone other than the author installing it. an obsidian plugin already ships FTS5 plus local vectors plus reciprocal rank fusion over MCP, measured against this engine on the same 3,264 notes in [[2026-08-27 build or install, measuring the engine against the plugin that already exists]] and surveyed in [[2026-08-27 what already exists, prior art for a local hybrid search engine]]. what is ours and not theirs is several corpora in one daemon and tool-touched files as edges, so a release that does not lead with those two is a worse version of something already installable.
 
 ## blockers
