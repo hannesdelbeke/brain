@@ -67,6 +67,9 @@ Already in, commit `f50d2ce8` on 2026-08-21, before this plan was written. `inde
 ### 6. Decide the link convention, once
 Pick one: keep `public/`-prefixed links and treat the private parent vault as the only valid reading context, or strip the prefix and make `brain` self-contained. Do not mass-edit 89 notes until that decision is written down. The lazy option is to leave the prefix and fix the *published* view instead, since the prefix is correct where the notes are actually authored.
 
+### 7. Anti-links and negative edge constraints
+Support `anti-links:` frontmatter and typed negative edges (`is_negative INTEGER DEFAULT 0` in `edges`). Prevents `--check-duplicate` false alarms on homonyms (e.g. text cursor vs Cursor editor), prunes unlinked mention noise in `/unlinked`, and applies Rocchio negative vector steering during hybrid search. Designed in [[public/anti links|anti links]] and [[public/anti link RnD|anti link RnD]].
+
 ---
 
 ## 🥉 P2 — Deferred, with the reason recorded
