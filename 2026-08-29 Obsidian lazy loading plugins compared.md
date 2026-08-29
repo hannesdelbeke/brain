@@ -90,7 +90,6 @@ When auditing plugins for startup optimization, categorize them into three bucke
 ---
 
 ## 🔗 Related Notes
-- [[2026-08-12 Obsidian plugin startup optimization]]
 - [[Obsidian faster startup]]
 - [[2026-08-29 Startup Metrics Logger devlog]]
 - [[2026-08-29 Obsidian community plugin submission process]]

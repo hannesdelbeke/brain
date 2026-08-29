@@ -131,12 +131,12 @@ Can **Header Extraction**, **Super Fast Lexical Search**, and **Semantic Vector 
 │  [Active Note: "2026-08-29 Obsidian lazy loading"]         │
 │                                                             │
 │  ▼ Linked Backlinks (3) ────────────────────────── [0.1ms]  │
-│    • [[Startup Metrics Logger devlog]]:L15                  │
-│    • [[search suite release plan]]:L8                       │
-│    • [[scoped agent memory]]:L7                             │
+│    • [[2026-08-29 Startup Metrics Logger devlog]]:L15       │
+│    • [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]]:L8 │
+│    • [[2026-08-29 agentic memory - scoped devlogs vs monolithic memory]]:L7 │
 │                                                             │
 │  ▼ Smart Unlinked Mentions (2) ─────────────────── [0.4ms]  │
-│    • [[2026-08-12 Obsidian startup optimization]]:L26       │
+│    • [[Obsidian faster startup]]:L26                        │
 │      "...Move to delay startup group in Plugin Groups..."   │
 │                                                             │
 │  ▼ Graph Distance / Semantic Neighbours (3) ─────── [1.2ms] │

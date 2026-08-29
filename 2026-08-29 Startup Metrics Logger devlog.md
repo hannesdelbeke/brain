@@ -34,5 +34,3 @@ tags:
 - Included the plugin's own name as a settings section heading (`new Setting().setName("Startup Metrics Logger")`), violating Obsidian settings guidelines.
 - Left outdated plugin title in `README.md` causing a mismatch warning with `manifest.json`.
 - Omitted explicit return types on setting builder lambdas, triggering TypeScript ESLint unsafe-return warnings.
-
-[[dev notes]]
