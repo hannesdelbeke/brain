@@ -27,7 +27,7 @@ Standard SSH connections kill running processes when the network drops or you cl
 
 ## Agent workflow
 
-For long-running AI coding tools like Claude Code:
+For long-running AI coding tools like [[Claude Code]]:
 1. Start the agent in a named session on the host: `zellij --session ai` or `tmux new -s ai`.
 2. Detach or close connection (`Ctrl+q` / `Ctrl+b d`).
 3. Reattach over SSH from phone, laptop, or web: `zellij attach ai` or `tmux attach -t ai`.
