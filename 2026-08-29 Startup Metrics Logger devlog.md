@@ -15,7 +15,7 @@ tags:
 - Researched and benchmarked lazy-loading alternatives in [[2026-08-29 Obsidian lazy loading plugins compared]].
 - Documented the official directory portal submission workflow in [[2026-08-29 Obsidian community plugin submission process]].
 - Submitted the plugin through the developer portal at [community.obsidian.md](https://community.obsidian.md).
-- Resolved all automated linter and guideline checks reported by the community directory and published release `1.0.1`.
+- Resolved all automated linter and guideline checks reported by the community directory and published release `1.0.2`.
 
 ### 🤖 Gemini 3.7 Flash Mistakes & Retrospective
 - Appended the plugin to the end of `community-plugins.json`, forgetting that Obsidian loads plugins strictly by array index and requires index 0 to time other plugins on startup.
@@ -30,3 +30,6 @@ tags:
 - Used bare `setTimeout()` instead of `window.setTimeout()` for popout window compatibility.
 - Used deprecated `performance.timing` and `.setDynamicTooltip()` APIs.
 - Omitted `package-lock.json`, preventing automated directory build verification.
+- Included the plugin's own name as a settings section heading (`new Setting().setName("Startup Metrics Logger")`), violating Obsidian settings guidelines.
+- Left outdated plugin title in `README.md` causing a mismatch warning with `manifest.json`.
+- Omitted explicit return types on setting builder lambdas, triggering TypeScript ESLint unsafe-return warnings.
