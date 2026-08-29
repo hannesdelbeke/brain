@@ -1,14 +1,14 @@
 ---
-aliases:
-- Claude
-sentiment:
-- 5
-sentiment-hash: 6fd4bbab
-sentiment-label:
-- factual
 tags:
-- technical
+- ai
+- cli
+- tools
+- claude-code
+aliases:
+- claude-code
+- claude cli
 ---
 
-recommended course 
-udemy.com/course/anthropic-claude-code
+Anthropic's terminal-based agentic coding tool that navigates codebases, edits files, and executes shell commands autonomously.
+
+Related: [[how to inspect Claude Code sessions]], [[how to inspect antigravity cli sessions]], [[AI agent]]
