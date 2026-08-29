@@ -46,7 +46,7 @@ Console errors and timeouts triggered by broken inline Dataview queries, Datavie
 Unique view counts, open dates, dwell time, and edit recency.
 - Informs smart context retrieval by prioritizing currently relevant notes.
 - Helps identify stale notes for consolidation or archiving.
-- View count tracking setup and standalone JSON storage: see [[2026-02-22 Obsidian track note view]], [[2026-07-22 follow up Obsidian viewcount]], and [[obsidian viewcount rnd]].
+- View count tracking setup and standalone JSON storage: see [[2026-02-22 Obsidian track note view]] and [[2026-07-22 follow up Obsidian viewcount]].
 
 ### Startup performance traces
 Per-plugin initialization milliseconds, layout ready time, and core overhead.

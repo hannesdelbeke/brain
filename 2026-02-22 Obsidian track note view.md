@@ -1,74 +1,34 @@
 ---
-energy: 6
-sentiment:
-  - 7
-  - 4
-sentiment-hash: 261daae1
-sentiment-label:
-  - pleased
-  - annoyed
+created: 2026-02-22
+energy: 5
 tags:
-  - journal
-  - technical
-  - self-reflection
-  - hobby
-  - archive
+- technical
+- obsidian
+- archive
 ---
 
-> [!warning]
-> i moved away from storing view in frontmatter, so this note is now outdated. see [[2026-07-22 follow up Obsidian viewcount]]
+#archive
 
-Yesterday, when writing [[Obsidian - one way wikilinks]] - a potential solution to  how [[Obsidian backlinks]] become [[visual clutter|visually cluttered]] when it's linked too often - I was reminded of [[Link strength]]. Today I wanted to see if I could calculate this based on note [[view count]]. 
+> [!warning] Outdated setup
+> Storing view counts in note frontmatter causes Git history churn and backup stalls. This setup was replaced with external JSON storage. See [[view count]] and [[2026-07-22 follow up Obsidian viewcount]].
 
-Ideally we also track time spent on the note, but that seems more complex to track. 
-[[view count]] might be high for notes with little value, e.g. the [[link]] note has not much in it. But it's an important concept, often mentioned in other notes. 
+## Initial concept: view counts as link strength
 
-And we might just often navigate through a note, increasing it's viewcount. However, notes we often navigate through also have value, they are like crossroads, or important hubs in our knowledge graph, without them we wouldn't find the notes that mattered. So tracking views is a good start.
+When exploring [[Obsidian - one way wikilinks]] to reduce [[visual clutter]] from heavy backlinks, tracking note view counts appeared as a way to quantify note centrality and traffic hubs.
 
-## View count
-To track views in my [[Obsidian vault]]
+Notes frequently navigated through act as crossroads in the graph. Even small hub notes gain high navigational value because other notes are discovered through them.
 
-1. Install the plugin [[obsidian-sentinel]]
+## Legacy setup (deprecated)
 
-2. Add new action
-	**Where** left empty
-	**if** `Opening a note once, reset on closing the note`
-	**property** `views` 
-	**value** `{{increment}}` 
+1. Installed [[obsidian-sentinel]].
+2. Added an automation action on note open to increment a `views` frontmatter property (`{{increment}}`).
+3. Used [[obsidian-dataview]] to query notes sorted by `views DESC`.
 
-	This will increment each time the note is opened, and reset to 0 when the note is closed.
+## Issues encountered
 
-3. setup [[obsidian-dataview]] to show notes sorted by views.
+Writing view metadata directly into markdown frontmatter polluted [[git history]], broke recently edited sorting, and caused [[Obsidian plugin - Git]] sync failures during reading sessions. See [[2026-07-22 follow up Obsidian viewcount]] for the migration to external JSON storage.
 
-----
-## Last viewed date
-
-if you want to track the date of last viewed: Add an action
-	**Where** left empty
-	**if** `Opening a note once, reset on closing the note`
-	**property** `views` 
-	**value** `{{date:DD-MM-YYYY-MM}}` 
-
-This can be usefull since [[most recent]] notes might be the most relevant
-
----
-
-I already use [[supercharged links]] for [[Obsidian - color links based on folder]]
-But I could use it to color notes with many views, or recentlly viewed notes.
-
-2026-04
-this works quite well
-few issues
-clutter
-- clutter [[git history]] everytime i view a file
-- when i start writing in a new note, i
-
----
-
-see most viewd notes with 
-
-```dataview
-TABLE views
-SORT views DESC
-LIMIT 20
-```
+## Related notes
+- [[view count]] — canonical overview of view count tracking architecture
+- [[2026-07-22 follow up Obsidian viewcount]] — migration to external JSON storage
+- [[2026-08-27 every read is a write - co-retrieval as synapse strength]] — modern approach for agent-driven reading telemetry
