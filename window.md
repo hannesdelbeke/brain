@@ -1,4 +1,7 @@
 ---
+anti-links:
+  - "[[Windows]]"
+  - "[[window (computing)]]"
 sentiment:
 - 5
 sentiment-hash: c7606a06
