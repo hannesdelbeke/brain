@@ -55,7 +55,7 @@ a plugin already ships FTS5 plus local vectors plus reciprocal rank fusion over 
 
 that second part is where the interesting feature is. backlinks answered as one indexed query against `edges` instead of a linear scan, unlinked mentions from FTS5 with code blocks and frontmatter excluded, and nearest-neighbour notes as soft backlinks beside the hard ones. the specific timings a plan of this shape asserts, sub-millisecond backlinks against a twelve second native startup, are unmeasured; the startup half can be measured with the plugin already published in [[2026-08-29 Startup Metrics Logger devlog]], and until it is, the feature is a hypothesis with a benchmark attached.
 
-the submission path is known rather than researched, written up in [[2026-08-29 Obsidian community plugin submission process]] and walked once already. what the plugin cannot avoid is the daemon: a community plugin that requires the user to install a python service is a different product from one that ships self-contained, and that is the design question to answer before writing typescript. the features worth rebuilding, with their acceptance, are listed in [[core Obsidian features to rework on the vault index]].
+the submission path is known rather than researched, written up in [[2026-08-29 Obsidian community plugin submission process]] and walked once already. what the plugin cannot avoid is the daemon: a community plugin that requires the user to install a python service is a different product from one that ships self-contained, and that is the design question to answer before writing typescript. the features worth rebuilding, with their acceptance, are listed in [[core Obsidian features to rework on the vault index]], and the plan for building them as one plugin over the endpoints that already answer is [[2026-08-29 one obsidian plugin over the search daemon]].
 
 ## package C, the session searcher
 
@@ -64,6 +64,20 @@ this is the one that pays before anyone else installs it, and the one that prove
 it is also the cheapest proof that the scanner interface is an interface. `scan_sessions` reads Claude Code transcripts; a second scanner over `~/.gemini/antigravity-cli/history.jsonl` is a small file and a different format, and once two scanners return the same tuple the plugin story in package A is a fact rather than a claim. `~/.codex` does not exist on this machine, so codex is a third scanner written when there are transcripts to read, not a bullet in a plan.
 
 a terminal UI is the part to leave until the search is used from a terminal often enough to be annoyed by the output format.
+
+## how it gets distributed
+
+the plugin and the session searcher both consume the daemon, and neither of them imports it. one speaks HTTP from javascript, the other is python that ships beside it, so the coupling between the pieces is a protocol on `127.0.0.1:44771` rather than a build. that is what decides the repository layout, and it rules out the two answers this question usually gets: a submodule contributes nothing to a plugin whose release assets are `main.js`, `manifest.json` and `styles.css`, and a cross-language build step exists only to copy files that never needed copying.
+
+two repositories, then. `pkm-search` holds the python: the engine, the daemon and both CLIs, published to PyPI as one package with the vector half as an optional dependency group and two entry points, one for the daemon and one for the session searcher. the obsidian plugin gets its own repository because the community directory requires `manifest.json`, `package.json`, a README and a licence at the root and syncs updates from release tags, per [[2026-08-29 Obsidian community plugin submission process]], which a subdirectory of a monorepo cannot satisfy without a generated mirror repository that exists only to hold a manifest.
+
+the session searcher is not a third repository for the same reason the obsidian features are not four plugins, worked through in [[2026-08-29 one obsidian plugin over the search daemon]]: it is the same install, the same daemon and the same scanner seam, so it is a second entry point in the same package.
+
+the engine stays editable in this vault and CI mirrors it one way into `pkm-search`, which is what keeps the drift from coming back: one copy anyone edits, one copy anyone installs, and the second generated from the first on every push. the moment that stops being right is the first pull request from someone else, since a mirror overwrites contributions; that is when the source moves into the engine repository and the vault installs it instead of holding it.
+
+version skew between a plugin and a daemon the user updates separately is the one thing a protocol coupling adds, and it costs an integer: `/health` reports an api number, the plugin compares it and says to upgrade rather than failing on a missing field.
+
+what is deliberately not on this list: shipping the daemon as a bundled binary. onnxruntime plus the model is a download of a different order, obsidian reviewers are right to be wary of a plugin that fetches an executable, and the plugin already spawns a daemon it can find. `pipx install pkm-search` is the install instruction until someone reports that it is not enough.
 
 ## the sequence
 
