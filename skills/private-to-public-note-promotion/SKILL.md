@@ -110,7 +110,7 @@ Before running `git add public/...`:
 3. [ ] **Verify Wikilinks:** Run `python _scripts/check_dead_links.py <note-path>` and confirm `[PASS]` (ignoring backticked code examples).
 4. [ ] **Check Link Directionality:** Confirm generic concept notes do not link downward to ephemeral or private notes.
 5. [ ] **Context Check:** Confirm that no vital technical nuances were lost during redacting/generalizing.
-6. [ ] **Cross-Submodule Frontmatter:** Inject `origin-sha: <commit-sha>`. Only inject `created: YYYY-MM-DD` for older historical notes (skip `created` if note was created on the same day or has date in title). See [[public/moving files across submodules loses created date]].
+6. [ ] **Cross-Submodule Frontmatter:** Only inject `origin-sha: <commit-sha>` if the note has a prior git history of changes in the source repo. Only inject `created: YYYY-MM-DD` for older historical notes. (Skip both if newly written or moved on the same day). See [[public/Anonymous SHA Pointer]] and [[public/moving files across submodules loses created date]].
 7. [ ] **Obsidian Buffer Refresh:** Close any open Obsidian tabs for the file before or immediately after the move.
 8. [ ] **Daily Note Indexing:** Add the new public note link to today's daily note under the appropriate section.
 9. [ ] **Dual Commit:** Commit inside `public/`, push `origin main`, then commit the submodule pointer in root `pkm/` and push `origin main`.
