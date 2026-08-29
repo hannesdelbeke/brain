@@ -66,4 +66,7 @@ Creating links to non-existent or empty notes degrades knowledge graph utility:
 - Passing mention or tool: plain text. Embeddings and FTS index it either way, and the bracket adds only a node.
 - A cluster emerges: once a search turns up five or so notes circling one theme, write the note that theme deserves, then link them.
 
+The initial public vault cleanup pass (`4c0c04c6`) pruned 201 dead stub notes and unbracketed speculative single mentions to plain text while keeping 8 atomic one-line claims.
+
 [[when to request wikilinks from AI]] turns this into instructions for an agent that is drafting notes.
+
