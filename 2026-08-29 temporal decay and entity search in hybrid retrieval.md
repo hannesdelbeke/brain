@@ -185,45 +185,53 @@ The answer comes down to **retrieval economics, latency, and battery/memory cons
 * Keeping a 7B/8B model resident in memory locks **4GB–8GB of VRAM/RAM** continuously and spins GPU cooling fans.
 * In contrast, the dedicated search daemon holds a compact NumPy float32 vector matrix in **~120MB of RAM** and operates at **0.000 idle cores** when not actively querying.
 
-### 3. The Optimal Architecture: Local LLM *On Top* of the Index (2-Tier Hierarchy)
+### 3. The 3 Tiers of a True Hybrid Architecture
 
-A local LLM is not a competitor to the search daemon; it is the **synthesis consumer**:
+A true **Hybrid Architecture** operates across three distinct levels of the system:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ 1. User Prompt: "What did I decide about Project Orion?"    │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 2. TIER 1: INDEXED DAEMON (< 5ms)                           │
-│    • Queries FTS5 + ONNX Vectors + Time-Decay Filter        │
-│    • Slices 10,000 notes down to TOP 3 EXACT HEADINGS       │
-│    • Payload size: ~400 tokens (path, heading, lines)       │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│ 3. TIER 2: LOCAL LLM SYNTHESIS (200ms - 500ms)              │
-│    • Local model (Ollama / Claude / Gemini) reads ONLY      │
-│      the 400-token payload rather than the entire vault     │
-│    • Synthesizes immediate, grounded, hallucination-free    │
-│      answer to the user                                     │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       THE 3-TIER HYBRID ARCHITECTURE                        │
+│                                                                             │
+│  [ Level 1: Hybrid Retrieval ]                                              │
+│    SQLite FTS5 (Lexical)  +  ONNX Vectors (Semantic)  +  Time-Decay Filter  │
+│                                │                                            │
+│                                ▼ Reciprocal Rank Fusion (RRF)               │
+│  [ Level 2: Hybrid Compute ]                                                │
+│    95% Navigation & Switcher   ──► Zero-AI Daemon (< 5ms, 0 tokens)         │
+│    5% Synthesis & Questions    ──► Hands ~400 token payload to LLM          │
+│                                │                                            │
+│                                ▼ Intelligent Privacy / Workload Router      │
+│  [ Level 3: Hybrid Model Routing ]                                          │
+│    Private / Sensitive Notes   ──► Local On-Device LLM (Ollama 3B/8B, 0 Egress)│
+│    Complex Multi-Step Coding   ──► Frontier Cloud Agent (Gemini/Claude)     │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-* **Tier 1 (The Retriever / Daemon):** Does the heavy lifting across 10,000 files in <5ms at zero GPU cost.
-* **Tier 2 (The Reasoner / Local LLM):** Reads only the distilled top 3 snippets to generate human-readable synthesis.
+#### Level 1: Hybrid Retrieval (Lexical + Semantic + Temporal)
+* **BM25 / FTS5:** Captures exact code symbols, file paths, acronyms, and proper nouns (`manifest.json`, `minAppVersion`, proper names).
+* **Neural Vectors (`bge-small-en-v1.5`):** Captures conceptual paraphrases (*"how to stop CPU overheating"* $\rightarrow$ *fan throttling and thread capping*).
+* **Reciprocal Rank Fusion (RRF):** Interleaves lexical and semantic ranks so neither model dominates.
+* **Temporal Decay Filter:** Automatically weights newer entries higher for recency-sensitive queries.
+
+#### Level 2: Hybrid Compute (Zero-Token Daemon vs On-Demand Synthesis)
+* **Zero-Token Operations (95% of usage):** Note switching, backlink navigation, orphan link detection, and symbol searches use **0 LLM tokens, 0 API cost, and respond in < 5ms**.
+* **On-Demand Synthesis (5% of usage):** Complex natural-language questions invoke the LLM *only after* the daemon has compressed 10,000 notes down to the top 3 relevant sections (~400 tokens).
+
+#### Level 3: Hybrid Model Routing (Local Offline vs Cloud Frontier)
+* **Private Notes (Journal, Finances, Medical):** Routed locally to a lightweight on-device model (e.g. Gemma-2-2B or Llama-3-8B via Ollama) with **zero cloud data egress**.
+* **Heavy Technical & Coding Tasks:** Routed to frontier cloud models (Gemini Pro, Claude Sonnet/Opus) when deep reasoning or multi-repository code refactoring is required.
 
 ---
 
 ## 🎯 Strategic Summary
 
-| Query / Task Type | Best Tool | Why |
+| Query / Task Type | Optimal Mechanism | Latency / Resource |
 | :--- | :--- | :--- |
-| **Interactive Search & Switcher** | **Indexed Daemon (<5ms)** | Requires real-time 60fps keystroke response. |
-| **Backlinks & Dead Link Audits** | **SQLite Edges Table (<1ms)** | Pure relational lookup with zero inference overhead. |
-| **Multi-Note Synthesis / Summary** | **Local LLM + Daemon RAG** | LLM reads only daemon-filtered snippets (~400 tokens). |
+| **Interactive Search & Switcher** | **Indexed Daemon (FTS5 + Vector)** | **`< 5ms`** (0 tokens, 0% idle CPU) |
+| **Backlinks & Dead Link Audits** | **SQLite Edges Table** | **`< 1ms`** (Pure relational lookup) |
+| **Private Vault Question Answering** | **Daemon RRF $\rightarrow$ Local LLM** | **`200ms`** (100% offline, 0 cloud egress) |
+| **Complex Multi-Repo Synthesis** | **Daemon RRF $\rightarrow$ Cloud Frontier Agent** | **`1-3s`** (Maximum reasoning depth) |
 
 ---
 
