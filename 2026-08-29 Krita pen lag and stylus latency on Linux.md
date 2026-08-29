@@ -1,5 +1,4 @@
 ---
-origin-sha: bbe6b08e
 tags:
 - technical
 - linux
