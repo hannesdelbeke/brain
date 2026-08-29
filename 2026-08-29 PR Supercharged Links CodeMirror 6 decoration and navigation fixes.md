@@ -13,7 +13,7 @@ tags:
 
 ## Overview
 
-Pull Request targeting [mdelobelle/obsidian-supercharged-links](https://github.com/mdelobelle/obsidian-supercharged-links) resolving link decoration dropouts during document navigation, unparsed syntax trees in CodeMirror 6, and missing attributes on notes without frontmatter.
+Pull Request [#286 on mdelobelle/obsidian_supercharged_links](https://github.com/mdelobelle/obsidian_supercharged_links/pull/286) resolving link decoration dropouts during document navigation, unparsed syntax trees in CodeMirror 6, and missing attributes on notes without frontmatter.
 
 ## Issues resolved
 
