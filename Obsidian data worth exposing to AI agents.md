@@ -10,7 +10,9 @@ tags:
 - ai
 - pkm
 ---
-after [[logger]]
+after [[2026-08-29 Startup Metrics Logger devlog]]
+i wonder what else we could expose
+
 ## Why expose Obsidian internal state
 
 Obsidian calculates rich metadata and runtime performance traces in memory. Because external agents run in a separate process, they can't see this state unless it's exported to disk or accessed via [[Obsidian CLI + Agent Context at Scale|Obsidian CLI IPC]].
