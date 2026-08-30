@@ -106,3 +106,5 @@ There’s a second limiter too:
   - paginated API fetch with resume state
   - Sync recent
   - optional bulk-export-first recommendation in settings.
+
+Found: Strava Periodic Note Sync plugin supports backfill up to 90 days, closer to this proposed UX than the original plugin's 30-activity page cap. See [[proposal - resumable bidirectional sync adapter]].

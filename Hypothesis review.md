@@ -54,4 +54,6 @@ there is a Hypothesis API: [docs](https://h.readthedocs.io/en/latest/)
 [[annotate websites]]
 [[annotate]]
 
+Found: [lindylearn/obsidian-annotations](https://github.com/lindylearn/obsidian-annotations) forks weichenw's plugin and adds true bidirectional sync (local edits push back to Hypothesis). See [[proposal - resumable bidirectional sync adapter]].
+
 #PKM #impressive #socialnetwork #community #pluginidea #link
