@@ -1,4 +1,6 @@
 ---
+aliases:
+- book
 sentiment:
 - 5
 sentiment-hash: be61a44b
@@ -8,6 +10,8 @@ tags:
 - planning
 - hobby
 ---
+
+[[blog]], or books
 
 summaries:
 [[thomas j frank notes - The Power of Habit]]

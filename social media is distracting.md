@@ -1,4 +1,6 @@
 ---
+aliases:
+- social media
 sentiment:
 - 5
 sentiment-hash: 26e486d1
@@ -10,6 +12,10 @@ tags:
 - communication
 - health
 ---
+
+[[comment|commenting]], [[liking]]
+
+- [article](https://anthonyamar.fr/Productivity/Social+media+detox) on social media detox
 
 The constant influx of [[notification|notifications]] and the allure of engaging content can pull attention away from primary tasks, leading to decreased focus and productivity.
 

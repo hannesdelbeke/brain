@@ -1,6 +1,8 @@
 ---
 aliases:
 - validation tool
+- validate
+- validated
 sentiment:
 - 5
 sentiment-hash: ab92294c
@@ -31,5 +33,8 @@ Complete asset pipeline automation is only possible with predictable data, and a
 - [[Pyblish]] A decent basic validation API, meant to be used to code your own validation pipeline. However, it has some unpythonic workflows, and is more aimed at VFX & film workflow than game dev workflow.
 - [[Maya modelchecker]] - a great free & fast Maya validator. Not meant to be customized 
 - [[Odin validator]] - a commercial Unity validator 
+
+the point of instances
+[[why use instance collection in validation]]
 
 [[validation]]

@@ -26,6 +26,7 @@ this [site](https://www.payette.com/research-innovation/the-geometry-of-sound-di
 
 [[quality of life (UX)]]
 [[sound waves]]
+[[sound absorption]]
 
 good materials for soundproofing ([source](https://blog.burtonacoustix.com/soundproof/wood-for-soundproofing))
 - Mass Loaded Vinyl (MLV) Barriers
