@@ -46,3 +46,8 @@ if we do have the option to use backlinks from our browser.
 e.g. a youtube video links to Jack. we click the jack link in our browser.
 - We need our own app to show the link tree hub page.
 - Or we open Obsidian, and load the link tree note.
+<<<<<<< HEAD
+=======
+
+See [[proposal - cross-app entity registry]] — this "linktree or app" split dissolves once backlinks live in a registry instead of on whichever thing you open.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

@@ -7,6 +7,10 @@ import os
 import re
 import sqlite3
 import sys
+<<<<<<< HEAD
+=======
+import threading
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 import time
 from collections import defaultdict
 from dataclasses import dataclass
@@ -76,6 +80,14 @@ RERANK_CANDIDATES = 20
 
 _MODEL_CACHE: dict[tuple, object] = {}
 _RERANK_CACHE: dict[str, object] = {}
+<<<<<<< HEAD
+=======
+# searchd answers queries on several threads, and a model that is loaded lazily
+# would otherwise be loaded once per thread that asked first: a second 90 MB
+# download and a second ONNX session for nothing. Only the load is guarded, the
+# models themselves are called concurrently and onnxruntime allows that.
+_LOAD_LOCK = threading.Lock()
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 
 def get_embedding_model(providers: list[str] | None = None, threads: int | None = None):
@@ -89,9 +101,16 @@ def get_embedding_model(providers: list[str] | None = None, threads: int | None 
     embedding and pass QUERY_THREADS on the query path, see the note above.
     """
     key = (tuple(providers or get_embedding_providers()), threads)
+<<<<<<< HEAD
     if key not in _MODEL_CACHE:
         kwargs = {"threads": threads} if threads is not None else {}
         _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key[0]), **kwargs)
+=======
+    with _LOAD_LOCK:
+        if key not in _MODEL_CACHE:
+            kwargs = {"threads": threads} if threads is not None else {}
+            _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key[0]), **kwargs)
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     return _MODEL_CACHE[key]
 
 
@@ -105,10 +124,18 @@ def get_cross_encoder():
     is tolerable for an opt-in call and is why the daemon's keepalive does not
     touch this model.
     """
+<<<<<<< HEAD
     if "model" not in _RERANK_CACHE:
         from fastembed.rerank.cross_encoder import TextCrossEncoder
         _RERANK_CACHE["model"] = TextCrossEncoder(model_name=RERANK_MODEL,
                                                   providers=QUERY_PROVIDERS)
+=======
+    with _LOAD_LOCK:
+        if "model" not in _RERANK_CACHE:
+            from fastembed.rerank.cross_encoder import TextCrossEncoder
+            _RERANK_CACHE["model"] = TextCrossEncoder(model_name=RERANK_MODEL,
+                                                      providers=QUERY_PROVIDERS)
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     return _RERANK_CACHE["model"]
 
 

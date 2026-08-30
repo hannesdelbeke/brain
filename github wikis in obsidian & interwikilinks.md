@@ -33,3 +33,8 @@ a interwiki link in my personal notes loads the other vault. which always prefer
 #advanced [[wiki]] [[interwiki links]]
 
 - a [note](https://commonplace.doubleloop.net/interlinking-wikis) discussing linking digital gardens / wikis
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

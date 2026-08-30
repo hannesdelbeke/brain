@@ -16,15 +16,30 @@ Three reference kinds become edges, all of them from markdown only: links
 `[text](path)`, image embeds `![alt](path)`, and bare relative paths in prose
 such as `see src/auth/token.py`. A target resolves against the source file's
 directory then the repository root, and `resolved_target_path` stays null when
+<<<<<<< HEAD
 neither exists on disk, which is what makes a broken reference queryable.
 
 No import parsing and no cross-repo resolution: those are the expensive half and
 they earn their keep once the cheap half is useful.
+=======
+neither exists on disk, which is what makes a broken reference queryable. A
+target that resolves nowhere falls back to its filename alone, when exactly one
+file in the repository carries that name.
+
+No import parsing and no cross-repo resolution: measured over three repositories,
+cross-repo resolution has 26 candidate edges across 54,000 files and does not earn itself, and import parsing does but
+only after a guid parser, since a unity asset is referenced from a `.meta` file
+rather than from prose.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 """
 
 from __future__ import annotations
 
 import argparse
+<<<<<<< HEAD
+=======
+import collections
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 import json
 import os
 import re
@@ -95,13 +110,26 @@ def repo_files(root: Path) -> list[str]:
 
 
 def iter_references(content: str):
+<<<<<<< HEAD
     """Yield `(raw_target, line)` for every markdown link, embed and bare path.
+=======
+    """Yield `(raw_target, line)` for every link, embed, wikilink and bare path.
+
+    Wikilinks are here because a documentation repository is often an obsidian
+    vault: obsidian's own help repository writes almost every reference as
+    `[[page]]` or `![[image.png]]`, and without them 6,357 documents produced
+    803 edges and read as a repository where nothing references anything.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
     A bare path inside a link matches twice, so the pair is deduplicated; the
     edges primary key would collapse it anyway, this just keeps the rows honest.
     """
     seen = set()
+<<<<<<< HEAD
     for pattern in (MD_LINK_RE, BARE_PATH_RE):
+=======
+    for pattern in (MD_LINK_RE, pkm.WIKILINK_RE, BARE_PATH_RE):
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
         for match in pattern.finditer(content):
             raw_target = match.group(1).strip()
             if not raw_target or EXTERNAL_RE.match(raw_target):
@@ -112,14 +140,46 @@ def iter_references(content: str):
                 yield raw_target, line
 
 
+<<<<<<< HEAD
 def resolve_reference(raw_target: str, source_path: str, root: Path, by_path: dict[str, str]) -> str | None:
+=======
+def with_markdown(candidate: str):
+    """The candidate, then the same name as a markdown file.
+
+    A docs site links a page by name and lets the generator add the extension:
+    obsidian's own developer docs are `[Component](Component)` throughout, and
+    docusaurus, mkdocs and a github wiki all write links the same way. Without
+    this, 5,583 of that repository's 5,586 references read as broken.
+    """
+    if PurePosixPath(candidate).suffix:
+        return [candidate]
+    return [candidate, candidate + ".md"]
+
+
+def resolve_reference(raw_target: str, source_path: str, root: Path,
+                      by_path: dict[str, str], by_name: dict[str, str] | None = None) -> str | None:
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     """The path this reference points at, or None when nothing is there.
 
     Relative to the source file first, since that is what a markdown link means,
     then to the repository root. A target that climbs out of the root is not a
     node here, so it stays unresolved rather than pointing outside the corpus.
+<<<<<<< HEAD
     """
     target = urllib.parse.unquote(raw_target.split("#", 1)[0].strip()).replace("\\", "/")
+=======
+
+    Last, the filename alone, and when several files carry it, the one nearest
+    the source in the tree. Prose names a file from wherever it was written, so
+    a partial path is the common shape of a broken edge rather than a rare one:
+    the fallback resolves 34% of a typescript game's unresolved edges and 72%
+    of a unity client's, against 5% and 3% whose basename is ambiguous. A name
+    that is
+    ambiguous at the same depth stays unresolved, since a wrong edge is worse
+    here than a missing one.
+    """
+    target = urllib.parse.unquote(pkm.clean_link_target(raw_target))
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     if not target:
         return None
     if target.startswith("/"):
@@ -131,6 +191,7 @@ def resolve_reference(raw_target: str, source_path: str, root: Path, by_path: di
         normalised = os.path.normpath(candidate).replace("\\", "/")
         if normalised.startswith("..") or normalised in (".", ""):
             continue
+<<<<<<< HEAD
         known = by_path.get(normalised.casefold())
         if known:
             return known
@@ -141,11 +202,74 @@ def resolve_reference(raw_target: str, source_path: str, root: Path, by_path: di
     return None
 
 
+=======
+        for attempt in with_markdown(normalised):
+            known = by_path.get(attempt.casefold())
+            if known:
+                return known
+            # An ignored file is still a file, so "the readme points at a build
+            # artifact" reads as resolved rather than broken.
+            if (root / attempt).is_file():
+                return attempt
+    for attempt in with_markdown(PurePosixPath(target).name):
+        known = nearest(source_path, attempt, (by_name or {}).get(attempt.casefold()) or [])
+        if known:
+            return known
+    return None
+
+
+def nearest(source_path: str, wanted: str, candidates: list[str]) -> str | None:
+    """Of the files carrying this name, the one the reference most likely means.
+
+    A generated docs tree names the same page at several depths: obsidian's
+    developer docs hold four `workspace.md`, and a method page one level down
+    links `[Workspace](Workspace)` meaning its own parent. Three things separate
+    them, in order: the longer shared path prefix, the name written in the same
+    case as the reference, and the shallower path, since `Foo/bar.md` is a
+    member of `Foo.md` rather than the other way round. Candidates that tie on
+    all three stay unresolved, since a wrong edge is worse here than a missing
+    one.
+    """
+    if len(candidates) == 1:
+        return candidates[0]
+
+    def rank(path):
+        parts = PurePosixPath(path).parts
+        shared = shared_depth(source_path, path)
+        # depth only breaks a tie inside a shared subtree: from the repository
+        # root, two files of the same name in different trees are a real
+        # ambiguity and the shallower one is not the better guess.
+        return (shared, parts[-1] == wanted, -len(parts) if shared else 0)
+
+    scored = sorted(((rank(path), path) for path in candidates), reverse=True)
+    if len(scored) > 1 and scored[0][0] == scored[1][0]:
+        return None
+    return scored[0][1] if scored else None
+
+
+def shared_depth(one: str, two: str) -> int:
+    first = PurePosixPath(one).parent.parts
+    second = PurePosixPath(two).parent.parts
+    depth = 0
+    for a, b in zip(first, second):
+        if a.casefold() != b.casefold():
+            break
+        depth += 1
+    return depth
+
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 def scan_repo(root: Path):
     """Scanner with the same contract as `collect_index_data`."""
     root = Path(root)
     relative_paths = repo_files(root)
     by_path = {path.casefold(): path for path in relative_paths}
+<<<<<<< HEAD
+=======
+    by_name = collections.defaultdict(list)
+    for path in relative_paths:
+        by_name[PurePosixPath(path).name.casefold()].append(path)
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
     notes, sections, links, errors = [], [], [], []
     for relative_path in relative_paths:
@@ -169,7 +293,11 @@ def scan_repo(root: Path):
                 links.append(pkm.Link(
                     source_path=relative_path,
                     raw_target=raw_target,
+<<<<<<< HEAD
                     resolved_target_path=resolve_reference(raw_target, relative_path, root, by_path),
+=======
+                    resolved_target_path=resolve_reference(raw_target, relative_path, root, by_path, by_name),
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
                     start_line=start_line,
                 ))
 
@@ -209,11 +337,32 @@ def selfcheck():
             "\n"
             "Broken on purpose: see src/missing.ts and [gone](docs/gone.md).\n"
             "\n"
+<<<<<<< HEAD
             "External links are not edges: [site](https://example.com/a/b.html).\n",
+=======
+            "A partial path still resolves: see lib/parser.ts for the parser.\n"
+            "\n"
+            "An ambiguous one does not: see other/util.ts.\n"
+            "\n"
+            "External links are not edges: [site](https://example.com/a/b.html).\n"
+            "\n"
+            "A docs site drops the extension: [guide](docs/guide) and [readme](README).\n"
+            "\n"
+            "A vault writes it as [[guide|the guide]] and embeds ![[logo.png]].\n",
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
             encoding="utf-8")
         (root / "docs" / "guide.md").write_text(
             "## Setup\n\nBack to the [readme](../README.md).\n", encoding="utf-8")
         (root / "src" / "app.ts").write_text("export const app = 1;\n", encoding="utf-8")
+<<<<<<< HEAD
+=======
+        (root / "src" / "lib").mkdir()
+        (root / "src" / "lib" / "parser.ts").write_text("export const parse = 1;\n", encoding="utf-8")
+        (root / "src" / "util.ts").write_text("export const a = 1;\n", encoding="utf-8")
+        (root / "src" / "lib" / "util.ts").write_text("export const b = 1;\n", encoding="utf-8")
+        (root / "src" / "lib" / "notes.md").write_text(
+            "# Notes\n\nThe nearer one wins: see gone/util.ts here.\n", encoding="utf-8")
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
         (root / "assets" / "logo.png").write_bytes(b"\x89PNG")
         (root / "assets" / "unused.png").write_bytes(b"\x89PNG")
         (root / "node_modules" / "pkg" / "readme.md").write_text("# ignored\n", encoding="utf-8")
@@ -221,11 +370,21 @@ def selfcheck():
         notes, sections, links, errors = scan_repo(root)
         assert not errors, errors
         paths = {note[0] for note in notes}
+<<<<<<< HEAD
         assert paths == {"README.md", "docs/guide.md", "src/app.ts",
                          "assets/logo.png", "assets/unused.png"}, paths
         assert {note[0]: note[2] for note in notes}["assets/logo.png"] == "asset"
         assert {note[0]: note[2] for note in notes}["src/app.ts"] == "code"
         assert {section.path for section in sections} == {"README.md", "docs/guide.md"}, \
+=======
+        assert paths == {"README.md", "docs/guide.md", "src/app.ts", "src/lib/parser.ts",
+                         "src/util.ts", "src/lib/util.ts", "src/lib/notes.md",
+                         "assets/logo.png", "assets/unused.png"}, paths
+        assert {note[0]: note[2] for note in notes}["assets/logo.png"] == "asset"
+        assert {note[0]: note[2] for note in notes}["src/app.ts"] == "code"
+        assert {section.path for section in sections} == {"README.md", "docs/guide.md",
+                                                          "src/lib/notes.md"}, \
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
             "only markdown is searchable"
 
         edges = {(link.source_path, link.raw_target): link.resolved_target_path for link in links}
@@ -235,6 +394,19 @@ def selfcheck():
         assert edges[("README.md", "src/missing.ts")] is None, "a broken bare path is queryable"
         assert edges[("README.md", "docs/gone.md")] is None, "a broken link is queryable"
         assert edges[("docs/guide.md", "../README.md")] == "README.md", "resolved from the source dir"
+<<<<<<< HEAD
+=======
+        assert edges[("README.md", "lib/parser.ts")] == "src/lib/parser.ts", \
+            "a partial path falls back to the one file with that name"
+        assert edges[("README.md", "other/util.ts")] is None, \
+            "two files named util.ts leave the reference unresolved"
+        assert edges[("README.md", "docs/guide")] == "docs/guide.md", "extensionless link"
+        assert edges[("README.md", "README")] == "README.md", "extensionless link to a sibling"
+        assert edges[("src/lib/notes.md", "gone/util.ts")] == "src/lib/util.ts", \
+            "of two files with that name, the one nearer the source"
+        assert edges[("README.md", "guide|the guide")] == "docs/guide.md", "wikilink with an alias"
+        assert edges[("README.md", "logo.png")] == "assets/logo.png", "wikilink embed"
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
         assert not [target for _, target in edges if "example.com" in target], "urls are not edges"
         assert len(links) == len(edges), "no duplicate edge from one line matching twice"
 

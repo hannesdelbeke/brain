@@ -24,3 +24,8 @@ Imagine an infinite scroll for interesting notes. [[sliding panes]] already feel
 
 [[navigation]]
 [[scrolling]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - note-taking workflow gaps]] — no swipe/feed plugin exists; closest are [Serendipity](https://community.obsidian.md/plugins/serendipity) and Smart Random Note.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

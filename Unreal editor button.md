@@ -1,4 +1,9 @@
 ---
+<<<<<<< HEAD
+=======
+aliases:
+- add button to unreal toolbar
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: 8fff01ef
@@ -38,3 +43,8 @@ def create_script_editor_button():
     level_menu_bar.add_menu_entry(section_name, entry)
     menus.refresh_all_widgets()
 ```
+<<<<<<< HEAD
+=======
+
+See also [[Unreal python plugin template]] and [[Unreal toolbar]].
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

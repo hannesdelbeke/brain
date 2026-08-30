@@ -52,3 +52,9 @@ In case of updates ensure we don't break dependencies
 
 ## alternatives
 https://pypi.org/project/mkdocs-backlinks/ this might replace janitor
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+> [!learning] confirmed (checked 2026-08-30): the original [andymatuschak/note-link-janitor](https://github.com/andymatuschak/note-link-janitor) is real and still the reference implementation; Matuschak's own README says he intended to extend it to detect broken links and orphans but never did, so it never became a dead-link/orphan tool (see [[Obsidian find dead links]] for what does that job instead).
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

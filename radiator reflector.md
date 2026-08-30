@@ -16,3 +16,8 @@ tags:
 	- the total energy saved in a typical year in the UK’s climate would be of the order of 60 kW⋅h"
 		- current rate is 5.89 p/kWh, so about £3.5 per year, per room
 Seems the saving might not be worth the effort for a modern house.
+<<<<<<< HEAD
+=======
+
+[[radiator]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

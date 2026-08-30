@@ -1,4 +1,9 @@
 ---
+<<<<<<< HEAD
+=======
+aliases:
+- social media
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: 26e486d1
@@ -11,6 +16,13 @@ tags:
 - health
 ---
 
+<<<<<<< HEAD
+=======
+[[comment|commenting]], [[liking]]
+
+- [article](https://anthonyamar.fr/Productivity/Social+media+detox) on social media detox
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 The constant influx of [[notification|notifications]] and the allure of engaging content can pull attention away from primary tasks, leading to decreased focus and productivity.
 
 [[cognitive load]]

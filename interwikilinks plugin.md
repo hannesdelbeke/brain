@@ -80,3 +80,9 @@ It works, but it's not as neat as `[[graph:page name]]`
 could we do something similar in [[Obsidian]] ?
 
 [[interwiki links]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+> [!learning] confirmed (checked 2026-08-30) there is no maintained Obsidian plugin doing true cross-vault interwiki resolution — this note is a design sketch, not a reference to an existing tool. The closest things are the manual `obsidian://vault/<vault>/<note>` URI and Logseq's `logseq://graph/<graph>?page=<page>` scheme, both already noted above.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

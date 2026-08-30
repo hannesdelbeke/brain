@@ -22,3 +22,8 @@ use normal URLs and replace source everywhere when needed
 Notes:
 - if it redirects to an URL, does it work with the "open link in note-tab" plugin?
 - similar to [[Obsidian aliases]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

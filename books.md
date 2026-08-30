@@ -1,4 +1,9 @@
 ---
+<<<<<<< HEAD
+=======
+aliases:
+- book
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: be61a44b
@@ -9,6 +14,11 @@ tags:
 - hobby
 ---
 
+<<<<<<< HEAD
+=======
+[[blog]], or books
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 summaries:
 [[thomas j frank notes - The Power of Habit]]
 [[mirror - thomas j frank notes - hyperfocus]]

@@ -1,4 +1,9 @@
 ---
+<<<<<<< HEAD
+=======
+aliases:
+- Lisbon
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 energy: 6
 sentiment:
 - 6
@@ -49,3 +54,8 @@ tags:
 	- hipster area: LX Factory
 
 [[Lisbon]]
+<<<<<<< HEAD
+=======
+[[city]]
+[[Portugal]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

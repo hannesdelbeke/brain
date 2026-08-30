@@ -27,3 +27,8 @@ Ideally:
 - an [[AI agent]] processes my notes and adds them into my vault.
 	- then deletes the keep note once processed.
 - option to ignore notes in keep, e.g. my shopping list.
+<<<<<<< HEAD
+=======
+
+Found: Keepsidian v1.1.2+ added experimental two-way sync (opt-in, backup required first). See [[proposal - resumable bidirectional sync adapter]].
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

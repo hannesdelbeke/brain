@@ -19,3 +19,8 @@ opposite of [[private notes]]
 
 example of a public "note": www.wikipedia.org
 another example: this note you are reading.
+<<<<<<< HEAD
+=======
+
+Found: [Share Note](https://github.com/alangrainger/share-note) for the friend-only tier — see [[proposal - note-taking workflow gaps]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

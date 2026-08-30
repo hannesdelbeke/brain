@@ -94,3 +94,7 @@ This example follows the MVC pattern by separating the concerns into distinct co
 Note that in this example, we have not included any additional logic for displaying or utilizing the data from the Model. The focus is on the separation of responsibilities according to the MVC pattern.
 
 [[programming patterns]]
+<<<<<<< HEAD
+=======
+contrast with [[MVP python example]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

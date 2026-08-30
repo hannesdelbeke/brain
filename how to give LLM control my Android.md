@@ -54,3 +54,8 @@ or [[gemini]] (free, slow) atm
      exactly what to click and use the mirrored output as the working surface if your environment supports it.
      What it adds:
       - much faster UI setup
+<<<<<<< HEAD
+=======
+
+Related: [[proposal - agent git workflow tooling]] — same "agent needs access beyond its default sandbox" shape as the multi-repo sandboxing gap, flagged there as adjacent
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

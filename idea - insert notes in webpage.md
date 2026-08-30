@@ -29,3 +29,8 @@ becomes `Your [[Rule of X]] will also change`
 - The combo of [[note taking|notes]] & a [[website]] reminds me of [[note linking duplicate source]], which describes linking to sites from in a ([[Obsidian]]) note.
 
 [[idea]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - cross-app entity registry]] — a webpage as a registry entity with note-relationships covers this without a fragile in-page overlay.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
