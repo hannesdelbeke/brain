@@ -12,14 +12,14 @@ tags:
 ---
 Applying the hybrid search, vector embeddings, and SQLite indexing optimizations from [[pkm metadata indexer]] to unified session logs across Antigravity, Codex, and Claude Code.
 
-**Status, 2026-08-27: built for Claude Code.** `index_sessions.py` is the adapter, 859 transcripts and 1.49 GB index to 79,489 sections and 9,738 edges, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Queries run 34-62ms with vectors and 30-58ms without. A first pass costs 19.24s of metadata plus 298.86s of embedding; after it, a transcript only grows, so a reindex parses the appended bytes and finishes in 7.78s ([[2026-08-27 tail reads, resuming an index at the byte it stopped at]]). What follows is the design and what measurement changed about it; Antigravity and Codex are still unwritten.
+**Status, 2026-08-30: built for Claude Code and Antigravity.** `index_sessions.py` is the adapter, 859 transcripts and 1.49 GB index to 79,489 sections and 9,738 edges, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Queries run 34-62ms with vectors and 30-58ms without. A first pass costs 19.24s of metadata plus 298.86s of embedding; after it, a transcript only grows, so a reindex parses the appended bytes and finishes in 7.78s ([[2026-08-27 tail reads, resuming an index at the byte it stopped at]]). Antigravity followed on 2026-08-30 as `index_agy.py`, and Codex is still unwritten. What follows is the design and what measurement changed about it.
 
 The engine needed no new index, ranker or daemon. `build_index` gained one `collect=` parameter naming the scanner, the markdown scanner stayed the default, and everything after the scan was already source-agnostic.
 
 ## Problem: The Multi-Gigabyte Transcript Grep Bottleneck
 
 Developers and autonomous workflows run multiple agent CLIs across projects:
-- [[how to inspect antigravity cli sessions|Antigravity CLI]] stores structured steps in `~/.gemini/antigravity-cli/brain/`
+- [[how to inspect antigravity cli sessions|Antigravity CLI]] stores structured steps in one SQLite database per conversation under `~/.gemini/antigravity-cli/conversations/`, as binary protobuf with no published schema
 - [[how to inspect Codex sessions|Codex CLI]] records turn streams in `~/.codex/sessions/`
 - [[how to inspect Claude Code sessions|Claude Code]] logs project transcripts in `~/.claude/projects/`
 
@@ -96,7 +96,7 @@ Instead of vault heading chunking (`^## `), session indexing chunks by **turn in
 
 **Primary chunk: User Prompt + Assistant Plan** (~150–300 tokens). For multi-tool turns where a single response contains 5+ tool calls with intermediate reasoning, chunk each (tool_call + tool_result) pair as a separate searchable unit. Apply the same 30-token minimum floor from [[pkm metadata indexer]] — trivial turns like "yes" or "continue" skip embedding to avoid vector noise.
 
-**Incremental indexing:** Treat session JSONL as an append-only log. Track `file_mtime` + byte offset per file to index new turns without waiting for session completion (Antigravity sessions have no explicit end marker). SHA256 content hashing skips already-indexed turn blocks. Hash check: <50ms. Embedding new turns: ~1–5s depending on volume (GPU/DirectML).
+**Incremental indexing:** Resume rather than reparse, by whatever unit the store appends in. Claude Code appends JSON Lines, so the resume point is a `file_mtime` plus a byte offset per file. Antigravity appends rows, so the resume point is the highest `steps.idx` read, and the last step is reread because Antigravity rewrites it in place while the answer streams. Neither waits for session completion, since neither format has an explicit end marker. SHA256 content hashing skips already-indexed turn blocks. Hash check: <50ms. Embedding new turns: ~1–5s depending on volume (GPU/DirectML).
 
 **Tool call & file inversion:** Index tool arguments and changed files via the `file_edges` table and FTS5 for instant structured lookup:
 ```sql
@@ -121,6 +121,7 @@ Apply top-500 candidate pre-filtering before RRF to avoid O(N log N) sorting bot
 * [x] **Session Corpus Ingestion:** 859 transcripts (1.49 GB) parsed and indexed down to 79,489 sections and 9,738 subagent / file edges in SQLite (`.pkm_index.db`).
 * [x] **Local Hybrid Search:** FTS5 BM25 + ONNX DirectML `bge-small-en-v1.5` embeddings fused via Reciprocal Rank Fusion (RRF). Queries execute in 34–62ms warm.
 * [x] **Tail Reads on Transcripts:** Byte-offset resume parses only newly appended bytes, reducing incremental updates from 12.46s to 0.78s ([[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]]).
+* [x] **Antigravity Adapter:** `index_agy.py` reads schema-free protobuf out of one SQLite database per conversation, resuming on `steps.idx` rather than a byte offset, and reaches the daemon through `--corpus` without adding code to it.
 * [x] **Live File Watchers:** `searchd --watch` runs multi-corpus watchers using `watchfiles` with a 2-second debounce and indexer write filtering.
 * [x] **Cross-Encoder Reranking & Privacy Gates:** Optional `ms-marco-MiniLM-L-6-v2` reranker with `--withhold-private` regex scanner ensuring zero telemetry egress for sensitive credentials, home paths, or network IPs.
 * [x] **Graph & File Provenance Queries:** `link_graph.py` queries file references across sessions, identifying which agent session last modified or debugged any code or document asset.
@@ -149,16 +150,16 @@ The problem of giving coding agents durable memory across sessions spans several
 | Feature | Cloud Memory (Mem0 / Letta) | Local MCP Tools (SessionFlow) | Our Session Indexer (`pkm-search`) |
 | :--- | :--- | :--- | :--- |
 | **Data Privacy** | Cloud API storage / egress | Local machine | **100% Local-First** (Zero egress, DirectML ONNX) |
-| **Ingest Latency** | Async LLM extraction pipeline | Full file scan | **Tail-read byte offsets** (0.78s incremental) |
+| **Ingest Latency** | Async LLM extraction pipeline | Full file scan | **Resume per store** (byte offsets, 0.78s incremental; step cursors for Antigravity, 0.26s) |
 | **Retrieval Strategy** | Vector-only or GraphRAG | Pure Vector Search | **Hybrid RRF** (FTS5 BM25 + Vectors + Reranker) |
-| **Multi-Agent Normalization** | Single agent harness | Claude Code only | **Unified Schema** (Claude + Antigravity + Codex) |
+| **Multi-Agent Normalization** | Single agent harness | Claude Code only | **Unified Schema** (Claude and Antigravity shipped, Codex unwritten) |
 | **Live Sync & Invalidation** | Periodic re-sync | Static batch index | **`watchfiles` + split-lock resident daemon** |
 
 ---
 
 ## Open Tasks & Next Steps
 
-1. **Antigravity & Codex Adapters:** Write the scanner generator for Antigravity (`~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript.jsonl`) and Codex (`~/.codex/sessions/`) to fulfill the multi-agent contract.
+1. **Codex Adapter:** Write the scanner for Codex (`~/.codex/sessions/`) to fulfill the multi-agent contract. Antigravity landed on 2026-08-30 as `index_agy.py`: 18 conversations and 44 MB down to 17 notes, 1,511 sections, 107 edges and 2.4 MB of index, served through `searchd.py --corpus` with no code of its own. Its field map was read out of the wire format by volume rather than from a schema, so `index_agy_validation.md` is the procedure for rechecking it on a larger corpus.
 2. **Cross-Machine Sync Layer:** Transcripts remain local to each workstation; building a lightweight sync or Git-backed metadata exchange is required for multi-device recall.
 3. **Supervisor Integration:** Feed session turns directly into [[public/proposal - self-learning agent supervisor and continuous prompt failure distillation|self-learning agent supervisor]] to automatically cluster human correction prompts.
 
