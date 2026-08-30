@@ -20,9 +20,8 @@ neither exists on disk, which is what makes a broken reference queryable. A
 target that resolves nowhere falls back to its filename alone, when exactly one
 file in the repository carries that name.
 
-No import parsing and no cross-repo resolution: measured over three repositories
-in `2026-08-27 agent search progress`, cross-repo resolution has 26 candidate
-edges across 54,000 files and does not earn itself, and import parsing does but
+No import parsing and no cross-repo resolution: measured over three repositories,
+cross-repo resolution has 26 candidate edges across 54,000 files and does not earn itself, and import parsing does but
 only after a guid parser, since a unity asset is referenced from a `.meta` file
 rather than from prose.
 """
@@ -147,9 +146,9 @@ def resolve_reference(raw_target: str, source_path: str, root: Path,
     Last, the filename alone, and when several files carry it, the one nearest
     the source in the tree. Prose names a file from wherever it was written, so
     a partial path is the common shape of a broken edge rather than a rare one:
-    the fallback resolves 34% of HyperLight's unresolved edges and 72% of
-    proj-project-d-client's, against 5% and 3% whose basename is ambiguous, which
-    is the measurement in `2026-08-27 agent search progress`. A name that is
+    the fallback resolves 34% of a typescript game's unresolved edges and 72%
+    of a unity client's, against 5% and 3% whose basename is ambiguous. A name
+    that is
     ambiguous at the same depth stays unresolved, since a wrong edge is worse
     here than a missing one.
     """
