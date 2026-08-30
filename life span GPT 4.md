@@ -1,4 +1,6 @@
 ---
+aliases:
+- life span GPT3
 sentiment:
 - 5
 sentiment-hash: 613ed8dc
@@ -46,6 +48,10 @@ Increasing human [[lifespan]] involves a multifaceted approach combining diet, l
 
 1. **Avoid Environmental Toxins**: Minimize exposure to pollutants, pesticides, and harmful chemicals.
 2. **Positive Outlook and Purpose**: Cultivating a positive mindset and having a sense of purpose in life can contribute to longevity.
+
+### From the GPT3 variant of this prompt
+- **[[vitamin B12]]**: important for vegetarians specifically, via fortified foods or supplements.
+- **Regular Health Check-ups**: preventive screenings, [[vaccinations]], and monitoring [[blood pressure]], [[cholesterol]], and [[blood sugar levels]].
 
 ### Conclusion
 

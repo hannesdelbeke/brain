@@ -57,3 +57,4 @@ Show
 - i often go back to the [[2025-11-16 obsidian data lake|data lake idea]]. Data is data. a note, an event, a contact
 ### Related
 Recently I wrote about [[2025-10-21 write more on location|a more portable note taking setup]]
+[[idea - auto link notes to calendar]]
