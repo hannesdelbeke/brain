@@ -12,4 +12,6 @@ pros
 [[human vs ai text context|human vs AI authorship]]
 [[track prompt history]]
 
+See [[proposal - note-taking workflow gaps]] — not a plugin ask.
+
 

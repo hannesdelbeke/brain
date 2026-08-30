@@ -18,3 +18,5 @@ This feels like inconsistent [[UX]]
 
 [[inconsistent]]
 [[inconsistent UX]]
+
+See [[proposal - note-taking workflow gaps]] — core Obsidian gap, no plugin fixes it; open [forum thread](https://forum.obsidian.md/t/please-undo-deleting-a-file-now-closes-its-tab/55143).
