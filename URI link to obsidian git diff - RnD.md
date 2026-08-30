@@ -23,3 +23,5 @@ tech research: [[obsidian-git historical diff internals]]
 - [[linking to git commits and diffs in obsidian via uri]] — Synthesis of URI schemes, snapshots, and permalinks.
 - [[wikilink temporal integrity]] — Automated background temporal resolution without manual commit hashes.
 - [[2026-07-31 historic obsidian links]] — Mining Git commit diffs to discover historical link changes.
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
