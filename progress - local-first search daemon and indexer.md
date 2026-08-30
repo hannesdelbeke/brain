@@ -20,7 +20,7 @@ aliases:
 > **needs from you:** open obsidian and look at the plugin, since nobody has seen it rendered. then two publishing decisions: whether the engine ships as an installable package under `h-forts/pkm-search`, and whether the plugin repository goes public with a release.
 
 > [!todo] next
-> **next:** use the plugin for a week and read what the query log says afterwards, since every number on it so far comes from a harness. after that, run `index_repo.py` over a repository that has real documentation, since the only run so far was over a repository with three markdown files and no relative links, which produced 0 edges and proved nothing.
+> **next:** use the plugin for a week and read what the query log says afterwards, since every number on it so far comes from a harness. after that, point `index_repo.py` at a repository of ours and decide whether a code corpus joins the two vaults at logon.
 > **blocked:** the plugin cannot be submitted while its repository is private and has no release, which is yours to change.
 
 **why:** [[2026-08-27 agentic pkm action plan]]
@@ -68,7 +68,7 @@ an obsidian plugin reaches the daemon over the same HTTP interface any client us
 
 ## what is open
 
-the repository link graph is the live item. `index_repo.py` landed as v0 on 2026-08-28 and turns markdown links, image embeds and bare relative paths into `edges` rows, with the target resolved against the source directory then the repository root and left null when it resolves nowhere, which is what makes a broken reference queryable. it has been run over one repository, which had three markdown files and no relative links, and produced 606 notes and 0 edges. until it runs over a repository with real documentation, neither "what references this file" nor "which images are referenced by nothing" is answered. designed in [[2026-08-27 a link graph over code, docs and assets]].
+the repository link graph works and has not been pointed at our own repositories yet. `index_repo.py` landed as v0 on 2026-08-28 and turns markdown links, image embeds, wikilinks and bare relative paths into `edges` rows, with the target left null when it resolves nowhere, which is what makes a broken reference queryable. on 2026-08-30 it was run over obsidian's own documentation repositories, the first ones it has seen with real documentation in them, and three resolver gaps came out of it: extensionless links, wikilinks, and a basename carried by several files. fixed, and 5,586 references over the developer docs now resolve at 97.3% against 3 rows before. "which images are referenced by nothing" returns 729 of 4,457 over the help repository and the sample checks out. designed in [[2026-08-27 a link graph over code, docs and assets]], measured in [[2026-08-30 vault index work log]]. what is left is running it over a repository of ours and deciding whether a code corpus is registered at logon beside the two vaults.
 
 the scanner seam is a claim rather than a fact until a second transcript scanner exists. one scanner for one agent CLI returning `(notes, sections, links, errors)` is an interface with one implementation; a second one, for another agent's transcripts, is what turns it into a seam. any summarisation added later posts plain JSON to an endpoint named by an environment variable, with no SDK and no key in the source, and what the model wrote is committed as data so the index rebuilds with no model running.
 
