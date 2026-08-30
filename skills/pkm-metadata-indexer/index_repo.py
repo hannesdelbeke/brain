@@ -16,15 +16,21 @@ Three reference kinds become edges, all of them from markdown only: links
 `[text](path)`, image embeds `![alt](path)`, and bare relative paths in prose
 such as `see src/auth/token.py`. A target resolves against the source file's
 directory then the repository root, and `resolved_target_path` stays null when
-neither exists on disk, which is what makes a broken reference queryable.
+neither exists on disk, which is what makes a broken reference queryable. A
+target that resolves nowhere falls back to its filename alone, when exactly one
+file in the repository carries that name.
 
-No import parsing and no cross-repo resolution: those are the expensive half and
-they earn their keep once the cheap half is useful.
+No import parsing and no cross-repo resolution: measured over three repositories
+in `2026-08-27 agent search progress`, cross-repo resolution has 26 candidate
+edges across 54,000 files and does not earn itself, and import parsing does but
+only after a guid parser, since a unity asset is referenced from a `.meta` file
+rather than from prose.
 """
 
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import os
 import re
@@ -112,12 +118,21 @@ def iter_references(content: str):
                 yield raw_target, line
 
 
-def resolve_reference(raw_target: str, source_path: str, root: Path, by_path: dict[str, str]) -> str | None:
+def resolve_reference(raw_target: str, source_path: str, root: Path,
+                      by_path: dict[str, str], by_name: dict[str, str] | None = None) -> str | None:
     """The path this reference points at, or None when nothing is there.
 
     Relative to the source file first, since that is what a markdown link means,
     then to the repository root. A target that climbs out of the root is not a
     node here, so it stays unresolved rather than pointing outside the corpus.
+
+    Last, the filename alone, and only when exactly one file in the repository
+    carries it. Prose names a file from wherever it was written, so a partial
+    path is the common shape of a broken edge rather than a rare one: the
+    fallback resolves 34% of HyperLight's unresolved edges and 72% of
+    proj-project-d-client's, against 5% and 3% whose basename is ambiguous, which
+    is the measurement in `2026-08-27 agent search progress`. Ambiguous names
+    stay unresolved, since a wrong edge is worse here than a missing one.
     """
     target = urllib.parse.unquote(raw_target.split("#", 1)[0].strip()).replace("\\", "/")
     if not target:
@@ -138,7 +153,7 @@ def resolve_reference(raw_target: str, source_path: str, root: Path, by_path: di
         # artifact" reads as resolved rather than broken.
         if (root / normalised).is_file():
             return normalised
-    return None
+    return (by_name or {}).get(PurePosixPath(target).name.casefold())
 
 
 def scan_repo(root: Path):
@@ -146,6 +161,9 @@ def scan_repo(root: Path):
     root = Path(root)
     relative_paths = repo_files(root)
     by_path = {path.casefold(): path for path in relative_paths}
+    counted = collections.Counter(PurePosixPath(path).name.casefold() for path in relative_paths)
+    by_name = {PurePosixPath(path).name.casefold(): path for path in relative_paths
+               if counted[PurePosixPath(path).name.casefold()] == 1}
 
     notes, sections, links, errors = [], [], [], []
     for relative_path in relative_paths:
@@ -169,7 +187,7 @@ def scan_repo(root: Path):
                 links.append(pkm.Link(
                     source_path=relative_path,
                     raw_target=raw_target,
-                    resolved_target_path=resolve_reference(raw_target, relative_path, root, by_path),
+                    resolved_target_path=resolve_reference(raw_target, relative_path, root, by_path, by_name),
                     start_line=start_line,
                 ))
 
@@ -209,11 +227,19 @@ def selfcheck():
             "\n"
             "Broken on purpose: see src/missing.ts and [gone](docs/gone.md).\n"
             "\n"
+            "A partial path still resolves: see lib/parser.ts for the parser.\n"
+            "\n"
+            "An ambiguous one does not: see other/util.ts.\n"
+            "\n"
             "External links are not edges: [site](https://example.com/a/b.html).\n",
             encoding="utf-8")
         (root / "docs" / "guide.md").write_text(
             "## Setup\n\nBack to the [readme](../README.md).\n", encoding="utf-8")
         (root / "src" / "app.ts").write_text("export const app = 1;\n", encoding="utf-8")
+        (root / "src" / "lib").mkdir()
+        (root / "src" / "lib" / "parser.ts").write_text("export const parse = 1;\n", encoding="utf-8")
+        (root / "src" / "util.ts").write_text("export const a = 1;\n", encoding="utf-8")
+        (root / "src" / "lib" / "util.ts").write_text("export const b = 1;\n", encoding="utf-8")
         (root / "assets" / "logo.png").write_bytes(b"\x89PNG")
         (root / "assets" / "unused.png").write_bytes(b"\x89PNG")
         (root / "node_modules" / "pkg" / "readme.md").write_text("# ignored\n", encoding="utf-8")
@@ -221,7 +247,8 @@ def selfcheck():
         notes, sections, links, errors = scan_repo(root)
         assert not errors, errors
         paths = {note[0] for note in notes}
-        assert paths == {"README.md", "docs/guide.md", "src/app.ts",
+        assert paths == {"README.md", "docs/guide.md", "src/app.ts", "src/lib/parser.ts",
+                         "src/util.ts", "src/lib/util.ts",
                          "assets/logo.png", "assets/unused.png"}, paths
         assert {note[0]: note[2] for note in notes}["assets/logo.png"] == "asset"
         assert {note[0]: note[2] for note in notes}["src/app.ts"] == "code"
@@ -235,6 +262,10 @@ def selfcheck():
         assert edges[("README.md", "src/missing.ts")] is None, "a broken bare path is queryable"
         assert edges[("README.md", "docs/gone.md")] is None, "a broken link is queryable"
         assert edges[("docs/guide.md", "../README.md")] == "README.md", "resolved from the source dir"
+        assert edges[("README.md", "lib/parser.ts")] == "src/lib/parser.ts", \
+            "a partial path falls back to the one file with that name"
+        assert edges[("README.md", "other/util.ts")] is None, \
+            "two files named util.ts leave the reference unresolved"
         assert not [target for _, target in edges if "example.com" in target], "urls are not edges"
         assert len(links) == len(edges), "no duplicate edge from one line matching twice"
 
