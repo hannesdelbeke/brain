@@ -13,13 +13,13 @@ aliases:
 
 > [!summary] eli5
 > the obsidian side of the local search engine: backlinks, unlinked mentions, semantic neighbours and search, as one plugin rather than four, all of them reading from the daemon that already runs.
-> the merge happened on 2026-08-30 and the plugin exists: three surfaces, one daemon client, 45 tests against a fake obsidian and a live test against the real daemon. what is left is a look at it inside obsidian, and the measurement that decides whether the backlinks pane is worth keeping at all.
-> **needs from you:** open the private vault and look at the three surfaces, since nothing below has been seen by a human in the app yet.
+> the merge happened on 2026-08-30 and the plugin exists: five surfaces, one daemon client, 76 tests against a fake obsidian and a live test against the real daemon. what is left is a look at it inside obsidian, and the measurement that decides whether the backlinks pane is worth keeping at all.
+> **needs from you:** open the private vault and look at the five surfaces, since nothing below has been seen by a human in the app yet.
 
 > so if i want fast backlink search in obsidian, and semantic search later, and we have a prototype plugin in the vault, what are the next steps. and does it make sense to make separate plugins, backlinks, search, semantic search, semantic backlinks
 
 > [!todo] next
-> **next:** open the private vault in obsidian and use the three surfaces, since every measurement below is from a test harness and nothing has been seen rendered.
+> **next:** open the private vault in obsidian and use the five surfaces, since every measurement below is from a test harness and nothing has been seen rendered.
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]]
@@ -56,7 +56,9 @@ both hold their own base URL, their own fetch, their own CLI fallback, their own
 
 ## what shipped on 2026-08-30
 
-one plugin, `unified-search` in the private vault and `h-forts/obsidian-unified-search` as its repository, still plain javascript with no build step. three surfaces over one daemon client: the search modal, a related pane holding linked mentions, unlinked mentions and semantic neighbours as three sections, and the semantic local graph. the related pane fires its three routes in parallel and only `/links` is required, so a corpus with no vectors still renders backlinks.
+one plugin, `unified-search` in the private vault and `h-forts/obsidian-unified-search` as its repository, still plain javascript with no build step. five surfaces over one daemon client: the search modal, a related pane holding linked mentions, unlinked mentions and semantic neighbours as three sections, the semantic local graph, the vault graph, and missing links. the related pane fires its three routes in parallel and only `/links` is required, so a corpus with no vectors still renders backlinks.
+
+the last two came out of one route. `/graph` returns the whole corpus as mutual nearest neighbours in embedding space with the wikilinks merged in, and the plugin caches that payload for five minutes, so the vault graph is a canvas over it and missing links is a filter over the same bytes: `linked == 0`, sorted, top 200, behind the `!` prefix in the modal. the graph costs 116ms of layout at its 300-node default and 986ms for all 2,960 notes of the public corpus; the missing-links list costs 5ms because the payload is already in memory. see [[2026-08-30 a semantic graph over the whole vault]] for why mutual kNN is the edge rule and [[2026-08-30 what else the index can answer]] for the ranking these two came off.
 
 driven from a test harness against the running daemon, one note in the 871-note private corpus: the related pane renders in 107ms for all three sections, the graph in 22ms, a semantic query through the modal in 252ms, and a note the index has never seen still draws neighbours in 223ms through the `/search` fallback. the 2.7s first-call cost is gone from the interactive path, paid instead by one throwaway `/similar` after layout is ready.
 
@@ -80,7 +82,7 @@ two features landed with it, both ranked in [[2026-08-30 a semantic graph over t
 
 `harness.js` intercepts `require("obsidian")` before `main.js` loads and hands it a fake: `Plugin`, `ItemView`, `SuggestModal`, `Setting`, a DOM stub whose `createEl` records a tree that assertions can read, and a fake daemon that is a real HTTP server serving the shapes `searchd.py` returns, including its 200-with-an-error-field case. so the views, the modal and the settings tab run for real, rather than only the pure functions being reachable, which is all the two prototypes' tests could touch.
 
-59 tests, and they were checked by breaking the code: eight deliberate mutations, eight failures, one of which exposed a test that was passing for the wrong reason. `test-live.js` runs the same views against the daemon that is actually running, which is the only thing that catches a route quietly changing shape, and it now also asserts the two fields the new features read, `indexed_at` on `/health` and `vault` on a cross-corpus result row.
+76 tests. the suite was checked by breaking the code at 59 of them: eight deliberate mutations, eight failures, one of which exposed a test that was passing for the wrong reason. `test-live.js` runs the same views against the daemon that is actually running, which is the only thing that catches a route quietly changing shape, and it now also asserts the two fields the new features read, `indexed_at` on `/health` and `vault` on a cross-corpus result row.
 
 ## what is left
 

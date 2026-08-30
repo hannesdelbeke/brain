@@ -12,12 +12,12 @@ tags:
 > [!summary] eli5
 > obsidian's graph draws the links you wrote. the index knows a second kind of edge, the notes that are close in meaning whether or not you ever linked them, and this is what a graph over all of them looks like once it is measured rather than imagined.
 > mutual nearest neighbours is the version that draws: 5,458 edges over 2,959 notes, about the size of the wikilink graph, where plain nearest-neighbours gives 24,132 and a hairball. 69% of those edges are pairs you never linked, which is the whole point and also the reason the view has to be readable.
-> **needs from you:** nothing. the `/graph` route shipped on 2026-08-30 and the view is being built on top of it.
+> **needs from you:** open obsidian and look at it. the `/graph` route, the canvas view over it and the missing-links list all shipped on 2026-08-30, and nothing has been seen rendered by a human yet.
 
 > with the index and the daemon we have more connections. remake the obsidian graph but more optimised and with semantic connections
 
 > [!todo] next
-> **next:** the view. the route is written, the layout is not.
+> **next:** a human looks at the four surfaces in obsidian and says which of them is actually worth keeping.
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 one obsidian plugin over the search daemon]]
@@ -57,8 +57,8 @@ the route shipped on 2026-08-30, 60 lines. `nodes` is a path list and an edge in
 
 1. **freshness.** the pane answers out of the index, so a note edited since the last pass gets answers that are behind. `/health` already carries when the pass finished. *shipped on 2026-08-30, with a reindex the user can click.*
 2. **the other corpora.** one daemon serves several indexes, and no other obsidian plugin can show you the note in your other vault that is about what you are writing now. `/similar` cannot cross an index, so it is `/search` over the note's own text with the vault parameter set to all. *shipped the same day, off by default, 1.7s against two corpora.*
-3. **missing links.** the pairs that are mutual nearest neighbours and are not linked, sorted by how close they are, is a list of specific edits rather than a picture. it is the mutual-kNN computation above with the wikilinks subtracted, which is why the graph work pays for it.
+3. **missing links.** the pairs that are mutual nearest neighbours and are not linked, sorted by how close they are, is a list of specific edits rather than a picture. it is the mutual-kNN computation above with the wikilinks subtracted, which is why the graph work pays for it. *shipped on 2026-08-30 as the `!` prefix in the search modal, 3,750 pairs on the public corpus, top 200 kept, filtered from the graph payload the views already hold so it costs 5ms and no new route.* obsidian's own links are subtracted as well as the index's, or a link written since the last pass reads as missing.
 4. **section-level related.** neighbours of the paragraph the cursor is in rather than of the whole note. the sections are already the unit the index stores, so this is a route parameter and a heading, and it is the one that changes what writing in the editor feels like.
-5. **the whole-vault graph.** the picture. last, because it is the most work and the least likely to be opened twice.
+5. **the whole-vault graph.** the picture. *shipped on 2026-08-30, out of order, because the route made it a day of work rather than a week.* a canvas, a force layout with grid-bucketed repulsion, and a node budget: 116ms of layout at the 300-node default, 986ms for all 2,960. it opens around the note you are in and widens, and drawing everything is a button rather than the default. whether it gets opened twice is still the open question, and only use will answer it.
 
 related: [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]] for where the python lives, [[core Obsidian features to rework on the vault index]] for the acceptance each replaced feature needs, and [[2026-08-18 what retrieval costs as a vault grows]] for why the answers are locations rather than bodies.
