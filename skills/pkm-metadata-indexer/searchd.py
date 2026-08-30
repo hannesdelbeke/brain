@@ -34,6 +34,8 @@ Endpoints, all accepting `?vault=name`:
                            `&vault=all` searches every registered corpus
     GET  /links?note=      inbound and outbound wikilink edges for one note
     GET  /unlinked?note=   sections naming a note without linking to it
+    GET  /graph?k=         the whole corpus as nodes and edges: mutual nearest
+                           neighbours in embedding space, plus the wikilinks
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -75,6 +77,7 @@ from urllib.parse import urlparse, parse_qs
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import index_pkm_meta as pkm
+import numpy as np
 
 try:
     import watchfiles
@@ -171,6 +174,8 @@ class Vault:
         self.reader = None
         self.watched = False  # set when a watcher thread takes this corpus
         self.reindexing = False
+        self.graph_cache = None  # (vectors_version, k), payload
+
         self.stale_cache = None
         self.stale_at = 0.0
 
@@ -418,6 +423,124 @@ def do_links(vault: Vault, note: str) -> dict:
     }
 
 
+def note_vectors(meta, matrix):
+    """Pool section vectors into one vector per note, renormalised.
+
+    The index stores sections, and a graph wants notes. The mean of a note's
+    section vectors is what `find_similar_notes` already uses as its query, so
+    the same pooling is used here rather than a second definition of what a
+    note's position is.
+    """
+    paths, index_of = [], {}
+    for _, path, _, _ in meta:
+        if path not in index_of:
+            index_of[path] = len(paths)
+            paths.append(path)
+    rows = np.fromiter((index_of[row[1]] for row in meta), dtype=np.intp, count=len(meta))
+    pooled = np.zeros((len(paths), matrix.shape[1]), dtype=np.float32)
+    np.add.at(pooled, rows, matrix)
+    pooled /= np.maximum(np.linalg.norm(pooled, axis=1, keepdims=True), 1e-9)
+    return paths, index_of, pooled
+
+
+def semantic_graph(vectors, wikilinks, k: int, chunk: int = 512) -> dict:
+    """The corpus as a drawable graph: mutual nearest neighbours, plus the links.
+
+    Plain kNN is not drawable. Every note has k neighbours whether or not it
+    belongs anywhere, so a 2,959-note corpus produces 24,132 edges and a hairball
+    where the hubs eat the layout. Requiring the nearness to be mutual, that each
+    note is in the other's top k, drops that to 5,458 and to a degree
+    distribution a force layout can resolve. 69% of those edges are pairs nobody
+    wrote a wikilink between, which is the whole point of drawing them.
+
+    Wikilinks are carried too, whether or not the pair is near in meaning, so one
+    view holds both what was written and what was only meant. `linked` says which
+    it is, and an edge can be both.
+    """
+    meta, matrix = vectors
+    if matrix is None or len(meta) == 0:
+        return {"nodes": [], "edges": [], "k": k}
+    paths, index_of, pooled = note_vectors(meta, matrix)
+    count = len(paths)
+    k = max(1, min(k, count - 1))
+    if count < 2:
+        return {"nodes": paths, "edges": [], "k": k}
+
+    # The whole similarity matrix is count², 34 MB of float32 at 3k notes, and
+    # only ever needed a row at a time. Chunked so the peak is chunk × count.
+    near = [None] * count
+    for start in range(0, count, chunk):
+        block = pooled[start:start + chunk] @ pooled.T
+        for offset, row in enumerate(block):
+            index = start + offset
+            row[index] = -1.0  # a note is not its own neighbour
+            top = np.argpartition(-row, k - 1)[:k]
+            near[index] = {int(other): float(row[other]) for other in top}
+
+    edges = []
+    at = {}  # pair -> its row in edges, so a wikilink over a near pair marks it
+    for index, neighbours in enumerate(near):
+        for other, score in neighbours.items():
+            if other > index and index in near[other]:
+                at[(index, other)] = len(edges)
+                edges.append([index, other, round(score, 4), 0])
+    for source, target in wikilinks:
+        left, right = index_of.get(source), index_of.get(target)
+        if left is None or right is None or left == right:
+            continue
+        pair = (min(left, right), max(left, right))
+        if pair in at:
+            edges[at[pair]][3] = 1
+        else:
+            at[pair] = len(edges)
+            score = float(pooled[pair[0]] @ pooled[pair[1]])
+            edges.append([pair[0], pair[1], round(score, 4), 1])
+    return {"nodes": paths, "edges": edges, "k": k}
+
+
+def do_graph(vault: Vault, k: int) -> dict:
+    """The whole corpus, cached until the index changes.
+
+    Building it is a full similarity pass, 1 to 2s at 3k notes, which is too slow
+    for a pane that redraws on every note change and cheap enough to hold: the
+    answer only moves when the index does, and `data_version` already says when
+    that is. `nodes` is a path list and an edge indexes into it, `[source,
+    target, score, linked]`, which is a quarter of the bytes of the same edges
+    written out as objects with paths in them.
+    """
+    began = time.perf_counter()
+    vectors = vault.matrix()
+    with vault.lock:
+        key = (vault.vectors_version, k)
+        cached = vault.graph_cache
+    if cached is None or cached[0] != key:
+        payload = semantic_graph(vectors, wikilink_pairs(vault), k)
+        with vault.lock:
+            vault.graph_cache = (key, payload)
+    else:
+        payload = cached[1]
+    return {
+        "vault": vault.name,
+        "took_ms": round((time.perf_counter() - began) * 1000, 1),
+        "cached": cached is not None and cached[0] == key,
+        **payload,
+    }
+
+
+def wikilink_pairs(vault: Vault) -> list[tuple[str, str]]:
+    """Every wikilink that resolved to a note, as source and target paths."""
+    if not vault.db.exists():
+        return []
+    connection = sqlite3.connect(f"file:{vault.db}?mode=ro", uri=True)
+    try:
+        return connection.execute(
+            "SELECT DISTINCT source_path, resolved_target_path FROM edges "
+            "WHERE resolved_target_path IS NOT NULL"
+        ).fetchall()
+    finally:
+        connection.close()
+
+
 def do_similar(vault: Vault, note: str, limit: int) -> dict:
     began = time.perf_counter()
     STATE.last_query = time.time()
@@ -659,6 +782,8 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
                 self.reply(200, do_unlinked(vault, note, limit))
+            elif url.path == "/graph" and method == "GET":
+                self.reply(200, do_graph(vault, max(1, min(50, int(first("k") or 10)))))
             elif url.path == "/reindex" and method == "POST":
                 self.reply(200, do_reindex(vault))
             else:
@@ -666,7 +791,7 @@ class Handler(BaseHTTPRequestHandler):
         except KeyError as error:
             self.reply(404, {"error": str(error)})
         except ValueError:
-            self.reply(400, {"error": "limit must be a number"})
+            self.reply(400, {"error": "limit and k must be numbers"})
         except Exception as error:  # a bad query must not take the daemon down
             self.reply(500, {"error": f"{type(error).__name__}: {error}"})
 
