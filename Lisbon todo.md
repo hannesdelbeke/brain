@@ -1,4 +1,6 @@
 ---
+aliases:
+- Lisbon
 energy: 6
 sentiment:
 - 6
@@ -49,3 +51,5 @@ tags:
 	- hipster area: LX Factory
 
 [[Lisbon]]
+[[city]]
+[[Portugal]]

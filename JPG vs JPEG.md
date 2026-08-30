@@ -1,4 +1,7 @@
 ---
+aliases:
+- JPEG
+- JPG
 sentiment:
 - 5
 sentiment-hash: fdfb88b6

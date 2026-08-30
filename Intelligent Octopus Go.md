@@ -18,3 +18,4 @@ When it charges [[off-peak]], it costs only 7p / kWh, instead of 28p.
 
 [[octopus energy]]
 [[electrical grid]]
+[[Intelligent Octopus Go - 2026 EV charge 6h cap]]
