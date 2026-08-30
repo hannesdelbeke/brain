@@ -549,6 +549,76 @@ class SemanticGraphTest(unittest.TestCase):
         self.assertEqual(SEARCHD.semantic_graph(([], None), [], 10)["nodes"], [])
 
 
+class DuplicateClustersTest(unittest.TestCase):
+    """Pairs above a cutoff, grouped, on vectors chosen so the answer is known."""
+
+    # p, q, r, s are four ways of saying the same thing, x and y are close but
+    # not that close, and z is on its own.
+    META = [
+        (1, "p.md", "One", 1), (2, "q.md", "One", 1), (3, "r.md", "One", 1),
+        (4, "s.md", "One", 1), (5, "x.md", "One", 1), (6, "y.md", "One", 1),
+        (7, "z.md", "One", 1),
+    ]
+    MATRIX = SEARCHD.np.array([
+        [1.0, 0.0, 0.0], [0.9999, 0.0141, 0.0],
+        [0.9995, 0.0316, 0.0], [0.999, 0.0447, 0.0],
+        [0.0, 1.0, 0.0], [0.28, 0.96, 0.0],   # 0.96 to each other
+        [0.0, 0.0, 1.0],
+    ], dtype=SEARCHD.np.float32)
+
+    def clusters(self, threshold=0.99, wikilinks=(), **kwargs):
+        return SEARCHD.duplicate_clusters((self.META, self.MATRIX), list(wikilinks),
+                                          threshold, **kwargs)
+
+    def test_a_pile_of_duplicates_is_one_row_and_not_every_pair(self):
+        payload = self.clusters()
+        self.assertEqual(len(payload["clusters"]), 1)
+        cluster = payload["clusters"][0]
+        self.assertEqual(set(cluster["paths"]), {"p.md", "q.md", "r.md", "s.md"})
+        self.assertEqual(len(cluster["pairs"]), 6, "four notes are six pairs, reported once")
+        self.assertEqual(payload["pairs"], 6)
+
+    def test_the_threshold_decides_what_counts(self):
+        loose = self.clusters(threshold=0.95)
+        self.assertEqual({tuple(sorted(cluster["paths"])) for cluster in loose["clusters"]},
+                         {("p.md", "q.md", "r.md", "s.md"), ("x.md", "y.md")})
+        self.assertEqual(self.clusters(threshold=0.999999)["clusters"], [])
+
+    def test_a_note_is_never_its_own_duplicate(self):
+        for cluster in self.clusters(threshold=0.7)["clusters"]:
+            for left, right, _, _ in cluster["pairs"]:
+                self.assertNotEqual(left, right)
+
+    def test_an_existing_wikilink_is_marked_rather_than_filtered(self):
+        cluster = self.clusters(wikilinks=[("p.md", "q.md")])["clusters"][0]
+        by_pair = {tuple(sorted((cluster["paths"][left], cluster["paths"][right]))): linked
+                   for left, right, _, linked in cluster["pairs"]}
+        self.assertEqual(by_pair[("p.md", "q.md")], 1)
+        self.assertEqual(by_pair[("p.md", "r.md")], 0)
+        self.assertEqual(cluster["unlinked"], 5)
+
+    def test_the_pairs_that_mutual_knn_would_drop_are_found(self):
+        # every member of the pile is in every other's top 3, so k=3 mutual
+        # nearest neighbours cannot express all six pairs, and the scan does.
+        graph = SEARCHD.semantic_graph((self.META, self.MATRIX), [], 3)
+        drawn = sum(1 for edge in graph["edges"]
+                    if {graph["nodes"][edge[0]], graph["nodes"][edge[1]]} <= {"p.md", "q.md",
+                                                                              "r.md", "s.md"})
+        self.assertEqual(len(self.clusters()["clusters"][0]["pairs"]), 6)
+        self.assertLessEqual(drawn, 6)
+
+    def test_a_chunked_pass_gives_the_same_answer(self):
+        self.assertEqual(self.clusters(), self.clusters(chunk=2))
+
+    def test_the_cap_bounds_the_answer_and_says_so(self):
+        payload = self.clusters(threshold=0.7, max_pairs=2)
+        self.assertTrue(payload["truncated"])
+        self.assertLessEqual(payload["pairs"], 3)
+
+    def test_a_corpus_with_no_vectors_is_empty_rather_than_an_error(self):
+        self.assertEqual(SEARCHD.duplicate_clusters(([], None), [], 0.95)["clusters"], [])
+
+
 class GraphRouteTest(unittest.TestCase):
     """The route over a real index, which in this fixture has no vectors."""
 
@@ -586,6 +656,20 @@ class GraphRouteTest(unittest.TestCase):
 
     def test_a_k_that_is_not_a_number(self):
         self.assertEqual(fetch(self.port, "/graph?k=lots")[0], 400)
+
+    def test_the_duplicates_route_answers_and_caches(self):
+        status, body = fetch(self.port, "/duplicates")
+        self.assertEqual(status, 200)
+        self.assertEqual((body["vault"], body["threshold"]), ("graph", 0.95))
+        self.assertFalse(body["cached"])
+        self.assertTrue(fetch(self.port, "/duplicates")[1]["cached"])
+        self.assertEqual(body["clusters"], [])  # no embeddings in this fixture
+
+    def test_a_threshold_below_the_floor_is_clamped_rather_than_refused(self):
+        self.assertEqual(fetch(self.port, "/duplicates?threshold=0.1")[1]["threshold"], 0.7)
+
+    def test_a_threshold_that_is_not_a_number(self):
+        self.assertEqual(fetch(self.port, "/duplicates?threshold=high")[0], 400)
 
     def get_graph(self):
         return fetch(self.port, "/graph")
