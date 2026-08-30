@@ -38,8 +38,8 @@ When an [[public/AI agent|AI agent]] starts a turn and encounters uncommitted or
 ## 2. Multi-Agent Provenance & Safeguards
 
 When multiple agents run concurrently in the same repository:
-* **Check for In-Progress Agent Edits:** Ensure in-progress edits from another concurrent agent session are not swept up prematurely.
-* **Preserve Git Provenance:** Avoid committing agent code under human author without AI trailers, as git blame and review history depend on clear attribution.
+* **Sweep Only Cold Files:** A file nothing has written to for ten minutes is plausibly the human's. A file modified inside that window is plausibly a live agent's, so leave it alone and say so in the response instead of committing it. `git status --porcelain` lists the candidates and `find "<file>" -mmin +10` confirms one is cold.
+* **Preserve Git Provenance:** Avoid committing agent code under human author without AI trailers, as git blame and review history depend on clear attribution. The presumption of human authorship in section 1 only holds for a cold file.
 
 ## issues
 multi agents working in same vault human commit each others work
