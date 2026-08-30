@@ -65,6 +65,7 @@ To ensure Python doesn’t import the outdated vendored `plugget`, you can:
 consider:
 - Designing it to be stateless or restart-safe.
 - Using subprocesses or even `importlib.machinery.SourceFileLoader` to load a fresh copy under a different name.
+Brainstorm for [[plugget - create a self-installing plugin]].
 # Notes
 - plugget's `_requirements.py` action already vendors [[py-pip]], see [code](https://github.com/plugget/plugget/blob/9e46d4f7588e0818adb25eb52665a1c666a93696/plugget/actions/_requirements.py#L11)
   `_utils.py` doesn't use the vendored version, but the import is wrapped in a local method so it should be fine.

@@ -13,6 +13,6 @@ tags:
 
 [[heating]]
 
-[[insulation|insulating]] behind your radiator, makes it more efficient.
+[[insulation|insulating]] behind your radiator, makes it more efficient. See [[radiator reflector]] for the actual cost/benefit numbers.
 
 [[plumbing]]
