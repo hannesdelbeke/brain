@@ -1,5 +1,5 @@
 ---
-date: 2026-08-29
+date: 2026-08-30
 created: 2026-08-29
 tags:
   - architecture
@@ -14,7 +14,7 @@ aliases:
 
 > [!summary] eli5
 > whether the local search engine, today one directory of python inside this vault, should be split into parts and published for other people: a core library, an obsidian plugin, and a searcher over agent transcripts.
-> the engine already ran as two published copies once and they drifted, so the shape of any release is generated from the one copy rather than maintained beside it; of the three packages the transcript searcher is the only one that pays for itself before anyone else installs it.
+> the engine already ran as two published copies once and they drifted, so the shape of any release is generated from the one copy rather than maintained beside it; of the three packages the transcript searcher is the only one that pays for itself before anyone else installs it, and the obsidian one is written but not submitted.
 > **needs from you:** decide whether publishing is a goal at all, since none of this is worth doing for a single user, and the obsidian half competes with a plugin that already ships the same retrieval.
 
 > do a pass over the release plan and modular decoupling note, written by gemini flash. check what the vault already says about decoupling into a repository, and link those notes.
@@ -55,7 +55,21 @@ a plugin already ships FTS5 plus local vectors plus reciprocal rank fusion over 
 
 that second part is where the interesting feature is. backlinks answered as one indexed query against `edges` instead of a linear scan, unlinked mentions from FTS5 with code blocks and frontmatter excluded, and nearest-neighbour notes as soft backlinks beside the hard ones. the specific timings a plan of this shape asserts, sub-millisecond backlinks against a twelve second native startup, are unmeasured; the startup half can be measured with the plugin already published in [[2026-08-29 Startup Metrics Logger devlog]], and until it is, the feature is a hypothesis with a benchmark attached.
 
-the submission path is known rather than researched, written up in [[2026-08-29 Obsidian community plugin submission process]] and walked once already. what the plugin cannot avoid is the daemon: a community plugin that requires the user to install a python service is a different product from one that ships self-contained, and that is the design question to answer before writing typescript. the features worth rebuilding, with their acceptance, are listed in [[core Obsidian features to rework on the vault index]], and the plan for building them as one plugin over the endpoints that already answer is [[2026-08-29 one obsidian plugin over the search daemon]].
+the plugin itself was built out of order on 2026-08-30, ahead of everything else in this plan, because it was a merge of two prototypes that were already drifting rather than new work, and a third copy of the daemon client was about to appear. it exists, it is tested against the running daemon, and it is described in [[2026-08-29 one obsidian plugin over the search daemon]]. building it early costs nothing here: it is the one package with no dependency on the scanner seam. the features worth rebuilding, with their acceptance, are listed in [[core Obsidian features to rework on the vault index]].
+
+### what the directory checks now, and the two things that fail today
+
+the submission path moved. it is a form at community.obsidian.md rather than a pull request against `obsidian-releases`, and review is an automated scan on every release, scored across manifest, releases, source code and build verification, with errors blocking installation and warnings not. the source-code half is literally `obsidianmd/eslint-plugin`, which can be run locally before submitting, and the portal will run a preview scan against a branch. the older walkthrough in [[2026-08-29 Obsidian community plugin submission process]] is the account of the deprecated route.
+
+two rules bite this plugin specifically, and both are about the daemon rather than the code.
+
+the plugin must never install or update the daemon or its dependencies. detecting one and printing an instruction is allowed, `pip install` from a plugin is a removal. that is already how it behaves, and it is now stated in the README along with the network disclosure, since undisclosed network use is the most common reason a plugin is pulled, and localhost is cheap to disclose.
+
+the harder one: everything a plugin creates must be released on unload, and the daemon is deliberately started detached so it outlives obsidian and keeps serving the CLI and the agent sessions. either it is killed on unload, which breaks every other client, or the plugin does not own it and says so. the honest answer is the second, and it is a paragraph in the README rather than a code change, but it is the kind of thing a reviewer asks about.
+
+three smaller ones, all handled: `isDesktopOnly` does not silence the node-module lint, so `require("http")` sits behind a `Platform.isDesktop` guard; commands carry no default hotkeys and no plugin name; settings headings are sentence case with no heading called general.
+
+the build-step rule is the one real cost of plain javascript. the directory verifies that the shipped `main.js` matches the committed source, runs whatever npm script is named `build`, and the sample plugin's own `.gitignore` says not to commit `main.js` at all. a plugin with no bundler has nothing for that section to verify. the cheap way out is one esbuild line that bundles `src/main.js` into `main.js`, which also gets the minified build the load-time guide asks for; it is worth exactly nothing until submission, so it stays unwritten until then.
 
 ## package C, the session searcher
 
@@ -81,7 +95,7 @@ what is deliberately not on this list: shipping the daemon as a bundled binary. 
 
 ## the sequence
 
-second scanner first, since it is a day of work and everything else assumes it. then the session searcher, because its user exists. then the primitive split, at the point the searcher wants the extractor without ONNX, which is also when `--no-vectors` gets written and tested rather than asserted. the obsidian plugin last, because it is the most work, it is the one with a competitor, and its own prerequisite is the backlink measurement rather than any of the code above.
+second scanner first, since it is a day of work and everything else assumes it. then the session searcher, because its user exists. then the primitive split, at the point the searcher wants the extractor without ONNX, which is also when `--no-vectors` gets written and tested rather than asserted. the obsidian plugin is built already but its submission is still last, because it is the one with a competitor and its prerequisite is the backlink measurement rather than any of the code above.
 
 what would make the whole plan not worth running: nobody other than the author installing any of it. the engine is already in daily use as a skill directory, so the value of publishing is other people's bug reports and nothing else, and three packages is three READMEs, three issue trackers and three release workflows to keep for that. the version of this plan that survives a bad week is the session searcher on PyPI and the rest left as a directory in a vault.
 
