@@ -1,4 +1,6 @@
 ---
+aliases:
+- AI feedback BQt main
 sentiment:
 - 5
 sentiment-hash: 0ca3cf38
