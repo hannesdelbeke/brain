@@ -1,4 +1,6 @@
 ---
+aliases:
+- caffeine
 sentiment:
 - 5
 sentiment-hash: d5456bc9

@@ -14,4 +14,4 @@ tags:
 - central heating
 ---
 
-don't confuse with a [[boiler]] used in [[central heating]]
+don't confuse with a [[boiler]] used in [[central heating]], or with a plumbed-in [[boiling water tap]]

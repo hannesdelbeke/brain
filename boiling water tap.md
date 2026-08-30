@@ -18,3 +18,5 @@ or steaming hot tap
 
 instant water at 88C instead of 100C.
 e.g. better for [[coffee brew temperature]]
+
+not to be confused with a [[countertop boiling water boiler]] (freestanding countertop appliance, not plumbed in)

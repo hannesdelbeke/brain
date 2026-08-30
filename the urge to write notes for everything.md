@@ -29,7 +29,7 @@ This is not an effective use of my time, but it's fun.
 	- I think that maybe someone will one day read these notes.
 
 Fake productivity. I'm busy creating things, even if those things don't matter.
-e.g. [[writing notes about notes]]
+e.g. [[writing notes about notes]], [[writing notes can be procrastination]]
 
 It does however improve my [[writing]] skills, so it's not a complete waste of time.
 

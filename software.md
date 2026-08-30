@@ -1,3 +1,0 @@
-
-[[computer]]
-[[virtual]]
