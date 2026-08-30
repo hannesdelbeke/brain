@@ -64,11 +64,23 @@ six bugs were in the two prototypes and none of them would have been visible as 
 
 the corpus is now resolved by matching this vault's own path against the roots in `/health`, rather than by a name typed into settings, which is the fix that generalises: a client that names its corpus by hand is a client that will one day name the wrong one.
 
+## what the review changed
+
+a review of the merged file found 33 things, and the two worth writing down are the ones that were features rather than slips.
+
+the CLI fallback is gone. semantic search used to try the daemon and then fall back to spawning `search_vault.py` per keystroke, which is a second copy of the query path, a second way of being wrong, and a python process started while the user is still typing. one backend, and a message naming the setting when it is not there.
+
+the per-view cache became one cache on the plugin, keyed by view type, path and mtime. two panes open on one note now ask the daemon once, and an edit needs no invalidation because the new mtime simply misses. the old cache was per view and keyed by path, so the second pane paid again and a stale entry had to be actively removed.
+
+the rest were the ordinary kind: rows and graph nodes are focusable and open on Enter, their listeners are plain rather than registered on a view that outlives the elements, edge weights moved into the stylesheet, the corpus resolves on the first call rather than at load, a note missing from the vault reports rather than being created by `openLinkText`, the spawn latch clears when the child exits and not only when it errors, and `reveal` survives a window with no sidebar.
+
+two features landed with it, both ranked in [[2026-08-30 a semantic graph over the whole vault]]: the freshness line, which says when the index last ran and offers a reindex if the note has been edited since, and the other corpora, off by default, which is the one thing no other plugin can do because no other plugin has a daemon holding several indexes at once.
+
 ## how it is tested without obsidian
 
 `harness.js` intercepts `require("obsidian")` before `main.js` loads and hands it a fake: `Plugin`, `ItemView`, `SuggestModal`, `Setting`, a DOM stub whose `createEl` records a tree that assertions can read, and a fake daemon that is a real HTTP server serving the shapes `searchd.py` returns, including its 200-with-an-error-field case. so the views, the modal and the settings tab run for real, rather than only the pure functions being reachable, which is all the two prototypes' tests could touch.
 
-45 tests, and they were checked by breaking the code: five deliberate mutations, five failures, one of which exposed a test that was passing for the wrong reason. `test-live.js` runs the same views against the daemon that is actually running, which is the only thing that catches a route quietly changing shape.
+59 tests, and they were checked by breaking the code: eight deliberate mutations, eight failures, one of which exposed a test that was passing for the wrong reason. `test-live.js` runs the same views against the daemon that is actually running, which is the only thing that catches a route quietly changing shape, and it now also asserts the two fields the new features read, `indexed_at` on `/health` and `vault` on a cross-corpus result row.
 
 ## what is left
 
@@ -84,5 +96,7 @@ obsidian answers backlinks from an in-memory cache, and at 3,283 notes that is p
 the measurement is available rather than hypothetical, since [[2026-08-29 Startup Metrics Logger devlog]] shipped the instrument. take the native number first; if it is fast, drop the replacement and keep the two panes that add something.
 
 one thing the endpoint check turned up: inbound edges carry raw targets like `public/pkm-search|pkm-search`, the path-prefixed wikilinks. they resolve while the private vault is the obsidian root and break the moment this vault is opened on its own, so a backlinks pane will render them correctly and quietly depend on a layout that is not guaranteed.
+
+what happens when the editor, the CLI and several agent sessions query the same daemon at once is measured in [[2026-08-30 one daemon, several agents asking at once]]; the short version is that the plugin's timeouts were the half worth fixing first.
 
 the acceptance for each feature this replaces is listed in [[core Obsidian features to rework on the vault index]], the corpora the daemon answers over are in [[corpus]], and the submission path, once any of this is worth publishing, is [[2026-08-29 Obsidian community plugin submission process]].
