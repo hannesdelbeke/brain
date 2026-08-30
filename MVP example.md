@@ -133,3 +133,4 @@ def hookup_view():
 > It might be worth to add `*args` to your callback method to avoid crashing with qt passing extra arguments like a `is_checked` bool for checkboxes.
 
 [[programming patterns]]
+[[MVP py sample function]] — functional-style variant of this same demo

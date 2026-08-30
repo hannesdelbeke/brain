@@ -30,3 +30,5 @@ missing features
 - an option to update plugins
 ## references
 similar to [[Blender preferences Add-ons]]
+
+see also [[Maya Plugin Manager v2]] — idea for a richer UI showing plugin info
