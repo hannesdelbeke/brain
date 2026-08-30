@@ -61,3 +61,5 @@ If linking to a specific line, what happens if the line changes?
 let's link to the whole doc, or thread for now.
 
 [[public/link]]
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.

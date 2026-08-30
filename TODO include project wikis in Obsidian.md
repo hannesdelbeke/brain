@@ -57,3 +57,5 @@ This reminds me of [[annotate websites]]
 
 
 [[use more links in life]]
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.

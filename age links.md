@@ -18,3 +18,6 @@ It'd be great if links could age, resulting in some kind of dynamic [[Link stren
 This approach simulates [[neuron]] connections in the [[brain]], and since often [[evolution already figured out the optimal algorithm]] this might be the best approach to link data.
 
 Then the next step would be to figure out how [[Link strength]] can be [[visualize|visualized]] .
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+> [!learning] the closest existing plugin, obsidian-weighted-graph (`[[Note]]::weight` syntax), only supports a static weight you set by hand — no plugin found ages or decays that weight automatically, so this note's actual idea remains unsolved.

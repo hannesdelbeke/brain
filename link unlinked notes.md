@@ -25,3 +25,6 @@ A [[CICD]] pipeline could auto link all unlinked notes, like a chaotic inbox.
 - [ ] ensure it only links public notes in a central public note, and not private notes.
 
 [[note taking]]
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+> [!learning] the "Find orphaned files and broken links" plugin already scans the vault for files with no backlinks and lists them, which is the discovery step this note wants.

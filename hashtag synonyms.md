@@ -48,3 +48,6 @@ related: nested tags, e.g. `#writing, #writing/academic`
 [discuss](https://www.reddit.com/r/PKMS/comments/10a07wh/comment/j42frm2/?context=3) in reddit
 
 Is this is a limitation of obsidian?
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+> [!learning] the Tag Wrangler plugin (github.com/pjeby/tag-wrangler) already renames/merges tags vault-wide and supports tag-page aliases, which is exactly the hashtag-synonym problem this note describes.
