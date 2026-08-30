@@ -80,3 +80,5 @@ If I discuss an article in-depth, I might copy it to ensure I still have it when
 If I just want to quickly reference an article, I might just [[URL|URL link to it]].
 
 [[note taking|notes]]
+
+See [[proposal - cross-app entity registry]] — the "manager" this note describes is already drafted as the entity registry's architectural stance.

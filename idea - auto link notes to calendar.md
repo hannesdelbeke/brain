@@ -31,3 +31,5 @@ relates too
 [[note taking]]
 [[idea]]
 [[automate note taking]]
+
+See [[proposal - cross-app entity registry]] — calendar events as registry entities make the type-sorted review a plain search query.

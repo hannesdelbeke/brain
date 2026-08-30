@@ -52,3 +52,5 @@ expected impact: low - so don't spend a lot of time on this.
 it seems quite hacky atm.
 
 [[track time]]
+
+See [[proposal - cross-app entity registry]] — the ingestion stays hacky, but once ingested the call is a typed relationship between a contact and an event entity, not a free-text name.

@@ -43,3 +43,5 @@ An external browser app to show backlinks would be better. It could also work wi
 --- 
 
 conclusion, i focus too much on backlinks, but autocomplete would be a great addon.
+
+See [[proposal - cross-app entity registry]] — this is a hand-rolled, Obsidian-only stand-in for the registry's `external_record`/`entity_uri` pair.

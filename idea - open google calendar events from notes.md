@@ -58,3 +58,5 @@ Show
 ### Related
 Recently I wrote about [[2025-10-21 write more on location|a more portable note taking setup]]
 [[idea - auto link notes to calendar]]
+
+See [[proposal - cross-app entity registry]] — this autocomplete-to-calendar flow is the Phase 2 inline-autocomplete slice of the registry plan.
