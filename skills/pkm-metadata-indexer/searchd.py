@@ -97,14 +97,19 @@ NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
-# ponytail: one lock over the whole query path. The ONNX session is shared and
-# queries are tens of milliseconds once warm, so serialising them costs nothing
-# a single user can notice. Give the model its own lock if that stops being true.
-LOCK = threading.Lock()
+# There is no lock over the query path. There was one, a single global mutex, and
+# once the server was threaded it made every request wait for the one before it:
+# eight concurrent searches measured p50 1044ms against 111ms alone, and throughput
+# stayed at 7 req/s from one client to sixteen. Nothing on that path needs it.
+# Every engine function opens its own sqlite connection per call, onnxruntime Run
+# is thread-safe and fastembed keeps no per-call state on the model object, and the
+# one piece of shared mutable state left, the resident vector matrix and the
+# connection that reads it, has a lock per vault instead (see Vault.lock).
 
-# A reindex must not be one of those queries. It ran under LOCK, so a search that
-# arrived during a pass waited the whole pass out: 15s for two corpora against
-# 40ms idle, long enough that the CLI gave up and answered from a direct search
+# A reindex still takes a lock, and it is not that one. It once ran under the
+# query lock, so a search that arrived during a pass waited the whole pass out:
+# 15s for two corpora against 40ms idle, long enough that the CLI gave up and
+# answered from a direct search
 # of whichever corpus the working directory resolved to. The two do not share
 # state. The query model and the index model are separate ONNX sessions, keyed on
 # different providers, and the database is WAL, so a reader sees the pass's
@@ -115,8 +120,8 @@ INDEX_LOCK = threading.Lock()
 # Guards the one-reindex-per-corpus flag only, never held across a reindex.
 REINDEX_LOCK = threading.Lock()
 
-# Set by main(), None disables logging. The lock is separate from LOCK so a write
-# never sits inside the query path.
+# Set by main(), None disables logging. Its own lock, so appending a row never
+# waits on anything a query holds.
 LOG_PATH = None
 LOG_LOCK = threading.Lock()
 
@@ -159,6 +164,7 @@ class Vault:
         self.root = root
         self.db = db
         self.collect = collect  # None scans markdown, otherwise a corpus scanner
+        self.lock = threading.Lock()  # the resident matrix, its reader, and the counter
         self.queries = 0
         self.vectors = None
         self.vectors_version = None
@@ -195,21 +201,24 @@ class Vault:
         The connection has to outlive the call. A fresh connection reads 2 and
         keeps reading 2 no matter what any other connection commits, so opening
         one per query pinned the cache for the life of the daemon and a reindex
-        never reached a search. Every caller holds LOCK, so one connection shared
-        across the handler threads is safe, but sqlite3 has to be told that.
+        never reached a search. That one connection is shared across the handler
+        threads, which is what the lock is for: sqlite3 is told to allow it, and
+        then told once at a time. What comes back is read-only for its caller, so
+        holding the lock past the return would only serialise the search itself.
         """
-        if not self.db.exists():
-            return [], None
-        if self.reader is None:
-            self.reader = sqlite3.connect(
-                f"file:{self.db}?mode=ro", uri=True, check_same_thread=False
-            )
-        cursor = self.reader.cursor()
-        version = cursor.execute("PRAGMA data_version").fetchone()[0]
-        if self.vectors is None or version != self.vectors_version:
-            self.vectors = pkm.load_vectors(cursor)
-            self.vectors_version = version
-        return self.vectors
+        with self.lock:
+            if not self.db.exists():
+                return [], None
+            if self.reader is None:
+                self.reader = sqlite3.connect(
+                    f"file:{self.db}?mode=ro", uri=True, check_same_thread=False
+                )
+            cursor = self.reader.cursor()
+            version = cursor.execute("PRAGMA data_version").fetchone()[0]
+            if self.vectors is None or version != self.vectors_version:
+                self.vectors = pkm.load_vectors(cursor)
+                self.vectors_version = version
+            return self.vectors
 
     def close(self):
         """Release the read connection. Only a test needs this: Windows refuses to
@@ -305,15 +314,15 @@ def keepalive():
         time.sleep(KEEPALIVE_S)
         if time.time() - STATE.last_query < KEEPALIVE_S:
             continue
-        with LOCK:
-            list(model.embed(["."]))
+        list(model.embed(["."]))
 
 
 def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dict]:
-    with LOCK:
-        rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
-                                vectors=vault.matrix(), rerank=rerank)
+    vectors = vault.matrix()
+    with vault.lock:
         vault.queries += 1
+    rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
+                            vectors=vectors, rerank=rerank)
     return [
         {
             "vault": vault.name,
@@ -392,8 +401,7 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
 
 
 def do_links(vault: Vault, note: str) -> dict:
-    with LOCK:
-        found = pkm.query_links(note, db_path=str(vault.db))
+    found = pkm.query_links(note, db_path=str(vault.db))
     if not found:
         return {"error": f"no single indexed note matches {note!r}"}
     return {
@@ -413,9 +421,10 @@ def do_links(vault: Vault, note: str) -> dict:
 def do_similar(vault: Vault, note: str, limit: int) -> dict:
     began = time.perf_counter()
     STATE.last_query = time.time()
-    with LOCK:
-        rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=limit, vectors=vault.matrix())
+    vectors = vault.matrix()
+    with vault.lock:
         vault.queries += 1
+    rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=limit, vectors=vectors)
     if rows is None:
         return {"error": f"no single indexed note matches {note!r}"}
     payload = {
@@ -442,10 +451,9 @@ def do_similar(vault: Vault, note: str, limit: int) -> dict:
 
 def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
     began = time.perf_counter()
-    with LOCK:
-        found = pkm.find_unlinked_mentions(
-            note, vault_path=str(vault.root), db_path=str(vault.db), limit=limit
-        )
+    found = pkm.find_unlinked_mentions(
+        note, vault_path=str(vault.root), db_path=str(vault.db), limit=limit
+    )
     if found is None:
         return {"error": f"no single indexed note matches {note!r}"}
     return {
@@ -563,6 +571,12 @@ def watch_vault(vault: Vault, stream=None):
         except Exception as error:
             print(f"watch {vault.name}: reindex failed, {type(error).__name__}: {error}",
                   flush=True)
+
+
+class Server(ThreadingHTTPServer):
+    # Several agents searching at once arrive as a burst, and the default backlog
+    # of five turns the sixth into a refused connection rather than a queued one.
+    request_queue_size = 64
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -786,7 +800,7 @@ def main():
 
     print(f"query log {LOG_PATH or 'off'}", flush=True)
 
-    server = ThreadingHTTPServer((args.bind, args.port), Handler)
+    server = Server((args.bind, args.port), Handler)
     print(f"listening on http://{args.bind}:{args.port}"
           f"{' (token required)' if args.token else ''}", flush=True)
     try:
