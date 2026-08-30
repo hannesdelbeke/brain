@@ -35,4 +35,4 @@ In fused relationships, the dynamic often alternates across two polarities:
 
 > **Core Law:** One cannot feel passionate sexual desire for a partner they are constantly oscillating between parenting emotionally and depending on domestically. The dynamic acts as a permanent brake on the sexual inhibition system.
 
-Related: [[public/emotional disengagement in relationships|emotional disengagement in relationships]], [[public/structural constraint outpacing genuine dedication|structural constraint outpacing genuine dedication]], [[public/starter relationship calibration deficit|starter relationship calibration deficit]], [[public/attraction|attraction]]
+Related: [[public/emotional disengagement in relationships|emotional disengagement in relationships]], [[public/attraction|attraction]], [[public/desire|desire]]
