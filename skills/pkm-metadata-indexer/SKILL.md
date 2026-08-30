@@ -253,6 +253,21 @@ Resume is a cursor rather than an offset. Each conversation records the highest 
 
 Measured over 18 conversations, 44 MB on disk: 17 notes, 1,511 sections and 107 edges in 2.4 MB, 0.83s cold and 0.26s of scan on a resume. The eighteenth conversation was one `/usage` and produced no prose. `index_agy_validation.md` beside it is the check to run on a machine with hundreds of conversations, written for an agent to execute unattended.
 
+### 19. Duplicate Notes (`GET /duplicates`)
+`--check-duplicate` answers "is this note about to duplicate something" at write time, one title at a time. This is the other half: the whole corpus at once, for the duplicates that were written before the hook existed.
+```bash
+curl "http://127.0.0.1:44771/duplicates?threshold=0.95&limit=20&vault=brain"
+```
+Every pair of notes whose pooled vectors are at or above the threshold, unioned into connected components, each component returned once as `{paths, top, unlinked, pairs}` with `pairs` indexing into that component's own `paths`. Clusters are sorted by their highest internal score, `limit` caps how many come back, and the answer is cached on the index version like `/graph` is.
+
+Grouping is the feature, not a presentation choice. Eleven near-identical notes are 55 pairs, and a list of 55 rows saying the same thing is worse than no list. On a 2,979-note vault at 0.95 the answer is 46 pairs as 15 clusters, the largest being 11 podcast episode notes that share a template.
+
+A threshold scan rather than a filter over the `/graph` payload, because mutual kNN drops exactly the pairs that matter: a pile of near-identical notes fills every member's top k with the other members, so every pair past the kth is discarded. Measured at k=10 over the same vault, the graph filter misses 0 of 46 pairs at 0.95, 5 of 200 at 0.93 and 263 of 723 at 0.9. So at today's default they agree and the scan costs 360ms against 5ms, and the agreement ends as soon as the cutoff loosens or the corpus grows.
+
+`linked` marks a pair that already has a wikilink, and `unlinked` counts the pairs in a cluster that do not, which is what separates a note written twice from a note and its deliberate companion: on this vault the tightest cluster is `glycine` and `random study, sort`, already linked, while the podcast pile has 17 unlinked pairs of 55. It is reported rather than filtered, because a link between two notes is as often someone noticing the overlap as it is a decision to keep both.
+
+`threshold` is floored at 0.7, below which the pair count grows as the square of the corpus and the pairs stop being duplicates, and the scan is capped at 20,000 pairs and says `truncated` when it hits the cap.
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
