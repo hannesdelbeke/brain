@@ -11,13 +11,13 @@ tags:
 
 > [!summary] eli5
 > obsidian's graph draws the links you wrote. the index knows a second kind of edge, the notes that are close in meaning whether or not you ever linked them, and this is what a graph over all of them looks like once it is measured rather than imagined.
-> mutual nearest neighbours is the version that draws: 5,519 edges over 2,966 notes, about the size of the wikilink graph, where plain nearest-neighbours gives 24,135 and a hairball. 87% of those edges are not links you wrote, which is the whole point and also the reason the view has to be readable.
-> **needs from you:** nothing yet. the endpoint is not written and the local graph, which is the same idea for one note, already ships.
+> mutual nearest neighbours is the version that draws: 5,458 edges over 2,959 notes, about the size of the wikilink graph, where plain nearest-neighbours gives 24,132 and a hairball. 69% of those edges are pairs you never linked, which is the whole point and also the reason the view has to be readable.
+> **needs from you:** nothing. the `/graph` route shipped on 2026-08-30 and the view is being built on top of it.
 
 > with the index and the daemon we have more connections. remake the obsidian graph but more optimised and with semantic connections
 
 > [!todo] next
-> **next:** a `/graph` route returning the mutual-kNN edge list for a corpus, cached on the index version, which is the one piece of python this needs.
+> **next:** the view. the route is written, the layout is not.
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 one obsidian plugin over the search daemon]]
@@ -29,13 +29,15 @@ every section has a vector. a note vector is the mean of its section vectors, re
 | edge rule | edges | reads as |
 | --- | --- | --- |
 | every pair over a similarity cutoff | tuning exercise | a cutoff that is right for one cluster is wrong for the next |
-| k nearest neighbours, k=10 | 24,135 | a hairball, every note has ten edges whether or not it deserves them |
-| mutual kNN, k=10 | 5,519 | comparable to the 6,459 wikilinks that exist |
-| the wikilinks themselves | 6,459 | what obsidian draws today |
+| k nearest neighbours, k=10 | 24,132 | a hairball, every note has ten edges whether or not it deserves them |
+| mutual kNN, k=10 | 5,458 | comparable to the 6,506 wikilinks that exist |
+| the wikilinks themselves | 6,506 | what obsidian draws today |
 
 mutual kNN is the rule worth shipping: an edge exists when each note is in the other's top ten, so a hub note stops attaching itself to everything and a note nobody is near keeps no edges at all. it also lands, without tuning, at about the density of the hand-written link graph, which is a good sign that the resulting picture is legible.
 
-**86.8% of those edges are not wikilinks.** that is the feature and the warning in one number: the semantic graph is not a prettier version of the link graph, it is mostly new information, and a view that overlays both without distinguishing them is a view nobody can read.
+**1,708 of the 5,458 mutual edges also carry a wikilink, so 69% of them are new.** an earlier pass over this said 87%, from a wikilink set that was counted per direction rather than per pair; the corrected number is the one to use. it is still the feature and the warning in one: the semantic graph is not a prettier version of the link graph, it is mostly new information, and a view that overlays both without distinguishing them is a view nobody can read.
+
+drawn together, the public corpus is 2,959 nodes and 10,256 edges: 1,708 pairs that are both near and linked, 3,750 near only, 4,798 linked only. mean degree 7.1, maximum 102, and 58 notes with no edge of either kind.
 
 ## what does not work, measured rather than assumed
 
@@ -48,6 +50,8 @@ the payload is not the problem: 5,519 edges is 0.18 MB of JSON and about 140ms w
 the local graph, one note and its neighbours, already ships and is the version that earns its cost every day: bounded node count, no layout beyond a radial sort by similarity, redraws in tens of milliseconds. a whole-vault view is a different feature with a different failure mode, which is that it is beautiful once and never opened again.
 
 if it is built, the shape is: a `/graph` route returning `{nodes, edges}` for a corpus, computed once and cached on the index version so it is free until the index changes; a canvas rather than SVG past a few thousand nodes; and a filter that starts from the open note's neighbourhood rather than from everything, because "everything" is the view that gets opened once.
+
+the route shipped on 2026-08-30, 60 lines. `nodes` is a path list and an edge indexes into it, `[source, target, score, linked]`, which is 0.32 MB of JSON for the whole public corpus where the same edges written out as objects with paths in them are four times that. building it costs 0.15s, the first call over HTTP measured 371ms including the matrix load, and every call after it is served from the cache until the index moves.
 
 ## the features next to it, ranked by what they give per hour spent
 
