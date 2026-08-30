@@ -36,4 +36,8 @@ In emotionally disengaged partnerships:
 * Both partners retreat into solo hobbies, career focus, or screens to avoid confronting the emotional void.
 * Because overt fights are rare, the dynamic creates powerful [[public/relationship inertia|relationship inertia]], keeping couples in holding patterns for decades until midlife or late-stage separation (Susan Brown & I-Fen Lin, *The Gray Divorce Revolution*, 2012, [DOI: 10.1093/geronb/gbs089](https://doi.org/10.1093/geronb/gbs089)).
 
+<<<<<<< HEAD
 Related: [[public/relationship inertia|relationship inertia]], [[public/structural constraint outpacing genuine dedication|structural constraint outpacing genuine dedication]], [[public/caretaker polarity in relationships|caretaker polarity in relationships]]
+=======
+Related: [[public/relationship inertia|relationship inertia]], [[public/caretaker polarity in relationships|caretaker polarity in relationships]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

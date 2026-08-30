@@ -26,4 +26,8 @@ Note writing is fun, but not efficient.
 
 [[memorize]]
 [[writing notes about notes]]
+<<<<<<< HEAD
+=======
+[[the urge to write notes for everything]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 [[procrastination]]

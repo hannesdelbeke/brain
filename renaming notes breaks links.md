@@ -27,3 +27,9 @@ I like to use [[jf8923okj32roijf|Obsidian]] to write notes
 Introduces tech to manage these unique notes, or a strict naming convention .
 
 [[link rot]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+> [!learning] Obsidian's own Settings → Files & Links → "Automatically update internal links" (on by default) already rewrites in-vault wikilinks on rename. It does not fix external URLs pointing at a published note under its old name, which is the harder half of this problem.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

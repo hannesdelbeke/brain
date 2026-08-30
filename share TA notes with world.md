@@ -26,3 +26,8 @@ some issues mentioned [[issues with a shared TA database]]
 19 dec 22: created [[Obsidian web integration]] to handle this.
 
 [[technical artist]]
+<<<<<<< HEAD
+=======
+
+Found: [Digital Garden plugin](https://github.com/oleeskild/obsidian-digital-garden) / [Quartz](https://quartz.jzhao.xyz/) — see [[proposal - note-taking workflow gaps]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

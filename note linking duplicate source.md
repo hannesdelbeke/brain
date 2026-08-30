@@ -38,3 +38,8 @@ Note in [[Obsidian]], first define height, then width. Else height won't work.
 ```
 ---
 <iframe src="https://www.example.com" height="200" width="800" ></iframe>
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

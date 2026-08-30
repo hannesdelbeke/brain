@@ -57,3 +57,8 @@ This reminds me of [[annotate websites]]
 
 
 [[use more links in life]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - typed directional links for obsidian]] for the unified proposal.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

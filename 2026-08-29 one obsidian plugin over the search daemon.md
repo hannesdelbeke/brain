@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 date: 2026-08-29
+=======
+date: 2026-08-30
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 created: 2026-08-29
 tags:
   - obsidian
@@ -12,14 +16,24 @@ aliases:
 ---
 
 > [!summary] eli5
+<<<<<<< HEAD
 > the plan for the obsidian side of the local search engine: backlinks, unlinked mentions, semantic neighbours and search, as one plugin rather than four, all of them reading from the daemon that already runs.
 > nothing new is needed in the engine, the three endpoints these features need already answer in tens of milliseconds; what exists is two prototype plugins that each carry their own copy of the daemon client, and the work is merging them before a third copy appears.
 > **needs from you:** nothing to decide, the first step is a merge of code you already have; the measurement in the last section decides whether the backlinks pane is worth shipping at all.
+=======
+> the obsidian side of the local search engine: backlinks, unlinked mentions, semantic neighbours and search, as one plugin rather than four, all of them reading from the daemon that already runs.
+> the merge happened on 2026-08-30 and the plugin exists: five surfaces, one daemon client, 76 tests against a fake obsidian and a live test against the real daemon. what is left is a look at it inside obsidian, and the measurement that decides whether the backlinks pane is worth keeping at all.
+> **needs from you:** open the private vault and look at the five surfaces, since nothing below has been seen by a human in the app yet.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 > so if i want fast backlink search in obsidian, and semantic search later, and we have a prototype plugin in the vault, what are the next steps. and does it make sense to make separate plugins, backlinks, search, semantic search, semantic backlinks
 
 > [!todo] next
+<<<<<<< HEAD
 > **next:** merge `unified-search` and `semantic-local-graph` into one plugin with a single shared daemon client file, since each carries its own copy today and the backlinks pane would be the third.
+=======
+> **next:** open the private vault in obsidian and use the five surfaces, since every measurement below is from a test harness and nothing has been seen rendered.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]]
@@ -54,6 +68,7 @@ the split that would matter is daemon or no daemon, and none of these four sit o
 
 both hold their own base URL, their own fetch, their own CLI fallback, their own python discovery and their own spawn of the daemon when it is not running. that duplication is the same failure the engine already paid for as two published python copies, and the backlinks pane is where it becomes a third. merge first, add the pane second.
 
+<<<<<<< HEAD
 ## the steps
 
 1. merge the two plugins into one, with the daemon client as a single file both views import. no typescript and no bundler unless something needs them; two working plugins in plain javascript are evidence that neither is needed yet.
@@ -61,6 +76,44 @@ both hold their own base URL, their own fetch, their own CLI fallback, their own
 3. warm the vector path on plugin load with one `/similar` call.
 4. add unlinked mentions from `/unlinked` behind its own toggle, since at 70 to 270ms it is slower than the other two and should not sit in the same render pass.
 5. leave the python alone. the primitive split, `--no-vectors` and any packaging are on the distribution path, not on this one.
+=======
+## what shipped on 2026-08-30
+
+one plugin, `unified-search` in the private vault and `h-forts/obsidian-unified-search` as its repository, still plain javascript with no build step. five surfaces over one daemon client: the search modal, a related pane holding linked mentions, unlinked mentions and semantic neighbours as three sections, the semantic local graph, the vault graph, and missing links. the related pane fires its three routes in parallel and only `/links` is required, so a corpus with no vectors still renders backlinks.
+
+the last two came out of one route. `/graph` returns the whole corpus as mutual nearest neighbours in embedding space with the wikilinks merged in, and the plugin caches that payload for five minutes, so the vault graph is a canvas over it and missing links is a filter over the same bytes: `linked == 0`, sorted, top 200, behind the `!` prefix in the modal. the graph costs 116ms of layout at its 300-node default and 986ms for all 2,960 notes of the public corpus; the missing-links list costs 5ms because the payload is already in memory. see [[2026-08-30 a semantic graph over the whole vault]] for why mutual kNN is the edge rule and [[2026-08-30 what else the index can answer]] for the ranking these two came off.
+
+driven from a test harness against the running daemon, one note in the 871-note private corpus: the related pane renders in 107ms for all three sections, the graph in 22ms, a semantic query through the modal in 252ms, and a note the index has never seen still draws neighbours in 223ms through the `/search` fallback. the 2.7s first-call cost is gone from the interactive path, paid instead by one throwaway `/similar` after layout is ready.
+
+six bugs were in the two prototypes and none of them would have been visible as a crash. the modal searched whichever corpus the daemon happened to default to, because it never sent a vault and never resolved one, which is the wrong-corpus failure of 2026-08-28 arriving through a third door. it also spawned the daemon with no `--vault`, so an autostart registered whatever obsidian's working directory resolved to. a failed spawn left a latch set and no further attempt was possible for the session. a slow semantic round trip could overwrite the results of a newer keystroke. the graph threw on a result with no score, and its debounce timer outlived the view while its cache grew without limit.
+
+the corpus is now resolved by matching this vault's own path against the roots in `/health`, rather than by a name typed into settings, which is the fix that generalises: a client that names its corpus by hand is a client that will one day name the wrong one.
+
+## what the review changed
+
+a review of the merged file found 33 things, and the two worth writing down are the ones that were features rather than slips.
+
+the CLI fallback is gone. semantic search used to try the daemon and then fall back to spawning `search_vault.py` per keystroke, which is a second copy of the query path, a second way of being wrong, and a python process started while the user is still typing. one backend, and a message naming the setting when it is not there.
+
+the per-view cache became one cache on the plugin, keyed by view type, path and mtime. two panes open on one note now ask the daemon once, and an edit needs no invalidation because the new mtime simply misses. the old cache was per view and keyed by path, so the second pane paid again and a stale entry had to be actively removed.
+
+the rest were the ordinary kind: rows and graph nodes are focusable and open on Enter, their listeners are plain rather than registered on a view that outlives the elements, edge weights moved into the stylesheet, the corpus resolves on the first call rather than at load, a note missing from the vault reports rather than being created by `openLinkText`, the spawn latch clears when the child exits and not only when it errors, and `reveal` survives a window with no sidebar.
+
+two features landed with it, both ranked in [[2026-08-30 a semantic graph over the whole vault]]: the freshness line, which says when the index last ran and offers a reindex if the note has been edited since, and the other corpora, off by default, which is the one thing no other plugin can do because no other plugin has a daemon holding several indexes at once.
+
+## how it is tested without obsidian
+
+`harness.js` intercepts `require("obsidian")` before `main.js` loads and hands it a fake: `Plugin`, `ItemView`, `SuggestModal`, `Setting`, a DOM stub whose `createEl` records a tree that assertions can read, and a fake daemon that is a real HTTP server serving the shapes `searchd.py` returns, including its 200-with-an-error-field case. so the views, the modal and the settings tab run for real, rather than only the pure functions being reachable, which is all the two prototypes' tests could touch.
+
+76 tests. the suite was checked by breaking the code at 59 of them: eight deliberate mutations, eight failures, one of which exposed a test that was passing for the wrong reason. `test-live.js` runs the same views against the daemon that is actually running, which is the only thing that catches a route quietly changing shape, and it now also asserts the two fields the new features read, `indexed_at` on `/health` and `vault` on a cross-corpus result row.
+
+## what is left
+
+1. use it in obsidian. nothing here has been seen rendered.
+2. measure native backlinks before keeping the linked-mentions section, which is the section below.
+3. a `build` script and a minified `main.js`, needed only if this is submitted, see the release plan.
+4. leave the python alone. the primitive split, `--no-vectors` and any packaging are on the distribution path, not on this one.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 ## measure before replacing native backlinks
 
@@ -70,4 +123,9 @@ the measurement is available rather than hypothetical, since [[2026-08-29 Startu
 
 one thing the endpoint check turned up: inbound edges carry raw targets like `public/pkm-search|pkm-search`, the path-prefixed wikilinks. they resolve while the private vault is the obsidian root and break the moment this vault is opened on its own, so a backlinks pane will render them correctly and quietly depend on a layout that is not guaranteed.
 
+<<<<<<< HEAD
+=======
+what happens when the editor, the CLI and several agent sessions query the same daemon at once is measured in [[2026-08-30 one daemon, several agents asking at once]]; the short version is that the plugin's timeouts were the half worth fixing first.
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 the acceptance for each feature this replaces is listed in [[core Obsidian features to rework on the vault index]], the corpora the daemon answers over are in [[corpus]], and the submission path, once any of this is worth publishing, is [[2026-08-29 Obsidian community plugin submission process]].

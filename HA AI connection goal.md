@@ -27,3 +27,8 @@ i want my [[large language model|LLM]] to be able to do all of this, in 1 easy c
 [[AI agent]]
 [[todo]]
 [[mcp server home assistant]]
+<<<<<<< HEAD
+=======
+
+Related: [[proposal - agent git workflow tooling]] — same "agent needs access beyond its default sandbox" shape as the multi-repo sandboxing gap, flagged there as adjacent
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

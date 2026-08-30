@@ -232,3 +232,8 @@ obsidian has a REST API
 [[wikilink]]
 
 [test](my%20app%20launcher.md)
+<<<<<<< HEAD
+=======
+
+Found: Quartz (+ Quartz Syncer plugin) is now the leading Obsidian-native alternative to hand-rolled mkdocs publishing. See [[proposal - resumable bidirectional sync adapter]].
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

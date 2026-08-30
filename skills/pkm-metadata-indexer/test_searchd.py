@@ -110,6 +110,23 @@ class SearchDaemonTest(unittest.TestCase):
         self.get("/search?q=distinctivephrase")  # log off again
         self.assertEqual(len(log.read_text(encoding="utf-8").splitlines()), 1)
 
+<<<<<<< HEAD
+=======
+    def test_a_search_over_several_corpora_logs_one_line_each(self):
+        log = Path(self.temp_dir.name) / "many.jsonl"
+        SEARCHD.LOG_PATH = log
+        try:
+            self.get("/search?q=distinctivephrase+OR+separatephrase&vault=all")
+        finally:
+            SEARCHD.LOG_PATH = None
+        rows = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()]
+        # one line per corpus, each holding only its own paths, or a reader of one
+        # corpus sees a vault called "first,second" and pairs across the two
+        self.assertEqual([row["vault"] for row in rows], ["first", "second"])
+        self.assertEqual(rows[0]["results"], ["alpha.md"])
+        self.assertEqual(rows[1]["results"], ["gamma.md"])
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     def test_each_vault_only_sees_its_own_notes(self):
         _, wrong = self.get("/search?q=separatephrase")
         self.assertEqual(wrong["results"], [])
@@ -479,5 +496,106 @@ class MatrixCacheTest(unittest.TestCase):
         self.assertNotEqual(vault.vectors_version, warm)
 
 
+<<<<<<< HEAD
+=======
+class SemanticGraphTest(unittest.TestCase):
+    """Mutual nearest neighbours, on vectors chosen so the answer is known."""
+
+    # two tight pairs and one note far from everything: a and b point at each
+    # other, c and d point at each other, e is nobody's nearest.
+    META = [
+        (1, "a.md", "One", 1), (2, "a.md", "Two", 9),
+        (3, "b.md", "One", 1), (4, "c.md", "One", 1),
+        (5, "d.md", "One", 1), (6, "e.md", "One", 1),
+    ]
+    MATRIX = SEARCHD.np.array([
+        [1.0, 0.0, 0.0], [1.0, 0.02, 0.0],   # a, pooled from two sections
+        [0.99, 0.14, 0.0],                    # b, next to a
+        [0.0, 1.0, 0.0], [0.14, 0.99, 0.0],   # c and d, next to each other
+        [0.0, 0.0, 1.0],                      # e, orthogonal to all of them
+    ], dtype=SEARCHD.np.float32)
+
+    def graph(self, k=1, wikilinks=()):
+        return SEARCHD.semantic_graph((self.META, self.MATRIX), list(wikilinks), k)
+
+    def pairs(self, payload):
+        nodes = payload["nodes"]
+        return {(nodes[edge[0]], nodes[edge[1]]): edge[3] for edge in payload["edges"]}
+
+    def test_sections_pool_into_one_node_per_note(self):
+        self.assertEqual(self.graph()["nodes"], ["a.md", "b.md", "c.md", "d.md", "e.md"])
+
+    def test_only_mutual_neighbours_become_edges(self):
+        # e's nearest is someone, but nobody's nearest is e, so it draws no edge
+        self.assertEqual(set(self.pairs(self.graph())), {("a.md", "b.md"), ("c.md", "d.md")})
+
+    def test_a_wikilink_is_carried_whether_or_not_the_pair_is_near(self):
+        edges = self.pairs(self.graph(wikilinks=[("a.md", "b.md"), ("a.md", "e.md")]))
+        self.assertEqual(edges[("a.md", "b.md")], 1)  # near and linked
+        self.assertEqual(edges[("a.md", "e.md")], 1)  # linked only, and still drawn
+        self.assertEqual(edges[("c.md", "d.md")], 0)  # near only
+
+    def test_a_link_to_an_unindexed_note_is_dropped(self):
+        self.assertNotIn(("a.md", "gone.md"),
+                         self.pairs(self.graph(wikilinks=[("a.md", "gone.md")])))
+
+    def test_a_bigger_k_finds_more_pairs(self):
+        self.assertLess(len(self.graph(k=1)["edges"]), len(self.graph(k=3)["edges"]))
+
+    def test_k_is_clamped_to_what_the_corpus_can_answer(self):
+        self.assertEqual(self.graph(k=99)["k"], 4)
+
+    def test_a_chunked_pass_gives_the_same_answer(self):
+        whole = SEARCHD.semantic_graph((self.META, self.MATRIX), [], 2)
+        chunked = SEARCHD.semantic_graph((self.META, self.MATRIX), [], 2, chunk=2)
+        self.assertEqual(whole, chunked)
+
+    def test_a_corpus_with_no_vectors_is_empty_rather_than_an_error(self):
+        self.assertEqual(SEARCHD.semantic_graph(([], None), [], 10)["nodes"], [])
+
+
+class GraphRouteTest(unittest.TestCase):
+    """The route over a real index, which in this fixture has no vectors."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        cls.vault = build_vault(Path(cls.temp_dir.name) / "graph", "graph",
+                                {"alpha.md": "## One\nSee [[beta]].\n",
+                                 "beta.md": "## Two\nText.\n"})
+        SEARCHD.STATE = SEARCHD.State([cls.vault])
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+        cls.port = cls.server.server_address[1]
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.vault.close()
+        cls.temp_dir.cleanup()
+
+    def test_the_route_answers_and_caches(self):
+        status, body = self.get_graph()
+        self.assertEqual(status, 200)
+        self.assertEqual(body["vault"], "graph")
+        self.assertFalse(body["cached"])
+        self.assertTrue(self.get_graph()[1]["cached"])
+        # this fixture is indexed without embeddings, so there is nothing to place
+        self.assertEqual(body["nodes"], [])
+
+    def test_the_wikilinks_are_found_and_the_unresolved_ones_are_not(self):
+        pairs = SEARCHD.wikilink_pairs(self.vault)
+        self.assertEqual(pairs, [("alpha.md", "beta.md")])
+
+    def test_a_k_that_is_not_a_number(self):
+        self.assertEqual(fetch(self.port, "/graph?k=lots")[0], 400)
+
+    def get_graph(self):
+        return fetch(self.port, "/graph")
+
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 if __name__ == "__main__":
     unittest.main()

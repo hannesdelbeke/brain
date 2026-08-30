@@ -49,3 +49,8 @@ Key differences between MVC and MVVM/MVP:
 - Testability: Similar to MVVM and MVP, MVC offers good testability, but the direct interaction between the View and the Model can make it slightly more challenging to isolate and test components.
 
 source chatGPT
+<<<<<<< HEAD
+=======
+
+see also [[MVP vs MVC vs MV in Qt]] for a Qt-specific case study applying these patterns
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

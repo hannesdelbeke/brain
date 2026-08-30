@@ -37,3 +37,8 @@ https://thezvi.wordpress.com/2020/01/12/how-to-identify-an-immoral-maze/
 [[Obsidian]]
 [[social media]]
 [[community]]
+<<<<<<< HEAD
+=======
+
+See [[proposal - note-taking workflow gaps]] — no federated/subscription plugin found, needs custom build.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

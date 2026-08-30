@@ -22,3 +22,8 @@ i want to be able to
 
 - are there existing obsidian options?
 - what are existing non obsidian options?
+<<<<<<< HEAD
+=======
+
+Found: [Omnisearch](https://community.obsidian.md/plugins/omnisearch) — see [[proposal - note-taking workflow gaps]]
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

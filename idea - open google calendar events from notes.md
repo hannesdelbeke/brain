@@ -57,3 +57,9 @@ Show
 - i often go back to the [[2025-11-16 obsidian data lake|data lake idea]]. Data is data. a note, an event, a contact
 ### Related
 Recently I wrote about [[2025-10-21 write more on location|a more portable note taking setup]]
+<<<<<<< HEAD
+=======
+[[idea - auto link notes to calendar]]
+
+See [[proposal - cross-app entity registry]] — this autocomplete-to-calendar flow is the Phase 2 inline-autocomplete slice of the registry plan.
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

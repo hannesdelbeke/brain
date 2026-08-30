@@ -80,4 +80,9 @@ Advantages of using a function-based approach in MVP:
 However, it's important to note that the choice between class-based or function-based implementation in MVP depends on the specific requirements and complexity of the application. Both approaches have their own benefits and trade-offs, and the choice should be based on what works best for the specific context and development team.
 
 
+<<<<<<< HEAD
+=======
+[[MVP example]] — class/OOP-based variant of this same demo
+
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 [[programming patterns]]

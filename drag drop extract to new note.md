@@ -27,3 +27,8 @@ requirements
 - [ ] learn typescript
 - [ ] learn obsidian plugin dev 
 - [ ] make plugin
+<<<<<<< HEAD
+=======
+
+See [[proposal - note-taking workflow gaps]] — no existing plugin does this; closest is [Text Transporter](https://github.com/TfTHacker/obsidian42-text-transporter) (has an [open issue](https://github.com/TfTHacker/obsidian42-text-transporter/issues/82) requesting exactly this).
+>>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
