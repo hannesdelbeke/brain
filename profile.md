@@ -32,9 +32,10 @@ aliases:
 ---
 
 ## 🚀 Active Initiatives (Living Progress Hubs)
-1. **[[progress - local-first search daemon and indexer|Search Daemon & Indexer]]:** Sub-5ms resident ONNX neural + FTS5 retrieval engine (`pkm-search`).
-2. **[[progress - fearless vault consolidation and pruning|Fearless Vault Consolidation]]:** Ruthless refactoring of living notes toward high-signal gists, backed by Git archaeology.
-3. **[[progress - agentic biomimetic vault|Agentic Biomimetic Vault]]:** Transforming the vault into an organic thought partner with cognitive sparring lenses.
+1. [[progress - local-first search daemon and indexer|Search Daemon & Indexer]] — Sub-5ms resident ONNX neural + FTS5 retrieval engine (`pkm-search`).
+2. [[progress - fearless vault consolidation and pruning|Fearless Vault Consolidation]] — Ruthless refactoring of living notes toward high-signal gists, backed by Git archaeology.
+3. [[progress - agentic biomimetic vault|Agentic Biomimetic Vault]] — Transforming the vault into an organic thought partner with cognitive sparring lenses.
+4. [[progress - voice AI processing on ThinkPad|ThinkPad Voice AI Engine]] — Low-latency push-to-talk voice capture, Gemini processing, and vault logging.
 
 ---
 
