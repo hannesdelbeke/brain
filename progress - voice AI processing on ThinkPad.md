@@ -49,6 +49,8 @@ graph LR
   - `dictate`: pure speech-to-text with punctuation cleanup.
   - `pkm`: markdown thoughts with wikilinks.
   - `assistant`: direct answers to voice questions.
+- **Local audio archiving:** raw recordings are automatically saved as timestamped Opus files in `audio/voice/YYYY-MM-DD_HHMMSS.ogg` (~240KB/min) and embedded in daily note memos (`![[audio/voice/...]]`) for fast audio replay and proof-checking.
+- **Domain vocabulary disambiguation:** Gemini system prompts include a technical art, gamedev, and PKM glossary (LODs, DCC, Maya, Blender, shaders, drawcalls, DAG, FTS5, ONNX), allowing the LLM's attention mechanism to accurately disambiguate homophones (e.g. `LODs` vs `lots`, `UVs` vs `you've`) from surrounding context.
 - **Desktop delivery:** automatically copies response into clipboard via `wl-copy` and triggers `notify-send`.
 - **Vault sync:** `--pkm` flag appends formatted voice memos directly to today's daily note under a timestamped bullet.
 
