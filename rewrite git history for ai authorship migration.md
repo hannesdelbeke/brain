@@ -20,3 +20,4 @@ A Python script using `git log -p` and `git-filter-repo` can be used to scan pas
 ### Related
 - [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]]
 - [[public/Obsidian Git - device author identity|Obsidian Git - device author identity]]
+- [[proposal - agent git workflow tooling]] — confirms git-filter-repo is still the right tool for this, in the wider workflow-tooling proposal

@@ -37,3 +37,4 @@ Agents cannot spin up parallel search runners across 50 remote repos to extract 
 - [[multi-repo agentic search architecture]] — 3-tier catalog, AST outline, and map-reduce pipeline for GitHub orgs.
 - [[vault MCP server for agents]] — Designing structured tool interfaces over raw file dumps.
 - [[multi-repo agent search cost and ROI]]
+- [[proposal - agent git workflow tooling]] — folds these gaps into the wider workflow-tooling proposal

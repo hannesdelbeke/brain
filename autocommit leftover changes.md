@@ -43,3 +43,6 @@ When multiple agents run concurrently in the same repository:
 
 ## issues
 multi agents working in same vault human commit each others work
+
+### Related
+- [[proposal - agent git workflow tooling]] — this protocol as the attribution section of the wider workflow-tooling proposal

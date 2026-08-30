@@ -61,3 +61,4 @@ For the fastest setup with **zero ongoing server maintenance**:
 - [[single-repo vs multi-repo agent search]] — The architectural limitations of single-workspace CLI tools.
 - [[multi-repo agentic search architecture]] — High-level 3-tier catalog and map-reduce theory.
 - [[repo maps via GitHub Actions]] — Plug-and-play workflow for generating per-repo maps in CI/CD.
+- [[proposal - agent git workflow tooling]] — folds this MVP into the wider workflow-tooling proposal, with a 2026 tool scan (Zoekt, WarpGrep, CodeGraph).

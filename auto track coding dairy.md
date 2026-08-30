@@ -31,3 +31,5 @@ and some kind of [[discovery]] or [[search bar]]
 
 [[todo]]
 [[improve ai workflow]]
+
+Related: [[proposal - agent git workflow tooling]] — recommends reusing the supervisor proposal's transcript ingest instead of a second logger
