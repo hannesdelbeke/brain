@@ -110,6 +110,20 @@ class SearchDaemonTest(unittest.TestCase):
         self.get("/search?q=distinctivephrase")  # log off again
         self.assertEqual(len(log.read_text(encoding="utf-8").splitlines()), 1)
 
+    def test_a_search_over_several_corpora_logs_one_line_each(self):
+        log = Path(self.temp_dir.name) / "many.jsonl"
+        SEARCHD.LOG_PATH = log
+        try:
+            self.get("/search?q=distinctivephrase+OR+separatephrase&vault=all")
+        finally:
+            SEARCHD.LOG_PATH = None
+        rows = [json.loads(line) for line in log.read_text(encoding="utf-8").splitlines()]
+        # one line per corpus, each holding only its own paths, or a reader of one
+        # corpus sees a vault called "first,second" and pairs across the two
+        self.assertEqual([row["vault"] for row in rows], ["first", "second"])
+        self.assertEqual(rows[0]["results"], ["alpha.md"])
+        self.assertEqual(rows[1]["results"], ["gamma.md"])
+
     def test_each_vault_only_sees_its_own_notes(self):
         _, wrong = self.get("/search?q=separatephrase")
         self.assertEqual(wrong["results"], [])
