@@ -1,4 +1,0 @@
----
-aliases:
-  - source of truth
----
