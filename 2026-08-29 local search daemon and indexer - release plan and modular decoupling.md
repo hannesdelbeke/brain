@@ -19,17 +19,21 @@ aliases:
 > [!summary] eli5
 > whether the local search engine, today one directory of python inside this vault, should be split into parts and published for other people: a core library, an obsidian plugin, and a searcher over agent transcripts.
 <<<<<<< HEAD
+<<<<<<< HEAD
 > the engine already ran as two published copies once and they drifted, so the shape of any release is generated from the one copy rather than maintained beside it; of the three packages the transcript searcher is the only one that pays for itself before anyone else installs it.
 =======
 > the engine already ran as two published copies once and they drifted, so the shape of any release is generated from the one copy rather than maintained beside it; of the three packages the transcript searcher is the only one that pays for itself before anyone else installs it, and the obsidian one is written but not submitted.
 >>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
+=======
+> the engine already ran as two published copies once and they drifted, so the shape of any release is generated from the one copy rather than maintained beside it; of the three packages the transcript searcher is the only one that pays for itself before anyone else installs it, the obsidian one is written but not submitted, and the scanner seam the whole plan rests on has two implementations as of 2026-08-30.
+>>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
 > **needs from you:** decide whether publishing is a goal at all, since none of this is worth doing for a single user, and the obsidian half competes with a plugin that already ships the same retrieval.
 
 > do a pass over the release plan and modular decoupling note, written by gemini flash. check what the vault already says about decoupling into a repository, and link those notes.
 
 > [!todo] next
-> **next:** write a second transcript scanner over `~/.gemini/antigravity-cli/history.jsonl` returning the same `(notes, sections, links, errors)` tuple as `scan_sessions`, because every package below rests on the scanner seam being real and today it has one implementation.
-> **blocked:** whether publishing is a goal, which decides whether anything past that scanner happens.
+> **next:** the session searcher, which is the package with a user today. the second scanner it waited on landed on 2026-08-30 as `index_agy.py`, so the seam every package below rests on has two implementations.
+> **blocked:** whether publishing is a goal, which decides whether anything past this happens.
 
 **why:** [[progress - local-first search daemon and indexer]]
 
@@ -91,7 +95,7 @@ the build-step rule is the one real cost of plain javascript. the directory veri
 
 this is the one that pays before anyone else installs it, and the one that proves the seam. searching your own agent transcripts is a need the author has daily, the corpus is already indexed at 79,359 sections over 858 transcripts, and file provenance, which past session edited this file, is answerable from `edges` and is not answerable any other way.
 
-it is also the cheapest proof that the scanner interface is an interface. `scan_sessions` reads Claude Code transcripts; a second scanner over `~/.gemini/antigravity-cli/history.jsonl` is a small file and a different format, and once two scanners return the same tuple the plugin story in package A is a fact rather than a claim. `~/.codex` does not exist on this machine, so codex is a third scanner written when there are transcripts to read, not a bullet in a plan.
+it is also where the scanner interface stopped being an interface with one implementation. `scan_sessions` reads Claude Code transcripts; `index_agy.py`, written on 2026-08-30, reads antigravity's, and the two share nothing but the return type. the plan assumed that second scanner would read `~/.gemini/antigravity-cli/history.jsonl`, a small file in a different format, and that was wrong: the prompt history is 40 lines and the conversations are one SQLite database each holding binary protobuf with no schema published, so there is no line to count and no byte offset to resume from and the cursor is the step index instead. that is a better proof than the easy one would have been. `~/.codex` does not exist on this machine, so codex is a third scanner written when there are transcripts to read, not a bullet in a plan.
 
 a terminal UI is the part to leave until the search is used from a terminal often enough to be annoyed by the output format.
 
@@ -116,8 +120,12 @@ second scanner first, since it is a day of work and everything else assumes it. 
 =======
 one thing moved ahead of the scanner on 2026-08-30, and it is worth saying why rather than pretending the order held. `/graph` is engine work that the plugin needed and the scanner seam does not touch: 60 lines, cached on the index version, answered in 0.15s over 2,959 notes. it went in because the plugin is the half being used every day and the sequence below is about publishing rather than about using.
 
+<<<<<<< HEAD
 second scanner first, then, since it is a day of work and everything else assumes it. then the session searcher, because its user exists. then the primitive split, at the point the searcher wants the extractor without ONNX, which is also when `--no-vectors` gets written and tested rather than asserted. the obsidian plugin is built already but its submission is still last, because it is the one with a competitor and its prerequisite is the backlink measurement rather than any of the code above.
 >>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
+=======
+the second scanner went first, as planned, and took a day. the session searcher is next, because its user exists. then the primitive split, at the point the searcher wants the extractor without ONNX, which is also when `--no-vectors` gets written and tested rather than asserted. the obsidian plugin is built already but its submission is still last, because it is the one with a competitor and its prerequisite is the backlink measurement rather than any of the code above.
+>>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
 
 what would make the whole plan not worth running: nobody other than the author installing any of it. the engine is already in daily use as a skill directory, so the value of publishing is other people's bug reports and nothing else, and three packages is three READMEs, three issue trackers and three release workflows to keep for that. the version of this plan that survives a bad week is the session searcher on PyPI and the rest left as a directory in a vault.
 

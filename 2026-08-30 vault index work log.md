@@ -83,6 +83,20 @@ Measured over 18 conversations and 44 MB: 17 notes, 1,511 sections, 107 edges, 2
 
 Eighteen conversations is not enough to trust a hand-read wire format, so `index_agy_validation.md` sits beside the scanner: eight steps with a pass rule and a failure signature each, written for an agent to run unattended on a machine with hundreds, and a report template that asks for numbers.
 
+## Duplicates, which needed grouping more than they needed a route
+
+`--check-duplicate` has run as a write hook for weeks and answers one question: is the note about to be written a duplicate of something. It cannot answer the other one, which is what is already in there, and that was the argument for deferring `/duplicates`: 43 pairs on this vault, most of them legitimate variants, and a list that short is readable by hand.
+
+Building it showed the list length was never the problem. 46 pairs at 0.95, and eleven of the notes involved are DiSC podcast episode notes that share a template, which is 55 pairs of one fact. So the route returns connected components rather than pairs: union the pairs above the cutoff, report each component once with its internal pairs attached. 46 pairs becomes 15 rows, and the podcast pile is one of them.
+
+The second question was whether it needed a route at all, since the plugin already caches the `/graph` payload and missing links cost a filter over it. Measured at k=10: the graph filter misses 0 of 46 pairs at 0.95, 5 of 200 at 0.93, and 263 of 723 at 0.9. Mutual kNN drops exactly the case that matters, because a pile of near-identical notes fills every member's top ten with the other members and every pair past the tenth is discarded by the rule that makes the graph drawable. At today's default the two agree and the filter is 5ms against 360ms; the agreement ends as the cutoff loosens or the corpus grows, so the scan is the right primitive and the cache makes the cost a one-off.
+
+What makes the output judgeable is `unlinked`, the count of pairs in a cluster with no wikilink between them. The tightest pair on this vault, `glycine` and `random study, sort` at 0.974, is already linked and needs nothing; the podcast cluster has 17 unlinked pairs of 55. A link is reported rather than used as a filter, because writing one is as often someone noticing the overlap as it is a decision to keep both notes.
+
+Floored at 0.7 and capped at 20,000 pairs, since below that the count grows as the square of the corpus and the pairs stop being duplicates. Eight tests over fixed vectors, including the one that asserts the mutual-kNN shortcut is not equivalent.
+
+Nothing in Obsidian shows this yet. It is a route and a curl, where missing links got a `!` prefix in the search modal.
+
 ## Where it stands
 
 Five surfaces over one daemon client: the search modal with five prefixes, the related pane, the semantic local graph, the vault graph, and missing links. 76 tests against a fake Obsidian and a fake daemon, plus a live suite that drives the same views against the running daemon and is the only thing that catches a route changing shape. Live timings over 2,961 notes: related pane 177ms, local graph 31ms, vault graph 672ms around a note, 1,033ms for the whole corpus, missing links 4ms.
