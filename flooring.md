@@ -1,4 +1,6 @@
 ---
+aliases:
+- floor
 sentiment:
 - 5
 sentiment-hash: b22070cd
