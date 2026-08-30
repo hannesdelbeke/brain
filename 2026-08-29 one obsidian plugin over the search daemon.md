@@ -64,7 +64,7 @@ the split that would matter is daemon or no daemon, and none of these four sit o
 
 `unified-search` in the private vault's `.obsidian/plugins/`, extracted to `h-forts/obsidian-unified-search`, 395 lines of plain javascript with no build step: a modal with fuzzy, regex, tag and date modes, and semantic delegating to the daemon.
 
-`semantic-local-graph` in this vault's `.obsidian/plugins/`, 413 lines: a local graph of the notes nearest in meaning to the open note, drawing a fixed number of nodes so it does not slow down as the vault grows.
+`semantic-local-graph` in this vault's `.obsidian/plugins/`, 413 lines: a local graph of the notes nearest in meaning to the open note, drawing a fixed number of nodes so it does not slow down as the vault grows. it was extracted to `h-forts/obsidian-semantic-local-graph` on 2026-08-30, so the copy that this section says to remove is now recoverable rather than only deletable.
 
 both hold their own base URL, their own fetch, their own CLI fallback, their own python discovery and their own spawn of the daemon when it is not running. that duplication is the same failure the engine already paid for as two published python copies, and the backlinks pane is where it becomes a third. merge first, add the pane second.
 

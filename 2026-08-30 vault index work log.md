@@ -109,6 +109,8 @@ Nobody has looked at any of this inside Obsidian. Every number above comes from 
 
 The plugin repository is private and has no release, and submission needs both. The manifest author is "Claude" while the directory verifies ownership against the GitHub account, so the listing would show a name matching neither.
 
-The superseded `semantic-local-graph` prototype is still in this vault's plugin directory, untracked, and deleting it is not recoverable.
+The superseded `semantic-local-graph` prototype is now `h-forts/obsidian-semantic-local-graph`, private, rather than an untracked directory whose deletion would not be recoverable. It got the same submission pass its successor got — `contentEl` instead of an index into `containerEl`'s children, popout-safe timers, `resolvedLinks` instead of the private `getBacklinksForFile`, styling moved out of JavaScript into `styles.css`, `minAppVersion` raised to 1.7.2 — plus a licence and a README that says up front that PKM Search contains the same view. Whether it is worth keeping as a separate plugin at all is still open; it is now a question about a repository rather than about a directory nobody can restore.
+
+The two plugin manifests still name "Claude" as author, and both repositories are private with no release, so neither is submittable yet.
 
 Further reading: [[2026-08-29 one obsidian plugin over the search daemon]] for what the plugin is and why it is one plugin rather than four, [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]] for how the pieces get distributed, and [[2026-08-30 one daemon, several agents asking at once]] for the concurrency work whose benchmark loops polluted the query log measured above.
