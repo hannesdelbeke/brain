@@ -43,3 +43,5 @@ But what if I reach conclusions not found online, but not do any development?
 - If you’re **only theorizing** → it’s **research**.
 - If you’re **building or testing** → it’s **development**.
 - If you’re **doing both** (idea + prototype) → it’s [[research and development|R&D]].
+
+See also: [[publishing independent research]] — releasing findings as citable open studies.
