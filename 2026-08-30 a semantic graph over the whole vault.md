@@ -10,55 +10,129 @@ tags:
 ---
 
 > [!summary] eli5
-> obsidian's graph draws the links you wrote. the index knows a second kind of edge, the notes that are close in meaning whether or not you ever linked them, and this is what a graph over all of them looks like once it is measured rather than imagined.
-> mutual nearest neighbours is the version that draws: 5,458 edges over 2,959 notes, about the size of the wikilink graph, where plain nearest-neighbours gives 24,132 and a hairball. 69% of those edges are pairs you never linked, which is the whole point and also the reason the view has to be readable.
-> **needs from you:** open obsidian and look at it. the `/graph` route, the canvas view over it and the missing-links list all shipped on 2026-08-30, and nothing has been seen rendered by a human yet.
+> obsidian's graph draws the links you typed. the search index knows a second kind of connection: notes that mean similar things, whether or not you ever linked them. this note is that second graph, measured and then drawn.
+> the rule that produces a readable picture is mutual nearest neighbours: 5,458 connections over 2,959 notes, about the same density as the 6,506 links already in the vault. the obvious rule, "each note connects to its ten closest", gives 24,132 and a hairball.
+> 69% of the semantic connections are pairs you never linked. that is the value and the risk in one: it is mostly new information, so the view has to keep the two kinds apart or it is unreadable.
+> **needs from you:** open obsidian and look at it. the route, the view and the missing-links list all shipped on 2026-08-30 and no human has seen any of it rendered.
 
 > with the index and the daemon we have more connections. remake the obsidian graph but more optimised and with semantic connections
 
 > [!todo] next
-> **next:** a human looks at the four surfaces in obsidian and says which of them is actually worth keeping.
+> **next:** a human looks at the surfaces in obsidian and says which are worth keeping.
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 one obsidian plugin over the search daemon]]
 
-## what the index can already draw
+## the raw material
 
-every section has a vector. a note vector is the mean of its section vectors, renormalised, which costs one pass and no new storage. from there the whole-vault question is one matrix multiply, and the numbers below are from running it over 2,966 notes.
+the index already stores a vector for every `##` section of every note. a note's vector is the average of its sections' vectors, rescaled to unit length. that is the same averaging `/similar` has always used, so there is no new storage and no second definition of what a note is about.
 
-| edge rule | edges | reads as |
+with one vector per note, "how close is every note to every other note" is a single matrix multiply. over 2,966 notes that is 4.4 million pairs and takes a fraction of a second. the question is not whether the numbers exist. it is which of those 4.4 million pairs deserve a line drawn between them.
+
+## which pairs get a line
+
+| rule | connections | what it looks like |
 | --- | --- | --- |
-| every pair over a similarity cutoff | tuning exercise | a cutoff that is right for one cluster is wrong for the next |
-| k nearest neighbours, k=10 | 24,132 | a hairball, every note has ten edges whether or not it deserves them |
-| mutual kNN, k=10 | 5,458 | comparable to the 6,506 wikilinks that exist |
-| the wikilinks themselves | 6,506 | what obsidian draws today |
+| every pair above a fixed similarity score | depends entirely on the number | a threshold that suits one cluster is wrong for the next |
+| each note connects to its 10 closest | 24,132 | a hairball. every note gets ten lines whether it deserves them or not |
+| mutual: both notes are in each other's 10 closest | 5,458 | comparable to the links already written |
+| the wikilinks you typed | 6,506 | what obsidian draws today |
 
-mutual kNN is the rule worth shipping: an edge exists when each note is in the other's top ten, so a hub note stops attaching itself to everything and a note nobody is near keeps no edges at all. it also lands, without tuning, at about the density of the hand-written link graph, which is a good sign that the resulting picture is legible.
+mutual nearest neighbours is the rule that shipped. a line exists only when the feeling is returned: note A is in B's ten closest **and** B is in A's ten closest. two things fall out of that for free.
 
-**1,708 of the 5,458 mutual edges also carry a wikilink, so 69% of them are new.** an earlier pass over this said 87%, from a wikilink set that was counted per direction rather than per pair; the corrected number is the one to use. it is still the feature and the warning in one: the semantic graph is not a prettier version of the link graph, it is mostly new information, and a view that overlays both without distinguishing them is a view nobody can read.
+a hub note stops attaching itself to everything. a note about "obsidian" is near hundreds of notes, so under the plain rule it collects hundreds of lines. under the mutual rule it keeps only the notes that also consider it one of their own closest, which is the handful actually about obsidian rather than merely mentioning it.
 
-drawn together, the public corpus is 2,959 nodes and 10,256 edges: 1,708 pairs that are both near and linked, 3,750 near only, 4,798 linked only. mean degree 7.1, maximum 102, and 58 notes with no edge of either kind.
+a note nobody is near keeps no lines at all. under the plain rule every note has exactly ten, including the ones with nothing to connect to, which is how you get lines that mean nothing.
 
-## what does not work, measured rather than assumed
+there is no threshold to tune, and the density it lands on is close to the hand-written link graph without anyone aiming for that. that is a decent sign the picture will be legible, since the link graph is a density a human already reads.
 
-projecting the 384 dimensions down to two and using position as meaning does not survive contact with the data. taking each note's five nearest neighbours in the full space and asking how many are still among its five nearest on the map: PCA keeps 0.11 of 5, spectral 0.34 of 5. the map looks like a map and is noise. so position must come from a force layout over the edge list, where the edges are the truth and the coordinates are only a way to see them, exactly as obsidian already does.
+## how much of it is new
 
-the payload is not the problem: 5,519 edges is 0.18 MB of JSON and about 140ms warm. the drawing is the problem, and it is the same drawing problem obsidian already solved once.
+1,708 of the 5,458 mutual connections also carry a wikilink. so 69% of them are pairs nobody linked.
 
-## so the honest scope
+an earlier pass reported 87%. that came from counting wikilinks per direction instead of per pair; 69% is the number to use.
 
-the local graph, one note and its neighbours, already ships and is the version that earns its cost every day: bounded node count, no layout beyond a radial sort by similarity, redraws in tens of milliseconds. a whole-vault view is a different feature with a different failure mode, which is that it is beautiful once and never opened again.
+drawn together, the public corpus is 2,959 notes and 10,256 connections:
 
-if it is built, the shape is: a `/graph` route returning `{nodes, edges}` for a corpus, computed once and cached on the index version so it is free until the index changes; a canvas rather than SVG past a few thousand nodes; and a filter that starts from the open note's neighbourhood rather than from everything, because "everything" is the view that gets opened once.
+- 1,708 pairs both near in meaning and linked
+- 3,750 pairs near in meaning only, which is the missing-links list further down
+- 4,798 pairs linked only, which is everything from a passing mention to a link written for a reason the vectors cannot see
 
-the route shipped on 2026-08-30, 60 lines. `nodes` is a path list and an edge indexes into it, `[source, target, score, linked]`, which is 0.32 MB of JSON for the whole public corpus where the same edges written out as objects with paths in them are four times that. building it costs 0.15s, the first call over HTTP measured 371ms including the matrix load, and every call after it is served from the cache until the index moves.
+mean connections per note is 7.1, the most connected note has 102, and 58 notes have none of either kind.
 
-## the features next to it, ranked by what they give per hour spent
+the practical consequence: this is not a prettier version of the graph obsidian already draws. two thirds of it is information the link graph does not contain, so a view that mixes the two without telling them apart is a view nobody can read. in the drawing, a link you wrote is a solid line and a connection the index found is dashed.
 
-1. **freshness.** the pane answers out of the index, so a note edited since the last pass gets answers that are behind. `/health` already carries when the pass finished. *shipped on 2026-08-30, with a reindex the user can click.*
-2. **the other corpora.** one daemon serves several indexes, and no other obsidian plugin can show you the note in your other vault that is about what you are writing now. `/similar` cannot cross an index, so it is `/search` over the note's own text with the vault parameter set to all. *shipped the same day, off by default, 1.7s against two corpora.*
-3. **missing links.** the pairs that are mutual nearest neighbours and are not linked, sorted by how close they are, is a list of specific edits rather than a picture. it is the mutual-kNN computation above with the wikilinks subtracted, which is why the graph work pays for it. *shipped on 2026-08-30 as the `!` prefix in the search modal, 3,750 pairs on the public corpus, top 200 kept, filtered from the graph payload the views already hold so it costs 5ms and no new route.* obsidian's own links are subtracted as well as the index's, or a link written since the last pass reads as missing.
-4. **section-level related.** neighbours of the paragraph the cursor is in rather than of the whole note. the sections are already the unit the index stores, so this is a route parameter and a heading, and it is the one that changes what writing in the editor feels like.
-5. **the whole-vault graph.** the picture. *shipped on 2026-08-30, out of order, because the route made it a day of work rather than a week.* a canvas, a force layout with grid-bucketed repulsion, and a node budget: 116ms of layout at the 300-node default, 986ms for all 2,960. it opens around the note you are in and widens, and drawing everything is a button rather than the default. whether it gets opened twice is still the open question, and only use will answer it.
+## why the map cannot come from the vectors
 
-related: [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]] for where the python lives, [[core Obsidian features to rework on the vault index]] for the acceptance each replaced feature needs, and [[2026-08-18 what retrieval costs as a vault grows]] for why the answers are locations rather than bodies.
+the tempting shortcut is to squash the 384 numbers per note down to two and use those as x and y on screen. then position means something and no layout algorithm is needed.
+
+it does not survive being checked. take each note's five nearest neighbours in the full 384 dimensions, then ask how many of those five are still among its five nearest on the flattened map:
+
+- PCA keeps 0.11 of 5
+- spectral embedding keeps 0.34 of 5
+
+so roughly 2% and 7% of what you would be looking at is real. the map looks like a map and is noise. anyone reading clusters off it is reading an artefact of the projection.
+
+position therefore comes from a force layout over the connection list, the same as obsidian does it. the connections are the truth, and coordinates are only a way to see them. two notes ending up near each other on screen is a hint, not a measurement.
+
+## the route
+
+`GET /graph?k=10` returns the whole corpus as `{nodes, edges}`. it shipped in about 60 lines of python.
+
+`nodes` is a plain list of paths. an edge is `[source, target, score, linked]`, where source and target are positions in that list. writing edges as objects with the paths spelled out costs four times as much: the compact form is 0.32 MB of JSON for the whole public corpus.
+
+building it takes 0.15s. the first HTTP call measured 371ms including loading the vector matrix from disk. every call after that is served from a cache keyed on the index version, so it is free until a reindex moves the vectors, and stale by construction never.
+
+one route feeds three separate features, which is why it was worth building before deciding whether the picture itself was a good idea.
+
+## the view
+
+canvas, not SVG. the whole corpus is 2,959 notes and 10,256 lines, which is roughly 13,000 DOM elements against one draw call per frame.
+
+layout is Fruchterman-Reingold: connected notes pull together, all notes push apart, the step size cools over the run. the push is the expensive half, since done naively it compares every note against every other. instead notes are bucketed into a grid whose cells are the length of an ideal edge, and each note is only pushed by the nine cells around it. that makes a step linear in the number of notes rather than quadratic. a quadtree would restore the long-range push, and it only starts to matter past ten thousand notes.
+
+what you get on screen:
+
+- a dot per note, sized by how many connections it has, with the open note enlarged and highlighted
+- solid lines for links you wrote, dashed for connections the index found
+- names appear as you zoom in past 1.6x, and before that only the open note and whatever the pointer is over are named
+- scroll to zoom about the pointer, drag to pan, click a dot to open the note
+- two buttons: "around this note" versus "whole corpus", and "rebuild"
+- a caption under the canvas saying how many of the total notes and connections are being drawn
+
+## how big before it slows
+
+| notes drawn | layout time |
+| --- | --- |
+| 100 | 45ms |
+| 300, the default | 116ms |
+| 1,000 | 237ms |
+| 2,960 | 986ms |
+
+so the default budget is 300 notes and the whole corpus is a button, not the landing state.
+
+when the budget is smaller than the vault, which notes survive depends on the mode. around the open note, it widens outward in rings, always taking the strongest connection first, so the budget buys the notes surrounding this one rather than one long chain leading away from it. in whole-corpus mode it keeps the most connected notes first, because a graph cut down to whatever order the file paths happened to be in reads as dust, while one that keeps its hubs still reads as the same shape.
+
+the payload was never the bottleneck. drawing was, and it is the same drawing problem obsidian already solved once.
+
+## missing links, the version without a picture
+
+the same data, minus the picture: every pair that is mutually near with no link either way, sorted by how close they are. 3,750 of them on the public corpus, and the top 200 are kept, because the hit rate falls off in the tail and this is a worklist rather than an inventory.
+
+it cost no new route. the plugin already holds the `/graph` payload for its views, so this is a filter on the `linked` flag, a sort, and the `!` prefix in the search modal. 5ms.
+
+obsidian's own link map is subtracted as well as the index's flag. the index is always at least one pass behind the vault, so without that a link written five minutes ago still reads as missing.
+
+sampling the top 20 by hand: 19 are pairs that should be linked, one is unclear, none are wrong. the very top of the list is near-duplicate notes rather than missing links, which is the duplicate-detection feature showing up early and uninvited.
+
+a list of specific edits beats a picture, which is why this ranked first of the features below and the picture ranked last.
+
+## what shipped, in the order it was worth doing
+
+1. **freshness.** the panes answer out of the index, so a note edited since the last pass gets stale answers. `/health` already reports when the pass finished, so the view says so and offers a reindex button. *shipped 2026-08-30.*
+2. **the other corpora.** one daemon serves several indexes, and no other obsidian plugin can show you the note in your other vault that is about what you are writing now. `/similar` cannot cross an index, so it runs `/search` over the note's own text with the vault set to all. *shipped the same day, off by default, 1.7s against two corpora.*
+3. **missing links.** the section above. *shipped, 5ms, top 200 of 3,750.*
+4. **section-level related.** neighbours of the paragraph the cursor is in, rather than of the whole note. sections are already the unit the index stores, so this is a route parameter and a heading. *not built.* it is the one most likely to change what writing in the editor feels like.
+5. **the whole-vault picture.** *shipped out of order, because the route made it a day of work rather than a week.* the reservation stands: a picture of everything is the feature that gets opened once. whether it gets opened twice is a question only use answers.
+
+related: [[2026-08-30 what else the index can answer]] for the five candidate features this ranking came from, [[2026-08-30 vault index work log]] for the day it was all built, [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]] for where the python lives, [[core Obsidian features to rework on the vault index]] for the acceptance each replaced feature needs, and [[2026-08-18 what retrieval costs as a vault grows]] for why the answers are locations rather than bodies.
