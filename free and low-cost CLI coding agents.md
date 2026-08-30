@@ -11,7 +11,7 @@ aliases:
 
 > [!summary] eli5
 > this note compares CLI AI coding agents you can reach for after a free quota runs out, gemini cli and codex both ran dry in the same week.
-> done: six tools compared, agentic vs chat-only, free vs paid, with linux setup commands living in `free-ai-cli-notes.md` on the laptop rather than duplicated here.
+> done: six tools compared, agentic vs chat-only, free vs paid, with linux setup commands living in [[]] `free-ai-cli-notes.md` on the laptop rather than duplicated here.
 > **needs from you:** nothing, recommend qwen code cli as the default pick for guided walkthrough tasks, free and agentic.
 
 > ran out of gemini cli's free quota, then codex's free quota too, asked for a comparison of free alternatives and where cursor cli agent fits.
