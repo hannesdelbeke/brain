@@ -47,3 +47,4 @@ document.addEventListener("DOMContentLoaded", function() {
 [[Obsidian]]
 [[UX]]
 [[Obsidian improvements]]
+[[proposal - live AI agent bridge into obsidian]] — a live DOM/CDP bridge would let an agent verify why this JS doesn't work

@@ -16,6 +16,7 @@ issues
 - **Hashtag Fragmentation:** Using hashtags instead of wikilinks for concepts fragments the graph because hashtags don't support aliases (e.g., `#ai` vs `#artificial-intelligence`), meaning related ideas don't cluster.
 
 ### Related
+- [[proposal - live AI agent bridge into obsidian]] — live graph/link-state access via a running-Obsidian bridge, instead of static file scans
 - [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks and semantic links]]
 - [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]]
 - [[public/skills/private-to-public-note-promotion/SKILL|private to public note promotion]]
