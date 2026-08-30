@@ -25,3 +25,5 @@ The [[perfection|perfect]] workflow would have a plugin in Obsidian to auto sync
 PS: Glasp has daily Notion sync / export. Daily is too slow, and it's not clear if sync includes edits in Notion.
 
 [[Obsidian web integration]]
+
+Found: Glasp Obsidian plugin v0.3.0 (July 2026) — incremental, non-destructive sync; matches existing notes by source URL and updates in place, no duplicates. Exactly the workflow suggested above. See [[proposal - resumable bidirectional sync adapter]].

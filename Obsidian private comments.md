@@ -33,3 +33,5 @@ an Obsidian extension to leave private comments.
 obsidian forum [post](https://forum.obsidian.md/t/private-comments-on-note/51874)
 
 Get inspired by [[Hypothesis review]] , which supports private comments on any website.
+
+Found: Side Comments plugin stores annotations as local JSON sidecar files, one per note — source markdown untouched, matching this proposal's "connection not saved in the note" idea. See [[proposal - resumable bidirectional sync adapter]].
