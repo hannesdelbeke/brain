@@ -33,6 +33,7 @@ Agents cannot spin up parallel search runners across 50 remote repos to extract 
 *Simple solution:* [[repo maps via GitHub Actions]] — Pre-compute skeleton maps on push in CI/CD, so the agent only reads lightweight static maps rather than scanning raw code.
 
 ### Related
+- [[simple options for multi-repo agent search]] — Low-infrastructure options for closing these gaps.
 - [[multi-repo agentic search architecture]] — 3-tier catalog, AST outline, and map-reduce pipeline for GitHub orgs.
 - [[vault MCP server for agents]] — Designing structured tool interfaces over raw file dumps.
 - [[multi-repo agent search cost and ROI]]
