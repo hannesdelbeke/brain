@@ -18,7 +18,7 @@ tags:
 > with the index and the daemon we have more connections. remake the obsidian graph but more optimised and with semantic connections
 
 > [!todo] next
-> **next:** a human looks at the surfaces in obsidian and says which are worth keeping.
+> **next:** a human looks at the surfaces in obsidian and says which are worth keeping. nothing is left to build from the list at the bottom: four of the five shipped and the fifth, section-level related, was measured on 2026-08-30 and dropped.
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 one obsidian plugin over the search daemon]]
@@ -132,7 +132,29 @@ a list of specific edits beats a picture, which is why this ranked first of the 
 1. **freshness.** the panes answer out of the index, so a note edited since the last pass gets stale answers. `/health` already reports when the pass finished, so the view says so and offers a reindex button. *shipped 2026-08-30.*
 2. **the other corpora.** one daemon serves several indexes, and no other obsidian plugin can show you the note in your other vault that is about what you are writing now. `/similar` cannot cross an index, so it runs `/search` over the note's own text with the vault set to all. *shipped the same day, off by default, 1.7s against two corpora.*
 3. **missing links.** the section above. *shipped, 5ms, top 200 of 3,750.*
-4. **section-level related.** neighbours of the paragraph the cursor is in, rather than of the whole note. sections are already the unit the index stores, so this is a route parameter and a heading. *not built.* it is the one most likely to change what writing in the editor feels like.
+4. **section-level related.** neighbours of the paragraph the cursor is in, rather than of the whole note. *measured on 2026-08-30, do not build.* the section below is why.
 5. **the whole-vault picture.** *shipped out of order, because the route made it a day of work rather than a week.* the reservation stands: a picture of everything is the feature that gets opened once. whether it gets opened twice is a question only use answers.
+
+## section-level related, measured and dropped
+
+the pane builds its query from the note's title plus its first 60 words. so on a long note it answers about the top of the note whatever you are typing at the bottom. section-level related would query on the section under the cursor instead, so the pane follows what you are writing. sections are already the unit the index stores, so the build is a route parameter and a heading, half a day at most.
+
+it only behaves differently on notes long enough to hold more than one topic. this vault:
+
+| measure | value |
+| --- | --- |
+| notes | 3,088 |
+| median length | 53 words |
+| p90 length | 318 words |
+| notes with 3 or more `##` sections | 213 |
+| of those, 400 words or more | 141, which is 4.6% |
+
+on a 53-word note the section under the cursor is the note, and the feature returns exactly what the pane already returns. the 141 notes where it would differ are work logs, progress notes and proposals, which are written by agents rather than typed.
+
+the second half of the answer is who the feature is for. an agent already has section-level related and always has: `/search` takes arbitrary text, so pasting the paragraph is the whole feature, no plugin involved. the pane is a human-at-the-keyboard surface.
+
+that human does exist. of 241 notes added to this vault in the last 60 days, about 115 came from human commits and 126 from agents, so hand-written notes are still half the intake. they are just short. the conclusion is not "nobody writes here", it is "what gets typed here is one section long", and that is what makes the feature redundant.
+
+what would change the answer: notes getting longer. if the median passes a few hundred words, or the count of 3-plus-section notes passes something like 500, ask again. the same measurement is two shell commands.
 
 related: [[2026-08-30 what else the index can answer]] for the five candidate features this ranking came from, [[2026-08-30 vault index work log]] for the day it was all built, [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]] for where the python lives, [[core Obsidian features to rework on the vault index]] for the acceptance each replaced feature needs, and [[2026-08-18 what retrieval costs as a vault grows]] for why the answers are locations rather than bodies.
