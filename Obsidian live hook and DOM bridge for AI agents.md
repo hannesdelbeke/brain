@@ -67,6 +67,7 @@ Launching Obsidian with `--remote-debugging-port=9222`.
 - [Obsidian CLI](https://obsidian.md/cli): official command-line IPC tool for running `obsidian eval`.
 
 ## Related notes
+- [[proposal - live AI agent bridge into obsidian]] — synthesis, existing-solution findings, and recommended next step
 - [[Obsidian visual link color debugging and AI bridge plan]] — applied case study using this bridge to debug link colors
 - [[Obsidian data worth exposing to AI agents]] — high-value in-memory metadata and telemetry to expose
 - [[Obsidian CLI + Agent Context at Scale]] — official CLI IPC vs file-based retrieval
