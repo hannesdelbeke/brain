@@ -61,6 +61,28 @@ That is what makes the queries the scanner exists for answerable. "Which images 
 
 The 150 references still unresolved in the developer docs are worth keeping: most are `[(constructor)](Foo/(constructor))`, where the link regex stops at the nested bracket, and a handful are genuinely broken links in Obsidian's published documentation, which is the feature working.
 
+## A second scanner, over a format with no schema
+
+The `collect=` contract had one implementation, which makes it an interface and not a seam. The second one is `index_agy.py`, over Antigravity CLI conversations, and it was chosen because it shares nothing with the first except the return type.
+
+Nothing about the format is documented. The store was found by reading strings out of `agy.exe`: `~/.gemini/antigravity-cli/conversations/<uuid>.db`, one SQLite database per conversation, whose `steps` table holds a binary protobuf payload with no `.proto` published anywhere. So there is no line to count and no byte to resume from, which is precisely what the first scanner is built around.
+
+The payload is read by walking wire format directly. A varint key carries the field number and the wire type, and the ambiguous case is length-delimited: a nested message, a string and a byte array are the same three bytes of header. It is parsed as a message when it parses as one and kept as a string when it decodes as printable UTF-8, and when it does both, both are kept, since a JSON argument blob parses as a message by coincidence often enough to lose it that way.
+
+That leaves the question of which field holds what, which was answered by volume rather than by guessing: rank every field path by how many characters of text it holds across every conversation, per step type, and read the samples. Step type 14 is the user and its prose sits at `19.2`, step type 15 is the assistant at `20.1`, step type 17 is a provider error, and the rest are tool machinery. Both turns are repeated under a second path, `19.3.1` and `20.8`, so identical strings within a step are collapsed before anything is emitted.
+
+Only the prose is taken by field number. Tool calls are found by content instead: agy writes their arguments as a JSON object, and a JSON object stays recognisable wherever the field numbers move. That matters because the field map is the fragile part, and it is the part `--probe` exists to recheck — it prints the ranked map with a sample of each field, which is how the mapping was read in the first place.
+
+The exclusions carry over unchanged, and for the same reasons: tool results, whole-file arguments like `CodeContent`, and the assistant's thinking at `20.3`. What is kept is prose plus a whitelist of arguments, and the ones naming a path become edges.
+
+Resume is a cursor rather than an offset. Each conversation records the highest `steps.idx` it read, and the next run reparses from that index rather than past it, because agy rewrites the last step in place while the answer streams. The rows before it come back out of the index through `index_sessions.cached_rows`, which turned out to be source-agnostic already.
+
+One bug worth recording. A section id was `path::step:chunk`, and a single step can hold both an assistant turn and the tool call it made, so the second silently overwrote the first through its primary key: the run reported 1,511 sections and the database held 1,464. The id carries the event index now, and the selfcheck asserts the ids are unique.
+
+Measured over 18 conversations and 44 MB: 17 notes, 1,511 sections, 107 edges, 2.4 MB of index, 0.83s cold and 0.26s of scan on a resume. The eighteenth was one `/usage` and produced no prose, which is the correct answer. Searched through the daemon over `--corpus` with no code of its own, which is the actual proof.
+
+Eighteen conversations is not enough to trust a hand-read wire format, so `index_agy_validation.md` sits beside the scanner: eight steps with a pass rule and a failure signature each, written for an agent to run unattended on a machine with hundreds, and a report template that asks for numbers.
+
 ## Where it stands
 
 Five surfaces over one daemon client: the search modal with five prefixes, the related pane, the semantic local graph, the vault graph, and missing links. 76 tests against a fake Obsidian and a fake daemon, plus a live suite that drives the same views against the running daemon and is the only thing that catches a route changing shape. Live timings over 2,961 notes: related pane 177ms, local graph 31ms, vault graph 672ms around a note, 1,033ms for the whole corpus, missing links 4ms.

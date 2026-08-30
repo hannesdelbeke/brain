@@ -235,6 +235,24 @@ An image counts as referenced when an edge matches its path or its basename, not
 
 Run end to end against a repository index on 2026-08-28: `refs src/main.ts` returns 10 references across six documents in 0.42s whole-process, `orphans` returns 431 of 445, `broken` returns 138. Against the vault indexes, where the edges are wikilinks, `broken` returns 1,780 references on a 3,228-note vault and 238 on an 857-note one, which is the first time those were countable.
 
+### 18. Antigravity CLI Conversations (`index_agy.py`)
+The second scanner over the `collect=` contract, which is what makes section 15 a seam rather than an interface with one implementation:
+```bash
+python skills/pkm-metadata-indexer/index_agy.py --root ~/.gemini/antigravity-cli
+python skills/pkm-metadata-indexer/index_agy.py --probe
+python skills/pkm-metadata-indexer/index_agy.py --selfcheck
+python skills/pkm-metadata-indexer/searchd.py --corpus skills/pkm-metadata-indexer/index_agy.py:scan_agy=agy=~/.gemini/antigravity-cli
+```
+It is worth having as a second implementation because it shares nothing with the first but the return type. `agy` writes one SQLite database per conversation under `conversations/<uuid>.db`, and each row of its `steps` table holds a binary protobuf payload with no schema published anywhere, so there is no line to count, no byte offset to remember, and nothing to parse with a json reader.
+
+The payload is read by walking protobuf wire format directly: a varint key gives the field number and wire type, and a length-delimited chunk is treated as a nested message when it parses as one and as a string when it decodes as printable UTF-8. Prose comes from the field paths in `PROSE_FIELDS`, `19.2` for a user turn and `20.1` for an assistant one, which were found by volume with `--probe`. Tool calls are found by content rather than by field number, since agy writes their arguments as a JSON object and a JSON object stays recognisable wherever the field numbers move to. `--probe` prints the field map with a sample of each field so the mapping can be rechecked against another install, which is the failure mode a hand-read wire format has.
+
+The same exclusions as section 12 apply and for the same reasons: tool results and whole-file arguments such as `CodeContent` are skipped, and so is the assistant's thinking at `20.3`. Arguments naming a path become edges, so "which conversation touched that file" is answerable from the graph.
+
+Resume is a cursor rather than an offset. Each conversation records the highest `steps.idx` it read in `<root>/.pkm_agy_state.json`, and the next run reparses from that index, deliberately including the last step because agy rewrites it in place while the answer streams. The rows before it come back out of the index through `index_sessions.cached_rows`, which is source-agnostic already.
+
+Measured over 18 conversations, 44 MB on disk: 17 notes, 1,511 sections and 107 edges in 2.4 MB, 0.83s cold and 0.26s of scan on a resume. The eighteenth conversation was one `/usage` and produced no prose. `index_agy_validation.md` beside it is the check to run on a machine with hundreds of conversations, written for an agent to execute unattended.
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
