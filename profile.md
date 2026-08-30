@@ -1,4 +1,4 @@
-﻿---
+---
 date: 2026-08-28
 tags:
   - profile
@@ -26,6 +26,7 @@ aliases:
 ## ⚙️ Working Preferences & Tooling
 * **Interaction Style:** Flowing, concise technical prose over rigid boilerplate AI templates; provide direct file links and runnable proof commands.
 * **Environment:** Keyboard-first, dark mode, Windows/PowerShell + Git CLI, ONNX/DirectML offline embedding infrastructure.
+* **Hardware:** Devices, peripherals, and workstation specs in [[my hardware]].
 * **Instruction Constraint:** Keep agent prompts and `AGENTS.md` strictly under 100–120 lines; synthesize modular skills on-demand rather than appending raw bloat.
 
 ---
