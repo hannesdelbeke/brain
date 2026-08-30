@@ -10,11 +10,11 @@ tags:
 
 > [!summary] eli5
 > the search daemon holds vectors, wikilinks, and a query log. beyond search, this is what else it can answer, measured over 3,080 notes rather than assumed.
-> missing links ranked by mutual-kNN similarity hit 95% on the top 20: pairs the index knows are close that you never linked. duplicate detection at 0.95 cosine separates 43 near-duplicate pairs from 650 related ones. co-retrieval from 8,322 logged queries found 4,884 note associations the text does not say. orphan detection reaches 122 unlinked notes, though 96% of the vault already has links so the list is small. the query log is too new to show what search misses.
+> missing links ranked by mutual-kNN similarity hit 95% on the top 20: pairs the index knows are close that you never linked. duplicate detection at 0.95 cosine separates 43 near-duplicate pairs from 650 related ones. co-retrieval looked like 4,884 associations from 8,322 logged queries and turned out to be one benchmark query run 2,870 times. orphan detection reaches 122 unlinked notes, though 96% of the vault already has links so the list is small. the query log is too new to show what search misses.
 > **needs from you:** nothing. the ranking is below, and the two features at the top of it shipped the day it was written.
 
 > [!todo] next
-> **next:** co-retrieval edges folded into semantic neighbours, with `eval_rerank.py` deciding whether they stay. missing links shipped on 2026-08-30 as the `!` prefix in the plugin's search modal, without the route this note asked for.
+> **next:** nothing from this list. missing links shipped on 2026-08-30, co-retrieval was measured the same day and dropped, and the three below all say wait. the next thing the index answers comes from using the plugin, not from this ranking.
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 one obsidian plugin over the search daemon]]
@@ -27,7 +27,7 @@ five candidate features, tested over the brain corpus (3,080 notes, 7,301 sectio
 
 1. **missing links:** mutual-kNN pairs with no wikilink between them, ranked by similarity. sampled the top 20 by reading note titles and first lines. 19 of 20 should be linked (95% hit rate): disc podcast series pairs, related amino acids, skill documentation and its progress note, obsidian feature pairs, maya control features, entity registry versions. one unclear. zero false positives in the top 20.
 
-2. **co-retrieval edges:** notes that keep appearing in the same search results. the log holds 8,322 queries over three days, producing 4,884 distinct note pairs with decayed weights from 1.0 to 3,012. top edges are battery and solar clusters, all correct. the signal is real and the incremental fold from `co_retrieval.py` works.
+2. **co-retrieval edges:** notes that keep appearing in the same search results. the log holds 8,322 queries over three days, producing 4,884 distinct note pairs with decayed weights from 1.0 to 3,012, and the incremental fold from `co_retrieval.py` works. the pairs are not evidence though: a later pass classified the log and found 97% of it is benchmark traffic, half the pair mass coming from one query repeated 2,870 times, which is why the battery and solar clusters sit at the top.
 
 3. **query misses:** what search did not find. 5,926 queries, 2,967 distinct, zero returned empty, one returned fewer than four notes (stream deck), and 82 reformulation runs covering 5,924 queries. most reformulations are test probes with synthetic query strings (battery vector n5445104, linter cache n5460141). the log is too young and too full of daemon tests to show what real searches miss. ask again in a month.
 
@@ -39,7 +39,7 @@ five candidate features, tested over the brain corpus (3,080 notes, 7,301 sectio
 
 1. **missing links (shipped 2026-08-30).** 3,751 edges the index found that you did not write, 95% hit rate at the top, ranked by similarity so the list starts with the best. it cost less than the route this note asked for: the plugin already caches the `/graph` payload for its views, so the feature is a filter on `linked == 0`, a sort, and a `!` prefix in the search modal. 5ms over the cached payload, top 200 kept, and obsidian's own link map is subtracted as well as the index's so a link written since the last pass does not read as missing. the top of the list on the public corpus is near-duplicate pairs rather than missing links, which is the duplicate feature below arriving early and unasked.
 
-2. **co-retrieval edges folded into ranking (build it).** the log records what comes back together, which is a second kind of relatedness the text and the vectors both miss. 4,884 edges after three days, and the weight decays so old associations fade. fold these into the semantic neighbour list by adding a co-retrieval bonus to the cosine score, then run it through `eval_rerank.py` to see whether it improves precision at 10. cost is wiring `co_retrieval.py` into `searchd.py` and a rerank eval. value is better neighbours if the eval says so, nothing if it does not.
+2. **co-retrieval edges folded into ranking (measured on 2026-08-30, do not build).** the eval was run before the wiring, which is the right order, and it said no: no bonus weight moves nDCG@10 by more than 0.02, the sign flips between neighbouring weights, and the best of 21 cells has p(Δ>0) of 0.89. the reason is upstream of the ranking — 97% of the query log is benchmark traffic, and the 4,884 pairs counted below are mostly one query run 2,870 times. the full measurement is in [[2026-08-30 co-retrieval edges do not improve ranking]], including the two defects it turned up: a multi-corpus search was logging its edges under a composite corpus name, now fixed, and `eval_rerank.py`'s headline metric is invariant under reordering, so it cannot see a rerank at all.
 
 3. **duplicate detection at 0.95 (build it when note count climbs).** 43 pairs is a small list, and most are legitimate variants (disc series, progress notes on the same system, amino acid pairs). the feature is "check for duplicates before writing a note," which `index_pkm_meta.py --check-duplicate` already does. the route is one line, `/duplicates?threshold=0.95`. value is preventing note sprawl, but at 43 pairs over 3,080 notes the problem is not burning yet. build it when the vault hits 10,000 notes or the pair count breaks 200.
 
@@ -54,7 +54,7 @@ five candidate features, tested over the brain corpus (3,080 notes, 7,301 sectio
 | feature | measured value | threshold or count | cost | rank |
 | --- | --- | --- | --- | --- |
 | missing links | 3,751 pairs, 95% hit rate on top 20 | semantic edges without wikilinks | shipped: a filter on the cached graph, 5ms | 1 |
-| co-retrieval | 4,884 edges from 8,322 queries | weight > 1.0 after decay | fold into ranking, eval | 2 |
+| co-retrieval | no gain over baseline, 97% of the log is machine traffic | nDCG@10 within ±0.043 at every weight | measured, dropped | 2 |
 | duplicates | 43 pairs at 0.95, 650 at 0.90 | cosine > 0.95 | one route, burns at scale | 3 |
 | query misses | 0 empty, 1 narrow, 82 reformulations | log too young | wait 30 days | 4 |
 | orphans | 122 notes, 4.0% of vault | degree 0 | one query, no action | 5 |

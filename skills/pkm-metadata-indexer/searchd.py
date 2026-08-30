@@ -129,7 +129,7 @@ LOG_PATH = None
 LOG_LOCK = threading.Lock()
 
 
-def log_query(kind: str, vault: str, subject: str, limit: int, took_ms: float,
+def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
               results: list, origin: str = ""):
     """Append one line per query, so ranking changes can be judged after the fact.
 
@@ -137,21 +137,33 @@ def log_query(kind: str, vault: str, subject: str, limit: int, took_ms: float,
     reindex and a log that a reindex deletes is not a log. Results are paths
     only: the scores are reproducible from the query, the paths are what a
     co-retrieval edge needs.
+
+    A search over several corpora writes one line per corpus. Written as one
+    line it would name the corpus "a,b", which is a key no single-corpus reader
+    matches, and it would pair a note in one corpus with a note in another.
     """
     if LOG_PATH is None:
         return
-    row = {
-        "t": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "kind": kind,
-        "vault": vault,
-        "q": subject,
-        "limit": limit,
-        "took_ms": took_ms,
-        "results": [result["path"] for result in results],
-    }
-    if origin:
-        row["origin"] = origin
-    line = json.dumps(row, ensure_ascii=False)
+    when = time.strftime("%Y-%m-%dT%H:%M:%S")
+    names = [vault] if isinstance(vault, str) else list(vault)
+    grouped = {name: [] for name in names}
+    for result in results:
+        grouped.setdefault(result.get("vault") or names[0], []).append(result["path"])
+    lines = []
+    for name, paths in grouped.items():
+        row = {
+            "t": when,
+            "kind": kind,
+            "vault": name,
+            "q": subject,
+            "limit": limit,
+            "took_ms": took_ms,
+            "results": paths,
+        }
+        if origin:
+            row["origin"] = origin
+        lines.append(json.dumps(row, ensure_ascii=False))
+    line = "\n".join(lines)
     try:
         with LOG_LOCK:
             LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -401,7 +413,8 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
         "stale": stale,
         "results": results,
     }
-    log_query("search", name, query, limit, payload["took_ms"], payload["results"], origin)
+    log_query("search", [vault.name for vault in vaults], query, limit,
+              payload["took_ms"], payload["results"], origin)
     return payload
 
 
