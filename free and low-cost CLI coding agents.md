@@ -80,7 +80,7 @@ aider --model ollama/qwen2.5-coder:7b
 
 ## not free
 
-**cursor cli agent** (`cursor-agent`): good agent quality, gpt-5/claude/gemini backends, but short trial credits then paid subscription, doesn't solve a quota problem, just moves the cost.
+**cursor cli agent** (`cursor-agent`): good agent quality, gpt-5/claude/gemini backends, but short trial credits then paid subscription, doesn't solve a quota problem, just moves the cost. model picker and when-to-use guidance in [[cursor agent cli models]].
 
 ```bash
 curl https://cursor.com/install -fsS | bash
@@ -95,5 +95,6 @@ login via browser on first run, worth it only if paying is fine.
 
 qwen code cli first, it's the only option here that's both free and fully agentic with no pairing needed.
 opencode as the fallback if qwen's daily quota gets tight, since it can point at whatever free model still has headroom.
+for automatic fallback across multiple free keys on rate limits, use a local proxy like [[free LLM router and rate limit fallback]].
 
 **why:** root
