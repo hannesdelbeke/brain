@@ -38,7 +38,12 @@ Endpoints, all accepting `?vault=name`:
 =======
     GET  /graph?k=         the whole corpus as nodes and edges: mutual nearest
                            neighbours in embedding space, plus the wikilinks
+<<<<<<< HEAD
 >>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
+=======
+    GET  /duplicates?threshold=&limit=
+                           notes that say the same thing, grouped
+>>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -62,6 +67,7 @@ can name where a search came from with `&origin=<note>`.
 """
 
 import argparse
+import collections
 import hmac
 import importlib
 import importlib.util
@@ -236,6 +242,7 @@ class Vault:
 <<<<<<< HEAD
 =======
         self.graph_cache = None  # (vectors_version, k), payload
+        self.duplicate_cache = None  # (vectors_version, threshold), payload
 
 >>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
         self.stale_cache = None
@@ -651,6 +658,125 @@ def wikilink_pairs(vault: Vault) -> list[tuple[str, str]]:
         connection.close()
 
 
+def duplicate_clusters(vectors, wikilinks, threshold: float, chunk: int = 512,
+                       max_pairs: int = 20000) -> dict:
+    """Notes that say the same thing, grouped into clusters rather than listed as pairs.
+
+    A threshold scan rather than a filter over `/graph`, because the graph's
+    mutual-kNN rule drops the pairs that matter most: a pile of near-identical
+    notes fills every member's top k with the other members, so every pair past
+    the kth is discarded by the rule that makes the graph drawable. Measured
+    over 2,979 notes at k=10, the graph filter misses 0 of 46 pairs at 0.95, 5
+    of 200 at 0.93 and 263 of 723 at 0.9, so it is the same answer at today's
+    default and stops being one as soon as the cutoff loosens or the corpus
+    grows. The scan costs 360ms and is cached to nothing after the first call.
+
+    Grouping is the difference between usable and not. Eleven near-identical
+    notes are 55 pairs, and reading 55 rows to learn one fact is worse than
+    reading none, so pairs above the threshold are unioned into connected
+    components and each component is reported once with its internal pairs
+    attached. On this vault that is 46 pairs as 15 rows.
+
+    `linked` marks a pair that already has a wikilink between it, which is how a
+    note and its deliberate companion, a progress note and its work log, are
+    told apart from a note written twice. It is reported rather than filtered,
+    because a link between two notes is as often the person noticing the overlap
+    as it is a decision to keep both.
+    """
+    meta, matrix = vectors
+    empty = {"threshold": threshold, "pairs": 0, "notes": 0, "truncated": False, "clusters": []}
+    if matrix is None or len(meta) == 0:
+        return empty
+    paths, index_of, pooled = note_vectors(meta, matrix)
+    count = len(paths)
+    if count < 2:
+        return empty
+
+    found, truncated = [], False
+    for start in range(0, count, chunk):
+        block = pooled[start:start + chunk] @ pooled.T
+        # Only the upper triangle, so a pair is found once and a note is never
+        # its own duplicate.
+        rows, columns = np.nonzero(block >= threshold)
+        for row, column in zip(rows.tolist(), columns.tolist()):
+            if column > start + row:
+                found.append((start + row, column, float(block[row, column])))
+        # A caller who asks for 0.7 over a large corpus can ask for millions of
+        # pairs. The cap keeps the answer bounded and says that it did.
+        if len(found) > max_pairs:
+            found, truncated = found[:max_pairs], True
+            break
+
+    parent = list(range(count))
+
+    def root(node: int) -> int:
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    for left, right, _ in found:
+        one, two = root(left), root(right)
+        if one != two:
+            parent[one] = two
+
+    linked = set()
+    for source, target in wikilinks:
+        left, right = index_of.get(source), index_of.get(target)
+        if left is not None and right is not None and left != right:
+            linked.add((min(left, right), max(left, right)))
+
+    grouped = collections.defaultdict(list)
+    for pair in found:
+        grouped[root(pair[0])].append(pair)
+
+    clusters = []
+    for members in grouped.values():
+        local = {}
+        for left, right, _ in members:
+            local.setdefault(left, len(local))
+            local.setdefault(right, len(local))
+        pairs = sorted(([local[left], local[right], round(score, 4),
+                         int((min(left, right), max(left, right)) in linked)]
+                        for left, right, score in members), key=lambda row: -row[2])
+        clusters.append({
+            "paths": [paths[index] for index, _ in sorted(local.items(), key=lambda item: item[1])],
+            "top": pairs[0][2],
+            "unlinked": sum(1 for pair in pairs if not pair[3]),
+            "pairs": pairs,
+        })
+    clusters.sort(key=lambda cluster: (-cluster["top"], -len(cluster["paths"])))
+    return {"threshold": threshold, "pairs": len(found), "notes": count,
+            "truncated": truncated, "clusters": clusters}
+
+
+def do_duplicates(vault: Vault, threshold: float, limit: int) -> dict:
+    """Cached on the index version, like the graph, and for the same reason.
+
+    A full similarity pass is seconds at corpus scale and the answer only moves
+    when the vectors do.
+    """
+    began = time.perf_counter()
+    vectors = vault.matrix()
+    with vault.lock:
+        key = (vault.vectors_version, threshold)
+        cached = vault.duplicate_cache
+    hit = cached is not None and cached[0] == key
+    if hit:
+        payload = cached[1]
+    else:
+        payload = duplicate_clusters(vectors, wikilink_pairs(vault), threshold)
+        with vault.lock:
+            vault.duplicate_cache = (key, payload)
+    return {
+        "vault": vault.name,
+        "took_ms": round((time.perf_counter() - began) * 1000, 1),
+        "cached": hit,
+        **payload,
+        "clusters": payload["clusters"][:limit],
+    }
+
+
 def do_similar(vault: Vault, note: str, limit: int) -> dict:
     began = time.perf_counter()
     STATE.last_query = time.time()
@@ -907,7 +1033,16 @@ class Handler(BaseHTTPRequestHandler):
 =======
             elif url.path == "/graph" and method == "GET":
                 self.reply(200, do_graph(vault, max(1, min(50, int(first("k") or 10)))))
+<<<<<<< HEAD
 >>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
+=======
+            elif url.path == "/duplicates" and method == "GET":
+                # Floored at 0.7: below it the pair count grows as the square of
+                # the corpus and the pairs stop being duplicates anyway.
+                threshold = max(0.7, min(1.0, float(first("threshold") or 0.95)))
+                limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
+                self.reply(200, do_duplicates(vault, threshold, limit))
+>>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
             elif url.path == "/reindex" and method == "POST":
                 self.reply(200, do_reindex(vault))
             else:
@@ -916,10 +1051,14 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(404, {"error": str(error)})
         except ValueError:
 <<<<<<< HEAD
+<<<<<<< HEAD
             self.reply(400, {"error": "limit must be a number"})
 =======
             self.reply(400, {"error": "limit and k must be numbers"})
 >>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
+=======
+            self.reply(400, {"error": "limit, k and threshold must be numbers"})
+>>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
         except Exception as error:  # a bad query must not take the daemon down
             self.reply(500, {"error": f"{type(error).__name__}: {error}"})
 

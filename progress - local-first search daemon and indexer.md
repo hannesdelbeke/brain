@@ -81,6 +81,8 @@ every `/search` and `/similar` appends a row to `~/.pkm/queries.jsonl` with the 
 
 the duplicate check runs itself now. `--check-duplicate` existed for weeks and nothing called it, so it is wired to a `PostToolUse` hook on note writes in the private vault and reports what a new note may be duplicating while the agent still has the context to merge or link. it reports rather than refuses, because a write path that can refuse can wedge an unattended nightly run.
 
+the other half of that landed on 2026-08-30 as `GET /duplicates?threshold=`, which sweeps the whole corpus for what was written before the hook existed. it returns connected components rather than pairs, because eleven near-identical notes are 55 pairs of one fact: 46 pairs on this vault become 15 clusters, each carrying `unlinked`, the count of pairs in it with no wikilink, which is what tells a note written twice from a note and its deliberate companion. a threshold scan rather than a filter over the cached `/graph`, since mutual kNN drops the pairs inside a dense pile — measured at k=10, the filter misses 0 of 46 at 0.95, 5 of 200 at 0.93 and 263 of 723 at 0.9. cached on the index version, so 360ms once. nothing in obsidian surfaces it yet.
+
 the transcript corpus has been embedded once and measured: 79,359 sections over 858 transcripts, 298.86s at 265.5 vec/s on DirectML, a 222 MB database, warm hybrid queries at 34 to 62ms against 30 to 58ms lexical, so the ranking is free at query time. the cost is the 122 MB matrix the daemon holds resident, which is why it is not one of the corpora registered at logon today.
 
 <<<<<<< HEAD
