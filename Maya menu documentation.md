@@ -1,4 +1,6 @@
 ---
+aliases:
+- Maya menu
 sentiment:
 - 5
 sentiment-hash: 8e20a95a
@@ -17,5 +19,3 @@ We can use this to [[public/link]] [[documentation]] and tool settings to any Ma
 E.g. If every tool auto has a window with a help menu. Even if there are no settings.
 
 see [[Maya runTimeCommand from menu]]
-
-[[Maya menu]]
