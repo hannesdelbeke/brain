@@ -21,7 +21,7 @@ aliases:
 
 In modern [[personal knowledge management|PKM]] and AI retrieval systems, semantic search operates by transforming queries and text sections into dense mathematical vectors ([[vector embedding|vector embeddings]]) using transformer models (such as `bge-small-en-v1.5`), then ranking candidate results by vector cosine similarity.
 
-Related: [[public/vault hybrid search|vault hybrid search]], [[public/vector embedding|vector embedding]], [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]], [[public/pkm-search|pkm-search]], [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]], [[public/header extraction for token-efficient retrieval|header extraction for token-efficient retrieval]], [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]]
+Related: [[public/vault hybrid search|vault hybrid search]], [[public/multilingual semantic search across notes|multilingual semantic search across notes]], [[public/vector embedding|vector embedding]], [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]], [[public/pkm-search|pkm-search]], [[public/2026-08-18 what retrieval costs as a vault grows|what retrieval costs as a vault grows]], [[public/header extraction for token-efficient retrieval|header extraction for token-efficient retrieval]], [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]]
 
 ---
 
