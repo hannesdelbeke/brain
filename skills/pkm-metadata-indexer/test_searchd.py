@@ -816,5 +816,114 @@ class RecencyRouteTest(unittest.TestCase):
         self.assertNotIn("recency_hint", far)
 
 
+class FusionRouteTest(unittest.TestCase):
+    """`&fusion=1`: the calibrated additive stack (recency + co-commit + AA),
+    same real git-committed fixture RecencyRouteTest needs since fusion folds
+    the recency term in too."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        cls.vault = build_vault(Path(cls.temp_dir.name) / "fusion", "fusion", {
+            "alpha.md": "## Alpha\ntext\n",
+            "beta.md": "## Beta\ncompanion, committed 30 minutes after alpha\n",
+            "gamma.md": "## Gamma\nunrelated, committed years apart\n",
+            "epsilon.md": "## Epsilon\nno recency link, committed years apart, "
+                          "but co-committed with alpha\n",
+        })
+        root = cls.vault.root
+        run = lambda *args, when=None: subprocess.run(
+            ["git", *args], cwd=root, check=True, capture_output=True,
+            env={**os.environ, "GIT_AUTHOR_DATE": when, "GIT_COMMITTER_DATE": when} if when else None,
+        )
+        run("init", "-q")
+        run("config", "user.email", "t@t")
+        run("config", "user.name", "t")
+        run("add", "alpha.md")
+        run("commit", "-q", "-m", "alpha", when="2026-01-01T10:00:00+00:00")
+        run("add", "beta.md")
+        run("commit", "-q", "-m", "beta", when="2026-01-01T10:30:00+00:00")  # inside RECENCY_TAU_HOURS
+        run("add", "gamma.md")
+        run("commit", "-q", "-m", "gamma", when="2020-01-01T00:00:00+00:00")
+        run("add", "epsilon.md")
+        run("commit", "-q", "-m", "epsilon", when="2021-01-01T00:00:00+00:00")
+
+        SEARCHD.STATE = SEARCHD.State([cls.vault])
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+        cls.port = cls.server.server_address[1]
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.vault.close()
+        for attempt in range(3):
+            try:
+                cls.temp_dir.cleanup()
+                return
+            except PermissionError:
+                if attempt == 2:
+                    raise
+                time.sleep(0.2)
+
+    def with_co_commit_db(self, *rows):
+        """Same throwaway-file swap SearchDaemonTest.with_co_commit_db uses,
+        copied rather than shared across classes since each owns its own
+        temp_dir and cleanup order."""
+        original = SEARCHD.co_commit.DEFAULT_DB
+        db = Path(self.temp_dir.name) / f"co_commit_{uuid.uuid4().hex}.db"
+        connection = SEARCHD.co_commit.connect(db)
+        with connection:
+            connection.executemany("INSERT INTO co_commits VALUES (?, ?, ?, ?, ?, ?, ?)", rows)
+        connection.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+        connection.close()
+        SEARCHD.co_commit.DEFAULT_DB = db
+        self.addCleanup(setattr, SEARCHD.co_commit, "DEFAULT_DB", original)
+
+    def test_fusion_surfaces_a_fused_ranking_beyond_recency_alone(self):
+        # weight 10 caps at cc_prox=1.0 (min(10/5, 1)), so epsilon's co-commit
+        # term (FUSION_LAMBDA_COCOMMIT * 1.0 = 1.5) dominates beta's recency
+        # term (FUSION_LAMBDA_RECENCY = 0.05) - epsilon ranks first even
+        # though it has no recency relationship to alpha at all, which
+        # &recency=1 alone could never surface.
+        self.with_co_commit_db(("fusion", "alpha.md", "epsilon.md", 10.0, 4, "2026-08-31", "abc1234"))
+        status, body = fetch(self.port, "/similar?note=alpha&fusion=1")
+        self.assertEqual(status, 200)
+        self.assertEqual([row["path"] for row in body["results"]], ["epsilon.md", "beta.md"])
+        self.assertAlmostEqual(body["results"][0]["score"], SEARCHD.FUSION_LAMBDA_COCOMMIT)
+        self.assertAlmostEqual(body["results"][1]["score"], SEARCHD.FUSION_LAMBDA_RECENCY)
+        # gamma has neither signal, so it is never even a candidate
+        self.assertNotIn("gamma.md", [row["path"] for row in body["results"]])
+
+    def test_fusion_hint_appears_when_either_signal_exists_and_not_when_fused(self):
+        _, plain = fetch(self.port, "/similar?note=alpha")
+        self.assertIn("fusion=1", plain["fusion_hint"])
+        # already fused, so the hint recommending it would be circular
+        _, fused = fetch(self.port, "/similar?note=alpha&fusion=1")
+        self.assertNotIn("fusion_hint", fused)
+
+    def test_fusion_hint_absent_when_neither_signal_exists(self):
+        # gamma has no near-in-time note and (with the default empty
+        # co_commit db restored by the previous test's cleanup) no co-commit
+        # edge either
+        _, body = fetch(self.port, "/similar?note=gamma")
+        self.assertNotIn("fusion_hint", body)
+
+    def test_fusion_ignores_graph_and_recency_when_combined_not_double_counted(self):
+        # &fusion=1 already folds recency and co-commit in; stacking either
+        # flag alongside it must not add the same boost a second time - the
+        # elif chain in do_similar means fusion simply wins and the other
+        # flags are inert here, which this checks by exact score equality
+        # rather than by inspecting the implementation.
+        self.with_co_commit_db(("fusion", "alpha.md", "epsilon.md", 10.0, 4, "2026-08-31", "abc1234"))
+        _, fusion_only = fetch(self.port, "/similar?note=alpha&fusion=1")
+        _, with_recency = fetch(self.port, "/similar?note=alpha&fusion=1&recency=1")
+        _, with_graph = fetch(self.port, "/similar?note=alpha&fusion=1&graph=1")
+        self.assertEqual(fusion_only["results"], with_recency["results"])
+        self.assertEqual(fusion_only["results"], with_graph["results"])
+
+
 if __name__ == "__main__":
     unittest.main()

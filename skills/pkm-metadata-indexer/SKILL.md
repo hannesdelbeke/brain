@@ -278,6 +278,14 @@ python skills/pkm-metadata-indexer/recency_prior_experiment.py --vault-dir <vaul
 ```
 Same self-documenting pattern as `&graph=1`: a plain `/similar` response carries a `recency_hint` field when a near-in-time note exists to ask for. Creation timestamps come from one `git log --reverse` walk per vault (~1.2s over 3,886 notes here), cached on the `Vault` object for the life of the daemon process — a note added after the daemon started needs a restart to become visible to `&recency=1`, the same staleness trade `/graph` and `/duplicates` already make for their own resident caches. `&graph=1&recency=1` together is untested; each was validated independently, not stacked.
 
+### 22. Calibrated Multi-Signal Fusion (`stacked_fusion_experiment.py --calibrate`, `/similar?fusion=1`)
+`&fusion=1` additively combines vector cosine, recency (`FUSION_LAMBDA_RECENCY`, reusing `RECENCY_TAU_HOURS`'s hard cutoff), co-commit (`FUSION_LAMBDA_COCOMMIT`) and Adamic-Adar (`FUSION_LAMBDA_AA`) into one score, replacing `&graph=1`/`&recency=1`'s single-signal boosts rather than stacking with them.
+```bash
+curl "http://127.0.0.1:44771/similar?note=profile.md&fusion=1"
+python skills/pkm-metadata-indexer/stacked_fusion_experiment.py --vault-dir <vault> --calibrate --seed 0 --sample 1000
+```
+Lambdas are calibrated, not chosen by inspection: a grid search over `LAM_RECENCY_GRID`/`LAM_COCOMMIT_GRID`/`LAM_AA_GRID` on a 60% calibration fold of real wikilinked pairs, scored on the 40% held-out fold the grid never saw, run across 3 seeded splits. A fixed combo at the calibrated values beat the best single addition (co-commit alone, same lambda) on every held-out fold: +19.6%/+16.6%/+20.6% vs +15.4%/+14.8%/+14.0% MRR. The 3-way stack (recency+co-commit, no AA) sometimes barely beat or even lost to co-commit alone once recency used its real validated hard-cutoff shape instead of a decay curve; AA — individually a rejected signal on this vault — is what makes the 4-way stack reliably win, so it stays in. `&fusion=1` is mutually exclusive with `&graph=1`/`&recency=1`: it already folds both signals in, so fusion wins if more than one flag is set rather than double-counting either. A `fusion_hint` field says so on a plain `/similar` response when either underlying signal exists to ask for. See [[2026-08-31 other candidate relatedness signals for search reranking|the survey note]]'s "calibrated multi-signal fusion" section for the grid search setup and full held-out numbers.
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
