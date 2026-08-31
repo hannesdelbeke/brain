@@ -257,11 +257,18 @@ python skills/pkm-metadata-indexer/co_commit.py --selfcheck
 curl "http://127.0.0.1:44771/co-commits?note=profile.md&top=10"
 curl "http://127.0.0.1:44771/similar?note=profile.md&graph=1"
 ```
-Uses a pure power-law commit scaling model ($w = \max(0.005, 1 / (N - 1)^{1.5})$, no intent multiplier, no time decay — every commit weighted equally regardless of message) with evergreen accumulation. Incremental by default, using `commit_scan_state.last_scanned_sha`; a rewritten history (rebase, filter-repo, force-push) is detected via `merge-base --is-ancestor` and triggers a full rescan. A commit touching more than `MAX_COMMIT_FILES` (200) files is skipped entirely rather than pairwise-weighted: measured against this vault's real history, two bulk-import commits of ~2,476 files each produced 3.13M edge rows, 95.7% of the whole table, all noise.
+Uses a pure power-law commit scaling model ($w = \max(0.005, 1 / (N - 1)^{1.5})$, no intent multiplier, no time decay — every commit weighted equally regardless of message) with evergreen accumulation. Incremental by default, using `commit_scan_state.last_scanned_sha`; a rewritten history (rebase, filter-repo, force-push) is detected via `merge-base --is-ancestor` and triggers a full rescan. A commit touching more than `MAX_COMMIT_FILES` (200) files is skipped entirely rather than pairwise-weighted: two historical bulk-import commits of ~2,476 files each had produced 3.13M edge rows, 95.7% of the whole table, all noise; a `--rebuild` against this vault's real history after the fix landed at 82,796 rows, a 97.5% cut.
 
 `--exclude-hubs` drops notes with more co-commit partners than `--hub-degree` (default 20) — a "current project" doc or an AGENTS.md/memory.md-style index file otherwise drags in whatever else that session touched. Measured on real data, unfiltered top edges were 63% redundant or hub noise and 7% genuinely serendipitous; `GET /co-commits` and `/similar?graph=1` both apply it by default, the CLI does not unless asked.
 
-`/similar?graph=1` RRF-fuses `/co-commits` into the vector ranking (`1/(60+rank)` per source, same constant `/search` fuses lexical and vector with), opt-in rather than default: the noise rate above is real even with hub exclusion, so it is a signal a caller asks for. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
+`/similar?graph=1` RRF-fuses `/co-commits` into the vector ranking (`1/(60+rank)` per source, same constant `/search` fuses lexical and vector with), opt-in rather than default: the noise rate above is real even with hub exclusion, so it is a signal a caller asks for.
+
+`eval_related.py` is the blind-judge harness for this, `eval_rerank.py`'s pattern applied to note-to-note relatedness instead of query reranking: samples the notes with the most co-commit edges, asks both `/co-commits` and `/similar` for neighbours, and has a model judge each candidate pair from a short excerpt of each note alone, never learning which signal proposed it.
+```bash
+python skills/pkm-metadata-indexer/eval_related.py --vault brain --vault-dir <vault> --port 44781
+python skills/pkm-metadata-indexer/eval_related.py --self-check
+```
+Reports precision for co-commit-only, vector-only and both-agree candidates, and how many co-commit neighbours vector search never surfaced at all — the number that says whether the signal is distinct, separately from whether it is any good. Judgements cache in `~/.pkm/related-judgements.json`. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
 
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
