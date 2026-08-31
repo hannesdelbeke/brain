@@ -248,15 +248,20 @@ curl "http://127.0.0.1:44771/duplicates?threshold=0.95&limit=20&vault=brain"
 ```
 Every pair of notes whose pooled vectors are at or above the threshold, unioned into connected components, each component returned once as `{paths, top, unlinked, pairs}` with `pairs` indexing into that component's own `paths`. Clusters are sorted by their highest internal score.
 
-### 20. Co-Commit Graph Mining (`co_commit.py`)
+### 20. Co-Commit Graph Mining (`co_commit.py`, `GET /co-commits`, `/similar?graph=1`)
 Mines Git commit history to discover serendipitous and implicit relationships between notes that share zero semantic vector similarity (inspired by change coupling and logical coupling research).
 ```bash
-python skills/pkm-metadata-indexer/co_commit.py
-python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 10
 python skills/pkm-metadata-indexer/co_commit.py --rebuild
+python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 10 --exclude-hubs
 python skills/pkm-metadata-indexer/co_commit.py --selfcheck
+curl "http://127.0.0.1:44771/co-commits?note=profile.md&top=10"
+curl "http://127.0.0.1:44771/similar?note=profile.md&graph=1"
 ```
-Uses a pure power-law commit scaling model ($w = \max(0.005, 1 / (N - 1)^{1.5})$, no intent multiplier, no time decay — every commit weighted equally regardless of message) with evergreen accumulation. `commit_scan_state` is written but not yet read, so every run rescans full history; `--rebuild` only clears stale rows. Nothing reads the `co_commits` table yet — same caveat as `co_retrieval.py` above, wiring it into `/similar` ranking is a separate change that goes through an eval harness first. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
+Uses a pure power-law commit scaling model ($w = \max(0.005, 1 / (N - 1)^{1.5})$, no intent multiplier, no time decay — every commit weighted equally regardless of message) with evergreen accumulation. Incremental by default, using `commit_scan_state.last_scanned_sha`; a rewritten history (rebase, filter-repo, force-push) is detected via `merge-base --is-ancestor` and triggers a full rescan. A commit touching more than `MAX_COMMIT_FILES` (200) files is skipped entirely rather than pairwise-weighted: measured against this vault's real history, two bulk-import commits of ~2,476 files each produced 3.13M edge rows, 95.7% of the whole table, all noise.
+
+`--exclude-hubs` drops notes with more co-commit partners than `--hub-degree` (default 20) — a "current project" doc or an AGENTS.md/memory.md-style index file otherwise drags in whatever else that session touched. Measured on real data, unfiltered top edges were 63% redundant or hub noise and 7% genuinely serendipitous; `GET /co-commits` and `/similar?graph=1` both apply it by default, the CLI does not unless asked.
+
+`/similar?graph=1` RRF-fuses `/co-commits` into the vector ranking (`1/(60+rank)` per source, same constant `/search` fuses lexical and vector with), opt-in rather than default: the noise rate above is real even with hub exclusion, so it is a signal a caller asks for. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
 
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
