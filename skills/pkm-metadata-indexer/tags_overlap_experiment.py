@@ -36,6 +36,7 @@ import argparse
 import json
 import sqlite3
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -65,6 +66,38 @@ def load_note_tags(db_path: Path) -> dict[str, set[str]]:
     return tags_by_path
 
 
+def hub_notes(tags_by_path: dict[str, set[str]], degree_threshold: int) -> set[str]:
+    """Notes sharing at least one tag with more than `degree_threshold` other
+    notes - the tag-graph analogue of co_commit.py's hub_notes() and
+    shared_neighbor_experiment.py's wikilink-degree hub_notes(). "Degree" here
+    is co-occurrence degree (how many OTHER notes share >=1 tag with this one),
+    not tag count - a note with a single common tag like "technical" can have
+    enormous degree this way, which is exactly the hub-note failure mode this
+    is meant to catch. A hard cutoff, distinct from plain Jaccard's union-size
+    normalisation, which softens a large shared-tag-population's effect on a
+    single pair's score but never removes a note from the candidate pool.
+
+    Built via an inverted tag->notes index rather than an O(n^2) pairwise scan
+    over ~3,000 notes, the same reason co_commit.py's version is one SQL
+    GROUP BY instead of a nested loop over commits.
+    """
+    tag_to_notes: dict[str, set[str]] = defaultdict(set)
+    for path, tags in tags_by_path.items():
+        for tag in tags:
+            tag_to_notes[tag].add(path)
+    hubs = set()
+    for path, tags in tags_by_path.items():
+        if not tags:
+            continue
+        connected: set[str] = set()
+        for tag in tags:
+            connected |= tag_to_notes[tag]
+        connected.discard(path)
+        if len(connected) > degree_threshold:
+            hubs.add(path)
+    return hubs
+
+
 def score_all(tags_by_path: dict[str, set[str]], paths: list[str], anchor: str) -> np.ndarray:
     anchor_tags = tags_by_path.get(anchor, set())
     scores = np.zeros(len(paths), dtype=np.float64)
@@ -80,7 +113,8 @@ def score_all(tags_by_path: dict[str, set[str]], paths: list[str], anchor: str) 
 
 
 def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
-                   fuse_rrf_k: float | None = None) -> dict:
+                   fuse_rrf_k: float | None = None,
+                   exclude_hubs: bool = False, hub_degree: int = 20) -> dict:
     """Standalone mode (fuse_rrf_k=None): how well tag-Jaccard alone ranks the
     true target, and how much its top neighbours overlap with vector's - NOT a
     fair comparison to vector-only ranking, the overlap number is what matters,
@@ -104,6 +138,14 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
     total_notes = len(tags_by_path)
     tagged_notes = sum(1 for tags in tags_by_path.values() if tags)
     tag_paths = sorted(tags_by_path)
+    hubs_excluded = 0
+    if exclude_hubs:
+        hubs = hub_notes(tags_by_path, hub_degree)
+        # ponytail: same one-list-serves-both-roles simplification as
+        # shared_neighbor_experiment.py's --exclude-hubs - a hub note is
+        # dropped as a possible anchor too, not just as a candidate.
+        tag_paths = [p for p in tag_paths if p not in hubs]
+        hubs_excluded = len(hubs)
     path_in_tag_index = {p: i for i, p in enumerate(tag_paths)}
 
     links = wikilink_ground_truth(db_path)
@@ -127,6 +169,9 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
         "wikilinked_pairs_both_in_index": len(candidate_pairs) + dropped_no_anchor_tags,
         "dropped_anchor_has_no_tags": dropped_no_anchor_tags,
     }
+    if exclude_hubs:
+        coverage["hubs_excluded"] = hubs_excluded
+        coverage["hub_degree"] = hub_degree
 
     if fuse_rrf_k is not None:
         result = run_fusion(usable, vec_paths, vec_index_of, pooled, tags_by_path,
@@ -237,6 +282,11 @@ def main():
     parser.add_argument("--fuse-rrf-k", type=float, default=None,
                         help="RRF-fuse tag-Jaccard with vector rank at this k, instead of "
                              "the standalone Jaccard-vs-vector report")
+    parser.add_argument("--exclude-hubs", action="store_true",
+                        help="Drop notes sharing a tag with more than --hub-degree other notes "
+                             "from the candidate pool, mirroring co_commit.py's hub exclusion")
+    parser.add_argument("--hub-degree", type=int, default=20,
+                        help="A note tag-connected to more other notes than this counts as a hub")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -248,7 +298,8 @@ def main():
 
     vault_dir = Path(args.vault_dir).resolve()
     db_path = Path(args.db).resolve() if args.db else pkm.default_db_path(vault_dir)
-    result = run_experiment(vault_dir, db_path, args.sample, args.seed, args.fuse_rrf_k)
+    result = run_experiment(vault_dir, db_path, args.sample, args.seed, args.fuse_rrf_k,
+                            args.exclude_hubs, args.hub_degree)
     print(json.dumps(result, indent=1))
 
 
@@ -267,6 +318,10 @@ def self_check():
     # an anchor with no tags of its own has no opinion about anyone
     scores_from_d = score_all(tags_by_path, paths, "d")
     assert np.all(scores_from_d == 0.0)
+    # a, b, c all share "cat" so each is tag-connected to the other two (degree
+    # 2); d has no tags so it is never a hub regardless of threshold.
+    assert hub_notes(tags_by_path, 1) == {"a", "b", "c"}
+    assert hub_notes(tags_by_path, 2) == set()
     print("self-check ok")
 
 
