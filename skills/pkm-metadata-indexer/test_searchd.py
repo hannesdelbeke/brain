@@ -7,6 +7,7 @@ import time
 import unittest
 import urllib.error
 import urllib.request
+import uuid
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 
@@ -74,7 +75,19 @@ class SearchDaemonTest(unittest.TestCase):
         cls.server.server_close()
         for vault in VAULTS:
             vault.close()
-        cls.temp_dir.cleanup()
+        # co_commit's WAL mode leaves a -wal/-shm sidecar per database this class
+        # created; Windows can hold its memory-mapping open a moment past the
+        # owning connection's close(), long enough to fail an immediate rmtree.
+        # One retry after a short wait is the same tolerance Vault.close() above
+        # exists for, for the same reason.
+        for attempt in range(3):
+            try:
+                cls.temp_dir.cleanup()
+                return
+            except PermissionError:
+                if attempt == 2:
+                    raise
+                time.sleep(0.2)
 
     def get(self, path: str, headers: dict | None = None, method: str = "GET"):
         return fetch(self.port, path, headers, method)
@@ -86,6 +99,7 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual([v["name"] for v in body["vaults"]], ["first", "second"])
         self.assertEqual(body["vaults"][0]["notes"], 2)
         self.assertEqual(body["vaults"][0]["vectors"], 0)
+        self.assertEqual(body["vaults"][0]["co_commit_edges"], 0)
 
     def test_search_finds_a_lexical_hit(self):
         status, body = self.get("/search?q=distinctivephrase")
@@ -175,14 +189,21 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(body["results"], [])
 
     def with_co_commit_db(self, *rows):
-        """Point co_commit's DEFAULT_DB at a throwaway file for one test, restored after."""
+        """Point co_commit's DEFAULT_DB at a throwaway file for one test, restored after.
+
+        A fresh file per call, not a shared one reused across tests: uuid4 rather
+        than id(rows), since id() is a memory address CPython freely reuses once
+        the short-lived *rows tuple is collected, which previously produced two
+        tests colliding on the same filename and a UNIQUE constraint failure.
+        """
         original = SEARCHD.co_commit.DEFAULT_DB
-        db = Path(self.temp_dir.name) / f"co_commit_{len(rows)}_{id(rows)}.db"
+        db = Path(self.temp_dir.name) / f"co_commit_{uuid.uuid4().hex}.db"
         connection = SEARCHD.co_commit.connect(db)
         with connection:
             connection.executemany(
                 "INSERT INTO co_commits VALUES (?, ?, ?, ?, ?, ?, ?)", rows
             )
+        connection.execute("PRAGMA wal_checkpoint(TRUNCATE);")
         connection.close()
         SEARCHD.co_commit.DEFAULT_DB = db
         self.addCleanup(setattr, SEARCHD.co_commit, "DEFAULT_DB", original)
@@ -195,6 +216,17 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(body["results"][0]["path"], "beta.md")
         self.assertEqual(body["results"][0]["weight"], 2.5)
+        self.assertEqual(self.get("/health")[1]["vaults"][0]["co_commit_edges"], 1)
+
+    def test_similar_without_graph_hints_at_it_when_available(self):
+        # an agent calling plain /similar has not necessarily read this skill's
+        # docs, so the option to fuse in co-commit history has to surface here
+        self.with_co_commit_db(("first", "alpha.md", "beta.md", 1.0, 1, "2026-08-31", "abc1234"))
+        _, with_edge = self.get("/similar?note=alpha")
+        self.assertIn("graph=1", with_edge["graph_hint"])
+        # gamma is in a different vault with no co_commit rows at all
+        _, without_edge = self.get("/similar?note=gamma&vault=second")
+        self.assertNotIn("graph_hint", without_edge)
 
     def test_similar_graph_folds_in_co_commit_when_vectors_are_empty(self):
         # this fixture has no embeddings, so the vector side of the fusion is

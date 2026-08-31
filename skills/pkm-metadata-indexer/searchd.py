@@ -43,7 +43,9 @@ Endpoints, all accepting `?vault=name`:
                            from co_commit.py's own database, not this index
     GET  /similar?note=&limit=
                            `&graph=1` folds /co-commits into the ranking (RRF
-                           fusion, hubs excluded), instead of vectors alone
+                           fusion, hubs excluded), instead of vectors alone.
+                           Without it, a `graph_hint` field in the response
+                           says so when co-commit history exists to ask for
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -266,7 +268,20 @@ class Vault:
                 "notes": one("SELECT COUNT(*) FROM notes"),
                 "sections": one("SELECT COUNT(*) FROM sections"),
                 "vectors": one("SELECT COUNT(*) FROM sections WHERE vector IS NOT NULL"),
+                "co_commit_edges": self.co_commit_edge_count(),
             }
+        finally:
+            connection.close()
+
+    def co_commit_edge_count(self) -> int:
+        """Whether /co-commits and /similar?graph=1 have anything to say for this
+        vault at all, surfaced in /health so an agent can tell before trying a
+        specific note whether the co-commit signal exists here or is empty."""
+        connection = co_commit.connect(co_commit.DEFAULT_DB)
+        try:
+            return connection.execute(
+                "SELECT COUNT(*) FROM co_commits WHERE vault = ?", (self.name,)
+            ).fetchone()[0]
         finally:
             connection.close()
 
@@ -798,6 +813,16 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False) -> dict
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
         "results": results,
     }
+    if not graph:
+        # An agent calling this route usually has not read SKILL.md first, so the
+        # option to ask for the co-commit signal has to surface here or it may as
+        # well not exist. Existence only, not a count: a caller weighing whether
+        # a second call is worth it needs "is there anything," not a number to
+        # parse, and hub exclusion already prices out the cheap false positives.
+        resolved = resolve_note_path(vault, note) or note
+        if co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
+                                        top=1, exclude_hubs=True):
+            payload["graph_hint"] = "co-commit history exists for this note, retry with &graph=1"
     # The note is both the query and the origin here, which is the co-retrieval
     # edge this log exists to collect.
     log_query("similar", vault.name, note, limit, payload["took_ms"], payload["results"], note)

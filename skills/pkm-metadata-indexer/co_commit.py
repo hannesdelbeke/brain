@@ -58,7 +58,12 @@ def find_vault_root(start_path: Path = None) -> Path:
 
 def connect(db_path: Path) -> sqlite3.Connection:
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(db_path, timeout=30.0)
+    # WAL, so searchd's readers (/health, /co-commits, /similar?graph=1) are not
+    # locked out by a concurrent --rebuild: readers see the last committed state
+    # instead of blocking on the writer's rollback-journal exclusive lock, the
+    # same reason index_pkm_meta.py's own database uses it.
+    conn.execute("PRAGMA journal_mode=WAL;")
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS co_commits (
