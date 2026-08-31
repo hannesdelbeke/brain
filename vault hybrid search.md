@@ -23,5 +23,6 @@ Combining lexical keyword matching (BM25) and dense [[vector embedding|semantic 
 This guarantees that exact keywords appear at the top while semantically relevant notes without exact wording are pulled into the candidate set.
 
 ### Related
+- [[vault indexer - lightweight metadata pass vs full vector embedding]] — Performance tradeoffs between lexical metadata extraction and neural vector generation.
 - [[vault graph traversal]] — Navigating explicit wikilink structures alongside semantic similarity.
 - [[vault MCP server for agents]] — Exposing hybrid search queries directly to AI assistants.
