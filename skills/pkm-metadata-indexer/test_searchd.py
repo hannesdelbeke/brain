@@ -174,6 +174,42 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertEqual(body["results"], [])
 
+    def with_co_commit_db(self, *rows):
+        """Point co_commit's DEFAULT_DB at a throwaway file for one test, restored after."""
+        original = SEARCHD.co_commit.DEFAULT_DB
+        db = Path(self.temp_dir.name) / f"co_commit_{len(rows)}_{id(rows)}.db"
+        connection = SEARCHD.co_commit.connect(db)
+        with connection:
+            connection.executemany(
+                "INSERT INTO co_commits VALUES (?, ?, ?, ?, ?, ?, ?)", rows
+            )
+        connection.close()
+        SEARCHD.co_commit.DEFAULT_DB = db
+        self.addCleanup(setattr, SEARCHD.co_commit, "DEFAULT_DB", original)
+
+    def test_co_commits_route(self):
+        self.with_co_commit_db(("first", "alpha.md", "beta.md", 2.5, 3, "2026-08-31", "abc1234"))
+        self.assertEqual(self.get("/co-commits")[0], 400)
+        # extensionless reference, resolved the same way /similar and /links do
+        status, body = self.get("/co-commits?note=alpha")
+        self.assertEqual(status, 200)
+        self.assertEqual(body["results"][0]["path"], "beta.md")
+        self.assertEqual(body["results"][0]["weight"], 2.5)
+
+    def test_similar_graph_folds_in_co_commit_when_vectors_are_empty(self):
+        # this fixture has no embeddings, so the vector side of the fusion is
+        # empty and the fused result is co_commit's edge alone, taking its
+        # heading/snippet from note_snippet since /similar never ranked it
+        self.with_co_commit_db(("first", "alpha.md", "beta.md", 1.0, 1, "2026-08-31", "abc1234"))
+        status, body = self.get("/similar?note=alpha&graph=1")
+        self.assertEqual(status, 200)
+        self.assertEqual([row["path"] for row in body["results"]], ["beta.md"])
+        self.assertEqual(body["results"][0]["source"], "co_commit")
+        self.assertEqual(body["results"][0]["heading"], "Result")
+        # without &graph=1 the same query never sees the co_commit edge
+        _, plain = self.get("/similar?note=alpha")
+        self.assertEqual(plain["results"], [])
+
     def test_a_browser_page_cannot_reach_it(self):
         # a cross-site fetch always carries Origin, a real client never does
         self.assertEqual(self.get("/search?q=a", {"Origin": "https://evil.example"})[0], 403)

@@ -38,6 +38,12 @@ Endpoints, all accepting `?vault=name`:
                            neighbours in embedding space, plus the wikilinks
     GET  /duplicates?threshold=&limit=
                            notes that say the same thing, grouped
+    GET  /co-commits?note=&top=
+                           notes most often committed together with one note,
+                           from co_commit.py's own database, not this index
+    GET  /similar?note=&limit=
+                           `&graph=1` folds /co-commits into the ranking (RRF
+                           fusion, hubs excluded), instead of vectors alone
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -79,6 +85,7 @@ from urllib.parse import urlparse, parse_qs
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import co_commit
 import index_pkm_meta as pkm
 import numpy as np
 
@@ -558,6 +565,65 @@ def wikilink_pairs(vault: Vault) -> list[tuple[str, str]]:
         connection.close()
 
 
+def resolve_note_path(vault: Vault, note: str) -> str | None:
+    """The one indexed path `note` refers to, or None when it is ambiguous or unknown.
+
+    `/similar` and `/co-commits` accept the same loose reference forms
+    (extensionless, a suffix, a stem) that `pkm.find_note_paths` already
+    resolves for `/links` and vector search; co_commit's own table keys on
+    the exact indexed path, so fusing the two signals needs this resolution
+    done once and shared, not co_commit re-guessing from the raw reference.
+    """
+    if not vault.db.exists():
+        return None
+    connection = sqlite3.connect(f"file:{vault.db}?mode=ro", uri=True)
+    try:
+        matches = pkm.find_note_paths(connection.cursor(), note)
+    finally:
+        connection.close()
+    return matches[0] if len(matches) == 1 else None
+
+
+def note_snippet(vault: Vault, path: str) -> dict:
+    """A note's first section, for a co-commit neighbour /similar never ranked
+    and so has no heading/snippet of its own to show."""
+    if not vault.db.exists():
+        return {"heading": None, "line": None, "snippet": None}
+    connection = sqlite3.connect(f"file:{vault.db}?mode=ro", uri=True)
+    try:
+        row = connection.execute(
+            "SELECT sections.heading, sections.start_line, substr(sections_fts.content, 1, 200) "
+            "FROM sections JOIN sections_fts ON sections.id = sections_fts.section_id "
+            "WHERE sections.path = ? ORDER BY sections.start_line LIMIT 1",
+            (path,),
+        ).fetchone()
+    finally:
+        connection.close()
+    if not row:
+        return {"heading": None, "line": None, "snippet": None}
+    return {"heading": row[0], "line": row[1], "snippet": row[2]}
+
+
+def do_co_commits(vault: Vault, note: str, top: int) -> dict:
+    """Notes most often committed together with `note`, from co_commit.py's
+    own database (`~/.pkm/co_commit.db`), a signal this vault's own index
+    never sees: two notes with zero text or link overlap, edited in the same
+    session. Hubs (AGENTS.md-style index files, a "current project" doc)
+    are excluded by default, measured to be most of the unfiltered noise."""
+    resolved = resolve_note_path(vault, note) or note
+    rows = co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name, top,
+                                        exclude_hubs=True)
+    return {
+        "vault": vault.name,
+        "note": note,
+        "results": [
+            {"path": associated, "weight": weight, "commit_count": count,
+             "last_commit": last_commit, "last_sha": last_sha}
+            for (_, associated, weight, count, last_commit, last_sha) in rows
+        ],
+    }
+
+
 def duplicate_clusters(vectors, wikilinks, threshold: float, chunk: int = 512,
                        max_pairs: int = 20000) -> dict:
     """Notes that say the same thing, grouped into clusters rather than listed as pairs.
@@ -677,30 +743,60 @@ def do_duplicates(vault: Vault, threshold: float, limit: int) -> dict:
     }
 
 
-def do_similar(vault: Vault, note: str, limit: int) -> dict:
+def do_similar(vault: Vault, note: str, limit: int, graph: bool = False) -> dict:
+    """Vector-cosine neighbours, or `&graph=1` to RRF-fuse in co_commit's signal.
+
+    Fusion is opt-in, not the default: measured against this vault's real
+    history, unfiltered co-commit edges were only 7% genuinely serendipitous
+    against 63% redundant or hub noise (hub exclusion and the bulk-commit cap
+    in co_commit.py bring that down, but not to zero), so it stays a signal a
+    caller asks for rather than one silently blended into every /similar.
+    """
     began = time.perf_counter()
     STATE.last_query = time.time()
     vectors = vault.matrix()
     with vault.lock:
         vault.queries += 1
-    rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=limit, vectors=vectors)
+    fetch = limit * 3 if graph else limit
+    rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=fetch, vectors=vectors)
     if rows is None:
         return {"error": f"no single indexed note matches {note!r}"}
+    results = [
+        {
+            "path": row["path"],
+            "heading": row["heading"],
+            "line": row["start_line"],
+            "score": round(row["score"], 6),
+            "raw_sim": row["raw_sim"],
+            "snippet": row["snippet"],
+        }
+        for row in rows
+    ]
+    if graph:
+        resolved = resolve_note_path(vault, note) or note
+        co_rows = co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
+                                               top=limit * 3, exclude_hubs=True)
+        vector_rank = {row["path"]: rank for rank, row in enumerate(results)}
+        co_rank = {associated: rank for rank, (_, associated, *_rest) in enumerate(co_rows)}
+        by_path = {row["path"]: row for row in results}
+        fused = []
+        # 1/(60+rank) per source, the same RRF constant do_search fuses lexical
+        # and vector results with, summed rather than compared on raw score
+        # since a vector cosine and a co-commit weight are not on the same scale.
+        for path in dict.fromkeys([*vector_rank, *co_rank]):
+            rrf = (1.0 / (60 + vector_rank[path]) if path in vector_rank else 0.0) \
+                + (1.0 / (60 + co_rank[path]) if path in co_rank else 0.0)
+            base = by_path.get(path) or {"path": path, **note_snippet(vault, path), "raw_sim": None}
+            source = "both" if path in vector_rank and path in co_rank else \
+                     ("vector" if path in vector_rank else "co_commit")
+            fused.append({**base, "score": round(rrf, 6), "source": source})
+        fused.sort(key=lambda row: -row["score"])
+        results = fused[:limit]
     payload = {
         "vault": vault.name,
         "note": note,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
-        "results": [
-            {
-                "path": row["path"],
-                "heading": row["heading"],
-                "line": row["start_line"],
-                "score": round(row["score"], 6),
-                "raw_sim": row["raw_sim"],
-                "snippet": row["snippet"],
-            }
-            for row in rows
-        ],
+        "results": results,
     }
     # The note is both the query and the origin here, which is the co-retrieval
     # edge this log exists to collect.
@@ -910,7 +1006,14 @@ class Handler(BaseHTTPRequestHandler):
                     self.reply(400, {"error": "note is required"})
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
-                self.reply(200, do_similar(vault, note, limit))
+                self.reply(200, do_similar(vault, note, limit, first("graph") in {"1", "true", "yes"}))
+            elif url.path == "/co-commits" and method == "GET":
+                note = first("note")
+                if not note:
+                    self.reply(400, {"error": "note is required"})
+                    return
+                top = max(1, min(MAX_LIMIT, int(first("top") or DEFAULT_LIMIT)))
+                self.reply(200, do_co_commits(vault, note, top))
             elif url.path == "/unlinked" and method == "GET":
                 note = first("note")
                 if not note:
@@ -933,7 +1036,7 @@ class Handler(BaseHTTPRequestHandler):
         except KeyError as error:
             self.reply(404, {"error": str(error)})
         except ValueError:
-            self.reply(400, {"error": "limit, k and threshold must be numbers"})
+            self.reply(400, {"error": "limit, top, k and threshold must be numbers"})
         except Exception as error:  # a bad query must not take the daemon down
             self.reply(500, {"error": f"{type(error).__name__}: {error}"})
 
