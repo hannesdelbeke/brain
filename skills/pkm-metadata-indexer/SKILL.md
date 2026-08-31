@@ -270,6 +270,14 @@ python skills/pkm-metadata-indexer/eval_related.py --self-check
 ```
 Reports precision for co-commit-only, vector-only and both-agree candidates, and how many co-commit neighbours vector search never surfaced at all — the number that says whether the signal is distinct, separately from whether it is any good. Judgements cache in `~/.pkm/related-judgements.json`. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
 
+### 21. Recency-Proximity Prior (`recency_prior_experiment.py`, `/similar?recency=1`)
+A note created within `RECENCY_TAU_HOURS` (6) of the anchor gets `RECENCY_LAMBDA` (0.05) added to its raw cosine score — additively, not as a multiplier. Validated against real wikilinks: 5/5 seeds positive, full-sample +8.60% MRR. Two other combine forms were tried first and rejected (multiplicative: proven mathematically to displace an arbitrary amount, rejected; RRF rank fusion: theoretically sounder but still net-negative at every `k` tested, -4.18% full-sample) — additive is the one form a small weight cannot use to displace a candidate that was already clearly better on content. See [[public/2026-08-31 recency-proximity reranking prior tested against real wikilinks|the research note]] for the sweeps, the proof, and why the other two forms fail.
+```bash
+curl "http://127.0.0.1:44771/similar?note=profile.md&recency=1"
+python skills/pkm-metadata-indexer/recency_prior_experiment.py --vault-dir <vault> --combine add --mode hard --tau 6 --unit hours --lam 0.05 --sample 100000
+```
+Same self-documenting pattern as `&graph=1`: a plain `/similar` response carries a `recency_hint` field when a near-in-time note exists to ask for. Creation timestamps come from one `git log --reverse` walk per vault (~1.2s over 3,886 notes here), cached on the `Vault` object for the life of the daemon process — a note added after the daemon started needs a restart to become visible to `&recency=1`, the same staleness trade `/graph` and `/duplicates` already make for their own resident caches. `&graph=1&recency=1` together is untested; each was validated independently, not stacked.
+
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
