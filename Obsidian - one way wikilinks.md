@@ -74,9 +74,6 @@ Use [[YAML front matter|frontmatter]] fields as one‑directional links
 ---
 
 [[Obsidian plugin ideas]]
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
 > [!learning] no dedicated one-way-link plugin exists (checked 2026-08-30); the closest working technique found is a raw HTML `<a class="internal-link" href="...">` tag instead of `[[wikilink]]` — Obsidian's backlink indexer only scans `[[wikilinks]]`/markdown links, so an HTML anchor links without registering a backlink, at the cost of graph view and autocomplete.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

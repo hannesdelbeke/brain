@@ -52,8 +52,5 @@ Some goals:
 	- config to override plugin settings, actions, ...
 
 [[pipeline]]
-<<<<<<< HEAD
-=======
 
 follow-up: [[proposal - pipeline as code follow-up]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

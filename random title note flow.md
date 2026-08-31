@@ -41,8 +41,5 @@ Integrate an AI step that monitors randomly titled notes. Once writing is finish
 ### Related
 - [[minimal notetaking]]
 - [[automate]]
-<<<<<<< HEAD
-=======
 
 Found: [auto-title](https://github.com/dpshde/auto-title), [Title Generator](https://community.obsidian.md/plugins/title-generator), [smart-note-namer](https://github.com/bkindler/smart-note-namer) — see [[proposal - note-taking workflow gaps]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

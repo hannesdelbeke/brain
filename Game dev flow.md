@@ -102,8 +102,5 @@ add interactive tools to assets.
 This could be achieved if we have links to scripts or tools in the editor
 - it could be saved in the note
 - it could live in some meta data
-<<<<<<< HEAD
-=======
 
 See [[proposal - cross-app entity registry]] — mostly resolved by asset/doc relationships, but the branch/history link-integrity part here is a gap the current registry plan doesn't cover.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

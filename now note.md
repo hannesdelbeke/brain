@@ -19,8 +19,5 @@ The main purpose seems to be for other people to see what you work on, however I
 - a latest page is not a now note but follows the same concept, [example](https://nesslabs.com/articles)
 
 [[discovery]]
-<<<<<<< HEAD
-=======
 
 Provenance: [[now note discovery]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

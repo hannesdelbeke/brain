@@ -63,8 +63,5 @@ Currently the old folders act as some kind of link between all notes inside of i
 PS: In my new setup, new notes can be moved to a `public` or `private` folder [[Obsidian quick move|with the click of a button]].
 
 [[personal knowledge management]]
-<<<<<<< HEAD
-=======
 
 See [[proposal - note-taking workflow gaps]] — not a plugin ask, workflow already adopted.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

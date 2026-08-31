@@ -1,9 +1,5 @@
 ---
-<<<<<<< HEAD
-date: 2026-08-29
-=======
 date: 2026-08-30
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 created: 2026-08-27
 tags:
   - progress
@@ -20,20 +16,6 @@ aliases:
 
 > [!summary] eli5
 > the local search engine behind the vault: one background process holds a small language model in memory and answers "where did we write about X" over the notes, the code repositories and the agent transcripts, in about 20 milliseconds, without sending anything to a server.
-<<<<<<< HEAD
-> the engine works and is in daily use; what is open is the link graph over code repositories, a second transcript scanner to prove the plugin seam is real, and whether the engine gets published as a package at all.
-> **needs from you:** decide whether the engine ships as an installable package under `h-forts/pkm-search` or stays a skill directory in this vault, which is the section below on shipping.
-
-> do a pass over the release plan and modular decoupling of the local search daemon and indexer, check the pkm for what we already wrote about decoupling it into a repo, link those notes. feel free to rewrite or rethink the whole note
-
-> [!todo] next
-> **next:** run `index_repo.py` over a repository that has real documentation, since the only run so far was over a repository with three markdown files and no relative links, which produced 0 edges and proved nothing.
-> **blocked:** nothing.
-
-**why:** [[2026-08-27 agentic pkm action plan]]
-
-the engine is `skills/pkm-metadata-indexer/` in this vault, described in [[pkm-search]], and the day-by-day record of building it is [[2026-08-25 vault index work log]] and [[2026-08-27 vault index work log]]. this note is the standing state: what works, what is open, and what has been decided so a later session does not reopen it.
-=======
 > the engine works and is in daily use, and since 2026-08-30 an obsidian plugin sits on top of it with five surfaces. what is open is the link graph over code repositories, and whether either piece gets published at all.
 > **needs from you:** open obsidian and look at the plugin, since nobody has seen it rendered. run `index_agy_validation.md` on the machine with a real antigravity history, since the second scanner was written against 18 conversations. then two publishing decisions: whether the engine ships as an installable package under `h-forts/pkm-search`, and whether the plugin repository goes public with a release.
 
@@ -44,7 +26,6 @@ the engine is `skills/pkm-metadata-indexer/` in this vault, described in [[pkm-s
 **why:** [[2026-08-27 agentic pkm action plan]]
 
 the engine is `skills/pkm-metadata-indexer/` in this vault, described in [[pkm-search]], and the day-by-day record of building it is [[2026-08-25 vault index work log]], [[2026-08-27 vault index work log]] and [[2026-08-30 vault index work log]]. this note is the standing state: what works, what is open, and what has been decided so a later session does not reopen it.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 > [!warning] a search that ranks well over a stale index looks exactly like one that works
 > on 2026-08-28 this corpus had not been indexed since the 25th, nothing was watching it, and a hunt for five notes fell back to six `grep -rn` passes and fifty seconds. the ranking was never the problem, 126 files were simply not in the database. the same shape came back through another door the same day: a reindex held the query lock, a search arriving mid-pass timed out, and the client reads a timeout as no daemon and answers from whatever database the working directory resolves to. every path that gives up quietly answers from the wrong corpus, so each one now says so out loud instead: a `/search` names the files newer than the index, the locks are split, and every result carries its corpus as a prefix.
@@ -85,15 +66,6 @@ the other half of that landed on 2026-08-30 as `GET /duplicates?threshold=`, whi
 
 the transcript corpus has been embedded once and measured: 79,359 sections over 858 transcripts, 298.86s at 265.5 vec/s on DirectML, a 222 MB database, warm hybrid queries at 34 to 62ms against 30 to 58ms lexical, so the ranking is free at query time. the cost is the 122 MB matrix the daemon holds resident, which is why it is not one of the corpora registered at logon today.
 
-<<<<<<< HEAD
-## what is open
-
-the repository link graph is the live item. `index_repo.py` landed as v0 on 2026-08-28 and turns markdown links, image embeds and bare relative paths into `edges` rows, with the target resolved against the source directory then the repository root and left null when it resolves nowhere, which is what makes a broken reference queryable. it has been run over one repository, which had three markdown files and no relative links, and produced 606 notes and 0 edges. until it runs over a repository with real documentation, neither "what references this file" nor "which images are referenced by nothing" is answered. designed in [[2026-08-27 a link graph over code, docs and assets]].
-
-the scanner seam is a claim rather than a fact until a second transcript scanner exists. one scanner for one agent CLI returning `(notes, sections, links, errors)` is an interface with one implementation; a second one, for another agent's transcripts, is what turns it into a seam. any summarisation added later posts plain JSON to an endpoint named by an environment variable, with no SDK and no key in the source, and what the model wrote is committed as data so the index rebuilds with no model running.
-
-the obsidian features worth rebuilding on the index are listed with their acceptance in [[core Obsidian features to rework on the vault index]]: semantic quick switcher, a graph that draws meaning as well as links, tag suggestion, orphan-biased random note, and the 1,780 dead wikilinks as a query rather than a plugin.
-=======
 an obsidian plugin reaches the daemon over the same HTTP interface any client uses, with five surfaces over one client: a search modal taking regex, semantic, tag, date and missing-link prefixes, a related pane, a semantic local graph, a whole-vault graph on canvas, and a worklist of pairs the index scored as close that nobody linked. it spawns the daemon detached if it is not up, so obsidian closing does not take the CLI's engine with it, and it is desktop-only because the daemon rejects a browser `Origin`. 76 tests against a fake obsidian and a fake daemon, plus a live suite that drives the same views against the running one. described in [[2026-08-29 one obsidian plugin over the search daemon]], the graph it draws in [[2026-08-30 a semantic graph over the whole vault]].
 
 ## what is open
@@ -103,7 +75,6 @@ the repository link graph works and has not been pointed at our own repositories
 the scanner seam is a fact as of 2026-08-30 and needs confirming on a machine with a real history. `index_agy.py` is the second implementation of the `collect=` contract and shares nothing with the first but the return type: antigravity writes one SQLite database per conversation whose step payloads are binary protobuf with no schema published, so there is no line to count and no byte offset to resume from, and the cursor is the step index instead. 18 conversations here, 44 MB, giving 17 notes and 1,511 sections in 2.4 MB, and the daemon takes it through `--corpus` with no code of its own. what is unproven is the field map, which was read off one install by volume, so `index_agy_validation.md` is an eight-step check for an agent to run where there are hundreds of conversations. any summarisation added later posts plain JSON to an endpoint named by an environment variable, with no SDK and no key in the source, and what the model wrote is committed as data so the index rebuilds with no model running.
 
 what remains of [[core Obsidian features to rework on the vault index]] is tag suggestion, orphan-biased random note, and the 1,780 dead wikilinks as a query. the semantic quick switcher and the graph that draws meaning as well as links shipped in the plugin above, and the orphan list was measured and dropped in [[2026-08-30 what else the index can answer]]: 122 orphans is 4% of the vault and sampling them shows stubs that are correctly unlinked.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 whether the duplicate gate should ever block rather than report is still a decision, and it needs a week of warn-mode output to answer.
 
@@ -117,11 +88,7 @@ it was published twice, as this skill directory and as a standalone repository, 
 
 so the question a release plan reopens is not one copy or two, which is answered, it is whether the one copy gets a distribution channel. if it does, it is generated from this directory by CI and pushed to the empty repository, never hand-maintained beside it, because a hand-maintained second copy is the exact failure already paid for once.
 
-<<<<<<< HEAD
-what a release would need that does not exist today: a dependency install that works without the vault around it, the `--corpus` scanner contract documented as the supported extension point rather than as section 13 of a skill file, and the second scanner above, since a plugin interface with one implementation is not one. the tests exist already.
-=======
 what a release would need that does not exist today: a dependency install that works without the vault around it, and the `--corpus` scanner contract documented as the supported extension point rather than as section 15 of a skill file. the second scanner it also needed exists as of 2026-08-30. the tests exist already.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 the three-package version of that, a core library, an obsidian plugin and a searcher over agent transcripts, is worked through in [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]], which sequences the transcript searcher first because it is the only one with a user today.
 

@@ -33,9 +33,6 @@ link types could also be confused with, what type of link is it. e.g. :
 - [[backlink]]
 - [[wikilink]]
 - hyperlink / [[URL]]
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
 > [!learning] the Breadcrumbs plugin (github.com/michaelpporter/breadcrumbs) already does typed, directional links today — parent/child, next/prev, or custom types defined via frontmatter, tags, or a naming scheme, rendered as its own directed graph.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

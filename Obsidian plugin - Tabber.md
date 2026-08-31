@@ -133,8 +133,5 @@ also option for pure CSS with radio-buttons
 
 
 for example of a tabber see https://docs.readthedocs.io/en/stable/config-file/v2.html#id27
-<<<<<<< HEAD
-=======
 
 Found: Markdown Tabs and HTML Tabs are now maintained community plugins covering this proposal. See [[proposal - resumable bidirectional sync adapter]].
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

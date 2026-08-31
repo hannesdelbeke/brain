@@ -38,8 +38,5 @@ When an [[AI agent|AI agent]] reads an older note, it checks `git blame` to see 
 - [[agentic note taking]] — AI agents inspecting past revisions based on when a task was formulated.
 - [[algo to differentiate between AI and human notes]] — Distinguishing whether a historical link was created by a human or an AI agent.
 - [[Obsidian plugin - Git]] — Underlying Git engine providing local logs and diff views for temporal resolution.
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

@@ -33,8 +33,5 @@ But later on I might want to add a description or note to the strava activity.
 [[visual overview of recent exercise]]
 
 If I add a description in between, I add a [[wrapper note]] in between.
-<<<<<<< HEAD
-=======
 
 See [[proposal - cross-app entity registry]] — this multi-URI-per-friend flow is exactly what the entity registry's URI list is for.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

@@ -40,8 +40,5 @@ PS: this is less about note taking and more about publishing said notes.
 
 [[UX]]
 [[discovery]]
-<<<<<<< HEAD
-=======
 
 See [[proposal - note-taking workflow gaps]] — no dedicated "popular pages" plugin found, closest is bolting web analytics onto a published Quartz/Digital Garden site.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

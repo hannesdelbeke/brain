@@ -19,8 +19,5 @@ I wasted hours on this and it still needs more work.
 
 - revert to light theme and accept the limits of `read the docs`
 - revert to [[MkDocs material]]
-<<<<<<< HEAD
-=======
 
 Found: Quartz sidesteps this CSS-tuning burden entirely — Obsidian-native theme, no dark-mode hand-tuning needed. See [[proposal - resumable bidirectional sync adapter]].
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

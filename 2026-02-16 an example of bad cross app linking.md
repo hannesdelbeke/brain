@@ -48,8 +48,5 @@ Since my obsidian files are digital notes, [[digital asset management]] might be
 
 [[UX|user experience]]
 [[todo]]
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

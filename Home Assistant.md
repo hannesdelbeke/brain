@@ -1,10 +1,7 @@
 ---
 aliases:
 - HA
-<<<<<<< HEAD
-=======
 - Home assistant config
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: 2375afb7

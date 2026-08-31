@@ -1,9 +1,6 @@
 ---
-<<<<<<< HEAD
-=======
 aliases:
 - Excelidraw
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 energy: 5
 sentiment:
 - 6
@@ -22,8 +19,5 @@ an open source [[Miro]] alternative
 ### file format
 format is `.excalidraw`, a [[JSON]]
 [[Obsidian web integration]] & static site generators might struggle with embeds for this format.
-<<<<<<< HEAD
-=======
 
 see also [[Photoshop]], [[2d editor]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
