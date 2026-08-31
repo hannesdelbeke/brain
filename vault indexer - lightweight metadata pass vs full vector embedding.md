@@ -58,3 +58,21 @@ The full pass runs every section through a local transformer model (`BAAI/bge-sm
 * **Vague / exploratory search:** Asking open conceptual questions without knowing what keywords exist in the vault.
 * **Visual semantic graphs & clustering:** Visualizing high-dimensional semantic proximity in Obsidian or auditing vault duplicate clusters.
 * **Populating the initial cache:** Running once (or throttled with fewer threads/`nice -n 19`) so future incremental vector updates take <2 seconds.
+
+## 4. Options to run the full pass less aggressively
+
+Building 8,000+ vector embeddings cold on a multi-core CPU defaults to maxing all available cores, which spins up laptop cooling fans. You can throttle the build using OS-level process controls:
+
+* **Core affinity pinning (`taskset -c 0,1`):** Restricts the embedding process to 2 specific CPU cores (out of 12). The remaining 10 cores stay completely idle, keeping total system CPU under ~15–20% and preventing thermal fan spin:
+  ```bash
+  taskset -c 0,1 python skills/pkm-metadata-indexer/index_pkm_meta.py
+  ```
+* **Lowest CPU scheduling priority (`nice -n 19`):** Instructs the OS scheduler to only allocate CPU cycles when no foreground interactive process needs them:
+  ```bash
+  nice -n 19 python skills/pkm-metadata-indexer/index_pkm_meta.py
+  ```
+* **Combined quiet background execution:** Runs the full pass at the lowest CPU/IO priority pinned to two cores:
+  ```bash
+  ionice -c 3 nice -n 19 taskset -c 0,1 python skills/pkm-metadata-indexer/index_pkm_meta.py
+  ```
+* **Per-batch SQLite checkpoints:** The indexer automatically commits vector embeddings in 32-section chunks. If cancelled or interrupted, progress is never lost—re-running immediately skips already-embedded sections via SHA256 cache.
