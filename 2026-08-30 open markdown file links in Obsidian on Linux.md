@@ -64,17 +64,25 @@ def find_vault_root(file_path: Path):
     return None
 
 def open_with_fallback(file_path: Path):
-    for ed in [os.environ.get("VISUAL"), os.environ.get("EDITOR"), "gnome-text-editor", "code", "gedit", "nano"]:
+    fallback_editors = [
+        os.environ.get("VISUAL"),
+        os.environ.get("EDITOR"),
+        "gnome-text-editor",
+        "code",
+        "gedit",
+        "nano"
+    ]
+    for ed in fallback_editors:
         if ed and shutil.which(ed):
-            subprocess.run([ed, str(file_path)])
+            subprocess.Popen([ed, str(file_path)], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return
-    subprocess.run(["gio", "open", str(file_path)])
+    subprocess.Popen(["gio", "launch", "org.gnome.TextEditor.desktop", str(file_path)], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 def open_target(target: str):
     if not target:
         return
     if target.startswith("obsidian://"):
-        subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", target])
+        subprocess.Popen(["flatpak", "run", "md.obsidian.Obsidian", target], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return
     
     if target.startswith("file://"):
@@ -86,7 +94,7 @@ def open_target(target: str):
     file_path = Path(raw_path).resolve()
     if not file_path.exists():
         encoded_path = urllib.parse.quote(str(file_path), safe="/:")
-        subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", f"obsidian://open?path={encoded_path}"])
+        subprocess.Popen(["flatpak", "run", "md.obsidian.Obsidian", f"obsidian://open?path={encoded_path}"], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return
 
     vault_info = find_vault_root(file_path)
@@ -96,13 +104,13 @@ def open_target(target: str):
         encoded_file = urllib.parse.quote(str(rel), safe="/")
         encoded_vault = urllib.parse.quote(vault_name)
         uri = f"obsidian://open?vault={encoded_vault}&file={encoded_file}"
-        subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", uri])
+        subprocess.Popen(["flatpak", "run", "md.obsidian.Obsidian", uri], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     else:
         open_with_fallback(file_path)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        subprocess.run(["flatpak", "run", "md.obsidian.Obsidian"])
+        subprocess.Popen(["flatpak", "run", "md.obsidian.Obsidian"], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     else:
         for arg in sys.argv[1:]:
             open_target(arg)
