@@ -59,6 +59,17 @@ def build_neighbor_sets(edges: list[tuple[str, str]]) -> dict[str, set[str]]:
     return neighbors
 
 
+def hub_notes(neighbors: dict[str, set[str]], degree_threshold: int) -> set[str]:
+    """Notes with more than `degree_threshold` distinct wikilink neighbours -
+    the wikilink-graph analogue of co_commit.py's hub_notes(), a hard cutoff on
+    a note's own raw degree. This is a genuinely different mechanism than
+    Adamic-Adar's log-degree downweighting of a *shared* neighbour z: that
+    softens z's contribution to a score, this removes a hub note from the
+    candidate pool entirely, the same all-or-nothing exclusion co_commit.py
+    applies to a hub associated note."""
+    return {note for note, ns in neighbors.items() if len(ns) > degree_threshold}
+
+
 def score_all(neighbors: dict[str, set[str]], paths: list[str], anchor: str,
              metric: str) -> np.ndarray:
     anchor_set = neighbors.get(anchor, set())
@@ -92,7 +103,8 @@ def rrf_fuse_scores(score_a: np.ndarray, score_b: np.ndarray, k: float) -> np.nd
 
 
 def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
-                   fuse_rrf_k: float | None = None, fuse_metric: str = "aa") -> dict:
+                   fuse_rrf_k: float | None = None, fuse_metric: str = "aa",
+                   exclude_hubs: bool = False, hub_degree: int = 20) -> dict:
     """Standalone mode (fuse_rrf_k=None): how well AA/Jaccard alone rank the
     true target, and how much their top neighbours overlap with vector's -
     NOT a fair comparison to vector-only ranking (a dedicated embedding model
@@ -116,6 +128,18 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
     edges = load_all_edges(db_path)
     neighbors = build_neighbor_sets(edges)
     graph_paths = sorted(neighbors)  # every note that appears in the link graph at all
+    hubs_excluded = 0
+    if exclude_hubs:
+        hubs = hub_notes(neighbors, hub_degree)
+        # ponytail: one filtered list serves both the candidate pool and the
+        # anchor-eligibility check below (`a in path_in_graph_index`), so a hub
+        # note is dropped as a possible ANCHOR too, not just as a candidate the
+        # way co_commit.py's own exclude-hubs only strips hubs from returned
+        # results for a query note that is itself never excluded. Stricter than
+        # co_commit's version, but the two lists would otherwise duplicate the
+        # same sort/enumerate for a one-off stress-test script.
+        graph_paths = [p for p in graph_paths if p not in hubs]
+        hubs_excluded = len(hubs)
     path_in_graph_index = {p: i for i, p in enumerate(graph_paths)}
 
     links = wikilink_ground_truth(db_path)
@@ -126,8 +150,12 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
         usable = [usable[i] for i in rng.choice(len(usable), size=sample, replace=False)]
 
     if fuse_rrf_k is not None:
-        return run_fusion(usable, vec_paths, vec_index_of, pooled, neighbors,
-                          graph_paths, path_in_graph_index, fuse_rrf_k, fuse_metric)
+        result = run_fusion(usable, vec_paths, vec_index_of, pooled, neighbors,
+                            graph_paths, path_in_graph_index, fuse_rrf_k, fuse_metric)
+        if exclude_hubs:
+            result["hubs_excluded"] = hubs_excluded
+            result["hub_degree"] = hub_degree
+        return result
 
     results = {"aa": {"ranks": [], "baseline": []}, "jaccard": {"ranks": [], "baseline": []}}
     vector_neighbor_sets, aa_neighbor_sets = {}, {}
@@ -162,6 +190,9 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
 
     out = {"pairs_sampled": len(usable), "mean_vector_aa_overlap_pct":
            round(100 * float(np.mean(overlaps)), 1) if overlaps else None}
+    if exclude_hubs:
+        out["hubs_excluded"] = hubs_excluded
+        out["hub_degree"] = hub_degree
     for metric in ("aa", "jaccard"):
         ranks, baseline = results[metric]["ranks"], results[metric]["baseline"]
         if not ranks:
@@ -249,6 +280,11 @@ def main():
                         help="RRF-fuse --fuse-metric with vector rank at this k, "
                              "instead of the standalone AA-vs-Jaccard-vs-vector report")
     parser.add_argument("--fuse-metric", choices=["aa", "jaccard"], default="aa")
+    parser.add_argument("--exclude-hubs", action="store_true",
+                        help="Drop notes with more wikilink neighbours than --hub-degree from "
+                             "the candidate pool, mirroring co_commit.py's hub exclusion")
+    parser.add_argument("--hub-degree", type=int, default=20,
+                        help="A note with more wikilink neighbours than this counts as a hub")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -262,7 +298,8 @@ def main():
     db_path = Path(args.db).resolve() if args.db else pkm.default_db_path(vault_dir)
     import json
     result = run_experiment(vault_dir, db_path, args.sample, args.seed,
-                            args.fuse_rrf_k, args.fuse_metric)
+                            args.fuse_rrf_k, args.fuse_metric,
+                            args.exclude_hubs, args.hub_degree)
     print(json.dumps(result, indent=1))
 
 
@@ -278,6 +315,10 @@ def self_check():
         "sharing two neighbours (one of them lower-degree) should score higher than sharing one"
     jaccard_from_a = score_all(neighbors, paths, "a", "jaccard")
     assert jaccard_from_a[index_of["b"]] > jaccard_from_a[index_of["c"]]
+    # z has degree 3 (a, b, c all link to it) - a threshold of 2 makes it a hub,
+    # a threshold of 3 does not.
+    assert hub_notes(neighbors, 2) == {"z"}
+    assert hub_notes(neighbors, 3) == set()
     print("self-check ok")
 
 
