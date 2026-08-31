@@ -28,7 +28,7 @@ for **agent reasoning length** (how much an agent thinks before answering), a fi
 
 ## caveman-compress benchmarked against the vault's own method, on the same notes
 
-a private compression experiment ran the llmlingua-2-style idea above for real: an agent classified tokens as essential (facts, numbers, decisions, links) versus disposable (connective prose), cut only the disposable, and a second, adversarial agent scored the result against the original for lost meaning. five real notes went through it — two short pre-distilled claim notes, two narrative technical write-ups, and one long dense reference note.
+a private compression experiment ran the llmlingua-2-style idea above for real, as [[2026-08-31 classifier-based compression with an adversarial fidelity gate|a named, reusable two-pass method]]: one agent classifies tokens as essential (facts, numbers, decisions, links) versus disposable (connective prose) and cuts only the disposable, a second, independent agent adversarially scores the result against the original for lost meaning. five real notes went through it — two short pre-distilled claim notes, two narrative technical write-ups, and one long dense reference note.
 
 | note type | words before → after | cut | retention (adversarial, /100) |
 | :--- | :--- | :--- | :--- |
@@ -63,6 +63,7 @@ caveman-compress operates at the word/phrase level (drop articles, filler, hedgi
 the practical read for a vault compression skill: caveman-compress's mechanical rules are a real, small, safe-ish win (roughly 12-19%, same fidelity band as a much stronger method) with no judgment calls to get wrong — but they leave most of the token budget on the table precisely where a note is dense and factual, the case a smarter method wins hardest. the vault's own study reaches the same conclusion the caveman-compress rule set arrives at structurally: don't run either one unattended without a fidelity check, since a compressor — rule-based or learned — cannot be trusted to know which of its own cuts removed an argument rather than a word.
 
 ## related
+- [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — the two-pass method benchmarked above, as its own named technique
 - [[skills/token-thrift/SKILL|token-thrift]] — the practical side of the same question: fewer calls and less context per call are the only two levers, measured rather than assumed
 - [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]] — the same "classify what's essential, cut the rest" idea already applied to one growing markdown file vs. discrete skill modules, with measured token-overhead numbers
 - [[header extraction for token-efficient retrieval]] — a concrete worked example of the "agent-read-only notes" case above: measured 77.5% token reduction extracting headers instead of full note bodies

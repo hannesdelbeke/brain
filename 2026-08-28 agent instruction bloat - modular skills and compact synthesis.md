@@ -207,6 +207,7 @@ Given a set of input skill modules and a strict budget of 100 lines:
 
 ## 🔗 Related Notes
 - [[2026-08-31 research on compressing llm reasoning and notes without losing information]] — the research backing this: llmlingua-2's "classify essential tokens, cut the rest" is the same move this note applies to instruction files
+- [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — that same idea as a named, measured two-pass method (classify + cut, then an independent adversarial fidelity score)
 - [[AGENTS.md]] — vault agent instructions and conventions
 - [[2026-08-27 fearless note consolidation - using git history as the deep memory layer|fearless note consolidation]] — treating active notes as lean neocortex and Git as hippocampal tape
 - [[2026-08-27 biomimetic AI - stealing from brains, immune systems, and evolution|biomimetic AI]] — lossy compression, synaptic pruning, and sleep consolidation

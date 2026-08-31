@@ -116,3 +116,7 @@ sections:
 | **Token Payload (est.)** | ~688 [[AI tokens|tokens]] | ~155 [[AI tokens|tokens]] | **77.5% reduction (4.4x compression)** |
 | **Scan Cost (20 Notes)** | ~13,760 tokens | ~3,100 tokens | **10,660 tokens saved per turn** |
 | **Scan Cost (50 Notes)** | ~34,400 tokens | ~7,750 tokens | **26,650 tokens saved per turn** |
+
+## Related
+- [[2026-08-31 research on compressing llm reasoning and notes without losing information]] — the broader research this technique is one worked example of
+- [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — a different technique for the same "agent-read-only note" case: compress the note body itself rather than extract an outline and skip it
