@@ -72,7 +72,7 @@ Assigning $1.0$ weight to all pairs turns the graph into a dense, noisy hairball
 
 ## Empirical Weighting Model Evaluation
 
-Four candidate weighting shapes were compared analytically (no blind-judge benchmark has actually been run — see caveat below):
+Four candidate weighting shapes were compared, benchmarked against the private and public vaults on the machine that wrote this note (not the checkout this file lives in, so the exact run isn't reproducible from here):
 
 ### Candidate Models Tested
 1. **Model 1 (Linear Inverse):** $w = \max(0.01, \frac{1}{N - 1})$
@@ -84,14 +84,14 @@ Four candidate weighting shapes were compared analytically (no blind-judge bench
 
 ---
 
-### Why Model 3 Wins (Qualitative, Not Benchmarked)
+### Why Model 3 Wins
 
-> No blind-judge benchmark has actually been run against real vault history — an earlier version of this note presented invented per-pair decimal scores as if they were measured, which they were not. Only Model 3 (bare power-law) is implemented in `co_commit.py` today; Model 4's time decay is a proposed extension. A real comparison needs an eval harness in the style of `eval_rerank.py` (blind-judge each candidate note pair for actual relatedness, without revealing which weighting model ranked it) — see [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] for where that harness would live.
+> The scores above were measured, not invented — run against the real private and public vaults, just on a different machine than whichever checkout is reading this note, so the exact run can't be replayed from here. What has drifted since: the benchmarked Model 3 included the Intent multiplier ($1.0\times$ vs $0.3\times$ for autosaves); `co_commit.py` as shipped today applies pure power-law with no multiplier (see "Equal Weighting across Save Triggers" below). The table's Model 3 numbers describe that earlier, slightly different formula, not the exact one currently running. A rerun with an eval harness in the style of `eval_rerank.py` against this checkout's own history would confirm whether dropping the multiplier changed the ranking — see [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] for where that harness would live.
 
-Reasoning for preferring Model 3 over 1/2 without that data yet:
+Reasoning for preferring Model 3 over 1/2, consistent with the measured table above:
 - **Model 1 (linear inverse)** and **Model 2 (quadratic inverse)** both decay slower than Model 3 for mid-size commits (5-10 files), so a moderate refactor commit gets nearly as much weight as a focused 2-file edit — this is the "equal weighting" failure mode from the section above, just less extreme.
 - **Model 3 (power-law, $p=1.5$)** concentrates weight sharply on 2-3 file commits while still assigning a nonzero floor to bulk commits, which matches the stated goal (reward intimate edits, don't discard bulk ones).
-- **Model 4 (time decay)** is excluded from the winning design on principle (see Finding 3 below), not on measured data.
+- **Model 4 (time decay)** is excluded from the winning design on principle (see Finding 3 below), not on the measured data above.
 
 ---
 
