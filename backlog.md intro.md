@@ -1,10 +1,7 @@
 ---
-<<<<<<< HEAD
-=======
 aliases:
 - backlog.md task mngr
 - backlog.md
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: 113fcd7c
@@ -15,11 +12,8 @@ tags:
 - planning
 ---
 
-<<<<<<< HEAD
-=======
 https://github.com/MrLesk/Backlog.md
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 Setting up [[backlog.md task mngr]] inside an [[Obsidian vault]] is straightforward because both tools are built around local [[Markdown]] files.
 
 ---

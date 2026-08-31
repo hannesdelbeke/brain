@@ -42,9 +42,6 @@ How can we discover strong links? The graph view pulls nodes closer to each othe
 
 
 [[public/link]]
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
 > [!learning] the obsidian-weighted-graph plugin (github.com/jamesms36/obsidian-weighted-graph) already renders a directed, weighted graph using `[[Note]]::weight` syntax — a working (static, not dynamic) implementation of link strength.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

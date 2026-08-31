@@ -31,10 +31,7 @@ Core patterns and structural lessons from high-signal public [[digital garden|di
 - Dense, curated graph topology provides better context for human thinking and agent retrieval.
 
 ### References
-<<<<<<< HEAD
-=======
 - [[public/how can we get value out of public notes|how can we get value out of public notes]] — practical use cases for consuming public vaults, vs. this note's structural lessons.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 - [[public/examples of public evergreen gardens]] — curated directory of notable public gardens.
 - [[public/digital garden examples]] — list of public digital garden sites and wikis.
 - [[are wikilinks legacy with embedded vector]] — balancing explicit graph links with semantic retrieval.

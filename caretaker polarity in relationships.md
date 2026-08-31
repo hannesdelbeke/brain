@@ -30,18 +30,9 @@ Security and sexual desire operate on opposing psychological poles:
 ## The Alternating Polarity Loop
 
 In fused relationships, the dynamic often alternates across two polarities:
-<<<<<<< HEAD
-1. **Domestic Caretaker:** One partner manages meals, kitchen routines, and daily domestic scaffolding, casting the other partner in the role of a cared-for child.
-2. **Emotional Caretaker:** When one partner collapses into depression, anxiety, or travel meltdowns, the other partner is thrust into the role of an emotional parent soothing a dysregulated dependent.
-
-> **Core Law:** One cannot feel passionate sexual desire for a partner they are constantly oscillating between parenting emotionally and depending on domestically. The dynamic acts as a permanent brake on the sexual inhibition system.
-
-Related: [[public/emotional disengagement in relationships|emotional disengagement in relationships]], [[public/structural constraint outpacing genuine dedication|structural constraint outpacing genuine dedication]], [[public/starter relationship calibration deficit|starter relationship calibration deficit]], [[public/attraction|attraction]]
-=======
 1. **Domestic Caretaker:** One partner carries the daily domestic scaffolding, casting the other in the role of a cared-for child.
 2. **Emotional Caretaker:** When one partner is dysregulated, the other is thrust into the role of an emotional parent doing the soothing.
 
 > **Core Law:** One cannot feel passionate sexual desire for a partner they are constantly oscillating between parenting emotionally and depending on domestically. The dynamic acts as a permanent brake on the sexual inhibition system.
 
 Related: [[public/emotional disengagement in relationships|emotional disengagement in relationships]], [[public/attraction|attraction]], [[public/desire|desire]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

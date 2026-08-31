@@ -27,8 +27,5 @@ it'd be great if I could scan, all notes for aliases in notes, e.g.
 often i just manually add alias, and then move on. 
 - a in editor button to add alias could work.
 - or auto run it on all, and create a ignore list, and let user pick n chose through all aliases. likely use an AI to do so based on note context. and save ignore list in vault as a text file. (or note)
-<<<<<<< HEAD
-=======
 
 Found: [obsidian-note-aliases](https://github.com/pulsovi/obsidian-note-aliases) — see [[proposal - note-taking workflow gaps]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

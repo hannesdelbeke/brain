@@ -40,7 +40,4 @@ Instead we can write just a simple widget. And have just the logic separate.
 
 ## reference
 A Python [[MVP example]]
-<<<<<<< HEAD
-=======
 [[MVP MVC MVVM compared]] — general comparison of these architectural patterns
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

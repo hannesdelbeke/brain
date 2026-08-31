@@ -25,9 +25,6 @@ We can use this in Unity.
 > 	2. click `[[my note]]` to open `my note` in Obsidian
 > 	- how would the user edit the URL? no WYSIWYG in Unity editor tools
 > 		- could have an edit/view tab in the inspector, or an edit & save button
-<<<<<<< HEAD
-=======
 
 ## Related
 [[link Obsidian to Unity]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

@@ -1,11 +1,8 @@
 ---
 aliases:
 - validation tool
-<<<<<<< HEAD
-=======
 - validate
 - validated
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: ab92294c
@@ -37,10 +34,7 @@ Complete asset pipeline automation is only possible with predictable data, and a
 - [[Maya modelchecker]] - a great free & fast Maya validator. Not meant to be customized 
 - [[Odin validator]] - a commercial Unity validator 
 
-<<<<<<< HEAD
-=======
 the point of instances
 [[why use instance collection in validation]]
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 [[validation]]

@@ -51,8 +51,5 @@ so [[AI agent]] might lose context here, that a human has.
 It would be great for agents to have access to unlinked mentions.
 However i might talk about someone named Jack. and have a note about Jack, my best friend. But if they are 2 different people in that case, the AI might incorrectly assume I am talking about my friend Jack.
 An [[agent skill|AI skill]] could instead say, *this unlinked mention is potentially relevant*
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

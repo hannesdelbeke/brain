@@ -1,10 +1,7 @@
 ---
-<<<<<<< HEAD
-=======
 aliases:
 - Tesla Full Self Driving
 - FSD
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 sentiment:
 - 5
 sentiment-hash: df4fbb72
@@ -22,7 +19,4 @@ Full Self-Driving Capability includes:
 > Full Self-Driving Capability is a hands-on feature. Keep your hands on the steering wheel at all times and be mindful of road conditions, surrounding traffic, and other road users (such as pedestrians and cyclists). Pay attention to the road at all times and always be prepared to take immediate action. Failure to follow these instructions could cause damage, serious injury or death.
 
 [[Tesla autopilot]]
-<<<<<<< HEAD
-=======
 [[Tesla]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

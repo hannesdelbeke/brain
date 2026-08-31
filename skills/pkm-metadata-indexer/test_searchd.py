@@ -110,8 +110,6 @@ class SearchDaemonTest(unittest.TestCase):
         self.get("/search?q=distinctivephrase")  # log off again
         self.assertEqual(len(log.read_text(encoding="utf-8").splitlines()), 1)
 
-<<<<<<< HEAD
-=======
     def test_a_search_over_several_corpora_logs_one_line_each(self):
         log = Path(self.temp_dir.name) / "many.jsonl"
         SEARCHD.LOG_PATH = log
@@ -126,7 +124,6 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(rows[0]["results"], ["alpha.md"])
         self.assertEqual(rows[1]["results"], ["gamma.md"])
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     def test_each_vault_only_sees_its_own_notes(self):
         _, wrong = self.get("/search?q=separatephrase")
         self.assertEqual(wrong["results"], [])
@@ -496,8 +493,6 @@ class MatrixCacheTest(unittest.TestCase):
         self.assertNotEqual(vault.vectors_version, warm)
 
 
-<<<<<<< HEAD
-=======
 class SemanticGraphTest(unittest.TestCase):
     """Mutual nearest neighbours, on vectors chosen so the answer is known."""
 
@@ -680,6 +675,5 @@ class GraphRouteTest(unittest.TestCase):
         return fetch(self.port, "/graph")
 
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 if __name__ == "__main__":
     unittest.main()

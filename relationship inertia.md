@@ -37,8 +37,4 @@ Sliding Cohabitation ──► Accumulated Constraints ──► High Exit Penal
 2. **Escalating Exit Costs:** The logistical, financial, and emotional difficulty of separating increases with each adult milestone.
 3. **The Holding Pattern:** Couples stay together not because relationship quality or attraction is high, but because breaking up feels overwhelmingly disruptive.
 
-<<<<<<< HEAD
-Related: [[public/structural constraint outpacing genuine dedication|structural constraint outpacing genuine dedication]], [[public/relationship|relationship]], [[public/starter relationship calibration deficit|starter relationship calibration deficit]]
-=======
 Related: [[public/emotional disengagement in relationships|emotional disengagement in relationships]], [[public/relationship|relationship]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

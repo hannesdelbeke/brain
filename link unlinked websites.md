@@ -43,8 +43,5 @@ Allow better tutorial links. I can provide a link to a website, and add links to
 [shared on reddit](https://www.reddit.com/r/PKMS/comments/104d2dd/link_unlinked_websites/)
 
 [[annotate websites]] for more about notes for each website
-<<<<<<< HEAD
-=======
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

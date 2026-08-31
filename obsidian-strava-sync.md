@@ -103,8 +103,5 @@ not with the current strava-sync plugin behavior; it creates new notes and skips
 >   lastActivityTimestamp and imports only later activities, not changed older ones. That means:
 >   
 >  If you want, I can patch the installed plugin so it updates existing activity notes by ID instead of skipping them.
-<<<<<<< HEAD
-=======
 
 Found: strava-obsidian (saadsaifse) does explicit "smart sync" to catch backdated/edited uploads instead of create-only skipping. See [[proposal - resumable bidirectional sync adapter]].
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

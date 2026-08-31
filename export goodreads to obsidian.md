@@ -22,8 +22,5 @@ If I want both my data, and goodreads, the list needs to stay [[synced]]
 - automated RSS export (You can also use the Goodsidian plugin for [[Obsidian]] , but it's limited to 100 books / shelf )
 
 [[todo]]
-<<<<<<< HEAD
-=======
 
 Found: Booksidian (official community plugin, scheduled sync, overwrite-on-update option) and GoodReadSync (dedupes by a stored `bookID` frontmatter field — upsert-by-stable-id done right). See [[proposal - resumable bidirectional sync adapter]].
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1

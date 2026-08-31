@@ -21,15 +21,8 @@ a lot of smart plugs measure power consumption, giving you more automation optio
 most smart plugs are relays
 all relays are noisy and make a click when toggling on/off.
 to avoid this you can use a [[light dimmer]], or solid state relay
-<<<<<<< HEAD
-[[smart plug]]
-
-
-
-=======
 
 pass-through version also reports energy usage, similar to [[smart switch]]
 
 [[home automation]]
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 [[smart home]]

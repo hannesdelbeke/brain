@@ -62,10 +62,7 @@ To let an agent inspect the live DOM, query computed CSS, and verify visual fixe
 - Use the live hook to query `getComputedStyle(document.querySelector('.cm-link[data-link-path^="public/"]')).color` in the active note and verify that public links render green, private links render purple, and dead links render red.
 
 ## Related notes
-<<<<<<< HEAD
-=======
 - [[proposal - live AI agent bridge into obsidian]] — synthesis, existing-solution findings, and recommended next step
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 - [[Obsidian live hook and DOM bridge for AI agents]] — live WebSocket, MCP, and DOM eval bridge architecture
 - [[Obsidian data worth exposing to AI agents]] — exposing live metadata, unresolved links, and active context
 - [[Obsidian - color links based on folder]] — concept and visual design rules for public vs private links

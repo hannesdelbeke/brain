@@ -1,9 +1,5 @@
 ---
-<<<<<<< HEAD
-date: 2026-08-29
-=======
 date: 2026-08-30
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 created: 2026-08-29
 tags:
   - obsidian
@@ -16,24 +12,14 @@ aliases:
 ---
 
 > [!summary] eli5
-<<<<<<< HEAD
-> the plan for the obsidian side of the local search engine: backlinks, unlinked mentions, semantic neighbours and search, as one plugin rather than four, all of them reading from the daemon that already runs.
-> nothing new is needed in the engine, the three endpoints these features need already answer in tens of milliseconds; what exists is two prototype plugins that each carry their own copy of the daemon client, and the work is merging them before a third copy appears.
-> **needs from you:** nothing to decide, the first step is a merge of code you already have; the measurement in the last section decides whether the backlinks pane is worth shipping at all.
-=======
 > the obsidian side of the local search engine: backlinks, unlinked mentions, semantic neighbours and search, as one plugin rather than four, all of them reading from the daemon that already runs.
 > the merge happened on 2026-08-30 and the plugin exists: five surfaces, one daemon client, 76 tests against a fake obsidian and a live test against the real daemon. what is left is a look at it inside obsidian, and the measurement that decides whether the backlinks pane is worth keeping at all.
 > **needs from you:** open the private vault and look at the five surfaces, since nothing below has been seen by a human in the app yet.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 > so if i want fast backlink search in obsidian, and semantic search later, and we have a prototype plugin in the vault, what are the next steps. and does it make sense to make separate plugins, backlinks, search, semantic search, semantic backlinks
 
 > [!todo] next
-<<<<<<< HEAD
-> **next:** merge `unified-search` and `semantic-local-graph` into one plugin with a single shared daemon client file, since each carries its own copy today and the backlinks pane would be the third.
-=======
 > **next:** open the private vault in obsidian and use the five surfaces, since every measurement below is from a test harness and nothing has been seen rendered.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 > **blocked:** nothing.
 
 **why:** [[2026-08-29 local search daemon and indexer - release plan and modular decoupling]]
@@ -68,15 +54,6 @@ the split that would matter is daemon or no daemon, and none of these four sit o
 
 both hold their own base URL, their own fetch, their own CLI fallback, their own python discovery and their own spawn of the daemon when it is not running. that duplication is the same failure the engine already paid for as two published python copies, and the backlinks pane is where it becomes a third. merge first, add the pane second.
 
-<<<<<<< HEAD
-## the steps
-
-1. merge the two plugins into one, with the daemon client as a single file both views import. no typescript and no bundler unless something needs them; two working plugins in plain javascript are evidence that neither is needed yet.
-2. add the backlinks leaf against `/links`, inbound and outbound, each row a jump to its line since the endpoint already returns them.
-3. warm the vector path on plugin load with one `/similar` call.
-4. add unlinked mentions from `/unlinked` behind its own toggle, since at 70 to 270ms it is slower than the other two and should not sit in the same render pass.
-5. leave the python alone. the primitive split, `--no-vectors` and any packaging are on the distribution path, not on this one.
-=======
 ## what shipped on 2026-08-30
 
 one plugin, `unified-search` in the private vault and `h-forts/obsidian-unified-search` as its repository, still plain javascript with no build step. five surfaces over one daemon client: the search modal, a related pane holding linked mentions, unlinked mentions and semantic neighbours as three sections, the semantic local graph, the vault graph, and missing links. the related pane fires its three routes in parallel and only `/links` is required, so a corpus with no vectors still renders backlinks.
@@ -113,7 +90,6 @@ two features landed with it, both ranked in [[2026-08-30 a semantic graph over t
 2. measure native backlinks before keeping the linked-mentions section, which is the section below.
 3. a `build` script and a minified `main.js`, needed only if this is submitted, see the release plan.
 4. leave the python alone. the primitive split, `--no-vectors` and any packaging are on the distribution path, not on this one.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 ## measure before replacing native backlinks
 
@@ -123,9 +99,6 @@ the measurement is available rather than hypothetical, since [[2026-08-29 Startu
 
 one thing the endpoint check turned up: inbound edges carry raw targets like `public/pkm-search|pkm-search`, the path-prefixed wikilinks. they resolve while the private vault is the obsidian root and break the moment this vault is opened on its own, so a backlinks pane will render them correctly and quietly depend on a layout that is not guaranteed.
 
-<<<<<<< HEAD
-=======
 what happens when the editor, the CLI and several agent sessions query the same daemon at once is measured in [[2026-08-30 one daemon, several agents asking at once]]; the short version is that the plugin's timeouts were the half worth fixing first.
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 the acceptance for each feature this replaces is listed in [[core Obsidian features to rework on the vault index]], the corpora the daemon answers over are in [[corpus]], and the submission path, once any of this is worth publishing, is [[2026-08-29 Obsidian community plugin submission process]].
