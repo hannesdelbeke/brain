@@ -19,27 +19,39 @@ If I download my [[Google Drive]] folder in my vault, i can [[wikilink GDrive fi
 - renaming files in google drive , will break [[wikilink|wikilinks]] in [[my vault]] in [[Obsidian]]
 	- renaming likely happens at the start of a file's life. once a file is linked in a note, it's not likely to be renamed. so i don't expect this to often be an issue, if it breaks, i can manually fix it.
 
-### Walkthrough: How to embed GDrive folder in vault
-- [x] can i use google drive as a subfolder in my [[Obsidian vault|vault]]?
-- download gdrive [here](https://support.google.com/a/users/answer/13022292?hl=en)
-- launch and sign in
-- step 1
-	- there's only the option to sync folders too drive, untick them all and don't use this.
-- step 2 google photos
-	- I get a warning for differences between [[sync with drive vs back up to photos]]
-	- there's only an option to sync photo folders to photos/drive, untick all
-- step 3 see drive files in explorer
-	- defaults to stream mode, a [[virtual file system]], shows in explorer without taking up space.
-		- it created a new hard drive `G:\`
-		- to make drive files available offline rightclick - make available
-	- you can set to `Mirror files` to [[file sync|sync]] drive to a folder in both ways (two-way sync) 
-		- asks to select a folder where to mirror the whole drive too.
-- add `google-drive/` to [[gitignore|.gitignore]] in my vault if you use [[git]]
-- change drive settings to point to that folder.
-	- seems i can also make it point to a streaming folder instead of `G:\` drive.
-	 But when I do so Obsidian doesn't pick it up
+### Walkthrough: How to embed GDrive folder on Windows
+- Download Google Drive Desktop.
+- Launch and sign in.
+- Set sync mode to `Mirror files` pointing to `C:\repos\pkm\google-drive` (or keep stream mode).
+- Configure `.gitignore` so Git ignores heavy binary assets while tracking `.gsheet` / `.gdoc` shortcuts.
 
-Overall it seems to work well
+### Walkthrough: How to embed GDrive folder on Linux
+
+On Linux without native Google Drive Desktop, use **Rclone FUSE Mount** to stream or mirror Google Drive into `~/repos/pkm/google-drive`:
+
+1. **Install Rclone:**
+   Installed to `~/.local/bin/rclone`.
+2. **Authenticate Google Drive (`rclone config`):**
+   - Create new remote `gdrive` $\rightarrow$ choose `drive` (Google Drive) $\rightarrow$ follow browser OAuth login.
+3. **Mount Google Drive to Vault:**
+   Run `scripts/setup_gdrive_linux.sh` or create a systemd user service (`~/.config/systemd/user/rclone-gdrive.service`):
+   ```bash
+   rclone mount gdrive: ~/repos/pkm/google-drive \
+       --vfs-cache-mode full \
+       --vfs-cache-max-size 10G \
+       --drive-export-formats link.html
+   ```
+4. **Auto-Mount on Login:**
+   ```bash
+   systemctl --user enable --now rclone-gdrive.service
+   ```
+5. **Obsidian Configuration:**
+   Enable `"showUnsupportedFiles": true` in `.obsidian/app.json` so Obsidian detects Google Drive files and wikilinks.
+
+---
+
+### Alternative: GNOME Online Accounts
+In GNOME Settings $\rightarrow$ Online Accounts, sign into Google. GNOME automatically mounts Google Drive under `/run/user/1000/gvfs/`. Symlink that directory to `~/repos/pkm/google-drive`.
 I ran into some issues:
 
 > [!BUG]- convert to jpg plugin deletes drive files
