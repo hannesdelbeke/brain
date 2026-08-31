@@ -256,7 +256,7 @@ python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 10
 python skills/pkm-metadata-indexer/co_commit.py --rebuild
 python skills/pkm-metadata-indexer/co_commit.py --selfcheck
 ```
-Uses a Power-Law commit scaling model ($w = \text{Intent} \times \max(0.005, 1 / (N - 1)^{1.5})$) with an intent multiplier ($1.0\times$ for descriptive/prompt commits vs $0.3\times$ for Obsidian autosaves) and evergreen accumulation. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
+Uses a pure power-law commit scaling model ($w = \max(0.005, 1 / (N - 1)^{1.5})$, no intent multiplier, no time decay — every commit weighted equally regardless of message) with evergreen accumulation. `commit_scan_state` is written but not yet read, so every run rescans full history; `--rebuild` only clears stale rows. Nothing reads the `co_commits` table yet — same caveat as `co_retrieval.py` above, wiring it into `/similar` ranking is a separate change that goes through an eval harness first. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
 
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.

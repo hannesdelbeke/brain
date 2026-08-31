@@ -38,9 +38,19 @@ The concept of extracting implicit relationships from version control transactio
 
 | Research / Pioneer | Landmark Work | Core Contribution | Relevance to PKM |
 | :--- | :--- | :--- | :--- |
-| **Harald Gall, Mehdi Jazayeri et al. (1998)** | *CVS Release History Data for Detecting Logical Couplings* | First formulated that files co-modified in the same CVS transaction share hidden dependencies undetectable by static code analysis. | Proves commit transactions capture human cognitive context missing from static text. |
-| **Thomas Zimmermann & Andreas Zeller (2004)** | *Mining Version Histories to Guide Software Changes (ROSE)* | Applied association rule mining (Apriori) to commit logs to predict *"Programmers who changed file X also changed file Y"*. | Direct predecessor to auto-suggesting related notes during search. |
-| **Adam Tornhill (2015)** | *Your Code as a Crime Scene* & *Software Design X-Rays* | Popularized "Change Coupling" and temporal coupling analysis using Git commit logs (via tools like *Code Maat* and *CodeScene*). | Showed that co-change patterns reveal architectural hotspots and conceptual affinity. |
+| **Harald Gall, Karin Hajek, Mehdi Jazayeri (1998)** | *Detection of Logical Coupling Based on Product Release History* (ICSM) | First formulated that files co-modified across releases share hidden dependencies undetectable by static code analysis. | Proves commit transactions capture human cognitive context missing from static text. |
+| **Thomas Zimmermann, Peter Weißgerber, Stephan Diehl, Andreas Zeller (2004)** | *Mining Version Histories to Guide Software Changes (ROSE)* | Applied association rule mining (Apriori) to commit logs to predict *"Programmers who changed file X also changed file Y"*. | Direct predecessor to auto-suggesting related notes during search. |
+| **Adam Tornhill (2015 / 2018)** | *Your Code as a Crime Scene* (2015) & *Software Design X-Rays* (2018) | Popularized "Change Coupling" and temporal coupling analysis using Git commit logs (via tools like *Code Maat* and *CodeScene*). | Showed that co-change patterns reveal architectural hotspots and conceptual affinity. |
+| **source{d} Hercules ("couples" analysis)** | [Hercules](https://github.com/src-d/hercules) | Purpose-built tool for mining file co-change graphs directly from Git history, closer prior art than general logical-coupling research. | Same graph-extraction problem, ready-made reference implementation. |
+| **Mark Granovetter (1973)** | *The Strength of Weak Ties* | Distinguishes strong ties (frequent, high-overlap) from weak ties (rare, bridging) in a social/associative graph. | Better framing than "logical coupling" for *why* a 2-file power-law-heavy edge should outweigh a 20-file bulk edge — it's a strong-vs-weak tie problem, not just a coupling-detection one. |
+
+PKM-native prior art (content-based, not commit-based) is deliberately not listed here — Obsidian's graph view, the Smart Connections plugin, and Juggl all infer relatedness from note *content* (links, embeddings). This technique is git-history-based and finds pairs with zero content overlap, which is the actual novelty; it doesn't compete with them, it fills their blind spot.
+
+### A Broader Claim: Is Everything Connected?
+
+A stronger version of this idea says every note is latently connected to every earlier note, co-committed or not, because one continuous mind wrote all of them and every note is shaped by what came before it. This isn't a new claim: it's Bush's *associative trails* generalized past the two-note case, and it's the explicit premise of Niklas Luhmann's Zettelkasten writing — the slip-box's value comes from unplanned connections surfacing later, whether or not two notes were ever explicitly linked. The cognitive mechanism is **spreading activation** (Collins & Loftus, 1975): activating one concept partially activates everything associatively near it, decaying with distance.
+
+Formalizing this as a second, denser graph layer underneath co-commit — a fully-connected baseline where every note pair gets weight $e^{-\Delta t / \tau}$ by creation-time distance, with co-commit edges as sparse high-weight spikes on top — is mathematically sound but not worth building as literal graph edges: an $O(N^2)$ dense graph over thousands of notes costs real storage for almost entirely negligible weight. The one place it's worth keeping is as a **scalar recency-proximity prior in reranking** (`final_score = retrieval_score * (1 + λ · recency_proximity)`), never materialized as a graph. The co-commit graph in this note is the useful, sparse, empirically-grounded special case of this broader theory — build that, not the dense baseline.
 
 ---
 
@@ -62,7 +72,7 @@ Assigning $1.0$ weight to all pairs turns the graph into a dense, noisy hairball
 
 ## Empirical Weighting Model Evaluation
 
-To find the optimal mathematical weighting, four candidate models were benchmarked across **2,355 multi-file Markdown commits** in a personal vault:
+Four candidate weighting shapes were compared analytically (no blind-judge benchmark has actually been run — see caveat below):
 
 ### Candidate Models Tested
 1. **Model 1 (Linear Inverse):** $w = \max(0.01, \frac{1}{N - 1})$
@@ -74,18 +84,14 @@ To find the optimal mathematical weighting, four candidate models were benchmark
 
 ---
 
-### Empirical Benchmark Results
+### Why Model 3 Wins (Qualitative, Not Benchmarked)
 
-> Note: only Model 3 (bare power-law) is implemented in `co_commit.py` today. Model 4's time decay below is a proposed extension, not shipped behavior — treat that column as illustrative, not a reproducible run.
+> No blind-judge benchmark has actually been run against real vault history — an earlier version of this note presented invented per-pair decimal scores as if they were measured, which they were not. Only Model 3 (bare power-law) is implemented in `co_commit.py` today; Model 4's time decay is a proposed extension. A real comparison needs an eval harness in the style of `eval_rerank.py` (blind-judge each candidate note pair for actual relatedness, without revealing which weighting model ranked it) — see [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] for where that harness would live.
 
-| Test Probe Domain | Pair Description | Model 1 | Model 2 | Model 3 (Winner) | Model 4 (Time Decay) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Relational Synthesis** | `personal relationship analysis note` $\leftrightarrow$ `day 2026-08-28.md` | 3.69 pts | 3.37 pts | **3.41 pts** | 3.36 pts |
-| **Git Architecture** | `how to keep history.md` $\leftrightarrow$ `maintain git history.md` | 3.00 pts | 3.00 pts | **3.00 pts** | 2.89 pts |
-| **Linux Setup** | `new Linux PC setup log.md` $\leftrightarrow$ `Barrier/Input Leap sync` | 1.83 pts | 1.67 pts | **2.00 pts** | 1.99 pts |
-| **Linux Setup** | `new Linux PC setup log.md` $\leftrightarrow$ `Krita stylus latency` | 1.83 pts | 1.67 pts | **2.00 pts** | 1.99 pts |
-| **Game Tooling Pipeline** | `asset color tool` $\leftrightarrow$ `palette swatch painter` | 2.78 pts | 2.00 pts | **2.11 pts** | *0.03 pts (suppressed)* |
-| **Medical Event** | `specialist referral letter` $\leftrightarrow$ `patient contact record` | 3.33 pts | 3.17 pts | **3.19 pts** | *0.65 pts* |
+Reasoning for preferring Model 3 over 1/2 without that data yet:
+- **Model 1 (linear inverse)** and **Model 2 (quadratic inverse)** both decay slower than Model 3 for mid-size commits (5-10 files), so a moderate refactor commit gets nearly as much weight as a focused 2-file edit — this is the "equal weighting" failure mode from the section above, just less extreme.
+- **Model 3 (power-law, $p=1.5$)** concentrates weight sharply on 2-3 file commits while still assigning a nonzero floor to bulk commits, which matches the stated goal (reward intimate edits, don't discard bulk ones).
+- **Model 4 (time decay)** is excluded from the winning design on principle (see Finding 3 below), not on measured data.
 
 ---
 
@@ -95,7 +101,8 @@ To find the optimal mathematical weighting, four candidate models were benchmark
    - 2 files: **$1.00$** *(maximum intimate association)*.
    - 3 files: **$0.35$**.
    - 5 files: **$0.12$**.
-   - 20+ files: Flattens to the **$0.005$ (0.5%)** floor.
+   - 20 files: **$0.012$** — not yet at the floor (a common misreading of the graph's shape; solving $1/(N-1)^{1.5} = 0.005$ puts the actual floor crossover at **$N \approx 35$**).
+   - 35+ files: Flattens to the **$0.005$ (0.5%)** floor.
    - Preserves 100% of multi-file commits while giving focused 2-to-3 file edits **200x more associative power** than bulk sweeps.
 
 2. **Equal Weighting across Save Triggers:**
