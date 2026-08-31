@@ -25,3 +25,9 @@ for **agent-read-only notes**, this is the target: a compression pass modeled on
 for **human-view notes**, none of this research applies directly, it's all measuring llm-to-llm parsing, not human reading speed, so the existing [[2026-08-30 readability and reading-speed research applied to note-taking vaults]] rules should keep governing those, not this.
 
 for **agent reasoning length** (how much an agent thinks before answering), a fixed terse style has a ceiling it can't see: the token complexity floor is per-task, so a caveman-style instruction that works on one task can start cutting real content on a harder one. if this matters enough to tune, the tale-style approach, sizing the budget to the task rather than fixing the style, is the documented way to do it, not tightening the style further.
+
+## related
+- [[skills/token-thrift/SKILL|token-thrift]] — the practical side of the same question: fewer calls and less context per call are the only two levers, measured rather than assumed
+- [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]] — the same "classify what's essential, cut the rest" idea already applied to one growing markdown file vs. discrete skill modules, with measured token-overhead numbers
+- [[header extraction for token-efficient retrieval]] — a concrete worked example of the "agent-read-only notes" case above: measured 77.5% token reduction extracting headers instead of full note bodies
+- [[token efficient PKM analysis architecture]] — token budgets across agent operations more broadly
