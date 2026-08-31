@@ -78,30 +78,30 @@ To find the optimal mathematical weighting, four candidate models were benchmark
 
 | Test Probe Domain | Pair Description | Model 1 | Model 2 | Model 3 (Winner) | Model 4 (Time Decay) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Relational Synthesis** | `personal relationship analysis note` $\leftrightarrow$ `day 2026-08-28.md` | 3.69 pts | 3.37 pts | **3.39 pts** | 3.36 pts |
+| **Relational Synthesis** | `personal relationship analysis note` $\leftrightarrow$ `day 2026-08-28.md` | 3.69 pts | 3.37 pts | **3.41 pts** | 3.36 pts |
 | **Git Architecture** | `how to keep history.md` $\leftrightarrow$ `maintain git history.md` | 3.00 pts | 3.00 pts | **3.00 pts** | 2.89 pts |
 | **Linux Setup** | `new Linux PC setup log.md` $\leftrightarrow$ `Barrier/Input Leap sync` | 1.83 pts | 1.67 pts | **2.00 pts** | 1.99 pts |
 | **Linux Setup** | `new Linux PC setup log.md` $\leftrightarrow$ `Krita stylus latency` | 1.83 pts | 1.67 pts | **2.00 pts** | 1.99 pts |
-| **TT Games Pipeline** | `Lego color tool` $\leftrightarrow$ `Lego swatch painter` | 2.78 pts | 2.00 pts | **0.63 pts** | *0.03 pts (suppressed)* |
-| **Medical Event** | `specialist referral letter` $\leftrightarrow$ `patient contact record` | 3.33 pts | 3.17 pts | **0.96 pts** | *0.65 pts* |
+| **Game Tooling Pipeline** | `asset color tool` $\leftrightarrow$ `palette swatch painter` | 2.78 pts | 2.00 pts | **2.11 pts** | *0.03 pts (suppressed)* |
+| **Medical Event** | `specialist referral letter` $\leftrightarrow$ `patient contact record` | 3.33 pts | 3.17 pts | **3.19 pts** | *0.65 pts* |
 
 ---
 
 ### Findings & Final Design (Model 3)
 
-1. **Power-Law Scaling ($rac{1}{(N-1)^{1.5}}$):**
+1. **Power-Law Scaling ($\frac{1}{(N-1)^{1.5}}$):**
    - 2 files: **$1.00$** *(maximum intimate association)*.
    - 3 files: **$0.35$**.
    - 5 files: **$0.12$**.
    - 20+ files: Flattens to the **$0.005$ (0.5%)** floor.
    - Preserves 100% of multi-file commits while giving focused 2-to-3 file edits **200x more associative power** than bulk sweeps.
 
-2. **Intent Weighting ($1.0	imes$ vs $0.3	imes$):**
-   - Intentional human/AI commits with descriptive messages (`docs: ...`, `Prompt: ...`) reflect genuine human focus.
-   - Periodic background autosaves (`auto backup: YYYY-MM-DD HH:MM`) reflect accidental background timing, discounted by $70\%$.
+2. **Equal Weighting across Save Triggers:**
+   - In desktop PKM environments, automated saves (e.g. 15-minute syncs) capture authentic human focus sessions.
+   - Power-law scaling naturally dampens bulk commits without needing artificial penalties on autosaves.
 
 3. **Evergreen Persistence (Zero Time Decay):**
-   - While time decay is vital for activity heatmaps (`mention_heatmap.py`), it is harmful to associative knowledge graphs. Structural relationships between tools or historical medical notes remain permanent truths over time.
+   - While time decay is vital for activity heatmaps (`mention_heatmap.py`), it is harmful to associative knowledge graphs. Structural relationships between tools or historical records remain permanent truths over time.
 
 ---
 
