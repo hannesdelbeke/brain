@@ -104,11 +104,32 @@ def hub_notes(neighbors: dict[str, set[str]], degree_threshold: int) -> set[str]
 
 
 def score_all(neighbors: dict[str, set[str]], paths: list[str], anchor: str,
-             metric: str, degree_neighbors: dict[str, set[str]] | None = None) -> np.ndarray:
+             metric: str, degree_neighbors: dict[str, set[str]] | None = None,
+             z_hub_degree: int | None = None) -> np.ndarray:
     """`neighbors` supplies the anchor/candidate sets being intersected - this
     is what --direction changes. `degree_neighbors` supplies the degree(z) used
     to downweight a shared neighbor z in the AA sum; defaults to `neighbors`
     itself (the original, direction="both" behaviour, unchanged).
+
+    `z_hub_degree`: a hard cutoff on the shared neighbor z itself, AA-only.
+    This is a different axis than `hub_notes()`/`--exclude-hubs` below, which
+    drops a hub NOTE from the candidate pool (it can't be suggested as a
+    related result) but never touches whether that same note can still act as
+    the bridging z between two OTHER candidates - two notes with no real
+    relationship, but a shared wikilink to a same-day catalog/index note,
+    still get a nonzero AA score today no matter how aggressively
+    --exclude-hubs is set, because z is read from the unfiltered `neighbors`
+    dict regardless. Confirmed on real data: a same-day batch of game-portfolio
+    portfolio notes (`game-a.md`, `game-d.md`, ...) whose only wikilinks
+    are to a handful of shared same-session overview/catalog notes (degree
+    34-77) scores AA(game-a, game-d) = 1.03 even though the two share no
+    real topic - `--exclude-hubs` at threshold 20 does nothing for this pair
+    since neither endpoint is itself a hub. `z_hub_degree` fixes this by
+    zeroing out z's whole term (not just log-downweighting it) once
+    degree(z) exceeds the threshold, same 20-default convention as
+    `hub_notes()`. Jaccard has no per-z term to cut (it only counts
+    `len(shared)`), and Jaccard already lost to AA in every test tonight, so
+    this is AA-only rather than a parallel Jaccard change nothing asked for.
 
     # ponytail: when neighbors is a directional (out/in) set, degree_neighbors
     # is always passed in as the undirected/"both" set by run_experiment rather
@@ -134,7 +155,9 @@ def score_all(neighbors: dict[str, set[str]], paths: list[str], anchor: str,
             continue
         if metric == "aa":
             scores[index] = sum(
-                1.0 / math.log(len(degree_neighbors[z])) for z in shared if len(degree_neighbors[z]) > 1
+                1.0 / math.log(len(degree_neighbors[z])) for z in shared
+                if len(degree_neighbors[z]) > 1
+                and (z_hub_degree is None or len(degree_neighbors[z]) <= z_hub_degree)
             )
         else:  # jaccard
             union = len(anchor_set | other_set)
@@ -156,7 +179,7 @@ def rrf_fuse_scores(score_a: np.ndarray, score_b: np.ndarray, k: float) -> np.nd
 def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
                    fuse_rrf_k: float | None = None, fuse_metric: str = "aa",
                    exclude_hubs: bool = False, hub_degree: int = 20,
-                   direction: str = "both") -> dict:
+                   direction: str = "both", z_hub_degree: int | None = None) -> dict:
     """Standalone mode (fuse_rrf_k=None): how well AA/Jaccard alone rank the
     true target, and how much their top neighbours overlap with vector's -
     NOT a fair comparison to vector-only ranking (a dedicated embedding model
@@ -171,6 +194,11 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
     `direction`: "both" (default, undirected merge), "out" (bibliographic
     coupling - only what the anchor links to), or "in" (co-citation - only
     what links to the anchor). See build_neighbor_sets/score_all.
+
+    `z_hub_degree`: passed straight through to `score_all` - a hard cutoff on
+    the shared-neighbor z itself (AA-only), not to be confused with
+    `exclude_hubs`/`hub_degree` above which filters the candidate POOL. See
+    `score_all`'s docstring for why these are two different mechanisms.
     """
     connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
@@ -216,7 +244,7 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
     if fuse_rrf_k is not None:
         result = run_fusion(usable, vec_paths, vec_index_of, pooled, neighbors,
                             graph_paths, path_in_graph_index, fuse_rrf_k, fuse_metric,
-                            degree_neighbors=degree_neighbors)
+                            degree_neighbors=degree_neighbors, z_hub_degree=z_hub_degree)
         if exclude_hubs:
             result["hubs_excluded"] = hubs_excluded
             result["hub_degree"] = hub_degree
@@ -239,7 +267,7 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
         target_g_index = path_in_graph_index[target]
         for graph_metric in ("aa", "jaccard"):
             scores = score_all(neighbors, graph_paths, source, graph_metric,
-                               degree_neighbors=degree_neighbors)
+                               degree_neighbors=degree_neighbors, z_hub_degree=z_hub_degree)
             anchor_g_index = path_in_graph_index[source]
             rank = rank_of(scores, path_in_graph_index, anchor_g_index, target_g_index)
             if rank is not None:
@@ -276,7 +304,8 @@ def run_experiment(vault_dir: Path, db_path: Path, sample: int, seed: int,
 
 
 def run_fusion(usable, vec_paths, vec_index_of, pooled, neighbors, graph_paths,
-               path_in_graph_index, k: float, metric: str, degree_neighbors=None) -> dict:
+               path_in_graph_index, k: float, metric: str, degree_neighbors=None,
+               z_hub_degree: int | None = None) -> dict:
     """RRF-fuse a graph-structural signal's rank list with the vector-rank list.
 
     The fair test: not "does AA/Jaccard alone beat vector search" (it won't -
@@ -305,7 +334,7 @@ def run_fusion(usable, vec_paths, vec_index_of, pooled, neighbors, graph_paths,
             continue
 
         graph_scores = score_all(neighbors, graph_paths, source, metric,
-                                 degree_neighbors=degree_neighbors)
+                                 degree_neighbors=degree_neighbors, z_hub_degree=z_hub_degree)
         v_full = np.full(len(candidates), -1.0, dtype=np.float64)
         v_full[vec_to_cand] = vector_scores
         g_full = np.zeros(len(candidates), dtype=np.float64)
@@ -352,6 +381,12 @@ def main():
                              "the candidate pool, mirroring co_commit.py's hub exclusion")
     parser.add_argument("--hub-degree", type=int, default=20,
                         help="A note with more wikilink neighbours than this counts as a hub")
+    parser.add_argument("--z-hub-degree", type=int, default=None,
+                        help="AA-only: zero out a shared neighbour z's whole contribution "
+                             "(not just log-downweight it) once degree(z) exceeds this. "
+                             "Different axis than --exclude-hubs/--hub-degree, which filters "
+                             "the candidate pool, not the bridging z - see score_all's docstring. "
+                             "Off (None) by default for backward compatibility.")
     parser.add_argument("--direction", choices=["both", "out", "in"], default="both",
                         help="both (default): undirected merge, this script's original baseline. "
                              "out: bibliographic coupling, only what the anchor links to (Kessler 1963). "
@@ -370,7 +405,8 @@ def main():
     import json
     result = run_experiment(vault_dir, db_path, args.sample, args.seed,
                             args.fuse_rrf_k, args.fuse_metric,
-                            args.exclude_hubs, args.hub_degree, args.direction)
+                            args.exclude_hubs, args.hub_degree, args.direction,
+                            args.z_hub_degree)
     print(json.dumps(result, indent=1))
 
 
@@ -390,6 +426,21 @@ def self_check():
     # a threshold of 3 does not.
     assert hub_notes(neighbors, 2) == {"z"}
     assert hub_notes(neighbors, 3) == set()
+
+    # z_hub_degree: a and c share ONLY z (degree 3); a and b share z AND y
+    # (degree 2). At z_hub_degree=2, z's whole term must drop to 0 (3 > 2)
+    # while y's term survives (2 <= 2) - a~c should go to exactly 0, a~b
+    # should stay positive but shrink (loses z's contribution too). This is
+    # the game-portfolio-portfolio false positive in miniature: two notes whose
+    # only connection is a shared same-session catalog/hub note should not
+    # score above zero just because that hub's degree is high.
+    aa_c_no_cutoff = score_all(neighbors, paths, "a", "aa")[index_of["c"]]
+    assert aa_c_no_cutoff > 0, "sanity: a~c does score positive without a cutoff"
+    aa_c_cutoff = score_all(neighbors, paths, "a", "aa", z_hub_degree=2)[index_of["c"]]
+    assert aa_c_cutoff == 0.0, "z_hub_degree=2 must zero out a~c's only shared neighbour (degree 3 > 2)"
+    aa_b_no_cutoff = score_all(neighbors, paths, "a", "aa")[index_of["b"]]
+    aa_b_cutoff = score_all(neighbors, paths, "a", "aa", z_hub_degree=2)[index_of["b"]]
+    assert 0 < aa_b_cutoff < aa_b_no_cutoff, "a~b keeps y's contribution but loses z's under the cutoff"
 
     # Directional split: bibliographic coupling (out) vs co-citation (in),
     # Kessler 1963 / Small 1973. Built so the merged/undirected view (the
