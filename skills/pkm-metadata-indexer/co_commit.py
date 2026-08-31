@@ -6,7 +6,7 @@ attention-budget note inspired by the same session).
 
     python skills/pkm-metadata-indexer/co_commit.py
     python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 15
-    python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --exclude-hubs
+    python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --rank-by weight --exclude-hubs
     python skills/pkm-metadata-indexer/co_commit.py --rebuild
     python skills/pkm-metadata-indexer/co_commit.py --selfcheck
 
@@ -21,6 +21,14 @@ Incremental by default: a run scans only commits after the last checkpoint
 (`commit_scan_state.last_scanned_sha`) and adds to what is stored, so a repeat
 run costs what changed rather than the whole history. `--rebuild`, or history
 being rewritten out from under a stale checkpoint, starts over from empty.
+
+Hub handling: `--note` results are ordered by `--rank-by` (default `lift`,
+Amazon-style lift-normalized scoring - see `lift_score`/`note_totals`),
+which needs no `--exclude-hubs`/`--hub-degree` cutoff at all. `--rank-by
+weight` restores the original raw-weight order, honouring `--exclude-hubs`'s
+hard degree cutoff (`hub_notes`) for a caller that wants that mechanism
+explicitly - see `query_associations`'s docstring for why `lift` is this
+CLI's default but not `query_associations`'s own function default.
 """
 
 import argparse
@@ -241,6 +249,19 @@ def hub_notes(db_path: Path, vault: str = "", degree_threshold: int = 20) -> set
     that session happened to touch. Excluding high-degree notes is a single
     query, not the diff-scaling or submodule-aware rework the architecture
     spec describes for the same problem.
+
+    A hard degree cutoff, though: `2026-08-31 other candidate relatedness
+    signals for search reranking.md`'s "lift-normalized co-occurrence"
+    section found this threshold does not transfer across graph scale at
+    all - calibrated for this vault's 199,783-edge graph, the same
+    `degree_threshold=20` excludes 48-99.5% of nodes on graphs one to three
+    orders of magnitude smaller (co_touch, a small cloned vault's own
+    co_commit graph). `query_associations`'s `rank_by="lift"` mode (see
+    `lift_score`/`note_totals` below) self-normalizes against each note's
+    own popularity instead, and was measured to beat this threshold on every
+    graph tested, standalone and RRF-fused, with no per-graph tuning. Kept
+    here, unchanged, for `rank_by="weight"` callers that explicitly want the
+    old hard-cutoff mechanism.
     """
     conn = connect(db_path)
     try:
@@ -262,35 +283,143 @@ def hub_notes(db_path: Path, vault: str = "", degree_threshold: int = 20) -> set
         conn.close()
 
 
+def note_totals(db_path: Path, vault: str = "") -> tuple[dict[str, float], float]:
+    """Each note's own total co-commit weight (the sum of its edges) and the
+    graph's grand total - the two numbers `lift_score` needs beyond a single
+    edge weight, one pass over the table in the same shape as `hub_notes`'s
+    own scan."""
+    conn = connect(db_path)
+    try:
+        clause = "WHERE vault = ?" if vault else ""
+        params = (vault,) if vault else ()
+        rows = conn.execute(
+            f"""
+            SELECT note, SUM(w) FROM (
+                SELECT note_a AS note, weight AS w FROM co_commits {clause}
+                UNION ALL
+                SELECT note_b AS note, weight AS w FROM co_commits {clause}
+            )
+            GROUP BY note
+            """,
+            params + params,
+        ).fetchall()
+    finally:
+        conn.close()
+    totals = {note: total for note, total in rows}
+    return totals, sum(totals.values())
+
+
+def lift_score(weight_ab: float, total_a: float, total_b: float, grand_total: float) -> float:
+    """Amazon-style lift (Linden, Smith & York 2003): `P(B|A) / P(B)`.
+
+    Self-normalizes against each note's own baseline popularity, so a hub
+    with a huge `total_b` needs a correspondingly huge `weight_ab` to still
+    score high with any specific `A` - no manually-picked degree threshold
+    required, unlike `hub_notes`'s hard cutoff. Tested in
+    `lift_cooccurrence_experiment.py` against that threshold on four real
+    graphs spanning three orders of magnitude in size: lift won on every one,
+    standalone and RRF-fused, with the same formula and no per-graph tuning.
+    0 with no edge or no weight to normalize by.
+    """
+    if weight_ab <= 0 or total_a <= 0 or total_b <= 0 or grand_total <= 0:
+        return 0.0
+    return (weight_ab / total_a) / (total_b / grand_total)
+
+
 def query_associations(db_path: Path, note: str, vault: str = "", top: int = 25,
-                       exclude_hubs: bool = False, hub_degree: int = 20) -> list[tuple]:
-    """Find notes most strongly co-committed with a given note."""
+                       exclude_hubs: bool = False, hub_degree: int = 20,
+                       rank_by: str = "weight") -> list[tuple]:
+    """Find notes most strongly co-committed with a given note.
+
+    rank_by="weight" (default here, for full backward compatibility with
+    every existing caller - `searchd.py`'s `/co-commits` endpoint and its
+    `&graph=1`/`&fusion=1` routes, `eval_related.py`'s judge harness, and
+    this module's own CLI/selfcheck all call this without `rank_by` and must
+    keep getting today's exact behavior): plain weight order.
+    `exclude_hubs=True` drops `hub_notes()` candidates via a hard degree
+    cutoff - found to be either catastrophic or right only by accident once
+    a graph is far smaller than the one the cutoff was calibrated on (see
+    `hub_notes`'s docstring).
+
+    rank_by="lift": Amazon-style lift-normalized scoring (`lift_score`
+    above) instead of raw weight. `exclude_hubs`/`hub_degree` are ignored
+    under this mode - lift self-normalizes against each note's own
+    popularity, so no manually-picked cutoff is needed at all. This is the
+    recommended mode for a fresh standalone query (this module's CLI
+    `--note` flag defaults `--rank-by` to it) - not wired as this
+    function's own default because `searchd.py`'s `&fusion=1`/`&graph=1`
+    additive-combine paths call this function with the exact same argument
+    shape as `/co-commits` does, and those need their own held-out
+    calibration pass (`stacked_fusion_experiment.py --calibrate`) before
+    their candidate set changes, a separate, not-yet-done piece of work.
+
+    Returned rows are the same 6-tuple shape either way - `weight` is always
+    the raw co-commit weight, never the lift score, only the ORDER changes -
+    `searchd.py`'s `do_co_commits` unpacks this tuple by fixed position and
+    would break on an extra field.
+    """
+    if rank_by not in ("weight", "lift"):
+        raise ValueError(f"rank_by must be 'weight' or 'lift', got {rank_by!r}")
     conn = connect(db_path)
     try:
         clean_note = note.replace("\\", "/").strip().lower()
         clause = "AND vault = ?" if vault else ""
         params = (vault,) if vault else ()
-        fetch_limit = top * 4 if exclude_hubs else top
+        anchor_pattern = f"%{clean_note}"
+        where = (f"(lower(note_a) = ? OR lower(note_b) = ? OR lower(note_a) LIKE ? OR lower(note_b) LIKE ?) {clause}")
+        where_params = (clean_note, clean_note, f"%/{clean_note}", f"%/{clean_note}") + params
 
-        # Match exact note path, ending suffix, or basename
-        rows = conn.execute(
-            f"""
-            SELECT vault,
-                   CASE WHEN lower(note_a) LIKE ? THEN note_b ELSE note_a END AS associated_note,
-                   weight, commit_count, last_commit, last_sha
-            FROM co_commits
-            WHERE (lower(note_a) = ? OR lower(note_b) = ? OR lower(note_a) LIKE ? OR lower(note_b) LIKE ?) {clause}
-            ORDER BY weight DESC, commit_count DESC
-            LIMIT ?
-            """,
-            (f"%{clean_note}", clean_note, clean_note, f"%/{clean_note}", f"%/{clean_note}") + params + (fetch_limit,),
-        ).fetchall()
+        if rank_by == "weight":
+            fetch_limit = top * 4 if exclude_hubs else top
+            # Match exact note path, ending suffix, or basename
+            rows = conn.execute(
+                f"""
+                SELECT vault,
+                       CASE WHEN lower(note_a) LIKE ? THEN note_b ELSE note_a END AS associated_note,
+                       weight, commit_count, last_commit, last_sha
+                FROM co_commits
+                WHERE {where}
+                ORDER BY weight DESC, commit_count DESC
+                LIMIT ?
+                """,
+                (anchor_pattern,) + where_params + (fetch_limit,),
+            ).fetchall()
+        else:
+            # No LIMIT: a low-raw-weight/high-lift edge is exactly what lift
+            # exists to surface, so pre-trimming the candidate pool by weight
+            # before scoring would defeat the point. This query's own WHERE
+            # clause already bounds the result to one note's own degree, not
+            # the whole graph, so an unbounded fetch here is not the
+            # whole-table scan it might look like.
+            rows = conn.execute(
+                f"""
+                SELECT vault,
+                       CASE WHEN lower(note_a) LIKE ? THEN note_b ELSE note_a END AS associated_note,
+                       CASE WHEN lower(note_a) LIKE ? THEN note_a ELSE note_b END AS anchor_note,
+                       weight, commit_count, last_commit, last_sha
+                FROM co_commits
+                WHERE {where}
+                ORDER BY weight DESC, commit_count DESC
+                """,
+                (anchor_pattern, anchor_pattern) + where_params,
+            ).fetchall()
     finally:
         conn.close()
-    if exclude_hubs:
-        hubs = hub_notes(db_path, vault, hub_degree)
-        rows = [row for row in rows if row[1] not in hubs][:top]
-    return rows
+
+    if rank_by == "weight":
+        if exclude_hubs:
+            hubs = hub_notes(db_path, vault, hub_degree)
+            rows = [row for row in rows if row[1] not in hubs][:top]
+        return rows
+
+    totals, grand_total = note_totals(db_path, vault)
+    scored = [
+        (lift_score(weight, totals.get(anchor, 0.0), totals.get(assoc, 0.0), grand_total),
+         (v, assoc, weight, count, last_commit, last_sha))
+        for v, assoc, anchor, weight, count, last_commit, last_sha in rows
+    ]
+    scored.sort(key=lambda pair: -pair[0])
+    return [row for _, row in scored[:top]]
 
 
 def heaviest_edges(db_path: Path, vault: str = "", top: int = 25) -> list[tuple]:
@@ -347,6 +476,28 @@ def selfcheck():
         assert hub_notes(db, "v", degree_threshold=2) == {"d.md"}
         assert "d.md" not in {row[1] for row in query_associations(
             db, "e.md", vault="v", top=5, exclude_hubs=True, hub_degree=2)}
+
+        # lift self-check: Q's edge to hub H (weight 10, but H also co-occurs
+        # heavily with 4 other notes, total_weight(H)=50) should score BELOW
+        # Q's edge to rare partner R (weight only 3, but R co-occurs with
+        # nothing else, total_weight(R)=3) - the opposite of raw-weight order,
+        # same shape as lift_cooccurrence_experiment.py's own self_check().
+        conn = connect(db)
+        with conn:
+            conn.execute("INSERT INTO co_commits VALUES ('v', 'Q.md', 'H.md', 10.0, 1, '2026-08-31', 'bbb0000')")
+            conn.execute("INSERT INTO co_commits VALUES ('v', 'Q.md', 'R.md', 3.0, 1, '2026-08-31', 'bbb0001')")
+            conn.executemany(
+                "INSERT INTO co_commits VALUES ('v', 'H.md', ?, 10.0, 1, '2026-08-31', 'bbb0002')",
+                [("X1.md",), ("X2.md",), ("X3.md",), ("X4.md",)],
+            )
+        conn.close()
+        weight_order = [row[1] for row in query_associations(db, "Q.md", vault="v", top=5, rank_by="weight")]
+        assert weight_order.index("H.md") < weight_order.index("R.md"), "raw weight ranks the hub edge higher (10 > 3)"
+        lift_order = [row[1] for row in query_associations(db, "Q.md", vault="v", top=5, rank_by="lift")]
+        assert lift_order.index("R.md") < lift_order.index("H.md"), "lift must invert raw weight's ranking here"
+        # weight is still the raw value, unchanged by rank_by, only order differs.
+        lift_rows = {row[1]: row[2] for row in query_associations(db, "Q.md", vault="v", top=5, rank_by="lift")}
+        assert lift_rows["H.md"] == 10.0 and lift_rows["R.md"] == 3.0
     print("co_commit.py selfcheck ok")
 
 
@@ -365,6 +516,12 @@ def main():
                              "files) from --note results, measured to be most of the noise")
     parser.add_argument("--hub-degree", type=int, default=20,
                         help="A note with more distinct co-commit partners than this counts as a hub")
+    parser.add_argument("--rank-by", choices=["lift", "weight"], default="lift",
+                        help="'lift' (default): Amazon-style lift-normalized scoring, no manually-picked "
+                             "hub cutoff needed. 'weight': the original raw-weight order, honouring "
+                             "--exclude-hubs/--hub-degree. query_associations() itself still defaults to "
+                             "'weight' for backward compatibility - this CLI flag is the discoverable "
+                             "opt-in-to-lift surface for a standalone --note query.")
     parser.add_argument("--selfcheck", action="store_true", help="Run internal validation unit tests")
     args = parser.parse_args()
 
@@ -375,7 +532,7 @@ def main():
 
     if args.note:
         rows = query_associations(args.db, args.note, args.vault, args.top,
-                                  args.exclude_hubs, args.hub_degree)
+                                  args.exclude_hubs, args.hub_degree, args.rank_by)
         if not rows:
             print(f"No co-commit associations found for '{args.note}' in {args.db}. (Try running index update first)")
         print(f"\n--- Top Co-Committed Notes for: {args.note} [{args.vault}] ---")
