@@ -52,7 +52,31 @@ On Linux without native Google Drive Desktop, use **Rclone FUSE Mount** to strea
 
 ### Alternative: GNOME Online Accounts
 In GNOME Settings $\rightarrow$ Online Accounts, sign into Google. GNOME automatically mounts Google Drive under `/run/user/1000/gvfs/`. Symlink that directory to `~/repos/pkm/google-drive`.
-I ran into some issues:
+
+## Linux Failure Modes & Troubleshooting
+
+> [!BUG]- rclone config fails with "Failed to read line: EOF"
+> Running interactive `rclone config` in scripted or non-TTY terminals fails with `CRITICAL: Failed to read line: EOF`.
+> **Fix:** Use non-interactive direct command `rclone config create gdrive drive scope drive` which opens the default browser directly for OAuth without terminal prompts.
+
+> [!BUG]- google-drive folder remains empty after browser login
+> Authorizing Google Drive in the browser only writes credentials to `~/.config/rclone/rclone.conf`. The mount is not active until the systemd service is started.
+> **Fix:** Start and enable the mount service:
+> ```bash
+> systemctl --user enable --now rclone-gdrive.service
+> ```
+
+> [!WARNING]- google-drive folder hidden in Obsidian File Explorer
+> If `google-drive/` is listed in `.obsidian/app.json` under `"userIgnoreFilters"`, Obsidian will hide the entire folder from the left sidebar file tree.
+> **Fix:** Remove `google-drive/` from `userIgnoreFilters` in Obsidian settings (Files and links $\rightarrow$ Excluded files) if you want the folder visible in the sidebar.
+
+> [!WARNING]- git status freezes or leaves index.lock on FUSE mounts
+> Using recursive whitelist rules like `!google-drive/**/*.gsheet` in `.gitignore` forces `git status` to traverse the remote FUSE mount over the internet, causing long freezes and lockfile contention.
+> **Fix:** Ignore `google-drive/` completely in `.gitignore`, and track local `.gsheet` JSON stubs in the vault root or subfolders.
+
+---
+
+## Past Windows Issues
 
 > [!BUG]- convert to jpg plugin deletes drive files
 > The [[Obsidian paste img png to jpg]] plugin causes issues with gdrive syncing.
