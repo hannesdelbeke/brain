@@ -75,11 +75,42 @@ A qualitative spot-check (reading the actual notes behind worsened and improved 
 
 That second point is the actual failure mode, and it's structural, not a tuning problem: a **global multiplier applied to every candidate** necessarily changes relative rank for everyone, not just the pair you're trying to help. Rewarding same-day notes demotes the relative position of every note written on a different day — including notes a human explicitly linked, at whatever distance. The benefit (correctly surfacing real same-day companions) and the cost (burying real long-distance links under a wave of same-day noise) come from the same mechanism and can't be separated by adjusting τ or λ; they only trade off against each other.
 
+## Follow-up: does a hard cutoff (last hours/days) fix it?
+
+Natural next question — the smooth exponential tail still gives *some* boost to far-apart candidates; does replacing it with a step function (`proximity = 1.0 if gap ≤ window else 0.0`, `--mode hard` in the script) confined to a short, literal "last few hours / last day" window avoid the damage? `recency_prior_experiment.py` was extended to support this, with the creation-date cache upgraded from day-only to full ISO timestamps (`git log --format=%aI`, still one walk, 3,886 timestamps in 1.2s) so hour-scale windows are measurable at all.
+
+**Window swept at λ=1.0** (fixed seed, n=500):
+
+| window | MRR change | mean boosted candidates |
+| :--- | :--- | :--- |
+| 1 hour | -5.71% (best) | 9.52 |
+| 6 hours | -13.20% | 17.03 |
+| 24 hours | -16.06% | 32.22 |
+| 3 days | -17.17% | 54.88 |
+| 1 week | -18.85% | 91.28 |
+| 30 days | -20.99% | 189.60 |
+
+`mean_boosted_candidates` — how many other notes fall within the window per anchor, the actual mechanism check — drops 20× from 30 days to 1 hour, and MRR damage does shrink monotonically alongside it. But it never turns positive, and worsened pairs outnumber improved at every window tested here, because λ=1.0 is still too strong once *any* candidate qualifies.
+
+**λ swept at a 24-hour window** (fixed seed, n=500): peaks at λ=0.05 (+7.95%), turns negative by λ=0.3, flat at λ≥1.0 (-16.06%, unchanging past that point since `mean_boosted_candidates` is fixed by the window, not λ). Same peak-then-collapse shape as the decay sweep, same magnitude — narrowing the window alone doesn't change the story, it needs pairing with a small λ too.
+
+**Stability check at a 6-hour window, λ=0.3** (the tightest, gentlest combination tested): 5-seed sweep at n=500 gave -1.68%, -0.93%, -7.49%, -1.66%, -7.70% (mean ≈ -3.89%, std ≈ 3.04% — more stable than decay mode's wild swing, but every individual seed still negative). The full-sample answer (n=4,725, no cap) was **+1.11%** — small, but genuinely positive, the first configuration all session where the population-level truth isn't negative. A qualitative spot-check found the identical mechanism as before at smaller scale: worsened pairs have gaps of 12–497 days (target's own boost ≈0, other in-window candidates jump past it instead), improved pairs are essentially all same-session companions (`2025-11-12 datafix - added automated testing.md` → `Python - Black.md`, rank 752→5). Narrowing the window shrank the blast radius enough to flip the population sign, but the effect is tiny and routinely erased by per-sample noise at realistic sample sizes.
+
+## Why it fails, proven independent of the measurements
+
+A separate derivation confirms the mechanism without relying on the numbers above. For a true target $i$ and rival candidate $j$, reranking flips their order exactly when:
+
+$$p_j - p_i > \frac{v_j - v_i}{\lambda \cdot v_i}$$
+
+If $v_j \le v_i$ (the rival was never ahead on content alone), the right side is $\le 0$, so **the flip triggers whenever $p_j > p_i$, for any $\lambda > 0$** — a multiplicative boost can only ever demote a target relative to something *more temporally-close than the target itself*, never relative to something further away.
+
+This is why rival *count*, not tuning, dominates: if an anchor has $k$ "temporal rivals" (other notes created near it) each with some small independent chance $p$ of already scoring close enough to flip once boosted, the chance at least one does is $1 - (1-p)^k$ — saturating toward 1 as $k$ grows, even for small $p$. Measured directly on this vault: **14.4 rivals within 1 hour of any given note, 37.4 within 24 hours** — $k$ never approaches 0 at any window tested, which is exactly why narrowing the window shrinks but never eliminates the damage. The idea only nets positive when the true target is *itself* one of the anchor's temporal rivals (a same-session companion note) rather than a genuine long-distance link — a bet that "written close in time" implies "the right answer," true for one specific kind of pair and false for the general case a wikilink graph is full of.
+
 ## Verdict
 
-Don't ship a global recency multiplier over the whole candidate pool, at any τ or λ found in this sweep. If the idea is worth revisiting, the fix has to be mechanistic, not a different constant: apply the recency term only as a **tiebreaker among near-equal vector scores** (so it only ever decides between candidates that were already close, rather than displacing a clearly-better candidate that happens to be older), not as a multiplier over every candidate regardless of how well it already matched.
+Don't ship a global recency multiplier — smooth or hard-cutoff — over the whole candidate pool. The one configuration that crossed into genuinely positive territory (6-hour hard cutoff, λ=0.3, +1.11% on the full sample) is real but marginal: tiny effect size, erased by sampling noise more often than not, not worth the complexity or the risk of the failure mode reappearing on a different vault or corpus size. If the idea is worth revisiting, the fix has to be mechanistic, not a smaller window or constant: apply the recency term only as a **tiebreaker among near-equal vector scores** (so it only ever decides between candidates that were already close, never displacing a clearly-better candidate that happens to be older).
 
-The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] — a sparse, explicit signal from real co-edit history, not a dense time-decay function applied to everything — remains the useful special case of the broader "everything is connected" theory. This reranking-prior version of the same theory does not hold up under testing.
+The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] — a sparse, explicit signal from real co-edit history, not a dense time-decay function applied to everything — remains the useful special case of the broader "everything is connected" theory. This reranking-prior version of the same theory does not hold up under testing, in either its smooth or hard-cutoff form.
 
 ## Related
 - [[co-commit graph mining for serendipitous note associations]]
