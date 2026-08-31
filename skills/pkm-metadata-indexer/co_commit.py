@@ -74,13 +74,11 @@ def connect(db_path: Path) -> sqlite3.Connection:
     return conn
 
 
-def calculate_commit_weight(num_files: int, commit_msg: str) -> float:
-    """Power-law scaling with intent multiplier."""
+def calculate_commit_weight(num_files: int, commit_msg: str = "") -> float:
+    """Pure power-law scaling across all commits without artificial auto-backup discounts."""
     if num_files < 2:
         return 0.0
-    w_size = max(0.005, 1.0 / math.pow(num_files - 1, 1.5))
-    intent_mult = 0.3 if "auto backup" in (commit_msg or "").lower() else 1.0
-    return w_size * intent_mult
+    return max(0.005, 1.0 / math.pow(num_files - 1, 1.5))
 
 
 def scan_git_commits(vault_dir: Path):
@@ -218,11 +216,10 @@ def heaviest_edges(db_path: Path, vault: str = "", top: int = 25) -> list[tuple]
 
 
 def selfcheck():
-    assert calculate_commit_weight(1, "test") == 0.0, "1 file has 0 co-commit weight"
-    assert abs(calculate_commit_weight(2, "docs: update") - 1.0) < 1e-6, "2 files get 1.0 weight"
-    assert abs(calculate_commit_weight(3, "docs: update") - 1.0 / (2 ** 1.5)) < 1e-4, "3 files power law"
-    assert abs(calculate_commit_weight(2, "auto backup: 2026-08-31") - 0.3) < 1e-6, "auto backup gets 0.3x"
-    assert calculate_commit_weight(100, "bulk") == 0.005, "bulk commit hits 0.5% floor"
+    assert calculate_commit_weight(1) == 0.0, "1 file has 0 co-commit weight"
+    assert abs(calculate_commit_weight(2) - 1.0) < 1e-6, "2 files get 1.0 weight"
+    assert abs(calculate_commit_weight(3) - 1.0 / (2 ** 1.5)) < 1e-4, "3 files power law"
+    assert calculate_commit_weight(100) == 0.005, "bulk commit hits 0.5% floor"
 
     import tempfile
     with tempfile.TemporaryDirectory() as temp:
