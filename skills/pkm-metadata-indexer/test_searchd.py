@@ -1,5 +1,7 @@
 import importlib.util
 import json
+import os
+import subprocess
 import sys
 import tempfile
 import threading
@@ -741,6 +743,77 @@ class GraphRouteTest(unittest.TestCase):
 
     def get_graph(self):
         return fetch(self.port, "/graph")
+
+
+class RecencyRouteTest(unittest.TestCase):
+    """A real git-committed fixture, since &recency= needs actual commit
+    timestamps, not the plain build_vault fixture the other classes use."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        cls.vault = build_vault(Path(cls.temp_dir.name) / "recency", "recency", {
+            "alpha.md": "## Alpha\ntext\n",
+            "beta.md": "## Beta\ncompanion, committed 30 minutes after alpha\n",
+            "gamma.md": "## Gamma\nunrelated, committed years apart\n",
+        })
+        root = cls.vault.root
+        run = lambda *args, when=None: subprocess.run(
+            ["git", *args], cwd=root, check=True, capture_output=True,
+            env={**os.environ, "GIT_AUTHOR_DATE": when, "GIT_COMMITTER_DATE": when} if when else None,
+        )
+        run("init", "-q")
+        run("config", "user.email", "t@t")
+        run("config", "user.name", "t")
+        run("add", "alpha.md")
+        run("commit", "-q", "-m", "alpha", when="2026-01-01T10:00:00+00:00")
+        run("add", "beta.md")
+        run("commit", "-q", "-m", "beta", when="2026-01-01T10:30:00+00:00")  # 30 min later, inside RECENCY_TAU_HOURS
+        run("add", "gamma.md")
+        run("commit", "-q", "-m", "gamma", when="2020-01-01T00:00:00+00:00")  # years away
+
+        SEARCHD.STATE = SEARCHD.State([cls.vault])
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+        cls.port = cls.server.server_address[1]
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.vault.close()
+        for attempt in range(3):
+            try:
+                cls.temp_dir.cleanup()
+                return
+            except PermissionError:
+                if attempt == 2:
+                    raise
+                time.sleep(0.2)
+
+    def test_recency_surfaces_a_same_session_note_when_vectors_are_empty(self):
+        # this fixture has no embeddings, so without &recency= /similar finds
+        # nothing for alpha; with it, beta (30 minutes later) should appear
+        # from the recency window alone, scored at exactly RECENCY_LAMBDA
+        # since its base vector score is unknown (0.0, the conservative floor)
+        _, plain = fetch(self.port, "/similar?note=alpha")
+        self.assertEqual(plain["results"], [])
+        status, body = fetch(self.port, "/similar?note=alpha&recency=1")
+        self.assertEqual(status, 200)
+        self.assertEqual([row["path"] for row in body["results"]], ["beta.md"])
+        self.assertAlmostEqual(body["results"][0]["score"], SEARCHD.RECENCY_LAMBDA)
+        self.assertEqual(body["results"][0]["heading"], "Beta")
+
+    def test_gamma_is_too_far_away_to_be_surfaced(self):
+        _, body = fetch(self.port, "/similar?note=gamma&recency=1")
+        self.assertEqual(body["results"], [])
+
+    def test_similar_without_recency_hints_when_a_near_note_exists(self):
+        _, near = fetch(self.port, "/similar?note=alpha")
+        self.assertIn("recency=1", near["recency_hint"])
+        _, far = fetch(self.port, "/similar?note=gamma")
+        self.assertNotIn("recency_hint", far)
 
 
 if __name__ == "__main__":
