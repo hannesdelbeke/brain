@@ -45,7 +45,14 @@ Endpoints, all accepting `?vault=name`:
                            `&graph=1` folds /co-commits into the ranking (RRF
                            fusion, hubs excluded), instead of vectors alone.
                            Without it, a `graph_hint` field in the response
-                           says so when co-commit history exists to ask for
+                           says so when co-commit history exists to ask for.
+                           `&recency=1` adds a small same-session boost (a note
+                           created within RECENCY_TAU_HOURS of the anchor gets
+                           +RECENCY_LAMBDA added to its score, additively, not
+                           as a multiplier — see recency_prior_experiment.py
+                           for why the difference matters). A `recency_hint`
+                           field says so when unused and a near-in-time note
+                           exists. `&graph=1&recency=1` together is untested
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -69,6 +76,7 @@ can name where a search came from with `&origin=<note>`.
 """
 
 import argparse
+import bisect
 import collections
 import hmac
 import importlib
@@ -81,6 +89,7 @@ import subprocess
 import sys
 import threading
 import time
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
@@ -90,6 +99,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import co_commit
 import index_pkm_meta as pkm
 import numpy as np
+import recency_prior_experiment as recency
 
 try:
     import watchfiles
@@ -111,6 +121,15 @@ REFRESH_TIMEOUT_S = 300
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
+
+# Validated in recency_prior_experiment.py: additive combine, hard cutoff,
+# swept and stability-checked against real wikilinks (5/5 seeds positive,
+# full-sample +8.60% MRR at exactly these values). Multiplicative and RRF
+# forms were tried first and rejected - additive is the only one where a
+# small weight cannot displace a candidate that was clearly better on
+# content, see that file for the proof.
+RECENCY_TAU_HOURS = 6.0
+RECENCY_LAMBDA = 0.05
 
 # There is no lock over the query path. There was one, a single global mutex, and
 # once the server was threaded it made every request wait for the one before it:
@@ -200,6 +219,8 @@ class Vault:
         self.reindexing = False
         self.graph_cache = None  # (vectors_version, k), payload
         self.duplicate_cache = None  # (vectors_version, threshold), payload
+        self.creation_dates = None  # path -> ISO timestamp, built once per process (see creation_index)
+        self.creation_sorted = None  # (epoch_seconds, path) pairs, sorted, for the &recency= window search
 
         self.stale_cache = None
         self.stale_at = 0.0
@@ -220,6 +241,24 @@ class Vault:
             self.stale_cache = pkm.stale_paths(self.root, self.db)
             self.stale_at = now
         return self.stale_cache
+
+    def creation_index(self):
+        """(dates, sorted (epoch_seconds, path) pairs) for `&recency=`, built once.
+
+        One `git log` walk, ~1.2s over 3,886 notes, the same cost
+        recency_prior_experiment.py measured — worth paying once per process
+        rather than never, but not on every query. A note added after the
+        daemon started or since the last build stays invisible to `&recency=`
+        until the next restart, the same staleness trade `graph_cache` and
+        `duplicate_cache` already make for a query-time cost this size.
+        """
+        if self.creation_dates is None:
+            self.creation_dates = recency.build_creation_dates(self.root)
+            self.creation_sorted = sorted(
+                (datetime.fromisoformat(value).timestamp(), key)
+                for key, value in self.creation_dates.items()
+            )
+        return self.creation_dates, self.creation_sorted
 
     def matrix(self):
         """Keep the vector matrix resident, rebuilt only when the database changes.
@@ -619,6 +658,19 @@ def note_snippet(vault: Vault, path: str) -> dict:
     return {"heading": row[0], "line": row[1], "snippet": row[2]}
 
 
+def notes_within_hours(vault: Vault, path: str, tau_hours: float) -> list[str]:
+    """Every other note created within `tau_hours` of `path`, via one binary
+    search over the vault's sorted creation timestamps rather than a scan."""
+    dates, sorted_pairs = vault.creation_index()
+    if path not in dates:
+        return []
+    anchor_ts = datetime.fromisoformat(dates[path]).timestamp()
+    window = tau_hours * 3600
+    lo = bisect.bisect_left(sorted_pairs, (anchor_ts - window, ""))
+    hi = bisect.bisect_right(sorted_pairs, (anchor_ts + window, "￿"))
+    return [candidate for _, candidate in sorted_pairs[lo:hi] if candidate != path]
+
+
 def do_co_commits(vault: Vault, note: str, top: int) -> dict:
     """Notes most often committed together with `note`, from co_commit.py's
     own database (`~/.pkm/co_commit.db`), a signal this vault's own index
@@ -758,21 +810,27 @@ def do_duplicates(vault: Vault, threshold: float, limit: int) -> dict:
     }
 
 
-def do_similar(vault: Vault, note: str, limit: int, graph: bool = False) -> dict:
-    """Vector-cosine neighbours, or `&graph=1` to RRF-fuse in co_commit's signal.
+def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
+              recency: bool = False) -> dict:
+    """Vector-cosine neighbours, plus two independent opt-in fusions.
 
-    Fusion is opt-in, not the default: measured against this vault's real
-    history, unfiltered co-commit edges were only 7% genuinely serendipitous
-    against 63% redundant or hub noise (hub exclusion and the bulk-commit cap
-    in co_commit.py bring that down, but not to zero), so it stays a signal a
-    caller asks for rather than one silently blended into every /similar.
+    `&graph=1` RRF-fuses in co_commit's signal (see below). `&recency=1` adds
+    RECENCY_LAMBDA to a candidate's raw cosine score if it was created within
+    RECENCY_TAU_HOURS of the anchor — additively, not as a multiplier, and
+    validated: 5/5 seeds positive, full-sample +8.60% MRR against real
+    wikilinks (see recency_prior_experiment.py). A multiplicative or
+    rank-fused version of the same idea was tried first and rejected there;
+    a small additive term is the one form that cannot displace a candidate
+    that was already clearly better on content. Both are opt-in rather than
+    default, and combining them (`&graph=1&recency=1`) is untested - each was
+    validated independently, not stacked.
     """
     began = time.perf_counter()
     STATE.last_query = time.time()
     vectors = vault.matrix()
     with vault.lock:
         vault.queries += 1
-    fetch = limit * 3 if graph else limit
+    fetch = limit * 3 if (graph or recency) else limit
     rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=fetch, vectors=vectors)
     if rows is None:
         return {"error": f"no single indexed note matches {note!r}"}
@@ -807,6 +865,24 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False) -> dict
             fused.append({**base, "score": round(rrf, 6), "source": source})
         fused.sort(key=lambda row: -row["score"])
         results = fused[:limit]
+    if recency:
+        resolved = resolve_note_path(vault, note) or note
+        near = set(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
+        by_path = {row["path"]: row for row in results}
+        boosted = []
+        for path in dict.fromkeys([*by_path, *near]):
+            base = by_path.get(path)
+            # raw_sim is the pure cosine the experiment validated this against;
+            # a near-in-time note outside the fetched candidates has no known
+            # score at all, so it starts from 0 - the boost alone (0.05) only
+            # surfaces it when nothing better already fills the result list,
+            # which is the conservative direction to be wrong in.
+            base_score = (base.get("raw_sim") if base and base.get("raw_sim") is not None
+                         else base["score"] if base else 0.0)
+            entry = base or {"path": path, **note_snippet(vault, path), "raw_sim": None}
+            boosted.append({**entry, "score": round(base_score + (RECENCY_LAMBDA if path in near else 0.0), 6)})
+        boosted.sort(key=lambda row: -row["score"])
+        results = boosted[:limit]
     payload = {
         "vault": vault.name,
         "note": note,
@@ -823,6 +899,10 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False) -> dict
         if co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
                                         top=1, exclude_hubs=True):
             payload["graph_hint"] = "co-commit history exists for this note, retry with &graph=1"
+    if not recency:
+        resolved = resolve_note_path(vault, note) or note
+        if notes_within_hours(vault, resolved, RECENCY_TAU_HOURS):
+            payload["recency_hint"] = "a note created within a few hours of this one exists, retry with &recency=1"
     # The note is both the query and the origin here, which is the co-retrieval
     # edge this log exists to collect.
     log_query("similar", vault.name, note, limit, payload["took_ms"], payload["results"], note)
@@ -1031,7 +1111,9 @@ class Handler(BaseHTTPRequestHandler):
                     self.reply(400, {"error": "note is required"})
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
-                self.reply(200, do_similar(vault, note, limit, first("graph") in {"1", "true", "yes"}))
+                self.reply(200, do_similar(vault, note, limit,
+                                          first("graph") in {"1", "true", "yes"},
+                                          first("recency") in {"1", "true", "yes"}))
             elif url.path == "/co-commits" and method == "GET":
                 note = first("note")
                 if not note:
