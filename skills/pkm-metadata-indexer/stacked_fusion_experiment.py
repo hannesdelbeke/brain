@@ -216,6 +216,178 @@ def run_experiment(vault_dir: Path, db_path: Path, co_commit_db: Path, co_commit
     return out
 
 
+# Grid for the calibration pass below. The by-inspection run this calibrates
+# (lam_recency=0.05, lam_cocommit=0.2, lam_aa=0.02) sits inside all three
+# ranges, at the same tau=30d - the grid exists to check whether inspection
+# happened to land near the real optimum or just somewhere positive, not to
+# retest a single already-tried point.
+#
+# lam_cocommit's range looks lopsided next to the other two because it is:
+# an initial 0.05-0.4 grid (matching this file's own docstring survey) pinned
+# its winner to the top edge (0.4) on every seed tried, and a manual sweep
+# afterward found the real calib-MRR peak between 3 and 10 - roughly an order
+# of magnitude past where the by-inspection run and the first grid both
+# guessed. cc_prox is capped at 1.0 (see build_pair_signals), so a lambda
+# this size only ever amplifies the sparse set of candidates that already
+# have a real co-commit edge, not every candidate - unlike lam_recency, whose
+# proximity term is a dense per-candidate decay, which is why its own optimum
+# stays small and the two lambdas are not on a comparable scale.
+LAM_RECENCY_GRID = [0.02, 0.05, 0.08, 0.11, 0.15]
+LAM_COCOMMIT_GRID = [0.05, 0.1, 0.2, 0.4, 0.8, 1.5, 3.0, 5.0, 10.0, 15.0]
+LAM_AA_GRID = [0.02, 0.05, 0.1, 0.15, 0.2, 0.3]
+
+# The recency term calibrated here uses the SAME hard-cutoff mechanism
+# searchd.py's own `&recency=1` already ships and validated independently
+# (mode=hard, tau=6h, lambda=0.05, +8.60% MRR) - not the smooth exponential
+# decay `run_experiment`'s by-inspection stacking check above used (tau=30
+# days). Calibrating a lambda against one recency shape and wiring it onto a
+# different one would not actually transfer; this mirrors searchd.py's
+# RECENCY_TAU_HOURS so the fusion route below can reuse its exact boost
+# rather than invent a second, unvalidated recency implementation.
+FUSION_RECENCY_TAU_HOURS = 6.0
+
+
+def build_pair_signals(usable: list[tuple[str, str]], vec_paths: list[str],
+                       vec_index_of: dict, pooled: np.ndarray, dates: dict,
+                       co_adjacency: dict, neighbors: dict,
+                       recency_tau_hours: float = FUSION_RECENCY_TAU_HOURS,
+                       recency_mode: str = "hard") -> list[dict]:
+    """Precompute every per-pair signal array ONCE, so the lambda grid search
+    below only ever does a cheap weighted sum + argsort per combo, instead of
+    redoing a matrix multiply, a co-commit lookup and an Adamic-Adar pass per
+    grid point - the grid is 300 combos, and recomputing those per combo per
+    pair would be the actual bottleneck the grid search waits on, not the
+    arithmetic it exists to try."""
+    pairs = []
+    for source, target in usable:
+        anchor_index, target_index = vec_index_of[source], vec_index_of[target]
+        vector_scores = pooled @ pooled[anchor_index]
+        baseline_rank = rank_of(vector_scores, vec_index_of, anchor_index, target_index)
+        if baseline_rank is None:
+            continue
+        recency_prox = np.array([
+            recency_proximity(dates[source], dates.get(path, dates[source]),
+                              recency_tau_hours, recency_mode)
+            if path in dates else 0.0
+            for path in vec_paths
+        ])
+        cc_scores = co_commit_score_all(co_adjacency, vec_paths, source)
+        aa_scores = score_all(neighbors, vec_paths, source, "aa")
+        pairs.append({
+            "anchor_index": anchor_index, "target_index": target_index,
+            "baseline_rank": baseline_rank,
+            "vector_scores": vector_scores,
+            "recency_prox": recency_prox,
+            # ponytail: same linear cap the by-inspection additive run already
+            # used - co-commit/AA have no natural [0,1] scale the way
+            # recency_proximity's exp decay does. Upgrade path: fit a real
+            # scale against judged pairs if this stops being good enough.
+            "cc_prox": np.minimum(cc_scores / 5.0, 1.0),
+            "aa_prox": np.minimum(aa_scores / 5.0, 1.0),
+        })
+    return pairs
+
+
+def mrr_at_lambdas(pairs: list[dict], vec_index_of: dict, lam_recency: float = 0.0,
+                   lam_cocommit: float = 0.0, lam_aa: float = 0.0) -> float | None:
+    ranks = []
+    for p in pairs:
+        scores = (p["vector_scores"] + lam_recency * p["recency_prox"]
+                 + lam_cocommit * p["cc_prox"] + lam_aa * p["aa_prox"])
+        r = rank_of(scores, vec_index_of, p["anchor_index"], p["target_index"])
+        if r is not None:
+            ranks.append(r)
+    return float(np.mean([1 / r for r in ranks])) if ranks else None
+
+
+def grid_search(pairs: list[dict], vec_index_of: dict) -> dict:
+    """Best lambda combo per stack, by calibration-set MRR alone: three single-
+    signal additions (each its own lambda calibrated, not the 0.5-for-
+    everything by-inspection default), the 3-way stack (recency+co-commit),
+    and the 4-way stack (+AA). Never looks at the holdout set."""
+    winners = {}
+
+    def best_over(label: str, combos: list[dict]):
+        scored = [(mrr, lam) for lam in combos
+                 if (mrr := mrr_at_lambdas(pairs, vec_index_of, **lam)) is not None]
+        scored.sort(key=lambda t: -t[0])
+        winners[label] = {"lambdas": scored[0][1], "calib_mrr": round(scored[0][0], 4)}
+
+    best_over("recency_only", [{"lam_recency": v} for v in LAM_RECENCY_GRID])
+    best_over("cocommit_only", [{"lam_cocommit": v} for v in LAM_COCOMMIT_GRID])
+    best_over("aa_only", [{"lam_aa": v} for v in LAM_AA_GRID])
+    best_over("stack3_recency_cocommit", [
+        {"lam_recency": r, "lam_cocommit": c}
+        for r in LAM_RECENCY_GRID for c in LAM_COCOMMIT_GRID])
+    best_over("stack4_recency_cocommit_aa", [
+        {"lam_recency": r, "lam_cocommit": c, "lam_aa": a}
+        for r in LAM_RECENCY_GRID for c in LAM_COCOMMIT_GRID for a in LAM_AA_GRID])
+    return winners
+
+
+def run_calibration(db_path: Path, co_commit_db: Path, co_commit_vault: str,
+                    dates: dict, sample: int, split_seed: int, split_frac: float) -> dict:
+    """Grid search on a calibration fold, real numbers on a held-out fold it
+    never touched - the gap the by-inspection stacked-fusion finding could not
+    close, since its lambdas were "chosen by inspection, not fit against judged
+    pairs" (see the survey note). Splitting `usable` before scoring anything,
+    with a seeded shuffle, is what keeps the calibration set and the holdout
+    set from ever being the same pairs."""
+    connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        meta, matrix = pkm.load_vectors(connection.cursor())
+    finally:
+        connection.close()
+    if matrix is None:
+        return {"error": "no vectors in this index"}
+    vec_paths, vec_index_of, pooled = note_vectors(meta, matrix)
+
+    edges = load_all_edges(db_path)
+    neighbors = build_neighbor_sets(edges)
+    co_adjacency = load_cocommit_weights(co_commit_db, co_commit_vault)
+
+    links = wikilink_ground_truth(db_path)
+    usable = [(a, b) for a, b in links if a in vec_index_of and b in vec_index_of and a in dates]
+    rng = np.random.default_rng(split_seed)
+    if len(usable) > sample:
+        usable = [usable[i] for i in rng.choice(len(usable), size=sample, replace=False)]
+    order = rng.permutation(len(usable))
+    cut = int(len(order) * split_frac)
+    calib_raw = [usable[i] for i in order[:cut]]
+    holdout_raw = [usable[i] for i in order[cut:]]
+
+    calib = build_pair_signals(calib_raw, vec_paths, vec_index_of, pooled, dates,
+                               co_adjacency, neighbors)
+    holdout = build_pair_signals(holdout_raw, vec_paths, vec_index_of, pooled, dates,
+                                 co_adjacency, neighbors)
+    if not calib or not holdout:
+        return {"error": "not enough usable pairs after the calibration/holdout split"}
+
+    winners = grid_search(calib, vec_index_of)
+    calib_baseline = float(np.mean([1 / p["baseline_rank"] for p in calib]))
+    holdout_baseline = float(np.mean([1 / p["baseline_rank"] for p in holdout]))
+
+    out = {
+        "split_seed": split_seed, "split_frac": split_frac,
+        "recency_tau_hours": FUSION_RECENCY_TAU_HOURS, "recency_mode": "hard",
+        "calib_pairs": len(calib), "holdout_pairs": len(holdout),
+        "calib_baseline_mrr": round(calib_baseline, 4),
+        "holdout_baseline_mrr": round(holdout_baseline, 4),
+        "winners": {},
+    }
+    for name, info in winners.items():
+        holdout_mrr = mrr_at_lambdas(holdout, vec_index_of, **info["lambdas"])
+        out["winners"][name] = {
+            "lambdas": info["lambdas"],
+            "calib_mrr": info["calib_mrr"],
+            "calib_change_pct": round((info["calib_mrr"] / calib_baseline - 1) * 100, 2),
+            "holdout_mrr": round(holdout_mrr, 4) if holdout_mrr is not None else None,
+            "holdout_change_pct": (round((holdout_mrr / holdout_baseline - 1) * 100, 2)
+                                   if holdout_mrr else None),
+        }
+    return out
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--vault-dir", help="required unless --self-check")
@@ -232,6 +404,11 @@ def main():
     parser.add_argument("--lam-recency", type=float, default=0.5)
     parser.add_argument("--lam-cocommit", type=float, default=0.5)
     parser.add_argument("--lam-aa", type=float, default=0.5)
+    parser.add_argument("--calibrate", action="store_true",
+                        help="grid search lambdas on a calibration fold, report MRR on a held-out "
+                             "fold the grid search never saw, instead of running one fixed combo")
+    parser.add_argument("--split-frac", type=float, default=0.6,
+                        help="fraction of usable pairs kept for calibration, the rest is holdout")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -250,6 +427,14 @@ def main():
         dates = build_creation_dates(vault_dir)
         args.recency_cache.parent.mkdir(parents=True, exist_ok=True)
         args.recency_cache.write_text(json.dumps(dates), encoding="utf-8")
+
+    if args.calibrate:
+        result = run_calibration(
+            db_path, args.co_commit_db, args.co_commit_vault, dates,
+            args.sample, args.seed, args.split_frac,
+        )
+        print(json.dumps(result, indent=1))
+        return
 
     result = run_experiment(
         vault_dir, db_path, args.co_commit_db, args.co_commit_vault, dates,
@@ -280,6 +465,34 @@ def self_check():
     adjacency = {"x": {"y": 3.5}, "y": {"x": 3.5}}
     scores = co_commit_score_all(adjacency, ["x", "y", "z"], "x")
     assert scores[0] == 0.0 and scores[1] == 3.5 and scores[2] == 0.0
+
+    # mrr_at_lambdas with every lambda at 0 must reproduce the plain vector
+    # baseline exactly - the calibration grid's "no boost" corner.
+    pairs = [
+        # target is index 2, currently ranked 2nd (index 1's 0.5 beats it,
+        # index 0 excluded as the anchor) - a boost strong enough to pass 0.5
+        # must move it to rank 1.
+        {"anchor_index": 0, "target_index": 2, "baseline_rank": 2,
+         "vector_scores": np.array([1.0, 0.5, 0.4, 0.1]),
+         "recency_prox": np.array([0.0, 0.0, 1.0, 0.0]),
+         "cc_prox": np.array([0.0, 0.0, 1.0, 0.0]),
+         "aa_prox": np.array([0.0, 0.0, 0.0, 0.0])},
+    ]
+    index_of = {"a": 0, "b": 1, "c": 2, "d": 3}
+    assert mrr_at_lambdas(pairs, index_of) == 1 / 2
+    # a big enough recency+cocommit boost on the target (index 2) must move it
+    # to rank 1 - the mechanism the grid search is choosing lambdas over.
+    assert mrr_at_lambdas(pairs, index_of, lam_recency=0.5, lam_cocommit=0.5) == 1.0
+
+    # grid_search must never let a stack's winner beat what an exhaustive scan
+    # of the same grid finds - it would be a real bug in best_over's sort, not
+    # a modeling question.
+    winners = grid_search(pairs, index_of)
+    exhaustive_best = max(
+        mrr_at_lambdas(pairs, index_of, lam_recency=r, lam_cocommit=c)
+        for r in LAM_RECENCY_GRID for c in LAM_COCOMMIT_GRID
+    )
+    assert winners["stack3_recency_cocommit"]["calib_mrr"] == round(exhaustive_best, 4)
     print("self-check ok")
 
 

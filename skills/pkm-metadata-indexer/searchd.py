@@ -52,7 +52,18 @@ Endpoints, all accepting `?vault=name`:
                            as a multiplier — see recency_prior_experiment.py
                            for why the difference matters). A `recency_hint`
                            field says so when unused and a near-in-time note
-                           exists. `&graph=1&recency=1` together is untested
+                           exists. `&fusion=1` additively combines vector +
+                           recency + co-commit + Adamic-Adar at once, using
+                           lambdas calibrated by a grid search against a held-
+                           out fold of real wikilinks (stacked_fusion_
+                           experiment.py --calibrate), not chosen by
+                           inspection — see FUSION_LAMBDA_RECENCY/COCOMMIT/AA
+                           for the numbers. Mutually exclusive with
+                           `&graph=1`/`&recency=1` (fusion wins, the other two
+                           are ignored, since it already folds both signals in
+                           and stacking them again would double-count). A
+                           `fusion_hint` field says so when unused and either
+                           signal exists to ask for.
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -100,6 +111,7 @@ import co_commit
 import index_pkm_meta as pkm
 import numpy as np
 import recency_prior_experiment as recency
+import shared_neighbor_experiment as shared_neighbor
 
 try:
     import watchfiles
@@ -130,6 +142,26 @@ QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 # content, see that file for the proof.
 RECENCY_TAU_HOURS = 6.0
 RECENCY_LAMBDA = 0.05
+
+# Calibrated in stacked_fusion_experiment.py --calibrate: a grid search over
+# lambda_recency/lambda_cocommit/lambda_aa on a 60% calibration fold of real
+# wikilinked pairs, scored on the 40% held-out fold the grid never saw - not
+# chosen by inspection the way the stacking finding that motivated this pass
+# originally was. The recency term reuses this exact RECENCY_TAU_HOURS hard
+# cutoff, so the calibration is against the same signal shape wired below,
+# not the smooth decay curve recency_prior_experiment.py sweeps elsewhere.
+# A fixed combo at these values, run across 3 calibration/holdout splits
+# (seeds 0/1/2), beat the best single addition (co-commit alone, same
+# lambda) on every held-out fold: +19.6%/+16.6%/+20.6% vs +15.4%/+14.8%/
+# +14.0% MRR. The 3-way stack (recency+co-commit only, no AA) sometimes
+# barely beat or even lost to co-commit alone once recency used its real
+# validated (hard-cutoff) shape instead of a decay curve - AA is what makes
+# the stack reliably win, even though AA alone is a rejected signal on this
+# vault (see the survey note's "shared-neighbor Adamic-Adar" section), so it
+# stays in the wired version.
+FUSION_LAMBDA_RECENCY = 0.05
+FUSION_LAMBDA_COCOMMIT = 1.5
+FUSION_LAMBDA_AA = 0.15
 
 # There is no lock over the query path. There was one, a single global mutex, and
 # once the server was threaded it made every request wait for the one before it:
@@ -219,6 +251,7 @@ class Vault:
         self.reindexing = False
         self.graph_cache = None  # (vectors_version, k), payload
         self.duplicate_cache = None  # (vectors_version, threshold), payload
+        self.aa_neighbors_cache = None  # vectors_version, wikilink neighbor-set dict for &fusion=1
         self.creation_dates = None  # path -> ISO timestamp, built once per process (see creation_index)
         self.creation_sorted = None  # (epoch_seconds, path) pairs, sorted, for the &recency= window search
 
@@ -811,8 +844,8 @@ def do_duplicates(vault: Vault, threshold: float, limit: int) -> dict:
 
 
 def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
-              recency: bool = False) -> dict:
-    """Vector-cosine neighbours, plus two independent opt-in fusions.
+              recency: bool = False, fusion: bool = False) -> dict:
+    """Vector-cosine neighbours, plus three opt-in fusions.
 
     `&graph=1` RRF-fuses in co_commit's signal (see below). `&recency=1` adds
     RECENCY_LAMBDA to a candidate's raw cosine score if it was created within
@@ -821,16 +854,24 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
     wikilinks (see recency_prior_experiment.py). A multiplicative or
     rank-fused version of the same idea was tried first and rejected there;
     a small additive term is the one form that cannot displace a candidate
-    that was already clearly better on content. Both are opt-in rather than
-    default, and combining them (`&graph=1&recency=1`) is untested - each was
-    validated independently, not stacked.
+    that was already clearly better on content.
+
+    `&fusion=1` additively combines all three signals at once — vector cosine
+    plus FUSION_LAMBDA_RECENCY/COCOMMIT/AA (see those constants for the
+    calibration numbers) — rather than either single-signal boost above.
+    `&fusion=1` is mutually exclusive with `&graph=1`/`&recency=1`: recency
+    and co-commit are already folded into it, so honouring `&graph=1` or
+    `&recency=1` alongside it would apply the same signal a second time.
+    `fusion` wins if more than one flag is set, and the other two flags are
+    simply ignored rather than erroring, matching how this route already
+    clamps rather than rejects an out-of-range `limit`.
     """
     began = time.perf_counter()
     STATE.last_query = time.time()
     vectors = vault.matrix()
     with vault.lock:
         vault.queries += 1
-    fetch = limit * 3 if (graph or recency) else limit
+    fetch = limit * 3 if (graph or recency or fusion) else limit
     rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=fetch, vectors=vectors)
     if rows is None:
         return {"error": f"no single indexed note matches {note!r}"}
@@ -845,7 +886,51 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         }
         for row in rows
     ]
-    if graph:
+    if fusion:
+        resolved = resolve_note_path(vault, note) or note
+        near = set(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
+        co_rows = co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
+                                               top=limit * 3, exclude_hubs=True)
+        # Same linear cap the calibration script uses (build_pair_signals in
+        # stacked_fusion_experiment.py): co-commit weight and Adamic-Adar have
+        # no natural [0,1] scale the way the recency boost's flat 0/1 window
+        # membership does, so both are capped at a raw score of 5.0 before
+        # their lambda is applied - wiring anything else here would not be
+        # the combination that was actually calibrated.
+        cc_prox = {associated: min(weight / 5.0, 1.0) for _, associated, weight, *_rest in co_rows}
+        by_path = {row["path"]: row for row in results}
+        candidates = list(dict.fromkeys([*by_path, *near, *cc_prox]))
+        # Same resident-cache shape as do_graph's graph_cache: the neighbor-set
+        # dict only moves when the index does, and building it is a full scan
+        # of the edges table, too slow to redo on every &fusion=1 call.
+        with vault.lock:
+            cached_neighbors = vault.aa_neighbors_cache
+        if cached_neighbors is None or cached_neighbors[0] != vault.vectors_version:
+            wl_neighbors = shared_neighbor.build_neighbor_sets(wikilink_pairs(vault))
+            with vault.lock:
+                vault.aa_neighbors_cache = (vault.vectors_version, wl_neighbors)
+        else:
+            wl_neighbors = cached_neighbors[1]
+        aa_scores = shared_neighbor.score_all(wl_neighbors, candidates, resolved, "aa")
+        aa_prox = dict(zip(candidates, np.minimum(aa_scores / 5.0, 1.0)))
+        fused = []
+        for path in candidates:
+            base = by_path.get(path)
+            # raw_sim is the pure cosine the calibration was scored against;
+            # a candidate the vector fetch never surfaced has no known score,
+            # so it starts from 0 - only the other signals can carry it in,
+            # the same conservative floor &recency=1 already uses alone.
+            base_score = (base.get("raw_sim") if base and base.get("raw_sim") is not None
+                         else base["score"] if base else 0.0)
+            score = (base_score
+                    + (FUSION_LAMBDA_RECENCY if path in near else 0.0)
+                    + FUSION_LAMBDA_COCOMMIT * cc_prox.get(path, 0.0)
+                    + FUSION_LAMBDA_AA * aa_prox.get(path, 0.0))
+            entry = base or {"path": path, **note_snippet(vault, path), "raw_sim": None}
+            fused.append({**entry, "score": round(float(score), 6)})
+        fused.sort(key=lambda row: -row["score"])
+        results = fused[:limit]
+    elif graph:
         resolved = resolve_note_path(vault, note) or note
         co_rows = co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
                                                top=limit * 3, exclude_hubs=True)
@@ -865,7 +950,7 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
             fused.append({**base, "score": round(rrf, 6), "source": source})
         fused.sort(key=lambda row: -row["score"])
         results = fused[:limit]
-    if recency:
+    elif recency:
         resolved = resolve_note_path(vault, note) or note
         near = set(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
         by_path = {row["path"]: row for row in results}
@@ -889,20 +974,24 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
         "results": results,
     }
-    if not graph:
+    # Hints share one resolution and one pair of lookups rather than each
+    # flag re-querying co_commit/creation-dates for the same note.
+    resolved = resolve_note_path(vault, note) or note
+    has_cocommit = bool(co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
+                                                     top=1, exclude_hubs=True))
+    has_recency = bool(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
+    if not fusion and not graph and has_cocommit:
         # An agent calling this route usually has not read SKILL.md first, so the
         # option to ask for the co-commit signal has to surface here or it may as
         # well not exist. Existence only, not a count: a caller weighing whether
         # a second call is worth it needs "is there anything," not a number to
         # parse, and hub exclusion already prices out the cheap false positives.
-        resolved = resolve_note_path(vault, note) or note
-        if co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
-                                        top=1, exclude_hubs=True):
-            payload["graph_hint"] = "co-commit history exists for this note, retry with &graph=1"
-    if not recency:
-        resolved = resolve_note_path(vault, note) or note
-        if notes_within_hours(vault, resolved, RECENCY_TAU_HOURS):
-            payload["recency_hint"] = "a note created within a few hours of this one exists, retry with &recency=1"
+        payload["graph_hint"] = "co-commit history exists for this note, retry with &graph=1"
+    if not fusion and not recency and has_recency:
+        payload["recency_hint"] = "a note created within a few hours of this one exists, retry with &recency=1"
+    if not fusion and (has_cocommit or has_recency):
+        payload["fusion_hint"] = ("co-commit history or a same-session note exists for this note, "
+                                  "retry with &fusion=1 for the calibrated combined ranking")
     # The note is both the query and the origin here, which is the co-retrieval
     # edge this log exists to collect.
     log_query("similar", vault.name, note, limit, payload["took_ms"], payload["results"], note)
@@ -1113,7 +1202,8 @@ class Handler(BaseHTTPRequestHandler):
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
                 self.reply(200, do_similar(vault, note, limit,
                                           first("graph") in {"1", "true", "yes"},
-                                          first("recency") in {"1", "true", "yes"}))
+                                          first("recency") in {"1", "true", "yes"},
+                                          first("fusion") in {"1", "true", "yes"}))
             elif url.path == "/co-commits" and method == "GET":
                 note = first("note")
                 if not note:
