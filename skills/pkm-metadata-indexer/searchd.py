@@ -34,16 +34,10 @@ Endpoints, all accepting `?vault=name`:
                            `&vault=all` searches every registered corpus
     GET  /links?note=      inbound and outbound wikilink edges for one note
     GET  /unlinked?note=   sections naming a note without linking to it
-<<<<<<< HEAD
-=======
     GET  /graph?k=         the whole corpus as nodes and edges: mutual nearest
                            neighbours in embedding space, plus the wikilinks
-<<<<<<< HEAD
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
-=======
     GET  /duplicates?threshold=&limit=
                            notes that say the same thing, grouped
->>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
     POST /reindex          incremental rebuild, blocks until done
 
 `--watch` starts one watcher thread per corpus, so a write reindexes that
@@ -86,10 +80,7 @@ from urllib.parse import urlparse, parse_qs
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import index_pkm_meta as pkm
-<<<<<<< HEAD
-=======
 import numpy as np
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
 try:
     import watchfiles
@@ -112,16 +103,6 @@ NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
-<<<<<<< HEAD
-# ponytail: one lock over the whole query path. The ONNX session is shared and
-# queries are tens of milliseconds once warm, so serialising them costs nothing
-# a single user can notice. Give the model its own lock if that stops being true.
-LOCK = threading.Lock()
-
-# A reindex must not be one of those queries. It ran under LOCK, so a search that
-# arrived during a pass waited the whole pass out: 15s for two corpora against
-# 40ms idle, long enough that the CLI gave up and answered from a direct search
-=======
 # There is no lock over the query path. There was one, a single global mutex, and
 # once the server was threaded it made every request wait for the one before it:
 # eight concurrent searches measured p50 1044ms against 111ms alone, and throughput
@@ -135,7 +116,6 @@ LOCK = threading.Lock()
 # query lock, so a search that arrived during a pass waited the whole pass out:
 # 15s for two corpora against 40ms idle, long enough that the CLI gave up and
 # answered from a direct search
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 # of whichever corpus the working directory resolved to. The two do not share
 # state. The query model and the index model are separate ONNX sessions, keyed on
 # different providers, and the database is WAL, so a reader sees the pass's
@@ -146,22 +126,13 @@ INDEX_LOCK = threading.Lock()
 # Guards the one-reindex-per-corpus flag only, never held across a reindex.
 REINDEX_LOCK = threading.Lock()
 
-<<<<<<< HEAD
-# Set by main(), None disables logging. The lock is separate from LOCK so a write
-# never sits inside the query path.
-=======
 # Set by main(), None disables logging. Its own lock, so appending a row never
 # waits on anything a query holds.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 LOG_PATH = None
 LOG_LOCK = threading.Lock()
 
 
-<<<<<<< HEAD
-def log_query(kind: str, vault: str, subject: str, limit: int, took_ms: float,
-=======
 def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
               results: list, origin: str = ""):
     """Append one line per query, so ranking changes can be judged after the fact.
 
@@ -169,23 +140,6 @@ def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
     reindex and a log that a reindex deletes is not a log. Results are paths
     only: the scores are reproducible from the query, the paths are what a
     co-retrieval edge needs.
-<<<<<<< HEAD
-    """
-    if LOG_PATH is None:
-        return
-    row = {
-        "t": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "kind": kind,
-        "vault": vault,
-        "q": subject,
-        "limit": limit,
-        "took_ms": took_ms,
-        "results": [result["path"] for result in results],
-    }
-    if origin:
-        row["origin"] = origin
-    line = json.dumps(row, ensure_ascii=False)
-=======
 
     A search over several corpora writes one line per corpus. Written as one
     line it would name the corpus "a,b", which is a key no single-corpus reader
@@ -213,7 +167,6 @@ def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
             row["origin"] = origin
         lines.append(json.dumps(row, ensure_ascii=False))
     line = "\n".join(lines)
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     try:
         with LOG_LOCK:
             LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -229,22 +182,16 @@ class Vault:
         self.root = root
         self.db = db
         self.collect = collect  # None scans markdown, otherwise a corpus scanner
-<<<<<<< HEAD
-=======
         self.lock = threading.Lock()  # the resident matrix, its reader, and the counter
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
         self.queries = 0
         self.vectors = None
         self.vectors_version = None
         self.reader = None
         self.watched = False  # set when a watcher thread takes this corpus
         self.reindexing = False
-<<<<<<< HEAD
-=======
         self.graph_cache = None  # (vectors_version, k), payload
         self.duplicate_cache = None  # (vectors_version, threshold), payload
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
         self.stale_cache = None
         self.stale_at = 0.0
 
@@ -275,23 +222,6 @@ class Vault:
         The connection has to outlive the call. A fresh connection reads 2 and
         keeps reading 2 no matter what any other connection commits, so opening
         one per query pinned the cache for the life of the daemon and a reindex
-<<<<<<< HEAD
-        never reached a search. Every caller holds LOCK, so one connection shared
-        across the handler threads is safe, but sqlite3 has to be told that.
-        """
-        if not self.db.exists():
-            return [], None
-        if self.reader is None:
-            self.reader = sqlite3.connect(
-                f"file:{self.db}?mode=ro", uri=True, check_same_thread=False
-            )
-        cursor = self.reader.cursor()
-        version = cursor.execute("PRAGMA data_version").fetchone()[0]
-        if self.vectors is None or version != self.vectors_version:
-            self.vectors = pkm.load_vectors(cursor)
-            self.vectors_version = version
-        return self.vectors
-=======
         never reached a search. That one connection is shared across the handler
         threads, which is what the lock is for: sqlite3 is told to allow it, and
         then told once at a time. What comes back is read-only for its caller, so
@@ -310,7 +240,6 @@ class Vault:
                 self.vectors = pkm.load_vectors(cursor)
                 self.vectors_version = version
             return self.vectors
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 
     def close(self):
         """Release the read connection. Only a test needs this: Windows refuses to
@@ -406,17 +335,6 @@ def keepalive():
         time.sleep(KEEPALIVE_S)
         if time.time() - STATE.last_query < KEEPALIVE_S:
             continue
-<<<<<<< HEAD
-        with LOCK:
-            list(model.embed(["."]))
-
-
-def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dict]:
-    with LOCK:
-        rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
-                                vectors=vault.matrix(), rerank=rerank)
-        vault.queries += 1
-=======
         list(model.embed(["."]))
 
 
@@ -426,7 +344,6 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dic
         vault.queries += 1
     rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
                             vectors=vectors, rerank=rerank)
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     return [
         {
             "vault": vault.name,
@@ -500,22 +417,13 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
         "stale": stale,
         "results": results,
     }
-<<<<<<< HEAD
-    log_query("search", name, query, limit, payload["took_ms"], payload["results"], origin)
-=======
     log_query("search", [vault.name for vault in vaults], query, limit,
               payload["took_ms"], payload["results"], origin)
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     return payload
 
 
 def do_links(vault: Vault, note: str) -> dict:
-<<<<<<< HEAD
-    with LOCK:
-        found = pkm.query_links(note, db_path=str(vault.db))
-=======
     found = pkm.query_links(note, db_path=str(vault.db))
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     if not found:
         return {"error": f"no single indexed note matches {note!r}"}
     return {
@@ -532,14 +440,6 @@ def do_links(vault: Vault, note: str) -> dict:
     }
 
 
-<<<<<<< HEAD
-def do_similar(vault: Vault, note: str, limit: int) -> dict:
-    began = time.perf_counter()
-    STATE.last_query = time.time()
-    with LOCK:
-        rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=limit, vectors=vault.matrix())
-        vault.queries += 1
-=======
 def note_vectors(meta, matrix):
     """Pool section vectors into one vector per note, renormalised.
 
@@ -784,7 +684,6 @@ def do_similar(vault: Vault, note: str, limit: int) -> dict:
     with vault.lock:
         vault.queries += 1
     rows = pkm.find_similar_notes(note, db_path=str(vault.db), limit=limit, vectors=vectors)
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     if rows is None:
         return {"error": f"no single indexed note matches {note!r}"}
     payload = {
@@ -811,16 +710,9 @@ def do_similar(vault: Vault, note: str, limit: int) -> dict:
 
 def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
     began = time.perf_counter()
-<<<<<<< HEAD
-    with LOCK:
-        found = pkm.find_unlinked_mentions(
-            note, vault_path=str(vault.root), db_path=str(vault.db), limit=limit
-        )
-=======
     found = pkm.find_unlinked_mentions(
         note, vault_path=str(vault.root), db_path=str(vault.db), limit=limit
     )
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     if found is None:
         return {"error": f"no single indexed note matches {note!r}"}
     return {
@@ -940,15 +832,12 @@ def watch_vault(vault: Vault, stream=None):
                   flush=True)
 
 
-<<<<<<< HEAD
-=======
 class Server(ThreadingHTTPServer):
     # Several agents searching at once arrive as a burst, and the default backlog
     # of five turns the sixth into a refused connection rather than a queued one.
     request_queue_size = 64
 
 
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
 class Handler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -1029,20 +918,14 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
                 self.reply(200, do_unlinked(vault, note, limit))
-<<<<<<< HEAD
-=======
             elif url.path == "/graph" and method == "GET":
                 self.reply(200, do_graph(vault, max(1, min(50, int(first("k") or 10)))))
-<<<<<<< HEAD
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
-=======
             elif url.path == "/duplicates" and method == "GET":
                 # Floored at 0.7: below it the pair count grows as the square of
                 # the corpus and the pairs stop being duplicates anyway.
                 threshold = max(0.7, min(1.0, float(first("threshold") or 0.95)))
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
                 self.reply(200, do_duplicates(vault, threshold, limit))
->>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
             elif url.path == "/reindex" and method == "POST":
                 self.reply(200, do_reindex(vault))
             else:
@@ -1050,15 +933,7 @@ class Handler(BaseHTTPRequestHandler):
         except KeyError as error:
             self.reply(404, {"error": str(error)})
         except ValueError:
-<<<<<<< HEAD
-<<<<<<< HEAD
-            self.reply(400, {"error": "limit must be a number"})
-=======
-            self.reply(400, {"error": "limit and k must be numbers"})
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
-=======
             self.reply(400, {"error": "limit, k and threshold must be numbers"})
->>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
         except Exception as error:  # a bad query must not take the daemon down
             self.reply(500, {"error": f"{type(error).__name__}: {error}"})
 
@@ -1192,11 +1067,7 @@ def main():
 
     print(f"query log {LOG_PATH or 'off'}", flush=True)
 
-<<<<<<< HEAD
-    server = ThreadingHTTPServer((args.bind, args.port), Handler)
-=======
     server = Server((args.bind, args.port), Handler)
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
     print(f"listening on http://{args.bind}:{args.port}"
           f"{' (token required)' if args.token else ''}", flush=True)
     try:
