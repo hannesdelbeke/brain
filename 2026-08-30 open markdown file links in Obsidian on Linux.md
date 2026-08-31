@@ -23,26 +23,82 @@ Obsidian Flatpak expects `obsidian://open?path=...` URIs rather than raw filesys
 
 ## Setup
 
-### 1. Create URI converter wrapper
-Create `~/.local/bin/obsidian-open` to convert raw file paths and `file://` URLs to URL-encoded `obsidian://` protocol calls:
+### 1. Create URI converter wrapper with vault detection
+Create `~/.local/bin/obsidian-open` to convert markdown paths. If the note is inside an Obsidian vault, it opens in Obsidian via URL-encoded `obsidian://open?vault=...&file=...`. If the file is outside any vault (e.g. standalone repo README or temp file), it falls back to the system text editor (`gnome-text-editor` / `$EDITOR`):
 
 ```python
 #!/usr/bin/env python3
-import sys, os, urllib.parse, subprocess
+import sys, os, json, shutil, urllib.parse, subprocess
+from pathlib import Path
 
-def open_target(target):
+def get_vaults():
+    config_paths = [
+        Path.home() / ".var/app/md.obsidian.Obsidian/config/obsidian/obsidian.json",
+        Path.home() / ".config/obsidian/obsidian.json"
+    ]
+    for config_path in config_paths:
+        if config_path.exists():
+            try:
+                data = json.loads(config_path.read_text(encoding="utf-8"))
+                return data.get("vaults", {})
+            except Exception:
+                pass
+    return {}
+
+def find_vault_root(file_path: Path):
+    curr = file_path.parent if file_path.is_file() else file_path
+    for p in [curr, *curr.parents]:
+        if (p / ".obsidian").is_dir():
+            return p, p.name
+
+    vaults = get_vaults()
+    for vid, vinfo in vaults.items():
+        vpath_str = vinfo.get("path", "")
+        if vpath_str:
+            vpath = Path(vpath_str).resolve()
+            try:
+                file_path.relative_to(vpath)
+                return vpath, vpath.name
+            except ValueError:
+                continue
+    return None
+
+def open_with_fallback(file_path: Path):
+    for ed in [os.environ.get("VISUAL"), os.environ.get("EDITOR"), "gnome-text-editor", "code", "gedit", "nano"]:
+        if ed and shutil.which(ed):
+            subprocess.run([ed, str(file_path)])
+            return
+    subprocess.run(["gio", "open", str(file_path)])
+
+def open_target(target: str):
     if not target:
         return
     if target.startswith("obsidian://"):
         subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", target])
         return
-    if target.startswith("file://"):
-        path = urllib.parse.unquote(urllib.parse.urlparse(target).path)
-    else:
-        path = os.path.abspath(target)
     
-    encoded = urllib.parse.quote(path, safe="/:")
-    subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", f"obsidian://open?path={encoded}"])
+    if target.startswith("file://"):
+        url_obj = urllib.parse.urlparse(target)
+        raw_path = urllib.parse.unquote(url_obj.path)
+    else:
+        raw_path = target
+    
+    file_path = Path(raw_path).resolve()
+    if not file_path.exists():
+        encoded_path = urllib.parse.quote(str(file_path), safe="/:")
+        subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", f"obsidian://open?path={encoded_path}"])
+        return
+
+    vault_info = find_vault_root(file_path)
+    if vault_info:
+        vault_root, vault_name = vault_info
+        rel = file_path.relative_to(vault_root)
+        encoded_file = urllib.parse.quote(str(rel), safe="/")
+        encoded_vault = urllib.parse.quote(vault_name)
+        uri = f"obsidian://open?vault={encoded_vault}&file={encoded_file}"
+        subprocess.run(["flatpak", "run", "md.obsidian.Obsidian", uri])
+    else:
+        open_with_fallback(file_path)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
