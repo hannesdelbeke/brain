@@ -37,22 +37,22 @@ However, version control (Git) commits capture exact temporal co-occurrences. Fi
 ## 2. Core Mathematical Architecture
 
 ### 2.1 The Clique Explosion Problem ($O(N^2)$)
-When a Git commit touches $N$ files, generating undirected pairs creates $rac{N(N - 1)}{2}$ edges.
-- $N = 2 \implies 1	ext{ edge}$
-- $N = 5 \implies 10	ext{ edges}$
-- $N = 20 \implies 190	ext{ edges}$
-- $N = 500	ext{ (bulk refactor / automated linter)} \implies 124,750	ext{ edges}$
+When a Git commit touches $N$ files, generating undirected pairs creates $\frac{N(N - 1)}{2}$ edges.
+- $N = 2 \implies 1\text{ edge}$
+- $N = 5 \implies 10\text{ edges}$
+- $N = 20 \implies 190\text{ edges}$
+- $N = 500\text{ (bulk refactor / automated linter)} \implies 124,750\text{ edges}$
 
 Naive equal weighting ($w = 1.0$) turns the graph into an unusable hairball. Conversely, hard boolean cutoffs (`if N > 10: drop`) discard authentic multi-document restructuring sessions.
 
 ### 2.2 Power-Law Scaling with Floor
 Each pairwise edge $(A, B)$ in a commit with $N$ modified files receives weight:
 
-$$w_{	ext{size}} = \max\left(w_{	ext{floor}},\, rac{1}{(N - 1)^p}ight)$$
+$$w_{\text{size}} = \max\left(w_{\text{floor}},\, \frac{1}{(N - 1)^p}\right)$$
 
 Where:
 - $p = 1.5$ (Power-law exponent, heavily prioritizing intimate 2-to-3 file edits).
-- $w_{	ext{floor}} = 0.005$ (0.5% baseline floor, preserving all large structural edits without graph pollution).
+- $w_{\text{floor}} = 0.005$ (0.5% baseline floor, preserving all large structural edits without graph pollution).
 - $N = 2 \implies w = 1.000$
 - $N = 3 \implies w = 0.353$
 - $N = 5 \implies w = 0.125$
@@ -68,8 +68,8 @@ Where:
   - Parse Git diff statistics (`git log --numstat`).
   - Compute modified lines $\Delta L_A$ and $\Delta L_B$.
   - Apply diff volume scaling using geometric mean:
-    $$w_{	ext{diff}} = \min\left(1.0,\, rac{\sqrt{\Delta L_A 	imes \Delta L_B}}{	au_{	ext{lines}}}ight)$$
-    where $	au_{	ext{lines}} = 5$ lines. Edits where either file had $<2$ lines modified are aggressively downweighted.
+    $$w_{\text{diff}} = \min\left(1.0,\, \frac{\sqrt{\Delta L_A \times \Delta L_B}}{\tau_{\text{lines}}}\right)$$
+    where $\tau_{\text{lines}} = 5$ lines. Edits where either file had $<2$ lines modified are aggressively downweighted.
 
 ### Edge Case 2: Submodule & Multi-Repository Fragmentation
 - **Problem:** Knowledge bases organized into Git submodules store commits in separate `.git` trees. A root repository scan only sees 1-line submodule pointer updates, missing all intra-submodule and cross-submodule co-edits.
@@ -82,9 +82,9 @@ Where:
 - **Problem:** Central index files (e.g. `daily/YYYY-MM-DD.md`, `README.md`, `INDEX.md`) get committed alongside hundreds of leaf notes. In an undirected graph, hubs dominate all retrieval results.
 - **Solution:** 
   - Compute **Directional Association Confidence** and **Jaccard Similarity**:
-    $$	ext{Confidence}(A 	o B) = rac{\sum w(A \cap B)}{\sum w(A)}$$
-    $$	ext{Jaccard}(A, B) = rac{\sum w(A \cap B)}{\sum w(A) + \sum w(B) - \sum w(A \cap B)}$$
-  - When querying related notes for a specific leaf note $A$, its link to a daily log has high confidence ($P(	ext{Daily} \mid A) pprox 0.85$). When querying the daily log, individual leaf notes have low confidence ($P(A \mid 	ext{Daily}) pprox 0.01$), preventing hub noise.
+    $$\text{Confidence}(A \to B) = \frac{\sum w(A \cap B)}{\sum w(A)}$$
+    $$\text{Jaccard}(A, B) = \frac{\sum w(A \cap B)}{\sum w(A) + \sum w(B) - \sum w(A \cap B)}$$
+  - When querying related notes for a specific leaf note $A$, its link to a daily log has high confidence ($P(\text{Daily} \mid A) \approx 0.85$). When querying the daily log, individual leaf notes have low confidence ($P(A \mid \text{Daily}) \approx 0.01$), preventing hub noise.
 
 ### Edge Case 4: Path Renames & Structural Migrations
 - **Problem:** Files are frequently reorganized and renamed. Treating paths as static strings fragments historical edge weights across old and new paths.
@@ -111,54 +111,63 @@ Where:
 
 ## 4. SQLite Schema Specification
 
-The graph is stored in a standalone SQLite database (`co_commit.db`) or embedded in the main index:
+### 4.1 Shipped Schema (`co_commit.py`, `~/.pkm/co_commit.db`)
 
 ```sql
-PRAGMA journal_mode = WAL;
-PRAGMA synchronous = NORMAL;
-
-CREATE TABLE IF NOT EXISTS co_commit_edges (
-    corpus TEXT NOT NULL,
-    source_path TEXT NOT NULL,
-    target_path TEXT NOT NULL,
-    raw_weight REAL NOT NULL,
-    jaccard_weight REAL NOT NULL,
-    confidence_ab REAL NOT NULL,
-    confidence_ba REAL NOT NULL,
+CREATE TABLE IF NOT EXISTS co_commits (
+    vault TEXT NOT NULL,
+    note_a TEXT NOT NULL,
+    note_b TEXT NOT NULL,
+    weight REAL NOT NULL,
     commit_count INTEGER NOT NULL,
-    avg_diff_lines REAL NOT NULL,
-    last_commit_date TEXT NOT NULL,
-    last_commit_sha TEXT NOT NULL,
-    PRIMARY KEY (corpus, source_path, target_path)
+    last_commit TEXT NOT NULL,
+    last_sha TEXT NOT NULL,
+    PRIMARY KEY (vault, note_a, note_b)
 );
 
-CREATE INDEX IF NOT EXISTS idx_cce_source ON co_commit_edges(corpus, source_path);
-CREATE INDEX IF NOT EXISTS idx_cce_target ON co_commit_edges(corpus, target_path);
+CREATE INDEX IF NOT EXISTS idx_cc_note_a ON co_commits(vault, note_a);
+CREATE INDEX IF NOT EXISTS idx_cc_note_b ON co_commits(vault, note_b);
 
 CREATE TABLE IF NOT EXISTS commit_scan_state (
-    corpus TEXT PRIMARY KEY,
+    vault TEXT PRIMARY KEY,
     last_scanned_sha TEXT NOT NULL,
-    total_commits_indexed INTEGER NOT NULL,
     scanned_at TEXT NOT NULL
 );
+```
+
+### 4.2 Proposed Extension (not implemented)
+
+Adding directional confidence and Jaccard (Section 3, Edge Case 3) needs extra columns not in the shipped table today:
+
+```sql
+ALTER TABLE co_commits ADD COLUMN jaccard_weight REAL;
+ALTER TABLE co_commits ADD COLUMN confidence_ab REAL;
+ALTER TABLE co_commits ADD COLUMN confidence_ba REAL;
+ALTER TABLE co_commits ADD COLUMN avg_diff_lines REAL;
 ```
 
 ---
 
 ## 5. CLI & Retrieval Interface
 
+### 5.1 Shipped (`co_commit.py`: `--db`, `--vault-dir`, `--vault`, `--note`, `--top`, `--rebuild`, `--selfcheck`)
+
 ```bash
 # 1. Update / Incremental Scan
-python co_commit.py --corpus root --rebuild
+python co_commit.py --vault root --rebuild
 
 # 2. Query Associations for a Specific Note
-python co_commit.py --note "docs/pipeline-architecture.md" --top 10 --metric jaccard
+python co_commit.py --note "docs/pipeline-architecture.md" --top 10
 
-# 3. Query Directional Outbound Connections
-python co_commit.py --note "docs/pipeline-architecture.md" --direction outbound --min-confidence 0.2
-
-# 4. Run Self-Check Unit Tests
+# 3. Run Self-Check Unit Tests
 python co_commit.py --selfcheck
+```
+
+### 5.2 Proposed (needs `--metric`, `--direction`, `--min-confidence` — not implemented)
+
+```bash
+# Query Directional Outbound Connections, ranked by Jaccard
+python co_commit.py --note "docs/pipeline-architecture.md" --direction outbound --metric jaccard --min-confidence 0.2
 ```
 
 ---
@@ -166,8 +175,8 @@ python co_commit.py --selfcheck
 ## 6. Implementation Checklist for Agents
 
 1. **Extractor Module (`co_commit.py`):**
-   - [ ] Implement `scan_git_commits` using `git log --name-status --numstat -M`.
-   - [ ] Implement power-law commit size calculator ($p=1.5, 	ext{floor}=0.005$).
+   - [x] Implement `scan_git_commits` (uses `git log --name-only`, not yet `-M` rename detection or `--numstat`).
+   - [x] Implement power-law commit size calculator ($p=1.5, \text{floor}=0.005$) — no Intent multiplier or time decay yet, see Section 2.2.
    - [ ] Implement diff geometric-mean scaling.
 2. **Submodule Traversal:**
    - [ ] Recursively walk `.gitmodules` and resolve root-relative canonical paths.
