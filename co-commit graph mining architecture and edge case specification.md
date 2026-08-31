@@ -56,7 +56,8 @@ Where:
 - $N = 2 \implies w = 1.000$
 - $N = 3 \implies w = 0.353$
 - $N = 5 \implies w = 0.125$
-- $N \ge 20 \implies w = 0.005$
+- $N = 20 \implies w = 0.012$ (not yet floored)
+- $N \ge 35 \implies w = 0.005$ (floor crossover: solving $1/(N-1)^{1.5} = w_{\text{floor}}$)
 
 ---
 
