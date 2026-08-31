@@ -1,6 +1,6 @@
 ---
 name: recency-proximity reranking prior tested against real wikilinks
-description: A time-closeness reranking multiplier for search, measured against real wikilinks in this vault and rejected — displacement cost dominates at any useful weight
+description: A time-closeness reranking signal for search, measured against real wikilinks — multiplicative and rank-fusion forms rejected (proven and measured), an additive form validated and recommended
 created: 2026-08-31
 aliases:
   - recency-proximity reranking prior tested against real wikilinks
@@ -13,7 +13,7 @@ tags:
   - technical
 ---
 
-A proposed search-reranking signal — fold time-closeness between two notes into ranking as a multiplier, `final_score = vector_score * (1 + λ · e^(-Δt/τ))` — tested against real data and rejected. Documented here because the negative result is as reusable as a positive one would have been: the mechanism works exactly as designed, and still shouldn't ship.
+A proposed search-reranking signal — fold time-closeness between two notes into ranking. Three ways to combine it with a vector-similarity score were tested against real wikilinks: a multiplier (rejected, proven and measured), reciprocal rank fusion (also rejected, measured), and an additive term (validated: +7.73% to +8.60% MRR on the full sample, stable across seeds). Documented in full because the negative results are as reusable as the positive one — each mechanism's failure or success maps directly onto the same rank-flip proof.
 
 ## Where this came from
 
@@ -106,26 +106,46 @@ If $v_j \le v_i$ (the rival was never ahead on content alone), the right side is
 
 This is why rival *count*, not tuning, dominates: if an anchor has $k$ "temporal rivals" (other notes created near it) each with some small independent chance $p$ of already scoring close enough to flip once boosted, the chance at least one does is $1 - (1-p)^k$ — saturating toward 1 as $k$ grows, even for small $p$. Measured directly on this vault: **14.4 rivals within 1 hour of any given note, 37.4 within 24 hours** — $k$ never approaches 0 at any window tested, which is exactly why narrowing the window shrinks but never eliminates the damage. The idea only nets positive when the true target is *itself* one of the anchor's temporal rivals (a same-session companion note) rather than a genuine long-distance link — a bet that "written close in time" implies "the right answer," true for one specific kind of pair and false for the general case a wikilink graph is full of.
 
-## A promising lead: additive instead of multiplicative (preliminary)
+## RRF fusion: also rejected, decisively
 
-A brainstorm on alternatives produced one genuinely different mechanism, quick-checked (one seed, not yet a full sweep): replace the multiplier with a small additive term, `final_score = vector_score + ε · proximity`, instead of `vector_score * (1 + λ · proximity)`.
+Research turned up a third combination mechanism: reciprocal rank fusion, `final = 1/(k+vector_rank) + 1/(k+recency_rank)`, fusing by rank position instead of rescaling a score. This is the standard way production hybrid search systems combine relevance and freshness, and a 2025 paper (Re3, arXiv 2509.01306) uses it specifically to avoid the unbounded-displacement failure proven above — a signal's contribution here is capped at `1/k`, so it looked like the structural fix.
 
-| ε | MRR change | improved | worsened |
+It isn't, at least not for this signal. A k sweep (1 to 100,000, n=500) never turned positive — best at k=5 (-4.60%), and damage got *worse*, not better, as k grew (-21.39% at k=100,000; both lists flatten together at large k rather than converging back to the vector-only order, contrary to the initial hypothesis). 5-seed stability at k=5: every seed negative (mean ≈ -7.7%). Full-sample (n=4,725) at k=5: **-4.18%**.
+
+The qualitative reason is more nuanced than "irrelevant noise wins": in 4/5 spot-checked worsened cases, the candidate that displaced the true target had a *genuinely strong* vector rank on its own (2-4) and happened to share the anchor's session — RRF correctly promoted a good, real match, just not the *specific* one a human had wikilinked, and MRR only credits the one true answer. RRF bounds the damage from *unbounded* rescaling, but a rank-1 recency signal that's mostly noise with respect to "is this the specific wikilinked note" still costs more than it gives, at any weighting a plain rank-fusion constant can express.
+
+## The mechanism that actually works: additive, not multiplicative or rank-fused
+
+A brainstorm on alternatives found the one combination mechanism that survives every check the other two failed: a small additive term, `final_score = vector_score + λ · proximity`, instead of a multiplier or a rank fusion.
+
+**Lambda sweep, decay mode, τ=30 days** (n=500, seed=0):
+
+| λ | MRR change | improved | worsened |
 | :--- | :--- | :--- | :--- |
-| 0.01 | +3.06% | **150** | 138 |
-| 0.02 | +5.23% | 165 | 164 |
-| 0.05 | +9.73% | 168 | 208 |
-| 0.1 | +7.75% | 166 | 244 |
+| 0.001 | -0.20% | 77 | 53 |
+| 0.005 | +1.06% | 134 | 106 |
+| 0.01 | +3.05% | **150** | 138 |
+| 0.02 | +5.24% | 165 | 164 |
+| 0.05 | **+9.74%** (peak) | 168 | 208 |
+| 0.1 | +7.76% | 167 | 244 |
+| 0.2 | -4.10% | 165 | 273 |
+| 0.5 | -17.33% | 153 | 298 |
 
-At ε=0.01, `improved` (150) exceeds `worsened` (138) — the first time all session, at any config in either the multiplicative or hard-cutoff sweeps, that this happened. The reason maps directly onto the rank-flip proof above: an additive term of size ε can only flip an order where the *raw vector-score gap* between two candidates is smaller than ε, so a small enough ε is structurally incapable of displacing a candidate that was clearly better on content — it only ever breaks near-ties, which is exactly the "tiebreaker" fix this note had speculated about before testing it. Bigger ε reintroduces the same displacement pattern (`worsened` growing faster than `improved`) once the additive term gets large enough to overwhelm real score gaps again, same failure mode, later onset.
+`improved` exceeds `worsened` through λ=0.02 — the first time all session, at any configuration in any combination mechanism, that happened. Unlike the multiplicative peak, this one **decays gently past its optimum instead of collapsing.**
 
-This is one seed and one τ (30 days) — not yet the 5-seed stability check and full-sample run every other config in this note got before being trusted. Treat this as a real, structurally-motivated lead worth the same rigor, not yet a validated result.
+**5-seed stability at λ=0.05:** +9.74%, +8.40%, +6.26%, +7.31%, +3.61% — mean ≈ 7.06%, std ≈ 2.2%. **Every single seed positive.** The multiplicative "peak" reversed sign on 4 of 5 seeds; this one didn't reverse on any.
+
+**Full-sample (n=4,725):** **+7.73%** MRR (decay, τ=30d, λ=0.05) — confirms the seed average, the opposite of what happened when the multiplicative peak was checked this way. The hard-cutoff variant (τ=6h) does slightly better still: peak λ=0.05, full-sample **+8.60%**.
+
+The mechanism, from the rank-flip proof above: an additive term of size λ can only flip an order where the *raw vector-score gap* between two candidates is smaller than λ — it is structurally incapable of displacing a candidate that was clearly better on content, unlike the multiplier (which flips whenever proximity favors a rival at all, regardless of the underlying score gap) or RRF (which lets a strong showing on the rank-fused recency list fully compensate for a rank gap on the vector list). It only ever breaks near-ties, which is exactly the "tiebreaker" fix this note speculated about before testing it — and it is the one mechanism, of three tried, where that speculation held up.
 
 ## Verdict
 
-Don't ship a global recency **multiplier** — smooth or hard-cutoff — over the whole candidate pool. The one multiplicative configuration that crossed into genuinely positive territory (6-hour hard cutoff, λ=0.3, +1.11% on the full sample) is real but marginal: tiny effect size, erased by sampling noise more often than not. The additive-tiebreaker mechanism above is the more principled fix implied by the same proof, and is the next thing to properly validate before drawing a final conclusion on whether any form of this idea is worth shipping.
+**Don't ship a global recency multiplier or an RRF rank-fusion of recency** — both were tested rigorously (multi-seed, full-sample) and rejected; the RRF result specifically shows that avoiding unbounded displacement is not sufficient on its own, since RRF still let a signal that's mostly noise with respect to the specific wikilinked target dilute a good baseline ranking.
 
-The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] — a sparse, explicit signal from real co-edit history, not a dense time-decay function applied to everything — remains the useful special case of the broader "everything is connected" theory. This reranking-prior version of the same theory does not hold up under testing, in either its smooth or hard-cutoff form.
+**The additive combine is a real, validated improvement** and the recommended form if this is pursued further: `combine=add, mode=hard, tau=6h, lambda=0.05` (+8.60% full-sample) is the best config found, with `combine=add, mode=decay, tau=30d, lambda=0.05` (+7.73%) a close, simpler alternative. Before wiring it into `searchd.py`'s `/similar` the way [[co-commit graph mining for serendipitous note associations|co-commit's `&graph=1`]] was, it should get the same opt-in-behind-a-flag treatment and the same live smoke-test — but unlike the multiplicative and RRF forms, there's now a genuine case for shipping it.
+
+The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] remains a useful, independent signal in its own right; this note's conclusion is no longer "the whole idea fails," it's "two of three ways to combine it fail, and the third is worth shipping."
 
 ## Related
 - [[co-commit graph mining for serendipitous note associations]]
