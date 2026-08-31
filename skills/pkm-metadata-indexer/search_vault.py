@@ -10,6 +10,20 @@ in-process, so the ranking exists once no matter who asks.
     python search_vault.py "battery mode" --vault work --top 5
     python search_vault.py "battery mode" --direct    # skip the daemon
     python search_vault.py "Obsidian" --unlinked      # mentions that are not links
+    python search_vault.py "gemini flash" --no-rerank  # fusion order, no cross-encoder
+
+The cross-encoder rerank is on by default here, where the daemon leaves it off.
+It won on both corpora it has been measured against: precision@10 39% against
+32% on brain, 45% against 42% on vault-b over the same 13 hold-out questions,
+with the first useful section at mean rank 1.7 against 2.2. This front end
+answers agents and humans rather than other programs, and both pay more for a
+wrong first result than for the wait.
+
+The wait is 2 to 3 seconds per corpus through the daemon, not the 500ms the
+model costs on its own. A process holding the DirectML index session reranks
+20 candidates in 2.4s where the same call in a process without it takes 540ms,
+and the daemon holds that session by definition. `--no-rerank` is the way out
+until that is fixed. See `2026-08-31 turning the rerank on by default`.
 
 Searches every registered corpus by default. The vault on this machine is two
 repositories, private notes and published ones, kept apart so their git
@@ -70,13 +84,13 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: 
         return None
 
 
-def direct_search(query: str, top: int, db: str | None):
+def direct_search(query: str, top: int, db: str | None, rerank: bool = True):
     import index_pkm_meta as pkm  # numpy and fastembed cost ~1.3s to import, skip them for a daemon hit
 
     return [
         {"path": row["path"], "heading": row["heading"],
          "line": row["start_line"], "score": row["score"]}
-        for row in pkm.search_index(query, db_path=db, limit=top)
+        for row in pkm.search_index(query, db_path=db, limit=top, rerank=rerank)
     ]
 
 
@@ -170,6 +184,9 @@ def main():
                         help="Report files missing from the index without starting a pass over them")
     parser.add_argument("--unlinked", action="store_true",
                         help="Treat the query as a note title and list unlinked mentions of it")
+    parser.add_argument("--no-rerank", action="store_true",
+                        help="Return the fused order instead of reordering the top with the "
+                             "cross-encoder. Saves 2 to 3 seconds per corpus and loses precision")
     args = parser.parse_args()
 
     # --db names one database and the daemon answers from the corpora it was
@@ -192,20 +209,24 @@ def main():
             print(f"   {row['snippet']}")
         return
 
+    rerank = not args.no_rerank
     params = {"q": args.query, "limit": args.top}
+    if rerank:
+        params["rerank"] = "1"
     if args.no_reindex:
         params["reindex"] = "0"
     payload = None if direct else daemon_get(args.daemon, "search", params, vault)
+    order = "rerank" if rerank else "fused"
     if payload is not None:
         results, stale = payload["results"], payload["stale"]
         indexed = ", ".join(f"{name} @ {(at or 'never')[:19]}"
                             for name, at in payload["indexed_at"].items())
-        source = f"daemon: {indexed}"
+        source = f"daemon, {order}: {indexed}"
     else:
-        results = direct_search(args.query, args.top, args.db)
+        results = direct_search(args.query, args.top, args.db, rerank)
         missing = direct_stale(args.db, not args.no_reindex)
         stale = {"vault": missing} if missing["count"] or missing.get("no_index") else {}
-        source = f"direct @ {(missing['indexed_at'] or 'never')[:19]}"
+        source = f"direct, {order} @ {(missing['indexed_at'] or 'never')[:19]}"
 
     print(f'\n--- Semantic Search Results for: "{args.query}" ({source}) ---')
     for index, row in enumerate(results, 1):

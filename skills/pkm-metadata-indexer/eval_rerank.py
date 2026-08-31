@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sqlite3
 import sys
@@ -34,8 +35,8 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from urllib.parse import urlencode
 
-GATEWAY = "http://127.0.0.1:8080"
-MODEL = "gemini-2.5-flash"
+GATEWAY = os.environ.get("GATEWAY", "http://127.0.0.1:8080")
+MODEL = os.environ.get("MODEL", "gemini-2.5-flash")
 JUDGEMENTS = Path.home() / ".pkm" / "rerank-judgements.json"
 SECTION_CHARS = 3000
 
@@ -114,22 +115,46 @@ def section_text(cursor: sqlite3.Cursor, hit: dict) -> str:
     return row[0] if row else (hit.get("snippet") or "")
 
 
+def judge_request(model: str, prompt: str) -> tuple[str, dict]:
+    """URL and body for one judgement, in whichever dialect the model speaks.
+
+    Gemini-shaped when the model name says gemini, OpenAI-shaped otherwise. The
+    docstring always promised both; only the Gemini half existed, so a gateway
+    serving `/v1/chat/completions` and `/v1/messages` and no `/v1beta` route —
+    which is what the vault-b one serves — could not run this at all.
+    """
+    if model.startswith("gemini"):
+        return f"{GATEWAY}/v1beta/models/{model}:generateContent", {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0, "maxOutputTokens": 8,
+                                 "thinkingConfig": {"thinkingBudget": 0}},
+        }
+    return f"{GATEWAY}/v1/chat/completions", {
+        "model": model, "max_tokens": 8, "temperature": 0,
+        "messages": [{"role": "user", "content": prompt}],
+    }
+
+
+def judge_answer(model: str, data: dict) -> str:
+    """The reply text out of either dialect's response envelope."""
+    if model.startswith("gemini"):
+        parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+        return "".join(part.get("text", "") for part in parts)
+    choices = data.get("choices") or [{}]
+    return choices[0].get("message", {}).get("content") or ""
+
+
 def judge(question: str, text: str) -> bool | None:
     if not text.strip():
         return None
-    payload = {
-        "contents": [{"role": "user", "parts": [{"text": JUDGE.format(
-            question=question, section=text[:SECTION_CHARS])}]}],
-        "generationConfig": {"temperature": 0, "maxOutputTokens": 8,
-                             "thinkingConfig": {"thinkingBudget": 0}},
-    }
+    url, payload = judge_request(
+        MODEL, JUDGE.format(question=question, section=text[:SECTION_CHARS]))
     try:
-        data = post(f"{GATEWAY}/v1beta/models/{MODEL}:generateContent", payload)
+        data = post(url, payload)
     except (urllib.error.URLError, TimeoutError) as error:
         print(f"  judge failed: {error}", flush=True)
         return None
-    parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-    answer = "".join(part.get("text", "") for part in parts).strip().upper()
+    answer = judge_answer(MODEL, data).strip().upper()
     return answer.startswith("YES") if answer.startswith(("YES", "NO")) else None
 
 
@@ -237,6 +262,19 @@ def self_check():
     assert private("the solarsynk inverter mode") == ["house"]
     assert private("a section about reciprocal rank fusion") == []
     assert [group for _, group in QUESTIONS].count("seen") == 1
+
+    url, payload = judge_request("gemini-2.5-flash", "q")
+    assert url.endswith("/v1beta/models/gemini-2.5-flash:generateContent"), url
+    assert payload["contents"][0]["parts"][0]["text"] == "q"
+    assert judge_answer("gemini-2.5-flash",
+                        {"candidates": [{"content": {"parts": [{"text": "YES"}]}}]}) == "YES"
+
+    url, payload = judge_request("claude-haiku-4-5-20251001", "q")
+    assert url.endswith("/v1/chat/completions"), url
+    assert payload["messages"][0]["content"] == "q"
+    assert judge_answer("claude-haiku-4-5-20251001",
+                        {"choices": [{"message": {"content": "NO"}}]}) == "NO"
+    assert judge_answer("claude-haiku-4-5-20251001", {}) == ""
     print("self-check ok")
 
 
