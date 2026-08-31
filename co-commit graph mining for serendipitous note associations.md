@@ -46,7 +46,7 @@ The concept of extracting implicit relationships from version control transactio
 
 ## The Graph Clique Explosion Problem ($O(N^2)$)
 
-When a Git commit modifies $N$ files, pairing every file with every other file creates an undirected clique of $rac{N(N-1)}{2}$ edges:
+When a Git commit modifies $N$ files, pairing every file with every other file creates an undirected clique of $\frac{N(N-1)}{2}$ edges:
 - **2 files:** 1 edge
 - **5 files:** 10 edges
 - **20 files:** 190 edges
@@ -65,16 +65,18 @@ Assigning $1.0$ weight to all pairs turns the graph into a dense, noisy hairball
 To find the optimal mathematical weighting, four candidate models were benchmarked across **2,355 multi-file Markdown commits** in a personal vault:
 
 ### Candidate Models Tested
-1. **Model 1 (Linear Inverse):** $w = \max(0.01, rac{1}{N - 1})$
-2. **Model 2 (Quadratic Inverse):** $w = \max(0.01, rac{2}{N(N - 1)})$
-3. **Model 3 (Power-Law + Intent Multiplier):** 
-   $$w = 	ext{Intent} 	imes \max\left(0.005, rac{1}{(N - 1)^{1.5}}ight)$$
-   where $	ext{Intent} = 1.0$ for descriptive commits and $0.3$ for Obsidian `auto backup:` saves.
+1. **Model 1 (Linear Inverse):** $w = \max(0.01, \frac{1}{N - 1})$
+2. **Model 2 (Quadratic Inverse):** $w = \max(0.01, \frac{2}{N(N - 1)})$
+3. **Model 3 (Pure Power-Law, no discount):** 
+   $$w = \max\left(0.005, \frac{1}{(N - 1)^{1.5}}\right)$$
+   Applies to every commit equally, including Obsidian `auto backup:` saves — this is what `co_commit.py` ships.
 4. **Model 4 (Model 3 + 180-Day Half-Life Time Decay):** Applies exponential decay based on commit age.
 
 ---
 
 ### Empirical Benchmark Results
+
+> Note: only Model 3 (bare power-law) is implemented in `co_commit.py` today. Model 4's time decay below is a proposed extension, not shipped behavior — treat that column as illustrative, not a reproducible run.
 
 | Test Probe Domain | Pair Description | Model 1 | Model 2 | Model 3 (Winner) | Model 4 (Time Decay) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -107,17 +109,17 @@ To find the optimal mathematical weighting, four candidate models were benchmark
 
 ## Production Implementation
 
-Implemented in [`public/skills/pkm-metadata-indexer/co_commit.py`](file:///home/hannes/repos/pkm/public/skills/pkm-metadata-indexer/co_commit.py) storing edges in `~/.pkm/co_commit.db`:
+Implemented in [`skills/pkm-metadata-indexer/co_commit.py`](skills/pkm-metadata-indexer/co_commit.py), storing edges in `~/.pkm/co_commit.db` (single `co_commits` table: `vault`, `note_a`, `note_b`, `weight`, `commit_count`, `last_commit`, `last_sha`):
 
 ```bash
 # Update co-commit index across vault git history
-python public/skills/pkm-metadata-indexer/co_commit.py
+python skills/pkm-metadata-indexer/co_commit.py --rebuild
 
 # Query top co-committed notes for a specific file
-python public/skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 10
+python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 10
 
 # Run internal unit tests
-python public/skills/pkm-metadata-indexer/co_commit.py --selfcheck
+python skills/pkm-metadata-indexer/co_commit.py --selfcheck
 ```
 
 ## Related Notes
