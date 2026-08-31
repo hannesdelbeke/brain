@@ -111,6 +111,13 @@ def get_cross_encoder():
     rerank 106ms to 256ms. The pool spins for about two seconds afterwards, which
     is tolerable for an opt-in call and is why the daemon's keepalive does not
     touch this model.
+
+    Those numbers hold only in a process that has not loaded the DirectML index
+    model. Once it has, the same 20-candidate rerank goes from 540ms to 2.4s, and
+    no thread cap wins it back: capped at 8 it is 1.3s, at 1 it is 8.5s. The
+    daemon holds that session, which is why `/search?rerank=1` costs seconds
+    there and half a second here. Moving indexing off DirectML or into its own
+    process would fix it, and either is a change that needs its own measurement.
     """
     with _LOAD_LOCK:
         if "model" not in _RERANK_CACHE:
