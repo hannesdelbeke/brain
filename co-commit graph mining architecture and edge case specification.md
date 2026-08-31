@@ -98,6 +98,15 @@ Where:
   - Include all human-authored source extensions (`.py`, `.ts`, `.js`, `.cpp`, `.h`, `.rs`, `.go`, `.json`, `.sh`).
   - Filter out binary and build artifacts (`.png`, `.exe`, `.dll`, `.wasm`, `.lock`, `.min.js`).
 
+### Edge Case 6: Cross-Repository Temporal Session Correlation
+- **Problem:** Developers frequently write code in a standalone project repository (`repo-a`) and, within 15–30 minutes, author or update a companion design document, architectural decision record (ADR), or daily work log in a separate documentation repository (`repo-b`). Because each repository maintains an independent Git DAG, single-repository log extraction misses this cross-repository session link.
+- **Solution:**
+  - Support a multi-repository registry configuration (`repos.json`).
+  - Ingest commit metadata across all registered checkouts onto a single unified global timeline.
+  - Apply a **Sliding Temporal Session Window** ($\tau_{\text{session}} \le 30\text{ minutes}$) across commits by the same author:
+    $$w_{\text{temporal}} = w_{\text{size}} \times \exp\left(-\frac{\Delta t}{\tau_{\text{session}}}\right)$$
+  - Generate cross-repository associative edges between source files in `repo-a` and notes in `repo-b` modified during the active mental sprint.
+
 ---
 
 ## 4. SQLite Schema Specification
