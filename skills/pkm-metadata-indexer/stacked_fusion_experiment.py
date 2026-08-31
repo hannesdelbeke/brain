@@ -29,6 +29,13 @@ there - each signal gets its own lambda instead of sharing one k.
 
     python skills/pkm-metadata-indexer/stacked_fusion_experiment.py --vault-dir <vault> --sample 500 --rrf-k 60
     python skills/pkm-metadata-indexer/stacked_fusion_experiment.py --vault-dir <vault> --sample 500 --combine add
+    python skills/pkm-metadata-indexer/stacked_fusion_experiment.py --vault-dir <vault> --calibrate --z-hub-degree 20
+
+`--z-hub-degree` forwards straight to `score_all`'s AA term (see that
+function's docstring in shared_neighbor_experiment.py) - the shared-neighbor
+hub cutoff built for the game-portfolio same-batch/same-template false
+positive. Off (None) by default, same backward-compatible convention as
+`shared_neighbor_experiment.py` itself.
 """
 
 from __future__ import annotations
@@ -104,11 +111,16 @@ def rrf_fuse_many(score_arrays: list[np.ndarray], k: float) -> np.ndarray:
 def run_experiment(vault_dir: Path, db_path: Path, co_commit_db: Path, co_commit_vault: str,
                    dates: dict[str, str], sample: int, seed: int, k: float,
                    tau_hours: float, combine: str, lam_recency: float, lam_cocommit: float,
-                   lam_aa: float) -> dict:
+                   lam_aa: float, z_hub_degree: int | None = None) -> dict:
     """Standalone signals (vector+recency, vector+co-commit, vector+AA) at the
     same k/sample as the stacked combos below, so "does stacking beat the best
     single addition" is a fair same-sample, same-k comparison rather than a
-    comparison against numbers pulled from a different run."""
+    comparison against numbers pulled from a different run.
+
+    `z_hub_degree`: passed straight through to `shared_neighbor_experiment.py`'s
+    `score_all` for the AA term only - same hard cutoff on the shared-neighbor
+    z's own degree that script's vault-b false-positive fix added. Default None
+    (off), fully backward compatible - see that script's docstring for why."""
     connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
         meta, matrix = pkm.load_vectors(connection.cursor())
@@ -156,7 +168,7 @@ def run_experiment(vault_dir: Path, db_path: Path, co_commit_db: Path, co_commit
             for path in vec_paths
         ])
         cc_scores = co_commit_score_all(co_adjacency, vec_paths, source)
-        aa_scores = score_all(neighbors, vec_paths, source, "aa")
+        aa_scores = score_all(neighbors, vec_paths, source, "aa", z_hub_degree=z_hub_degree)
 
         if combine == "rrf":
             signals = {
@@ -251,13 +263,18 @@ def build_pair_signals(usable: list[tuple[str, str]], vec_paths: list[str],
                        vec_index_of: dict, pooled: np.ndarray, dates: dict,
                        co_adjacency: dict, neighbors: dict,
                        recency_tau_hours: float = FUSION_RECENCY_TAU_HOURS,
-                       recency_mode: str = "hard") -> list[dict]:
+                       recency_mode: str = "hard",
+                       z_hub_degree: int | None = None) -> list[dict]:
     """Precompute every per-pair signal array ONCE, so the lambda grid search
     below only ever does a cheap weighted sum + argsort per combo, instead of
     redoing a matrix multiply, a co-commit lookup and an Adamic-Adar pass per
     grid point - the grid is 300 combos, and recomputing those per combo per
     pair would be the actual bottleneck the grid search waits on, not the
-    arithmetic it exists to try."""
+    arithmetic it exists to try.
+
+    `z_hub_degree`: forwarded to `score_all` for the AA term - see
+    `run_experiment`'s docstring. Default None, unaffected unless a caller
+    (currently only `run_calibration`) sets it."""
     pairs = []
     for source, target in usable:
         anchor_index, target_index = vec_index_of[source], vec_index_of[target]
@@ -272,7 +289,7 @@ def build_pair_signals(usable: list[tuple[str, str]], vec_paths: list[str],
             for path in vec_paths
         ])
         cc_scores = co_commit_score_all(co_adjacency, vec_paths, source)
-        aa_scores = score_all(neighbors, vec_paths, source, "aa")
+        aa_scores = score_all(neighbors, vec_paths, source, "aa", z_hub_degree=z_hub_degree)
         pairs.append({
             "anchor_index": anchor_index, "target_index": target_index,
             "baseline_rank": baseline_rank,
@@ -326,13 +343,19 @@ def grid_search(pairs: list[dict], vec_index_of: dict) -> dict:
 
 
 def run_calibration(db_path: Path, co_commit_db: Path, co_commit_vault: str,
-                    dates: dict, sample: int, split_seed: int, split_frac: float) -> dict:
+                    dates: dict, sample: int, split_seed: int, split_frac: float,
+                    z_hub_degree: int | None = None) -> dict:
     """Grid search on a calibration fold, real numbers on a held-out fold it
     never touched - the gap the by-inspection stacked-fusion finding could not
     close, since its lambdas were "chosen by inspection, not fit against judged
     pairs" (see the survey note). Splitting `usable` before scoring anything,
     with a seeded shuffle, is what keeps the calibration set and the holdout
-    set from ever being the same pairs."""
+    set from ever being the same pairs.
+
+    `z_hub_degree`: forwarded to both the calibration and holdout fold's AA
+    term (see `run_experiment`'s docstring) - both folds must use the same
+    cutoff, the same way they already share `recency_tau_hours`/`recency_mode`,
+    or the comparison stops being apples-to-apples."""
     connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
         meta, matrix = pkm.load_vectors(connection.cursor())
@@ -357,9 +380,9 @@ def run_calibration(db_path: Path, co_commit_db: Path, co_commit_vault: str,
     holdout_raw = [usable[i] for i in order[cut:]]
 
     calib = build_pair_signals(calib_raw, vec_paths, vec_index_of, pooled, dates,
-                               co_adjacency, neighbors)
+                               co_adjacency, neighbors, z_hub_degree=z_hub_degree)
     holdout = build_pair_signals(holdout_raw, vec_paths, vec_index_of, pooled, dates,
-                                 co_adjacency, neighbors)
+                                 co_adjacency, neighbors, z_hub_degree=z_hub_degree)
     if not calib or not holdout:
         return {"error": "not enough usable pairs after the calibration/holdout split"}
 
@@ -370,6 +393,7 @@ def run_calibration(db_path: Path, co_commit_db: Path, co_commit_vault: str,
     out = {
         "split_seed": split_seed, "split_frac": split_frac,
         "recency_tau_hours": FUSION_RECENCY_TAU_HOURS, "recency_mode": "hard",
+        "z_hub_degree": z_hub_degree,
         "calib_pairs": len(calib), "holdout_pairs": len(holdout),
         "calib_baseline_mrr": round(calib_baseline, 4),
         "holdout_baseline_mrr": round(holdout_baseline, 4),
@@ -409,6 +433,10 @@ def main():
                              "fold the grid search never saw, instead of running one fixed combo")
     parser.add_argument("--split-frac", type=float, default=0.6,
                         help="fraction of usable pairs kept for calibration, the rest is holdout")
+    parser.add_argument("--z-hub-degree", type=int, default=None,
+                        help="AA term only: forwarded to shared_neighbor_experiment.py's score_all "
+                             "to zero out a shared neighbour's contribution once its own degree "
+                             "exceeds this. Off (None) by default for backward compatibility.")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -431,7 +459,7 @@ def main():
     if args.calibrate:
         result = run_calibration(
             db_path, args.co_commit_db, args.co_commit_vault, dates,
-            args.sample, args.seed, args.split_frac,
+            args.sample, args.seed, args.split_frac, args.z_hub_degree,
         )
         print(json.dumps(result, indent=1))
         return
@@ -439,7 +467,7 @@ def main():
     result = run_experiment(
         vault_dir, db_path, args.co_commit_db, args.co_commit_vault, dates,
         args.sample, args.seed, args.rrf_k, args.tau * 24, args.combine,
-        args.lam_recency, args.lam_cocommit, args.lam_aa,
+        args.lam_recency, args.lam_cocommit, args.lam_aa, args.z_hub_degree,
     )
     print(json.dumps(result, indent=1))
 
@@ -493,6 +521,25 @@ def self_check():
         for r in LAM_RECENCY_GRID for c in LAM_COCOMMIT_GRID
     )
     assert winners["stack3_recency_cocommit"]["calib_mrr"] == round(exhaustive_best, 4)
+
+    # z_hub_degree must reach score_all's AA term through build_pair_signals -
+    # a note whose only shared neighbour is a hub gets aa_prox zeroed once the
+    # cutoff engages, same fixture shape shared_neighbor_experiment.py's own
+    # self-check uses (a~c share only z, degree 3).
+    edges = [("a", "z"), ("b", "z"), ("c", "z"), ("a", "y"), ("b", "y")]
+    neighbors = build_neighbor_sets(edges)
+    fake_paths = ["a", "b", "c", "y", "z"]
+    fake_index_of = {p: i for i, p in enumerate(fake_paths)}
+    fake_pooled = np.eye(5)
+    fake_usable = [("a", "c")]
+    signals_no_cutoff = build_pair_signals(
+        fake_usable, fake_paths, fake_index_of, fake_pooled, {}, {}, neighbors)
+    signals_cutoff = build_pair_signals(
+        fake_usable, fake_paths, fake_index_of, fake_pooled, {}, {}, neighbors, z_hub_degree=2)
+    assert signals_no_cutoff[0]["aa_prox"][fake_index_of["c"]] > 0, \
+        "sanity: a~c's only shared neighbour (z, degree 3) scores positive with no cutoff"
+    assert signals_cutoff[0]["aa_prox"][fake_index_of["c"]] == 0.0, \
+        "z_hub_degree=2 must reach build_pair_signals' AA term and zero out a~c (z has degree 3 > 2)"
     print("self-check ok")
 
 
