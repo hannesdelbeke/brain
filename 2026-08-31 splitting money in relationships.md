@@ -30,6 +30,34 @@ on dating specifically, older work by [Alksnis, Desmarais & Wood (1996)](https:/
 
 a parallel literature on housework fairness (Dutch data, [Koster, Poortman, van der Lippe & Kleingeld, 2022](https://journals.sagepub.com/doi/10.1177/0192513X21993899)) found women rate an unequal division as unfair more often than men do at the *same* actual division — the perception gap exists independent of the real numbers, and money splitting research tends to mirror it.
 
+## pooling proportionally, not just pooling
+
+**pooling and 50/50 are separable, and mixing them up defeats the point of pooling.** putting a flat, equal dollar amount into a shared account — say both partners put in 3,000 a month — is still a 50/50 split, just moved behind a joint-account label. the [equity theory](https://www.bepartly.com/blog/5050-vs-proportional-splitting-how-couples-can-fairly-share-expenses) problem from the systems section above applies just as hard inside a joint account as it does to splitting a restaurant bill.
+
+worked example, partner A earns 8,000/month, partner B earns 4,000/month, combined 12,000, ratio 2:1. say the household needs 6,000/month in the shared pool to cover rent, groceries, dates, all joint costs.
+
+**flat pooling (3,000 + 3,000):** A keeps 5,000 personal, 62.5% of A's income. B keeps 1,000 personal, 25% of B's income. B is giving up two and a half times more of their own income than A is, despite the equal-looking number going into the account — the exact asymmetry equity theory predicts causes resentment.
+
+**proportional pooling (contribution scaled to income share):** A contributes 66.7% of the pool, 4,000. B contributes 33.3% of the pool, 2,000. A keeps 4,000 personal, B keeps 2,000 personal — leftover money is now 2:1, the same ratio as their incomes, so both partners give up an equal *share* of what they have, not an equal *amount*.
+
+the formula: `contribution = shared_total × (own_income / combined_income)`. equivalently, both partners commit the same percentage of their own income to the pool rather than the same dollar figure — in the example above that percentage is 50% for both, which is where the two methods' numbers happen to converge; at any other shared-total the flat-dollar approach and the percentage approach diverge, and it's the percentage approach the research above is describing when it says "pool and split proportionally," not the flat-dollar one.
+
+whatever stays outside the pool after that — personal spending, individual savings — is each partner's own business, and this is also the part [Vogler & Pahl](https://www.areweeven.com/blog/should-you-split-bills-50-50-partner)'s finding about explicit agreement matters most for: the split only reads as fair if both people did this math together rather than one of them assuming a flat number was already fair.
+
+## paying for family and friends
+
+the couple research above is about equals splitting shared costs. family and friends run on a different rule entirely: hierarchy, not equity.
+
+[Expectations of Reciprocal Generosity Are Specific to Equal Relationships](https://dx.doi.org/10.1162/OPMI.a.357), Open Mind / MIT Press, six studies, 599 US adults: people expect turn-taking repayment, "I paid last time, you pay this time," only between equals, friends, cousins, coworkers of the same rank. in asymmetric relationships, parent-child, elder-younger, boss-employee, people expect the same direction to keep flowing rather than reciprocation — the higher-status or older party pays down the hierarchy by default, and nobody expects the junior party to take a turn.
+
+so paying for a younger cousin's meal isn't a debt being created, it's a one-way flow that's supposed to keep going, and there's no social ledger tracking it.
+
+paying for a parent's drinks sits inside a bigger pattern documented by [Fingerman's intergenerational support research](https://pmc.ncbi.nlm.nih.gov/articles/PMC5738271/), *Journal of Marriage and Family* / *The Gerontologist*: financial support between generations runs both directions across the whole lifespan, and parents keep giving into their 70s and 80s largely because they *want* to keep giving, not because they're asked to. when an adult child refuses their money repeatedly, parents tend to read that as "you don't need me anymore" rather than as respect. an adult child offering to pay for a parent, especially in the sandwich-generation years, is partly a status performance too, "I've made it, I can take care of this now," independent of whether the parent actually needs the help.
+
+that produces a real bind for the youngest adult in the room: offering to pay can signal maturity, or it can imply the elder can't provide, and there's no single right read, it depends on the relationship.
+
+practical shape of it: paying for a younger cousin costs nothing socially and isn't tracked. paying for parents is usually wanted as a gesture, not as relief, and doing it *every single time* can undercut their role rather than honor it, the tension is about who gets to be the provider, not about fairness. among cousins or friends your own age, ordinary reciprocity applies, informal turn-taking, no formula, and it holds up fine until an income gap opens up between them, at which point the same fairness-perception effect from the couples' research above starts to apply.
+
 ## conclusion
 
 **structure matters less than commitment to a structure.** the strongest, largest studies here all point the same direction: whether a couple pools money into one account beats which formula (dutch, 50/50, proportional) they use for what stays separate. couples who never explicitly agree on a system and just drift into one — usually 50/50 by inertia — are the group with the worst outcomes, not the group using any particular formula.
