@@ -64,16 +64,9 @@ def find_vault_root(file_path: Path):
     return None
 
 def open_with_fallback(file_path: Path):
-    fallback_editors = [
-        os.environ.get("VISUAL"),
-        os.environ.get("EDITOR"),
-        "gnome-text-editor",
-        "code",
-        "gedit",
-        "nano"
-    ]
-    for ed in fallback_editors:
-        if ed and shutil.which(ed):
+    gui_editors = ["gnome-text-editor", "code", "gedit"]
+    for ed in gui_editors:
+        if shutil.which(ed):
             subprocess.Popen([ed, str(file_path)], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return
     subprocess.Popen(["gio", "launch", "org.gnome.TextEditor.desktop", str(file_path)], start_new_session=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
