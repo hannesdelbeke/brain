@@ -106,9 +106,24 @@ If $v_j \le v_i$ (the rival was never ahead on content alone), the right side is
 
 This is why rival *count*, not tuning, dominates: if an anchor has $k$ "temporal rivals" (other notes created near it) each with some small independent chance $p$ of already scoring close enough to flip once boosted, the chance at least one does is $1 - (1-p)^k$ — saturating toward 1 as $k$ grows, even for small $p$. Measured directly on this vault: **14.4 rivals within 1 hour of any given note, 37.4 within 24 hours** — $k$ never approaches 0 at any window tested, which is exactly why narrowing the window shrinks but never eliminates the damage. The idea only nets positive when the true target is *itself* one of the anchor's temporal rivals (a same-session companion note) rather than a genuine long-distance link — a bet that "written close in time" implies "the right answer," true for one specific kind of pair and false for the general case a wikilink graph is full of.
 
+## A promising lead: additive instead of multiplicative (preliminary)
+
+A brainstorm on alternatives produced one genuinely different mechanism, quick-checked (one seed, not yet a full sweep): replace the multiplier with a small additive term, `final_score = vector_score + ε · proximity`, instead of `vector_score * (1 + λ · proximity)`.
+
+| ε | MRR change | improved | worsened |
+| :--- | :--- | :--- | :--- |
+| 0.01 | +3.06% | **150** | 138 |
+| 0.02 | +5.23% | 165 | 164 |
+| 0.05 | +9.73% | 168 | 208 |
+| 0.1 | +7.75% | 166 | 244 |
+
+At ε=0.01, `improved` (150) exceeds `worsened` (138) — the first time all session, at any config in either the multiplicative or hard-cutoff sweeps, that this happened. The reason maps directly onto the rank-flip proof above: an additive term of size ε can only flip an order where the *raw vector-score gap* between two candidates is smaller than ε, so a small enough ε is structurally incapable of displacing a candidate that was clearly better on content — it only ever breaks near-ties, which is exactly the "tiebreaker" fix this note had speculated about before testing it. Bigger ε reintroduces the same displacement pattern (`worsened` growing faster than `improved`) once the additive term gets large enough to overwhelm real score gaps again, same failure mode, later onset.
+
+This is one seed and one τ (30 days) — not yet the 5-seed stability check and full-sample run every other config in this note got before being trusted. Treat this as a real, structurally-motivated lead worth the same rigor, not yet a validated result.
+
 ## Verdict
 
-Don't ship a global recency multiplier — smooth or hard-cutoff — over the whole candidate pool. The one configuration that crossed into genuinely positive territory (6-hour hard cutoff, λ=0.3, +1.11% on the full sample) is real but marginal: tiny effect size, erased by sampling noise more often than not, not worth the complexity or the risk of the failure mode reappearing on a different vault or corpus size. If the idea is worth revisiting, the fix has to be mechanistic, not a smaller window or constant: apply the recency term only as a **tiebreaker among near-equal vector scores** (so it only ever decides between candidates that were already close, never displacing a clearly-better candidate that happens to be older).
+Don't ship a global recency **multiplier** — smooth or hard-cutoff — over the whole candidate pool. The one multiplicative configuration that crossed into genuinely positive territory (6-hour hard cutoff, λ=0.3, +1.11% on the full sample) is real but marginal: tiny effect size, erased by sampling noise more often than not. The additive-tiebreaker mechanism above is the more principled fix implied by the same proof, and is the next thing to properly validate before drawing a final conclusion on whether any form of this idea is worth shipping.
 
 The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] — a sparse, explicit signal from real co-edit history, not a dense time-decay function applied to everything — remains the useful special case of the broader "everything is connected" theory. This reranking-prior version of the same theory does not hold up under testing, in either its smooth or hard-cutoff form.
 
