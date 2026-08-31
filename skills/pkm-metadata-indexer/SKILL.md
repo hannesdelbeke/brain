@@ -213,21 +213,11 @@ python skills/pkm-metadata-indexer/searchd.py --corpus skills/pkm-metadata-index
 ```
 Every file that is not ignored becomes a note, but only markdown gets sections. A png with no sections is searchable by nothing and is still a row, which is what makes "every image nothing references" one query — the unreferenced side of it is a node no edge points at, not a file nobody listed. `category` is `doc`, `code` or `asset`, so the two acceptance queries are `SELECT source_path FROM edges WHERE resolved_target_path = ?` and `SELECT path FROM notes n WHERE n.category='asset' AND NOT EXISTS (SELECT 1 FROM edges e WHERE e.resolved_target_path = n.path)`. No schema change.
 
-<<<<<<< HEAD
-Three reference kinds become edges, all of them read out of markdown: links `[text](path)`, image embeds `![alt](path)`, and bare relative paths in prose such as `see src/auth/token.py`. A target resolves against the source file's directory first, then the repository root, and `resolved_target_path` stays null when neither exists on disk, which is what makes a broken reference queryable instead of absent. Urls are skipped. A bare path needs a slash and an extension starting with a letter, or every ratio in the prose reads as a broken reference.
-
-File discovery is `git ls-files --cached --others --exclude-standard`, so `.gitignore` is applied by git rather than by a second half-implementation of it; a directory that is not a checkout falls back to a walk that skips `dist`, `build`, `node_modules` and the rest of `SKIP_DIRS`.
-
-Measured on a 773-file repository with 87 markdown docs, 241 source files and 445 images: the scan takes 0.62s and the whole metadata-only pass 0.74s, for 1,852 sections and 831 edges in 3.7 MB, of which 693 resolve to a real file and 138 do not. 435 of the 445 images are unreferenced, which is the scope showing rather than the repository being untidy: an asset loaded from source code has no markdown reference to find, and imports are not parsed. Two other systematic misses — a partial path such as `lib/parser.ts` where the file is at `src/lib/parser.ts`, which a unique-basename fallback would fix for 38 of the 138 broken edges, and an `org/repo.git` slug, which is the cross-repo case. Imports, cross-corpus resolution and stem fallback are deliberately out of v0. See [[2026-08-27 a link graph over code, docs and assets]].
-=======
 Three reference kinds become edges, all of them read out of markdown: links `[text](path)`, image embeds `![alt](path)`, and bare relative paths in prose such as `see src/auth/token.py`. A target resolves against the source file's directory first, then the repository root, then its filename alone when exactly one file in the repository carries that name, and `resolved_target_path` stays null when none of the three finds anything, which is what makes a broken reference queryable instead of absent. An ambiguous filename stays unresolved, since a wrong edge is worse than a missing one. Urls are skipped. A bare path needs a slash and an extension starting with a letter, or every ratio in the prose reads as a broken reference.
 
 File discovery is `git ls-files --cached --others --exclude-standard`, so `.gitignore` is applied by git rather than by a second half-implementation of it; a directory that is not a checkout falls back to a walk that skips `dist`, `build`, `node_modules` and the rest of `SKIP_DIRS`.
 
-Measured on a 773-file repository with 87 markdown docs, 241 source files and 445 images: the scan takes 0.62s and the whole metadata-only pass 0.74s, for 1,852 sections and 831 edges in 3.7 MB, of which 693 resolve to a real file and 138 do not. 435 of the 445 images are unreferenced, which is the scope showing rather than the repository being untidy: an asset loaded from source code has no markdown reference to find, and imports are not parsed. Two other systematic misses — a partial path such as `lib/parser.ts` where the file is at `src/lib/parser.ts`, and an `org/repo.git` slug, which is the cross-repo case. See [[2026-08-27 a link graph over code, docs and assets]].
-
-Three more repositories decided what to build next, 2026-08-30: a 4,140-file typescript game, a 49,549-file unity client and a 283-file web game. The unique-basename fallback earned itself and is in, taking broken edges from 42% to 28% on the first, 58% to 16% on the second and 24% to 18% on the third, while the source files an edge reaches go from 708 to 785 and from 169 to 503. Cross-repo resolution did not earn itself: 26 edges across 54,000 files climb out of their repository root. Import parsing is the only route to code coverage in a large client, where prose reaches 503 of 44,947 source files. The orphan-image query is the one that does not survive contact with a game repository: it reaches 1 of the unity client's 4,366 images, because a unity asset is referenced by guid from a `.meta` file or a prefab and never in markdown, so a guid parser comes before an import parser. `broken` also carries a floor of documentation placeholders, `url`, `release/X.Y.x` and `release/v0.NN`, which are template text rather than references.
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
+Measured on a 773-file repository with 87 markdown docs, 241 source files and 445 images: the scan takes 0.62s and the whole metadata-only pass 0.74s, for 1,852 sections and 831 edges in 3.7 MB, of which 693 resolve to a real file and 138 do not. 435 of the 445 images are unreferenced, which is the scope showing rather than the repository being untidy: an asset loaded from source code has no markdown reference to find, and imports are not parsed. See [[2026-08-27 a link graph over code, docs and assets]].
 
 ### 17. Querying the Link Graph (`link_graph.py`)
 The `edges` table is filled by every scanner and read by nothing else, so this is the query surface over it, for a vault index or a repository one:
@@ -241,10 +231,6 @@ python skills/pkm-metadata-indexer/link_graph.py --selfcheck
 
 An image counts as referenced when an edge matches its path or its basename, not only its resolved target. The vault scanner stores image embeds with a null `resolved_target_path`, so the strict join called all 38 images in a vault orphans. The bias is deliberate: a false orphan gets a file deleted and a false reference only leaves one lying around.
 
-Run end to end against a repository index on 2026-08-28: `refs src/main.ts` returns 10 references across six documents in 0.42s whole-process, `orphans` returns 431 of 445, `broken` returns 138. Against the vault indexes, where the edges are wikilinks, `broken` returns 1,780 references on a 3,228-note vault and 238 on an 857-note one, which is the first time those were countable.
-
-<<<<<<< HEAD
-=======
 ### 18. Antigravity CLI Conversations (`index_agy.py`)
 The second scanner over the `collect=` contract, which is what makes section 15 a seam rather than an interface with one implementation:
 ```bash
@@ -253,46 +239,38 @@ python skills/pkm-metadata-indexer/index_agy.py --probe
 python skills/pkm-metadata-indexer/index_agy.py --selfcheck
 python skills/pkm-metadata-indexer/searchd.py --corpus skills/pkm-metadata-indexer/index_agy.py:scan_agy=agy=~/.gemini/antigravity-cli
 ```
-It is worth having as a second implementation because it shares nothing with the first but the return type. `agy` writes one SQLite database per conversation under `conversations/<uuid>.db`, and each row of its `steps` table holds a binary protobuf payload with no schema published anywhere, so there is no line to count, no byte offset to remember, and nothing to parse with a json reader.
+`agy` writes one SQLite database per conversation under `conversations/<uuid>.db`, and each row of its `steps` table holds a binary protobuf payload. Prose comes from the field paths in `PROSE_FIELDS` (`19.2` for user turn, `20.1` for assistant turn). Tool calls and file arguments become edges back to touched files.
 
-The payload is read by walking protobuf wire format directly: a varint key gives the field number and wire type, and a length-delimited chunk is treated as a nested message when it parses as one and as a string when it decodes as printable UTF-8. Prose comes from the field paths in `PROSE_FIELDS`, `19.2` for a user turn and `20.1` for an assistant one, which were found by volume with `--probe`. Tool calls are found by content rather than by field number, since agy writes their arguments as a JSON object and a JSON object stays recognisable wherever the field numbers move to. `--probe` prints the field map with a sample of each field so the mapping can be rechecked against another install, which is the failure mode a hand-read wire format has.
-
-The same exclusions as section 12 apply and for the same reasons: tool results and whole-file arguments such as `CodeContent` are skipped, and so is the assistant's thinking at `20.3`. Arguments naming a path become edges, so "which conversation touched that file" is answerable from the graph.
-
-Resume is a cursor rather than an offset. Each conversation records the highest `steps.idx` it read in `<root>/.pkm_agy_state.json`, and the next run reparses from that index, deliberately including the last step because agy rewrites it in place while the answer streams. The rows before it come back out of the index through `index_sessions.cached_rows`, which is source-agnostic already.
-
-Measured over 18 conversations, 44 MB on disk: 17 notes, 1,511 sections and 107 edges in 2.4 MB, 0.83s cold and 0.26s of scan on a resume. The eighteenth conversation was one `/usage` and produced no prose. `index_agy_validation.md` beside it is the check to run on a machine with hundreds of conversations, written for an agent to execute unattended.
-
-<<<<<<< HEAD
->>>>>>> 043a9802989d5522611c6a13f19ede56b31041d1
-=======
 ### 19. Duplicate Notes (`GET /duplicates`)
 `--check-duplicate` answers "is this note about to duplicate something" at write time, one title at a time. This is the other half: the whole corpus at once, for the duplicates that were written before the hook existed.
 ```bash
 curl "http://127.0.0.1:44771/duplicates?threshold=0.95&limit=20&vault=brain"
 ```
-Every pair of notes whose pooled vectors are at or above the threshold, unioned into connected components, each component returned once as `{paths, top, unlinked, pairs}` with `pairs` indexing into that component's own `paths`. Clusters are sorted by their highest internal score, `limit` caps how many come back, and the answer is cached on the index version like `/graph` is.
+Every pair of notes whose pooled vectors are at or above the threshold, unioned into connected components, each component returned once as `{paths, top, unlinked, pairs}` with `pairs` indexing into that component's own `paths`. Clusters are sorted by their highest internal score.
 
-Grouping is the feature, not a presentation choice. Eleven near-identical notes are 55 pairs, and a list of 55 rows saying the same thing is worse than no list. On a 2,979-note vault at 0.95 the answer is 46 pairs as 15 clusters, the largest being 11 podcast episode notes that share a template.
+### 20. Co-Commit Graph Mining (`co_commit.py`)
+Mines Git commit history to discover serendipitous and implicit relationships between notes that share zero semantic vector similarity (inspired by change coupling and logical coupling research).
+```bash
+python skills/pkm-metadata-indexer/co_commit.py
+python skills/pkm-metadata-indexer/co_commit.py --note "profile.md" --top 10
+python skills/pkm-metadata-indexer/co_commit.py --rebuild
+python skills/pkm-metadata-indexer/co_commit.py --selfcheck
+```
+Uses a Power-Law commit scaling model ($w = \text{Intent} \times \max(0.005, 1 / (N - 1)^{1.5})$) with an intent multiplier ($1.0\times$ for descriptive/prompt commits vs $0.3\times$ for Obsidian autosaves) and evergreen accumulation. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
 
-A threshold scan rather than a filter over the `/graph` payload, because mutual kNN drops exactly the pairs that matter: a pile of near-identical notes fills every member's top k with the other members, so every pair past the kth is discarded. Measured at k=10 over the same vault, the graph filter misses 0 of 46 pairs at 0.95, 5 of 200 at 0.93 and 263 of 723 at 0.9. So at today's default they agree and the scan costs 360ms against 5ms, and the agreement ends as soon as the cutoff loosens or the corpus grows.
-
-`linked` marks a pair that already has a wikilink, and `unlinked` counts the pairs in a cluster that do not, which is what separates a note written twice from a note and its deliberate companion: on this vault the tightest cluster is `glycine` and `random study, sort`, already linked, while the podcast pile has 17 unlinked pairs of 55. It is reported rather than filtered, because a link between two notes is as often someone noticing the overlap as it is a decision to keep both.
-
-`threshold` is floored at 0.7, below which the pair count grows as the square of the corpus and the pairs stop being duplicates, and the scan is capped at 20,000 pairs and says `truncated` when it hits the cap.
-
->>>>>>> 9fb12612a322c34313bf9698ee10010c01b938c8
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
 - **Neural Embeddings:** 384-dimensional dense vectors (`BAAI/bge-small-en-v1.5`) stored as float32 blobs.
 - **Link Graph (`edges`):** All source-to-target [[wikilink|wikilinks]] for instant traversal without grepping files.
+- **Co-Commit Graph (`co_commits`):** Weighted Git commit co-occurrence graph for non-textual associative discovery.
 
 ## Why use this
 Enables instant SQL aggregations and single-turn semantic search across thousands of notes with zero ongoing API costs, serving as an intelligent pre-filter for agents.
 
 ### Related
 - [[public/pkm-search|pkm-search]]
+- [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining for serendipitous note associations]]
 - [[agentic tooling upgrades over grep]]
 - [[vault hybrid search]]
 - [[offline GPU embeddings with incremental cache]]
