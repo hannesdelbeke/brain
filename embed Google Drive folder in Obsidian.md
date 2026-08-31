@@ -41,10 +41,13 @@ On Linux without native Google Drive Desktop, use **Rclone FUSE Mount** to strea
        --vfs-cache-max-size 10G \
        --drive-export-formats link.html
    ```
-4. **Auto-Mount on Login:**
+4. **Auto-Mount on Login (Startup):**
+   The user systemd unit (`~/.config/systemd/user/rclone-gdrive.service`) hooks into `default.target`. Enabling it guarantees Google Drive is mounted silently in the background on every boot/login before Obsidian launches:
    ```bash
    systemctl --user enable --now rclone-gdrive.service
    ```
+   - Check auto-start enabled: `systemctl --user is-enabled rclone-gdrive.service` $\rightarrow$ `enabled`
+   - Check live status: `systemctl --user status rclone-gdrive.service`
 5. **Obsidian Configuration:**
    Enable `"showUnsupportedFiles": true` in `.obsidian/app.json` so Obsidian detects Google Drive files and wikilinks.
 
