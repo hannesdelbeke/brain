@@ -88,6 +88,24 @@ A hierarchical map-reduce rollup — batch-synthesizing many notes into cached m
 
 The two aren't really competing levers, the same way header extraction and note-compress weren't: rollup would operate on the whole corpus as a rebuildable cache (a read-path lever, nothing in any note ever changes), where note-compress permanently rewrites one note's body (a one-time cost, paid once, recouped only if that specific note gets reread enough). Rollup is worth building once the corpus stops fitting a single context call — roughly 5x this vault's current size, by the earlier estimate. Below that threshold, a rollup would be synthesizing a summary of something an agent could already read directly in one call, which is pure overhead with no read-cost saved. Note-compress's bar is different and per-note: worth running only on a specific note that's dense prose (not link-dense, not diagram-heavy, not worked-example-dense per the finding above) and reread often enough — which, per today's real bench numbers, is a narrower slice of this vault's actual notes than the original research hoped.
 
+## conclusion: how to actually use this
+
+Don't run it routinely or in bulk. The real bench numbers above say 0.5% mean cut across this vault's actual eligible notes — not worth the habit, the API calls, or the trust cost of unattended `--apply` across a folder.
+
+Header extraction stays the everyday lever. Already shipped, 77.5% reduction, zero rewrite risk, needs nothing further. That's still the default answer to "how do I save tokens reading this vault," unchanged by anything measured here.
+
+Use `note-compress` by hand, occasionally, only on the narrow case it's actually good at: a long, prose-heavy reference or narrative note — not a MOC, not full of ASCII-art diagrams, not stacked with numeric worked examples — that's expected to be reread by agents often. When that case comes up:
+
+```
+python skills/note-compress/compress_notes.py --dry-run --folder "<that note's folder>"
+```
+
+check the diff, then `--apply` if it looks right. One note at a time, by choice, never scheduled or automatic.
+
+Don't build a predictor. Confirmed above that it wouldn't help, and the gate already makes every individual attempt free to fail.
+
+One standalone win still on the table: `delint()`'s emoji-strip is free and zero-risk independent of whether the paid compression call is worth running. It currently only fires as a silent pre-step inside the compression pipeline. Exposing it as its own `--delint-only` flag, so it can run broadly across the vault with no LLM cost or gate risk at all, is a small, low-priority follow-up if the emoji-cleanup effect turns out to be wanted on its own.
+
 ## related
 - [[2026-08-31 research on compressing llm reasoning and notes without losing information]] — the research survey, external literature, and why this design was chosen over the alternatives
 - [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — the two-pass method this skill deliberately simplifies to one call
