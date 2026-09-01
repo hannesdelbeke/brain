@@ -21,7 +21,7 @@ the recurring thread across all of these is **choice**: autonomy and voluntary a
 
 ## mental health and isolation
 
-the largest and most recent finding is a [Science journal study](https://www.science.org/doi/10.1126/science.aec7671) by Natalia Emanuel and Emma Harrington, drawing on five nationally representative US surveys (n = 588,322, 2011-2024, pandemic years excluded). remote-capable workers spend roughly an extra hour alone each workday versus in-person peers and do not make it up after hours, the effect is worst for remote workers who live alone, who can go entire days without human contact, and the researchers estimate remote work explains about a third of the rise in isolation and mental distress between 2011-2019 and 2022-2024.
+the largest and most recent finding is a [Science journal study](https://www.science.org/doi/10.1126/science.aec7671), "Home alone: remote work, isolation, and mental health," by Natalia Emanuel, Emma Harrington, and Amanda Pallais, drawing on five nationally representative US surveys (n = 588,322, 2011-2024, pandemic years excluded). remote-capable workers spend roughly an extra hour alone each workday versus in-person peers and do not make it up after hours, the effect is worst for remote workers who live alone, who can go entire days without human contact, and the researchers estimate remote work explains about a third of the rise in isolation and mental distress between 2011-2019 and 2022-2024.
 
 critically, the same research says [return-to-office mandates are not the fix](https://www.npr.org/2026/06/08/nx-s1-5848125/remote-work-mental-health-isolation): "sitting next to people is not the same as belonging," flexible policies that let people choose, plus employers ensuring coworkers are actually present on office days, matter more than forcing attendance.
 
@@ -31,9 +31,9 @@ a UK NHS mental healthcare staff study found half of remote staff reported moder
 
 ## physical health
 
-a [systematic review of home-office work during COVID](https://pmc.ncbi.nlm.nih.gov/articles/PMC9566552/) found sedentary time up 16%, physical activity down 17%, light activity down 26%, and moderate-to-vigorous activity down 20%, alongside more pain and parenting stress and lower wellbeing.
+a [systematic review of home-office work during COVID](https://pmc.ncbi.nlm.nih.gov/articles/PMC9566552/) found sedentary time up 16%, physical activity down 16%, light activity down 26%, and moderate-to-vigorous activity down 20%, alongside more pain and parenting stress and lower wellbeing.
 
-a [Stanford Longevity study](https://longevity.stanford.edu/wp-content/uploads/2021/05/Sedentary-Brief.pdf) found remote workers sit roughly two more hours per day than in-person workers (9.2 vs 7.3 hours), and a [2025 meta-analysis](https://pubmed.ncbi.nlm.nih.gov/40380300/) found daily steps drop by about 2,564 when working from home versus onsite.
+a [Stanford Longevity study](https://longevity.stanford.edu/wp-content/uploads/2021/05/Sedentary-Brief.pdf) found remote workers sit roughly two more hours per day than in-person workers (9.2 vs 7.3 hours), a [2025 meta-analysis of 12 studies, 9,059 participants](https://pubmed.ncbi.nlm.nih.gov/40380300/) found telework significantly reduced light physical activity versus office work, though total activity and sedentary time showed no statistically significant difference, a smaller effect than the Stanford figure above.
 
 the effect is not universal: [Canadian data](https://onlinecjc.ca/article/S0828-282X(24)01009-2/fulltext) found remote workers who saved roughly 64 minutes a day on commuting redirected some of it into sleep and recreational exercise, and Swiss remote workers with flexible schedules cycled and walked more for leisure, but Swedish and US studies found remote workers slept more yet moved less overall, so whether saved commute time becomes exercise or just more sitting depends on the person and the country.
 
@@ -41,7 +41,7 @@ sedentary behaviour itself is independently linked to cardiovascular and all-cau
 
 ## job satisfaction and meaning
 
-the [Gajendran & Harrison meta-analysis](https://www.researchgate.net/publication/373997988_The_Relationship_between_Remote_Work_and_Job_Satisfaction_The_Mediating_Role_of_Perceived_Autonomy) and its 2014 follow-up identify **autonomy** as the central mechanism: more remote time raises perceived autonomy, which raises job satisfaction, lowers turnover intention and role stress.
+the [Gajendran & Harrison meta-analysis](https://doi.org/10.1037/0021-9010.92.6.1524), *Journal of Applied Psychology* 2007, identifies **autonomy** as the central mechanism: more remote time raises perceived autonomy, which raises job satisfaction, lowers turnover intention and role stress.
 
 autonomy also feeds meaning directly through self-determination theory, perceived autonomy shapes experienced meaningfulness, felt responsibility, and satisfaction with results, and remote work can raise task variety and let people focus on the work they find most engaging rather than office-driven interruptions.
 

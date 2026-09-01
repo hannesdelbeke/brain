@@ -92,11 +92,11 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
 ## Chapter 2: The Limits of Your Attention
 
 - “There’s a finite limit to how many things we can focus on.”
-- Brain receives 11 million “bits” of info every second, according to Timothy Wilson, psych prof at University of Virginia
-- Mind can only consciously process 40 of those.
+- Brain receives 11 million “bits” of info every second, according to Timothy Wilson, psych prof at University of Virginia (verified 2026-09-01)
+- Mind can only consciously process 40 of those. (verified 2026-09-01)
 - Csikszentmihalyi: The simple act of decoding a conversation (parsing the language so we understand it) consumes about half our attentional resources.
-- Working memory: After focusing on something, we can only hold so much of it in working memory. The average is **four bits**.
-    - Some people can naturally hold more – often up to 7 without other aids
+- Working memory: After focusing on something, we can only hold so much of it in working memory. The average is **four bits**. (verified 2026-09-01)
+    - Some people can naturally hold more – often up to 7 without other aids (verified 2026-09-01)
     - [[chunking]] can aide working memory by bundling bits together through meaning – e.g. names in a list could be bundled if some of them are your friends or people you talk to often, or if some start with the same letter.
 - Popular culture has tons of examples of groups of information ranging from 2-7 bits.
     - Pairs – Calvin and Hobbes
@@ -881,7 +881,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Letting your mind wander intentionally can boost happiness, allowing you to get into scatterfocus without the guilt and worrying associated with involuntary mind-wandering.
     - When you’re in a negative mood, write down your worries and the problems you’re dealing with. The [[Zeigarnik effect]] will cause you to dwell on the open loops, which can keep you in a negative mood longer.
     - Shawn Achor, in his book _The Happiness Advantage:_
-        - Happy people are 31% more productive than people in a neutral or negative mood
+        - Happy people are 31% more productive than people in a neutral or negative mood (verified 2026-09-01)
         - Strategies to improve average-day happiness levels:
             - Practice gratitude – write down things you’re grateful for at the end of the day
             - Journaling
@@ -893,7 +893,7 @@ _Italicized text indicates Thomas j frank's own thoughts and observations._
     - Energy levels fluctuate during the week – people are least engaged on Mondays and most engaged on Fridays
 > [!NOTE]-
 > - _Really though? For most of my life, I’ve been the least engaged on Fridays – it’s the weekly version of senioritis. I’m also quite engaged on Mondays. Currently, Fridays are my most engaged day, but that’s only because of a Friday Beeminder deadline for uploading videos._
-> - _Chris cites this paper:_ [Bored mondays and focused afternoons: The rhythm of attention and online activity in the workplace](https://www.researchgate.net/publication/266655565_Bored_mondays_and_focused_afternoons_The_rhythm_of_attention_and_online_activity_in_the_workplace) – _the summary states, “On Mondays people are most bored but also most focused.” I think Chris’ further summarization of this point in the book doesn’t accurately convey its meaning._
+> - _Chris cites this paper:_ [Bored mondays and focused afternoons: The rhythm of attention and online activity in the workplace](https://www.researchgate.net/publication/266655565_Bored_mondays_and_focused_afternoons_The_rhythm_of_attention_and_online_activity_in_the_workplace) (verified 2026-09-01) – _the summary states, “On Mondays people are most bored but also most focused.” I think Chris’ further summarization of this point in the book doesn’t accurately convey its meaning._
 
 > [!NOTE]- Drink Alcohol and Caffeine Strategically
 >     - Alcohol can boost creativity, but decreases focus
