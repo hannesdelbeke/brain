@@ -46,6 +46,20 @@ G-Eval (Liu et al. 2023, arXiv:2303.16634) gets a similar effect from
 logprob-weighted scoring, but that needs raw token logprobs Groq/Gemini
 don't cleanly expose for an arbitrary score token, hence sample-and-average
 instead of logprobs here.
+
+The same audit also scores relinking, a distinct failure neither the
+mechanical gate nor the framing judge catches: KBRA (2026, arXiv:2606.21732,
+"Safe to Check, Unsafe to Use: Relinking at the Compression Boundary of LLM
+Agents") names the case where two fragments that were each individually true
+in the original get reassembled by the compression into a claim the original
+never made — "X happened in March" plus, separately, "Y caused delays"
+becoming "X happened in March because Y caused delays". The mechanical gate
+only checks that spans survive, not what new claims got built by juxtaposing
+them, and the framing judge only checks whether existing hedges/connectors
+survived, not whether a new one got invented — so this runs a second judge
+prompt (`RELINK_PROMPT`) asking specifically whether the compressed text
+asserts any connection between two facts the original left unconnected,
+sampled and averaged the same way as the framing score.
 """
 
 from __future__ import annotations
@@ -81,6 +95,22 @@ NOTE BODY:
 {body}"""
 
 AUDIT_PROMPT = """Score, from 0 to 100, how well the COMPRESSED version below preserves the ORIGINAL's hedges (words like "might", "usually", "some"), confidence/epistemic markers ("observed" vs "confirmed"), and causal or logical connectors ("because", "so", "therefore", "since"). Do not score general quality, fact retention, or wording style — only whether the framing and claimed certainty survived.
+
+Respond with ONLY the integer score, nothing else.
+
+ORIGINAL:
+{original}
+
+COMPRESSED:
+{compressed}"""
+
+RELINK_PROMPT = """Score, from 0 to 100, how well the COMPRESSED version below avoids asserting a NEW connection between facts that were separate and unconnected in the ORIGINAL.
+
+A relinking failure: the ORIGINAL states two individually true things separately and without connecting them (e.g. "X happened in March." ... elsewhere, unrelated: "Y caused delays."), and the COMPRESSED text combines them into a claim the ORIGINAL never made (e.g. "X happened in March because Y caused delays") — a causal, temporal, or other link built from two true fragments, even though neither fragment alone is false.
+
+100 = every claim and every connection between facts in the COMPRESSED text was already made, in that combination, in the ORIGINAL. 0 = the COMPRESSED text asserts a causal link, sequence, or combined claim between two facts the ORIGINAL never connected.
+
+Do not score general quality, wording, hedges, or omitted content — only whether the COMPRESSED text links two things the ORIGINAL kept separate.
 
 Respond with ONLY the integer score, nothing else.
 
@@ -286,13 +316,13 @@ def parse_score(response: str) -> int | None:
     return int(match.group()) if match else None
 
 
-def audit_note(client, provider: str, model: str, original: str, compressed: str,
-               samples: int = 3) -> float | None:
-    """Judge framing-fidelity `samples` times and average, per Rating Roulette
+def _judge_score(client, provider: str, model: str, prompt_template: str, original: str,
+                 compressed: str, samples: int) -> float | None:
+    """Run one judge prompt `samples` times and average, per Rating Roulette
     (arXiv:2510.27106): averaging repeat judge calls, not majority vote or
     temperature=0, is what recovers agreement with human judgment.
     """
-    prompt = AUDIT_PROMPT.format(original=original, compressed=compressed)
+    prompt = prompt_template.format(original=original, compressed=compressed)
     scores = []
     for _ in range(samples):
         response = call_llm(client, provider, model, prompt=prompt)
@@ -302,6 +332,27 @@ def audit_note(client, provider: str, model: str, original: str, compressed: str
         if score is not None:
             scores.append(score)
     return sum(scores) / len(scores) if scores else None
+
+
+def audit_note(client, provider: str, model: str, original: str, compressed: str,
+               samples: int = 3) -> tuple[float | None, float | None]:
+    """Judge framing-fidelity and relinking-fidelity, each averaged over
+    `samples` independent judge calls, and return (framing_score, relink_score).
+
+    Two separate prompts and two separate score series rather than one prompt
+    asking for both numbers: framing fidelity ("did a hedge/connector
+    survive") and relinking ("did a NEW connection get invented") are
+    different questions, and mixing them into one judge call risks one
+    answer anchoring the other. The relinking score exists because of KBRA
+    (arXiv:2606.21732): fragments that were each individually true in the
+    original can get reassembled by compression into a claim the original
+    never made, and neither the mechanical invariant gate (which only checks
+    spans survive) nor the framing judge (which only checks existing
+    hedges/connectors survive) catches a brand new one being added.
+    """
+    framing = _judge_score(client, provider, model, AUDIT_PROMPT, original, compressed, samples)
+    relinking = _judge_score(client, provider, model, RELINK_PROMPT, original, compressed, samples)
+    return framing, relinking
 
 
 def process_note(path: Path, vault_root: Path, client, provider: str, model: str,
@@ -362,8 +413,8 @@ def main():
     parser.add_argument("--model", type=str, default=None)
     parser.add_argument("--report", type=Path, default=None, help="Write a JSON bench report here")
     parser.add_argument("--audit-sample", type=int, default=0,
-                        help="Judge framing-fidelity on N passed notes with 3 averaged LLM "
-                             "calls each (0 = off, default)")
+                        help="Judge framing-fidelity and relinking-fidelity on N passed notes, "
+                             "3 averaged LLM calls each per score (0 = off, default)")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
 
@@ -425,17 +476,23 @@ def main():
         candidates = applied
         if len(candidates) > args.audit_sample:
             candidates = random.sample(candidates, args.audit_sample)
-        print(f"\nAuditing framing fidelity on {len(candidates)} note(s), 3 judge calls each:")
-        audit_scores = []
+        print(f"\nAuditing framing fidelity and relinking on {len(candidates)} note(s), "
+              f"3 judge calls each:")
+        framing_scores, relink_scores = [], []
         for result in candidates:
-            score = audit_note(client, provider, model, result["_body"], result["_compressed"])
-            if score is not None:
-                audit_scores.append(score)
-                print(f"  {score:5.1f}  {result['path']}")
-            else:
-                print(f"  (no score)  {result['path']}")
-        if audit_scores:
-            print(f"Mean framing-fidelity score: {sum(audit_scores) / len(audit_scores):.1f}")
+            framing, relinking = audit_note(client, provider, model, result["_body"],
+                                            result["_compressed"])
+            framing_str = f"{framing:5.1f}" if framing is not None else "(none)"
+            relink_str = f"{relinking:5.1f}" if relinking is not None else "(none)"
+            print(f"  framing={framing_str}  relink={relink_str}  {result['path']}")
+            if framing is not None:
+                framing_scores.append(framing)
+            if relinking is not None:
+                relink_scores.append(relinking)
+        if framing_scores:
+            print(f"Mean framing-fidelity score: {sum(framing_scores) / len(framing_scores):.1f}")
+        if relink_scores:
+            print(f"Mean relinking-fidelity score: {sum(relink_scores) / len(relink_scores):.1f}")
 
 
 def self_check():
@@ -479,6 +536,48 @@ def self_check():
     assert parse_score("Score: 42") == 42
     assert parse_score("  95  ") == 95
     assert parse_score("no number here") is None
+
+    # Synthetic relinking case (KBRA, arXiv:2606.21732): two facts that are
+    # true and stated but never connected in the original. "good" repeats
+    # them separately; "bad" invents a causal link between them.
+    relink_original = (
+        "## Timeline\nThe [[migration]] to the new billing service happened in March 2026. "
+        "Separately, the vendor's API had an outage that caused a two-week delay in Q1 2026."
+    )
+    relink_good = (
+        "## Timeline\n[[migration]] to new billing service: March 2026. "
+        "Separately, vendor API outage caused a two-week delay, Q1 2026."
+    )
+    relink_bad = (
+        "## Timeline\nThe [[migration]] to the new billing service happened in March 2026 "
+        "because the vendor's API outage caused a two-week delay."
+    )
+
+    class _FakeModels:
+        def __init__(self, texts):
+            self._texts = iter(texts)
+
+        def generate_content(self, model, contents):
+            return type("R", (), {"text": next(self._texts)})()
+
+    class _FakeClient:
+        def __init__(self, texts):
+            self.models = _FakeModels(texts)
+
+    # audit_note calls the framing prompt `samples` times, then the relink
+    # prompt `samples` times: feed framing scores first, then relink scores.
+    good_client = _FakeClient(["90", "88", "92", "95", "97", "96"])
+    framing, relinking = audit_note(good_client, "gemini", "fake-model",
+                                    relink_original, relink_good, samples=3)
+    assert framing == 90.0, framing
+    assert relinking == 96.0, relinking
+
+    bad_client = _FakeClient(["85", "80", "83", "10", "15", "5"])
+    framing, relinking = audit_note(bad_client, "gemini", "fake-model",
+                                    relink_original, relink_bad, samples=3)
+    assert abs(framing - 82.67) < 0.01, framing
+    assert relinking == 10.0, relinking
+    assert relinking < 96.0, "a bad (invented-link) compression must score lower than a good one"
 
     print("self-check ok")
 
