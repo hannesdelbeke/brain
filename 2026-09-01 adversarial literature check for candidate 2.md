@@ -56,5 +56,7 @@ the null U-curve needs a different sentence in the writeup than the one currentl
 
 ## related
 
+- [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — standalone diagnosis pulled out of this note's conclusion 2 section
+- [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]] — the fix, as a runnable experiment
 - [[2026-09-01 publish plan - readability and compression research as papers]] — candidate 2's section, updated with this note's finding
 - [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] — the experiment this note is checking, updated with a corrected hypothesis section

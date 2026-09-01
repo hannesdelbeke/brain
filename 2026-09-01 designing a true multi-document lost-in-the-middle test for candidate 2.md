@@ -142,6 +142,8 @@ this experiment's questions ask "why was serial X493-22 recalled" against a uniq
 
 ## related
 
+- [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — standalone diagnosis pulled out of this note's result section
+- [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]] — the fix, as a runnable experiment reusing this note's design
 - [[2026-08-30 agent reading versus human reading, which formatting rules transfer]] — the mechanism argument this whole line of testing is trying to check empirically
 - [[2026-08-30 readability and reading-speed research applied to note-taking vaults]] — the human-reading research the agent-side claims are contrasted against
 - [[2026-09-01 process log - from readability question to publish plan]] — how the three single-document pilots and this gap were found
