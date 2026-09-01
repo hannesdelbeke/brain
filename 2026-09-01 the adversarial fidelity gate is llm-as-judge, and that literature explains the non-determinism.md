@@ -39,3 +39,4 @@ the vault's live-corpus test found link density (0.04 to 4.02 wikilinks per 100 
 - [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — the method this note supplies prior art and a reliability fix for
 - [[2026-09-01 note-compress skill - design, adversarial review, and bench data]] — where the non-determinism was first observed, unexplained, in a fenced-code stress test
 - [[2026-09-01 publish plan - readability and compression research as papers]] — where this gap analysis feeds into a submittable empirical study
+- [[2026-09-01 does git history benefit from token compression for an agent]] — the scope boundary this compression research doesn't cross: notes compress well because they're prose-heavy, git history mostly doesn't because it's already terse and structural

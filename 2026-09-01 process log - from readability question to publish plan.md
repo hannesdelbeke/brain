@@ -38,6 +38,19 @@ delegated a scoped code change to [[skills/note-compress/SKILL|note-compress]]: 
 
 wrote [[2026-09-01 publish plan - readability and compression research as papers]] ranking the two clusters, naming what's still missing before either is submittable (a second model run and an explicit relinking limitation for the compression study; an actual experiment instead of argued-from-mechanism reasoning for the readability synthesis), and a venue plus concrete next steps for each.
 
+## step 7: a re-sweep found a third cluster, and why the first pass missed it
+
+asked why the first pass didn't surface [[2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise]] and [[2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing]]. two real reasons, not one: topic mismatch (the original searches were scoped to "readability" and "compression," an unrelated research thread on search reranking and expertise-finding wouldn't surface for those queries regardless of timing), and index staleness (`search_vault.py`'s semantic index for `brain` was last built at 09:45:41; both of those notes were committed at 10:12 and 10:43, after that snapshot, so they weren't in the index when the first searches ran even if the query had matched).
+
+a follow-up re-sweep — `git log --since` across both repos for everything touched today, plus a grep across `public/` for every 2026-08-30 through 2026-09-01 note mentioning compression or tokens — found two more real misses:
+
+- [[2026-08-31 other candidate relatedness signals for search reranking]], committed *before* the first pass's index snapshot and missed anyway because no search that day was scoped to search-reranking topics. this one substantially strengthens candidate 3: it tests five more relatedness signals across **four separate vaults** (this one plus three public Obsidian vaults), closing the single-corpus gap the publish plan had originally flagged as missing, and documents a same-session self-correction (an early claim about co-commit's overlap percentage didn't hold up under later, more careful measurement, and was logged as wrong rather than quietly fixed).
+- [[2026-09-01 does git history benefit from token compression for an agent]] — directly adjacent to the compression research cluster (asks the same question about git history instead of notes, finds it mostly doesn't apply because commit messages are already terse) but never surfaced by the original compression-scoped searches either, since its own title and content use "git" and "version control" vocabulary rather than "compression" as the leading terms. added as related work on the gap-analysis note.
+
+candidate 3's writeup and venue recommendation were both revised upward on the strength of the four-vault result: from "workshop, on the negative results alone" to "aim for a short paper at an IR venue (ECIR/SIGIR) first, workshop as fallback."
+
+the honest limit of this second pass: it covered everything changed today plus a keyword grep over the two days most relevant to this thread, not a read of all ~3,228 notes in the vault. a genuinely exhaustive pass isn't a reasonable ask at that scale; the practical mitigation is the same one this vault's own search-reranking research is busy improving — a better relatedness signal, not a human or agent reading everything by hand.
+
 ## what stayed private
 
 nothing from `private-vault` root (the private half of this vault) was quoted or referenced in any of the public notes above — vault-b-specific brainstorm notes and internal application details stayed out, per the vault's own [[AGENTS.md|brain rule]]. everything above lives in `public/`.
