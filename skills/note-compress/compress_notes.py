@@ -33,6 +33,19 @@ by convention, above a minimum size (short notes rarely justify the call).
 Uses Groq (free tier, openai/gpt-oss-20b) or Gemini Flash, whichever key
 is set — same provider choice as skills/notes-sentiment-analysis, so a vault
 that already has one of those keys configured needs nothing new.
+
+Optional `--audit-sample N`: the mechanical gate above can't catch framing
+drift, so this runs a second, judge-style LLM call on a sample of passed
+notes to at least measure that blind spot instead of leaving it unmonitored.
+Rating Roulette (2025, arXiv:2510.27106) measured LLM judges to be highly
+inconsistent run-to-run on identical input (intra-rater Krippendorff's alpha
+0.265-0.563) and found averaging several independent judge calls, not
+majority vote and not temperature=0, is what recovers agreement with human
+judgment — so this samples the judge `samples` times per note and averages.
+G-Eval (Liu et al. 2023, arXiv:2303.16634) gets a similar effect from
+logprob-weighted scoring, but that needs raw token logprobs Groq/Gemini
+don't cleanly expose for an arbitrary score token, hence sample-and-average
+instead of logprobs here.
 """
 
 from __future__ import annotations
@@ -66,6 +79,18 @@ Hard rules:
 
 NOTE BODY:
 {body}"""
+
+AUDIT_PROMPT = """Score, from 0 to 100, how well the COMPRESSED version below preserves the ORIGINAL's hedges (words like "might", "usually", "some"), confidence/epistemic markers ("observed" vs "confirmed"), and causal or logical connectors ("because", "so", "therefore", "since"). Do not score general quality, fact retention, or wording style — only whether the framing and claimed certainty survived.
+
+Respond with ONLY the integer score, nothing else.
+
+ORIGINAL:
+{original}
+
+COMPRESSED:
+{compressed}"""
+
+SCORE_RE = re.compile(r"-?\d+")
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)")
 MD_LINK_URL_RE = re.compile(r"\]\((https?://[^\s)]+)\)")
@@ -216,14 +241,18 @@ def find_eligible_notes(vault_root: Path, db_path: Path, folder: str | None,
     return sorted(eligible)
 
 
-def call_llm(client, provider: str, model: str, body: str, max_retries: int = 3) -> str | None:
+def call_llm(client, provider: str, model: str, body: str = "", max_retries: int = 3,
+             prompt: str | None = None) -> str | None:
     """Reasoning-style Groq models (gpt-oss-*) sometimes spend the whole
     completion on the hidden `reasoning` field and leave `content` empty -
     observed non-deterministically on identical input, not tied to a
     specific note. Treat empty content as a retryable failure, same as a
     rate limit, rather than returning it as if it were a real compression.
+
+    `prompt`, if given, is sent as-is (already formatted, e.g. AUDIT_PROMPT)
+    instead of building COMPRESS_PROMPT from `body`.
     """
-    prompt = COMPRESS_PROMPT.format(body=body)
+    prompt = prompt if prompt is not None else COMPRESS_PROMPT.format(body=body)
     for attempt in range(max_retries):
         try:
             if provider == "groq":
@@ -250,6 +279,29 @@ def call_llm(client, provider: str, model: str, body: str, max_retries: int = 3)
             else:
                 time.sleep(1)
     return None
+
+
+def parse_score(response: str) -> int | None:
+    match = SCORE_RE.search(response)
+    return int(match.group()) if match else None
+
+
+def audit_note(client, provider: str, model: str, original: str, compressed: str,
+               samples: int = 3) -> float | None:
+    """Judge framing-fidelity `samples` times and average, per Rating Roulette
+    (arXiv:2510.27106): averaging repeat judge calls, not majority vote or
+    temperature=0, is what recovers agreement with human judgment.
+    """
+    prompt = AUDIT_PROMPT.format(original=original, compressed=compressed)
+    scores = []
+    for _ in range(samples):
+        response = call_llm(client, provider, model, prompt=prompt)
+        if response is None:
+            continue
+        score = parse_score(response)
+        if score is not None:
+            scores.append(score)
+    return sum(scores) / len(scores) if scores else None
 
 
 def process_note(path: Path, vault_root: Path, client, provider: str, model: str,
@@ -280,6 +332,8 @@ def process_note(path: Path, vault_root: Path, client, provider: str, model: str
         return result
 
     result["status"] = "applied" if apply else "would-apply"
+    result["_body"] = body
+    result["_compressed"] = compressed
     if apply:
         post.content = compressed
         post["compressed"] = True
@@ -307,6 +361,9 @@ def main():
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--model", type=str, default=None)
     parser.add_argument("--report", type=Path, default=None, help="Write a JSON bench report here")
+    parser.add_argument("--audit-sample", type=int, default=0,
+                        help="Judge framing-fidelity on N passed notes with 3 averaged LLM "
+                             "calls each (0 = off, default)")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
 
@@ -364,6 +421,22 @@ def main():
         args.report.write_text(json.dumps(results, indent=1), encoding="utf-8")
         print(f"Report written to {args.report}")
 
+    if args.audit_sample > 0:
+        candidates = applied
+        if len(candidates) > args.audit_sample:
+            candidates = random.sample(candidates, args.audit_sample)
+        print(f"\nAuditing framing fidelity on {len(candidates)} note(s), 3 judge calls each:")
+        audit_scores = []
+        for result in candidates:
+            score = audit_note(client, provider, model, result["_body"], result["_compressed"])
+            if score is not None:
+                audit_scores.append(score)
+                print(f"  {score:5.1f}  {result['path']}")
+            else:
+                print(f"  (no score)  {result['path']}")
+        if audit_scores:
+            print(f"Mean framing-fidelity score: {sum(audit_scores) / len(audit_scores):.1f}")
+
 
 def self_check():
     original = (
@@ -401,6 +474,11 @@ def self_check():
     assert "- ship it" in cleaned
     assert "\U0001F600" in cleaned, "delint must only touch heading/bullet lines, not prose"
     assert "\U0001F680 this fenced emoji must survive" in cleaned, "fenced code must never be touched"
+
+    assert parse_score("87") == 87
+    assert parse_score("Score: 42") == 42
+    assert parse_score("  95  ") == 95
+    assert parse_score("no number here") is None
 
     print("self-check ok")
 
