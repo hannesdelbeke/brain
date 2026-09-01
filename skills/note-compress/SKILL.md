@@ -40,6 +40,7 @@ python skills/note-compress/compress_notes.py --self-check
 - `--model name` — override the default model for the detected provider
 - `--report path.json` — write a JSON bench report (per-note before/after word counts, cut %, gate verdict)
 - `--self-check` — run the built-in fidelity-gate self-test, no API key or vault needed
+- `--audit-sample N` — after the run, judge framing-fidelity on N passed notes with 3 averaged LLM calls each (default 0, off)
 
 ### Setup & Providers
 
@@ -70,6 +71,7 @@ python skills/note-compress/compress_notes.py --sample 5 --model gemini-2.5-flas
 - **Eligibility, not "compress everything."** A compression pass only pays for itself after enough future rereads recoup the cost of the call that produced it — and external research on compression backfiring (see the research note) confirms an unconditional compress-every-note policy can lose more than it saves. Eligibility uses the vault's own existing wikilink-backlink graph as a free reread-frequency proxy, rather than tracking anything new.
 - **Dry-run by default.** Rewriting a note body is harder to undo than adding a frontmatter field (`notes-sentiment-analysis`'s own default); `--apply` is opt-in.
 - **Rejects rather than best-effort.** If the fidelity gate finds anything missing, the original file is left untouched and the note is reported as rejected — never a partial or "close enough" write.
+- **`--audit-sample` is a sampled audit, not a second call per note.** The mechanical gate can't catch framing drift, but paying for a judge call on every note doubles the cost of the whole run; sampling multiplies the call count only for the notes checked. Three judge calls per sampled note, averaged rather than single-shot or majority-voted, because Rating Roulette (arXiv:2510.27106) measured LLM judges to be highly inconsistent run-to-run on identical input and found averaging repeat calls is what recovers agreement with human judgment.
 
 ## Related
 - [[2026-09-01 note-compress skill - design, adversarial review, and bench data]] — full design rationale, adversarial for/against case, and measured bench numbers
