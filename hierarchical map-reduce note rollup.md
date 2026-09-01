@@ -24,7 +24,7 @@ The time axis does not exist in the note metadata. 18 notes carry a `created` fi
 
 If this vault ever grows a per-period leaf layer (a daily or weekly capture note, however it's produced), rolling it up over time would look like the same pattern as the tag/link reduce above, one level added:
 
-**trigger:** on demand ("what happened in August"), not scheduled. Matches the "regenerate on read" principle below, one layer higher.
+**trigger:** on demand ("what happened in August"), not scheduled. Matches the "regenerate on read" principle below.
 
 **map:** the per-period leaf itself — already condensed if the capture layer is doing its job, so a month's worth of it is a few thousand tokens, not raw source material.
 
@@ -33,6 +33,8 @@ If this vault ever grows a per-period leaf layer (a daily or weekly capture note
 **invalidation:** same pattern as the `sections.sha256` approach below, one level up — store the month rollup beside a hash of the period-leaves it was built from. Stale exactly when a leaf inside the month changes or a new one is added.
 
 **cost:** trivial and infrequent, same shape as the whole-vault digest reduce above — a month of already-condensed leaves is a few thousand tokens in, a few hundred out, paid once when someone asks for that month or year.
+
+None of this is built here; it's the design to reach for only once a time-based leaf layer exists to reduce over.
 
 Regenerate on read, not on write. Writes happen daily; whole-vault syntheses happen a few times a year. A materialised `technical` rollup spans 1,944 notes, costs about $0.24 to regenerate on Sonnet 5, and is invalidated by an edit to any one of those 1,944 notes, so a maintained tree pays that repeatedly for an artifact nobody read. On demand the same reduce costs the same $0.24, once, when someone asks. The maintained tree also has to live outside the vault under the artifact rules above, which removes the only thing it was good for, being browsable in Obsidian. It loses on cost and on the one benefit it had.
 
