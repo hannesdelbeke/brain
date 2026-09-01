@@ -36,8 +36,15 @@ the reader-side rules already in place (front-load subjects, chunk to four or fi
 - **check topic/stress position per sentence**, not just per heading — old information first, the new or important fact last, the same instruction Gopen & Swan give at paragraph scale
 - **never separate a claim from its evidence** — a number, table, or link that supports a sentence belongs next to it, not in a different section, per the split-attention effect
 
+## a real, established fix already exists: the plain-language summary
+
+academic writing's hardness isn't only diagnosed in the literature above, it has a genuine, widely-adopted institutional countermeasure: a short, jargon-free summary published alongside (not instead of) the technical abstract. this is not a fringe practice. [Cochrane systematic reviews](https://training.cochrane.org/plain-language-summaries) require a **Plain Language Summary** on every review. [eLife](https://elifesciences.org/) runs a "digest" rewriting every accepted paper's core finding in accessible language. [PNAS](https://www.pnas.org/author-center/submitting-your-manuscript) requires a **Significance Statement** aimed at a broad scientific readership, distinct from the technical abstract. Funders increasingly mandate this too — NIH, the Wellcome Trust, and UKRI all require lay summaries on grant outputs.
+
+the convention that makes it work: never replace the technical abstract, which reviewers and specialists still need at full precision, add the plain-language version alongside it, clearly labeled so nobody mistakes one for the other. for a self-published paper specifically — no venue, no press office writing a summary for you — this does real work: it's what makes a stranger on arXiv or a blog actually read past the title, and it's the exact same lede-first, plain-language principle this vault's own reader-side readability research already argues for, just applied to a paper's audience instead of a note's. this vault's own note convention (every note opens with an eli5 callout) already does this natively — carrying it into a paper draft is not inventing a new practice, it's applying an existing one to a new document type.
+
 ## related
 
+- [[2026-09-01 candidate 3 paper draft outline]] — a live example: this practice added to a real paper draft in this vault
 - [[2026-08-30 readability and reading-speed research applied to note-taking vaults]] — the reader-side research this note extends to the writer's side
 - [[2026-08-30 agent reading versus human reading, which formatting rules transfer]] — which of these rules hold for an LLM reader and which don't
 - [[2026-09-01 note-compress skill - design, adversarial review, and bench data]] — the vault's own usability-test-over-formula standard, applied to compression rather than authoring
