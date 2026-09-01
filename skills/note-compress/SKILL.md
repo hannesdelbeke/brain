@@ -16,7 +16,8 @@ Compresses eligible vault notes' bodies in place using one LLM call, then verifi
 
 ## What it does
 - Finds notes eligible for compression: at least `--min-words` long AND (under a `learnings/`-style folder, OR at least `--min-backlinks` inbound wikilinks per the vault's own pkm-metadata-indexer `edges` table)
-- Sends each note's body to Groq (free) or Gemini Flash with a classify-and-cut prompt: keep facts/numbers/decisions/links/code/hedges, cut connective filler
+- Strips decorative emoji from headings and bullets first, mechanically, for free — a regex scoped to those lines and blind to fenced code, not an LLM call, because asking the model to do this itself was measured to bleed into rewriting fenced ASCII-art diagrams it was separately told never to touch
+- Sends each note's body to Groq (free) or Gemini Flash with a classify-and-cut prompt: keep facts/numbers/decisions/links/code/hedges, cut connective filler and stacked near-synonym adjectives
 - Extracts wikilinks, URLs, dates, numbers, and code spans from the original and the compressed text and rejects (keeps the original untouched) if anything essential is missing — no second LLM call needed for this check
 - Skips unchanged notes via body content MD5 hashing (`compress-hash` frontmatter field)
 - Dry-run by default — rewriting a note's body is riskier than adding frontmatter, so `--apply` is required to actually write

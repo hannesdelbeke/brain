@@ -53,6 +53,26 @@ None of these showed up in the five hand-picked bench notes above. All five surf
 
 The fidelity gate did exactly its job in every one of these four cases: it rejected all four and left the original files untouched. The bug was never in what got written — it was in what the eligibility filter offered up to compress in the first place.
 
+## follow-up: emoji-heavy AI-generated notes, and where relaxing the rules broke
+
+One of the live-rejected notes, `2026-08-27 AI - 7 Cognitive Sparring Lenses.md`, is heavy with decorative emoji in every heading and stylized roleplay quote-blocks ("The Buddy Intervention: ..."). That's a distinct problem from prose bulk — a fixed hard rule ("keep every heading exactly as written") makes the decoration itself un-cuttable, no matter how the classify-and-cut instruction is worded.
+
+Three things were tried against this exact note, live, to see if relaxing the hard rules could recover a real, safe cut:
+
+- **Relaxing the prompt to let the model flatten roleplay framing and strip heading emoji itself:** worked on this one note in isolation (13.4% cut, clean gate pass, all worked examples preserved) once the instruction was made specific enough to forbid summarizing an example down to its caption. But regression-tested against the five originally-clean bench notes, it **mangled ASCII-art fenced code diagrams in two of them** — rewriting a box-drawing diagram into a bulleted list, violating the same "byte-for-byte, no exceptions" rule the prompt stated twice, once in emphatic all-caps. Rejected: a rule that only holds on notes without diagrams isn't safe as a shipped default.
+- **Isolating just the "collapse near-synonym adjectives" instruction** ("hyper-agreeable, polite, and eager to please" → "agreeable and pleasing"), without the roleplay/heading permission: no meaningfully increased regression risk in a direct comparison — folded into the shipped `COMPRESS_PROMPT`.
+- **Doing the emoji-heading cleanup mechanically instead of asking the model:** a regex scoped to heading/bullet lines, skipping fenced code blocks entirely, can't make the mistake an LLM made twice. Shipped as `delint()`, an unconditional free pre-pass before the one paid call. Delint alone doesn't rescue this specific note to a clean gate pass — a follow-up test on the delinted body still lost one number (down from 4 wikilinks + 3 dates + 5 numbers on the raw original) — because the note's worked examples each carry their own dense numeric content, the same "narrative/example-dense" case the original classifier research already named as the hardest one.
+
+**A finding this stress-test surfaced independent of any of the above:** the exact same unmodified shipped prompt, run twice against the identical note, passed once and mangled a fenced ASCII diagram the other time — non-deterministic, not tied to any wording change tried. This is the mechanical fidelity gate's actual justification, restated more strongly than the original design rationale could without having watched it happen: no prompt wording, however carefully worded, made this model's fenced-code handling 100% reliable, so the free mechanical check is the only thing standing between "usually fine" and a silently corrupted note.
+
+Also hit live: a verbose relaxed-prompt variant plus a long note exceeded Groq's 8,000 tokens-per-minute limit for `openai/gpt-oss-20b` on the free tier (`413`, request too large) — a real ceiling worth knowing about before assuming every note in a folder can run back-to-back without backoff.
+
+## compared to hierarchical rollup
+
+A hierarchical map-reduce rollup — batch-synthesizing many notes into cached monthly/tag/cluster summaries — was measured and rejected separately at this vault's current size: roughly 3,228 notes serialize to about 180k tokens of metadata, which already fits one model call, so there's no intermediate level to insert yet.
+
+The two aren't really competing levers, the same way header extraction and note-compress weren't: rollup would operate on the whole corpus as a rebuildable cache (a read-path lever, nothing in any note ever changes), where note-compress permanently rewrites one note's body (a one-time cost, paid once, recouped only if that specific note gets reread enough). Rollup is worth building once the corpus stops fitting a single context call — roughly 5x this vault's current size, by the earlier estimate. Below that threshold, a rollup would be synthesizing a summary of something an agent could already read directly in one call, which is pure overhead with no read-cost saved. Note-compress's bar is different and per-note: worth running only on a specific note that's dense prose (not link-dense, not diagram-heavy, not worked-example-dense per the finding above) and reread often enough — which, per today's real bench numbers, is a narrower slice of this vault's actual notes than the original research hoped.
+
 ## related
 - [[2026-08-31 research on compressing llm reasoning and notes without losing information]] — the research survey, external literature, and why this design was chosen over the alternatives
 - [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — the two-pass method this skill deliberately simplifies to one call
