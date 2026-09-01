@@ -18,6 +18,20 @@ Measured on 2026-08-25 from `--stats` and a pass over the vault root: 3,228 note
 
 The time axis does not exist in the note metadata. 18 notes carry a `created` field, 10 carry `date`, 35 have a date-prefixed filename. This is a vault of atomic topic notes, not [[daily notes]], so a monthly rollup has almost nothing to group by frontmatter. Git commit history is a time axis every file has regardless of frontmatter, and this vault's git history runs back to 2024-03-21, but nothing here reduces over it — no day-log or activity-capture layer exists in this vault to serve as the leaf for a time-based rollup. That's a real gap, not a case for building the recursion on its own though: it only becomes worth reducing over once something produces per-period leaves to group, and nothing measured here says whether that's worth building at all. The units that do exist today are tags (396 distinct, 22 of them covering 20 or more notes, `technical` covering 1,944) and the link graph (9,256 edges). Scope a reduce by tag, by a [[vault hybrid search]] result set, or by a link neighbourhood.
 
+## A Recurring Reduce, If a Time-Based Leaf Layer Ever Exists
+
+If this vault ever grows a per-period leaf layer (a daily or weekly capture note, however it's produced), rolling it up over time would look like the same pattern as the tag/link reduce above, one level added:
+
+**trigger:** on demand ("what happened in August"), not scheduled. Matches the "regenerate on read" principle below, one layer higher.
+
+**map:** the per-period leaf itself — already condensed if the capture layer is doing its job, so a month's worth of it is a few thousand tokens, not raw source material.
+
+**reduce:** group leaves by month, one call over that month's worth, output a month rollup. Month rollups group the same way into a year rollup. This is the one shape where the recursion in this note would actually earn its keep, because there's a real hierarchy (period → month → year) instead of a flat note set.
+
+**invalidation:** same pattern as the `sections.sha256` approach below, one level up — store the month rollup beside a hash of the period-leaves it was built from. Stale exactly when a leaf inside the month changes or a new one is added.
+
+**cost:** trivial and infrequent, same shape as the whole-vault digest reduce above — a month of already-condensed leaves is a few thousand tokens in, a few hundred out, paid once when someone asks for that month or year.
+
 Regenerate on read, not on write. Writes happen daily; whole-vault syntheses happen a few times a year. A materialised `technical` rollup spans 1,944 notes, costs about $0.24 to regenerate on Sonnet 5, and is invalidated by an edit to any one of those 1,944 notes, so a maintained tree pays that repeatedly for an artifact nobody read. On demand the same reduce costs the same $0.24, once, when someone asks. The maintained tree also has to live outside the vault under the artifact rules above, which removes the only thing it was good for, being browsable in Obsidian. It loses on cost and on the one benefit it had.
 
 Invalidation needs no DAG and no run manifest. `sections.sha256` is recomputed on every index run. Store the summary beside it with the hash it was generated from; a summary is stale exactly when `summary_sha != sha256`. Renamed and deleted notes fall out on their own because their section rows do.
