@@ -153,6 +153,18 @@ A GitHub and web search found real, independent corroboration for both sides of 
 
 The strongest corroboration is [albinotonnina/echos](https://github.com/albinotonnina/echos), which benchmarked hybrid (RRF of full-text + vector) search against the same hybrid with a temporal-decay boost added, on its own labeled ground truth — a genuinely independent replication, different codebase, different data. Result: temporal decay gave zero improvement on temporal queries (MRR 1.000 to 1.000 — no gain) and caused a serious regression elsewhere (P@5 dropped 0.855 to 0.491, needle-in-haystack MRR collapsed 0.920 to 0.209). That's the same failure shape this note measured — a naive recency boost demotes genuinely correct results — reached independently, which is stronger evidence than a single-vault result on its own.
 
+A fourth combination mode also surfaced in that search: [tin-cat/momentum-ranking-algorithm](https://github.com/tin-cat/momentum-ranking-algorithm) compounds recent attention into relevance rather than adding or multiplying a flat term — "trending" items get boosted even if old, distinct from plain freshness. Tested.
+
+## a fourth combine mode: momentum, tested and rejected
+
+The naive way to operationalize "compounding" — `vector_score + λ·proximity·vector_score` — reduces algebraically to `vector_score·(1 + λ·proximity)`, which is exactly the already-rejected `mul` mode above. Under a *pairwise* anchor-candidate gap, compounding isn't actually a fourth mode at all.
+
+The genuinely distinct version of momentum is query-independent: a candidate's own recent-activity level (how recently it was modified, not how close in time it was created relative to whichever anchor happens to be querying it) — the same thing that makes a Hacker News or Reddit "hot" score boost an old post that's newly active again. `recency_prior_experiment.py` (`skills/pkm-metadata-indexer/`) was extended with `--combine momentum`: `vector_score·(1 + λ·candidate_freshness)`, where `candidate_freshness` is computed once against the newest modification timestamp in the vault, independent of the anchor, using a new `build_modification_dates()` cache (same one-pass git-log method as the existing creation-date cache, newest-first instead of oldest-first).
+
+**Lambda swept at τ=30 days, decay mode** (n=500, seed=0): -0.42% (λ=0.01), **+0.21%** (λ=0.02, the apparent peak), -4.29% (λ=0.05), -14.64% (λ=0.1), -38.08% (λ=0.2) — the same shape as the rejected `mul` mode: a narrow near-zero region, then rapid collapse.
+
+**5-seed stability check at the apparent peak (λ=0.02):** +0.21%, -1.80%, -1.91%, -0.80%, -2.79% — 4 of 5 seeds negative, mean ≈ -1.42%. **Full-sample (n=4,800): -1.47%.** Rejected, at every scale tested, the same verdict as `mul` and `rrf` — the third combine mode to fail, additive remains the only one that works on this vault's ground truth.
+
 ## Related
 - [[co-commit graph mining for serendipitous note associations]]
 - [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]]

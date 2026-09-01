@@ -64,6 +64,7 @@ import numpy as np
 import index_pkm_meta as pkm
 
 DEFAULT_CACHE = Path.home() / ".pkm" / "recency-experiment-datetimes.json"
+DEFAULT_MTIME_CACHE = Path.home() / ".pkm" / "recency-experiment-mtimes.json"
 
 
 def build_creation_dates(vault_dir: Path) -> dict[str, str]:
@@ -88,6 +89,32 @@ def build_creation_dates(vault_dir: Path) -> dict[str, str]:
             current = line[len("commit "):].strip()
         elif line.startswith("A\t"):
             path = line[2:].strip().replace("\\", "/")
+            if path.endswith(".md") and path not in dates:
+                dates[path] = current
+    return dates
+
+
+def build_modification_dates(vault_dir: Path) -> dict[str, str]:
+    """Most recent commit ISO timestamp touching each current path.
+
+    Same one-pass-log idea as `build_creation_dates`, but newest-first
+    (no --reverse) so the FIRST time a path appears in the stream is its
+    latest touch, not its first. `--diff-filter=AM` (add or modify) rather
+    than `A` alone, since momentum is about recent activity, not just
+    existence.
+    """
+    proc = subprocess.run(
+        ["git", "-C", str(vault_dir), "log", "--diff-filter=AM", "--name-status",
+         "--format=commit %aI"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+    )
+    dates: dict[str, str] = {}
+    current = None
+    for line in proc.stdout.splitlines():
+        if line.startswith("commit "):
+            current = line[len("commit "):].strip()
+        elif line[:1] in ("A", "M") and "\t" in line:
+            path = line.split("\t", 1)[1].strip().replace("\\", "/")
             if path.endswith(".md") and path not in dates:
                 dates[path] = current
     return dates
@@ -169,7 +196,8 @@ def rank_of(scores: np.ndarray, index_of: dict, exclude: int, target_index: int)
 
 def run_experiment(vault_dir: Path, db_path: Path, dates: dict[str, str],
                    tau_hours: float, lam: float, sample: int, seed: int,
-                   mode: str = "decay", combine: str = "mul") -> dict:
+                   mode: str = "decay", combine: str = "mul",
+                   mtimes: dict[str, str] | None = None) -> dict:
     import sqlite3
     connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
@@ -187,6 +215,22 @@ def run_experiment(vault_dir: Path, db_path: Path, dates: dict[str, str],
     if len(usable) > sample:
         usable = [usable[i] for i in rng.choice(len(usable), size=sample, replace=False)]
 
+    momentum_boost = None
+    if combine == "momentum":
+        # Query-independent, unlike mul/add/rrf above: a candidate's own
+        # recent-activity level, not its time-gap to THIS anchor. "now" is
+        # the newest mtime seen, not wall-clock time, so the experiment is
+        # reproducible from a frozen cache. vector_score*(1+lam*proximity)
+        # with a pairwise gap is algebraically identical to the already-
+        # rejected `mul` mode (see the module docstring) - this is the
+        # actual point of divergence from it.
+        assert mtimes is not None, "momentum requires --mtime-cache"
+        now = max(mtimes.values())
+        momentum_boost = np.array([
+            recency_proximity(now, mtimes[path], tau_hours, mode) if path in mtimes else 0.0
+            for path in paths
+        ])
+
     baseline_ranks, reranked_ranks, boosted_candidate_counts = [], [], []
     for source, target in usable:
         anchor_index, target_index = index_of[source], index_of[target]
@@ -194,7 +238,9 @@ def run_experiment(vault_dir: Path, db_path: Path, dates: dict[str, str],
         baseline_rank = rank_of(vector_scores, index_of, anchor_index, target_index)
         if baseline_rank is None:
             continue
-        if combine == "rrf":
+        if combine == "momentum":
+            reranked_scores = vector_scores * (1 + lam * momentum_boost)
+        elif combine == "rrf":
             # No proximity function needed: RRF ranks candidates by raw gap
             # directly. A missing creation date gets a sentinel gap larger than
             # any real one, so it always ranks last on the recency list rather
@@ -260,17 +306,22 @@ def main():
     parser.add_argument("--vault-dir", help="required unless --self-check")
     parser.add_argument("--db", default=None, help="defaults to <vault>/.obsidian/pkm_index.db")
     parser.add_argument("--cache", type=Path, default=DEFAULT_CACHE)
-    parser.add_argument("--build-cache", action="store_true", help="(re)build the creation-date cache and exit")
+    parser.add_argument("--mtime-cache", type=Path, default=DEFAULT_MTIME_CACHE,
+                        help="only used by --combine momentum")
+    parser.add_argument("--build-cache", action="store_true", help="(re)build the creation-date (and, for momentum, mtime) cache and exit")
     parser.add_argument("--mode", choices=["decay", "hard"], default="decay",
                         help="shape of the proximity function, ignored when --combine rrf. "
                              "decay: smooth exponential tail. hard: step function, 1 within "
                              "--tau, 0 outside it")
-    parser.add_argument("--combine", choices=["mul", "add", "rrf"], default="mul",
+    parser.add_argument("--combine", choices=["mul", "add", "rrf", "momentum"], default="mul",
                         help="mul: vector_score*(1+lam*proximity), the original rejected form. "
                              "add: vector_score+lam*proximity, a tiebreaker that cannot flip a "
                              "clearly-better candidate. rrf: reciprocal-rank-fuse a vector-rank "
                              "list with a recency-rank list (--tau doubles as the RRF k constant, "
-                             "--lam ignored) - structurally cannot displace an unbounded amount")
+                             "--lam ignored) - structurally cannot displace an unbounded amount. "
+                             "momentum: vector_score*(1+lam*candidate_freshness), where freshness "
+                             "is the CANDIDATE's own recent-modification recency, independent of "
+                             "the anchor - not a pairwise gap like the other three modes")
     parser.add_argument("--tau", type=float, default=30.0,
                         help="decay: the exponential time constant. hard: the cutoff. rrf: the "
                              "RRF k constant (--unit ignored for rrf). in --unit units otherwise")
@@ -299,14 +350,25 @@ def main():
         args.cache.write_text(json.dumps(dates), encoding="utf-8")
         print(f"cached {len(dates)} creation dates in {time.perf_counter() - began:.1f}s -> {args.cache}",
               flush=True)
+        if args.build_cache and args.combine != "momentum":
+            return
+
+    if args.combine == "momentum" and (args.build_cache or not args.mtime_cache.exists()):
+        began = time.perf_counter()
+        mtimes = build_modification_dates(vault_dir)
+        args.mtime_cache.parent.mkdir(parents=True, exist_ok=True)
+        args.mtime_cache.write_text(json.dumps(mtimes), encoding="utf-8")
+        print(f"cached {len(mtimes)} modification dates in {time.perf_counter() - began:.1f}s -> {args.mtime_cache}",
+              flush=True)
         if args.build_cache:
             return
 
     dates = json.loads(args.cache.read_text(encoding="utf-8"))
+    mtimes = json.loads(args.mtime_cache.read_text(encoding="utf-8")) if args.combine == "momentum" else None
     tau_hours = args.tau if args.combine == "rrf" else (
         args.tau * 24 if args.unit == "days" else args.tau)
     result = run_experiment(vault_dir, db_path, dates, tau_hours, args.lam,
-                            args.sample, args.seed, args.mode, args.combine)
+                            args.sample, args.seed, args.mode, args.combine, mtimes)
     print(json.dumps(result, indent=1))
 
 
@@ -334,6 +396,15 @@ def self_check():
     # failure mode proven for the multiplicative combine.
     rescaled = rrf_fuse(vector_scores * 1000, gaps, k=1.0)
     assert np.array_equal(np.argsort(-fused), np.argsort(-rescaled))
+
+    # momentum uses candidate-intrinsic freshness (vs. "now"), not a pairwise
+    # anchor-candidate gap - so two different anchors querying the same
+    # candidate must get the same boost, unlike mul/add/rrf above.
+    mtimes = {"a": "2026-01-01T00:00:00+00:00", "b": "2026-01-05T00:00:00+00:00"}
+    now = max(mtimes.values())
+    boost = {p: recency_proximity(now, t, tau=24 * 3, mode="decay") for p, t in mtimes.items()}
+    assert boost["b"] > boost["a"], "the more recently modified candidate must get the bigger boost"
+    assert boost["b"] == recency_proximity(now, mtimes["b"], 24 * 3, "decay")  # same regardless of anchor
     print("self-check ok")
 
 
