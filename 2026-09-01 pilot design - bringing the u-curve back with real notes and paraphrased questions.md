@@ -63,6 +63,7 @@ grading changes too: a paraphrased answer can't be scored by exact-substring mat
 
 ## related
 
+- [[2026-09-01 hop-ceiling pilot - a u-curve shadow the token-ceiling test never found]] — a different pilot on the same fact and question, one note per turn instead of concatenated, found a signal this single-shot pilot didn't
 - [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — the diagnosis this pilot is built to test
 - [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] — the existing scale-up design this reuses almost entirely
 - [[2026-09-01 adversarial literature check for candidate 2]] — the literature that named the exact-match shortcut as the likely cause
