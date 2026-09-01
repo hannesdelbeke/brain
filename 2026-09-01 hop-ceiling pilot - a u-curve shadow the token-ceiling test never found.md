@@ -106,6 +106,7 @@ repeat the 13-hop design with 2-3 more facts, keeping the same three positions, 
 
 ## related
 
+- [[2026-09-01 wikipedia hop-ceiling test - setup and reproduction steps]] — the same design rerun on wikipedia prose with closed-book screening and 2 models: found zero trouble at any of 7 positions, contrasting with this note's real (if rare) hop-4 trouble
 - [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]] — the single-shot pilot this one contrasts with, same fact and question
 - [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — the diagnosis this pilot is an alternative angle on
 - [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] — the original liu-et-al-scale design, still the next step for the single-shot line of testing
