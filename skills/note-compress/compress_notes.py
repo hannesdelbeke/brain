@@ -12,6 +12,13 @@ extracts wikilinks/numbers/dates/URLs/code spans before and after
 compression and rejects (keeps the original untouched) if anything essential
 went missing, rather than paying for an adversarial LLM pass on every note.
 
+A free mechanical delint pass (`delint()`) strips decorative emoji from
+headings and bullets before the LLM ever sees the note. Handing the model
+that job instead was tried and measured to bleed into fenced ASCII-art code
+blocks it was separately told never to touch - real regressions on this
+vault's own emoji-heavy notes, not a hypothetical. A regex scoped to
+heading/bullet lines and blind to fenced code can't make that mistake.
+
 Eligibility, not "compress everything": a compression pass only pays for
 itself after enough future rereads recoup its own cost (this vault's own
 research measured a 2-11 to ~20-48 reread break-even range depending on
@@ -53,6 +60,7 @@ Hard rules:
 - Never drop a causal connector ("because", "so", "therefore", "since") if removing it would make the reader infer a relationship the original stated explicitly.
 - Never drop a hedge or confidence marker ("might", "some", "usually", "observed", "confirmed") — these change what the note claims, not just how it's worded.
 - Keep every markdown heading exactly as written, same level, same text.
+- DO collapse a stack of near-synonym adjectives that all make the same point into one or two words: "hyper-agreeable, polite, and eager to please" -> "agreeable and pleasing" is a good cut, not a loss.
 - Cut prose bulk, not claims: merging two sentences that say the same thing is fine, removing one that says something distinct is not.
 - Return ONLY the compressed markdown body. No preamble, no explanation, no code fence around the whole response.
 
@@ -66,6 +74,33 @@ DATE_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b")
 NUMBER_RE = re.compile(r"(?<![\w.])\d[\d,]*\.?\d*%?(?![\w])")
 FENCED_CODE_RE = re.compile(r"```.*?```", re.DOTALL)
 INLINE_CODE_RE = re.compile(r"`[^`\n]+`")
+EMOJI_RE = re.compile(
+    "[\U0001F300-\U0001FAFF\U00002600-\U000027BF\U0001F1E6-\U0001F1FF️]+\\s*"
+)
+
+
+def delint(text: str) -> str:
+    """Strip decorative emoji from headings and list markers, free and zero-risk.
+
+    A judgment prompt asked to do this itself ("strip decorative styling")
+    was measured to bleed that permission into fenced ASCII-art code blocks
+    it was separately told never to touch - a real regression found by
+    testing against this vault's own emoji-heavy notes, not a hypothetical.
+    A regex that only touches heading/bullet lines and skips fenced code
+    entirely can't make that mistake, so this runs unconditionally before
+    the LLM ever sees the note, instead of being left to the model's
+    judgment.
+    """
+    parts = re.split(r"(```.*?```)", text, flags=re.DOTALL)
+    for i, part in enumerate(parts):
+        if part.startswith("```"):
+            continue  # never touch fenced code
+        lines = part.split("\n")
+        parts[i] = "\n".join(
+            EMOJI_RE.sub("", line) if line.lstrip().startswith(("#", "*", "-")) else line
+            for line in lines
+        )
+    return "".join(parts)
 
 
 def find_vault_root() -> Path:
@@ -226,6 +261,7 @@ def process_note(path: Path, vault_root: Path, client, provider: str, model: str
     if post.metadata.get("compress-hash") == before_hash:
         return {"path": str(path), "status": "skipped-unchanged"}
 
+    body = delint(body)  # free, zero-risk emoji strip before spending the one LLM call
     compressed = call_llm(client, provider, model, body)
     if compressed is None:
         return {"path": str(path), "status": "error-no-response"}
@@ -353,6 +389,19 @@ def self_check():
 
     assert word_count("a b c") == 3
     assert content_hash("x") == content_hash("x") and content_hash("x") != content_hash("y")
+
+    decorated = (
+        "## \U0001F680 Launch Plan\n"
+        "- ✅ ship it\n"
+        "plain prose keeps its \U0001F600 untouched, only heading/bullet markers are cleaned\n"
+        "```\n\U0001F680 this fenced emoji must survive, code is never touched\n```"
+    )
+    cleaned = delint(decorated)
+    assert cleaned.startswith("## Launch Plan"), cleaned
+    assert "- ship it" in cleaned
+    assert "\U0001F600" in cleaned, "delint must only touch heading/bullet lines, not prose"
+    assert "\U0001F680 this fenced emoji must survive" in cleaned, "fenced code must never be touched"
+
     print("self-check ok")
 
 
