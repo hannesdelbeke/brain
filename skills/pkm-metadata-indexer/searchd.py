@@ -58,7 +58,12 @@ Endpoints, all accepting `?vault=name`:
                            out fold of real wikilinks (stacked_fusion_
                            experiment.py --calibrate), not chosen by
                            inspection — see FUSION_LAMBDA_RECENCY/COCOMMIT/AA
-                           for the numbers. Mutually exclusive with
+                           for the numbers. The AA term also cuts a shared
+                           neighbour's contribution to zero past
+                           FUSION_Z_HUB_DEGREE, a same-batch/same-template
+                           false-positive fix confirmed NOT to improve MRR
+                           (see that constant's comment) — precision, not
+                           ranking quality. Mutually exclusive with
                            `&graph=1`/`&recency=1` (fusion wins, the other two
                            are ignored, since it already folds both signals in
                            and stacking them again would double-count). A
@@ -162,6 +167,20 @@ RECENCY_LAMBDA = 0.05
 FUSION_LAMBDA_RECENCY = 0.05
 FUSION_LAMBDA_COCOMMIT = 1.5
 FUSION_LAMBDA_AA = 0.15
+
+# The AA term's shared-neighbour z is read from the unfiltered wikilink graph
+# regardless of how aggressively a candidate pool excludes hubs - see the
+# survey note's "the same-batch/same-template false positive: investigated"
+# section and shared_neighbor_experiment.py's score_all docstring. A same-day
+# batch of notes whose only wikilinks are to a shared catalog/index note
+# scores a nonzero AA contribution with no real relationship between them;
+# z_hub_degree zeroes out a shared neighbour's whole term once its own degree
+# exceeds this. This is a precision fix, confirmed NOT to improve MRR (see
+# the note's "calibrating the z_hub_degree fix on vault-b" section - wash to
+# negative on held-out MRR at every threshold tried). Wired here on the
+# false-positive/precision basis only, not as a ranking-quality improvement -
+# do not cite this as an MRR win.
+FUSION_Z_HUB_DEGREE = 20
 
 # There is no lock over the query path. There was one, a single global mutex, and
 # once the server was threaded it made every request wait for the one before it:
@@ -859,9 +878,12 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
     `&fusion=1` additively combines all three signals at once — vector cosine
     plus FUSION_LAMBDA_RECENCY/COCOMMIT/AA (see those constants for the
     calibration numbers) — rather than either single-signal boost above.
-    `&fusion=1` is mutually exclusive with `&graph=1`/`&recency=1`: recency
-    and co-commit are already folded into it, so honouring `&graph=1` or
-    `&recency=1` alongside it would apply the same signal a second time.
+    The AA term applies FUSION_Z_HUB_DEGREE, a same-batch/same-template
+    false-positive fix (precision only, not an MRR win — see that
+    constant's comment). `&fusion=1` is mutually exclusive with
+    `&graph=1`/`&recency=1`: recency and co-commit are already folded into
+    it, so honouring `&graph=1` or `&recency=1` alongside it would apply the
+    same signal a second time.
     `fusion` wins if more than one flag is set, and the other two flags are
     simply ignored rather than erroring, matching how this route already
     clamps rather than rejects an out-of-range `limit`.
@@ -911,7 +933,8 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
                 vault.aa_neighbors_cache = (vault.vectors_version, wl_neighbors)
         else:
             wl_neighbors = cached_neighbors[1]
-        aa_scores = shared_neighbor.score_all(wl_neighbors, candidates, resolved, "aa")
+        aa_scores = shared_neighbor.score_all(wl_neighbors, candidates, resolved, "aa",
+                                              z_hub_degree=FUSION_Z_HUB_DEGREE)
         aa_prox = dict(zip(candidates, np.minimum(aa_scores / 5.0, 1.0)))
         fused = []
         for path in candidates:
