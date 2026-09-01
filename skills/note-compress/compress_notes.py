@@ -192,8 +192,14 @@ def call_llm(client, provider: str, model: str, body: str, max_retries: int = 3)
     for attempt in range(max_retries):
         try:
             if provider == "groq":
+                # gpt-oss-* is a reasoning model: at the default max_tokens
+                # it can spend the whole budget on hidden reasoning and hit
+                # finish_reason="length" before writing any content.
+                # reasoning_effort="low" and a larger cap fix that instead
+                # of just retrying into the same wall.
                 response = client.chat.completions.create(
                     model=model, messages=[{"role": "user", "content": prompt}],
+                    max_tokens=4096, reasoning_effort="low",
                 )
                 content = (response.choices[0].message.content or "").strip()
             else:
