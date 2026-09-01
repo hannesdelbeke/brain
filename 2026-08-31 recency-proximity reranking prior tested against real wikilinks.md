@@ -108,7 +108,9 @@ This is why rival *count*, not tuning, dominates: if an anchor has $k$ "temporal
 
 ## RRF fusion: also rejected, decisively
 
-Research turned up a third combination mechanism: reciprocal rank fusion, `final = 1/(k+vector_rank) + 1/(k+recency_rank)`, fusing by rank position instead of rescaling a score. This is the standard way production hybrid search systems combine relevance and freshness, and a 2025 paper (Re3, arXiv 2509.01306) uses it specifically to avoid the unbounded-displacement failure proven above — a signal's contribution here is capped at `1/k`, so it looked like the structural fix.
+Research turned up a third combination mechanism: reciprocal rank fusion, `final = 1/(k+vector_rank) + 1/(k+recency_rank)`, fusing by rank position instead of rescaling a score. This is the standard way production hybrid search systems combine relevance and freshness, and it looked like a structural fix for the unbounded-displacement failure proven above — a signal's contribution here is capped at `1/k`.
+
+**Correction:** an earlier version of this section cited a 2025 paper, Re3 (arXiv:2509.01306), as using RRF specifically for this reason. That citation was wrong: [Re3's actual paper](https://arxiv.org/abs/2509.01306) balances relevance and recency with a learned, query-aware gating mechanism — RRF appears nowhere in its text — and the paper was withdrawn in January 2026, the authors stating the surviving version "no longer reflects the direction" of their revised work, per [[2026-09-01 adversarial literature check for candidate 3]]. The RRF rejection below never depended on Re3's authority; it stands on this note's own k-sweep (k=1 to 100,000, never positive).
 
 It isn't, at least not for this signal. A k sweep (1 to 100,000, n=500) never turned positive — best at k=5 (-4.60%), and damage got *worse*, not better, as k grew (-21.39% at k=100,000; both lists flatten together at large k rather than converging back to the vector-only order, contrary to the initial hypothesis). 5-seed stability at k=5: every seed negative (mean ≈ -7.7%). Full-sample (n=4,725) at k=5: **-4.18%**.
 
