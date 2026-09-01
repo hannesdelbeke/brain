@@ -30,6 +30,10 @@ A fixed rule list (drop articles, filler words, hedging phrases, preserve every 
 
 Not yet built as a skill. The candidate use case is compressing agent-read-only vault notes in place — dense reference notes and catalogs are closest to a free win (content-heavy, light connective prose, the case a classifier is built for); narrative notes carrying a chain of reasoning are the risky case, since reasoning is exactly what this method's own failure mode eats first. Any real implementation needs the adversarial gate as a built-in step, not an optional check run once during prototyping — a compressor, classifier-based or rule-based, cannot self-certify which of its own cuts were safe.
 
+## prior art: no exact match found
+
+A GitHub search turned up compression tools for LLM context but nothing combining classify-then-cut with a verification gate the way this method does. [marv1nnnnn/llm-min.txt](https://github.com/marv1nnnnn/llm-min.txt) distills docs into a dense format for LLM consumption but has no verification step, one-way compression only. PackRat (an auto-learning codebook compressor, cited in the HuangOwen/Awesome-LLM-Compression list) claims lossless round-trip via tiktoken, but that's syntactic codebook substitution, not semantic essential-vs-disposable judgment. A Hacker News thread on llm-min.txt independently raised the same idea — use a separate LLM to verify a compressed doc kept task-relevant fidelity — but no shipped repo implements it as a gate. This method appears to be genuinely unclaimed territory, not a rediscovery.
+
 ## Related
 - [[2026-08-31 research on compressing llm reasoning and notes without losing information]]
 - [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]]
