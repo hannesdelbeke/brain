@@ -1,6 +1,6 @@
 ---
 name: designing a true multi-document lost-in-the-middle test for candidate 2
-description: experiment design, not yet run, for testing markdown formatting against LLM fact-retrieval at genuine multi-document Lost-in-the-Middle scale, after three single-document nulls
+description: experiment design for testing markdown formatting against LLM fact-retrieval at genuine multi-document Lost-in-the-Middle scale, after three single-document nulls. now run — see the result section. a fourth null on formatting, and the base position effect itself didn't reproduce either
 created: 2026-09-01
 tags:
   - pkm
@@ -70,6 +70,45 @@ a future agent (or this one, later) can execute this directly:
 2. `candidate2-multidoc/format_delimiters.py` — a small pure-python script, no LLM call, that reads one content JSON and a condition name (`flat`/`bold`/`chunked`) and emits one concatenated markdown context file with that condition's document separators applied. run it 3 times per content file (18 files total) into `candidate2-multidoc/contexts/{instance}_{position}_{condition}.md`, each paired with a `{...}_questions.md` holding the 3-4 questions and nothing that names the formatting variable.
 3. dispatch 18 fresh Claude/haiku subagent calls, one per context file, each given only the file path and its question file, told to answer from the document and nothing else. collect answers into `candidate2-multidoc/results.json`.
 4. grade by exact/substring match against `candidate2-multidoc/content/*.json`'s answer keys, same convention as the three prior pilots and as Liu et al.'s own scoring. tabulate accuracy by condition × position (a 3×3 table for the primary design) — a flat table means another null; a curve that dips in the middle, and dips less under chunked/bold than flat, would be the first actual signal this line of research has found.
+
+## result
+
+ran the primary design exactly as specified above: 6 content generations (3 positions x 2 instances), each expanded into 3 formatted contexts (18 total), each answered blind by a fresh claude/haiku subagent on 3 questions. 54 graded question-answers.
+
+overall accuracy: 45/54, 83.3%. this is the first non-ceiling result in this research line. all three single-document pilots landed at 100%.
+
+### accuracy by position x condition
+
+| position | flat | bold | chunked |
+|---|---|---|---|
+| 1 | 100% | 100% | 50% |
+| 10 | 83.3% | 83.3% | 83.3% |
+| 20 | 83.3% | 83.3% | 83.3% |
+
+### the base position effect did not reproduce
+
+position marginals, averaged across the three formatting conditions: position 1 is 83.3%, position 10 is 83.3%, position 20 is 83.3%. identical.
+
+there is no u-curve. [liu et al.'s](https://cs.stanford.edu/~nfliu/papers/lost-in-the-middle.arxiv2023.pdf) core finding was degraded accuracy for a mid-context answer document. this design still didn't produce that, even at 20 documents, even with a genuine multi-document context, the shape the three single-document pilots were missing. that's the bigger finding here, separate from formatting: this setup, at this scale, on claude/haiku, doesn't reproduce the paper's own base effect. any read of the formatting numbers below has to sit on top of that fact, not next to it.
+
+### the formatting comparison
+
+condition marginals, averaged across the three positions: flat 88.9%, bold 88.9%, chunked 72.2%.
+
+chunked looks worse, but the gap comes from one cell. both content instances at position 1 lost accuracy specifically under chunked delimiters, on document sets where flat and bold — identical underlying content, only the separator differs — scored perfectly. at position 10 and position 20, all three conditions tied at 83.3%.
+
+n=2 instances per cell. one cell moving is not enough to call this a real formatting effect over noise. a bigger instance count at position 1 specifically would be the next thing to check, if this line of research continues.
+
+### where the errors actually came from
+
+- 8 of the 9 wrong answers were on the same question wording, "why was serial X recalled?" — the other two phrasings of the same question, same document, mostly succeeded. that's a question-phrasing effect, not a position or format effect.
+- one full content instance (position 10, instance 2) missed that question in all three formats. the model consistently pulled the reason from a different document in the same near-duplicate reason cluster, not the target. that's the near-duplicate-cluster design working as intended — a real confusion, driven by content, not by where the document sat in context or how it was delimited.
+
+### conclusion
+
+no evidence formatting helps or hurts multi-document retrieval at this scale, past one thin, unreplicated signal (chunked at position 1) too small to trust on its own.
+
+no evidence of the u-curve either, and that's the more important miss. this design still doesn't reproduce liu et al.'s own base position effect at 20 documents on claude/haiku, so the formatting comparison sits on ground that isn't behaving like the paper it's modeled on. the honest read is a fourth null on the formatting question, plus a separate, newly-found null on the position effect itself — both belong in any writeup, and neither should get buried under the other.
 
 ## related
 
