@@ -15,13 +15,13 @@ tags:
 
 > [!todo] next
 > **next:** ask again when the log holds a few thousand human searches, with the judge running so the evaluation pool can be refilled against the current index.
-> **blocked:** the llm judge `eval_rerank.py` needs is not running anywhere, so the harness cannot score a fresh pool.
+> **blocked:** the llm judge [[eval_rerank.py]] needs is not running anywhere, so the harness cannot score a fresh pool.
 
 **why:** [[2026-08-30 what else the index can answer]] ranked this second of six, behind missing links. it is the first of the six to be measured and dropped.
 
 ## what was being tested
 
-`co_retrieval.py` reads `~/.pkm/queries.jsonl`, adds a point to every unordered pair of distinct notes that shared a result set, and decays each pair from its own last sighting with a 30-day half life. the proposal was to add that weight to the fused score at query time, so notes that keep being retrieved together rank together.
+[[co_retrieval.py]] reads `~/.pkm/queries.jsonl`, adds a point to every unordered pair of distinct notes that shared a result set, and decays each pair from its own last sighting with a 30-day half life. the proposal was to add that weight to the fused score at query time, so notes that keep being retrieved together rank together.
 
 the experiment: for each evaluation question take the top 100 fused hits, use the first five distinct notes as pseudo-relevant seeds, give every candidate a bonus equal to the summed decayed edge weight between it and those seeds, normalise the bonus per query, and re-sort by `score + w * bonus`. fused scores sit in a 0.016–0.033 band, so `w = 0.02` is a bonus the size of the whole score spread and `w = 0.2` decides the order outright.
 
@@ -58,7 +58,7 @@ so the 4,884 pairs an earlier pass counted are mostly one benchmark query run 2,
 
 **the corpus key on a multi-corpus search.** a search over several corpora logged one row naming the corpus as the two names joined by a comma, so its edges landed in a bucket no single-corpus reader matches — 1,227 of them — and pairs could span two corpora that share nothing. the daemon now writes one log row per corpus, each holding only that corpus's paths. fixed on 2026-08-30 with a test.
 
-**the harness cannot see a reorder.** `eval_rerank.py` reports precision@limit, and precision at k where k is the request limit is invariant under reordering: the same ten sections in a different order give the same fraction. its headline metric is blind to every rerank it exists to judge. only its mean-first-useful-rank column moves. this measurement used MRR, nDCG@10 and precision@5 instead; the harness should gain one of them before it is trusted again.
+**the harness cannot see a reorder.** [[eval_rerank.py]] reports precision@limit, and precision at k where k is the request limit is invariant under reordering: the same ten sections in a different order give the same fraction. its headline metric is blind to every rerank it exists to judge. only its mean-first-useful-rank column moves. this measurement used MRR, nDCG@10 and precision@5 instead; the harness should gain one of them before it is trusted again.
 
 a third thing to remember rather than fix: the fourteen evaluation questions are themselves in the query log, so the edge database already holds edges derived from the questions under test. it changed nothing measurable here, but any future run has to exclude them or it is scoring itself.
 

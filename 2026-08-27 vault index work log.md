@@ -71,7 +71,7 @@ Added 2026-08-28. The watcher above was written and correct and no reindex it ra
 
 `Vault.matrix()` opened a fresh SQLite connection per call and used `PRAGMA data_version` as the invalidation signal. A fresh connection reads 2 and keeps reading 2 no matter what any other connection commits — the counter only moves for a connection that was already open when the write landed. Measured: three fresh connections read 2, 2, 2 across two external commits, while one long-lived connection went 2 to 3. So the cache was pinned for the life of the process and every watcher pass, every manual reindex and every plugin write was invisible.
 
-The connection now lives on the `Vault` with `check_same_thread=False`, which is safe because every caller already holds `LOCK`, and a `close()` came with it because Windows will not delete a database file a test still has open. `test_searchd.py` asserts a reindex changes `vectors_version`.
+The connection now lives on the `Vault` with `check_same_thread=False`, which is safe because every caller already holds `LOCK`, and a `close()` came with it because Windows will not delete a database file a test still has open. [[test_searchd.py]] asserts a reindex changes `vectors_version`.
 
 Two things generalise. A cache whose invalidation is never exercised by a test is a cache that is always warm and always wrong, and this one sat behind a docstring that described the mechanism accurately while using it incorrectly. And it is the second time in two days that the daemon served a stale answer with a correct database behind it, after the scanner-restart trap above — the pattern is that the process is the cache, so anything measured against a long-running daemon needs a restart or a proven invalidation before the number means anything.
 
@@ -87,7 +87,7 @@ One query is not an evaluation, and the next step was the same question set disc
 
 ## The rerank, measured
 
-`eval_rerank.py` asks one question set of one corpus twice, with the rerank and without, and a model judges each returned section from the section text alone, never seeing which run produced it or at what rank. Fourteen questions written before any result was looked at, one of them the query the rerank was built on, 3,228 notes, 178 judgements, ten minutes.
+[[eval_rerank.py]] asks one question set of one corpus twice, with the rerank and without, and a model judges each returned section from the section text alone, never seeing which run produced it or at what rank. Fourteen questions written before any result was looked at, one of them the query the rerank was built on, 3,228 notes, 178 judgements, ten minutes.
 
 Over the thirteen hold-out questions precision@10 is 39% with the rerank against 32% without, 51 useful sections against 41, and the first useful section sits at mean rank 1.6 against 1.9. Seven questions improve, three get worse, three are unchanged. So the rerank is worth its 533ms, and the size of the win is a couple of extra useful sections in ten rather than a different result list.
 
@@ -107,7 +107,7 @@ The question the rerank was built on lands differently under a blind judge than 
 
 ## Section-level invalidation was already in
 
-Editing one heading does not re-embed the whole note, and has not since commit `f50d2ce8` on 2026-08-21. `index_pkm_meta.py` hashes each `##` section into `Section.sha256`, `load_vector_cache()` keys reuse on `(sha256, embedding_model, chunking_version)`, and `test_unchanged_section_keeps_cached_vector` fails if an untouched section loses its vector or an edited one keeps it. It was carried on the open list here and in [[public/progress - local-first search daemon and indexer|the progress note]] for a week after it shipped, because it landed inside a commit named for per-batch SQLite checkpointing.
+Editing one heading does not re-embed the whole note, and has not since commit `f50d2ce8` on 2026-08-21. [[index_pkm_meta.py]] hashes each `##` section into `Section.sha256`, `load_vector_cache()` keys reuse on `(sha256, embedding_model, chunking_version)`, and `test_unchanged_section_keeps_cached_vector` fails if an untouched section loses its vector or an edited one keeps it. It was carried on the open list here and in [[public/progress - local-first search daemon and indexer|the progress note]] for a week after it shipped, because it landed inside a commit named for per-batch SQLite checkpointing.
 
 What that leaves is a different floor than the one the open item assumed. On 859 notes and 5,169 sections an incremental run is 1.74s: 1.20s scanning and parsing every file, 0.45s in SQLite including the whole-table `DELETE FROM sections_fts`, `note_titles_fts` and `edges` rebuild, and embedding at effectively zero. Cutting the FTS and edges rebuild to a delta wins at most 0.45s of that, so the lever worth pulling first is skipping unchanged files on the scan.
 

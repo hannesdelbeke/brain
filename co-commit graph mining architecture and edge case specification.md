@@ -112,7 +112,7 @@ Where:
 
 ## 4. SQLite Schema Specification
 
-### 4.1 Shipped Schema (`co_commit.py`, `~/.pkm/co_commit.db`)
+### 4.1 Shipped Schema ([[co_commit.py]], `~/.pkm/co_commit.db`)
 
 ```sql
 CREATE TABLE IF NOT EXISTS co_commits (
@@ -151,7 +151,7 @@ ALTER TABLE co_commits ADD COLUMN avg_diff_lines REAL;
 
 ## 5. CLI & Retrieval Interface
 
-### 5.1 Shipped (`co_commit.py`: `--db`, `--vault-dir`, `--vault`, `--note`, `--top`, `--rebuild`, `--selfcheck`)
+### 5.1 Shipped ([[co_commit.py]]: `--db`, `--vault-dir`, `--vault`, `--note`, `--top`, `--rebuild`, `--selfcheck`)
 
 ```bash
 # 1. Update / Incremental Scan
@@ -175,7 +175,7 @@ python co_commit.py --note "docs/pipeline-architecture.md" --direction outbound 
 
 ## 6. Implementation Checklist for Agents
 
-1. **Extractor Module (`co_commit.py`):**
+1. **Extractor Module ([[co_commit.py]]):**
    - [x] Implement `scan_git_commits` (uses `git log --name-only`, not yet `-M` rename detection or `--numstat`).
    - [x] Implement power-law commit size calculator ($p=1.5, \text{floor}=0.005$) — no Intent multiplier or time decay yet, see Section 2.2.
    - [ ] Implement diff geometric-mean scaling.

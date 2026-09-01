@@ -66,7 +66,7 @@ python skills/pkm-metadata-indexer/index_pkm_meta.py --stats
 python skills/pkm-metadata-indexer/index_pkm_meta.py --perf
 ```
 
-### 6. Resident Search Daemon (`searchd.py`)
+### 6. Resident Search Daemon ([[searchd.py]])
 Every CLI call above pays about 3.0s to load the embedding model before it can encode a single query. The daemon loads it once and serves the same `search_index` over HTTP on `127.0.0.1:44771`, which takes a query to 13-22ms. One process serves every vault, because the model is the expensive part and it is vault-independent:
 ```bash
 python skills/pkm-metadata-indexer/searchd.py --vault brain=/path/to/brain --vault work=/path/to/work
@@ -80,7 +80,7 @@ A keepalive thread encodes a throwaway string every 250ms so the model never goe
 
 `&rerank=1` on `/search`, or `--rerank` on the CLI, reorders the fused top 20 with a cross-encoder that reads the query and each section together instead of comparing two vectors made apart. The model is `Xenova/ms-marco-MiniLM-L-6-v2` through the `fastembed` already installed, so it adds no dependency; the first call downloads about 90 MB and loads it lazily, and it is never loaded otherwise. It costs about 22ms per candidate in a bare process, so 227ms over 10, 533ms over 20 and 706ms over 30 against a 26ms query, which is why it is opt-in. Those figures do not hold in the daemon: a process that has loaded the DirectML index model reranks 20 candidates in 2.4s against 540ms for the same call without it, and no thread cap wins it back (8 threads 1.3s, 1 thread 8.5s), so `/search?rerank=1` measures 2.2-5.7s per corpus end to end. Moving indexing off DirectML or into its own process is the fix and has not been tried. `RERANK_CANDIDATES` sets the depth. Results carry a `rerank_score` when it ran. On the query "how did we stop the laptop overheating" over 3,264 notes, fusion put the two sections that answer it at rank 9 and 11 and returned notes about laptop hardware and building ventilation above them; the rerank put both first with a score gap of 5.9 and 5.4 against -5.2 for the next.
 
-`eval_rerank.py` is what says whether that generalises. It asks a question set of one corpus twice, once with the rerank and once without, and has a model judge each returned section from the section text alone, so the judge cannot see which run produced it or at what rank. Point it at a daemon serving the corpus: `python searchd.py --vault brain=<vault> --port 44781` then `python eval_rerank.py --vault brain --port 44781`, with `--self-check` for the scoring asserts. Judgements cache in `~/.pkm/rerank-judgements.json`. Over 13 hold-out questions on a 3,228-note vault, precision@10 was 39% with the rerank against 32% without, first useful section at mean rank 1.6 against 1.9, seven questions better, three worse, three unchanged. Repeated on the 927-note vault-b corpus with `--withhold-private` and a `claude-haiku-4-5-20251001` judge: 45% against 42%, 51% against 48% over the sections a judge saw, first useful section at mean rank 1.7 against 2.2, six questions better, three worse, four unchanged. Winning on both corpora is why `search_vault.py` turns it on by default while `/search` leaves it opt-in.
+[[eval_rerank.py]] is what says whether that generalises. It asks a question set of one corpus twice, once with the rerank and once without, and has a model judge each returned section from the section text alone, so the judge cannot see which run produced it or at what rank. Point it at a daemon serving the corpus: `python searchd.py --vault brain=<vault> --port 44781` then `python eval_rerank.py --vault brain --port 44781`, with `--self-check` for the scoring asserts. Judgements cache in `~/.pkm/rerank-judgements.json`. Over 13 hold-out questions on a 3,228-note vault, precision@10 was 39% with the rerank against 32% without, first useful section at mean rank 1.6 against 1.9, seven questions better, three worse, three unchanged. Repeated on the 927-note vault-b corpus with `--withhold-private` and a `claude-haiku-4-5-20251001` judge: 45% against 42%, 51% against 48% over the sections a judge saw, first useful section at mean rank 1.7 against 2.2, six questions better, three worse, four unchanged. Winning on both corpora is why [[search_vault.py]] turns it on by default while `/search` leaves it opt-in.
 
 `GATEWAY` and `MODEL` pick the judge. The request is Gemini-shaped when `MODEL` names a Gemini model and OpenAI-shaped otherwise, so a gateway serving only `/v1/chat/completions` can still run the eval.
 
@@ -104,7 +104,7 @@ tail -3 ~/.pkm/queries.jsonl
 
 Tests: `python -m unittest test_searchd test_index_pkm_meta test_index_sessions`.
 
-### 7. Open Problem Finder (`find_open_problems.py`)
+### 7. Open Problem Finder ([[find_open_problems.py]])
 Ranks notes by how likely they still describe an unsolved problem, so an agent can pick work without reading the vault:
 ```bash
 python skills/pkm-metadata-indexer/find_open_problems.py --top 30
@@ -113,7 +113,7 @@ python skills/pkm-metadata-indexer/find_open_problems.py --self-test
 ```
 It scans markdown directly rather than the index, so a stale or missing database does not matter; a full pass over 3200 notes takes about 2s. Score comes from a problem-shaped heading with no solution-shaped heading (+3), a `TODO ` title prefix (+3), open task checkboxes (+1 each, capped at 3), and body markers such as "unresolved", "doesn't work" or "can't figure out" (+2). Notes carrying the `solved` tag score zero and drop off the list permanently, which is how a finished problem gets retired. See [[finding unsolved problems in my vault]].
 
-### 8. Urgent Task Ranking (`urgent_tasks.py`)
+### 8. Urgent Task Ranking ([[urgent_tasks.py]])
 Orders open `- [ ]` tasks by a time-based urgency score, for tasks whose importance changes with the calendar rather than with their wording:
 ```bash
 python skills/pkm-metadata-indexer/urgent_tasks.py
@@ -122,7 +122,7 @@ python skills/pkm-metadata-indexer/urgent_tasks.py --selfcheck
 ```
 Score is `100 / max(3, days_until_due + 3) + days_since_created / 3`, so a deadline term that stays near zero until the last weeks then climbs to 33 on the due date, plus a rot term of one point per three days a task has sat. Dates come from `[due:: YYYY-MM-DD]` and `[created:: YYYY-MM-DD]` inline fields or the equivalent 📅 and ➕ emoji. Like the open problem finder it reads markdown directly, ignores fenced code blocks so documented examples do not rank, and skips tasks with neither date. See [[TODO how to highlight urgent tasks]].
 
-### 9. Mention Heatmap (`mention_heatmap.py`)
+### 9. Mention Heatmap ([[mention_heatmap.py]])
 Ranks wikilink targets by how often they were newly written over time, so a subject that keeps coming back surfaces above one that is merely linked from many old notes:
 ```bash
 python skills/pkm-metadata-indexer/mention_heatmap.py
@@ -138,7 +138,7 @@ curl "http://127.0.0.1:44771/unlinked?note=Zettelkasten&limit=20"
 python skills/pkm-metadata-indexer/search_vault.py "Zettelkasten" --unlinked
 python skills/pkm-metadata-indexer/search_vault.py "Zettelkasten" --unlinked --direct
 ```
-Matching is an FTS5 phrase over `sections_fts`, so it is token-based: `covariance` does not match `covariances`, which the pane's substring match does. Frontmatter `aliases` count as titles and are read from the target file at query time, one file read per query, because the index does not store them. Five things are excluded: the note itself; sections already holding a `[[wikilink]]` to it under any alias; matches inside a fenced code block (the complaint in [[Obsidian unlinked mentions include code snippets]], using the same fence toggle as `urgent_tasks.py`); matches inside a code span, for the same reason; and matches sitting inside a link to some other note. Results are ordered by bm25 and carry path, heading, line number and a snippet with the term in brackets. The endpoint and the CLI call one `find_unlinked_mentions`, so they cannot drift.
+Matching is an FTS5 phrase over `sections_fts`, so it is token-based: `covariance` does not match `covariances`, which the pane's substring match does. Frontmatter `aliases` count as titles and are read from the target file at query time, one file read per query, because the index does not store them. Five things are excluded: the note itself; sections already holding a `[[wikilink]]` to it under any alias; matches inside a fenced code block (the complaint in [[Obsidian unlinked mentions include code snippets]], using the same fence toggle as [[urgent_tasks.py]]); matches inside a code span, for the same reason; and matches sitting inside a link to some other note. Results are ordered by bm25 and carry path, heading, line number and a snippet with the term in brackets. The endpoint and the CLI call one `find_unlinked_mentions`, so they cannot drift.
 
 Measured over 3,228 notes and 6,550 sections at `limit=20`: a narrow title (`Zettelkasten`, 7 hits) costs 20ms in the daemon and 34ms over HTTP; a hub title (`Obsidian`, `Python`, both capped at 20 hits) costs 41-48ms and 57-59ms, because bm25 ranks every section holding the word before the top 200 is taken. A first call against a freshly started daemon costs the same, since this endpoint keeps no resident state, unlike `/search` and its model. Through the CLI a call is 0.38s against the daemon and 1.53s with `--direct`, both Python startup. Limits: one hit per section, the first; a mention inside a URL or a markdown link label still counts; an unclosed fence marks the rest of the file as code. No plugin calls this yet. See [[unlinked mentions from the vault index]].
 
@@ -149,7 +149,7 @@ curl "http://127.0.0.1:44771/similar?note=Obsidian%20graph%20view&limit=12&vault
 ```
 `/search` spends about 220ms encoding the query string on `CPUExecutionProvider`, which is most of the cost of a call and is pure waste when the note is already indexed. `find_similar_notes` mean-pools the note's own section vectors instead, normalises, and multiplies the resident matrix, so no model runs: 11-26ms over HTTP at `limit=36` on 3,228 notes and 6,550 sections, against 228-541ms for the same note through `/search`. The note itself is excluded and each other note appears once, at its best-matching section. Response shape matches `/search`, so a caller only changes the URL. An unresolvable or ambiguous note reference returns `{"error": ...}` rather than an empty list, which is how a caller tells "not indexed yet" apart from "no neighbours" and decides whether to fall back to `/search`. That fallback is what the Semantic Local Graph plugin does for a note written since the last reindex. See [[core Obsidian features to rework on the vault index]].
 
-### 12. Agent Session Index (`index_sessions.py`)
+### 12. Agent Session Index ([[index_sessions.py]])
 Indexes agent transcripts into the same tables as notes, so past sessions are searchable by the same query path:
 ```bash
 python skills/pkm-metadata-indexer/index_sessions.py --root ~/.claude/projects
@@ -158,13 +158,13 @@ python skills/pkm-metadata-indexer/searchd.py --sessions claude=~/.claude/projec
 ```
 A transcript is a note, a turn is a section, and a subagent spawn is an edge back to the session that spawned it, so `search_index`, `query_links` and the SHA256 cache work unchanged. Every file a tool touched is also an edge, which answers "which session last edited this file" from the graph rather than from git. `build_index` takes a `collect=` scanner for this, and the markdown scanner is still the default, so there is one index format and two front ends rather than two systems.
 
-A reindex is a tail read. A transcript only ever grows, so each run records the byte it stopped at, the line number there and a hash of the 4 KB before it in `<root>/.pkm_scan_state.json`, and the next run seeks to that byte instead of parsing from the top. Rows for the untouched part come back out of the index itself, which already stores every section with its text, so nothing is cached twice. A file that shrank, whose prefix hash moved, or whose section count disagrees with the index is read in full, and any edit to `index_sessions.py` or to `CHUNKING_VERSION` changes a fingerprint in the state file that invalidates every offset — so a scanner change can never leave stale rows behind. Measured over 859 transcripts: parsing drops from 12.46s to 0.78s and the whole metadata-only pass from 19.24s to 7.78s, of which 6.6s is the FTS rebuild. A half-written last line has no newline yet, so it is left for the next run. `--full` reparses everything.
+A reindex is a tail read. A transcript only ever grows, so each run records the byte it stopped at, the line number there and a hash of the 4 KB before it in `<root>/.pkm_scan_state.json`, and the next run seeks to that byte instead of parsing from the top. Rows for the untouched part come back out of the index itself, which already stores every section with its text, so nothing is cached twice. A file that shrank, whose prefix hash moved, or whose section count disagrees with the index is read in full, and any edit to [[index_sessions.py]] or to `CHUNKING_VERSION` changes a fingerprint in the state file that invalidates every offset — so a scanner change can never leave stale rows behind. Measured over 859 transcripts: parsing drops from 12.46s to 0.78s and the whole metadata-only pass from 19.24s to 7.78s, of which 6.6s is the FTS rebuild. A half-written last line has no newline yet, so it is left for the next run. `--full` reparses everything.
 
 Only prose and a whitelist of tool arguments are indexed. Tool results are about 80% of the corpus by size, they hold whatever secrets and file dumps passed through the session, and the files they read are still on disk; thinking blocks are another 6% and are skipped for now. Client-generated user turns (slash commands, hook output, `isMeta` caveats, task notifications, the interrupt marker) are dropped before they can become the session title. A prose floor drops the rest of the noise, and it is asymmetric: 30 characters for an assistant turn, 10 for a user one. Over 120 transcripts, 15% of user prose sits under 30 characters and reads like "who is logged in gh", while the 6% of assistant prose that short is all "Now the tests." The floor drops the turn rather than only its vector, so a short first prompt would otherwise cost the session its title as well.
 
 Measured at `~/.claude/projects/.pkm_index.db`: a metadata-only pass over 766 transcripts and 1.49 GB takes 2m05s (102s parsing JSON Lines, 21s committing) for 70,418 sections and 8,524 edges in 101 MB, and `--with-embeddings` over 858 transcripts adds 298.86s at 265.5 vec/s on DirectML for 79,359 vectors, 320.92s and 222 MB in total. Warm queries run 34-62ms with vectors and 30-58ms without, against 13-22ms for the vault index at a tenth the sections; the vector matrix is 122 MB resident in the daemon. Embeddings stay a flag rather than a prerequisite, because `search_index` degrades to lexical when a corpus has none. Chunk headings carry the session's first real prompt, which labels a turn by its session rather than by itself. See [[cross-agent session indexing architecture]].
 
-### 13. Co-retrieval Edges (`co_retrieval.py`)
+### 13. Co-retrieval Edges ([[co_retrieval.py]])
 Notes that keep coming back in the same result set are related in a way their text does not say. The query log records the result paths of every `/search` and `/similar` call, so the association is derivable after the fact: read the log, add a point to every pair of notes that shared a result set, let old points fade.
 ```bash
 python skills/pkm-metadata-indexer/co_retrieval.py
@@ -176,9 +176,9 @@ A run folds in whatever the log gained since the last run and prints the heavies
 
 Edges live in `~/.pkm/co_retrieval.db`, beside the log rather than in the vault index, for the reason the log is not in the index either: a reindex rebuilds the index. The table is `(vault, note_a, note_b, weight, last_seen)` keyed on the pair, with `note_a < note_b` so an unordered pair is stored once, and a `log_state` row holding the byte offset already folded in. Byte offset rather than line count because the log is written in text mode, and a half-written last line is left for the next run.
 
-Nothing reads these edges yet. Wiring them into ranking is a separate change and it goes through `eval_rerank.py` first, or it is an opinion rather than an improvement.
+Nothing reads these edges yet. Wiring them into ranking is a separate change and it goes through [[eval_rerank.py]] first, or it is an opinion rather than an improvement.
 
-### 14. Query Misses (`query_misses.py`)
+### 14. Query Misses ([[query_misses.py]])
 The query log is the only record of a search that went nowhere, and nothing read it for that. This reads the same `~/.pkm/queries.jsonl` and prints what search did not find:
 ```bash
 python skills/pkm-metadata-indexer/query_misses.py
@@ -189,7 +189,7 @@ Three signals. `empty` is a query that returned nothing. `narrow` is a result se
 
 A fourth signal, a top score far under the corpus median, is not built: `log_query` stores result paths and no scores, so the number does not exist to read. It needs a writer change first.
 
-The reader is read-only and replays the whole log from offset 0 each run. It shares `read_new` with `co_retrieval.py`, and so the same tolerance for a half-written last line, but not that module's stored offset, which stays where co-retrieval left it.
+The reader is read-only and replays the whole log from offset 0 each run. It shares `read_new` with [[co_retrieval.py]], and so the same tolerance for a half-written last line, but not that module's stored offset, which stays where co-retrieval left it.
 
 Measured on a log of 12 queries over two days, 6 of them distinct: 0 empty, 3 narrow, and 4 reformulation runs covering 10 of the 12. That is a log written almost entirely by daemon tests and watcher probes rather than by anyone searching, so the counts measure the tool and not the index. There is not enough real traffic yet to say what search misses.
 
@@ -204,7 +204,7 @@ def scan_my_corpus(root):
 
 pkm.build_index(vault_path=str(root), collect=scan_my_corpus)
 ```
-`index_sessions.py` is the worked example, in 380 lines. The daemon takes the same scanner by import path, so a corpus living in another repository needs no code here:
+[[index_sessions.py]] is the worked example, in 380 lines. The daemon takes the same scanner by import path, so a corpus living in another repository needs no code here:
 ```bash
 python skills/pkm-metadata-indexer/searchd.py --corpus /path/to/that/repo/my_scanner.py:scan_my_corpus=name=/path/to/corpus
 ```
@@ -212,7 +212,7 @@ python skills/pkm-metadata-indexer/searchd.py --corpus /path/to/that/repo/my_sca
 
 Embedding uses CUDA or DirectML when either is present and falls back to CPU. Query embedding is a single vector either way, so the daemon is fast without a GPU; indexing is where the device matters.
 
-### 16. Repository Link Graph (`index_repo.py`)
+### 16. Repository Link Graph ([[index_repo.py]])
 A repository has no wikilinks and is full of references anyway, so the same `edges` table works on one once the references are derived rather than parsed:
 ```bash
 python skills/pkm-metadata-indexer/index_repo.py --root /path/to/repo
@@ -228,7 +228,7 @@ File discovery is `git ls-files --cached --others --exclude-standard`, so `.giti
 
 Measured on a 773-file repository with 87 markdown docs, 241 source files and 445 images: the scan takes 0.62s and the whole metadata-only pass 0.74s, for 1,852 sections and 831 edges in 3.7 MB, of which 693 resolve to a real file and 138 do not. 435 of the 445 images are unreferenced, which is the scope showing rather than the repository being untidy: an asset loaded from source code has no markdown reference to find, and imports are not parsed. See [[2026-08-27 a link graph over code, docs and assets]].
 
-### 17. Querying the Link Graph (`link_graph.py`)
+### 17. Querying the Link Graph ([[link_graph.py]])
 The `edges` table is filled by every scanner and read by nothing else, so this is the query surface over it, for a vault index or a repository one:
 ```bash
 python skills/pkm-metadata-indexer/link_graph.py refs src/main.ts
@@ -240,7 +240,7 @@ python skills/pkm-metadata-indexer/link_graph.py --selfcheck
 
 An image counts as referenced when an edge matches its path or its basename, not only its resolved target. The vault scanner stores image embeds with a null `resolved_target_path`, so the strict join called all 38 images in a vault orphans. The bias is deliberate: a false orphan gets a file deleted and a false reference only leaves one lying around.
 
-### 18. Antigravity CLI Conversations (`index_agy.py`)
+### 18. Antigravity CLI Conversations ([[index_agy.py]])
 The second scanner over the `collect=` contract, which is what makes section 15 a seam rather than an interface with one implementation:
 ```bash
 python skills/pkm-metadata-indexer/index_agy.py --root ~/.gemini/antigravity-cli
@@ -257,7 +257,7 @@ curl "http://127.0.0.1:44771/duplicates?threshold=0.95&limit=20&vault=brain"
 ```
 Every pair of notes whose pooled vectors are at or above the threshold, unioned into connected components, each component returned once as `{paths, top, unlinked, pairs}` with `pairs` indexing into that component's own `paths`. Clusters are sorted by their highest internal score.
 
-### 20. Co-Commit Graph Mining (`co_commit.py`, `GET /co-commits`, `/similar?graph=1`)
+### 20. Co-Commit Graph Mining ([[co_commit.py]], `GET /co-commits`, `/similar?graph=1`)
 Mines Git commit history to discover serendipitous and implicit relationships between notes that share zero semantic vector similarity (inspired by change coupling and logical coupling research).
 ```bash
 python skills/pkm-metadata-indexer/co_commit.py --rebuild
@@ -269,18 +269,18 @@ curl "http://127.0.0.1:44771/similar?note=profile.md&graph=1"
 ```
 Uses a pure power-law commit scaling model ($w = \max(0.005, 1 / (N - 1)^{1.5})$, no intent multiplier, no time decay — every commit weighted equally regardless of message) with evergreen accumulation. Incremental by default, using `commit_scan_state.last_scanned_sha`; a rewritten history (rebase, filter-repo, force-push) is detected via `merge-base --is-ancestor` and triggers a full rescan. A commit touching more than `MAX_COMMIT_FILES` (200) files is skipped entirely rather than pairwise-weighted: two historical bulk-import commits of ~2,476 files each had produced 3.13M edge rows, 95.7% of the whole table, all noise; a `--rebuild` against this vault's real history after the fix landed at 82,796 rows, a 97.5% cut.
 
-`query_associations()`'s `rank_by` (new) picks how a `--note` result is ordered. Default `lift` — Amazon-style lift-normalized scoring (`lift(A,B) = P(B|A)/P(B)`, self-normalizing against each note's own total co-commit weight) — needs no hub cutoff at all, and was measured in `lift_cooccurrence_experiment.py` to beat the `--exclude-hubs` threshold below on every graph tested (four graphs, three vault scales), standalone and RRF-fused, with zero recalibration. `rank_by=weight` restores the original raw-weight order and honours `--exclude-hubs`, which drops notes with more co-commit partners than `--hub-degree` (default 20) — a "current project" doc or an AGENTS.md/memory.md-style index file otherwise drags in whatever else that session touched — kept for a caller that explicitly wants that mechanism, since it was found to not transfer across graph scale (meaningless on a graph much smaller than the 199,783-edge one it was calibrated on). `query_associations()`'s own function default stays `weight`, unchanged, for backward compatibility with existing callers that never pass `rank_by` (`GET /co-commits`, `/similar?graph=1`/`&fusion=1`, `eval_related.py`); only the CLI's own `--note` flag defaults to `lift`. The `weight` field in a returned row is always the raw co-commit weight either way, never the lift score — only the ORDER changes.
+`query_associations()`'s `rank_by` (new) picks how a `--note` result is ordered. Default `lift` — Amazon-style lift-normalized scoring (`lift(A,B) = P(B|A)/P(B)`, self-normalizing against each note's own total co-commit weight) — needs no hub cutoff at all, and was measured in [[lift_cooccurrence_experiment.py]] to beat the `--exclude-hubs` threshold below on every graph tested (four graphs, three vault scales), standalone and RRF-fused, with zero recalibration. `rank_by=weight` restores the original raw-weight order and honours `--exclude-hubs`, which drops notes with more co-commit partners than `--hub-degree` (default 20) — a "current project" doc or an AGENTS.md/memory.md-style index file otherwise drags in whatever else that session touched — kept for a caller that explicitly wants that mechanism, since it was found to not transfer across graph scale (meaningless on a graph much smaller than the 199,783-edge one it was calibrated on). `query_associations()`'s own function default stays `weight`, unchanged, for backward compatibility with existing callers that never pass `rank_by` (`GET /co-commits`, `/similar?graph=1`/`&fusion=1`, [[eval_related.py]]); only the CLI's own `--note` flag defaults to `lift`. The `weight` field in a returned row is always the raw co-commit weight either way, never the lift score — only the ORDER changes.
 
 `/similar?graph=1` RRF-fuses `/co-commits` into the vector ranking (`1/(60+rank)` per source, same constant `/search` fuses lexical and vector with), opt-in rather than default: the noise rate above is real even with hub exclusion, so it is a signal a caller asks for. An agent is the expected caller here rather than a human clicking through options, and won't reliably have this file loaded when it calls `/similar`, so the option is surfaced in-band instead of only in this doc: a plain `/similar` response carries a `graph_hint` field when co-commit history exists for the note (existence only, not a count — a caller deciding whether a second call is worth it needs "is there anything," not a number), and `/health` reports `co_commit_edges` per vault so an agent can tell upfront whether the signal exists in this vault at all before trying a specific note.
 
-`eval_related.py` is the blind-judge harness for this, `eval_rerank.py`'s pattern applied to note-to-note relatedness instead of query reranking: samples the notes with the most co-commit edges, asks both `/co-commits` and `/similar` for neighbours, and has a model judge each candidate pair from a short excerpt of each note alone, never learning which signal proposed it.
+[[eval_related.py]] is the blind-judge harness for this, [[eval_rerank.py]]'s pattern applied to note-to-note relatedness instead of query reranking: samples the notes with the most co-commit edges, asks both `/co-commits` and `/similar` for neighbours, and has a model judge each candidate pair from a short excerpt of each note alone, never learning which signal proposed it.
 ```bash
 python skills/pkm-metadata-indexer/eval_related.py --vault brain --vault-dir <vault> --port 44781
 python skills/pkm-metadata-indexer/eval_related.py --self-check
 ```
 Reports precision for co-commit-only, vector-only and both-agree candidates, and how many co-commit neighbours vector search never surfaced at all — the number that says whether the signal is distinct, separately from whether it is any good. Judgements cache in `~/.pkm/related-judgements.json`. See [[public/co-commit graph mining for serendipitous note associations|co-commit graph mining research]].
 
-### 21. Recency-Proximity Prior (`recency_prior_experiment.py`, `/similar?recency=1`)
+### 21. Recency-Proximity Prior ([[recency_prior_experiment.py]], `/similar?recency=1`)
 A note created within `RECENCY_TAU_HOURS` (6) of the anchor gets `RECENCY_LAMBDA` (0.05) added to its raw cosine score — additively, not as a multiplier. Validated against real wikilinks: 5/5 seeds positive, full-sample +8.60% MRR. Two other combine forms were tried first and rejected (multiplicative: proven mathematically to displace an arbitrary amount, rejected; RRF rank fusion: theoretically sounder but still net-negative at every `k` tested, -4.18% full-sample) — additive is the one form a small weight cannot use to displace a candidate that was already clearly better on content. See [[public/2026-08-31 recency-proximity reranking prior tested against real wikilinks|the research note]] for the sweeps, the proof, and why the other two forms fail.
 ```bash
 curl "http://127.0.0.1:44771/similar?note=profile.md&recency=1"
@@ -300,7 +300,7 @@ Lambdas are calibrated, not chosen by inspection: a grid search over `LAM_RECENC
 ```bash
 python skills/pkm-metadata-indexer/stacked_fusion_experiment.py --vault-dir <new-vault> --calibrate --seed 0 --sample 1000
 ```
-and compare the held-out MRR of the currently-wired fixed combo against the best single addition on that vault's own data (same comparison the vault-b check ran). If the wired combo still wins or comes close, no action needed. If a single signal clearly beats it: don't build per-vault config on one reading — the gap can shrink on its own as a fresh vault's co-commit graph matures (co-commit strength scales with git history depth, see the survey note's four-vault section), and a single calibration run can land on a noisy point (the lambda surface is often flat enough that the exact argmax moves between seeds). Recalibrate again after the vault has a few more weeks of real history; only invest in per-vault lambda plumbing in `searchd.py` (currently global constants, no per-vault override exists) once the same vault shows the gap persisting across multiple recalibrations spaced apart, not from a single check.
+and compare the held-out MRR of the currently-wired fixed combo against the best single addition on that vault's own data (same comparison the vault-b check ran). If the wired combo still wins or comes close, no action needed. If a single signal clearly beats it: don't build per-vault config on one reading — the gap can shrink on its own as a fresh vault's co-commit graph matures (co-commit strength scales with git history depth, see the survey note's four-vault section), and a single calibration run can land on a noisy point (the lambda surface is often flat enough that the exact argmax moves between seeds). Recalibrate again after the vault has a few more weeks of real history; only invest in per-vault lambda plumbing in [[searchd.py]] (currently global constants, no per-vault override exists) once the same vault shows the gap persisting across multiple recalibrations spaced apart, not from a single check.
 
 ## What it extracts
 - **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.

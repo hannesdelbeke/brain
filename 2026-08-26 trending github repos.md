@@ -120,7 +120,7 @@ The optimal pattern treats **Markdown as Human Source Code** and **sqlite-vec** 
 [ AI Execution Layer ]    ──▶ sqlite-vec + FTS5 in SQLite (10ms C vector KNN + Lexical search)
 ```
 
-* **Integration with [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]:** Replacing NumPy matrix multiplication in `searchd.py` with native sqlite-vec and sqlite-rag eliminates Python memory bloat and allows SQL-level filtering (e.g. `WHERE tag = 'technical' AND distance < 0.3`).
+* **Integration with [[public/skills/pkm-metadata-indexer/SKILL|pkm metadata indexer]]:** Replacing NumPy matrix multiplication in [[searchd.py]] with native sqlite-vec and sqlite-rag eliminates Python memory bloat and allows SQL-level filtering (e.g. `WHERE tag = 'technical' AND distance < 0.3`).
 * **Where Chroma Fits:** Chroma excels not as the permanent vault, but as an **ephemeral subagent scratchpad** (storing intermediate reasoning steps and tool execution traces during multi-agent tasks, which get distilled into Markdown upon task completion).
 
 ---

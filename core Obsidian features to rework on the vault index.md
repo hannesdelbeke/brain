@@ -30,7 +30,7 @@ Measured from `.obsidian/pkm_index.db` on 2026-08-25:
 > [!todo] 1. Quick switcher that searches by meaning
 > Right now, when you press the switcher and type, Obsidian only looks at the names of your notes. If you type "feeling overwhelmed by projects" and no note is called that, you get nothing, even though you wrote that note last year.
 > The index already knows what every note is about, because every section has an embedding, which is a list of numbers describing its meaning. Notes about the same thing get similar numbers. So the switcher can find the note by its meaning instead of by its name.
-> The work is small: `search_vault.py` already answers this exact query, and the plugin already opens a modal with mode prefixes. This is one more prefix, not a new window.
+> The work is small: [[search_vault.py]] already answers this exact query, and the plugin already opens a modal with mode prefixes. This is one more prefix, not a new window.
 > Related: [[Obsidian - Tab Switcher]], [[random title note flow]], [[vault hybrid search]]
 
 > [!todo] 2. Local graph that shows related notes, not only linked ones

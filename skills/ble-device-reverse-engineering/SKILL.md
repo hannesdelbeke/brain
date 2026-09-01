@@ -37,9 +37,9 @@ When documenting or publishing IoT hardware reverse-engineering findings:
 | :--- | :--- | :---: | :--- |
 | **Physical MAC Address** | `E4:96:89:XX:XX:XX` | 🔒 **PRIVATE** | **Never commit to public repos.** MAC addresses uniquely identify physical hardware. Accept via CLI flag (`--mac`) or environment variables. |
 | **Physical Dimensions** | `1840mm x 1385mm` | 🔒 **PRIVATE** | Identifies specific window/room architectural details. Keep in private notes. |
-| **GATT Service & Char UUIDs** | `0000fe50-0000-1000-8000-00805f9b34fb` *(example)* | 🌐 **PUBLIC** | Firmware constants shared across all units of that model. Safe to publish. Substitute real UUIDs from `inspect_ble.py` output. |
+| **GATT Service & Char UUIDs** | `0000fe50-0000-1000-8000-00805f9b34fb` *(example)* | 🌐 **PUBLIC** | Firmware constants shared across all units of that model. Safe to publish. Substitute real UUIDs from [[inspect_ble.py]] output. |
 | **Command Hex Sequences** | `ff78ea41bf030000` | 🌐 **PUBLIC** | Generic motor protocol format; contains zero credentials or tokens. Safe to publish. |
-| **Automation Scripts** | `tuiss_blind_controller.py` | 🌐 **PUBLIC** | Code logic is generic and sanitized. Safe to publish. |
+| **Automation Scripts** | [[tuiss_blind_controller.py]] | 🌐 **PUBLIC** | Code logic is generic and sanitized. Safe to publish. |
 
 ## 📂 Files & Scripts in this Skill
 

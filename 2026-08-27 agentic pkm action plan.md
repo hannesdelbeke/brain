@@ -29,8 +29,8 @@ Checked on 2026-08-27 against `pkm-search` (working tree) and the `brain` vault.
 | Claim in notes | Actual state | Consequence |
 |:---|:---|:---|
 | Idle CPU burn: levers "identified", one of them a direct `ort.SessionOptions` with `session.intra_op.allow_spinning=0` | That lever was unreachable: embeddings run through `fastembed.TextEmbedding`, which accepts no `SessionOptions`. Its own `threads=` argument reaches the same pool | Fixed 2026-08-27. `get_embedding_model()` takes `threads`, part of the model cache key, and the query path passes 1; bulk indexing keeps the full pool. Warm idle daemon reads 0.000 cores, pinned by a test |
-| `urgent_tasks.py` documented in the pkm-metadata-indexer skill (section 8) | Present in the skill, which is now the only copy of the tool | Resolved. The `pkm-search` repo it was missing from is a README pointing at the skill |
-| `python _scripts/check_dead_links.py <note>` is a mandatory pre-publish step | Script now exists (`_scripts/check_dead_links.py`, added 2026-08-27) | Resolved. Run it in the promotion SOP rather than describing it |
+| [[urgent_tasks.py]] documented in the pkm-metadata-indexer skill (section 8) | Present in the skill, which is now the only copy of the tool | Resolved. The `pkm-search` repo it was missing from is a README pointing at the skill |
+| `python _scripts/check_dead_links.py <note>` is a mandatory pre-publish step | Script now exists ([[check_dead_links.py]], added 2026-08-27) | Resolved. Run it in the promotion SOP rather than describing it |
 | Public notes link as `[[public/<note>]]` | `brain` is mounted at `public/` inside a private parent vault by directory junction, not as a submodule — a submodule would commit a pointer to `brain` into the private repo's history. Opened standalone there is no parent, so every `public/`-prefixed link (90 notes) resolves to nothing | Fine inside the parent vault, broken for standalone/published browsing. Decide which context is authoritative before mass-editing links |
 | `profile.md` (living user profile) and `memory.md` (episodic log) | `profile.md` initialized 2026-08-28 (`60971f39`). Architectural decisions refined to live directly in concept/progress notes rather than duplicate `memory.md` | Resolved. `profile.md` operational as identity briefing; decisions update concept notes in-place |
 | In-memory NumPy search <1ms over 68,000 sections; no vector DB below ~300k notes | Consistent with [[public/2026-08-18 what retrieval costs as a vault grows|retrieval economics]] | `sqlite-vec` evaluation is a solution without a problem. Defer |
@@ -41,7 +41,7 @@ Checked on 2026-08-27 against `pkm-search` (working tree) and the `brain` vault.
 ## 🥇 P0 — Do these before writing another architecture note
 
 ### 1. Actually fix the idle CPU burn — done 2026-08-27
-* **Where:** `skills/pkm-metadata-indexer/index_pkm_meta.py`, `get_embedding_model()`.
+* **Where:** [[index_pkm_meta.py]], `get_embedding_model()`.
 * **What:** `threads` argument passed into `TextEmbedding(...)` and made part of the model cache key. The query path sets `QUERY_THREADS = 1`; bulk indexing leaves it unset and keeps the full pool. No `SessionOptions` and no `OMP_WAIT_POLICY` needed — the fastembed argument reaches the same pool, which is why the session-config entry the earlier notes named was never applied.
 * **Acceptance, met:** warm daemon idle over 20s reads 0.000 cores against 11.93 before, at 3.8ms to 8.6ms per encode inside a 13-22ms query. `python -m unittest test_index_pkm_meta test_searchd` fails if the query path stops passing it.
 * **Owner note:** [[public/progress - local-first search daemon and indexer|search daemon progress]].
@@ -62,7 +62,7 @@ Done 2026-08-27: `skills/pkm-metadata-indexer/` is the only copy, and the `pkm-s
 Embed the intended title before a note is written and refuse or merge on a close match. Both [[public/2026-08-18 what retrieval costs as a vault grows|retrieval economics]] and the search progress note name this as the failure that scales worst: near-duplicate pairs grow with the square of note count and agents carry nothing between sessions. At 3,253 notes and rising it is cheap now and expensive later.
 
 ### 5. Section-level SHA256 invalidation
-Already in, commit `f50d2ce8` on 2026-08-21, before this plan was written. `index_pkm_meta.py` hashes each `##` section into `Section.sha256` and `load_vector_cache()` keys reuse on `(sha256, embedding_model, chunking_version)`, so one edited heading costs one vector. Verified 2026-08-28 against `test_unchanged_section_keeps_cached_vector` and a run over 859 notes and 5,169 sections: 1.74s total, 1.20s scan, 0.45s SQLite, embedding effectively zero. The cost this item named is not in the incremental path any more, and the remaining floor is the scan rather than the embed.
+Already in, commit `f50d2ce8` on 2026-08-21, before this plan was written. [[index_pkm_meta.py]] hashes each `##` section into `Section.sha256` and `load_vector_cache()` keys reuse on `(sha256, embedding_model, chunking_version)`, so one edited heading costs one vector. Verified 2026-08-28 against `test_unchanged_section_keeps_cached_vector` and a run over 859 notes and 5,169 sections: 1.74s total, 1.20s scan, 0.45s SQLite, embedding effectively zero. The cost this item named is not in the incremental path any more, and the remaining floor is the scan rather than the embed.
 
 ### 6. Decide the link convention, once
 Pick one: keep `public/`-prefixed links and treat the private parent vault as the only valid reading context, or strip the prefix and make `brain` self-contained. Do not mass-edit 89 notes until that decision is written down. The lazy option is to leave the prefix and fix the *published* view instead, since the prefix is correct where the notes are actually authored.
@@ -76,7 +76,7 @@ Support `anti-links:` frontmatter and typed negative edges (`is_negative INTEGER
 
 | Idea | Why it waits |
 |:---|:---|
-| `synaptic_edges` table, Hebbian weighting, nightly decay | The producer exists as of 2026-08-27: `searchd.py` appends every query and its result paths to `~/.pkm/queries.jsonl`. Build the consumer once the log holds a few weeks of real use, since weighting a table built from a day of it is theatre. [[public/2026-08-27 every read is a write - co-retrieval as synapse strength|every read is a write]] designs it |
+| `synaptic_edges` table, Hebbian weighting, nightly decay | The producer exists as of 2026-08-27: [[searchd.py]] appends every query and its result paths to `~/.pkm/queries.jsonl`. Build the consumer once the log holds a few weeks of real use, since weighting a table built from a day of it is theatre. [[public/2026-08-27 every read is a write - co-retrieval as synapse strength|every read is a write]] designs it |
 | Inhibitory / `contradicts` edges | Same dependency, plus no contradiction detector exists |
 | `sqlite-vec` migration | The vault's own measurements say NumPy is under 1ms and no vector DB is warranted below ~300k notes. Revisit at 300k or when a cold query is measurably slow |
 | Local Mem0 evaluation | [[public/2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy|the Mem0 note]] already concludes local-first. Refined model stores decisions in concept notes rather than vector key-value memory |

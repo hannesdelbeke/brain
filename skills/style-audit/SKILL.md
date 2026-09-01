@@ -4,7 +4,7 @@ description: Measure verbal tics in past claude code output by building an n-gra
 created: 2026-08-27
 ---
 
-`tics.py` walks `~/.claude/projects/**/*.jsonl`, keeps only assistant `text` blocks, strips code and urls and paths, and writes an sqlite database of one to five word n-grams with both a total count and a sentence-opening count.
+[[tics.py]] walks `~/.claude/projects/**/*.jsonl`, keeps only assistant `text` blocks, strips code and urls and paths, and writes an sqlite database of one to five word n-grams with both a total count and a sentence-opening count.
 
 ```
 python tics.py --out tics.db                 # whole corpus, a few minutes

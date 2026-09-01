@@ -29,9 +29,9 @@ Related: [[public/2026-08-27 synapse links vs wikilinks and semantic links|synap
 
 The action plan puts `synaptic_edges`, Hebbian weighting and nightly decay in P2, with one reason recorded:
 
-> Needs co-retrieval data that nothing logs yet. Log queries and their result sets in `searchd.py` first; weighting an empty table is theatre.
+> Needs co-retrieval data that nothing logs yet. Log queries and their result sets in [[searchd.py]] first; weighting an empty table is theatre.
 
-That is this note. The design in [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] describes the consumer — a weighted edge table, LTP on co-activation, LTD on disuse, pruning below threshold. It never named the producer. `searchd.py` is now it: since 2026-08-27 every `/search` and `/similar` appends the query, the vault, the result paths and an optional caller-supplied `origin` to `~/.pkm/queries.jsonl`. A result set in one row is a co-activation, which is the raw material every P2 item here waits on. What is still missing is the consumer: nothing reads that file yet.
+That is this note. The design in [[public/2026-08-27 synapse links vs wikilinks and semantic links|synapse links vs wikilinks]] describes the consumer — a weighted edge table, LTP on co-activation, LTD on disuse, pruning below threshold. It never named the producer. [[searchd.py]] is now it: since 2026-08-27 every `/search` and `/similar` appends the query, the vault, the result paths and an optional caller-supplied `origin` to `~/.pkm/queries.jsonl`. A result set in one row is a co-activation, which is the raw material every P2 item here waits on. What is still missing is the consumer: nothing reads that file yet.
 
 Nothing else in the stack is in a position to do this. The indexer only sees files. Obsidian only sees human clicks ([[public/view count|view count]], [[public/2026-02-22 Obsidian track note view|track note view]], [[public/2026-07-22 follow up Obsidian viewcount|follow up on viewcount]]) and misses everything an agent reads, which is now the majority of reads.
 
@@ -39,7 +39,7 @@ Nothing else in the stack is in a position to do this. The indexer only sees fil
 
 ## ⚙️ The Mechanism
 
-`searchd.py` is resident on `127.0.0.1` serving `/search`, `/links`, `/health` and `/reindex`, hybrid FTS5 BM25 plus 384-dim `bge-small-en-v1.5` vectors fused by reciprocal rank fusion, warm queries at 13–22 ms, against `notes` / `sections` / `links` in `pkm_index.db`.
+[[searchd.py]] is resident on `127.0.0.1` serving `/search`, `/links`, `/health` and `/reindex`, hybrid FTS5 BM25 plus 384-dim `bge-small-en-v1.5` vectors fused by reciprocal rank fusion, warm queries at 13–22 ms, against `notes` / `sections` / `links` in `pkm_index.db`.
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐

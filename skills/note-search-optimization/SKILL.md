@@ -63,7 +63,7 @@ Embed wikilinks naturally within explanatory sentences (`she used [[supercharged
 
 ## Automated Heuristic Audit Tool
 
-Use `audit_search_readiness.py` to calculate a Searchability Score (0–100) and get actionable refactoring suggestions:
+Use [[audit_search_readiness.py]] to calculate a Searchability Score (0–100) and get actionable refactoring suggestions:
 
 ```bash
 # 1. Audit entire vault and show lowest-scoring notes:

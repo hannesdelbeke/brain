@@ -12,7 +12,7 @@ created: 2026-08-24
 ---
 Architectural blueprint for a decoupled, zero-lag search engine: a standalone local search daemon paired with a lightweight [[Obsidian plugin]] UI modal, terminal CLI, and AI agent MCP server.
 
-**This was built.** The daemon is `skills/pkm-metadata-indexer/searchd.py` and the shape below survived contact; the parts that changed are in [[#What was actually built]] at the bottom, which is the section to trust where the two disagree.
+**This was built.** The daemon is [[searchd.py]] and the shape below survived contact; the parts that changed are in [[#What was actually built]] at the bottom, which is the section to trust where the two disagree.
 
 ## Architecture Overview
 
@@ -94,7 +94,7 @@ The daemon listens on localhost (`127.0.0.1:44771` or named pipe/Unix socket):
 
 ## What was actually built
 
-`searchd.py` plus a thin plugin, both against the existing SQLite index. Where the plan above was wrong or optimistic:
+[[searchd.py]] plus a thin plugin, both against the existing SQLite index. Where the plan above was wrong or optimistic:
 
 | Planned | Built | Why |
 | :--- | :--- | :--- |
@@ -102,7 +102,7 @@ The daemon listens on localhost (`127.0.0.1:44771` or named pipe/Unix socket):
 | 1–3ms per query | **13–22ms**, flat | The estimate ignored encoding the query, which is the largest single stage even warm |
 | Fuzzy matching in the daemon | In the plugin, via Obsidian's `prepareFuzzySearch` | Titles and tags are already in the editor's metadata cache, so shipping them to a daemon to rank would be slower than ranking them where they sit |
 | File watcher, incremental on save | `POST /reindex`, run manually | An incremental run is ~11s and the index is never far behind. Worth adding when that stops being true |
-| MCP server for agents | HTTP and `search_vault.py` | Agents can already curl or shell out; MCP is a wrapper to add when an agent needs it as a tool rather than a command |
+| MCP server for agents | HTTP and [[search_vault.py]] | Agents can already curl or shell out; MCP is a wrapper to add when an agent needs it as a tool rather than a command |
 | One daemon, one vault | One daemon, **many vaults**, `?vault=name` | The resident model is the expensive part and it is vault-independent, so a second daemon per vault pays for it twice |
 | Localhost bind is the security model | Loopback `Host` check, any `Origin` refused, optional `X-PKM-Token` | Binding to 127.0.0.1 keeps nothing out: any page the browser visits can POST to it, and DNS rebinding can point a hostile name here |
 

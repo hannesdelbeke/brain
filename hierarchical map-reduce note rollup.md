@@ -35,7 +35,7 @@ Cost of an LLM leaf pass, if the free digest in step 1 turns out too thin: 6,550
 
 ## Plan
 
-1. Zero-cost digest first. Add `--digest` to `index_pkm_meta.py`, printing one line per note straight out of the DB: filename, tags, headings, `summary_snippet`. No API key, no schema change, about 30 lines of query and print. The whole vault is 180k tokens; a tag scope like `pkm` is about 2k.
+1. Zero-cost digest first. Add `--digest` to [[index_pkm_meta.py]], printing one line per note straight out of the DB: filename, tags, headings, `summary_snippet`. No API key, no schema change, about 30 lines of query and print. The whole vault is 180k tokens; a tag scope like `pkm` is about 2k.
    `python skills/pkm-metadata-indexer/index_pkm_meta.py --digest --tag pkm`
 2. Ask the actual synthesis questions against that digest and see what breaks. The snippet is the first 133 characters of a note, not a summary, so the likely failure is notes whose opening line does not describe them.
 3. Only if step 2 fails, add the three `sections` columns above and a `--summarize` pass over the stale-row query, with `--limit` so the first run costs cents rather than $2.30. One call per note, output capped at about 80 tokens, Batch API for the cold pass.

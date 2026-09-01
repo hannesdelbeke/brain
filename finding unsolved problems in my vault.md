@@ -20,7 +20,7 @@ Semantic search is poor at this. Querying the embedding index for "unsolved prob
 
 ## Tool
 
-`skills/pkm-metadata-indexer/find_open_problems.py` scores every note against those four signals and prints a ranked list. It reads markdown directly instead of the sqlite index, so it also works when the index is stale.
+[[find_open_problems.py]] scores every note against those four signals and prints a ranked list. It reads markdown directly instead of the sqlite index, so it also works when the index is stale.
 
 ```bash
 python skills/pkm-metadata-indexer/find_open_problems.py --top 30

@@ -87,7 +87,7 @@ For instant full-vault searching across 10,000+ notes without opening Obsidian s
 
 ## References
 - [[public/pkm-search|pkm-search]] — resident search daemon and fast hybrid query engine
-- [[public/pkm metadata indexer|pkm metadata indexer]] — standalone SQLite FTS5 + neural embedding indexer with resident daemon (`searchd.py`).
+- [[public/pkm metadata indexer|pkm metadata indexer]] — standalone SQLite FTS5 + neural embedding indexer with resident daemon ([[searchd.py]]).
 - [[public/lightning-fast unified search plugin for obsidian|lightning-fast unified search plugin for obsidian]]
 - [[public/Obsidian Windows Defender exclusion|Obsidian Windows Defender exclusion]]
 - [[public/Obsidian faster startup|Obsidian faster startup]]
