@@ -12,9 +12,9 @@ tags:
 ---
 
 > [!summary] eli5
-> candidate 2's u-curve test failed because the question had an exact-match shortcut (a serial number). this note designs a cheap fix: use real vault notes as the document stack instead of synthetic ones, and ask a question worded differently than the source note so there's no string to grep for. a tiny 3-trial pilot first, a full liu-et-al-scale run only if the pilot shows any signal.
-> not run yet, design only.
-> **needs from you:** approve running the 3-trial pilot on public vault notes — recommend yes, it's 3 subagent calls and graded by hand, cheapest possible way to find out if this fix actually works before spending on the full 18-24 call version.
+> candidate 2's u-curve test failed because the question had an exact-match shortcut (a serial number). this note designs a cheap fix: use real vault notes as the document stack instead of synthetic ones, and ask a question worded differently than the source note so there's no string to grep for. the 3-trial pilot ran — see the result section — and came back a clean ceiling, 3/3 correct at every position, no dip yet.
+> pilot done, ceiling effect, inconclusive on its own. the scale-up plan below is still the next step.
+> **needs from you:** approve running the full 20-document scale-up (below) — recommend yes, 13 short real notes is well under liu et al.'s own scale, so a ceiling here doesn't confirm the fix failed, it just means this pilot was too small to stress the effect, same lesson candidate 2's own single-document pilots already learned once.
 
 **why:** [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]]
 
@@ -35,6 +35,18 @@ tags:
 6. grade the 3 answers by hand (correct / wrong), since n=3 doesn't need automated grading.
 
 **what the result means:** if position 1 and last both answer correctly and the middle one doesn't (or is visibly weaker), that's the u-curve's shadow showing up even at this tiny scale — worth scaling up. if all three come back correct, either the fix isn't enough or the pilot is still too small to stress the effect (liu et al.'s own dip is more visible at 10-20+ documents than at this size) — scale up before concluding either way, per the design below.
+
+## result
+
+ran exactly as designed: 13 real notes from `public/` (rocket stove, a diary-use-of-instagram note, a youtube premium signup note, a river walk note, roller shutters, the maya node editor, a google drive outage note, a tesla-to-calendar idea, talinolol, battery discharge rate, a 2013 game-jam retro, and a blender window-size bug — plus the target), target note **machinist square** (a tool description that never uses the words "machinist" or "square" together with "right angle," "metal," or "wood-bodied" the way the question does) moved to position 1, 7 (the middle), and 13 (the last) across three separate trials, everything else held identical.
+
+question: "for checking a perfect right angle, craftspeople often pick an all-metal option over the older wood-bodied version because it holds its accuracy better over time. what is that all-metal tool called?" — zero shared vocabulary with the source note's own wording ("90 degrees," "steel," "try square," "woodworking").
+
+three fresh, blind claude/haiku subagents, one per position. **3/3 correct** — "machinist square" (or "engineer's square," an accepted synonym) at position 1, 7, and 13 alike.
+
+one real bug caught and fixed before this result: the first attempt at this pilot stripped the target note down to its body text only, dropping its own title — so the answer literally wasn't present in the document at all, and all three trials correctly reported "not stated." fixed by giving every document a title line (`### Document N: <note title>`), same as liu et al.'s own passages carry an implicit identity, then rerun clean.
+
+**what this means:** a ceiling, not a disproof. 13 short real notes (roughly 400 words total) is far below liu et al.'s own 10-30 document, 1,500-4,400 token range — this is closer in scale to candidate 2's very first single-document pilot, which also ceilinged before later, bigger runs found the base effect still didn't show. the paraphrase-and-real-notes fix hasn't been shown to fail; it's only been tested at a scale too small to need it. the scale-up below is the actual test.
 
 ## the scale-up: reuse the existing liu-et-al-scale design, swap two things
 
