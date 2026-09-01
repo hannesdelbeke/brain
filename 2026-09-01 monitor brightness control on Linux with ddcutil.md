@@ -83,3 +83,23 @@ To minimize delay in extension settings:
 - **Skip verification (`--noverify`):** Eliminates the round-trip read confirmation after writing brightness values.
 - **Lower sleep multiplier (`--sleep-multiplier 0.2` - `0.5`):** Speeds up inter-byte I2C pauses on modern monitor microcontrollers.
 - **Bus caching:** Locks the display to its known I2C bus (e.g. `/dev/i2c-17`) to prevent scanning unused video ports on each slider tick.
+
+## Keyboard shortcuts (20% step control)
+
+Using keyboard hotkeys bypasses mouse dragging latency entirely, allowing instant step-based brightness changes across displays without opening menus.
+
+### 1. Extension shortcuts
+In the **Brightness control using ddcutil** extension settings:
+- Set step increment size (e.g. **20%**).
+- Bind global shortcuts to increase / decrease brightness across connected displays.
+
+### 2. Native GNOME custom shortcuts
+Alternatively, bind shortcuts under **Settings → Keyboard → View and Customize Shortcuts → Custom Shortcuts**:
+
+```bash
+# Increase external brightness by 20%
+ddcutil setvcp 10 + 20 --noverify
+
+# Decrease external brightness by 20%
+ddcutil setvcp 10 - 20 --noverify
+```
