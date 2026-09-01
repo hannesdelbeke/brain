@@ -62,6 +62,23 @@ caveman-compress operates at the word/phrase level (drop articles, filler, hedgi
 
 the practical read for a vault compression skill: caveman-compress's mechanical rules are a real, small, safe-ish win (roughly 12-19%, same fidelity band as a much stronger method) with no judgment calls to get wrong — but they leave most of the token budget on the table precisely where a note is dense and factual, the case a smarter method wins hardest. the vault's own study reaches the same conclusion the caveman-compress rule set arrives at structurally: don't run either one unattended without a fidelity check, since a compressor — rule-based or learned — cannot be trusted to know which of its own cuts removed an argument rather than a word.
 
+## wider literature search: what else exists, and why most of it doesn't apply here
+
+A broader search turned up the rest of the document-compression literature next to llmlingua-2. Most of it doesn't change the plan above, but for different reasons worth recording so this isn't re-searched later.
+
+- [selective-context](https://arxiv.org/abs/2304.12102) prunes by token self-information (logprobs) from a small causal LM — free, no classifier training — but needs access to a base model's raw logprobs. A hosted chat API (Groq, Gemini) doesn't expose that, so this is only usable with a locally-run model, not the provider setup this vault already has keys for.
+- [recomp](https://arxiv.org/abs/2310.04408) trains a dedicated compressor for RAG-retrieved passages specifically. Needs training infrastructure and a task-specific compressor, aimed at retrieval context, not at compressing a note at write time. Not applicable without building something this vault has no use for elsewhere.
+- gist tokens / autocompressors / ICAE compress a document into learned embedding vectors, not text. Ruled out outright for this use case: the whole point of a vault note is that a human and any future agent can read it as markdown; an embedding isn't a document anymore.
+- production RAG gateways (LangChain/LlamaIndex compression middleware) wrap llmlingua under a different API — not a new technique, just repackaging one already covered above.
+- link-graph / MOC-style pruning (select which notes to surface, rather than compressing the ones selected) is free and zero-LLM-cost, but it's a different lever than compression — this vault already gets that lever from [[header extraction for token-efficient retrieval]] and its own wikilink graph, so it's already implemented, not a compression technique to add.
+- two papers argue compression can backfire: **"Token Reduction Is Not Cost Reduction"** and a pre-registered trial on compressed-prompt output quality both find that a shorter input can *increase* total cost if it causes longer output, forces a re-read, or if the input was already being served at a prompt-cache discount that a rewrite invalidates. This is the strongest external argument against unconditional compression, and it's the reason the resulting skill (below) filters *what* gets compressed instead of compressing every note that's read.
+
+None of this changes the two live candidates from the section above (llmlingua-2-style classification, and this vault's own two-pass classify+adversarial-gate method) — it rules out the alternatives and adds one real constraint: compress selectively, not everything, per the backfire-risk finding.
+
+## conclusion: what got built
+
+[[2026-09-01 note-compress skill - design, adversarial review, and bench data|A working skill]] resulted from this research, not just another proposal: `skills/note-compress/` in this repo, one LLM call per note plus a free mechanical fidelity gate, gated to only the notes likely to be reread enough to pay for the call. See that note for the adversarial for/against case, the final design rationale, and real measured bench numbers on this vault's own notes.
+
 ## related
 - [[2026-08-31 classifier-based compression with an adversarial fidelity gate]] — the two-pass method benchmarked above, as its own named technique
 - [[skills/token-thrift/SKILL|token-thrift]] — the practical side of the same question: fewer calls and less context per call are the only two levers, measured rather than assumed
