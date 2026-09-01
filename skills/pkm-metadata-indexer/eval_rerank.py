@@ -168,6 +168,17 @@ def precision(hits: list[dict], verdicts: dict[str, bool | None]) -> tuple[int, 
     return len(useful), len(hits), (useful[0] + 1 if useful else None), judged
 
 
+def load_questions(path: str) -> list[tuple[str, str]]:
+    """Read a question set for a corpus these hard-coded questions do not fit.
+
+    Same shape as QUESTIONS, a list of `[question, group]`. Everything is a
+    hold-out on a corpus the rerank was never tuned against, so `seen` is
+    allowed but never expected.
+    """
+    rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    return [(row[0], row[1]) for row in rows]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--vault", default="brain", help="Corpus the daemon serves")
@@ -178,12 +189,18 @@ def main():
     parser.add_argument("--withhold-private", action="store_true",
                         help="Never send a section matching PRIVATE to the judge. It counts as "
                              "not useful in both runs and is reported as withheld")
+    parser.add_argument("--questions", default=None,
+                        help="JSON list of [question, group] pairs to ask instead of QUESTIONS. "
+                             "A corpus that is not this vault needs its own questions, since "
+                             "these ones ask about notes it does not have")
     parser.add_argument("--self-check", action="store_true")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
     if args.self_check:
         return self_check()
+
+    questions = load_questions(args.questions) if args.questions else QUESTIONS
 
     base = f"http://127.0.0.1:{args.port}"
     db = args.db
@@ -198,7 +215,7 @@ def main():
     withheld: Counter[str] = Counter()
     rows = []
 
-    for question, group in QUESTIONS:
+    for question, group in questions:
         arms = {name: search(base, args.vault, question, args.limit, name == "rerank")
                 for name in ("fused", "rerank")}
         seen: dict[str, dict] = {}
