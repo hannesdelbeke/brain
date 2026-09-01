@@ -49,6 +49,30 @@ two clusters in this vault are real candidates. neither is submittable as-is; bo
 2. publish to a personal blog, cross-post to LessWrong/Alignment Forum
 3. Zenodo-DOI the final version
 
+## candidate 3: recency-proximity reranking, and its cross-domain confirmation
+
+**base notes:** [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]], [[2026-08-31 other candidate relatedness signals for search reranking]], [[2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise]], [[2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing]]. Surfaced during concurrent pkm-index work on this same vault today, not part of the original readability/compression thread — folded in here because it's the strongest single candidate of the four, on a fuller read.
+
+**why it's the strongest of the four:** this is a full empirical study with a mechanistic proof, not just a benchmark table. three ways to fold time-closeness into search reranking were tested against real wikilinks as ground truth (multi-seed, full-sample, n=4,725): a global multiplier (rejected — every τ tested made ranking worse, -19.5% to -2.3% MRR), reciprocal rank fusion (rejected — never positive at any k, -21% to -4%), and a small additive term (validated — +7.73% to +8.60% MRR, positive on every seed tested). the rejection isn't just measured, it's *derived*: a rank-flip proof shows a multiplicative or rank-fused boost can demote a true target relative to any more-recent rival regardless of tuning, while an additive term can only break near-ties — and the vault measured the exact rival count (14.4 notes within 1 hour, 37.4 within 24 hours) that makes the multiplicative failure mode near-certain rather than occasional.
+
+the companion note ([[2026-08-31 other candidate relatedness signals for search reranking]]) already does most of what candidate-3 originally listed as missing: it tests four more signals (Adamic-Adar, Jaccard, shared tags, session co-touch, Personalized PageRank, lift-normalized co-occurrence) across **four separate vaults**, not one — this vault plus three public Obsidian vaults (Obsidian's own help docs, and two named public vaults, `kepano` and `bramses`). it found a signal rejected on this vault (Adamic-Adar) flips to positive on a more densely-linked one, chased that down to link-graph density as the real variable (not personal-vs-curated authorship, which it explicitly ruled out by testing two more vaults) — and it caught and corrected its own earlier claim on a later adversarial pass (an opening "1.7% overlap, uniquely non-redundant" framing for co-commit didn't hold up under a consistent measurement, logged rather than quietly fixed). that self-correction, done in the open, is worth keeping in any writeup — it's evidence the negative results are real findings, not a first-draft that never got checked.
+
+what makes it a paper rather than a vault note: a follow-up found the *same* mechanism, independently, in a completely different literature — [CodeCV](https://www.computer.org/csdl/proceedings-article/scam/2022/960900a143/1JSpk9oqpY4) (IEEE SCAM 2022) found first-authorship and recency of modification are the strongest predictors of who actually understands a piece of code, and this vault's own co-commit mining independently found the same additive-not-multiplicative shape (lift-normalization over raw co-edit weight, to stop hub files/committers from dominating). two unrelated domains, same failure mode, same fix — that generalization is the actual contribution, not just the reranking benchmark on its own.
+
+**what's missing before it's submittable:**
+- ~~single-corpus~~ already closed: four vaults tested, and the density-not-authorship explanation for why a signal's verdict flips between vaults is itself a real, generalizable finding worth stating as such in a writeup, not just a caveat
+- the cross-domain claim (code-authorship expertise finding has the identical failure mode) is still argued from literature comparison, not tested directly — an actual replication of the rival-count dilution proof against a real git history (using CodeCV's own setup or a public repo) would make the generalization a measured result instead of an analogy
+- the stacked multi-signal fusion (`&fusion=1`, additive combination of vector + recency + co-commit + Adamic-Adar) was calibrated against held-out data but the calibration itself used hand-inspected lambdas as a starting point before the grid search — worth stating the calibration procedure precisely in a writeup rather than summarizing it as "tuned"
+- no comparison yet against a learned reranker (e.g. a small cross-encoder that has recency as a feature) as an upper-bound baseline
+
+**venue:** four-vault validation plus a derived proof is enough to aim higher than the negative-results workshop as the first choice here — [ECIR](https://ecir2026.eu/)'s reproducibility/short-paper track or a [SIGIR](https://sigir.org/) short paper fits a validated positive result with this much cross-corpus evidence. [Insights from Negative Results in NLP](https://insights-workshop.github.io/) stays the fallback (still a real fit on the multiplicative/RRF rejections alone) if the IR-venue bar turns out too high without the missing cross-encoder baseline.
+
+**plan:**
+1. implement the small cross-encoder baseline comparison — the one piece of missing evidence for an IR-venue submission
+2. write up the four-vault result, the density-explains-the-flip finding, and the cross-domain CodeCV confirmation as one paper; the self-correction episode is worth a short methods-note callout, not something to smooth over
+3. submit to ECIR or SIGIR's short-paper track; fall back to Insights from Negative Results in NLP if reviews suggest the positive result needs more validation than a short paper allows
+4. Zenodo-DOI the sweep data (the τ/λ tables, the four-vault comparison) regardless of venue outcome
+
 ## note on arXiv generally
 
 as of the January 2026 policy change, an institutional email no longer auto-qualifies for endorsement — an unaffiliated author needs a specific personal endorser per category, found via each category's own "who can endorse" list. this is real friction, not a formality, and is the reason both plans above route through a workshop or a citable-but-unreviewed platform first rather than arXiv directly.
@@ -56,4 +80,6 @@ as of the January 2026 policy change, an institutional email no longer auto-qual
 ## related
 
 - [[2026-09-01 the adversarial fidelity gate is llm-as-judge, and that literature explains the non-determinism]] — the gap analysis this plan is built on
+- [[2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise]] — candidate 3's cross-domain confirmation
+- [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]] — candidate 3's core experiment
 - [[2026-09-01 process log - from readability question to publish plan]] — how this plan was reached
