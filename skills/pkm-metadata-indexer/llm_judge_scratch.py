@@ -8,6 +8,7 @@ hand -- does not call any LLM judge itself.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import urllib.request
 from pathlib import Path
@@ -18,8 +19,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from shared_neighbor_experiment import load_all_edges, build_neighbor_sets, hub_notes, score_all
 from recency_prior_experiment import wikilink_ground_truth
 
-BRAIN_DB = Path(r"C:\Users\H\Documents\GitHub\brain\.obsidian\pkm_index.db")
-vault-b_DB = Path(r"C:\Users\H\Documents\GitHub\private-vault\.obsidian\pkm_index.db")
+# Index paths come from the environment, so no machine layout is baked in here.
+BRAIN_DB = Path(os.environ.get("BRAIN_DB", ".obsidian/pkm_index.db"))
+OTHER_DB = Path(os.environ["OTHER_DB"]) if os.environ.get("OTHER_DB") else None
 DAEMON = "http://127.0.0.1:44771"
 
 
@@ -118,7 +120,9 @@ def plain_wikilink_sample(db_path: Path, n=6, seed=0):
 
 def main():
     vault = sys.argv[1] if len(sys.argv) > 1 else "brain"
-    db = BRAIN_DB if vault == "brain" else vault-b_DB
+    db = BRAIN_DB if vault == "brain" else OTHER_DB
+    if db is None:
+        sys.exit("set OTHER_DB to the index path of the vault named %r" % vault)
     mode = sys.argv[2] if len(sys.argv) > 2 else "all"
 
     if mode in ("all", "hub"):
