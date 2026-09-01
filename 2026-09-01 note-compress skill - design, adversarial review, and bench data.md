@@ -10,6 +10,9 @@ tags:
   - technical
 ---
 
+> [!warning] don't run this routinely
+> real bench data below: 0.5% mean cut across this vault's actual eligible notes. [[header extraction for token-efficient retrieval|header extraction]] stays the default lever. Use this by hand, occasionally, only on a long prose-heavy note unlikely to be a MOC or diagram-heavy — see the conclusion section at the bottom.
+
 [[skills/note-compress/SKILL|note-compress]] is a working skill, not another proposal: one LLM call per note, gated by a free mechanical fidelity check, targeting only notes likely to be reread enough to pay for the call. This note is the design rationale, the adversarial case for and against it, and the real bench numbers behind it.
 
 ## the design
