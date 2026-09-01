@@ -12,9 +12,9 @@ tags:
 ---
 
 > [!summary] eli5
-> the earlier pilot fed a model 13 documents all at once and asked a question — 3/3 correct, no dip, at any position. this pilot asks about five different facts instead, one note per turn, no memory of earlier notes except the model's own running sense of the task, target planted at hop 1, 4, or 7 of 7. hop 1 and hop 7 came back perfectly clean — 10/10 correct across all five facts, zero hesitation. hop 4 is the only place anything went wrong: 2 of 6 middle-position trials had trouble (one flat wrong answer, one missed-then-recovered-a-turn-late), the other 4 were clean. the signal is real but weaker and noisier than the first three-fact round alone suggested — the two facts added in the second round produced zero trouble at any position.
-> done, 15 real trials plus one discarded-and-repurposed one, a real but noisy middle-hop signal that got weaker, not stronger, as the sample grew.
-> **needs from you:** nothing forced — the next real step (more repeats, or a longer chain past 7 hops) is optional follow-up, not a decision blocking anything else.
+> the earlier pilot fed a model 13 documents all at once and asked a question — 3/3 correct, no dip, at any position. this pilot asks one note per turn instead, no memory of earlier notes except the model's own running sense of the task. two follow-ups ran after the first 7-hop round: 6 more repeats at the middle hop (to pin down how often it actually goes wrong there), and a longer, 13-hop chain to see whether depth changes the shape. the middle-hop rate settled lower than first thought — 2 wrong out of 12, not 2 out of 6. the 13-hop chain found something the 7-hop version never showed: the *first* note, not the middle one, was the one that failed completely — a full, unrecovered miss, while the middle and the end of that same longer chain were both fine. depth didn't make the same spot worse, it moved which spot was risky.
+> done — 12 hop-4 trials, one 13-hop chain (3 positions), real signal, but the shape changes with chain length rather than holding still.
+> **needs from you:** nothing forced. the honest open question is now "does risk track a fixed position (start/middle/end) or a fixed distance from the end of the chain" — worth one more longer-chain run with 2-3 more facts before either framing gets treated as settled.
 
 **why:** [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]]
 
@@ -67,15 +67,42 @@ route notation: `D1 D2 D3 [TARGET] D4 D5 D6` means the target was shown on turn 
 - **hop 7 (end): 5/5 clean correct.** every fact, correct on the turn the target appeared.
 - **hop 4 (middle): 4/6 clean, 2 with real trouble.** F1 gave a flat wrong answer that never corrected. F3's first replicate missed the answer on the turn it appeared and only recovered one turn late. F2, F4, F5, and F3's second (mistake-derived) replicate were all clean. every piece of trouble this pilot found, across both rounds, happened at the middle position — but the middle position is no longer *mostly* trouble, it's now a minority of middle trials (2 of 6).
 
+## follow-up A: 6 more repeats at hop 4 only
+
+pinning down the hop-4 trouble rate specifically, without spending more calls on hop 1 and hop 7 (already 10/10 across 5 facts — not where the uncertainty was). 6 fresh facts, each a single 4-turn trial (3 distractors then target, no continuation past the answer — this round only measures accuracy at the moment the target appears, not post-answer retention):
+
+| fact | question topic | outcome |
+|---|---|---|
+| capital gains tax allowance | UK tax-free threshold on asset-sale profit | correct — "£3,000" |
+| .pth files | python startup-code file extension | correct — ".pth" |
+| ducting shapes | which duct cross-section seals worse but looks better | correct — "rectangular" |
+| domestic hot water heat pump | appliance that heats water from ambient warmth | correct — "Heat pump" |
+| HDMI over wifi | shared vs. separate wireless network | correct — separate network, stated correctly |
+| Charging Downstream Port | nickname for a charge-and-sync USB port | correct — "CDP" |
+
+**6/6 clean.** combined with the original round's 6 hop-4 trials (1 wrong, 1 delayed-then-recovered, 4 clean), the real hop-4 tally is **10 clean out of 12, 2 with trouble** — closer to 1-in-6 than the 1-in-3 the smaller first sample suggested. the trouble is real (it never happened at either end across 16 separate 7-hop trials) but rarer than round one made it look.
+
+## follow-up B: a single 13-hop chain, target swept at hop 1 / 7 / 13
+
+same F1 fact and question (machinist square) for direct comparability, 12 distractors instead of 6 (the original 6 plus talinolol, capital gains tax allowance, .pth, google, ducting, HDMI over wifi), one trial per position, run to full length each time (not stopped early).
+
+| position | route | outcome |
+|---|---|---|
+| hop 1 | `[F1] then 11 distractors` (one distractor, maya node editor, was accidentally skipped mid-chain — a minor slip, noted honestly, that shortens this specific route to 12 notes instead of 13 but doesn't change where the target sat) | **wrong — full, unrecovered miss.** said "next" for all 11 remaining turns, then, when told explicitly this was the last note and to give a final answer instead of "next," replied "I don't know" — and its own reasoning showed it had correctly matched note 1's description to the question, but still couldn't produce the tool's name |
+| hop 7 | `6 distractors, [F1], 6 distractors` | correct — "Engineer's Square" |
+| hop 13 | `12 distractors, [F1]` | correct — "Machinist's square" |
+
+this is the opposite shape from the 7-hop chain, where hop 1 was the *safest* position (5/5 clean across every fact tested) and hop 4 (the middle) was the only place trouble showed up. at 13 hops, the same "shown first" position failed completely, while both the middle-ish hop 7 and the final hop 13 succeeded.
+
 ## what this does and doesn't show
 
-**does show:** a real, observable difference from the earlier single-shot pilot, which went a clean 3/3 with zero trouble at any position on the same kind of fact. across 16 hop-ceiling trials, hop 1 and hop 7 combined are a perfect 10/10 — no wrong answer, no delay, ever, at either end. every single instance of trouble in this whole pilot, both rounds, happened at hop 4. that clustering held up as the sample doubled.
+**does show:** hop-ceiling trouble is real and reproducible — some position in a long, amnesia-gated chain will eventually fail, across two very different chain lengths and six different facts. it also shows the failure isn't tied to a fixed slot like "the middle" or "the start" — the 13-hop chain's failure moved to the position that was safest at 7 hops. that rules out the simplest story ("early information sticks, middle information doesn't") and argues for something more like: risk depends on the shape and length of the whole chain, not a fixed seat in it.
 
-**doesn't show:** a strong or monotonic effect. adding two more facts (F4, F5) added zero new trouble — both went 3/3 clean, including at hop 4. the honest reading after 5 facts: middle-hop trouble is real (it never once appeared at either end) but is more like a 1-in-3 chance at the middle than a reliable dip, at least at this depth and on this model. a slow moment for the model on one particular fact is still a live alternative explanation for either of the two failures.
+**doesn't show:** a settled mechanism. n=1 per position in the 13-hop round means the hop-1 failure could be one unlucky trial rather than a real "long chains punish early information" rule — the honest alternative explanations (total chain length, distance from the end, or just this one model instance having a bad run) aren't yet distinguishable from each other. the hop-4 rate at 7 hops is now reasonably solid (n=12); the 13-hop shape is not.
 
 ## next step (optional, not blocking)
 
-two directions, either would sharpen this more than blindly adding facts at the same depth: more repeats specifically at hop 4 (to pin down whether it's closer to 1-in-3 or something else), or a longer chain than 7 hops — this pilot has never shown a dip get *worse*, only whether one appears at all at a single middle point, and a real agent session runs far more than 7 turns. if either line holds up, that's a genuinely new, distinct claim from anything in [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] or [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — both of those are about position *within a single context*, not persistence of a goal *across turns*.
+repeat the 13-hop design with 2-3 more facts, keeping the same three positions, to see whether hop 1 keeps failing (a real depth effect) or this was one bad trial (noise). if the hop-1 failure holds up across more facts, the next real question is whether it's "hop 1 specifically" or "furthest from the end" that's dangerous — which would need a fourth position (e.g. hop 2 or hop 12) to tell apart. either way, this is a genuinely new, distinct claim from anything in [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] or [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — both of those are about position *within a single context*, not persistence of a goal *across turns*.
 
 ## related
 
