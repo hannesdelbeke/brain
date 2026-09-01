@@ -110,6 +110,10 @@ no evidence formatting helps or hurts multi-document retrieval at this scale, pa
 
 no evidence of the u-curve either, and that's the more important miss. this design still doesn't reproduce liu et al.'s own base position effect at 20 documents on claude/haiku, so the formatting comparison sits on ground that isn't behaving like the paper it's modeled on. the honest read is a fourth null on the formatting question, plus a separate, newly-found null on the position effect itself — both belong in any writeup, and neither should get buried under the other.
 
+### a hypothesis for why, not just that it didn't reproduce
+
+liu et al.'s original models — GPT-3.5-Turbo, Claude-1.3, MPT-30B-Instruct, LongChat-13B — are all 2023-era. claude/haiku is a later-generation small model, and a large 2026 study already cited elsewhere in this research ([Structured Context Engineering for File-Native Agentic Systems](https://arxiv.org/html/2602.06384v1), 9,649 experiments across 11 models) found no statistically significant aggregate formatting difference on frontier-era models specifically, consistent with position/formatting sensitivity shrinking as models improve. this experiment's null u-curve reads as the same trend showing up one level down: not just "frontier models stopped caring about formatting," but "a modern small model may have stopped exhibiting the base lost-in-the-middle degradation at all," at least at this document count and length. untested here: whether a bigger sweep (liu et al.'s full 30-document, denser position setting) reproduces the u-curve on haiku, or whether the effect is genuinely gone at this model generation regardless of scale — that would need the full-scale alternative named in the cost section above, run specifically to test the u-curve's presence rather than the formatting question.
+
 ## related
 
 - [[2026-08-30 agent reading versus human reading, which formatting rules transfer]] — the mechanism argument this whole line of testing is trying to check empirically
