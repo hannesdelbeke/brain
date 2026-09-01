@@ -85,5 +85,6 @@ two things changed between the two tests, not one: the document source (personal
 
 ## related
 
+- [[2026-09-01 synthetic hop-ceiling test - two fictional vaults, cross-model content, zero trouble found]] — closes a gap this note's screening couldn't: prior topic exposure and same-model writer-reader bias, using entirely invented content instead
 - [[2026-09-01 hop-ceiling pilot - a u-curve shadow the token-ceiling test never found]] — the vault-note version this test is checking against a cleaner document source
 - [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — the original diagnosis (exact-match shortcuts erasing position effects) this whole line of testing responds to
