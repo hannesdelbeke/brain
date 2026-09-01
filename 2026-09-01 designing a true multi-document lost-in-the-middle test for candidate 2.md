@@ -110,6 +110,24 @@ no evidence formatting helps or hurts multi-document retrieval at this scale, pa
 
 no evidence of the u-curve either, and that's the more important miss. this design still doesn't reproduce liu et al.'s own base position effect at 20 documents on claude/haiku, so the formatting comparison sits on ground that isn't behaving like the paper it's modeled on. the honest read is a fourth null on the formatting question, plus a separate, newly-found null on the position effect itself — both belong in any writeup, and neither should get buried under the other.
 
+## a partial cross-model check: gpt-oss-20b, same 18 contexts
+
+per [[2026-09-01 tests that only used one model, and whether re-testing is worth it]], this whole experiment used claude/haiku exclusively — worth checking against a different model, since this vault's own compression research found model choice swings results by up to 50x. reused the exact same 18 context files, answered fresh via `openai/gpt-oss-20b` on groq instead of a haiku subagent.
+
+**a real infrastructure limit, not a bug:** groq's free tier caps at 8,000 tokens per minute for this model, and a single ~5,400-token context plus its answer budget uses nearly the whole cap in one request — meaning at most one call per minute is sustainable, not the faster pace haiku subagents allowed. even spacing calls 65 seconds apart with 3 retries each, 8 of 18 calls still failed with a persistent 429 (plausibly the org-level cap being shared with other concurrent sessions active in this vault at the same time). **10 of 18 cells got real answers (55.6% coverage)** — not enough to properly assess the u-curve or the formatting question with this model, but enough for a partial read.
+
+**available cells:**
+
+| position | flat | bold | chunked |
+|---|---|---|---|
+| 1 | 50% (n=6) | 50% (n=6) | 100% (n=3) |
+| 10 | 100% (n=3) | no data | 100% (n=3) |
+| 20 | 100% (n=3) | 100% (n=3) | 100% (n=3) |
+
+overall on available data: **25/30, 83.3%** — matching haiku's own 83.3% headline number almost exactly. the visible errors (both position-1 misses, 0/3 each) land entirely in one content instance (instance 2), the same failure shape haiku showed: content-specific confusion from the near-duplicate reason clusters, not a position or formatting effect. on the cells this model could actually answer, gpt-oss-20b doesn't look dramatically different from haiku — a limited but real data point against the idea that a different model would trivially unlock the missing u-curve at this scale.
+
+this doesn't close the question. a full 18-cell run on a model without groq's free-tier TPM ceiling (a paid tier, or a different provider) would be needed to properly compare u-curve presence and formatting sensitivity model-to-model. named here as the next step if this line of research continues, not run now.
+
 ### a hypothesis for why, not just that it didn't reproduce
 
 liu et al.'s original models — GPT-3.5-Turbo, Claude-1.3, MPT-30B-Instruct, LongChat-13B — are all 2023-era. claude/haiku is a later-generation small model, and a large 2026 study already cited elsewhere in this research ([Structured Context Engineering for File-Native Agentic Systems](https://arxiv.org/html/2602.06384v1), 9,649 experiments across 11 models) found no statistically significant aggregate formatting difference on frontier-era models specifically, consistent with position/formatting sensitivity shrinking as models improve. this experiment's null u-curve reads as the same trend showing up one level down: not just "frontier models stopped caring about formatting," but "a modern small model may have stopped exhibiting the base lost-in-the-middle degradation at all," at least at this document count and length. untested here: whether a bigger sweep (liu et al.'s full 30-document, denser position setting) reproduces the u-curve on haiku, or whether the effect is genuinely gone at this model generation regardless of scale — that would need the full-scale alternative named in the cost section above, run specifically to test the u-curve's presence rather than the formatting question.
