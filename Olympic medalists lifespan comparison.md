@@ -9,19 +9,17 @@ tags:
 ---
 
 **Key Findings:**
-- Athletes in athletics, basketball, boxing, equestrian sports, and wrestling had significantly shorter lives, [according to the NIH](https://pubmed.ncbi.nlm.nih.gov/38180004/). 
-- Olympic achievement was more strongly linked to length of life in individual sports than in team sports, [according to the NIH](https://pubmed.ncbi.nlm.nih.gov/38180004/). 
-- **Olympians, in general, outlived the general population by about 3.4 years**
+- within medalists specifically, those in athletics, basketball, boxing, equestrian sports, and wrestling had significantly shorter lives than non-medalists in the same sports, [Kovbasiuk, Ciechanowski & Jemielniak, *Scandinavian Journal of Public Health*, 2025](https://pubmed.ncbi.nlm.nih.gov/38180004/). 
+- Olympic medal status was more strongly linked to length of life in individual sports than in team sports, [Kovbasiuk, Ciechanowski & Jemielniak, *Scandinavian Journal of Public Health*, 2025](https://pubmed.ncbi.nlm.nih.gov/38180004/). 
+- this paper makes no comparison between Olympians and the general population at all, and no sport-specific year figures like the ones below.
 
-> [!NOTE]
-> pole vaulting was associated with an 8.4-year extension in lifespan, 
-> gymnastics was linked to an 8.2-year extension
+> [!warning] unverified, not from the cited paper
+> "Olympians outlived the general population by about 3.4 years", "pole vaulting was associated with an 8.4-year extension in lifespan", and "gymnastics was linked to an 8.2-year extension" could not be traced to the ambrosia paper above or to any other source this pass, web search and fetch access were both restricted. they may belong to a different, older study on Olympic medallist longevity, e.g. the 2012 BMJ "Longevity of outstanding sporting achievement" line of research, but that is unconfirmed. treat all three numbers as unsourced until checked again.
 
-Olympic medalists' lifespan was shorter than non-medalists
-boxing, weightlifting, ice hockey, cycling, football, swimming, and wrestling
+overall, Olympic medalists' lifespan was shorter than non-medalists'
+boxing, weightlifting, ice hockey, cycling, football, swimming, and wrestling had the shortest overall lifespans among the disciplines studied
 
-the duration of life in athletes involved in these disciplines was highest
-athletics, rowing, fencing, artistic gymnastics, shooting, cross-country skiing, sailing, and equestrian sports
+athletics, rowing, fencing, artistic gymnastics, shooting, cross-country skiing, sailing, and equestrian sports had the longest, note athletics and equestrian sports also appear above among medalists with shorter lives than their own sport's non-medalists, the two findings compare different things and are not a contradiction
 
 **Conclusions**
 Disciplines engaging mostly power link to shorter [[lifespan|lifespans]],
@@ -36,7 +34,4 @@ Disciplines involving predominantly skill associate with longer life durations.
 
 [[longevity]]
 [[sport]]
-
-[research: A taste of ambrosia: Do Olympic medalists live longer than Olympic losers?](https://pubmed.ncbi.nlm.nih.gov/38180004) 
-
 [[Olympic]]

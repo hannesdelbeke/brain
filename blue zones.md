@@ -12,7 +12,7 @@ tags:
 - health
 ---
 
-Blue Zones are [five specific areas](https://www.bluezones.com/exploration/#section-1) of the world where people consistently live over 100 years of age. 
+Blue Zones are [five specific areas](https://www.bluezones.com/exploration/#section-1) of the world claimed to have unusually high rates of people living over 100 years of age, a claim disputed on demographic grounds, see the warning callout below.
 - [Sardinia, Italy](https://sardinia.nia.nih.gov/)
 - [Ikaria, Greece](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8296328/)
 - [Nicoya, Costa Rica](https://pubmed.ncbi.nlm.nih.gov/30919261/)
@@ -35,6 +35,9 @@ nine common practices. Called the [Power 9](https://www.bluezones.com/2016/11/p
 	- put family first
 	- keep a social circle that supports healthy behaviors.
 	- [Loneliness](https://www.medicalnewstoday.com/articles/320534) is a top risk factor for a shorter life
+
+> [!warning]- the data itself is contested
+> demographer [Saul Justin Newman](https://en.wikipedia.org/wiki/Saul_Justin_Newman), who won the 2024 Ig Nobel Prize in Demography for this work, argues the blue zone clusters are largely an artifact of bad record-keeping rather than real biology: missing birth certificates, clerical error, and pension fraud (relatives not reporting a death and continuing to collect the payment) inflate the count of "supercentenarians" in exactly the poorest-documented regions. [Okinawa's own family registers were destroyed in 1945](https://en.wikipedia.org/wiki/Blue_Zone) and rebuilt afterward, and Okinawa's life expectancy has since declined; a 2021 review found no controlled studies of elderly people in any blue zone, calling the associated diets speculative; and people born in Nicoya after 1930 did not show exceptional longevity next to the rest of Costa Rica, with Nicoya's blue zone status itself described as no longer applicable as of 2023. none of this proves the five regions have no longevity effect, but it means the claim is actively disputed, not settled, and the Power 9 practices above are plausible healthy habits independent of whether the "outlive everyone" framing holds up.
 
 [[longevity]]
 [[health]]
