@@ -34,7 +34,7 @@ CodeGraph is a 100% local code intelligence engine and MCP server designed to el
 | **Graph Model** | Symbol-to-symbol call trees, inheritance, imports, route bindings | Note-to-note and section-to-section resolved [[wikilinks]] and backlinks |
 | **Search Paradigm** | Deterministic symbol resolution + SQLite FTS5 lexical search | **Hybrid Retrieval:** FTS5 BM25 lexical + `bge-small-en-v1.5` neural vector embeddings (DirectML GPU) fused via [[reciprocal rank fusion|RRF]] |
 | **Semantic Concept Matching** | No neural embeddings (purely AST & lexical symbol matching) | **Yes:** Dense vector dot-product matrix (<0.5ms) for thematic similarity and duplicate prevention |
-| **Agent Interface** | Single high-density MCP tool (`codegraph_explore`) returning full source + flow | Granular query tools (`search_vault.py`, `check_duplicate`) returning `path:line` targets |
+| **Agent Interface** | Single high-density MCP tool (`codegraph_explore`) returning full source + flow | Granular query tools ([[search_vault.py]], `check_duplicate`) returning `path:line` targets |
 | **File Syncing** | Continuous background daemon with OS watcher & debounce (300ms–2s) | SHA256 diff cache with batch checkpointing (~2s incremental on GPU) |
 | **Context Strategy** | Dense verbatim payload in 1 call (fewer turns, higher residual context) | Surgical line-range targets (lower turn context, relies on targeted `view_file`) |
 

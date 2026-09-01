@@ -20,7 +20,7 @@ Agent execution sessions provide the missing ground-truth feedback loop for note
 
 Obsidian [[view count]] tracks human navigation waypoints and active topic hubs. It records file opens, but misses all agent reads and cannot measure whether a note contained the core solution or was merely a navigational waypoint.
 
-Passive co-retrieval logging in [[2026-08-27 every read is a write - co-retrieval as synapse strength|every read is a write]] captures queries and returned candidates in `searchd.py`. While valuable for tracking query impressions, ranking solely on raw retrievals creates a **rich-get-richer loop**: notes ranked highly by initial BM25/vector embeddings get retrieved repeatedly, accumulating weight regardless of whether they helped or acted as noisy distractors.
+Passive co-retrieval logging in [[2026-08-27 every read is a write - co-retrieval as synapse strength|every read is a write]] captures queries and returned candidates in [[searchd.py]]. While valuable for tracking query impressions, ranking solely on raw retrievals creates a **rich-get-richer loop**: notes ranked highly by initial BM25/vector embeddings get retrieved repeatedly, accumulating weight regardless of whether they helped or acted as noisy distractors.
 
 True usefulness requires measuring **task resolution**: did reading a note directly contribute to the working code, decision, or synthesis committed at the end of the turn?
 
@@ -28,7 +28,7 @@ True usefulness requires measuring **task resolution**: did reading a note direc
 
 Every productive agent execution turn provides four concrete anchors:
 - **Prompt:** User intent, constraints, and problem statement (recorded in git commit body per [[track prompt history]]).
-- **Read trace:** Note paths fetched from `searchd.py` or inspected via tool calls (`view_file`, `grep_search`).
+- **Read trace:** Note paths fetched from [[searchd.py]] or inspected via tool calls (`view_file`, `grep_search`).
 - **Session recap:** The agent's final synthesized explanation of how the problem was resolved.
 - **Git commit diff:** The ground-truth outcome—the exact code, configuration, or note changes verified as working.
 

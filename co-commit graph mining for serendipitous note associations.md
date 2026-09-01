@@ -83,14 +83,14 @@ Four candidate weighting shapes were compared, benchmarked against the private a
 2. **Model 2 (Quadratic Inverse):** $w = \max(0.01, \frac{2}{N(N - 1)})$
 3. **Model 3 (Pure Power-Law, no discount):** 
    $$w = \max\left(0.005, \frac{1}{(N - 1)^{1.5}}\right)$$
-   Applies to every commit equally, including Obsidian `auto backup:` saves — this is what `co_commit.py` ships.
+   Applies to every commit equally, including Obsidian `auto backup:` saves — this is what [[co_commit.py]] ships.
 4. **Model 4 (Model 3 + 180-Day Half-Life Time Decay):** Applies exponential decay based on commit age.
 
 ---
 
 ### Why Model 3 Wins
 
-> The scores above were measured, not invented — run against the real private and public vaults, just on a different machine than whichever checkout is reading this note, so the exact run can't be replayed from here. What has drifted since: the benchmarked Model 3 included the Intent multiplier ($1.0\times$ vs $0.3\times$ for autosaves); `co_commit.py` as shipped today applies pure power-law with no multiplier (see "Equal Weighting across Save Triggers" below). The table's Model 3 numbers describe that earlier, slightly different formula, not the exact one currently running. A rerun with an eval harness in the style of `eval_rerank.py` against this checkout's own history would confirm whether dropping the multiplier changed the ranking — see [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] for where that harness would live.
+> The scores above were measured, not invented — run against the real private and public vaults, just on a different machine than whichever checkout is reading this note, so the exact run can't be replayed from here. What has drifted since: the benchmarked Model 3 included the Intent multiplier ($1.0\times$ vs $0.3\times$ for autosaves); [[co_commit.py]] as shipped today applies pure power-law with no multiplier (see "Equal Weighting across Save Triggers" below). The table's Model 3 numbers describe that earlier, slightly different formula, not the exact one currently running. A rerun with an eval harness in the style of [[eval_rerank.py]] against this checkout's own history would confirm whether dropping the multiplier changed the ranking — see [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] for where that harness would live.
 
 Reasoning for preferring Model 3 over 1/2, consistent with the measured table above:
 - **Model 1 (linear inverse)** and **Model 2 (quadratic inverse)** both decay slower than Model 3 for mid-size commits (5-10 files), so a moderate refactor commit gets nearly as much weight as a focused 2-file edit — this is the "equal weighting" failure mode from the section above, just less extreme.
@@ -114,13 +114,13 @@ Reasoning for preferring Model 3 over 1/2, consistent with the measured table ab
    - Power-law scaling naturally dampens bulk commits without needing artificial penalties on autosaves.
 
 3. **Evergreen Persistence (Zero Time Decay):**
-   - While time decay is vital for activity heatmaps (`mention_heatmap.py`), it is harmful to associative knowledge graphs. Structural relationships between tools or historical records remain permanent truths over time.
+   - While time decay is vital for activity heatmaps ([[mention_heatmap.py]]), it is harmful to associative knowledge graphs. Structural relationships between tools or historical records remain permanent truths over time.
 
 ---
 
 ## Production Implementation
 
-Implemented in [`skills/pkm-metadata-indexer/co_commit.py`](skills/pkm-metadata-indexer/co_commit.py), storing edges in `~/.pkm/co_commit.db` (single `co_commits` table: `vault`, `note_a`, `note_b`, `weight`, `commit_count`, `last_commit`, `last_sha`):
+Implemented in [[[co_commit.py]]](skills/pkm-metadata-indexer/co_commit.py), storing edges in `~/.pkm/co_commit.db` (single `co_commits` table: `vault`, `note_a`, `note_b`, `weight`, `commit_count`, `last_commit`, `last_sha`):
 
 ```bash
 # Update co-commit index across vault git history

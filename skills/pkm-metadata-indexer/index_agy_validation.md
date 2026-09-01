@@ -1,6 +1,6 @@
-# Validating `index_agy.py` on a machine with a real agy history
+# Validating [[index_agy.py]] on a machine with a real agy history
 
-Instructions for an agent to run unattended. `index_agy.py` was written and
+Instructions for an agent to run unattended. [[index_agy.py]] was written and
 measured against 18 conversations on one machine, which is enough to prove the
 parser runs and not enough to prove it is right. This is the check to run
 somewhere with hundreds.

@@ -20,7 +20,7 @@ aliases:
 > do a pass over the release plan and modular decoupling note, written by gemini flash. check what the vault already says about decoupling into a repository, and link those notes.
 
 > [!todo] next
-> **next:** the session searcher, which is the package with a user today. the second scanner it waited on landed on 2026-08-30 as `index_agy.py`, so the seam every package below rests on has two implementations.
+> **next:** the session searcher, which is the package with a user today. the second scanner it waited on landed on 2026-08-30 as [[index_agy.py]], so the seam every package below rests on has two implementations.
 > **blocked:** whether publishing is a goal, which decides whether anything past this happens.
 
 **why:** [[progress - local-first search daemon and indexer]]
@@ -33,7 +33,7 @@ so a release plan is not choosing between one copy and several. it is deciding w
 
 ## the three primitives, and whether they need separating
 
-extraction, lexical search and vector search are already separable in behaviour. a corpus indexed without embeddings answers from FTS5 alone, which is how the transcript corpus ran for weeks, and the vector half is a `--with-embeddings` pass that adds a float32 blob per section. what is not separated is the source: they live together in `index_pkm_meta.py`, 1,669 lines, with the daemon another 800.
+extraction, lexical search and vector search are already separable in behaviour. a corpus indexed without embeddings answers from FTS5 alone, which is how the transcript corpus ran for weeks, and the vector half is a `--with-embeddings` pass that adds a float32 blob per section. what is not separated is the source: they live together in [[index_pkm_meta.py]], 1,669 lines, with the daemon another 800.
 
 so the split buys one thing that does not exist today, an install that never touches ONNX: no model download, no DirectML, no 122 MB resident matrix, for a low-power machine or a CI job or a person who will not install a model to search their notes. that is a real story, and it needs a `--no-vectors` flag and an optional dependency group more than it needs three files.
 
@@ -77,7 +77,7 @@ the build-step rule is the one real cost of plain javascript. the directory veri
 
 this is the one that pays before anyone else installs it, and the one that proves the seam. searching your own agent transcripts is a need the author has daily, the corpus is already indexed at 79,359 sections over 858 transcripts, and file provenance, which past session edited this file, is answerable from `edges` and is not answerable any other way.
 
-it is also where the scanner interface stopped being an interface with one implementation. `scan_sessions` reads Claude Code transcripts; `index_agy.py`, written on 2026-08-30, reads antigravity's, and the two share nothing but the return type. the plan assumed that second scanner would read `~/.gemini/antigravity-cli/history.jsonl`, a small file in a different format, and that was wrong: the prompt history is 40 lines and the conversations are one SQLite database each holding binary protobuf with no schema published, so there is no line to count and no byte offset to resume from and the cursor is the step index instead. that is a better proof than the easy one would have been. `~/.codex` does not exist on this machine, so codex is a third scanner written when there are transcripts to read, not a bullet in a plan.
+it is also where the scanner interface stopped being an interface with one implementation. `scan_sessions` reads Claude Code transcripts; [[index_agy.py]], written on 2026-08-30, reads antigravity's, and the two share nothing but the return type. the plan assumed that second scanner would read `~/.gemini/antigravity-cli/history.jsonl`, a small file in a different format, and that was wrong: the prompt history is 40 lines and the conversations are one SQLite database each holding binary protobuf with no schema published, so there is no line to count and no byte offset to resume from and the cursor is the step index instead. that is a better proof than the easy one would have been. `~/.codex` does not exist on this machine, so codex is a third scanner written when there are transcripts to read, not a bullet in a plan.
 
 a terminal UI is the part to leave until the search is used from a terminal often enough to be annoyed by the output format.
 

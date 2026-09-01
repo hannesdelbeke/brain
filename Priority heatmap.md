@@ -51,7 +51,7 @@ The proposal above said planning system. What shipped is a read command, not a s
 
 Smallest first step: run the command once and look at the top five. The heatmap only sees things written as [[wikilink|wikilinks]], so if a recurring task shows up as plain prose it will not rank, and writing it as a link is the habit that makes the rest work.
 
-Implementation is `skills/pkm-metadata-indexer/mention_heatmap.py`, documented as section 9 of the [[pkm metadata indexer]] skill, with a `--selfcheck` covering the decay values and the diff parsing.
+Implementation is [[mention_heatmap.py]], documented as section 9 of the [[pkm metadata indexer]] skill, with a `--selfcheck` covering the decay values and the diff parsing.
 
 #prioritizing #planning
 [[visualize]]

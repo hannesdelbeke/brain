@@ -30,7 +30,7 @@ aliases:
 │                      PKM-SEARCH PIPELINE                    │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
-│   1. DAEMON LAYER (`searchd.py`)                            │
+│   1. DAEMON LAYER ([[searchd.py]])                            │
 │   • Keeps ONNX embedding model resident in memory.          │
 │   • Avoids 2–5s PyTorch/transformers cold-start penalty.    │
 │   • Responds to local IPC/HTTP socket queries in ~3–5ms.    │
@@ -55,7 +55,7 @@ aliases:
 
 ## ⚡ Performance & Stability Best Practices
 
-When running `searchd.py` as an always-on background daemon on multi-core laptops or workstations:
+When running [[searchd.py]] as an always-on background daemon on multi-core laptops or workstations:
 
 ### 1. ONNX Intra-Op Thread Pool Configuration
 By default, ONNX Runtime's thread pool busy-spins between keepalive encodes (every 250ms), burning CPU on multi-core machines with no active queries. Fixed: `get_embedding_model()` takes a `threads` argument, part of the model cache key, and the query path passes `QUERY_THREADS = 1`. Bulk embedding leaves it unset and keeps the full pool, where the parallelism is real work.

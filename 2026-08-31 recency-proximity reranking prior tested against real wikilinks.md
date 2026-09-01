@@ -23,7 +23,7 @@ A proposed search-reranking signal — fold time-closeness between two notes int
 
 No local LLM gateway was available to blind-judge relatedness the way [[co-commit graph mining for serendipitous note associations|the co-commit signal]] was tested. Used a different ground truth already in the vault instead: an explicit `[[wikilink]]` between two notes is a human saying, at write time, "these are related" — real, human-curated, and free.
 
-`recency_prior_experiment.py` (in `skills/pkm-metadata-indexer/`):
+[[recency_prior_experiment.py]] (in `skills/pkm-metadata-indexer/`):
 1. Builds a creation-date cache from one `git log --reverse --diff-filter=A` walk (3,885 dates in 1.2s — not one `git log` per file, which an earlier fork this session used and which does not scale).
 2. For every note with a resolved outbound wikilink, computes the target's rank under vector-cosine similarity alone (baseline), and its rank after multiplying every candidate's score by the recency-proximity factor (reranked).
 3. Reports mean rank and MRR (mean reciprocal rank — weights top-of-list positions heavily) for both, over a sample of wikilinked pairs.
@@ -77,7 +77,7 @@ That second point is the actual failure mode, and it's structural, not a tuning 
 
 ## Follow-up: does a hard cutoff (last hours/days) fix it?
 
-Natural next question — the smooth exponential tail still gives *some* boost to far-apart candidates; does replacing it with a step function (`proximity = 1.0 if gap ≤ window else 0.0`, `--mode hard` in the script) confined to a short, literal "last few hours / last day" window avoid the damage? `recency_prior_experiment.py` was extended to support this, with the creation-date cache upgraded from day-only to full ISO timestamps (`git log --format=%aI`, still one walk, 3,886 timestamps in 1.2s) so hour-scale windows are measurable at all.
+Natural next question — the smooth exponential tail still gives *some* boost to far-apart candidates; does replacing it with a step function (`proximity = 1.0 if gap ≤ window else 0.0`, `--mode hard` in the script) confined to a short, literal "last few hours / last day" window avoid the damage? [[recency_prior_experiment.py]] was extended to support this, with the creation-date cache upgraded from day-only to full ISO timestamps (`git log --format=%aI`, still one walk, 3,886 timestamps in 1.2s) so hour-scale windows are measurable at all.
 
 **Window swept at λ=1.0** (fixed seed, n=500):
 
@@ -143,7 +143,7 @@ The mechanism, from the rank-flip proof above: an additive term of size λ can o
 
 **Don't ship a global recency multiplier or an RRF rank-fusion of recency** — both were tested rigorously (multi-seed, full-sample) and rejected; the RRF result specifically shows that avoiding unbounded displacement is not sufficient on its own, since RRF still let a signal that's mostly noise with respect to the specific wikilinked target dilute a good baseline ranking.
 
-**The additive combine is a real, validated improvement** and the recommended form if this is pursued further: `combine=add, mode=hard, tau=6h, lambda=0.05` (+8.60% full-sample) is the best config found, with `combine=add, mode=decay, tau=30d, lambda=0.05` (+7.73%) a close, simpler alternative. Before wiring it into `searchd.py`'s `/similar` the way [[co-commit graph mining for serendipitous note associations|co-commit's `&graph=1`]] was, it should get the same opt-in-behind-a-flag treatment and the same live smoke-test — but unlike the multiplicative and RRF forms, there's now a genuine case for shipping it.
+**The additive combine is a real, validated improvement** and the recommended form if this is pursued further: `combine=add, mode=hard, tau=6h, lambda=0.05` (+8.60% full-sample) is the best config found, with `combine=add, mode=decay, tau=30d, lambda=0.05` (+7.73%) a close, simpler alternative. Before wiring it into [[searchd.py]]'s `/similar` the way [[co-commit graph mining for serendipitous note associations|co-commit's `&graph=1`]] was, it should get the same opt-in-behind-a-flag treatment and the same live smoke-test — but unlike the multiplicative and RRF forms, there's now a genuine case for shipping it.
 
 The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] remains a useful, independent signal in its own right; this note's conclusion is no longer "the whole idea fails," it's "two of three ways to combine it fail, and the third is worth shipping."
 

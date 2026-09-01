@@ -12,7 +12,7 @@ tags:
 ---
 Applying the hybrid search, vector embeddings, and SQLite indexing optimizations from [[pkm metadata indexer]] to unified session logs across Antigravity, Codex, and Claude Code.
 
-**Status, 2026-08-30: built for Claude Code and Antigravity.** `index_sessions.py` is the adapter, 859 transcripts and 1.49 GB index to 79,489 sections and 9,738 edges, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Queries run 34-62ms with vectors and 30-58ms without. A first pass costs 19.24s of metadata plus 298.86s of embedding; after it, a transcript only grows, so a reindex parses the appended bytes and finishes in 7.78s ([[2026-08-27 tail reads, resuming an index at the byte it stopped at]]). Antigravity followed on 2026-08-30 as `index_agy.py`, and Codex is still unwritten. What follows is the design and what measurement changed about it.
+**Status, 2026-08-30: built for Claude Code and Antigravity.** [[index_sessions.py]] is the adapter, 859 transcripts and 1.49 GB index to 79,489 sections and 9,738 edges, and `searchd.py --sessions claude=~/.claude/projects` serves them beside the vault. Queries run 34-62ms with vectors and 30-58ms without. A first pass costs 19.24s of metadata plus 298.86s of embedding; after it, a transcript only grows, so a reindex parses the appended bytes and finishes in 7.78s ([[2026-08-27 tail reads, resuming an index at the byte it stopped at]]). Antigravity followed on 2026-08-30 as [[index_agy.py]], and Codex is still unwritten. What follows is the design and what measurement changed about it.
 
 The engine needed no new index, ranker or daemon. `build_index` gained one `collect=` parameter naming the scanner, the markdown scanner stayed the default, and everything after the scan was already source-agnostic.
 
@@ -121,10 +121,10 @@ Apply top-500 candidate pre-filtering before RRF to avoid O(N log N) sorting bot
 * [x] **Session Corpus Ingestion:** 859 transcripts (1.49 GB) parsed and indexed down to 79,489 sections and 9,738 subagent / file edges in SQLite (`.pkm_index.db`).
 * [x] **Local Hybrid Search:** FTS5 BM25 + ONNX DirectML `bge-small-en-v1.5` embeddings fused via Reciprocal Rank Fusion (RRF). Queries execute in 34–62ms warm.
 * [x] **Tail Reads on Transcripts:** Byte-offset resume parses only newly appended bytes, reducing incremental updates from 12.46s to 0.78s ([[public/2026-08-27 tail reads, resuming an index at the byte it stopped at|tail reads]]).
-* [x] **Antigravity Adapter:** `index_agy.py` reads schema-free protobuf out of one SQLite database per conversation, resuming on `steps.idx` rather than a byte offset, and reaches the daemon through `--corpus` without adding code to it.
+* [x] **Antigravity Adapter:** [[index_agy.py]] reads schema-free protobuf out of one SQLite database per conversation, resuming on `steps.idx` rather than a byte offset, and reaches the daemon through `--corpus` without adding code to it.
 * [x] **Live File Watchers:** `searchd --watch` runs multi-corpus watchers using `watchfiles` with a 2-second debounce and indexer write filtering.
 * [x] **Cross-Encoder Reranking & Privacy Gates:** Optional `ms-marco-MiniLM-L-6-v2` reranker with `--withhold-private` regex scanner ensuring zero telemetry egress for sensitive credentials, home paths, or network IPs.
-* [x] **Graph & File Provenance Queries:** `link_graph.py` queries file references across sessions, identifying which agent session last modified or debugged any code or document asset.
+* [x] **Graph & File Provenance Queries:** [[link_graph.py]] queries file references across sessions, identifying which agent session last modified or debugged any code or document asset.
 
 ---
 
@@ -159,7 +159,7 @@ The problem of giving coding agents durable memory across sessions spans several
 
 ## Open Tasks & Next Steps
 
-1. **Codex Adapter:** Write the scanner for Codex (`~/.codex/sessions/`) to fulfill the multi-agent contract. Antigravity landed on 2026-08-30 as `index_agy.py`: 18 conversations and 44 MB down to 17 notes, 1,511 sections, 107 edges and 2.4 MB of index, served through `searchd.py --corpus` with no code of its own. Its field map was read out of the wire format by volume rather than from a schema, so `index_agy_validation.md` is the procedure for rechecking it on a larger corpus.
+1. **Codex Adapter:** Write the scanner for Codex (`~/.codex/sessions/`) to fulfill the multi-agent contract. Antigravity landed on 2026-08-30 as [[index_agy.py]]: 18 conversations and 44 MB down to 17 notes, 1,511 sections, 107 edges and 2.4 MB of index, served through `searchd.py --corpus` with no code of its own. Its field map was read out of the wire format by volume rather than from a schema, so `index_agy_validation.md` is the procedure for rechecking it on a larger corpus.
 2. **Cross-Machine Sync Layer:** Transcripts remain local to each workstation; building a lightweight sync or Git-backed metadata exchange is required for multi-device recall.
 3. **Supervisor Integration:** Feed session turns directly into [[public/proposal - self-learning agent supervisor and continuous prompt failure distillation|self-learning agent supervisor]] to automatically cluster human correction prompts.
 

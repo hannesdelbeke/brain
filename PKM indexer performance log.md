@@ -14,7 +14,7 @@ tags:
 > [!quote] User Prompt
 > *add the log updates to the indexers to a sep ntote*
 
-Empirical performance telemetry, per-phase timing breakdown, throughput benchmarks, and historical execution logs for the **[[pkm metadata indexer]]** (`skills/pkm-metadata-indexer/index_pkm_meta.py`).
+Empirical performance telemetry, per-phase timing breakdown, throughput benchmarks, and historical execution logs for the **[[pkm metadata indexer]]** ([[index_pkm_meta.py]]).
 
 ---
 
@@ -98,7 +98,7 @@ python -m pip install --no-cache-dir onnxruntime-directml
 
 Order matters: DirectML last. Any later `pip install fastembed` re-pulls the CPU wheel and clobbers it again.
 
-**Query cold start.** A single `search_vault.py` call takes 3.0s end to end on a warm DB, and nearly all of it is loading the embedding model to encode one query string. The per-call cost is fixed, so it does not improve with a smaller vault or a narrower query, and it is the measurement behind keeping the model resident in the [[lightning-fast unified search plugin for obsidian|search daemon]].
+**Query cold start.** A single [[search_vault.py]] call takes 3.0s end to end on a warm DB, and nearly all of it is loading the embedding model to encode one query string. The per-call cost is fixed, so it does not improve with a smaller vault or a narrower query, and it is the measurement behind keeping the model resident in the [[lightning-fast unified search plugin for obsidian|search daemon]].
 
 ---
 
@@ -135,7 +135,7 @@ Three findings, in order of how much they moved the number.
 
 Ranking improves alongside the timing, since the dropped words were contributing BM25 noise. If every term is common the rarest one survives, so no query is left with an empty expression.
 
-**Where a query stands now.** 13–22ms server-side against the 6,550 section vault, flat across idle gaps. A shell call through `search_vault.py` is 0.61s, of which roughly 0.5s is Python starting up: it is a daemon client first, so `numpy` and `fastembed` are imported only when it has to fall back to searching in-process.
+**Where a query stands now.** 13–22ms server-side against the 6,550 section vault, flat across idle gaps. A shell call through [[search_vault.py]] is 0.61s, of which roughly 0.5s is Python starting up: it is a daemon client first, so `numpy` and `fastembed` are imported only when it has to fall back to searching in-process.
 
 ---
 

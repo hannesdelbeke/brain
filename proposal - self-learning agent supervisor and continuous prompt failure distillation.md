@@ -81,7 +81,7 @@ Each of those was diagnosed once, in a session, and then the diagnosis stayed in
 
 ## stage 1, ingest
 
-Reuses [[cross-agent session indexing architecture]] rather than adding a daemon. Claude Code transcripts in `~/.claude/projects/` are already scanned by `skills/pkm-metadata-indexer/index_sessions.py` and served by `searchd.py`; Antigravity (`~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript.jsonl`) and Codex (`~/.codex/sessions/`) still need adapters. Git history is the second source, read with `git log -p` and `git blame -C -C -C` for line provenance.
+Reuses [[cross-agent session indexing architecture]] rather than adding a daemon. Claude Code transcripts in `~/.claude/projects/` are already scanned by [[index_sessions.py]] and served by [[searchd.py]]; Antigravity (`~/.gemini/antigravity-cli/brain/<id>/.system_generated/logs/transcript.jsonl`) and Codex (`~/.codex/sessions/`) still need adapters. Git history is the second source, read with `git log -p` and `git blame -C -C -C` for line provenance.
 
 One thing that note already settled applies here: `tool_result` bodies are 80% of the corpus and are dropped at index time. A correction detector runs on prose and `tool_use` arguments, which is the part that survives.
 

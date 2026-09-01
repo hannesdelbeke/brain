@@ -27,7 +27,7 @@ Five things are excluded:
 
 - The target note itself.
 - Sections that already contain a `[[wikilink]]` to the target, under any alias. Those are linked mentions.
-- Matches inside a fenced code block. The fence state is tracked from the first line of the file, using the same toggle `urgent_tasks.py` and the rest of the skill already use.
+- Matches inside a fenced code block. The fence state is tracked from the first line of the file, using the same toggle [[urgent_tasks.py]] and the rest of the skill already use.
 - Matches inside a `code span`. Same reason as the fence: you cannot put brackets there without changing what the code says.
 - Matches sitting inside a `[[link]]` to some other note. `[[Obsidian faster startup]]` is not a mention of `Obsidian` that anyone can act on, and without this rule the results for a hub title are mostly other notes' titles.
 

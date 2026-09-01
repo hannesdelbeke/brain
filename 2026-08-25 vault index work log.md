@@ -9,11 +9,11 @@ A day of work on the vault index, run mostly by agents in parallel. This note is
 
 ## Finding work to do
 
-The starting question was how to find unsolved problems in a vault of 3,228 notes. Semantic search answers it badly, because "problem" is a shape rather than a topic. Structure answers it well: a problem heading with no solution heading, a title starting with TODO, open checkboxes, and a small set of marker phrases. `find_open_problems.py` scores notes on those four signals and scans the vault in about 2 seconds without touching the index, so it works when the index is stale. See [[finding unsolved problems in my vault]].
+The starting question was how to find unsolved problems in a vault of 3,228 notes. Semantic search answers it badly, because "problem" is a shape rather than a topic. Structure answers it well: a problem heading with no solution heading, a title starting with TODO, open checkboxes, and a small set of marker phrases. [[find_open_problems.py]] scores notes on those four signals and scans the vault in about 2 seconds without touching the index, so it works when the index is stale. See [[finding unsolved problems in my vault]].
 
 A note is retired from the list by adding `solved` to its frontmatter tags, which zeroes its score. The open count went from 117 to 109 over the day. Twenty-six notes were tagged in the sweep.
 
-Two ranking tools came out of the same question. `urgent_tasks.py` ranks open tasks, and `mention_heatmap.py` scores link targets by `0.5 ** (age_days / 30)` per distinct day mentioned, read from `git log -p` rather than the `edges` table, because `edges` holds the current graph with no dates and in-degree just ranks hubs. See [[Priority heatmap]] and [[TODO how to highlight urgent tasks]].
+Two ranking tools came out of the same question. [[urgent_tasks.py]] ranks open tasks, and [[mention_heatmap.py]] scores link targets by `0.5 ** (age_days / 30)` per distinct day mentioned, read from `git log -p` rather than the `edges` table, because `edges` holds the current graph with no dates and in-degree just ranks hubs. See [[Priority heatmap]] and [[TODO how to highlight urgent tasks]].
 
 ## Notes solved
 

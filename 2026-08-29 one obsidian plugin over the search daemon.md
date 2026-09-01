@@ -70,7 +70,7 @@ the corpus is now resolved by matching this vault's own path against the roots i
 
 a review of the merged file found 33 things, and the two worth writing down are the ones that were features rather than slips.
 
-the CLI fallback is gone. semantic search used to try the daemon and then fall back to spawning `search_vault.py` per keystroke, which is a second copy of the query path, a second way of being wrong, and a python process started while the user is still typing. one backend, and a message naming the setting when it is not there.
+the CLI fallback is gone. semantic search used to try the daemon and then fall back to spawning [[search_vault.py]] per keystroke, which is a second copy of the query path, a second way of being wrong, and a python process started while the user is still typing. one backend, and a message naming the setting when it is not there.
 
 the per-view cache became one cache on the plugin, keyed by view type, path and mtime. two panes open on one note now ask the daemon once, and an edit needs no invalidation because the new mtime simply misses. the old cache was per view and keyed by path, so the second pane paid again and a stale entry had to be actively removed.
 
@@ -80,7 +80,7 @@ two features landed with it, both ranked in [[2026-08-30 a semantic graph over t
 
 ## how it is tested without obsidian
 
-`harness.js` intercepts `require("obsidian")` before `main.js` loads and hands it a fake: `Plugin`, `ItemView`, `SuggestModal`, `Setting`, a DOM stub whose `createEl` records a tree that assertions can read, and a fake daemon that is a real HTTP server serving the shapes `searchd.py` returns, including its 200-with-an-error-field case. so the views, the modal and the settings tab run for real, rather than only the pure functions being reachable, which is all the two prototypes' tests could touch.
+`harness.js` intercepts `require("obsidian")` before `main.js` loads and hands it a fake: `Plugin`, `ItemView`, `SuggestModal`, `Setting`, a DOM stub whose `createEl` records a tree that assertions can read, and a fake daemon that is a real HTTP server serving the shapes [[searchd.py]] returns, including its 200-with-an-error-field case. so the views, the modal and the settings tab run for real, rather than only the pure functions being reachable, which is all the two prototypes' tests could touch.
 
 76 tests. the suite was checked by breaking the code at 59 of them: eight deliberate mutations, eight failures, one of which exposed a test that was passing for the wrong reason. `test-live.js` runs the same views against the daemon that is actually running, which is the only thing that catches a route quietly changing shape, and it now also asserts the two fields the new features read, `indexed_at` on `/health` and `vault` on a cross-corpus result row.
 
