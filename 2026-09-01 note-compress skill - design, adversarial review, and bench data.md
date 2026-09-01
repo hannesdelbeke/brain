@@ -67,6 +67,21 @@ Three things were tried against this exact note, live, to see if relaxing the ha
 
 Also hit live: a verbose relaxed-prompt variant plus a long note exceeded Groq's 8,000 tokens-per-minute limit for `openai/gpt-oss-20b` on the free tier (`413`, request too large) — a real ceiling worth knowing about before assuming every note in a folder can run back-to-back without backoff.
 
+## negative result: a cheap pre-check can't predict which notes are worth attempting
+
+Since the mechanical gate makes every attempt structurally safe (nothing is ever written unless it verifiably preserves every wikilink/date/number/code span — the only possible failure is a wasted call, never a corrupted note), the open question isn't "is it safe to try" but "is it worth trying." Wikilink density and number density (both free, computed before spending any call) looked like plausible predictors, since the live rejections skewed toward link-dense notes.
+
+Calibrated against all 17 real outcomes from today's live runs (8-note and 20-note samples plus the five hand-run notes), neither metric separates passes from rejects:
+
+| | wikilinks per 100 words |
+| :--- | :--- |
+| rejected notes | ranged 0.21 - 3.19 |
+| passed notes | ranged 0.04 - 4.02, fully overlapping |
+
+`Obsidian improvements.md`, the highest-link-density note tested (4.02), passed with a real 3.2% cut. `2026-08-27 what already exists, prior art for a local hybrid search engine.md`, near the lowest (0.21), was rejected. Number density showed the same overlap. The working theory from the section above — link-dense notes are the risk — held for the two most dramatic individual cases (`Priority heatmap.md`, `wikilink temporal integrity.md`) but isn't a general rule once checked against the full set.
+
+Part of why a static predictor can't fully work: the same note and the same unmodified prompt produced a pass on one call and a fenced-code failure on another (noted above) — some of the outcome is decided at call time, not by anything measurable in the text beforehand. Conclusion: don't build a pre-filter. The eligibility filter (word count + backlinks) already bounds how many notes get tried; the free gate already bounds the damage of each individual attempt to zero. Predicting per-note success in advance would spend engineering effort removing a cost — one wasted free-tier API call — that's already effectively zero.
+
 ## compared to hierarchical rollup
 
 A hierarchical map-reduce rollup — batch-synthesizing many notes into cached monthly/tag/cluster summaries — was measured and rejected separately at this vault's current size: roughly 3,228 notes serialize to about 180k tokens of metadata, which already fits one model call, so there's no intermediate level to insert yet.
