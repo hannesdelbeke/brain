@@ -17,3 +17,5 @@ winget install emoacht.Monitorian
 ```
 
 the reduced brightness has a similar effect on the eyes as [[dark mode]]
+
+On Linux, see [[public/2026-09-01 monitor brightness control on Linux with ddcutil|monitor brightness control on Linux with ddcutil]] for hardware DDC/CI control via `ddcutil` and GNOME extensions.
