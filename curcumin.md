@@ -16,14 +16,14 @@ PROS
 Curcumin helps with
 - oxidative & inflammatory conditions 
 - metabolic syndrome
-- [[arthritis]]
-- [[anxiety]]
+- [[arthritis]] — decent RCT support for knee osteoarthritis pain, comparable to paracetamol/NSAIDs in some trials
+- [[anxiety]] — weak evidence, based on small short trials only
 - hyperlipidemia
 - exercise-induced [[inflammation]] & muscle soreness
 	- thus enhancing recovery and subsequent performance in active people
-- [study](https://pubmed.ncbi.nlm.nih.gov/35334842/) in older adults found that curcumin consumption was associated with improvements in the maintenance of [[attention]], short-term working memory, language, and executive function over time
+- [study](https://pubmed.ncbi.nlm.nih.gov/35334842/) followed 2,734 singaporean adults (55+) for 4.5 years and found frequent curry eaters scored better on tests of [[attention]], short-term working memory, language, and executive function than infrequent eaters — observational, tracks dietary curry intake rather than curcumin supplements, effect sizes small (cohen's d 0.1–0.3)
 - reduce blood sugars in type 2 [[diabetes]]
-- reduce [[osteoporosis]]
+- animal studies suggest reduced [[osteoporosis]] risk via anti-osteoclast activity — no human trial evidence found
 
 CONS
 - might damage [[liver]]
@@ -39,7 +39,7 @@ dosing
 - 1 teaspoon is 0.5 g
 - adults <1.5 grams daily for up to 9 months
 - Doses of over 8 grams of curcumin per day are not recommended
-- the average [Indian diet](https://www.healthline.com/nutrition/indian-diet-weight-loss) provides 2,000–2,500 mg of [[turmeric]] per day, which is 60–100 mg of curcumin
+- the average indian diet is estimated to provide 2,000–2,500 mg of [[turmeric]] per day (60–100 mg of curcumin) — figure widely repeated in curcumin research reviews; the [Indian diet](https://www.healthline.com/nutrition/indian-diet-weight-loss) link previously cited here doesn't actually contain it, and no primary source was confirmed
 
 [[health]]
 [[supplement]]
