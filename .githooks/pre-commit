@@ -26,4 +26,22 @@ if [ -z "$PKM_ALLOW_MASS_DELETE" ] && git rev-parse --verify HEAD >/dev/null 2>&
   fi
 fi
 
+# --- private term gate -----------------------------------------------------
+#
+# This repository is public. Three times a private term reached its history
+# and needed a filter-repo rewrite and a force push to remove. See
+# .githooks/leak_scan.py for what is checked and how to add a term.
+#
+# Set PKM_ALLOW_LEAK_TERM=1 to commit through a false positive.
+
+if [ -z "$PKM_ALLOW_LEAK_TERM" ]; then
+  PY=$(command -v python || command -v python3)
+  if [ -z "$PY" ]; then
+    echo "pre-commit: python not found, cannot run the private-term scan." >&2
+    echo "Install python, or bypass with: PKM_ALLOW_LEAK_TERM=1 git commit ..." >&2
+    exit 1
+  fi
+  "$PY" .githooks/leak_scan.py --staged || exit 1
+fi
+
 exit 0
