@@ -74,6 +74,19 @@ class MetadataIndexerTest(unittest.TestCase):
         self.assertEqual(links["path"], "folder/beta.md")
         self.assertEqual(links["inbound"][0][0], "alpha.md")
 
+    def test_digest_lists_tags_and_headings_at_zero_api_cost(self):
+        self.build_metadata_only()
+        digest = INDEXER.digest_notes(vault_path=str(self.vault), db_path=str(self.db))
+        by_path = {row["path"]: row for row in digest}
+        self.assertEqual(by_path["alpha.md"]["tags"], "test")
+        self.assertIn("Planned", by_path["alpha.md"]["headings"])
+        self.assertIn("Long", by_path["alpha.md"]["headings"])
+
+    def test_digest_tag_filter_excludes_notes_without_it(self):
+        self.build_metadata_only()
+        digest = INDEXER.digest_notes(vault_path=str(self.vault), db_path=str(self.db), tag="test")
+        self.assertEqual({row["path"] for row in digest}, {"alpha.md"})
+
     def test_common_terms_are_pruned_from_the_fts_expression(self):
         self.build_metadata_only()
         connection = sqlite3.connect(self.db)

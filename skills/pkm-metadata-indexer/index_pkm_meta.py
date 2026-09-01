@@ -1385,6 +1385,48 @@ def query_links(note_reference: str, vault_path: str | None = None, db_path: str
         connection.close()
 
 
+def digest_notes(vault_path: str | None = None, db_path: str | None = None, tag: str | None = None):
+    """Print filename, tags, headings, and summary_snippet per note, straight from the index.
+
+    Zero API cost: every field printed here is already sitting in `notes` and
+    `sections` from the last index run. This is the leaf layer from
+    [[hierarchical map-reduce note rollup]]'s plan, step 1 — an agent reads
+    this instead of the raw note body to decide whether it needs to open the
+    file at all.
+    """
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
+    if not database_file.exists():
+        print("Index database not found. Run indexing first.")
+        return None
+
+    connection = sqlite3.connect(database_file)
+    try:
+        cursor = connection.cursor()
+        query = "SELECT path, tags, summary_snippet FROM notes"
+        params: tuple = ()
+        if tag:
+            query += " WHERE tags LIKE ?"
+            params = (f'%"{tag}"%',)
+        query += " ORDER BY path"
+        notes = cursor.execute(query, params).fetchall()
+
+        headings_by_path: dict[str, list[str]] = {}
+        for path, heading in cursor.execute("SELECT path, heading FROM sections ORDER BY path, start_line"):
+            headings_by_path.setdefault(path, []).append(heading)
+
+        digest = []
+        for path, tags_json, summary_snippet in notes:
+            tags = ", ".join(json.loads(tags_json)) if tags_json else ""
+            headings = " / ".join(headings_by_path.get(path, []))
+            line = f"{path} | tags: {tags} | headings: {headings} | {summary_snippet}"
+            print(line)
+            digest.append({"path": path, "tags": tags, "headings": headings, "summary_snippet": summary_snippet})
+        return digest
+    finally:
+        connection.close()
+
+
 # Unlinked mentions. Every candidate section costs one file read, so the FTS
 # candidate set is capped well above anything a pane shows.
 UNLINKED_CANDIDATES = 200
@@ -1641,6 +1683,9 @@ def main():
     )
     parser.add_argument("--json", action="store_true", help="Emit the duplicate check as JSON on stdout")
     parser.add_argument("--links", type=str, default=None, help="Show inbound and outbound links for a note")
+    parser.add_argument("--digest", action="store_true",
+                        help="Print filename, tags, headings, and summary_snippet per note, zero API cost")
+    parser.add_argument("--tag", type=str, default=None, help="Restrict --digest to notes carrying this tag")
     parser.add_argument("--stats", "--perf", action="store_true", help="Display database and indexing performance benchmarks")
     parser.add_argument("--limit", type=int, default=10, help="Maximum search results")
     parser.add_argument("--rerank", action="store_true",
@@ -1648,7 +1693,9 @@ def main():
                              "20 candidates and a 90 MB model download the first time")
     args = parser.parse_args()
 
-    if args.stats:
+    if args.digest:
+        digest_notes(vault_path=args.vault, db_path=args.db, tag=args.tag)
+    elif args.stats:
         print_stats(vault_path=args.vault, db_path=args.db)
     elif args.search:
         results = search_index(args.search, vault_path=args.vault, db_path=args.db,
