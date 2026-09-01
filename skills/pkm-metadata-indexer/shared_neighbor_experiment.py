@@ -92,6 +92,49 @@ def all_graph_nodes(edges: list[tuple[str, str]]) -> set[str]:
     return nodes
 
 
+# (avg wikilink-graph degree, AA fusion MRR change at k=1) for the 4 real
+# vaults measured so far - see "why the Adamic-Adar verdict flipped" and
+# "more test vaults" in 2026-08-31 other candidate relatedness signals for
+# search reranking.md. n=4, one positive example: not enough to fit a real
+# threshold, only enough to see a rough direction, and bramses scoring less
+# negative than kepano despite lower degree shows degree isn't the whole
+# story - the vault's own density-ablation experiment already found density
+# explains "part of it, not all of it". Treat any recommendation from this
+# as a starting point for a human decision, not a threshold to switch on
+# automatically.
+AA_DEGREE_CALIBRATION = [
+    ("bramses", 2.115, -19.82),
+    ("kepano", 2.156, -34.91),
+    ("this vault (brain)", 4.87, -8.24),
+    ("obsidianmd/obsidian-help", 8.32, 15.96),
+]
+
+
+def recommend_aa_weight(avg_degree: float) -> str:
+    """Human-readable, non-binding read on whether AA fusion is likely to help
+    at this vault's measured wikilink-graph density - not an on/off switch.
+    """
+    lines = [f"measured average wikilink-graph degree: {avg_degree:.3f}",
+             "",
+             "calibration points so far (degree -> AA fusion MRR change at k=1):"]
+    for name, degree, change in sorted(AA_DEGREE_CALIBRATION, key=lambda row: row[1]):
+        lines.append(f"  {degree:5.3f}  {change:+6.2f}%  {name}")
+    lines.append("")
+    if avg_degree < 4.87:
+        lines.append("below every vault that has rejected AA fusion so far (n=2 negative in this "
+                      "range) - AA fusion has not helped on any vault this sparse yet.")
+    elif avg_degree < 8.32:
+        lines.append("between this vault's own rejection point and obsidian-help's validation "
+                      "point - no real calibration data in this range, direction only.")
+    else:
+        lines.append("at or above the one vault where AA fusion validated (n=1) - a plausible "
+                      "candidate to try, not a confirmed win.")
+    lines.append("")
+    lines.append("n=4 total, one positive example: this is a starting point for a human decision "
+                 "to try --fuse-metric aa and check the real result, not a rule to automate.")
+    return "\n".join(lines)
+
+
 def hub_notes(neighbors: dict[str, set[str]], degree_threshold: int) -> set[str]:
     """Notes with more than `degree_threshold` distinct wikilink neighbours -
     the wikilink-graph analogue of co_commit.py's hub_notes(), a hard cutoff on
@@ -392,6 +435,11 @@ def main():
                              "out: bibliographic coupling, only what the anchor links to (Kessler 1963). "
                              "in: co-citation, only what links to the anchor (Small 1973).")
     parser.add_argument("--self-check", action="store_true")
+    parser.add_argument("--recommend-aa-weight", action="store_true",
+                        help="Print a non-binding read on whether AA fusion is likely to help "
+                             "here, based on this vault's measured wikilink-graph density "
+                             "against the 4 real vaults calibrated so far, then exit - does not "
+                             "run the experiment or change any live behavior.")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
@@ -402,6 +450,12 @@ def main():
 
     vault_dir = Path(args.vault_dir).resolve()
     db_path = Path(args.db).resolve() if args.db else pkm.default_db_path(vault_dir)
+
+    if args.recommend_aa_weight:
+        neighbors = build_neighbor_sets(load_all_edges(db_path), args.direction)
+        avg_degree = sum(len(n) for n in neighbors.values()) / len(neighbors) if neighbors else 0.0
+        print(recommend_aa_weight(avg_degree))
+        return
     import json
     result = run_experiment(vault_dir, db_path, args.sample, args.seed,
                             args.fuse_rrf_k, args.fuse_metric,
@@ -477,6 +531,13 @@ def self_check():
     both_scores = score_all(both_neighbors, dpaths, "a", "aa", degree_neighbors=both_neighbors)
     assert both_scores[d_index["b"]] > 0 and both_scores[d_index["c"]] > 0, \
         "merging directions should surface both relationships the directional views kept separate"
+
+    # recommend_aa_weight is advisory text, not a rule - just check it names
+    # the right band and never claims more certainty than the n=4 data has.
+    assert "below" in recommend_aa_weight(2.0).lower()
+    assert "no real calibration data" in recommend_aa_weight(6.0)
+    assert "n=1" in recommend_aa_weight(9.0)
+    assert "not a rule to automate" in recommend_aa_weight(5.0)
 
     print("self-check ok")
 
