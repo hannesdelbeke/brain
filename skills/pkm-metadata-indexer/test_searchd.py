@@ -925,5 +925,92 @@ class FusionRouteTest(unittest.TestCase):
         self.assertEqual(fusion_only["results"], with_graph["results"])
 
 
+class FusionZHubDegreeTest(unittest.TestCase):
+    """`&fusion=1`'s AA term, z_hub_degree-cut: the same-batch/same-template
+    false positive named in shared_neighbor_experiment.py's score_all
+    docstring and the survey note's "the same-batch/same-template false
+    positive: investigated" section - two notes whose only connection is a
+    wikilink to a shared high-degree hub note must not get a nonzero AA
+    contribution from it once FUSION_Z_HUB_DEGREE is exceeded, while a note
+    sharing a genuinely narrow (low-degree) neighbour still does. No git
+    fixture needed here (unlike Recency/FusionRouteTest): the AA term reads
+    the wikilink graph, not commit timestamps, and creation_index() degrades
+    to an empty `near` set with no git history rather than erroring."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        notes = {
+            "north.md": "## North\nanchor note. [[hub]] [[narrow]]\n",
+            "south.md": "## South\nshares only the hub with north - no real relationship. [[hub]]\n",
+            "east.md": "## East\nshares narrow, a genuinely specific neighbour, with north. [[narrow]]\n",
+            "hub.md": "## Hub\na same-session catalog/index note linked from everywhere.\n",
+            "narrow.md": "## Narrow\na specific note linked from exactly two others.\n",
+        }
+        # 19 filler notes linking only to hub, plus north and south already
+        # linking to it, pushes hub's wikilink degree to 21 - past the
+        # default FUSION_Z_HUB_DEGREE of 20. narrow stays at degree 2.
+        for i in range(19):
+            notes[f"filler{i:02d}.md"] = f"## Filler {i}\nlinks only to the hub. [[hub]]\n"
+        cls.vault = build_vault(Path(cls.temp_dir.name) / "zhub", "zhub", notes)
+
+        SEARCHD.STATE = SEARCHD.State([cls.vault])
+        cls.server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+        cls.port = cls.server.server_address[1]
+        cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        cls.thread.start()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.server.shutdown()
+        cls.server.server_close()
+        cls.vault.close()
+        for attempt in range(3):
+            try:
+                cls.temp_dir.cleanup()
+                return
+            except PermissionError:
+                if attempt == 2:
+                    raise
+                time.sleep(0.2)
+
+    def with_co_commit_db(self, *rows):
+        """Same throwaway-file swap SearchDaemonTest/FusionRouteTest use."""
+        original = SEARCHD.co_commit.DEFAULT_DB
+        db = Path(self.temp_dir.name) / f"co_commit_{uuid.uuid4().hex}.db"
+        connection = SEARCHD.co_commit.connect(db)
+        with connection:
+            connection.executemany("INSERT INTO co_commits VALUES (?, ?, ?, ?, ?, ?, ?)", rows)
+        connection.execute("PRAGMA wal_checkpoint(TRUNCATE);")
+        connection.close()
+        SEARCHD.co_commit.DEFAULT_DB = db
+        self.addCleanup(setattr, SEARCHD.co_commit, "DEFAULT_DB", original)
+
+    def test_hub_bridge_scores_zero_aa_while_a_narrow_shared_neighbour_still_scores(self):
+        # sanity: the fixture actually stresses the cutoff under test
+        wl_neighbors = SEARCHD.shared_neighbor.build_neighbor_sets(SEARCHD.wikilink_pairs(self.vault))
+        self.assertGreater(len(wl_neighbors["hub.md"]), SEARCHD.FUSION_Z_HUB_DEGREE)
+        self.assertLessEqual(len(wl_neighbors["narrow.md"]), SEARCHD.FUSION_Z_HUB_DEGREE)
+
+        # identical co-commit weight for both, so south and east differ only
+        # on the AA term - south's only shared neighbour is the hub (over the
+        # cutoff, zeroed), east's is narrow (under it, kept)
+        self.with_co_commit_db(
+            ("zhub", "north.md", "south.md", 1.0, 1, "2026-08-31", "abc1234"),
+            ("zhub", "north.md", "east.md", 1.0, 1, "2026-08-31", "abc1235"),
+        )
+        status, body = fetch(self.port, "/similar?note=north&fusion=1")
+        self.assertEqual(status, 200)
+        scores = {row["path"]: row["score"] for row in body["results"]}
+        cc_only = round(SEARCHD.FUSION_LAMBDA_COCOMMIT * min(1.0 / 5.0, 1.0), 6)
+        # south's shared neighbour (hub) is over the cutoff - AA contributes
+        # nothing, so its score is exactly the co-commit term alone
+        self.assertAlmostEqual(scores["south.md"], cc_only)
+        # east's shared neighbour (narrow) is under the cutoff - AA still
+        # contributes, so east outranks south despite identical co-commit weight
+        self.assertGreater(scores["east.md"], scores["south.md"])
+        self.assertEqual([row["path"] for row in body["results"]], ["east.md", "south.md"])
+
+
 if __name__ == "__main__":
     unittest.main()
