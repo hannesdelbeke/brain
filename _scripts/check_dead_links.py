@@ -13,9 +13,39 @@ from pathlib import Path
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-VAULT_ROOT = Path(__file__).resolve().parent.parent
 WIKILINK_RE = re.compile(r"\[\[(.*?)\]\]")
 CODE_SPAN_RE = re.compile(r"`[^`\n]+`")
+SCRIPT_CODE_SPAN_RE = re.compile(r"(?<!\[\[)`([a-zA-Z0-9_\-]+\.(?:py|sh|ps1|bat|ts|js))`(?!\s*\]\])")
+
+
+def find_vault_root(start_path: Path = None) -> Path:
+    """Find the enclosing Obsidian vault root or Git repository root."""
+    if start_path is None:
+        start_path = Path.cwd()
+    start_path = start_path.resolve()
+    if start_path.is_file():
+        start_path = start_path.parent
+
+    # 1. Search upwards for .obsidian directory
+    curr = start_path
+    for _ in range(10):
+        if (curr / ".obsidian").exists():
+            return curr
+        if curr.parent == curr:
+            break
+        curr = curr.parent
+
+    # 2. Search upwards for .git directory
+    curr = start_path
+    for _ in range(10):
+        if (curr / ".git").exists():
+            return curr
+        if curr.parent == curr:
+            break
+        curr = curr.parent
+
+    # 3. Fallback to parent of script directory
+    return Path(__file__).resolve().parent.parent
 
 
 def build_vault_index(root: Path):
@@ -87,13 +117,70 @@ def check_file_links(file_path: Path, valid_targets: set):
     return broken
 
 
-def main():
-    root = VAULT_ROOT
-    files_to_check = []
+def autolink_file_scripts(file_path: Path, valid_targets: set) -> bool:
+    """Auto-convert backticked script filenames to [[filename.ext]] if they exist on disk."""
+    if not file_path.exists() or file_path.suffix.lower() != ".md":
+        return False
 
-    if len(sys.argv) > 1:
-        files_to_check = [Path(arg).resolve() for arg in sys.argv[1:]]
+    in_fenced_code = False
+    new_lines = []
+    modified = False
+
+    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            stripped = line.strip()
+            if stripped.startswith("```"):
+                in_fenced_code = not in_fenced_code
+                new_lines.append(line)
+                continue
+
+            if in_fenced_code:
+                new_lines.append(line)
+                continue
+
+            def _replace_script(match):
+                fname = match.group(1)
+                if fname.lower() in valid_targets or Path(fname).stem.lower() in valid_targets:
+                    return f"[[{fname}]]"
+                return match.group(0)
+
+            new_line = SCRIPT_CODE_SPAN_RE.sub(_replace_script, line)
+            if new_line != line:
+                modified = True
+            new_lines.append(new_line)
+
+    if modified:
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.writelines(new_lines)
+
+    return modified
+
+
+def main():
+    args = sys.argv[1:]
+    fix_mode = "--fix" in args
+    if fix_mode:
+        args = [a for a in args if a != "--fix"]
+
+    vault_override = None
+    if "--vault" in args:
+        v_idx = args.index("--vault")
+        if v_idx + 1 < len(args):
+            vault_override = Path(args[v_idx + 1]).resolve()
+            args = args[:v_idx] + args[v_idx + 2 :]
+
+    files_to_check = []
+    if args:
+        files_to_check = [Path(arg).resolve() for arg in args]
+
+    if vault_override:
+        root = vault_override
+    elif files_to_check:
+        root = find_vault_root(files_to_check[0])
     else:
+        root = find_vault_root()
+
+    if not files_to_check:
         import subprocess
 
         try:
@@ -113,6 +200,17 @@ def main():
         sys.exit(0)
 
     valid_targets = build_vault_index(root)
+
+    if fix_mode:
+        for file_path in files_to_check:
+            if autolink_file_scripts(file_path, valid_targets):
+                rel = (
+                    file_path.relative_to(root).as_posix()
+                    if file_path.is_relative_to(root)
+                    else file_path.name
+                )
+                print(f"[AUTO-FIX] Converted script code spans to wikilinks in {rel}")
+
     total_broken = 0
 
     for file_path in files_to_check:
