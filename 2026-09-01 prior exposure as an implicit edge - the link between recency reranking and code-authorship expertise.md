@@ -1,0 +1,47 @@
+---
+name: prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise
+description: The same underlying mechanism — prior exposure causally shapes what gets produced next — explains why recency-proximity reranking works as a note-ranking signal and why first git authorship predicts real code knowledge, and this vault already measured why the naive version of that mechanism fails
+created: 2026-09-01
+tags:
+  - pkm
+  - ai
+  - research
+  - graph-theory
+  - technical
+---
+
+> any note in the past influences all notes in the future, since it alters the mind of the author (or agent) who wrote it — all prior knowledge shapes subsequent action and therefore subsequent discovery. that's a real, if invisible, link between notes, and it looks like the same mechanism as first git authorship predicting who really knows a piece of code.
+
+That comparison holds, and this vault already has evidence on both sides of it, including a proof of exactly how far the naive version of the idea can be pushed before it breaks.
+
+## the same mechanism, two domains
+
+[[2026-08-31 recency-proximity reranking prior tested against real wikilinks|this vault's own recency-proximity research]] traces its origin to precisely this claim: "every note in a vault is latently connected to every earlier note, because one continuous mind wrote all of them" — citing Vannevar Bush's associative trails (*As We May Think*), Niklas Luhmann's Zettelkasten practice, and the cognitive mechanism behind both, spreading activation (Collins & Loftus, 1975): activating one concept in memory partially activates everything associated with it, including things written or read long before, without any explicit pointer between them.
+
+[[2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing|today's separate research]] on code-authorship expertise-finding found the code equivalent from a completely different literature: [CodeCV](https://www.computer.org/csdl/proceedings-article/scam/2022/960900a143/1JSpk9oqpY4) (IEEE SCAM 2022) measured that **first authorship and recency of modification are the strongest predictors of who actually understands a piece of code** — not the person with the most commits, not the person with the most seniority, but whoever's mental model was most recently or most originally shaped by writing it.
+
+Same claim, two names: a mind that has been shaped by an artifact (a note, a function, a decision) carries that shaping forward into whatever it produces next, whether or not any explicit trace — a wikilink, a citation, a `git blame` line — records the connection. The link is real and causal; it's just invisible to a graph built only from explicit references.
+
+## this vault already tested the naive version, and it failed
+
+The valuable part isn't the theory, which is old (Bush wrote it in 1945) — it's that this vault already operationalized the naive form of it and measured exactly how it breaks.
+
+The straightforward implementation — every pair of notes gets an implicit edge weighted by how close together they were written, boost ranking by that closeness — was built and tested three ways against real wikilinks (a human, at write time, saying "these two are related," used as ground truth):
+
+- **A global multiplier** on vector-similarity score: every τ (time-decay window) tested made ranking *worse*, from -19.5% MRR at 3 days to -2.3% even at 1000 days. No configuration was positive.
+- **Reciprocal rank fusion**, the standard production way to combine relevance and freshness: also rejected, worst at small k (-21% at k=100,000), never positive at any k tested.
+- **A small additive term** (`final_score = vector_score + λ·proximity`, not a multiplier): the only form that worked — +7.73% to +8.60% MRR, stable across every random seed tested.
+
+The proof for *why* the first two fail generalizes past this specific vault: a temporal-closeness boost can only demote a true target relative to something *closer in time*, and the number of temporal "rivals" near any given note is large (measured directly: 14.4 other notes within 1 hour of any note, 37.4 within 24 hours) — so the chance that *some* rival gets boosted past the true target approaches certainty as rival count grows, regardless of how the decay curve or fusion constant is tuned. The mechanism is real, but it's diluted by every other note sharing the same rough time window, most of which have nothing to do with the specific pair a human actually linked. An additive term survives because it can only break near-ties — it's structurally incapable of displacing a candidate that was clearly better on content, unlike a multiplier or rank-fusion term, which can be swamped by proximity alone.
+
+## the transferable warning for code-authorship expertise
+
+The same failure mode should be expected, not assumed away, if "who was recently near this code" gets used as an expertise-finding signal the same naive way: a naive proximity boost (whoever touched a file most recently, or whoever's commits cluster closest in time to a change, ranks as most expert) will have exactly the same rival-count dilution problem — many commits near a given file or period share nothing but coincidental timing (a mass reformat, a dependency bump, a build-config change), the same way many notes share a rough creation window without being substantively related.
+
+This vault's [[skills/pkm-metadata-indexer/SKILL|co-commit mining work]] independently found the code-domain version of the same lesson: a raw co-edit weight is dominated by hub files/hub committers unless explicitly excluded (`z_hub_degree`), and lift-normalization (not raw weight) is what correctly demotes a "touches everything" signal in favor of a rare, specific pairing. That's the same shape of fix as the additive-not-multiplicative result above: **don't let a broad, real-but-diffuse signal (temporal or topical proximity) directly rescale a ranking; let it only break ties or act as a bounded, small correction on top of a stronger underlying signal (content similarity, actual co-edit weight).** Any future expertise-finder built on "recent activity near this code" should assume it needs the same additive, hub-excluded shape as both signals here, not a proximity multiplier, and should test for the same rival-count dilution before trusting a raw version of the idea.
+
+## related
+- [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]] — the full experiment, proof, and the additive-form recommendation this note builds on
+- [[2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing]] — the CodeCV first-authorship finding
+- [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] — the co-commit hub-exclusion and lift-normalization result this note draws the parallel to
+- [[2026-08-31 wide time gaps between repeated notes are stronger signal than close ones]] — a related but distinct use of time-gaps-as-signal in this vault: confidence in a recurring pattern rather than relatedness between different notes
