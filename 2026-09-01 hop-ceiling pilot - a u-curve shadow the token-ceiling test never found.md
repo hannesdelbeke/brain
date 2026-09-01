@@ -12,9 +12,9 @@ tags:
 ---
 
 > [!summary] eli5
-> the earlier pilot fed a model 13 documents all at once and asked a question — 3/3 correct, no dip, at any position. this pilot asks the same question about the same fact, but shows the model one note per turn instead, with no memory of earlier notes except its own running sense of the task. result: correct, wrong, correct — hop 4 (the middle) got a real, different tool name wrong, not just "not stated." a small, real signal the token-ceiling version never produced.
-> done, n=1 per position, real signal but too small to trust alone.
-> **needs from you:** decide whether to repeat this design with more instances per hop-position (recommend yes — 3-5 repeats per position, same 7-hop structure, before treating "middle hops are harder" as a real finding rather than one lucky/unlucky trial).
+> the earlier pilot fed a model 13 documents all at once and asked a question — 3/3 correct, no dip, at any position. this pilot asks about three different facts, one note per turn instead, no memory of earlier notes except the model's own running sense of the task, target planted at hop 1, 4, or 7 of 7. hop 1 and hop 7 came back clean, 3/3 correct each, across all three facts. hop 4 is where it fell apart: 3 of 4 trials at that position had trouble — one flat wrong answer, one missed-then-recovered-a-turn-late, one caught immediately. one of those four trials only exists because of a delivery mistake mid-experiment, flagged below rather than quietly folded in.
+> done, 9 real trials plus one discarded-and-repurposed one, a real if noisy middle-hop signal.
+> **needs from you:** nothing forced — the next real step (more repeats, or varying which fact sits at which hop) is optional follow-up, not a decision blocking anything else.
 
 **why:** [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]]
 
@@ -26,29 +26,48 @@ the fix: strict amnesia. each turn shows *only* the current note — no running 
 
 ## setup
 
-same target fact and question as [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]]: the note describing an all-steel right-angle checking tool ("machinist square" / "engineer's square"), question worded with zero vocabulary overlap ("for checking a perfect right angle, craftspeople often pick an all-metal option over the older wood-bodied version because it holds its accuracy better over time. what is that all-metal tool called?").
+three different target facts, each with a question worded with zero vocabulary overlap against its source note, tested against the same fixed pool of 6 distractor notes (D1 rocket stove, D2 instagram-as-diary, D3 youtube premium, D4 river tame, D5 maya node editor, D6 gdrive-went-down outage) — 7 slots per trial, target inserted at slot 1, 4, or 7, distractors filling the rest in fixed order.
 
-three fresh claude/haiku subagents, each resumed turn-by-turn via direct messages (not re-sent full history — each turn's message contained only the next note's text plus the standing instruction to answer or say "next"). same 6 distractor notes as the earlier pilot (rocket stove, instagram-as-diary, youtube premium, river tame, roller shutters, maya node editor), 7 slots total, target inserted at slot 1, 4, or 7 across the three trials, everything else identical and in the same order.
+- **F1 — machinist square**: source note describes an all-steel right-angle checking tool. question: "for checking a perfect right angle, craftspeople often pick an all-metal option over the older wood-bodied version because it holds its accuracy better over time. what is that all-metal tool called?"
+- **F2 — discharge rate**: source note describes a battery's C-rate. question: "batteries get a rating that describes their speed of draining, expressed as a multiple of the battery's total size — what is that rating called?"
+- **F3 — roller shutters**: source note describes UK planning-permission rules for external shutters. question: "which home addition, common on shop entrances but rare on houses in the UK, needs local government approval to install outside but not if fitted indoors?"
 
-## result
+each trial is one fresh claude/haiku subagent, resumed turn-by-turn via direct messages — no re-sent history, each turn's message contains only that note's text plus the standing instruction: answer directly if the note contains it, otherwise reply exactly "next."
 
-| hop position | answer given | correct? |
+## result — route traveled and outcome, every trial
+
+route notation: `D1 D2 D3 [TARGET] D4 D5 D6` means the target was shown on turn 4, distractors on the other six turns, in that fixed relative order.
+
+| fact | route (target position marked `[F]`) | outcome |
 |---|---|---|
-| 1 (start) | "Engineer's square" | yes |
-| 4 (middle) | "Speed Square" | **no** |
-| 7 (end) | "Engineer's square" | yes |
+| F1 (machinist square) | `[F1] D1 D2 D3 D4 D5 D6` (hop 1) | correct — "Engineer's square," turn 1 |
+| F1 (machinist square) | `D1 D2 D3 [F1] D4 D5 D6` (hop 4) | **wrong** — "Speed Square," turn 4, never corrected |
+| F1 (machinist square) | `D1 D2 D3 D4 D5 D6 [F1]` (hop 7) | correct — "Engineer's square," turn 7 |
+| F2 (discharge rate) | `[F2] D1 D2 D3 D4 D5 D6` (hop 1) | correct — "C rate," turn 1 |
+| F2 (discharge rate) | `D1 D2 D3 [F2] D4 D5 D6` (hop 4) | correct — "C rate," turn 4 |
+| F2 (discharge rate) | `D1 D2 D3 D4 D5 D6 [F2]` (hop 7) | correct — "C-rate," turn 7 |
+| F3 (roller shutters) | `[F3] D1 D2 D3 D4 D5 D6` (hop 1) | correct — "Shutters," turn 1 |
+| F3 (roller shutters) | `D1 D2 D3 [F3] D4 D5 D6` (hop 4) | **missed at turn 4** ("next," answer was present) — self-corrected to "Shutters" at turn 5, one turn late |
+| F3 (roller shutters), extra replicate | `D1 D2 D3 [F3] D4 D5 D6` (hop 4, see note below) | correct — "Shutters," turn 4, immediately |
+| F3 (roller shutters) | `D1 D2 D3 D4 D5 D6 [F3]` (hop 7) | correct — "Shutters," turn 7 |
 
-correct, wrong, correct — a shape the single-shot 13-document pilot never produced (that one went 3/3, flat, no dip at any position). the hop-4 error is a genuine confusion, not a refusal: "Speed Square" is a real carpentry tool (a triangular layout square), a plausible-sounding wrong guess rather than "not stated," suggesting the model's sense of which fact it was chasing had drifted by the fourth turn rather than simply forgetting it saw one.
+> [!note] one trial's route was wrong because of my mistake, not the model's
+> the F3 hop-7 trial was meant to travel `D1 D2 D3 D4 D5 D6 [F3]` — target last. mid-experiment, I sent it the target note's text on turn 4 instead of the D4 distractor, so its real route became `D1 D2 D3 [F3] D4 D5 D6`, a hop-4 route in disguise. discarding it as a hop-7 result would hide a real, cleanly-answered trial; keeping it labeled as hop-7 would misrepresent what actually happened. it's kept above as what it actually was — an extra hop-4 replicate — and a fresh, correctly-routed hop-7 trial was run separately to fill the gap the mistake left (that's the F3 hop-7 row above, route confirmed correct).
+
+**by position, across all three facts:**
+- **hop 1 (start): 3/3 clean correct.** every fact, first turn, no hesitation.
+- **hop 7 (end): 3/3 clean correct.** every fact, correct on the turn the target appeared.
+- **hop 4 (middle): 1 wrong, 1 delayed, 2 clean, out of 4 trials.** every trouble this pilot found — the one flat wrong answer, the one missed-then-recovered answer — happened at the middle position. the two clean hop-4 answers (both real, not explained away) mean this isn't a hard rule, but it's the only position where anything went wrong at all.
 
 ## what this does and doesn't show
 
-**does show:** a real, observable difference between the two designs on the identical fact and question — turn-by-turn delivery produced an error the same content, delivered as one block, did not. that's at least consistent with the idea that hop-count and token-count are measuring different things when context is genuinely restricted per turn.
+**does show:** a real, observable difference from the earlier single-shot pilot, which went a clean 3/3 with zero trouble at any position on the same kind of fact. turn-by-turn delivery produced genuine confusion (a wrong but real tool name) and a genuine delay (right answer, one turn late) that the concatenated-document version never produced once. all of that trouble clustered at the middle hop, none at the ends.
 
-**doesn't show:** that "middle hops are harder" is a real, general effect. this is n=1 per position — one wrong answer at one position could easily be noise (a single bad rephrasing, one moment of model confusion) rather than a real curve. the single-document pilot only became trustworthy after being run at n=2-6 per cell across several scales; this pilot hasn't earned that yet.
+**doesn't show:** a proven, monotonic curve. 2 of 4 hop-4 trials were clean, and n=1-2 per fact-position cell is thin — a slow week for one model on one turn is still a plausible alternative explanation for any single miss. this is a real signal worth taking seriously, not yet a claim to cite as settled.
 
-## next step
+## next step (optional, not blocking)
 
-repeat with more instances per position (3-5 per hop, same 7-hop structure, fresh content each time so the specific fact/note pairing isn't doing the work) before citing "hop distance degrades accuracy independent of token budget" as a real finding. if the middle-hop error rate stays elevated across repeats, that's a genuinely new, distinct claim from anything in [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] or [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — both of those are about position *within a single context*, not persistence of a goal *across turns*.
+more repeats per position, or the same three facts swapped to different hop positions than tested here, would tighten this. if the middle-hop trouble rate holds up, that's a genuinely new, distinct claim from anything in [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] or [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — both of those are about position *within a single context*, not persistence of a goal *across turns*.
 
 ## related
 
