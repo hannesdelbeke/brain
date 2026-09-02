@@ -12,6 +12,9 @@ tags:
   - reproducibility
 ---
 
+> [!warning] 
+> this research seems like a dead end, skip it
+
 > [!summary] eli5
 > even a closed-book screen only proves a model can't recall an exact fact — it doesn't rule out prior exposure to a topic making the right passage easier to *recognize*, and it doesn't rule out the test itself being biased because the same model (Claude) both wrote the test material and read it. this test closes both gaps: two vaults of entirely invented content, one short/terse (matching the style that showed trouble originally), one long (Wikipedia-article length), with the actual target facts written by a different model (openai/gpt-oss-20b via Groq) so the reader isn't grading its own sibling's writing. result: 6/6 correct, zero trouble, either vault.
 > done. raw content, protocol, and results live in a standalone git repo, not this vault, so the test material and the analysis are separated and the repo itself is independently reproducible.
@@ -25,7 +28,7 @@ tags:
 
 Separately: the whole test — content, questions, protocol — was designed by Claude, and the agents doing the reading are also Claude (Haiku, Sonnet). Content one model writes can be systematically easier for a related model to parse: shared conventions about where a fact sits in a sentence, what "the important clause" looks like. That's the same shape of bias as self-preference in LLM-as-judge research, just between writer and reader instead of judge and candidate.
 
-Full design, exact content, and protocol: [[2026-09-01 hop-ceiling test vaults repo|hop-ceiling-test-vaults]] (`C:\Users\H\Documents\GitHub\hop-ceiling-test-vaults`, its own git repo, not part of this vault).
+Full design, exact content, and protocol: (`C:\Users\H\Documents\GitHub\hop-ceiling-test-vaults`, its own git repo, not part of this vault).
 
 ## the fix
 
@@ -52,9 +55,3 @@ across every round of this research line now:
 three separate controlled conditions all came back clean; only the original, real, personal-vault condition ever found anything. the most honest reading left standing is that the original trouble was likely specific to something about *that* material — near-duplicate topics, ambiguous personal shorthand, or a small-sample noise event — rather than a general property of short notes, long notes, or turn-based amnesia by itself.
 
 **the one gap this note doesn't close:** sample size. 3 trials per vault this round against the original's 12 means a true ~1-in-6 rate could easily land on 0/3 by chance. the next honest step, if anyone continues this, is matching sample sizes — repeating the synthetic short vault at the same n as the original before treating "terseness doesn't do it" as settled rather than "not yet found."
-
-## related
-
-- [[2026-09-01 wikipedia hop-ceiling test - setup and reproduction steps]] — the closed-book-screened round this one closes a remaining gap in
-- [[2026-09-01 hop-ceiling pilot - a u-curve shadow the token-ceiling test never found]] — the original vault-note pilot, the only round that found real trouble
-- [[2026-09-01 why the u-curve disappeared in candidate 2's multi-document test]] — the diagnosis (exact-match lookup keys erase position effects) both synthetic vaults were built to avoid repeating

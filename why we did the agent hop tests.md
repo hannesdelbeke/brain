@@ -59,8 +59,9 @@ writing this overview puts things back in perspective.
 ---
 ## Conclusion
 
-use [[map-reduce]] instead, specifically [[hierarchical map-reduce note rollup]], so the agent reads a summary/header first and only opens the full note if it needs to
+use [[map-reduce]] instead, specifically [[hierarchical map-reduce note rollup]], so the agent reads a summary/header first and only opens the full note if it needs to.
 
+We also investigated token compression, which would make a note quicker to read.
 - token thrift and token compression notes:
 	- [[2026-08-31 research on compressing llm reasoning and notes without losing information]], 
 	- [[2026-08-31 classifier-based compression with an adversarial fidelity gate]]

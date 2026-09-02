@@ -13,6 +13,14 @@ tags:
 > after reading "[[why we did the agent hop tests]]", is it still not worth it to build [[hierarchical map-reduce note rollup]]?
 > ... (later) but 180k tokens is a lot of tokens, so it wouldn't do cost savings
 
+
+### digest
+On the digest — it's already fully spec'd, not built. From [[hierarchical map-reduce note rollup]] Plan section:
+- a --digest flag on index_pkm_meta.py, prints one line per note straight from the existing DB — filename, tags, headings, summary_snippet
+- zero API cost, no schema change, ~30 lines
+- whole vault at that granularity is ~180k tokens, a tag-scoped slice like pkm is ~2k
+- fallback only if the raw snippet proves too thin: add a paid --summarize pass (~$2.30 cold, cents per incremental run)
+
 ## still not worth the hierarchy
 
 [[hierarchical map-reduce note rollup]]'s own conclusion, marked solved on 2026-08-25: not needed as designed, the vault fits one context as a flat digest (180k tokens), no time axis to recurse over, recursion only earns its keep at roughly 5x this vault's size or when one scope stops fitting the reducer's context. neither changed.
@@ -29,4 +37,22 @@ tags:
 
 so the digest's win is only against the raw-dump path. skip it entirely if whole-vault synthesis never happens; it isn't a search replacement either way.
 
-**why:** [[hierarchical map-reduce note rollup]]
+---
+
+ the main things i m aiming for. if we e.g. only load headers in that might save many tokens comparedto loading whole note. and be enough to answer ai question
+
+  Read 1 file, ran 1 shell command
+
+There's already a dedicated concept note. Reading it.
+
+  Read 1 file
+
+Already exists — measured and mostly built: header extraction for token-efficient retrieval.md (2026-08-28, brain).
+
+The idea itself: yes, headers-only beats loading the whole note. Measured on a real case (20-50 note scan): full body ~688 tokens/note vs extracted outline ~155 tokens/note, 77.5% reduction, 10-26k tokens saved per scan turn depending on candidate pool size. Enough to answer relevance questions ("is this the note I want") without reading the body.
+
+Already built, not just theory: pkm-metadata-indexer already chunks at heading boundaries and stores path, heading, start_line, end_line per section in SQLite — that's what search_vault.py returns today (heading + line, not full text). The remaining gap the note flags: once a heading looks relevant, the agent should do an offset read (start_line–end_line only) rather than reading the whole file — that discipline isn't consistently followed, but the line boundaries needed for it already exist for free in the index.
+
+Heading design matters — the note's case study found generic labels ("Overview") force a full read anyway (0% zero-read capability); assertion-style headers ("Label: core thesis") get to 100% zero-read while staying human-scannable.
+
+So: no new note needed, no new build — the mechanism's there, the win is just using offset reads off the existing index instead of Read-ing the whole file.
