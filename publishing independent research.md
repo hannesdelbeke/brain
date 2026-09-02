@@ -12,7 +12,7 @@ Scientific validity comes from methodology, transparency, and reproducible [[dat
 
 You don't need academic credentials or an `.edu` address:
 
-- **Zenodo** — Run by CERN and OpenAIRE. Accepts papers, datasets, and code from anyone across all fields. Assigns a permanent, citable DOI.
+- [[Zenodo]] — Run by CERN and OpenAIRE. Accepts papers, datasets, and code from anyone across all fields. Assigns a permanent, citable DOI.
 - **OSF Preprints** (Open Science Framework) — Ideal for behavioral, social, cognitive, and psychology experiments. Free and open to independent researchers.
 - **SSRN & ResearchGate** — Broad open repositories for working papers and domain research.
 - **Open access journals** — Most peer-reviewed journals accept independent submissions. List your affiliation as *Independent Researcher, [City, Country]*.

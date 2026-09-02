@@ -27,7 +27,7 @@ aliases:
 
 ## what is already decided
 
-the engine was published twice, as `skills/pkm-metadata-indexer/` in this vault and as a standalone repository, and the two copies drifted across seven files until a fix landing in one did not reach the other, which is why the idle CPU fix had to be written twice. on 2026-08-27 one copy was deleted: the standalone repository is a `README.md` pointing here and consumers find the engine by path, see [[pkm-search]].
+	the engine was published twice, as `skills/pkm-metadata-indexer/` in this vault and as a standalone repository, and the two copies drifted across seven files until a fix landing in one did not reach the other, which is why the idle CPU fix had to be written twice. on 2026-08-27 one copy was deleted: the standalone repository is a `README.md` pointing here and consumers find the engine by path, see [[pkm-search]].
 
 so a release plan is not choosing between one copy and several. it is deciding whether the one copy gets a distribution channel, and if it does, every artifact is generated from this directory by CI and pushed, never hand-maintained beside it. three packages hand-maintained is the drift already paid for once, three times over.
 

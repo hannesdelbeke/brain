@@ -1,10 +1,5 @@
 > [!summary] eli5
 > BM25's score for a document depends on how rare the query's words are across the whole corpus, so the same query on two different corpora, or two different queries on the same corpus, can produce raw scores that differ by 10x or 100x with no meaning in the number itself, only in the relative order. done, this is the mechanism [[2026-08-31 recency-proximity reranking prior tested against real wikilinks|the recency-proximity note]] cites as elastic's reason for preferring multiplicative boosting over additive.
-> **needs from you:** nothing
-
-> filled in while reading elastic's writeup on multiplicative vs additive `function_score` boosting, cited from [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]]
-
-**why:** [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]]
 
 ## the formula
 
@@ -21,6 +16,3 @@ that means the same document scores wildly differently depending on which words 
 a fixed additive constant added to BM25 means something completely different depending on which side of that spread the query lands on: elastic's own example is roughly an 18x jump on the low end (0.12 to ~2.12) against a 17% nudge on the high end (12 to 14), for the identical `+2` boost. a multiplicative boost avoids this because a ratio is scale-free — a 20% uplift stays a 20% uplift whichever side of the spread the query score falls on.
 
 not every base score has this problem. vector cosine similarity is bounded to roughly [-1, 1] by construction, independent of corpus term-rarity statistics, so it doesn't carry the swings BM25 does — which is why [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]] found the opposite result (additive safe, multiplicative unsafe) testing a different base score under a different boost shape.
-
-## Related
-- [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]]
