@@ -8,18 +8,17 @@ tags:
 - pkm
 - obsidian
 ---
+## Intro
 
-in [[2026-09-02 what wikilink markup costs a machine reader]]
+Let's take another look at [[Obsidian aliases]], in an age where notes will be consumed by AI.
 
-Comparing [[Obsidian aliases]] in an age where notes will be consumed by AI.
-
-we highlight that 
+We highlight that 
 `[[extra long note names can contain more information]]`
 is more friendly for agents, than 
 `[[extra long note names can contain more information|my note]]`
 
 `my note` is a human facing interface.
-with 1 advantage of locking the word in time, incase our note is renamed.
+with the advantage of locking the word in time, incase our note is renamed.
 
 however Obsidian aliases allow us to link to a note in context, without breaking reading structure.
 
@@ -32,16 +31,7 @@ however Obsidian aliases allow us to link to a note in context, without breaking
 > ```
 > 
 
-
-
-
-
-
-
-
-
-
-
+## Claim
 the piped form of a wikilink, `[[long descriptive note name|short label]]`, is a human display convenience. it shortens what a person reads in a sentence and pays for it in exactly the information a machine reader needs. write the bare full name instead, `[[long descriptive note name]]`, and put alternate names in frontmatter, which is paid once per read of the note rather than once per link.
 
 ## why the pipe costs a machine reader
@@ -72,3 +62,10 @@ in a vault where filenames are written as assertions, that protection points the
 - [[Obsidian aliases]] — the frontmatter feature, which is the good half
 - [[wikilink]] — the link form itself
 - [[header extraction for token-efficient retrieval]] — the same argument applied to headings, assertion-style beats generic labels
+
+## next
+so are wikilinks any good in an age of AI, or should we reinvent our pkm approach?
+[[markdown is the right output format for an agent-written note]]
+
+
+
