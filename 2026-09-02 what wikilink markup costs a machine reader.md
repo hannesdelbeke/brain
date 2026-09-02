@@ -99,6 +99,7 @@ python skills/pkm-metadata-indexer/wikilink_cost_experiment.py --demo
 the embedding pass needs `fastembed`, everything else is stdlib plus `tiktoken`.
 
 ## related notes
+- [[markdown is the right output format for an agent-written note]] — the container the links sit in, measured the same way
 - [[path alias is human facing not agent]] — the rule this note's alias section argues for, stated on its own
 - [[Obsidian aliases]] — the alias feature itself, both forms
 - [[semantic search]] — the earlier bench showing brackets barely move retrieval scores
