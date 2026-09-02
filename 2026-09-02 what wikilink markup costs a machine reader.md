@@ -93,6 +93,7 @@ python skills/pkm-metadata-indexer/wikilink_cost_experiment.py --demo
 the embedding pass needs `fastembed`, everything else is stdlib plus `tiktoken`.
 
 ## related notes
+- [[path alias is human facing not agent]] — the rule this note's alias section argues for, stated on its own
 - [[Obsidian aliases]] — the alias feature itself, both forms
 - [[semantic search]] — the earlier bench showing brackets barely move retrieval scores
 - [[wikilink]] — what the link form is and what it does in a graph
