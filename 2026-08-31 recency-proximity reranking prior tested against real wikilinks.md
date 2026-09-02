@@ -14,8 +14,11 @@ tags:
 ---
 
 > [!summary] eli5
-> tested whether "written around the same time" should count toward search ranking, alongside the usual content match. tried three ways to mix it in: multiplying the content score (bad, breaks results), fusing rank positions (also bad), adding a small amount to the content score (good, actually helps). elastic's engineering blog recommends multiplying instead, for a different search system with a differently-shaped base score — not a contradiction, explained below. done testing.
-> **needs from you:** approve wiring the additive form into [[searchd.py]]'s `/similar` behind a flag, recommend yes, it's tested and the downside is bounded.
+> tested whether "written around the same time" should count toward search ranking, alongside the usual content match. tried three ways to mix it in: 
+> - multiplying the content score (bad, breaks results), 
+> - fusing rank positions (also bad), adding a small amount to the content score (good, actually helps). 
+> - elastic's engineering blog recommends multiplying instead, for a different search system with a differently-shaped base score — not a contradiction, explained below. done testing.
+> **needs from you:** nothing, approved and already shipped in [[searchd.py]]'s `/similar` behind `&recency=1`/`&fusion=1`.
 
 A proposed search-reranking signal — fold time-closeness between two notes into ranking. Three ways to combine it with a vector-similarity score were tested against real wikilinks: a multiplier (rejected, proven and measured), reciprocal rank fusion (also rejected, measured), and an additive term (validated: +7.73% to +8.60% MRR on the full sample, stable across seeds). Documented in full because the negative results are as reusable as the positive one — each mechanism's failure or success maps directly onto the same rank-flip proof.
 
@@ -149,7 +152,7 @@ The mechanism, from the rank-flip proof above: an additive term of size λ can o
 
 **Don't ship a global recency multiplier or an RRF rank-fusion of recency** — both were tested rigorously (multi-seed, full-sample) and rejected; the RRF result specifically shows that avoiding unbounded displacement is not sufficient on its own, since RRF still let a signal that's mostly noise with respect to the specific wikilinked target dilute a good baseline ranking.
 
-**The additive combine is a real, validated improvement** and the recommended form if this is pursued further: `combine=add, mode=hard, tau=6h, lambda=0.05` (+8.60% full-sample) is the best config found, with `combine=add, mode=decay, tau=30d, lambda=0.05` (+7.73%) a close, simpler alternative. Before wiring it into [[searchd.py]]'s `/similar` the way [[co-commit graph mining for serendipitous note associations|co-commit's `&graph=1`]] was, it should get the same opt-in-behind-a-flag treatment and the same live smoke-test — but unlike the multiplicative and RRF forms, there's now a genuine case for shipping it.
+**The additive combine is a real, validated improvement** and the recommended form: `combine=add, mode=hard, tau=6h, lambda=0.05` (+8.60% full-sample) is the best config found, with `combine=add, mode=decay, tau=30d, lambda=0.05` (+7.73%) a close, simpler alternative. Shipped: [[searchd.py]]'s `/similar` takes `&recency=1` (RECENCY_TAU_HOURS=6.0, RECENCY_LAMBDA=0.05, the hard-cutoff config), opt-in behind the flag the same way [[co-commit graph mining for serendipitous note associations|co-commit's `&graph=1`]] is, plus `&fusion=1` which additively stacks recency with co-commit and Adamic-Adar at calibrated weights — both covered by `test_searchd.py`.
 
 The narrower [[co-commit graph mining for serendipitous note associations|co-commit graph]] remains a useful, independent signal in its own right; this note's conclusion is no longer "the whole idea fails," it's "two of three ways to combine it fail, and the third is worth shipping."
 
