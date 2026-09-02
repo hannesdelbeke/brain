@@ -39,3 +39,4 @@ Nothing here argues for changing the architecture. Hybrid-plus-RRF is both what 
 ## Related
 
 - [[pkm metadata indexer]] — the tool this note is comparing against the field
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

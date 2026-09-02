@@ -139,3 +139,4 @@ python skills/pkm-metadata-indexer/co_commit.py --selfcheck
 - [[public/skills/note-search-optimization/SKILL|note-search-optimization]]
 - [[agentic tooling upgrades over grep]]
 - [[vault graph traversal]]
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

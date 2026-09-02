@@ -53,3 +53,4 @@ A short note at the top of the page for human readers:
 - [[anti link RnD]] — SQLite edge schema, vector steering, and indexer integration
 - [[pkm metadata indexer]] — hybrid search and link graph engine
 - [[wikilink]] — standard positive graph association
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

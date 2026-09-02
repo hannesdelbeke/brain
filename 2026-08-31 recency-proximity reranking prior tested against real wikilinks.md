@@ -201,3 +201,4 @@ The genuinely distinct version of momentum is query-independent: a candidate's o
 ## Related
 - [[co-commit graph mining for serendipitous note associations]]
 - [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]]
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

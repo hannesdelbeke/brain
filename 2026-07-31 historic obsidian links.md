@@ -29,5 +29,6 @@ proposed solution: [[extract historic wikilinks from git]]
 ### References
 - [[wikilink temporal integrity]] — resolves links to their historical snapshot states based on commit timestamps.
 - [[linking to git commits and diffs in obsidian via uri]] — inspecting historical diffs via URI protocol.
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in
 
 See [[proposal - typed directional links for obsidian]] for the unified proposal.

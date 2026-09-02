@@ -248,3 +248,4 @@ Build the nightly consolidation agent first. Everything else follows from having
 - [[public/2026-08-27 synapse links vs wikilinks and semantic links|2026-08-27 synapse links vs wikilinks and semantic links]]
 - [[public/2026-08-27 fearless note consolidation - using git history as the deep memory layer|2026-08-27 fearless note consolidation - using git history as the deep memory layer]]
 - [[public/2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy|2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy]]
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

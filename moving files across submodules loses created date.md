@@ -43,3 +43,4 @@ OS-level timestamps (`Date Created`) change whenever a folder is archived, unzip
 - [[maintain git history between submodules]] — Technical trade-offs between patch preservation and origin SHA pointers.
 - [[wikilink temporal integrity]] — How link resolution depends on preserved creation timestamps.
 - [[AGENTS.md]] — Vault-wide rules for agent operations and metadata injections
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

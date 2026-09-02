@@ -62,3 +62,4 @@ the null U-curve needs a different sentence in the writeup than the one currentl
 - [[2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions]] — the fix, as a runnable experiment
 - [[2026-09-01 publish plan - readability and compression research as papers]] — candidate 2's section, updated with this note's finding
 - [[2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2]] — the experiment this note is checking, updated with a corrected hypothesis section
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

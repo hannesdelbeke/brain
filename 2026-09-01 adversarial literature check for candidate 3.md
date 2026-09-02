@@ -54,3 +54,4 @@ claim 3's mechanism also stands, but its supporting citation needs a primary-sou
 - [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]] — the core experiment and the elastic/temporal-rag counterexamples this note builds on
 - [[2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise]] — the codecv cross-domain claim this note found a citation problem in
 - [[2026-09-01 adversarial literature check for candidate 2]] — same task shape, run against a different candidate paper's null results
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in
