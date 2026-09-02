@@ -7,7 +7,7 @@ tags:
 ---
 
 > [!summary] eli5
-> wikilinks do not measurably confuse a machine reader — the `[[ ]]` brackets move a chunk's embedding by about 1% against a 44-point gap to unrelated text, and they cost 0.7-2.6% of a vault's tokens. the real cost is elsewhere: 17-18% of wikilinks in these two vaults point at a note that does not exist, and a link an agent has not opened looks exactly like one it has. the reading-comprehension half is measured only for retrieval, not for question answering — that probe is written up below but unrun, no reader model was available.
+> wikilinks do not measurably confuse a machine reader — the `[[ ]]` brackets move a chunk's embedding by about 1% against a 44-point gap to unrelated text, and they cost 0.7-2.6% of a vault's tokens. the real cost is elsewhere: 17-18% of wikilinks in these two vaults point at a note that does not exist, and a link an agent has not opened looks exactly like one it has. the reading-comprehension half is measured only for retrieval, not for question answering — that probe is written up below but unrun, no reader model was available. a section below compares Obsidian's two alias features: frontmatter aliases help a machine reader, display aliases inside a link hide on average 60% of the target name's length from it.
 
 > do wikilinks make agents understand text worse?
 
@@ -41,6 +41,42 @@ that is where an agent goes wrong, and it is a behaviour problem rather than a p
 
 425 links in brain and 39 in the private vault use the `[[dir/note name|note name]]` form, which pays for the name twice plus a path the reader does not need, for zero benefit over `[[note name]]`. Obsidian resolves name-only links regardless of folder, which is why name-only is the written convention in both vaults. these are cheap to fix and the fix also survives a note being moved.
 
+## aliases are two different features wearing one name
+
+[[Obsidian aliases]] covers both, and for a machine reader they pull in opposite directions.
+
+**frontmatter aliases help.** 1,393 of them across 753 notes in brain. they are written once per note, cost nothing per mention, and add surface forms a search can hit — `RAG` finds [[retrieval augmented generation]] because the alias is there. more of these is strictly better for retrieval.
+
+**display aliases inside a link cost.** `[[target|display]]` pays for both names and then shows the reader only the short one. 1,735 of these in brain, and the breakdown is unflattering:
+
+| form | count | what it does |
+|:---|---:|:---|
+| display identical to target | 227 | pays twice for the same string, zero benefit |
+| case or punctuation variant | 30 | near-zero benefit |
+| display shorter than target | 1,018 | hides information the writer already wrote |
+| display longer than target | 429 | adds information, the useful direction |
+| unrelated wording | 31 | reader cannot tell what is behind it |
+
+the shortening links keep **40% of the target name's length on average**, median 36%. so roughly 60% of what the filename says is present in the file and absent from the sentence a reader actually reads. in a vault where filenames are written as assertions, that discarded 60% is the claim itself: `[[extra long note names can contain more information]]` tells an agent what is behind the link, and `[[extra long note names can contain more information|my note]]` tells it nothing while costing more tokens than either name alone.
+
+### the rename argument, and why it inverts
+
+the honest case for the aliased form is stability: Obsidian rewrites `[[old name]]` into `[[new name]]` on rename, editing your sentence under you, while `[[old name|my note]]` keeps the prose fixed and lets only the target move. the display word is locked in time.
+
+for an assertion-named vault that protection points the wrong way. if the filename is a claim, renaming it is revising the claim, and a sentence that still displays the old wording is now quietly asserting something the vault no longer believes — with no broken link and no diff to notice it by. the rewrite Obsidian performs is the feature: it surfaces every place the old claim was relied on. locking the display text buys prose stability by paying in stale claims, which is the more expensive of the two.
+
+### what an AI writing notes should do instead
+
+- **default to the bare full name.** `[[extra long note names can contain more information]]`, no pipe. cheapest of the three forms and the only one that carries the claim to a reader that has not opened the target.
+- **write the sentence around the link,** not the link into the sentence. the subject-first convention already asks for this, and a name that is a full noun phrase usually drops into a sentence unchanged once the sentence is built for it.
+- **keep grammar outside the brackets.** `[[header extraction for token-efficient retrieval]] measured 77.5%` rather than an alias that bends the name into the clause.
+- **put alternate names in frontmatter, once,** instead of in every link. short forms, acronyms and older titles belong there, where they serve search and cost nothing per mention.
+- **if display text must differ, make it longer than the target, not shorter.** the 429 expanding links are the only alias category that leaves a machine reader better off.
+
+that leaves one legitimate use: a target whose name is a formal identity the sentence cannot use as a common noun, a person or a product. even there, restructuring the sentence usually beats the pipe.
+
+**one mechanical cleanup is available now:** the 227 identical and 30 case-variant aliases can be rewritten to bare links with no loss of meaning to either reader, and the 425 path-alias links from the section above collapse the same way.
+
 ## what this does not measure
 
 question-answering accuracy. the probe worth running: take real paragraphs, ask factual questions answerable from the paragraph itself, and compare accuracy between the linked and stripped versions across a couple of small models. then run a second condition where the answer lives only behind a wikilink whose target is not supplied, where the correct answer is "not in this text" — that measures the fabrication rate the section above argues is the real risk. both were designed for this note and neither ran: no API key was configured, the [[antigravity]] cli pool had hit its daily quota, and no local model runtime is installed on this machine.
@@ -57,6 +93,7 @@ python skills/pkm-metadata-indexer/wikilink_cost_experiment.py --demo
 the embedding pass needs `fastembed`, everything else is stdlib plus `tiktoken`.
 
 ## related notes
+- [[Obsidian aliases]] — the alias feature itself, both forms
 - [[semantic search]] — the earlier bench showing brackets barely move retrieval scores
 - [[wikilink]] — what the link form is and what it does in a graph
 - [[are wikilinks legacy with embedded vector]] — whether hand-made links still earn their keep next to vector search
