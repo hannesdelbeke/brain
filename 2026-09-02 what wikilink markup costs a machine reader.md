@@ -7,7 +7,7 @@ tags:
 ---
 
 > [!summary] eli5
-> wikilinks do not measurably confuse a machine reader — the `[[ ]]` brackets move a chunk's embedding by about 1% against a 44-point gap to unrelated text, and they cost 0.7-2.6% of a vault's tokens. the real cost is elsewhere: 17-18% of wikilinks in these two vaults point at a note that does not exist, and a link an agent has not opened looks exactly like one it has. the reading-comprehension half is measured only for retrieval, not for question answering — that probe is written up below but unrun, no reader model was available. a section below compares Obsidian's two alias features: frontmatter aliases help a machine reader, display aliases inside a link hide on average 60% of the target name's length from it.
+> wikilinks do not measurably confuse a machine reader — the `[[ ]]` brackets move a chunk's embedding by about 1% against a 44-point gap to unrelated text, and they cost 0.7-2.6% of a vault's tokens. the real cost is elsewhere: 17-18% of wikilinks in these two vaults point at a note that does not exist, and a link an agent has not opened looks exactly like one it has. the reading-comprehension half is measured only for retrieval, not for question answering — that probe is written up below but unrun, no reader model was available. a section below compares Obsidian's two alias features: frontmatter aliases help a machine reader, display aliases inside a link hide on average 60% of the target name's length from it — though frontmatter aliases are not free either, costing more tokens vault-wide (9,043) than every piped label put together (6,961).
 
 > do wikilinks make agents understand text worse?
 
@@ -45,7 +45,13 @@ that is where an agent goes wrong, and it is a behaviour problem rather than a p
 
 [[Obsidian aliases]] covers both, and for a machine reader they pull in opposite directions.
 
-**frontmatter aliases help.** 1,393 of them across 753 notes in brain. they are written once per note, cost nothing per mention, and add surface forms a search can hit — `RAG` finds [[retrieval augmented generation]] because the alias is there. more of these is strictly better for retrieval.
+**frontmatter aliases are not free either.** 1,393 of them across 768 notes in brain, costing **9,043 tokens**, median 8 per note — more in total than every piped display text in the vault put together (6,961 tokens). they are 0.81% of the vault against the pipes' 0.62%.
+
+what differs is the denominator, not the price. an alias block is paid once per read of its own note; a piped label is paid once per link occurrence, in every note that links there, on every read of those notes. so aliases win when a note is linked more often than it is read, and lose when it is read more often than it is linked.
+
+they also buy less than assumed here: [[pkm metadata indexer]] separates frontmatter from body and chunks the body only, and its own source says the index does not store aliases. in this engine an alias is not semantic-search surface at all — it serves Obsidian's own link resolution and autocomplete, and the mention-search path that looks a note up by all its names. an alias whose words never appear in the body will not be found by a body query.
+
+**so the case against the pipe rests on information loss, not on tokens.** at 0.62% of the vault the piped form is not what makes a vault expensive, and moving those strings into frontmatter would not even be a saving. what the bare full name buys is that the claim reaches a reader who has not opened the target.
 
 **display aliases inside a link cost.** `[[target|display]]` pays for both names and then shows the reader only the short one. 1,735 of these in brain, and the breakdown is unflattering:
 
