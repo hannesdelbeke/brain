@@ -39,7 +39,7 @@ this is the same shape of fix as [[2026-08-31 recency-proximity reranking prior 
 a GitHub search across established co-commit and logical-coupling tools — [Hercules](https://github.com/src-d/hercules), [code-maat](https://github.com/adamtornhill/code-maat), and smaller tools like `LogicalCouplingTool` — found none of them document hub-node filtering or lift-normalization for this exact problem. they detect co-change frequency but don't appear to normalize for files with very high edit frequency. on the evidence of that search, this fix is a genuine, if small, contribution rather than a rediscovery of established practice.
 
 ## related
-- [[2026-08-31 other candidate relatedness signals for search reranking]] — the full experiment this note's numbers come from, including the z_hub_degree calibration sweep and the lift-normalization-in-production integration
+- the relatedness signals survey (not in this vault) — the full experiment this note's numbers come from, including the z_hub_degree calibration sweep and the lift-normalization-in-production integration
 - [[co-commit graph mining for serendipitous note associations]] — the original co-commit signal this fix was applied to
 - [[2026-08-31 recency-proximity reranking prior tested against real wikilinks]] — the parallel additive-vs-multiplicative lesson for a different diffuse signal
 - [[2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise]] — where this fix's absence from open-source expertise-mining tools is cited as a novelty point
