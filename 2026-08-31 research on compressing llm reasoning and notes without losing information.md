@@ -85,3 +85,4 @@ None of this changes the two live candidates from the section above (llmlingua-2
 - [[2026-08-28 agent instruction bloat - modular skills and compact synthesis]] — the same "classify what's essential, cut the rest" idea already applied to one growing markdown file vs. discrete skill modules, with measured token-overhead numbers
 - [[header extraction for token-efficient retrieval]] — a concrete worked example of the "agent-read-only notes" case above: measured 77.5% token reduction extracting headers instead of full note bodies
 - [[token efficient PKM analysis architecture]] — token budgets across agent operations more broadly
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

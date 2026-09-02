@@ -42,3 +42,4 @@ A company connector is a schema change on an existing indexer: an ACL column and
 ## Related
 
 - [[pkm metadata indexer]] — the single-owner index this note extends past one person
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

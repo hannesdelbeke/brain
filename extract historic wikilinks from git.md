@@ -59,3 +59,4 @@ if __name__ == "__main__":
 ### References
 - [[linking to git commits and diffs in obsidian via uri]] — URI protocol schemes to inspect the commit diffs where links were edited.
 - [[human vs ai text context]] — preserving Git commit history when moving notes to `public/`.
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in

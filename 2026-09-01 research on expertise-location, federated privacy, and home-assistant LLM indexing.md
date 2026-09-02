@@ -52,3 +52,4 @@ Documented failure modes on the command side, for context: token cost balloons w
 - [[skills/pkm-metadata-indexer/SKILL|pkm-metadata-indexer]] — the co-commit mining, cross-encoder reranking, and header-extraction techniques this survey keeps comparing against
 - the relatedness signals survey (not in this vault) — this vault's own recency and co-occurrence signal research, echoed by the CodeCV finding above
 - [[token efficient PKM analysis architecture]] — the token-budget discipline that applies equally to a home-automation history index
+- [[retrieval augmented generation]] — feeding an LLM passages fetched at query time instead of training them in
