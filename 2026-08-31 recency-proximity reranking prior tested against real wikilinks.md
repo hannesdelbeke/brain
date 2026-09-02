@@ -13,6 +13,10 @@ tags:
   - technical
 ---
 
+> [!summary] eli5
+> tested whether "written around the same time" should count toward search ranking, alongside the usual content match. tried three ways to mix it in: multiplying the content score (bad, breaks results), fusing rank positions (also bad), adding a small amount to the content score (good, actually helps). elastic's engineering blog recommends multiplying instead, for a different search system with a differently-shaped base score — not a contradiction, explained below. done testing.
+> **needs from you:** approve wiring the additive form into [[searchd.py]]'s `/similar` behind a flag, recommend yes, it's tested and the downside is bounded.
+
 A proposed search-reranking signal — fold time-closeness between two notes into ranking. Three ways to combine it with a vector-similarity score were tested against real wikilinks: a multiplier (rejected, proven and measured), reciprocal rank fusion (also rejected, measured), and an additive term (validated: +7.73% to +8.60% MRR on the full sample, stable across seeds). Documented in full because the negative results are as reusable as the positive one — each mechanism's failure or success maps directly onto the same rank-flip proof.
 
 ## Where this came from
@@ -162,15 +166,14 @@ a real, shipped PKM tool folding recency into hybrid search the same way this no
 
 [Emmimal/temporal-rag](https://github.com/Emmimal/temporal-rag) (49 stars) went the other way, multiplicative (`final = semantic_penalty × [(1−w)·vector + w·(decay×recency×validity×event)]`), with a decay floor added specifically so old-but-still-valid facts don't get zeroed out — a different mitigation for the same displacement risk this note's rank-flip proof describes. 
 
-[Elastic's own engineering blog](https://www.elastic.co/search-labs/blog/bm25-ranking-multiplicative-boosting-elasticsearch) documents the mirror-image lesson in production BM25 ranking: an additive rank-feature boost was found scale-unstable across queries, and Elasticsearch's `function_score` moved to multiplicative for that reason — the opposite conclusion from this note's own, a reminder that which combination mode is safe depends on what's being combined and how the base scores are scaled, not a universal rule.
-
 **Correction (2026-09-01): the "strongest corroboration" citation below doesn't hold up, retracted.** [albinotonnina/echos](https://github.com/albinotonnina/echos) exists and does publish a temporal-decay search benchmark (`docs.echos.sh/benchmarks`, unchanged since its one commit in April 2026), but the actual published numbers are the opposite of what this note claimed: hybrid+decay scores *higher* than hybrid alone (Precision@5 0.74 → 0.76), described by the source itself as "the biggest quality-per-cost improvement," with no regression on any query type, including needle-in-haystack. None of the figures previously stated here (MRR 1.000 to 1.000, P@5 0.855 to 0.491, needle-in-haystack MRR 0.920 to 0.209) appear anywhere on that page or in its git history. This was never independent corroboration of the multiplicative/RRF failure mode — the source says the opposite — so the citation is removed rather than repeated. It does not affect the additive-vs-multiplicative finding itself, which rests on this vault's own rank-flip proof and multi-seed measurements, not on this external citation.
 
-A fourth combination mode also surfaced in that search: [tin-cat/momentum-ranking-algorithm](https://github.com/tin-cat/momentum-ranking-algorithm) compounds recent attention into relevance rather than adding or multiplying a flat term — "trending" items get boosted even if old, distinct from plain freshness. Tested.
+
+[Elastic's own engineering blog](https://www.elastic.co/search-labs/blog/bm25-ranking-multiplicative-boosting-elasticsearch) documents the mirror-image lesson in production BM25 ranking: an additive rank-feature boost was found scale-unstable across queries, and Elasticsearch's `function_score` moved to multiplicative for that reason — the opposite conclusion from this note's own, a reminder that which combination mode is safe depends on what's being combined and how the base scores are scaled, not a universal rule.
 
 ## why elastic's multiplicative works and this vault's doesn't
 
-Read the [full Elastic post](https://www.elastic.co/search-labs/blog/bm25-ranking-multiplicative-boosting-elasticsearch) end to end rather than the one quoted line. Their reason for rejecting additive is scale instability of the base score, not a universal rule about combination direction: BM25 swings by orders of magnitude across queries — their own example is 0.12 on a rare-term query, 12 on a common-term one — so a fixed additive constant lands as roughly an 18x jump on the first and a 17% nudge on the second. Moving to `final = BM25 × boost_factor` fixes exactly that, because a ratio is scale-free: "a 20% uplift is always a 20% uplift," whether BM25 is 0.12 or 12.
+Read the [full Elastic post](https://www.elastic.co/search-labs/blog/bm25-ranking-multiplicative-boosting-elasticsearch) end to end rather than the one quoted line. Their reason for rejecting additive is scale instability of the base score, not a universal rule about combination direction: BM25 swings by orders of magnitude across queries [[why BM25 swings by orders of magnitude]] — their own example is 0.12 on a rare-term query, 12 on a common-term one — so a fixed additive constant lands as roughly an 18x jump on the first and a 17% nudge on the second. Moving to `final = BM25 × boost_factor` fixes exactly that, because a ratio is scale-free: "a 20% uplift is always a 20% uplift," whether BM25 is 0.12 or 12.
 
 Vector cosine similarity, the base score in this note's experiment, doesn't have that problem. It's bounded to roughly [-1, 1] by construction, not a raw term-frequency statistic that balloons or shrinks with corpus term rarity, so a fixed additive λ (0.05) lands on roughly the same fraction of the score range on every query. The instability Elastic is solving for was never present in this vault's base score, so the fix they needed and the fix this note needed point in opposite directions for a reason, not by contradiction.
 
@@ -179,6 +182,8 @@ The second, larger difference is breadth, not scale. Elastic's `boost_factor` is
 Both results hold at once: multiplicative is safe when the boost is scale-free relative to a wildly-scaled base score and sparse enough that few candidates compete for the same boost. Additive is safe when the base score is already stable in range and the boost only needs to break near-ties rather than express a categorical signal. BM25 boosted by a brand match is the first case. Vector similarity boosted by temporal proximity is the second.
 
 ## a fourth combine mode: momentum, tested and rejected
+
+[tin-cat/momentum-ranking-algorithm](https://github.com/tin-cat/momentum-ranking-algorithm) compounds recent attention into relevance rather than adding or multiplying a flat term — "trending" items get boosted even if old, distinct from plain freshness. Tested.
 
 The naive way to operationalize "compounding" — `vector_score + λ·proximity·vector_score` — reduces algebraically to `vector_score·(1 + λ·proximity)`, which is exactly the already-rejected `mul` mode above. Under a *pairwise* anchor-candidate gap, compounding isn't actually a fourth mode at all.
 
