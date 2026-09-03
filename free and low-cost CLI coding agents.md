@@ -12,7 +12,7 @@ aliases:
 > [!summary] eli5
 > this note compares CLI AI coding agents you can reach for after a free quota runs out, gemini cli and codex both ran dry in the same week, with copy-paste linux setup commands for each.
 > done: tools compared across agentic vs chat-only, free vs paid, and data-for-compute trade-offs, setup commands inline.
-> **needs from you:** nothing, recommend qwen code cli as the default pick for guided walkthrough tasks, free and agentic.
+> **needs from you:** nothing, recommend opencode for zero-cost walkthrough tasks, or connect local ollama into qwen code.
 
 > ran out of gemini cli's free quota, then codex's free quota too, asked for a comparison of free alternatives and where cursor cli agent fits.
 
@@ -23,16 +23,16 @@ that splits the field into agentic CLIs and plain chat tools paired with a harne
 
 ## free, agentic
 
-**qwen code cli**: alibaba's fork of [[Gemini CLI]], free via qwen oauth login, roughly 2000 requests/day, no api key needed. closest drop-in replacement for gemini cli's own workflow.
+**qwen code cli**: alibaba's fork of [[Gemini CLI]]. the zero-key free browser oauth tier was discontinued on 2026-04-15; it now requires an alibaba modelstudio key (`sk-sp-...`), a third-party provider (e.g. openrouter), or a custom endpoint (local ollama).
 
 ```bash
 npm install -g @qwen-code/qwen-code
 qwen
 ```
 
-first run opens a browser for oauth login, after that it works like gemini cli or claude code, natural language plus file edits plus shell.
+first run launches `/auth` to choose alibaba modelstudio, a third-party provider key, or custom local endpoint. once connected, it works like gemini cli or claude code.
 
-**opencode** (`opencode.ai`): open-source harness, same agentic shape, works with any provider you point it at. quality depends entirely on which model you pick underneath, openrouter's `:free` models or a local ollama model both plug in.
+**opencode** (`opencode.ai`): open-source harness, same agentic shape, works with any provider you point it at. cleanest zero-cost agentic option since openrouter's `:free` models or a local ollama model plug in immediately with zero subscription fees.
 
 ```bash
 curl -fsSL https://opencode.ai/install | bash
@@ -104,8 +104,8 @@ login via browser on first run, worth it only if paying is fine.
 
 ## recommendation
 
-qwen code cli first, it's the only option here that's both free and fully agentic with no pairing needed.
-opencode as the fallback if qwen's daily quota gets tight, since it can point at whatever free model still has headroom.
+opencode first for zero setup costs, pointing at openrouter's `:free` models or local ollama.
+qwen code cli if you already have an alibaba cloud modelstudio key or want to drive local ollama via qwen's agentic loop.
 for automatic fallback across multiple free keys on rate limits, use a local proxy like [[free LLM router and rate limit fallback]].
 
 **why:** root
