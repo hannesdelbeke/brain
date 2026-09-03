@@ -23,6 +23,9 @@ that splits the field into agentic CLIs and plain chat tools paired with a harne
 
 ## free, agentic
 
+[[free ai model credit alibaba qwen]]
+
+
 **qwen code cli**: alibaba's fork of [[Gemini CLI]]. the zero-key free browser oauth tier was discontinued on 2026-04-15; it now requires an alibaba modelstudio key (`sk-sp-...`), a third-party provider (e.g. openrouter), or a custom endpoint (local ollama).
 
 ```bash
