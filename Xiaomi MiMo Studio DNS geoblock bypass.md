@@ -10,28 +10,39 @@ aliases:
 - bypass xiaomi mimo dns sinkhole
 ---
 
-Xiaomi MiMo Studio (`aistudio.xiaomimimo.com`) is the web interface to test Xiaomi's [[large language model]] family (like MiMo-V2.5-Pro). In the UK and EU, browsers fail with `Unable to connect` / `Connection refused`.
+Xiaomi MiMo Studio (`aistudio.xiaomimimo.com`) is the web interface for Xiaomi's [[large language model]] family (like MiMo-V2.5-Pro). Access outside approved regions hits a multi-stage geoblock.
 
-## Why it fails
-The block is a regional DNS sinkhole configured on Xiaomi's authoritative nameservers (Tencent DNSPod), likely set up to avoid EU AI Act or GDPR compliance hurdles.
+## Layer 1: DNS sinkhole
+Authoritative nameservers (Tencent DNSPod) sinkhole queries from UK and EU resolvers to `127.0.0.1` (localhost). The browser tries port 443 locally, gets `Connection refused`, and displays `Unable to connect`.
 
-When querying from European resolvers, DNS returns `127.0.0.1` (localhost). The browser tries connecting to local port 443, finds no local web server listening, and immediately errors out.
+Resolvers in US, Singapore, or Japan return Xiaomi's Alibaba Cloud Singapore edge (`mimo-pri-alisgp.alb.xiaomi.com`, e.g. `47.236.158.11`).
 
-When querying from the US, Singapore, or Japan, DNS resolves to Xiaomi's Alibaba Cloud edge (`mimo-pri-alisgp.alb.xiaomi.com`). The server firewall itself doesn't block European IP addresses; only the DNS query is poisoned.
+**Quick bypasses for layer 1:**
+- map domain directly in `/etc/hosts` (`echo "47.236.158.11 aistudio.xiaomimimo.com" | sudo tee -a /etc/hosts`)
+- use a [[virtual private network|VPN]] set to US, Singapore, or Japan
+- developer portal (`platform.xiaomimimo.com`) and `mimo.xiaomi.com` aren't DNS-sinkholed
 
-## How to bypass
+## Layer 2: Post-login geo-restriction
+Bypassing layer 1 loads the site. Once logging in with Google OAuth, the web app errors with:
+`This service is not available in your region yet.`
 
-**Map domain in hosts file**
-Bypasses the poisoned DNS lookup without routing traffic through a third party. Add Xiaomi's Singapore ALB IP to `/etc/hosts`:
+Likely triggers:
+- browser-level VPN extension leaks the real IP via WebRTC or IPv6
+- VPN exit node is detected as a datacenter IP or placed in an unsupported region
+- Google OAuth callback returns an account country or locale flagged as EU/UK
+- server-side session handshake checks the client IP against strict regional allowlists
 
-```bash
-echo "47.236.158.11 aistudio.xiaomimimo.com" | sudo tee -a /etc/hosts
-```
+## Agent investigation instructions
+Next agent picking this up should test:
 
-Flush browser socket cache or restart the browser, then reload the page.
+**Check browser IP leaks**
+- verify if Firefox WebRTC leaks the host IP (`about:config` -> set `media.peerconnection.enabled` to `false`)
+- disable IPv6 in Firefox (`network.dns.disableIPv6 = true`) or use a system-wide OS VPN rather than a browser proxy extension
 
-**Use a [[virtual private network|VPN]]**
-Route traffic through a server in the US, Singapore, or Japan. Authoritative DNS returns the real edge IP automatically.
+**Test account & OAuth metadata**
+- inspect OAuth callback network payload in devtools to see if account `locale` or country is sent to Xiaomi's auth endpoint
+- test logging in with a non-Google method (e.g. phone/SMS or Xiaomi account if supported) or a non-EU Google account
 
-**Use the developer platform**
-The API portal at `platform.xiaomimimo.com` and main site `mimo.xiaomi.com` aren't sinkholed and remain reachable worldwide without overrides.
+**Test direct API access**
+- verify whether the API cluster endpoints on `platform.xiaomimimo.com` enforce the same regional block
+- check third-party model routers (e.g. OpenRouter, DeepInfra) that serve MiMo models without regional frontend restrictions
