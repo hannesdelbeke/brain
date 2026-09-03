@@ -11,7 +11,7 @@ aliases:
 
 > [!summary] eli5
 > this note compares CLI AI coding agents you can reach for after a free quota runs out, gemini cli and codex both ran dry in the same week, with copy-paste linux setup commands for each.
-> done: six tools compared, agentic vs chat-only, free vs paid, setup commands inline.
+> done: tools compared across agentic vs chat-only, free vs paid, and data-for-compute trade-offs, setup commands inline.
 > **needs from you:** nothing, recommend qwen code cli as the default pick for guided walkthrough tasks, free and agentic.
 
 > ran out of gemini cli's free quota, then codex's free quota too, asked for a comparison of free alternatives and where cursor cli agent fits.
@@ -77,6 +77,17 @@ needs a decent gpu, or patience on cpu, for 7b+ models. to drive it from aider o
 export OLLAMA_API_BASE=http://127.0.0.1:11434
 aider --model ollama/qwen2.5-coder:7b
 ```
+
+## data-for-compute trade-offs
+
+some providers drop fees or slash token rates by feeding prompts, code snippets, and repo context back into model training:
+
+- [[muse spark 1.2]] (muse code): meta's terminal agent offers a discounted contributor tier. token rates drop in exchange for letting meta log repo context, subagent spawns, and steer traces.
+- google ai studio (`gemini-2.5-flash` / `gemini-2.0-pro`): generous free api quotas (15 req/min, 1M tokens/min), but free-tier prompt data and human reviews feed future model training. attaching paid gcp billing stops data logging.
+- openrouter (`:free` models): community-hosted `:free` endpoints frequently harvest prompt logs for open-weights distillation and benchmarking.
+- codeium (windsurf / cli): free individual tier logs code context and completions for model training, while team plans guarantee zero data retention.
+
+trade-off: high token headroom for open-source work and personal scratchpads, but keep them off private vaults and client repos.
 
 ## not free
 
