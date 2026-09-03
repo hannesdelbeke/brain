@@ -11,7 +11,7 @@ aliases:
 
 > [!summary] eli5
 > this note compares CLI AI coding agents you can reach for after a free quota runs out, gemini cli and codex both ran dry in the same week, with copy-paste linux setup commands for each.
-> done: tools compared across agentic vs chat-only, free vs paid, and data-for-compute trade-offs, setup commands inline.
+> done: tools compared across agentic vs chat-only, free vs paid, budget token bundles (<€20/mo), and data-for-compute trade-offs, setup commands inline.
 > **needs from you:** nothing, recommend opencode for zero-cost walkthrough tasks, or connect local ollama into qwen code.
 
 > ran out of gemini cli's free quota, then codex's free quota too, asked for a comparison of free alternatives and where cursor cli agent fits.
@@ -91,6 +91,23 @@ some providers drop fees or slash token rates by feeding prompts, code snippets,
 - codeium (windsurf / cli): free individual tier logs code context and completions for model training, while team plans guarantee zero data retention.
 
 trade-off: high token headroom for open-source work and personal scratchpads, but keep them off private vaults and client repos.
+
+## budget bundles (<€20/month)
+
+if free quotas are too tight but you want to avoid expensive $20/mo flat seats (Claude Pro, Cursor, ChatGPT Plus):
+
+- **opencode go** ($10/mo): bundles ~$30 worth of deepseek flash tokens directly inside opencode.
+- **command code goat** ($10/mo): gives $40–$60 worth of unquantized deepseek flash tokens.
+- **glm coding plan** ($18/mo): high-quota subscription access to [[GLM 5.2]] and glm-5.3, pluggable directly into opencode or qwen code via alibaba/zhipu endpoints.
+- **student perks**: github student developer pack (free copilot tier) and google student credits provide free frontier access before paying for api tokens.
+
+## cost architecture: the orchestrator-executor pattern
+
+for irregular or spiky coding workflows, pay-as-you-go beats subscriptions. the most cost-effective architecture splits planning from execution:
+
+1. **free orchestrator**: pass project context and tasks to a free frontier model or web interface (gemini flash in antigravity, deepseek pro web, glm-5.3, or claude web) to design the solution and generate a detailed step-by-step implementation prompt.
+2. **cheap executor**: feed the generated plan into a lightweight cli agent (opencode or aider driving deepseek flash or qwen2.5-coder). the executor only needs to follow explicit instructions and apply code diffs, which fast cheap models handle well.
+3. **prompt caching**: agent loops hit prompt caching discounts repeatedly (cached tokens are often 5–10x cheaper than fresh input). combined with targeted tools (using ripgrep instead of dumping whole files into context), this keeps monthly spend under €5–€10.
 
 ## not free
 
