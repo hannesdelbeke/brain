@@ -13,9 +13,9 @@ aliases:
 - Total Return EPS Index
 ---
 
-retrospective analysis of Jesse Livermore's 2015 Total Return EPS (TR-EPS) framework. The mathematical critique of raw historical EPS remains completely sound, but its price forecasts failed because real-world corporate margins and market multiples structurally expanded.
+analysis of Jesse Livermore's 2015 Total Return EPS (TR-EPS) framework updated from the vantage point of today (2026). While the mathematical critique of raw historical EPS remains essential, real-world corporate margins and market multiples have structurally expanded, reshaping 10-year forward return expectations to 2036.
 
-### the core thesis and breakthrough
+### the core thesis: why raw EPS misleads
 
 dividend payout fallacy
 prior to SEC Rule 10b-18 in 1982, US corporations paid out 70%–90% of earnings as cash dividends. After 1982, capital shifted into share buybacks and internal reinvestment.
@@ -23,35 +23,54 @@ prior to SEC Rule 10b-18 in 1982, US corporations paid out 70%–90% of earnings
 why raw historical EPS is distorted
 when a company pays a dividend, capital leaves the corporate balance sheet. When it buys back shares, the share count contracts, automatically accelerating earnings per share (EPS) growth even if underlying company net income grows at the exact same pace.
 
-Shiller's 2010 error
-Robert Shiller estimated the [[S&P 500]] would trade at 1,430 in 2020 by assuming real EPS growth would revert to its 1890–1990 rate of 1.5%/year. That 1.5% rate was an artifact of high dividend payouts. Comparing modern post-1982 EPS growth to pre-1982 without adjusting for buybacks is an apples-to-oranges mistake.
-
 the TR-EPS solution
-converting historical dividends into counterfactual share repurchases at fair value normalizes the dividend payout ratio to 0% across all eras. Under TR-EPS, underlying real earnings power grew at a consistent ~5.7%/year from 1871 to 2015, closely matching the US corporate sector's historical return on equity. Shiller later recognized this by co-creating the Total Return CAPE with Barclays.
+converting historical dividends into counterfactual share repurchases at fair value normalizes the dividend payout ratio to 0% across all eras. Under TR-EPS, underlying real earnings power grew at a consistent ~5.7%/year from 1871 to 2015, matching the US corporate sector's long-term return on equity. Shiller later adopted this insight by co-creating the Total Return CAPE with Barclays.
 
-### where the model failed in practice
+### 2026 scorecard: why classical models failed
 
-Livermore used TR-EPS to revise Shiller's 2020 target from 1,430 up to ~2,150. In reality, the S&P 500 closed 2020 at 3,756, and trades well above 5,500 today. The model was mathematically superior to Shiller, but still substantially underpredicted reality due to three blind spots:
+in 2010, Robert Shiller predicted the [[S&P 500]] would trade at 1,430 in 2020 by assuming real EPS would revert to its 1890–1990 trend of 1.5%/year. In 2015, Livermore used TR-EPS to revise this to ~2,150. Both dramatically underestimated the market:
+- 2020 actual: S&P 500 closed at **3,756**.
+- 2026 actual: S&P 500 trades at **~5,600+** with EPS of **~$250**.
 
-asset-light tech margin expansion
-the model assumed corporate profit margins would revert to their 20th-century mean (~6%–8% of GDP). Instead, the index shifted from capital-heavy industrials, oil, and banks into global asset-light software and tech monopolies (Apple, Microsoft, Alphabet, Nvidia, Meta). S&P 500 net profit margins permanently expanded to 11%–13%+.
+classical mean-reversion models failed because of two structural shifts:
 
-permanent multiple expansion
-Livermore assumed the P/E ratio would revert to its historical geometric mean of 16.5. For the past 15 years, the S&P 500 has averaged a P/E between 20 and 26. Structurally higher multiples are supported by higher return on invested capital (ROIC), lower real discount rates, and automated price-inelastic inflows from pension and index funds.
+asset-light tech monopoly margins
+TR-EPS assumed corporate profit margins would revert to their 20th-century mean (~6%–8% of GDP). Instead, the index shifted from capital-heavy industrials, oil, and banks to asset-light global software and tech monopolies (Apple, Microsoft, Alphabet, Nvidia, Meta). S&P 500 net profit margins permanently expanded to **11%–13%+**, doubling earnings power per revenue dollar.
 
-debt-funded buybacks vs static assumptions
-TR-EPS assumed buybacks occurred at a hypothetical fair-value multiple of 16.59. Between 2010 and 2022, companies borrowed trillions in near-zero interest debt to aggressively buy back stock at market prices, generating real EPS accretion far beyond the static model.
+structural multiple floor shift
+Livermore assumed the P/E ratio would revert to its historical geometric mean of 16.5. For the past 15 years, the S&P 500 has maintained a P/E between **20 and 26**. Structurally higher multiples are anchored by higher return on invested capital (ROIC), lower real discount rates, automated price-inelastic inflows from pension and index funds, and global revenue diversification (over 40% non-US).
 
-global revenue decoupling
-over 40% of S&P 500 revenues originate outside the US, breaking strict historical correlations with domestic US economic growth.
+### applying TR-EPS today: 2026 to 2036 10-year projection
 
-### how to use it today
+applying the TR-EPS framework to today's baseline (S&P ~5,600, EPS ~$250, P/E ~22.5):
 
-diagnostic tool (sound)
-use TR-EPS to de-noise historical earnings and avoid falling for permabear charts that extrapolate unadjusted 100-year EPS growth or naive [[Shiller PE Ratio|CAPE]].
+nominal EPS compounding engine
+- real economic earnings growth: ~3.5%
+- buyback yield accretion: ~1.8%
+- real TR-EPS growth: ~5.3% (aligned with long-term ROE)
+- baseline inflation: ~2.5%
+- expected nominal EPS growth: **~7.8% / year**
+- **projected 2036 EPS:** $250 compounded at 7.8% for 10 years = **~$535 EPS**
 
-market timing tool (flawed)
-don't use it to wait for a 16.5 P/E multiple or 6% profit margins. Waiting for multi-decade mean reversion that structural economic shifts have outgrown leads to severe cash drag (as explored in [[2025-11-18 CAPE]]).
+10-year valuation scenarios for 2036
+
+| Scenario | 2036 P/E Multiple | 2036 S&P 500 Price | Annualized Capital Gain | Total Return (with ~1.3% div) | Real Return (~2.5% inflation) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Multiple Mean Reversion** | **16.5** | **~8,830** | +4.7% / yr | **~6.0% / yr** | **~3.5% / yr** |
+| **Multiple Persistence** | **22.0** | **~11,770** | +7.7% / yr | **~9.0% / yr** | **~6.5% / yr** |
+| **Tech/AI Expansion** | **26.0** | **~13,910** | +9.5% / yr | **~10.8% / yr** | **~8.3% / yr** |
+| **Margin Compression** (Margins drop to 9%) | **16.0** | **~6,080** | +0.8% / yr | **~2.1% / yr** | **-0.4% / yr** |
+
+### modern investor takeaways
+
+no 50% crash required to normalize valuations
+because share buybacks retire ~1.5%–2% of the index shares annually, EPS compounding provides an upward-sloping floor. Even under a severe 27% multiple contraction (P/E falling from 22.5 to 16.5), the market delivers a positive ~6% nominal (~3.5% real) total return.
+
+cash drag is the primary risk
+waiting in cash for a 1980-style 15 P/E or a 1.5% real EPS trend creates immediate opportunity cost. As seen in [[2025-11-18 CAPE]], holding cash out of high CAPE fears missed significant compounding because corporate buybacks continued retiring shares in the background.
+
+realistic return expectations
+starting from a P/E > 22, forward 10-year real returns are likely to land between **3.5% and 6.5% real** (rather than the 10%+ bull run of recent years). This reinforces using a conservative Safe Withdrawal Rate (~3.3%–3.5%) for retirement planning without needing to abandon equity index investing.
 
 ### related
 - [[Shiller PE Ratio]]
@@ -127,7 +146,7 @@ It should come as no surprise then, that buybacks, acquisitions, and mergers now
 
 ### Constructing the Total Return EPS Index
 
-According to S&P corporation, trailing twelve month (ttm) reported EPS for the S&P 500 is $102.77. What would it be today, if, starting in 1871, all of the dividends that were paid out to shareholders had instead been used to repurchase shares (or acquire or merge with other companies)? That’s the question that the Total Return EPS index is trying to answer–not only for today’s date, but for all dates in market history.
+According to S&P corporation, trailing twelve month (ttm) reported EPS for the [[S&P 500]] is $102.77. What would it be today, if, starting in 1871, all of the dividends that were paid out to shareholders had instead been used to repurchase shares (or acquire or merge with other companies)? That’s the question that the Total Return EPS index is trying to answer–not only for today’s date, but for all dates in market history.
 
 To get an answer, we start with Shiller’s familiar spreadsheet, which contains average monthly prices and reported earnings for the S&P 500 and its pre-1957 ancestry, with data obtained from S&P corporation and the Cowles Commission. We can use this data to create a log chart of EPS over time.
 
