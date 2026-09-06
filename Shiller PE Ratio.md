@@ -20,7 +20,9 @@ $$
 \text{CAPE} = \frac{\text{Current Price of the S\&P 500}}{\text{Average Inflation-Adjusted Earnings over the past 10 years}}
 $$
 
-This ratio is often used to assess whether the stock market is overvalued or undervalued **relative to historical norms**.
+This ratio is often used to assess whether the stock market is overvalued or undervalued relative to historical norms.
+
+Standard CAPE understates earnings power in modern low-dividend eras by ignoring retained earnings and buybacks (see [[P-CAPE]] and [[Total Return EPS to Decompose Historical S&P 500 Performance|TR-EPS]]).
 
 [[investing]]
 [[finance]]
