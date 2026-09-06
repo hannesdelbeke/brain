@@ -74,6 +74,7 @@ starting from a P/E > 22, forward 10-year real returns are likely to land betwee
 
 ### related
 - [[Shiller PE Ratio]]
+- [[P-CAPE]]
 - [[2025-11-18 CAPE]]
 - [[S&P 500]]
 - [[investing]]
