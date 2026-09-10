@@ -22,6 +22,7 @@ summaries:
 [[Art of giving feedback]]
 [[A Philosophy of Software Design]]
 [[Algorithms to Live By]]
+[[Herding Cats]]
 
  - [ ] check out [books and binders](https://anthonyamar.fr/Projects/Books+and+Binders), a plugin for obsidian to track books
  - [ ] moves these books to a nicer list
