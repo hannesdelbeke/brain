@@ -1112,8 +1112,14 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
         stream = watchfiles.watch(root, watch_filter=REFRESH_FILTER,
                                   debounce=debounce, step=WATCH_STEP_MS)
     # the script, not the interpreter, and not the tail of a -c one-liner
-    name = next((Path(token).name for token in reversed(command) if token.endswith(".py")),
-                Path(command[0]).name)
+    script = next((Path(token).name for token in reversed(command) if token.endswith(".py")),
+                  Path(command[0]).name)
+    # The script alone is not a label: co_commit.py is registered once per repo,
+    # so both watchers logged `refresh co_commit.py: ok` and a line could not be
+    # attributed to a vault. That is how one repo's edges sat empty while the log
+    # read healthy. The root disambiguates, but only past `.git/logs`, hence three
+    # components rather than the usual one.
+    name = f"{script} on {'/'.join(root.parts[-3:])}"
     for batch in stream:
         began = time.perf_counter()
         try:

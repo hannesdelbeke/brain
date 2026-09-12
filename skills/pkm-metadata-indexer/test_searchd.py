@@ -1,4 +1,6 @@
+import contextlib
 import importlib.util
+import io
 import json
 import os
 import subprocess
@@ -419,6 +421,22 @@ class WatcherTest(unittest.TestCase):
         # the rest of the filter still has to hold, or a watcher fires on noise
         self.assertFalse(SEARCHD.REFRESH_FILTER(change, str(Path("repo/__pycache__/x.pyc"))))
         self.assertFalse(SEARCHD.REFRESH_FILTER(change, str(Path("repo/node_modules/x.js"))))
+
+    def test_two_watchers_on_the_same_script_log_under_different_names(self):
+        # co_commit.py is registered once per repo, so a label of just the script
+        # name made the two lines interchangeable, and a vault whose edges were
+        # never built read exactly like one that refreshed fine
+        lines = []
+        for repo in ("first-repo", "second-repo"):
+            root = Path(tempfile.gettempdir()) / repo / ".git" / "logs"
+            captured = io.StringIO()
+            with contextlib.redirect_stdout(captured):
+                SEARCHD.watch_command(root, [sys.executable, "-c", "pass"], 10,
+                                      stream=[{("added", "x")}])
+            lines.append(captured.getvalue())
+        self.assertNotEqual(lines[0], lines[1])
+        self.assertIn("first-repo/.git/logs", lines[0])
+        self.assertIn("second-repo/.git/logs", lines[1])
 
     def test_a_watched_source_runs_its_command_without_a_console_window(self):
         # the daemon runs under pythonw, so a console child with no flag pops a
