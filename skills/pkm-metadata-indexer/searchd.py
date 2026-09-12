@@ -123,6 +123,16 @@ try:
 except ImportError:  # only --watch needs it
     watchfiles = None
 
+# DefaultFilter drops any path with a `.git` component, which silently made the
+# two `--refresh <repo>/.git/logs=... co_commit.py` watchers dead on arrival:
+# registered, logged at startup, and never once fired on either machine. The
+# rest of the filter is worth keeping, so only `.git` comes off the ignore list.
+REFRESH_FILTER = None
+if watchfiles is not None:
+    REFRESH_FILTER = watchfiles.DefaultFilter(
+        ignore_dirs=tuple(d for d in watchfiles.DefaultFilter.ignore_dirs if d != ".git")
+    )
+
 HOST = "127.0.0.1"
 PORT = 44771
 DEFAULT_LIMIT = 20
@@ -1099,7 +1109,8 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     them. Errors print and the loop continues, the same as the reindex watcher.
     """
     if stream is None:
-        stream = watchfiles.watch(root, debounce=debounce, step=WATCH_STEP_MS)
+        stream = watchfiles.watch(root, watch_filter=REFRESH_FILTER,
+                                  debounce=debounce, step=WATCH_STEP_MS)
     # the script, not the interpreter, and not the tail of a -c one-liner
     name = next((Path(token).name for token in reversed(command) if token.endswith(".py")),
                 Path(command[0]).name)

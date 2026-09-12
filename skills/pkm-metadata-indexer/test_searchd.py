@@ -407,6 +407,19 @@ class WatcherTest(unittest.TestCase):
         SEARCHD.watch_command(Path(temp_dir.name), command, 10, stream=[{("added", "x")}])
         self.assertEqual(made.read_text(encoding="utf-8"), "## Note\n")
 
+    def test_a_refresh_watcher_sees_inside_a_git_directory(self):
+        # watchfiles' DefaultFilter drops every path with a `.git` component, so
+        # the two co_commit watchers on <repo>/.git/logs registered at startup
+        # and then never fired, on any platform, with nothing in the log to say so
+        if SEARCHD.watchfiles is None:
+            self.skipTest("watchfiles is not installed")
+        self.assertIsNotNone(SEARCHD.REFRESH_FILTER)
+        change = SEARCHD.watchfiles.Change.modified
+        self.assertTrue(SEARCHD.REFRESH_FILTER(change, str(Path("repo/.git/logs/HEAD"))))
+        # the rest of the filter still has to hold, or a watcher fires on noise
+        self.assertFalse(SEARCHD.REFRESH_FILTER(change, str(Path("repo/__pycache__/x.pyc"))))
+        self.assertFalse(SEARCHD.REFRESH_FILTER(change, str(Path("repo/node_modules/x.js"))))
+
     def test_a_watched_source_runs_its_command_without_a_console_window(self):
         # the daemon runs under pythonw, so a console child with no flag pops a
         # window on every refresh, once a minute for as long as an agent is writing
