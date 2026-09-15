@@ -12,5 +12,3 @@ tags:
 
 [[Home Assistant]]
 [[Operating System]]
-
-setup notes: [[HAOS setup ssh]], [[HAOS setup samba]], [[mcp server home assistant|mcp for agent access]]
