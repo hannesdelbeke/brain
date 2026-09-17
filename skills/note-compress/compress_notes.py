@@ -223,6 +223,17 @@ def word_count(text: str) -> int:
     return len(text.split())
 
 
+def default_db_path(root: Path) -> Path:
+    """Where `index_pkm_meta.py` would have put the index for this corpus.
+
+    A corpus with no `.obsidian` to hide the index in gets a dotfile beside it
+    instead. Guessing only the vault layout silently finds no backlinks
+    everywhere else, which reads as "nothing is eligible" rather than as a
+    missing index.
+    """
+    return root / ".obsidian" / "pkm_index.db" if (root / ".obsidian").is_dir() else root / ".pkm_index.db"
+
+
 def backlink_counts(db_path: Path) -> dict[str, int]:
     """path -> inbound wikilink count, the free reread-frequency proxy.
 
@@ -231,6 +242,8 @@ def backlink_counts(db_path: Path) -> dict[str, int]:
     alone can still make a note eligible.
     """
     if not db_path.exists():
+        print(f"No index at {db_path}, so no note qualifies on backlinks. "
+              f"Build one with index_pkm_meta.py or pass --db.", file=sys.stderr)
         return {}
     connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
     try:
@@ -408,7 +421,10 @@ def main():
     parser.add_argument("--min-words", type=int, default=MIN_WORDS)
     parser.add_argument("--min-backlinks", type=int, default=MIN_BACKLINKS)
     parser.add_argument("--db", type=Path, default=None,
-                        help="pkm index db for backlink counts, defaults to <vault>/.obsidian/pkm_index.db")
+                        help="pkm index db for backlink counts, defaults to <vault>/.obsidian/pkm_index.db "
+                             "in a vault and <vault>/.pkm_index.db anywhere else")
+    parser.add_argument("--seed", type=int, default=None,
+                        help="Seed for --sample, so a bench run can be repeated on the same notes")
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--model", type=str, default=None)
     parser.add_argument("--report", type=Path, default=None, help="Write a JSON bench report here")
@@ -421,12 +437,12 @@ def main():
     if args.self_check:
         return self_check()
 
-    db_path = args.db or (VAULT_ROOT / ".obsidian" / "pkm_index.db")
+    db_path = args.db or default_db_path(VAULT_ROOT)
     notes = find_eligible_notes(VAULT_ROOT, db_path, args.folder, args.min_words, args.min_backlinks)
     print(f"Vault: {VAULT_ROOT}\nEligible notes: {len(notes)}")
     if args.sample and len(notes) > args.sample:
-        notes = random.sample(notes, args.sample)
-        print(f"Sampled: {len(notes)}")
+        notes = random.Random(args.seed).sample(notes, args.sample)
+        print(f"Sampled: {len(notes)}" + (f" with seed {args.seed}" if args.seed is not None else ""))
     if not notes:
         return
 
