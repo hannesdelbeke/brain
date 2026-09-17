@@ -128,5 +128,124 @@ class HeldOutTest(unittest.TestCase):
         self.assertGreater(report["bootstrap"]["low"], 0.0)
 
 
+def collected_item(query: str, lexical: list[str], semantic: list[str]) -> dict:
+    """One query's candidates, each retriever's list given as paths in rank order."""
+    return {
+        "query": query,
+        "lexical": {path: {"path": path, "heading": "", "start_line": 1,
+                           "lex_rank": rank, "snippet": ""}
+                    for rank, path in enumerate(lexical)},
+        "semantic": {path: {"path": path, "heading": "", "start_line": 1,
+                            "vec_rank": rank, "raw_sim": 1.0}
+                     for rank, path in enumerate(semantic)},
+    }
+
+
+class PowerCheckTest(unittest.TestCase):
+    """Before believing a null, check the metric can see a change that is real."""
+
+    def test_removing_the_retriever_that_was_carrying_it_is_detected(self):
+        # The vector list puts the answer first every time; the lexical list
+        # buries it under five wrong notes. At 1:1 the vector list wins and the
+        # answer ranks first, so deleting the vector list has to register.
+        filler = [f"w{j}.md" for j in range(5)]
+        collected = [collected_item(f"q{i}", filler + ["right.md"], ["right.md"])
+                     for i in range(30)]
+        order = [item["query"] for item in collected]
+        labels = {query: {"right.md"} for query in order}
+
+        checks = sweep.power_check(collected, order, 5, labels)
+        lexical_only = next(c for c in checks if c["ablation"] == "lexical only")
+        self.assertLess(lexical_only["mrr"]["high"], 0.0)
+        self.assertLess(lexical_only["ndcg"]["high"], 0.0)
+
+    def test_a_corpus_the_ablation_cannot_move_reports_no_power(self):
+        """Both retrievers return the same list, so no weighting of them can
+        reorder anything. The check has to say so rather than report a clean
+        null — on this corpus every sweep result is vacuous, and that is the
+        one thing worth knowing before reading the table."""
+        collected = [collected_item(f"q{i}", ["a.md", "b.md"], ["a.md", "b.md"])
+                     for i in range(30)]
+        order = [item["query"] for item in collected]
+        labels = {query: {"a.md"} for query in order}
+
+        for check in sweep.power_check(collected, order, 5, labels):
+            for metric in ("mrr", "ndcg"):
+                test = check[metric]
+                self.assertEqual(test["delta"], 0.0)
+                self.assertLessEqual(test["low"], 0.0)
+                self.assertGreaterEqual(test["high"], 0.0)
+
+
+class ShuffledNullTest(unittest.TestCase):
+    def test_a_real_effect_does_not_survive_detaching_the_labels(self):
+        """The corpus below has a genuine gain at 4:1. Permuting which query
+        each label set belongs to must destroy it: if significance survives,
+        the pipeline is scoring something other than relevance."""
+        collected = [
+            collected_item(f"q{i}", ["miss%d.md" % i, "x.md", "hit%d.md" % i],
+                           ["hit%d.md" % i, "miss%d.md" % i])
+            for i in range(24)
+        ]
+        order = [item["query"] for item in collected]
+        labels = {f"q{i}": {"hit%d.md" % i} for i in range(24)}
+
+        real = sweep.paired_bootstrap(
+            sweep.scored_series(collected, order, 5, labels)[0],
+            sweep.scored_series(collected, order, 5, labels, w_vec=4.0)[0],
+        )
+        self.assertGreater(real["low"], 0.0)
+
+        null = sweep.shuffled_null(collected, order, 5, labels, 4.0, rounds=3)
+        self.assertEqual(null["false_positives"], 0)
+        self.assertEqual(len(null["trials"]), 3)
+
+
+class LengthBinTest(unittest.TestCase):
+    def test_the_boundaries_land_where_the_labels_say(self):
+        self.assertEqual(sweep.length_bin("one two"), "1-2 words")
+        self.assertEqual(sweep.length_bin("one two three"), "3-5 words")
+        self.assertEqual(sweep.length_bin("a b c d e"), "3-5 words")
+        self.assertEqual(sweep.length_bin("a b c d e f"), "6-9 words")
+        self.assertEqual(sweep.length_bin("a b c d e f g h i"), "6-9 words")
+        self.assertEqual(sweep.length_bin("a b c d e f g h i j"), "10+ words")
+
+
+class BinnedDeltaTest(unittest.TestCase):
+    def test_two_query_kinds_that_cancel_are_reported_separately(self):
+        """Short queries gain exactly what long queries lose, so the average
+        is zero and the honest answer is not "the weight does nothing" but
+        "the weight wants to depend on the query"."""
+        collected, labels = [], {}
+        for i in range(4):
+            short = f"s{i} q"
+            collected.append(collected_item(
+                short, [f"miss{i}.md", "x.md", f"hit{i}.md"],
+                [f"hit{i}.md", f"miss{i}.md"]))
+            labels[short] = {f"hit{i}.md"}
+
+            # The mirror image: here the lexical list is the one that is right,
+            # so leaning on the vector list costs the same half a rank.
+            long = f"l{i} a b c d e"
+            collected.append(collected_item(
+                long,
+                [f"HIT{i}.md"] + [f"f{j}.md" for j in range(7)] + [f"MISS{i}.md"],
+                [f"MISS{i}.md", "y.md", "z.md", f"HIT{i}.md"]))
+            labels[long] = {f"HIT{i}.md"}
+
+        order = [item["query"] for item in collected]
+        table = sweep.binned_delta(collected, order, [1.0, 4.0], 5, labels)
+        by_bin = {entry["bin"]: entry for entry in table}
+
+        self.assertAlmostEqual(by_bin["1-2 words"]["delta"][4.0], 0.5)
+        self.assertAlmostEqual(by_bin["6-9 words"]["delta"][4.0], -0.5)
+
+        overall = sweep.paired_bootstrap(
+            sweep.scored_series(collected, order, 5, labels)[0],
+            sweep.scored_series(collected, order, 5, labels, w_vec=4.0)[0],
+        )
+        self.assertAlmostEqual(overall["delta"], 0.0)
+
+
 if __name__ == "__main__":
     unittest.main()

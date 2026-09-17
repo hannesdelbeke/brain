@@ -352,6 +352,167 @@ def held_out(result: dict, metric: str, train: set[int], test: set[int]) -> dict
     return report
 
 
+# ---------------------------------------------------------------------------
+# does the measurement have power, and is the effect one shape or many
+# ---------------------------------------------------------------------------
+
+ABLATIONS = (((1.0, 0.0), "lexical only"), ((0.0, 1.0), "vector only"))
+
+LENGTH_BINS = ("1-2 words", "3-5 words", "6-9 words", "10+ words")
+
+
+def scored_series(
+    collected: list[dict],
+    order: list[str],
+    depth: int,
+    labels: dict[str, set[str]],
+    w_lex: float = 1.0,
+    w_vec: float = 1.0,
+) -> tuple[list[float], list[float]]:
+    """Per-query RR and nDCG at one weight, emitted in `order` so pairs line up."""
+    by_query = {item["query"]: item for item in collected}
+    rrs, ndcgs = [], []
+    for query in order:
+        item = by_query[query]
+        ranked = note_order(
+            pkm.fuse_candidates(item["lexical"], item["semantic"],
+                                w_lex=w_lex, w_vec=w_vec),
+            depth,
+        )
+        relevant = labels[query]
+        rrs.append(reciprocal_rank(ranked, relevant))
+        ndcgs.append(ndcg_at(ranked, relevant, depth))
+    return rrs, ndcgs
+
+
+def power_check(
+    collected: list[dict],
+    order: list[str],
+    depth: int,
+    labels: dict[str, set[str]],
+) -> list[dict]:
+    """Can this corpus detect a difference that is certainly there?
+
+    A null result only means something if the instrument could have said
+    otherwise. So before believing that no weight beats 1:1, delete a whole
+    retriever and check the metric notices. Dropping the vector list entirely
+    is a far larger change than any point on the weight grid; a metric that
+    cannot see it at this many queries could never have seen a weight tweak,
+    and its flat sweep is a statement about the metric, not about the weight.
+
+    Run per metric, because they do not have the same power. MRR looks at one
+    rank per query and is nearly binary, so it throws away most of what
+    separates two rankings; nDCG@k reads the whole top k.
+    """
+    base_rr, base_ndcg = scored_series(collected, order, depth, labels)
+    checks = []
+    for (w_lex, w_vec), name in ABLATIONS:
+        rr, ndcg = scored_series(collected, order, depth, labels,
+                                 w_lex=w_lex, w_vec=w_vec)
+        checks.append({
+            "ablation": name,
+            "w_lex": w_lex,
+            "w_vec": w_vec,
+            "mrr": paired_bootstrap(base_rr, rr),
+            "ndcg": paired_bootstrap(base_ndcg, ndcg),
+        })
+    return checks
+
+
+def shuffled_null(
+    collected: list[dict],
+    order: list[str],
+    depth: int,
+    labels: dict[str, set[str]],
+    w_vec: float,
+    rounds: int = 5,
+) -> dict:
+    """The same test, against labels that have been detached from their queries.
+
+    Permuting the label sets across queries destroys any real relevance while
+    leaving every other property of the harness intact — same rankings, same
+    label sizes, same bootstrap. A significant result here is impossible to
+    earn honestly, so one means the pipeline has an artifact: an off-by-one in
+    the pairing, a metric that rewards list length, a leak from ranking into
+    labels. Zero across the rounds is the licence to read the real table.
+    """
+    label_sets = [labels[query] for query in order]
+    trials = []
+    for seed in range(rounds):
+        shuffled = list(label_sets)
+        random.Random(seed).shuffle(shuffled)
+        fake = dict(zip(order, shuffled))
+        base_rr, _ = scored_series(collected, order, depth, fake)
+        cand_rr, _ = scored_series(collected, order, depth, fake, w_vec=w_vec)
+        test = paired_bootstrap(base_rr, cand_rr)
+        test["seed"] = seed
+        test["significant"] = not (test["low"] <= 0.0 <= test["high"])
+        trials.append(test)
+    return {
+        "w_vec": w_vec,
+        "rounds": rounds,
+        "false_positives": sum(1 for trial in trials if trial["significant"]),
+        "trials": trials,
+    }
+
+
+def length_bin(query: str) -> str:
+    """Which length bucket a query falls in — the feature the weight trades on.
+
+    A lexical/semantic weight is supposed to matter differently for a two-word
+    lookup than for a sentence, so query length is the first place to look for
+    an effect that the average hides.
+    """
+    words = len(query.split())
+    if words <= 2:
+        return LENGTH_BINS[0]
+    if words <= 5:
+        return LENGTH_BINS[1]
+    if words <= 9:
+        return LENGTH_BINS[2]
+    return LENGTH_BINS[3]
+
+
+def binned_delta(
+    collected: list[dict],
+    order: list[str],
+    grid: list[float],
+    depth: int,
+    labels: dict[str, set[str]],
+) -> list[dict]:
+    """Mean delta against 1:1 within each length bucket, rather than over all.
+
+    An average of zero has two very different explanations: the weight does
+    nothing anywhere, or it helps one kind of query and hurts another and the
+    two cancel. Those call for opposite decisions — leave it alone, or make it
+    depend on the query — and only the split table tells them apart. A gain
+    that appears in exactly one bucket and nowhere else is an impulse, and
+    with a handful of queries in that bucket it is usually noise wearing a
+    pattern.
+    """
+    buckets: dict[str, list[int]] = {}
+    for index, query in enumerate(order):
+        buckets.setdefault(length_bin(query), []).append(index)
+
+    base_rr, _ = scored_series(collected, order, depth, labels)
+    deltas: dict[float, list[float]] = {}
+    for w_vec in grid:
+        if w_vec == 1.0:
+            continue
+        rr, _ = scored_series(collected, order, depth, labels, w_vec=w_vec)
+        deltas[w_vec] = [after - before for before, after in zip(base_rr, rr)]
+
+    return [
+        {
+            "bin": name,
+            "n": len(buckets[name]),
+            "delta": {w_vec: sum(values[i] for i in buckets[name]) / len(buckets[name])
+                      for w_vec, values in deltas.items()},
+        }
+        for name in LENGTH_BINS if name in buckets
+    ]
+
+
 def contention(collected: list[dict], depth: int) -> dict:
     """How much room the weight has to work with, before any sweeping.
 
@@ -401,6 +562,10 @@ def main() -> int:
                         help="how many notes deep to measure (default 5)")
     parser.add_argument("--labels", type=Path, default=None,
                         help="JSON of query -> [relevant note paths]; enables MRR and nDCG")
+    parser.add_argument("--preflight", action=argparse.BooleanOptionalAction, default=True,
+                        help="with labels, also run the power check, the shuffled null "
+                             "and the per-length breakdown. On by default: they cost no "
+                             "judgements and they decide whether the table above is readable")
     parser.add_argument("--json", type=Path, default=None,
                         help="write the full result, with the config snapshot, here")
     args = parser.parse_args()
@@ -515,6 +680,57 @@ def main() -> int:
                 metric: held_out(result, metric, train, test_set)
                 for metric in ("rr_by_query", "ndcg_by_query")
             }
+
+        if args.preflight and order and base is not None:
+            checks = power_check(collected, order, args.depth, labels)
+            result["power_check"] = checks
+            print()
+            print("DOES THIS MEASUREMENT HAVE POWER")
+            print("  Each metric against a whole retriever removed — a change far")
+            print("  bigger than anything on the grid. A metric that misses this")
+            print("  cannot be read as evidence that the weight does nothing.")
+            print()
+            for check in checks:
+                for name, test in (("MRR", check["mrr"]),
+                                   (f"nDCG@{args.depth}", check["ndcg"])):
+                    seen = "detects" if not (test["low"] <= 0.0 <= test["high"]) \
+                        else "MISSES "
+                    print(f"  {check['ablation']:>13}  {name:>8}  {seen}  "
+                          f"{test['delta']:>+8.4f}  "
+                          f"[{test['low']:>+7.4f},{test['high']:>+7.4f}]")
+            blind = sorted({name for check in checks
+                            for name, test in (("MRR", check["mrr"]),
+                                               (f"nDCG@{args.depth}", check["ndcg"]))
+                            if test["low"] <= 0.0 <= test["high"]})
+            if blind:
+                print()
+                print(f"  {', '.join(blind)} cannot see an ablation. Read the sweep on")
+                print("  the other metric, or judge more queries.")
+
+            apparent = max((row for row in result["grid"] if row["w_vec"] != 1.0),
+                           key=lambda row: row["mrr"])
+            null = shuffled_null(collected, order, args.depth, labels,
+                                 apparent["w_vec"])
+            result["shuffled_null"] = null
+            print()
+            print("SHUFFLED NULL")
+            print(f"  {apparent['w_vec']:g}:1 against 1:1, with the label sets permuted")
+            print("  across queries so no real effect survives. Any significant round")
+            print("  here is an artifact in the harness, not a result.")
+            print(f"  {null['false_positives']}/{null['rounds']} rounds came back significant.")
+
+            table = binned_delta(collected, order, grid, args.depth, labels)
+            result["binned"] = table
+            weights = [w for w in grid if w != 1.0]
+            print()
+            print("BINNED BY QUERY LENGTH")
+            print("  d MRR against 1:1 inside each bucket. A number that appears in")
+            print("  one row and nowhere else is an impulse, not a trend.")
+            print()
+            print(f"  {'bin':>10} {'n':>4} " + "".join(f"{w:>9.3f}:1" for w in weights))
+            for entry in table:
+                cells = "".join(f"{entry['delta'][w]:>+11.4f}" for w in weights)
+                print(f"  {entry['bin']:>10} {entry['n']:>4} {cells}")
     else:
         print()
         print("sensitivity only, no labels given. Read it as: if the top-5 barely "
