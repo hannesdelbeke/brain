@@ -48,17 +48,32 @@ python skills/pkm-metadata-indexer/index_pkm_meta.py --search "notes on feeling 
 
 The two rankings, BM25 over `sections_fts` and cosine over the section vectors, are combined by weighted Reciprocal Rank Fusion in [[index_pkm_meta.py]]'s `rrf_score`: `score = RRF_W_LEX / (RRF_K + lex_rank) + RRF_W_VEC / (RRF_K + vec_rank)`. Both weights are 1.0 and `RRF_K` is 60, so the default is the unweighted sum this has always computed. `retrieve_candidates` cuts each list at `CANDIDATE_DEPTH` (50) before fusion, so no weight can recover a candidate past that depth.
 
-**The 1:1 weight was never chosen and it is load-bearing.** Swept over 84 real queries from the query log with [[rrf_weight_sweep.py]], moving to 9:1 changes the top result on 33.3% of queries and keeps only 67.7% of the top 5; moving the other way to 1:9 changes 38.1% of top results. There is room for it to matter: both retrievers return candidates for 100% of queries and only 3.1% of top-5 entries were found by one retriever alone, so nearly every result is genuinely contested between the two signals. This is the lever the recency pass found dominant everywhere it looked — weight swung results 22.4 points against 1.5 for the timescale, and on RRF specifically an unweighted 1:1 scored -6.69% where the same function re-weighted to 9:1 reached +5.02%. That measurement fused content against recency, a different pair of lists, so **its 9:1 does not transfer here and has not been adopted**; what transfers is that 1:1 is an arbitrary choice nobody has measured on this corpus.
+**The 1:1 weight was never chosen, it moves a lot of results, and it is still the right value.** Swept over 84 real queries from the query log with [[rrf_weight_sweep.py]], moving to 9:1 changes the top result on 34.5% of queries and keeps only 66.9% of the top 5; moving the other way to 1:9 changes 35.7% of top results. So the constant is load-bearing in the sense that it decides what a third of searches return.
+
+It is not load-bearing on quality. Against 67 judged queries (§3b), no point on the grid is separable from 1:1: every 95% paired-bootstrap interval on MRR contains zero, and 1:1 has the best nDCG@5 outright. The apparent MRR winner, 4:1 at +0.033, wins 11 queries and loses 5 out of 67 and its interval is [-0.013, +0.080]. Held out — weight picked on 33 queries, scored on the other 34 — the pick *loses* on both metrics: MRR picks 9:1 and gives back -0.053, nDCG picks 1.5:1 and gives back -0.015. The reordering is churn, not improvement.
+
+The structural reason is in the contention line: only 2.6% of top-5 entries were found by one retriever alone. The two lists agree on nearly every candidate and disagree only about order, so the weight has very little to arbitrate — it shuffles the same notes rather than swapping them for better ones. **1:1 stands, now as a measured result rather than an unexamined default.**
+
+This is also the answer to the transplant question. The recency pass found weight dominant everywhere it looked — 22.4 points against 1.5 for the timescale, and on RRF specifically an unweighted 1:1 scoring -6.69% where the same function re-weighted to 9:1 reached +5.02%. That measurement fused content against recency, a different pair of lists, so its 9:1 was never adopted here. Now it has been tested: 9:1 is the value the held-out split punishes hardest.
 
 ### 3b. Fusion Weight Sweep ([[rrf_weight_sweep.py]])
 Sweeps `RRF_W_VEC` against `RRF_W_LEX=1.0` and reports what the weight changes. Retrieval and query encoding happen once per query and every grid point re-fuses the same two candidate lists, so a 40-point grid costs what one point costs.
 ```bash
 # sensitivity, offline, no API cost: does the weight move anything at all?
 python skills/pkm-metadata-indexer/rrf_weight_sweep.py --vault-dir <vault>
-# scored, once you have labels: which weight is best?
-python skills/pkm-metadata-indexer/rrf_weight_sweep.py --vault-dir <vault> --labels labels.json
+# labels, once: a blind judge over the pooled candidates (§3d)
+python skills/pkm-metadata-indexer/build_labels.py --db <index.db> --out ~/.pkm/rrf-labels.json
+# scored: which weight is best, and is the gap real?
+python skills/pkm-metadata-indexer/rrf_weight_sweep.py --vault-dir <vault> --labels ~/.pkm/rrf-labels.json
 ```
 Queries default to the distinct `/search` queries in `~/.pkm/queries.jsonl`, which carry the real mix of short lookups and long questions that a lexical/semantic weight trades between. Run the sensitivity mode first: if the top 5 barely moves across the grid the weight is not worth buying judgements for, and if it moves the ordering is resting on a constant nobody picked. The labels file is `{"query": ["path/to/note.md"]}` and is deliberately not derivable from wikilinks — wikilink ground truth measured 1.97x [1.48, 2.55] optimistic, and a weight tuned against an inflated label set is a weight tuned against that set's bias.
+
+With labels the sweep also answers whether any gap it printed is real, because on a nine-point grid over tens of queries the best cell is partly a draw:
+
+- **Paired bootstrap** — every weight against 1:1 on the same queries, 10000 resamples, 95% interval on the per-query MRR delta, plus how many queries each weight won and lost. An interval containing zero means the corpus cannot separate that weight from 1:1. The win/loss counts matter on their own: a mean carried by a handful of queries while others regress is churn, and the mean alone hides that.
+- **Held-out split** — the weight is picked on half the queries and scored on the other half. This is what caught the fusion-weight result: both metrics picked a winner on train and both gave the gain back on test.
+
+The `--json` dump keeps the per-query score series, so any of this can be re-tested later without re-running the judge. It drops the query strings; they are the one thing in the run that is about the person rather than the ranking.
 
 ### 3c. Ranking Configuration ([[ranking_config.py]])
 Every knob the live ranking turns is defined in one module and bound to its long-standing name in [[index_pkm_meta.py]] and [[searchd.py]], so a sweep moves it with an environment variable instead of an edit:
@@ -69,6 +84,20 @@ PKM_RRF_W_VEC=2.0 python skills/pkm-metadata-indexer/searchd.py --vault brain=<v
 `PKM_RRF_K`, `PKM_RRF_W_LEX`, `PKM_RRF_W_VEC`, `PKM_RERANK_CANDIDATES`, `PKM_RECENCY_TAU_HOURS`, `PKM_RECENCY_LAMBDA`, `PKM_FUSION_LAMBDA_RECENCY`, `PKM_FUSION_LAMBDA_COCOMMIT`, `PKM_FUSION_LAMBDA_AA`, `PKM_FUSION_Z_HUB_DEGREE`. A malformed value raises rather than silently falling back, and `snapshot()` returns the active values plus which ones the environment overrode — store it next to any measurement.
 
 This exists because the constants used to live wherever they were first written, and the experiment harness and the daemon drifted apart unnoticed. The recency paper spent a week reporting against a "shipped" configuration of `lambda=0.5`, `tau=30 days` and a symmetric time gap; those are [[recency_prior_experiment.py]]'s argparse defaults, and the daemon has never used them. A result whose configuration was not recorded gets attributed to whatever the reader assumes is running.
+
+### 3d. Relevance Labels ([[build_labels.py]])
+Writes the label file the scored sweep needs, by asking a blind judge which notes actually answered each logged query:
+```bash
+MODEL=claude-sonnet-5 python skills/pkm-metadata-indexer/build_labels.py \
+    --db <index.db> --query-vault <vault> --out ~/.pkm/rrf-labels.json
+```
+The labels are **pooled**: for one query, every section that reaches the top `--depth` at *any* point on the weight grid is judged, and nothing else is. That bounds cost to what the comparison can see — a note no weight can surface cannot change which weight wins — and keeps the pool neutral, since a pool built from one weight's output would score its rivals against a label set assembled from their opponent's hits. Run it with the same `--grid` and `--depth` as the sweep.
+
+The judge itself is [[eval_rerank.py]]'s, so both tools share `~/.pkm/rerank-judgements.json` and warm each other's cache; a rerun costs nothing for pairs already seen. It sees one question and one section, never a rank, a weight, or which retriever found it. `--withhold-private` is **on by default here**, unlike in `eval_rerank.py`, because this runs over whatever was really searched for rather than a written question list; a withheld section is recorded as unjudged, not as irrelevant. On the 84-query pass, 20% of pooled sections were withheld and 67 of 84 queries ended up with at least one relevant note.
+
+The dialect follows the model name — `claude*` is Anthropic-shaped, `gemini*` Gemini-shaped, anything else OpenAI-shaped — so `MODEL` plus `GATEWAY` is the whole configuration. Two things the Anthropic branch does not share with the others: it sends no `temperature`, which current models reject outright, and it sets `thinking: {"type": "disabled"}` rather than omitting it, because omitted means adaptive and adaptive can spend the whole eight-token answer budget reasoning and return empty text — which reads downstream as an unparseable judgement rather than as a failure.
+
+**The output holds real queries and real note paths, so it belongs outside any repository.** The default is under `~/.pkm` for that reason.
 
 ### 3. Duplicate Note Prevention
 Checks for semantic overlap before creating a new note to prevent note sprawl:

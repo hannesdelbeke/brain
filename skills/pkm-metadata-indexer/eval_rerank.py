@@ -16,8 +16,11 @@ set written before any result was looked at. Judgements are cached in
 ~/.pkm/rerank-judgements.json, keyed by question and section, so a rerun costs
 nothing for pairs already seen.
 
-Env: GATEWAY (default http://127.0.0.1:8080), MODEL (default gemini-2.5-flash),
-an OpenAI-shaped or Gemini-shaped local endpoint, whichever the machine runs.
+Env: GATEWAY (default http://127.0.0.1:8080), MODEL (default gemini-2.5-flash).
+The dialect follows the model name — Anthropic-shaped for `claude*`, Gemini for
+`gemini*`, OpenAI otherwise — so pointing MODEL at whatever the local gateway
+lists under `/v1/models` is the whole of the configuration. No credential is
+sent in any dialect; the gateway is assumed to hold it.
 """
 
 from __future__ import annotations
@@ -118,11 +121,26 @@ def section_text(cursor: sqlite3.Cursor, hit: dict) -> str:
 def judge_request(model: str, prompt: str) -> tuple[str, dict]:
     """URL and body for one judgement, in whichever dialect the model speaks.
 
-    Gemini-shaped when the model name says gemini, OpenAI-shaped otherwise. The
-    docstring always promised both; only the Gemini half existed, so a gateway
-    serving `/v1/chat/completions` and `/v1/messages` and no `/v1beta` route —
-    which is what the vault-b one serves — could not run this at all.
+    Anthropic-shaped when the model name says claude, Gemini-shaped when it says
+    gemini, OpenAI-shaped otherwise. The docstring always promised two dialects;
+    only the Gemini half existed, so a gateway serving `/v1/messages` and no
+    `/v1beta` route — which is what the one on this machine serves — could not
+    run this at all.
+
+    Two things the Anthropic branch does not copy from the others. It sends no
+    `temperature`: the current models reject it outright rather than ignoring
+    it, so the parameter that makes the other two dialects deterministic is the
+    one that would fail the request here. And it disables thinking rather than
+    leaving it out, because omitting it runs adaptive thinking, which is free to
+    spend the whole eight-token budget reasoning and hand back an empty answer —
+    a judgement that silently reads as unparseable, not as a failure.
     """
+    if model.startswith("claude"):
+        return f"{GATEWAY}/v1/messages", {
+            "model": model, "max_tokens": 8,
+            "thinking": {"type": "disabled"},
+            "messages": [{"role": "user", "content": prompt}],
+        }
     if model.startswith("gemini"):
         return f"{GATEWAY}/v1beta/models/{model}:generateContent", {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
@@ -136,7 +154,10 @@ def judge_request(model: str, prompt: str) -> tuple[str, dict]:
 
 
 def judge_answer(model: str, data: dict) -> str:
-    """The reply text out of either dialect's response envelope."""
+    """The reply text out of any dialect's response envelope."""
+    if model.startswith("claude"):
+        return "".join(block.get("text", "") for block in data.get("content", [])
+                       if block.get("type") == "text")
     if model.startswith("gemini"):
         parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
         return "".join(part.get("text", "") for part in parts)
