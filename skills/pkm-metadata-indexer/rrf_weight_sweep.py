@@ -60,6 +60,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import random
 import sqlite3
 import sys
 from collections import OrderedDict
@@ -222,6 +223,11 @@ def sweep(
         for item in collected
     }
 
+    # Fixed once, so every grid point is scored over the same queries in the
+    # same order and the per-query series below line up for a paired test.
+    scored_order = [item["query"] for item in collected
+                    if labels is not None and labels.get(item["query"])]
+
     rows = []
     for w_vec in grid:
         top1_changed = 0
@@ -255,8 +261,95 @@ def sweep(
             row["scored_queries"] = len(rrs)
             row["mrr"] = sum(rrs) / len(rrs) if rrs else 0.0
             row[f"ndcg@{depth}"] = sum(ndcgs) / len(ndcgs) if ndcgs else 0.0
+            # Kept per query, not just averaged, because the question the table
+            # cannot answer is whether a gap of a few thousandths is a result or
+            # a coin landing the same way twice.
+            row["rr_by_query"] = rrs
+            row["ndcg_by_query"] = ndcgs
         rows.append(row)
-    return {"grid": rows, "depth": depth, "queries": len(collected)}
+    return {"grid": rows, "depth": depth, "queries": len(collected),
+            "scored_order": scored_order}
+
+
+# ---------------------------------------------------------------------------
+# is the gap real
+# ---------------------------------------------------------------------------
+
+def paired_bootstrap(
+    base: list[float],
+    candidate: list[float],
+    rounds: int = 10000,
+    seed: int = 0,
+) -> dict:
+    """Mean per-query delta and a 95% interval, resampling queries with replacement.
+
+    Paired, because both weights are scored on the same queries: the thing that
+    varies between them is the ranking, and differencing per query removes the
+    much larger variation between one query and the next. An interval that
+    straddles zero means this corpus cannot tell the two weights apart — which
+    is a finding, not a failure to find one.
+    """
+    diffs = [after - before for before, after in zip(base, candidate)]
+    count = len(diffs)
+    if not count:
+        return {"delta": 0.0, "low": 0.0, "high": 0.0, "wins": 0, "losses": 0, "n": 0}
+    rng = random.Random(seed)
+    means = []
+    for _ in range(rounds):
+        means.append(sum(diffs[rng.randrange(count)] for _ in range(count)) / count)
+    means.sort()
+    return {
+        "delta": sum(diffs) / count,
+        "low": means[int(0.025 * rounds)],
+        "high": means[min(int(0.975 * rounds), rounds - 1)],
+        "wins": sum(1 for value in diffs if value > 0),
+        "losses": sum(1 for value in diffs if value < 0),
+        "n": count,
+    }
+
+
+def split_queries(queries: list[str], seed: int = 0) -> tuple[set[int], set[int]]:
+    """A repeatable half-and-half split, by position under a fixed shuffle.
+
+    Repeatable so that picking a weight and then checking it are not two
+    different experiments, and by shuffle rather than by hash so the two halves
+    are the same size on any corpus.
+    """
+    order = list(range(len(queries)))
+    random.Random(seed).shuffle(order)
+    half = len(order) // 2
+    return set(order[:half]), set(order[half:])
+
+
+def held_out(result: dict, metric: str, train: set[int], test: set[int]) -> dict:
+    """Pick the best weight on one half, then report what it scores on the other.
+
+    The grid has nine points and the corpus has tens of queries, so the best
+    cell of a nine-cell table is partly a draw. This is the cheapest guard
+    against reporting that draw as a tuning result.
+    """
+    def mean(row: dict, indices: set[int]) -> float:
+        values = [value for index, value in enumerate(row[metric]) if index in indices]
+        return sum(values) / len(values) if values else 0.0
+
+    rows = result["grid"]
+    baseline = next((row for row in rows if row["w_vec"] == 1.0), None)
+    picked = max(rows, key=lambda row: mean(row, train))
+    report = {
+        "metric": metric,
+        "picked_w_vec": picked["w_vec"],
+        "train": mean(picked, train),
+        "test": mean(picked, test),
+    }
+    if baseline is not None:
+        report["baseline_train"] = mean(baseline, train)
+        report["baseline_test"] = mean(baseline, test)
+        report["test_delta"] = report["test"] - report["baseline_test"]
+        report["bootstrap"] = paired_bootstrap(
+            [value for index, value in enumerate(baseline[metric]) if index in test],
+            [value for index, value in enumerate(picked[metric]) if index in test],
+        )
+    return report
 
 
 def contention(collected: list[dict], depth: int) -> dict:
@@ -376,18 +469,52 @@ def main() -> int:
         print(line)
 
     if labels is not None:
-        best = max(result["grid"], key=lambda row: row[f"ndcg@{args.depth}"])
-        base = next(row for row in result["grid"] if row["w_vec"] == 1.0) \
-            if any(row["w_vec"] == 1.0 for row in result["grid"]) else None
         print()
-        print(f"best nDCG@{args.depth} at w_vec={best['w_vec']}:1 "
-              f"({best[f'ndcg@{args.depth}']:.4f})")
-        if base is not None:
-            delta = best[f"ndcg@{args.depth}"] - base[f"ndcg@{args.depth}"]
-            print(f"against the shipped 1:1 ({base[f'ndcg@{args.depth}']:.4f}), "
-                  f"a change of {delta:+.4f}")
-            print("one corpus and one label set. Hold it to a held-out split before "
-                  "moving PKM_RRF_W_VEC.")
+        print("IS ANY OF THAT REAL")
+        print("  Every weight scored against the shipped 1:1 on the same queries,")
+        print("  95% interval from 10000 paired resamples. An interval containing")
+        print("  zero means this corpus cannot separate that weight from 1:1.")
+        print()
+        base = next((row for row in result["grid"] if row["w_vec"] == 1.0), None)
+        if base is None:
+            print("  no 1:1 point in the grid, so there is nothing to compare against")
+        else:
+            sub = f"{'w_vec:w_lex':>12}  {'d MRR':>8}  {'95% interval':>18}  {'won':>4}  {'lost':>5}"
+            print(sub)
+            print("  " + "-" * (len(sub) - 2))
+            for row in result["grid"]:
+                if row["w_vec"] == 1.0:
+                    continue
+                test = paired_bootstrap(base["rr_by_query"], row["rr_by_query"])
+                verdict = "" if test["low"] <= 0.0 <= test["high"] else "  *"
+                print(f"{row['w_vec']:>9.3f}:1  {test['delta']:>+8.4f}  "
+                      f"[{test['low']:>+7.4f},{test['high']:>+7.4f}]  "
+                      f"{test['wins']:>4d}  {test['losses']:>5d}{verdict}")
+            print()
+            print("  * marks an interval clear of zero. Nothing else on this table")
+            print("    is evidence for moving the weight.")
+
+        order = result["scored_order"]
+        if len(order) >= 8 and base is not None:
+            train, test_set = split_queries(order)
+            print()
+            print("HELD OUT")
+            print(f"  {len(train)} queries to pick the weight, {len(test_set)} to check it.")
+            for metric in ("rr_by_query", "ndcg_by_query"):
+                report = held_out(result, metric, train, test_set)
+                name = "MRR" if metric == "rr_by_query" else f"nDCG@{args.depth}"
+                boot = report["bootstrap"]
+                clear = "clear of zero" if not (boot["low"] <= 0.0 <= boot["high"]) \
+                    else "contains zero"
+                print(f"  {name:>8}: picked w_vec={report['picked_w_vec']}:1 on train "
+                      f"({report['train']:.4f} vs 1:1 {report['baseline_train']:.4f})")
+                print(f"  {'':>8}  on held-out it scores {report['test']:.4f} vs 1:1 "
+                      f"{report['baseline_test']:.4f}, {report['test_delta']:+.4f} "
+                      f"[{boot['low']:+.4f},{boot['high']:+.4f}] {clear}")
+            result["held_out"] = {
+                metric: held_out(result, metric, train, test_set)
+                for metric in ("rr_by_query", "ndcg_by_query")
+            }
     else:
         print()
         print("sensitivity only, no labels given. Read it as: if the top-5 barely "
@@ -396,6 +523,11 @@ def main() -> int:
               "nobody has ever measured.")
 
     if args.json:
+        # The per-query series stay, since they are what a later reader would
+        # need to re-test any of this. What someone searched for does not: it is
+        # the one thing here that is about the person rather than the ranking,
+        # and this file gets pasted into notes and issues.
+        result.pop("scored_order", None)
         args.json.write_text(json.dumps(result, indent=2), encoding="utf-8")
         print(f"\nwrote {args.json}")
     return 0
