@@ -115,6 +115,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import co_commit
 import index_pkm_meta as pkm
 import numpy as np
+import ranking_config
 import recency_prior_experiment as recency
 import shared_neighbor_experiment as shared_neighbor
 
@@ -149,14 +150,20 @@ NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
+# The six ranking knobs below are DEFINED IN ranking_config.py and only bound to
+# their long-standing names here, so a sweep can move them with an env var
+# instead of an edit. The comments say why each value is what it is; that module
+# adds what the 2026-09-16/17 research pass did to the evidence behind them, and
+# `python ranking_config.py` prints whatever is live right now.
+#
 # Validated in recency_prior_experiment.py: additive combine, hard cutoff,
 # swept and stability-checked against real wikilinks (5/5 seeds positive,
 # full-sample +8.60% MRR at exactly these values). Multiplicative and RRF
 # forms were tried first and rejected - additive is the only one where a
 # small weight cannot displace a candidate that was clearly better on
 # content, see that file for the proof.
-RECENCY_TAU_HOURS = 6.0
-RECENCY_LAMBDA = 0.05
+RECENCY_TAU_HOURS = ranking_config.RECENCY_TAU_HOURS
+RECENCY_LAMBDA = ranking_config.RECENCY_LAMBDA
 
 # Calibrated in stacked_fusion_experiment.py --calibrate: a grid search over
 # lambda_recency/lambda_cocommit/lambda_aa on a 60% calibration fold of real
@@ -174,9 +181,9 @@ RECENCY_LAMBDA = 0.05
 # the stack reliably win, even though AA alone is a rejected signal on this
 # vault (see the survey note's "shared-neighbor Adamic-Adar" section), so it
 # stays in the wired version.
-FUSION_LAMBDA_RECENCY = 0.05
-FUSION_LAMBDA_COCOMMIT = 1.5
-FUSION_LAMBDA_AA = 0.15
+FUSION_LAMBDA_RECENCY = ranking_config.FUSION_LAMBDA_RECENCY
+FUSION_LAMBDA_COCOMMIT = ranking_config.FUSION_LAMBDA_COCOMMIT
+FUSION_LAMBDA_AA = ranking_config.FUSION_LAMBDA_AA
 
 # The AA term's shared-neighbour z is read from the unfiltered wikilink graph
 # regardless of how aggressively a candidate pool excludes hubs - see the
@@ -190,7 +197,7 @@ FUSION_LAMBDA_AA = 0.15
 # negative on held-out MRR at every threshold tried). Wired here on the
 # false-positive/precision basis only, not as a ranking-quality improvement -
 # do not cite this as an MRR win.
-FUSION_Z_HUB_DEGREE = 20
+FUSION_Z_HUB_DEGREE = ranking_config.FUSION_Z_HUB_DEGREE
 
 # There is no lock over the query path. There was one, a single global mutex, and
 # once the server was threaded it made every request wait for the one before it:

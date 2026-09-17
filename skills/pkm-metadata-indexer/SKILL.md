@@ -46,6 +46,30 @@ Searches vault sections using combined lexical matching and neural vector cosine
 python skills/pkm-metadata-indexer/index_pkm_meta.py --search "notes on feeling overwhelmed by projects"
 ```
 
+The two rankings, BM25 over `sections_fts` and cosine over the section vectors, are combined by weighted Reciprocal Rank Fusion in [[index_pkm_meta.py]]'s `rrf_score`: `score = RRF_W_LEX / (RRF_K + lex_rank) + RRF_W_VEC / (RRF_K + vec_rank)`. Both weights are 1.0 and `RRF_K` is 60, so the default is the unweighted sum this has always computed. `retrieve_candidates` cuts each list at `CANDIDATE_DEPTH` (50) before fusion, so no weight can recover a candidate past that depth.
+
+**The 1:1 weight was never chosen and it is load-bearing.** Swept over 84 real queries from the query log with [[rrf_weight_sweep.py]], moving to 9:1 changes the top result on 33.3% of queries and keeps only 67.7% of the top 5; moving the other way to 1:9 changes 38.1% of top results. There is room for it to matter: both retrievers return candidates for 100% of queries and only 3.1% of top-5 entries were found by one retriever alone, so nearly every result is genuinely contested between the two signals. This is the lever the recency pass found dominant everywhere it looked — weight swung results 22.4 points against 1.5 for the timescale, and on RRF specifically an unweighted 1:1 scored -6.69% where the same function re-weighted to 9:1 reached +5.02%. That measurement fused content against recency, a different pair of lists, so **its 9:1 does not transfer here and has not been adopted**; what transfers is that 1:1 is an arbitrary choice nobody has measured on this corpus.
+
+### 3b. Fusion Weight Sweep ([[rrf_weight_sweep.py]])
+Sweeps `RRF_W_VEC` against `RRF_W_LEX=1.0` and reports what the weight changes. Retrieval and query encoding happen once per query and every grid point re-fuses the same two candidate lists, so a 40-point grid costs what one point costs.
+```bash
+# sensitivity, offline, no API cost: does the weight move anything at all?
+python skills/pkm-metadata-indexer/rrf_weight_sweep.py --vault-dir <vault>
+# scored, once you have labels: which weight is best?
+python skills/pkm-metadata-indexer/rrf_weight_sweep.py --vault-dir <vault> --labels labels.json
+```
+Queries default to the distinct `/search` queries in `~/.pkm/queries.jsonl`, which carry the real mix of short lookups and long questions that a lexical/semantic weight trades between. Run the sensitivity mode first: if the top 5 barely moves across the grid the weight is not worth buying judgements for, and if it moves the ordering is resting on a constant nobody picked. The labels file is `{"query": ["path/to/note.md"]}` and is deliberately not derivable from wikilinks — wikilink ground truth measured 1.97x [1.48, 2.55] optimistic, and a weight tuned against an inflated label set is a weight tuned against that set's bias.
+
+### 3c. Ranking Configuration ([[ranking_config.py]])
+Every knob the live ranking turns is defined in one module and bound to its long-standing name in [[index_pkm_meta.py]] and [[searchd.py]], so a sweep moves it with an environment variable instead of an edit:
+```bash
+python skills/pkm-metadata-indexer/ranking_config.py          # what is live right now
+PKM_RRF_W_VEC=2.0 python skills/pkm-metadata-indexer/searchd.py --vault brain=<vault>
+```
+`PKM_RRF_K`, `PKM_RRF_W_LEX`, `PKM_RRF_W_VEC`, `PKM_RERANK_CANDIDATES`, `PKM_RECENCY_TAU_HOURS`, `PKM_RECENCY_LAMBDA`, `PKM_FUSION_LAMBDA_RECENCY`, `PKM_FUSION_LAMBDA_COCOMMIT`, `PKM_FUSION_LAMBDA_AA`, `PKM_FUSION_Z_HUB_DEGREE`. A malformed value raises rather than silently falling back, and `snapshot()` returns the active values plus which ones the environment overrode — store it next to any measurement.
+
+This exists because the constants used to live wherever they were first written, and the experiment harness and the daemon drifted apart unnoticed. The recency paper spent a week reporting against a "shipped" configuration of `lambda=0.5`, `tau=30 days` and a symmetric time gap; those are [[recency_prior_experiment.py]]'s argparse defaults, and the daemon has never used them. A result whose configuration was not recorded gets attributed to whatever the reader assumes is running.
+
 ### 3. Duplicate Note Prevention
 Checks for semantic overlap before creating a new note to prevent note sprawl:
 ```bash
@@ -282,6 +306,8 @@ Reports precision for co-commit-only, vector-only and both-agree candidates, and
 
 ### 21. Recency-Proximity Prior ([[recency_prior_experiment.py]], `/similar?recency=1`)
 A note created within `RECENCY_TAU_HOURS` (6) of the anchor gets `RECENCY_LAMBDA` (0.05) added to its raw cosine score — additively, not as a multiplier. Validated against real wikilinks: 5/5 seeds positive, full-sample +8.60% MRR. Two other combine forms were tried first and rejected (multiplicative: proven mathematically to displace an arbitrary amount, rejected; RRF rank fusion: theoretically sounder but still net-negative at every `k` tested, -4.18% full-sample) — additive is the one form a small weight cannot use to displace a candidate that was already clearly better on content. See [[public/2026-08-31 recency-proximity reranking prior tested against real wikilinks|the research note]] for the sweeps, the proof, and why the other two forms fail.
+
+**The evidence behind that +8.60% weakened in the 2026-09-16/17 pass and the number above should not be quoted on its own.** Three results cut into it. Wikilink ground truth overstates the recency advantage by 1.97x [1.48, 2.55], measured over 56,820 query-candidate rows against 240 LLM-judged items, and +8.60% is a wikilink-scored figure. The four-vault replication collapsed: kepano and bramses are bulk-published repositories where commit batching confounds the signal, and obsidian-help flips sign, leaving the origin vault (+7.73%, holding at +6.50% held-out) as effectively the only corpus supporting the effect. The gain is also concentrated rather than broad — the top 5% of pairs carry 180.9% of the MRR gain while the other 95% contribute -81%, and rank-1 queries, 13.5% of the corpus and already correct, absorb -72.1% of it. The prior stays wired because it is opt-in, never on `/search`, and 0.05 already sits near the safe corner; **it should not be promoted to `/search` on this evidence.** Separately, the finding that add-versus-multiply was the variable did not survive: at equal weight the two forms land within a point of each other (+7.65% additive, +8.51% floored multiplicative) and the weight is what moves the result.
 ```bash
 curl "http://127.0.0.1:44771/similar?note=profile.md&recency=1"
 python skills/pkm-metadata-indexer/recency_prior_experiment.py --vault-dir <vault> --combine add --mode hard --tau 6 --unit hours --lam 0.05 --sample 100000

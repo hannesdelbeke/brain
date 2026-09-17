@@ -361,5 +361,66 @@ class RerankTest(unittest.TestCase):
         self.assertTrue(all("rerank_score" not in row for row in self.search(False)))
 
 
+class WeightedFusionTest(unittest.TestCase):
+    """The fusion weights, whose whole point is that moving them moves the order."""
+
+    def candidates(self):
+        """Two lists that disagree: `a` wins on lexical, `b` wins on semantic."""
+        lexical = {
+            1: {"path": "a.md", "heading": "A", "start_line": 1, "lex_rank": 1, "snippet": "x"},
+            2: {"path": "b.md", "heading": "B", "start_line": 1, "lex_rank": 40, "snippet": "y"},
+        }
+        semantic = {
+            1: {"path": "a.md", "heading": "A", "start_line": 1, "vec_rank": 40, "raw_sim": 0.1},
+            2: {"path": "b.md", "heading": "B", "start_line": 1, "vec_rank": 1, "raw_sim": 0.9},
+        }
+        return lexical, semantic
+
+    def test_the_default_is_the_unweighted_sum_it_has_always_been(self):
+        self.assertEqual(INDEXER.rrf_score(1, 1), 1.0 / 61 + 1.0 / 61)
+        self.assertEqual(INDEXER.rrf_score(1, None), 1.0 / 61)
+        self.assertEqual(INDEXER.rrf_score(None, 1), 1.0 / 61)
+        self.assertEqual(INDEXER.rrf_score(None, None), 0.0)
+
+    def test_a_weight_scales_only_its_own_list(self):
+        self.assertEqual(INDEXER.rrf_score(1, None, w_lex=3.0), 3.0 / 61)
+        self.assertEqual(INDEXER.rrf_score(None, 1, w_lex=3.0), 1.0 / 61)
+        self.assertEqual(INDEXER.rrf_score(None, 1, w_vec=3.0), 3.0 / 61)
+
+    def test_k_moves_the_offset(self):
+        self.assertEqual(INDEXER.rrf_score(1, None, k=9.0), 1.0 / 10)
+
+    def test_the_weight_decides_which_of_two_rivals_wins(self):
+        lexical, semantic = self.candidates()
+        even = INDEXER.fuse_candidates(lexical, semantic, w_lex=1.0, w_vec=1.0)
+        self.assertEqual({row["path"] for row in even}, {"a.md", "b.md"})
+
+        lexical_heavy = INDEXER.fuse_candidates(lexical, semantic, w_lex=9.0, w_vec=1.0)
+        self.assertEqual(lexical_heavy[0]["path"], "a.md")
+
+        semantic_heavy = INDEXER.fuse_candidates(lexical, semantic, w_lex=1.0, w_vec=9.0)
+        self.assertEqual(semantic_heavy[0]["path"], "b.md")
+
+    def test_a_candidate_only_one_retriever_found_still_ranks(self):
+        lexical = {
+            7: {"path": "solo.md", "heading": "S", "start_line": 1, "lex_rank": 1, "snippet": "z"},
+        }
+        fused = INDEXER.fuse_candidates(lexical, {})
+        self.assertEqual(len(fused), 1)
+        self.assertEqual(fused[0]["path"], "solo.md")
+        self.assertIsNone(fused[0]["vec_rank"])
+
+    def test_fuse_candidates_returns_what_search_index_returns(self):
+        """The sweep scores `fuse_candidates`, so it has to be the shipped fuser."""
+        lexical, semantic = self.candidates()
+        fused = INDEXER.fuse_candidates(lexical, semantic)
+        self.assertEqual(
+            sorted(fused[0]),
+            sorted(["section_id", "path", "heading", "start_line", "score",
+                    "lex_rank", "vec_rank", "raw_sim", "snippet"]),
+        )
+        self.assertGreaterEqual(fused[0]["score"], fused[-1]["score"])
+
+
 if __name__ == "__main__":
     unittest.main()
