@@ -16,6 +16,10 @@ from pathlib import Path, PurePosixPath
 
 import numpy as np
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+import ranking_config
+
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
@@ -73,7 +77,7 @@ QUERY_THREADS = 1
 # default because the sections that answered the sample query sat at fused rank
 # 9 and 11, so a top-10 rerank would have found one of them and missed the other.
 RERANK_MODEL = "Xenova/ms-marco-MiniLM-L-6-v2"
-RERANK_CANDIDATES = 20
+RERANK_CANDIDATES = ranking_config.RERANK_CANDIDATES
 
 _MODEL_CACHE: dict[tuple, object] = {}
 _RERANK_CACHE: dict[str, object] = {}
@@ -1016,6 +1020,150 @@ def load_vectors(cursor: sqlite3.Cursor):
     return meta, matrix
 
 
+def rrf_score(
+    lex_rank: int | None,
+    vec_rank: int | None,
+    k: float | None = None,
+    w_lex: float | None = None,
+    w_vec: float | None = None,
+) -> float:
+    """Weighted Reciprocal Rank Fusion of the lexical and semantic rankings.
+
+        score = w_lex / (k + lex_rank) + w_vec / (k + vec_rank)
+
+    A rank of None contributes nothing, which is what lets RRF rank a candidate
+    only one of the two retrievers found. Defaults come from `ranking_config`,
+    where both weights are 1.0 and this reduces exactly to the unweighted sum
+    the fuser computed before the weights existed.
+
+    This is a function rather than four lines inside `search_index`, where it
+    used to live, so that `rrf_weight_sweep.py` scores the formula that actually
+    runs instead of a second copy of it that is free to drift. The recency pass
+    is a standing lesson in what that drift costs.
+    """
+    k = ranking_config.RRF_K if k is None else k
+    w_lex = ranking_config.RRF_W_LEX if w_lex is None else w_lex
+    w_vec = ranking_config.RRF_W_VEC if w_vec is None else w_vec
+    score = 0.0
+    if lex_rank is not None:
+        score += w_lex / (k + lex_rank)
+    if vec_rank is not None:
+        score += w_vec / (k + vec_rank)
+    return score
+
+
+#: How deep each retriever goes before fusion. Both lists are cut here, so a
+#: candidate past this depth cannot be recovered by any fusion weight.
+CANDIDATE_DEPTH = 50
+
+
+def retrieve_candidates(
+    cursor: sqlite3.Cursor,
+    query: str,
+    vectors: tuple | None = None,
+    depth: int = CANDIDATE_DEPTH,
+) -> tuple[dict, dict]:
+    """The two ranked candidate lists that fusion combines, before it combines them.
+
+    Returns `(lexical_results, vector_results)`, each keyed by section id and
+    carrying that retriever's 1-based rank. Split out of `search_index` so that
+    `rrf_weight_sweep.py` can pay the retrieval and query-encoding cost once per
+    query and then re-fuse the same two lists at every weight in a grid for
+    free. Sweeping through `search_index` instead would re-encode the query on
+    every grid point, which is the entire cost of a warm query.
+
+    It also means the sweep scores the lists the live path really produces,
+    including the depth cut, rather than an approximation of them.
+    """
+    lexical_results = {}
+    query_expression = fts_query(query, cursor)
+    if query_expression:
+        rows = cursor.execute(
+            """
+            SELECT sections.id, sections.path, sections.heading, sections.start_line,
+                   snippet(sections_fts, 1, '[', ']', '...', 24)
+            FROM sections_fts
+            JOIN sections ON sections.id = sections_fts.section_id
+            WHERE sections_fts MATCH ?
+            ORDER BY bm25(sections_fts)
+            LIMIT ?
+            """,
+            (query_expression, depth),
+        ).fetchall()
+        for rank, row in enumerate(rows, 1):
+            lexical_results[row[0]] = {
+                "path": row[1],
+                "heading": row[2],
+                "start_line": row[3],
+                "lex_rank": rank,
+                "snippet": row[4],
+            }
+
+    vector_results = {}
+    meta, matrix = vectors if vectors is not None else load_vectors(cursor)
+    if matrix is not None:
+        if not HAS_FASTEMBED:
+            print("fastembed is unavailable; returning lexical results only.")
+        else:
+            model = get_embedding_model(QUERY_PROVIDERS, QUERY_THREADS)
+            query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
+            norm = np.linalg.norm(query_vector)
+            if norm > 0:
+                query_vector = query_vector / norm
+            scores = matrix @ query_vector
+            for rank, index in enumerate(np.argsort(-scores)[:depth], 1):
+                section_id, path, heading, start_line = meta[index]
+                vector_results[section_id] = {
+                    "path": path,
+                    "heading": heading,
+                    "start_line": start_line,
+                    "vec_rank": rank,
+                    "raw_sim": float(scores[index]),
+                }
+
+    return lexical_results, vector_results
+
+
+def fuse_candidates(
+    lexical_results: dict,
+    vector_results: dict,
+    k: float | None = None,
+    w_lex: float | None = None,
+    w_vec: float | None = None,
+) -> list[dict]:
+    """Fuse two candidate lists into one ranking, highest score first.
+
+    The weights pass straight through to `rrf_score`; leaving them None uses the
+    live configuration. This is the whole of the ranking that `/search`
+    performs, so a sweep that calls it is measuring the shipped fuser.
+    """
+    results = []
+    for section_id in set(lexical_results) | set(vector_results):
+        lexical = lexical_results.get(section_id)
+        semantic = vector_results.get(section_id)
+        source = semantic or lexical
+        results.append(
+            {
+                "section_id": section_id,
+                "path": source["path"],
+                "heading": source["heading"],
+                "start_line": source["start_line"],
+                "score": rrf_score(
+                    lexical["lex_rank"] if lexical else None,
+                    semantic["vec_rank"] if semantic else None,
+                    k=k,
+                    w_lex=w_lex,
+                    w_vec=w_vec,
+                ),
+                "lex_rank": lexical["lex_rank"] if lexical else None,
+                "vec_rank": semantic["vec_rank"] if semantic else None,
+                "raw_sim": semantic["raw_sim"] if semantic else None,
+                "snippet": lexical["snippet"] if lexical else None,
+            }
+        )
+    return sorted(results, key=lambda result: -result["score"])
+
+
 def search_index(
     query: str,
     vault_path: str | None = None,
@@ -1033,76 +1181,8 @@ def search_index(
     connection = sqlite3.connect(database_file, timeout=60.0)
     try:
         cursor = connection.cursor()
-        lexical_results = {}
-        query_expression = fts_query(query, cursor)
-        if query_expression:
-            rows = cursor.execute(
-                """
-                SELECT sections.id, sections.path, sections.heading, sections.start_line,
-                       snippet(sections_fts, 1, '[', ']', '...', 24)
-                FROM sections_fts
-                JOIN sections ON sections.id = sections_fts.section_id
-                WHERE sections_fts MATCH ?
-                ORDER BY bm25(sections_fts)
-                LIMIT 50
-                """,
-                (query_expression,),
-            ).fetchall()
-            for rank, row in enumerate(rows, 1):
-                lexical_results[row[0]] = {
-                    "path": row[1],
-                    "heading": row[2],
-                    "start_line": row[3],
-                    "lex_rank": rank,
-                    "snippet": row[4],
-                }
-
-        vector_results = {}
-        meta, matrix = vectors if vectors is not None else load_vectors(cursor)
-        if matrix is not None:
-            if not HAS_FASTEMBED:
-                print("fastembed is unavailable; returning lexical results only.")
-            else:
-                model = get_embedding_model(QUERY_PROVIDERS, QUERY_THREADS)
-                query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
-                norm = np.linalg.norm(query_vector)
-                if norm > 0:
-                    query_vector = query_vector / norm
-                scores = matrix @ query_vector
-                for rank, index in enumerate(np.argsort(-scores)[:50], 1):
-                    section_id, path, heading, start_line = meta[index]
-                    vector_results[section_id] = {
-                        "path": path,
-                        "heading": heading,
-                        "start_line": start_line,
-                        "vec_rank": rank,
-                        "raw_sim": float(scores[index]),
-                    }
-
-        results = []
-        for section_id in set(lexical_results) | set(vector_results):
-            lexical = lexical_results.get(section_id)
-            semantic = vector_results.get(section_id)
-            source = semantic or lexical
-            score = 0.0
-            if lexical:
-                score += 1.0 / (60 + lexical["lex_rank"])
-            if semantic:
-                score += 1.0 / (60 + semantic["vec_rank"])
-            results.append(
-                {
-                    "section_id": section_id,
-                    "path": source["path"],
-                    "heading": source["heading"],
-                    "start_line": source["start_line"],
-                    "score": score,
-                    "lex_rank": lexical["lex_rank"] if lexical else None,
-                    "vec_rank": semantic["vec_rank"] if semantic else None,
-                    "raw_sim": semantic["raw_sim"] if semantic else None,
-                    "snippet": lexical["snippet"] if lexical else None,
-                }
-            )
-        ranked = sorted(results, key=lambda result: -result["score"])
+        lexical_results, vector_results = retrieve_candidates(cursor, query, vectors)
+        ranked = fuse_candidates(lexical_results, vector_results)
         if rerank and ranked:
             if not HAS_FASTEMBED:
                 print("fastembed is unavailable; returning fused results unranked.")
