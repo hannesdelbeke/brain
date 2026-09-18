@@ -75,6 +75,7 @@ CURSOR=""
 pull() {
   [ "$GIT" = 1 ] || return 0
   [ -d "$ROOT/.git" ] || return 0
+  git -C "$ROOT" remote 2>/dev/null | grep -q . || return 0
   CURSOR="$ROOT/.git/comms-remote-sha"
   br=$(git -C "$ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null) || return 0
   remote=$(git -C "$ROOT" ls-remote origin "$br" 2>/dev/null | cut -f1)
@@ -89,6 +90,7 @@ pull() {
 push() {
   [ "$GIT" = 1 ] || return 0
   [ -d "$ROOT/.git" ] || return 0
+  git -C "$ROOT" remote 2>/dev/null | grep -q . || return 0
   n=0
   while [ "$n" -lt 5 ]; do
     git -C "$ROOT" add -A >/dev/null 2>&1 || true
