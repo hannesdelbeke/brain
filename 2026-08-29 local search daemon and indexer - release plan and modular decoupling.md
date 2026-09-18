@@ -15,7 +15,7 @@ aliases:
 > [!summary] eli5
 > whether the local search engine, today one directory of python inside this vault, should be split into parts and published for other people: a core library, an obsidian plugin, and a searcher over agent transcripts.
 > the engine already ran as two published copies once and they drifted, so the shape of any release is generated from the one copy rather than maintained beside it; of the three packages the transcript searcher is the only one that pays for itself before anyone else installs it, the obsidian one is written but not submitted, and the scanner seam the whole plan rests on has two implementations as of 2026-08-30.
-> **needs from you:** decide whether publishing is a goal at all, since none of this is worth doing for a single user, and the obsidian half competes with a plugin that already ships the same retrieval.
+> **needs from you:** decide whether publishing is a goal at all, since the obsidian half competes with a plugin that already ships the same retrieval; recommend splitting the question, because the packaging half, a `pyproject.toml` and a registration generated from one service definition, pays for itself at the two machines that already run the engine and does not wait on the publishing answer.
 
 > do a pass over the release plan and modular decoupling note, written by gemini flash. check what the vault already says about decoupling into a repository, and link those notes.
 
@@ -95,12 +95,26 @@ version skew between a plugin and a daemon the user updates separately is the on
 
 what is deliberately not on this list: shipping the daemon as a bundled binary. onnxruntime plus the model is a download of a different order, obsidian reviewers are right to be wary of a plugin that fetches an executable, and the plugin already spawns a daemon it can find. `pipx install pkm-search` is the install instruction until someone reports that it is not enough.
 
+## the second install already exists, and it is the author's other machine
+
+the case against this whole plan, restated at the end of it, is that a single user does not need a package. that is true about the obsidian directory and about PyPI, and it is not true about the install, because the engine already runs on more than one machine and each of those is an install performed by hand against a manifest that does not exist.
+
+the three things that drift between them are the three items already on the package list above, arriving earlier than expected and for a different reason.
+
+**dependencies declared rather than assumed** is the one that bites hardest, because it fails invisibly. the vault syncs through git so the python is always current, but the venv around it is not described anywhere, and a new import added on one machine leaves the other machine's daemon exiting on a traceback into a log nobody reads. a resident daemon that dies at startup looks exactly like a resident daemon that is idle.
+
+**an install that works without the vault around it** turns out to matter even with the vault around it, since the vault being present is what has been standing in for a manifest. `pip install -e` against a `pyproject.toml` in the engine directory is the whole fix, and it is worth writing before any publishing question is settled: it is the one item on the package list that pays for itself at two users, and a prior art for doing it across machines is in [[editable install all python repos]].
+
+**a registration that can be diffed.** the daemon is registered per operating system, so a watcher added in one place has to be added again in the other, and a stale registration is the failure mode with no symptom: it runs the old command successfully, so nothing errors and the only evidence is work quietly not being done. a single service definition that both registrations are generated from is what makes "is this machine current" a question with an answer, and it is the same generate-rather-than-maintain rule this note already applies to the published copies.
+
+so the honest revision to the conclusion below is narrower than it looks. publishing is still only worth it for other people's bug reports. the packaging work, specifically the manifest and the generated registration, is worth it now, and it is separable from the decision to publish anything.
+
 ## the sequence
 
 one thing moved ahead of the scanner on 2026-08-30, and it is worth saying why rather than pretending the order held. `/graph` is engine work that the plugin needed and the scanner seam does not touch: 60 lines, cached on the index version, answered in 0.15s over 2,959 notes. it went in because the plugin is the half being used every day and the sequence below is about publishing rather than about using.
 
 the second scanner went first, as planned, and took a day. the session searcher is next, because its user exists. then the primitive split, at the point the searcher wants the extractor without ONNX, which is also when `--no-vectors` gets written and tested rather than asserted. the obsidian plugin is built already but its submission is still last, because it is the one with a competitor and its prerequisite is the backlink measurement rather than any of the code above.
 
-what would make the whole plan not worth running: nobody other than the author installing any of it. the engine is already in daily use as a skill directory, so the value of publishing is other people's bug reports and nothing else, and three packages is three READMEs, three issue trackers and three release workflows to keep for that. the version of this plan that survives a bad week is the session searcher on PyPI and the rest left as a directory in a vault.
+what would make the whole plan not worth running: nobody other than the author installing any of it. the engine is already in daily use as a skill directory, so the value of publishing is other people's bug reports and nothing else, and three packages is three READMEs, three issue trackers and three release workflows to keep for that. the version of this plan that survives a bad week is the session searcher on PyPI and the rest left as a directory in a vault. that version still includes the manifest and the generated registration, per the second-install section above, because those are what a directory in a vault needs to be installable on the second machine that already exists rather than what a package needs to be installable by strangers.
 
 related: [[cross-agent session indexing architecture]] for the transcript corpora, [[2026-08-27 tail reads, resuming an index at the byte it stopped at]] for how they stay cheap to reindex, [[2026-08-18 what retrieval costs as a vault grows]] for why results are locations rather than bodies, and [[2026-08-29 agentic memory - scoped devlogs vs monolithic memory]] for what the transcripts are eventually for.

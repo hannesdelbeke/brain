@@ -36,7 +36,7 @@ import json
 import sqlite3
 import sys
 from dataclasses import dataclass
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import index_pkm_meta as pkm
 
@@ -284,7 +284,7 @@ def scan_conversation(db_path: Path, relative_path: str, meta: dict, resume=None
     note = (
         relative_path,
         title,
-        Path(workspace).name or "agy",
+        PureWindowsPath(workspace).name or "agy",
         None,
         None,
         json.dumps([]),
