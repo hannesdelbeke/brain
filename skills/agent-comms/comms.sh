@@ -69,6 +69,8 @@ GIT="${COMMS_GIT:-${CFG_GIT:-0}}"
 need_me() { [ -n "$ME" ] || die "set COMMS_ME to your agent name (or: comms config set me <name>)"; }
 
 stamp() { date -u +%Y-%m-%dT%H-%M-%SZ; }
+# bsd and gnu date disagree on relative times, so try one form then the other
+hour_ago() { date -u -v-1H +%Y-%m-%dT%H-%M-%SZ 2>/dev/null || date -u -d '1 hour ago' +%Y-%m-%dT%H-%M-%SZ 2>/dev/null; }
 rand() { LC_ALL=C tr -dc 'a-f0-9' < /dev/urandom | dd bs=1 count=6 2>/dev/null; }
 
 CURSOR=""
@@ -153,7 +155,38 @@ $body"
     done < "$filter_file"
   fi
 
-  # 3. Environment-level blocked patterns
+  # 3. Size. Every message is read by an agent and paid for in tokens, so the cost of
+  # a long one falls on its readers rather than its sender. The bus sits next to a
+  # vault and a git history: naming a note or a sha costs a line, pasting what they
+  # contain costs every reader the whole thing.
+  max_chars="${COMMS_MAX_CHARS:-500}"
+  len=$(printf '%s' "$body" | wc -c | tr -d ' ')
+  if [ "$len" -gt "$max_chars" ]; then
+    if [ "${COMMS_FORCE:-0}" = 1 ]; then
+      echo "comms: warning: message is $len chars against a $max_chars cap, but COMMS_FORCE=1 is set. Proceeding." >&2
+    else
+      die "size guard: message is $len chars and the cap is $max_chars. Say it in one line and name the note, task file or commit sha instead of pasting it (raise with COMMS_MAX_CHARS, or override with COMMS_FORCE=1)."
+    fi
+  fi
+
+  # 4. Rate. Two agents can acknowledge each other until a budget is gone, and neither
+  # notices, because each message looks reasonable on its own. Counting is free: the
+  # filenames already on disk carry the sender and the time.
+  max_hour="${COMMS_MAX_PER_HOUR:-20}"
+  ago=$(hour_ago)
+  if [ -n "$ago" ]; then
+    recent=$(find "$ROOT/inbox" "$ROOT/broadcast" -name "*--$ME--*.md" 2>/dev/null \
+      | sed 's|.*/||; s|--.*||' | awk -v a="$ago" '$0 > a' | wc -l | tr -d ' ')
+    if [ "$recent" -ge "$max_hour" ]; then
+      if [ "${COMMS_FORCE:-0}" = 1 ]; then
+        echo "comms: warning: $recent messages sent in the last hour against a $max_hour cap, but COMMS_FORCE=1 is set. Proceeding." >&2
+      else
+        die "rate guard: you have sent $recent messages in the last hour and the cap is $max_hour. An exchange this long is a loop rather than progress: stop and tell the human what you are stuck on (raise with COMMS_MAX_PER_HOUR, or override with COMMS_FORCE=1)."
+      fi
+    fi
+  fi
+
+  # 5. Environment-level blocked patterns
   if [ -n "${COMMS_BLOCKED_PATTERNS:-}" ]; then
     if printf '%s\n' "$combined" | grep -Eqi "$COMMS_BLOCKED_PATTERNS"; then
       if [ "${COMMS_FORCE:-0}" = 1 ]; then
@@ -250,14 +283,11 @@ cmd_send() {
     dir="$ROOT/inbox/$to"
   fi
   mkdir -p "$dir"
+  # No front matter. The filename is <ts>--<sender>--<random> and the directory is the
+  # recipient, so from/to/ts in the body would be four more lines that every reader
+  # pays for to learn what the path already told them.
   f="$dir/$(stamp)--$ME--$(rand).md"
-  {
-    echo "from: $ME"
-    echo "to: $to"
-    echo "ts: $(stamp)"
-    echo "---"
-    echo "$body"
-  } > "$f"
+  printf '%s\n' "$body" > "$f"
   push
   if [ -n "${COMMS_NOTIFY:-}" ]; then
     COMMS_TO="$to" COMMS_FROM="$ME" COMMS_BUS="$BUS" sh -c "$COMMS_NOTIFY" >/dev/null 2>&1 || true
@@ -266,6 +296,13 @@ cmd_send() {
 }
 
 bcursor() { echo "$ROOT/inbox/$ME/.broadcast-seen"; }
+
+# One short line rather than a filename banner, since the filename is mostly a random
+# suffix the reader has no use for: sender, time, and whether it went to everyone.
+hdr() {
+  b=$(basename "$1" .md); t=${b%%--*}; r=${b#*--}
+  echo "> ${r%%--*} ${t}$2"
+}
 
 bunseen() {
   last=""
@@ -292,7 +329,7 @@ cmd_read() {
   for f in "$ROOT/inbox/$ME"/*.md; do
     [ -e "$f" ] || break
     any=1
-    echo "=== $(basename "$f") ==="
+    hdr "$f" ""
     cat "$f"
     echo
     mv "$f" "$ROOT/inbox/$ME/done/"
@@ -300,7 +337,7 @@ cmd_read() {
   newest=""
   for f in $(bunseen); do
     any=1
-    echo "=== broadcast $(basename "$f") ==="
+    hdr "$f" " all"
     cat "$f"
     echo
     newest=$(basename "$f")

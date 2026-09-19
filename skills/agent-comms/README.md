@@ -21,17 +21,13 @@ inbox/<name>/done/*.md        messages <name> has read, kept forever
 broadcast/*.md                messages for everybody
 ```
 
-A message is front matter and a body, readable without tooling:
+A message file is its body and nothing else:
 
 ```markdown
-from: builder
-to: planner
-ts: 2026-09-18T20-14-02Z
----
-the migration is green, you can start on the docs
+migration green, docs unblocked
 ```
 
-Filenames are `<timestamp>--<sender>--<random>.md`, so `ls` sorts oldest-first and two senders cannot collide.
+Filenames are `<timestamp>--<sender>--<random>.md`, so `ls` sorts oldest-first and two senders cannot collide. Sender, recipient and time all come from the path, which is why none of them appear in the body: repeating them would be four more lines that every reader pays for in tokens to learn what the filename already said.
 
 ## named bus profiles
 
@@ -44,7 +40,11 @@ To separate message traffic across different projects or contexts:
 
 - **Token protection:** Automatic pre-flight regex check blocks GitHub tokens (`ghp_`, `gho_`), Bearer tokens, and private keys.
 - **Pattern filtering:** If `$ROOT/.comms-filter` exists, each non-comment line is treated as a regex pattern. Messages matching any pattern are blocked before sending.
-- **Override:** In rare cases where a blocked pattern must be sent intentionally, set `COMMS_FORCE=1`.
+- **Size:** A body over 500 characters is refused, `COMMS_MAX_CHARS` to raise it. Every message is read by an agent and paid for in tokens, so the cost of a long one falls on its readers. Name the note or the sha; do not paste what they contain.
+- **Rate:** More than 20 messages an agent an hour, rolling, is refused, `COMMS_MAX_PER_HOUR` to raise it. Two agents can acknowledge each other until a budget is gone and neither notices, because each message looks reasonable on its own. The count comes from the filenames already on disk, so it needs no new state.
+- **Override:** In rare cases where a blocked pattern, an oversized body or a burst must go through intentionally, set `COMMS_FORCE=1`.
+
+The rule that matters most cannot be enforced in code: **never acknowledge.** A bus where every message earns a "got it" costs twice as much and carries the same information. An exchange that runs three turns without either side moving is a loop, and the way out of a loop is the human, not another message.
 
 ## setup
 
@@ -99,11 +99,12 @@ It prints unseen broadcasts too. A broadcast is one shared file, so it cannot be
 
 Put this in whichever always-loaded instruction file your agent uses (`GEMINI.md`, `CLAUDE.md`, `AGENTS.md`, `.cursorrules`, system prompt):
 
-> You share a message bus with other agents. Your name on it is `<name>`.
-> Run `comms register "<your role>"` before your first task.
-> Run `comms read` at three points, every time: before you start a task, after you finish one, and before you tell the human you are done. Act on anything you find before continuing.
-> Use `comms send <peer> "<message>"` to ask a peer for something or hand them a result. Use `comms peers` if you do not know who is out there.
-> Address people by name and say what you want in the first line; they see a filename and a first line before they see anything else.
+> You are `<name>` on a shared message bus. Register once with `COMMS_ME=<name> comms register "<your role>"`.
+> Run `COMMS_ME=<name> comms read` before you start a task, after you finish one, and before you tell the human you are done. Act on what you find before continuing.
+> `COMMS_ME=<name> comms send <peer> "..."` reaches one agent, `send all "..."` reaches everyone, `comms peers` lists them.
+> Keep a message under 500 characters and under three lines. State the thing and name the note, task file or commit sha — never paste context the reader can fetch for themselves.
+> Stuck: `send all "stuck: <what, what you tried, human or retry>"`. Cleared: `send all "unstuck: <what fixed it>"`.
+> Never send an acknowledgement, a thank-you, or a message whose content is that you agree. If an exchange runs three turns without either side moving, stop and tell the human rather than replying again.
 
 ## across machines
 
