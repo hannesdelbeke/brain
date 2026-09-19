@@ -251,6 +251,19 @@ cmd_register() {
     echo "cwd: $(pwd)"
     echo "seen: $(stamp)"
   } > "$ROOT/agents/$ME.md"
+  # A new agent starts its broadcast cursor at the newest broadcast rather than at the
+  # beginning of time, so joining does not mean replaying every broadcast ever sent.
+  # History belongs in the notes and the git log; the bus is what happened since you
+  # arrived. Only on a first registration - re-running `register` later must not move
+  # the cursor past broadcasts this agent has not read yet.
+  if [ ! -f "$(bcursor)" ]; then
+    { echo "$BMARK"
+      for f in "$ROOT/broadcast"/*.md; do
+        [ -e "$f" ] || break
+        basename "$f"
+      done
+    } > "$(bcursor)"
+  fi
   push
   echo "registered $ME on bus '${BUS:-default}' ($ROOT)"
 }
@@ -304,14 +317,43 @@ hdr() {
   echo "> ${r%%--*} ${t}$2"
 }
 
+# The cursor used to hold one filename as a high-water mark, which was wrong: two
+# broadcasts sent in the same second are separated only by their random suffix, so the
+# one with the lower suffix sorted below a mark set by the other and was never
+# delivered. It lists every basename it has seen instead. Exact, immune to ordering,
+# and one short line per broadcast in a file only its own agent ever reads.
+BMARK="#comms-seen-v2"
+
+# A v1 cursor is a bare filename. Reading it as a list would redeliver everything below
+# it, so convert it once, keeping its high-water meaning for the history it covered.
+bmigrate() {
+  c=$(bcursor)
+  [ -f "$c" ] || return 0
+  head -n 1 "$c" | grep -q "^$BMARK$" && return 0
+  old=$(head -n 1 "$c")
+  { echo "$BMARK"
+    for f in "$ROOT/broadcast"/*.md; do
+      [ -e "$f" ] || break
+      n=$(basename "$f")
+      [ "$n" \> "$old" ] || echo "$n"
+    done
+  } > "$c.tmp" && mv "$c.tmp" "$c"
+}
+
 bunseen() {
-  last=""
-  [ -f "$(bcursor)" ] && last=$(cat "$(bcursor)")
+  bmigrate
+  c=$(bcursor)
   for f in "$ROOT/broadcast"/*.md; do
     [ -e "$f" ] || break
     n=$(basename "$f")
-    if [ -z "$last" ] || [ "$n" \> "$last" ]; then echo "$f"; fi
+    if [ ! -f "$c" ] || ! grep -qxF "$n" "$c"; then echo "$f"; fi
   done
+}
+
+bmark_seen() {
+  c=$(bcursor)
+  [ -f "$c" ] || { mkdir -p "$(dirname "$c")"; echo "$BMARK" > "$c"; }
+  echo "$1" >> "$c"
 }
 
 cmd_inbox() {
@@ -334,15 +376,13 @@ cmd_read() {
     echo
     mv "$f" "$ROOT/inbox/$ME/done/"
   done
-  newest=""
   for f in $(bunseen); do
     any=1
     hdr "$f" " all"
     cat "$f"
     echo
-    newest=$(basename "$f")
+    bmark_seen "$(basename "$f")"
   done
-  [ -n "$newest" ] && echo "$newest" > "$(bcursor)"
   [ "$any" = 1 ] || echo "(empty)"
   af="$ROOT/agents/$ME.md"
   if [ -f "$af" ]; then

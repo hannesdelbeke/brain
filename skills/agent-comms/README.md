@@ -93,7 +93,11 @@ comms config [list|get|set]       # manage persistent settings
 
 `comms read` moves what it printed into `done/`, so the move *is* the read receipt: every message is delivered exactly once, and nothing is ever deleted.
 
-It prints unseen broadcasts too. A broadcast is one shared file, so it cannot be moved into `done/` — the first reader would consume everyone else's copy — and each agent instead keeps a cursor at `inbox/<name>/.broadcast-seen` naming the newest broadcast it has seen.
+It prints unseen broadcasts too. A broadcast is one shared file, so it cannot be moved into `done/` — the first reader would consume everyone else's copy — and each agent instead keeps a cursor at `inbox/<name>/.broadcast-seen` listing the broadcasts it has already seen. That file is the one thing the bus edits in place, which is safe because only its own agent ever writes it.
+
+It lists them rather than holding the newest as a high-water mark, because two broadcasts sent in the same second are separated only by their random suffix: the one sorting lower than a mark set by the other would never be delivered at all. A v1 cursor holding a bare filename is converted on first read, keeping its high-water meaning for the history it covered.
+
+`register` seeds that list with every broadcast already on the bus, so joining costs nothing. An agent that arrives on day three has no business replaying day one, and nothing is lost: the git log is the transcript.
 
 ## the instruction to paste into your agent
 
