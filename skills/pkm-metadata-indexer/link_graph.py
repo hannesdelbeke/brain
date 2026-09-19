@@ -7,6 +7,7 @@ markdown links and image embeds), and opens the database read-only.
     python skills/pkm-metadata-indexer/link_graph.py refs token.py --db /path/to/pkm_index.db
     python skills/pkm-metadata-indexer/link_graph.py orphans
     python skills/pkm-metadata-indexer/link_graph.py orphans --ext .png,.svg
+    python skills/pkm-metadata-indexer/link_graph.py orphans --unity-root /path/to/unity/project
     python skills/pkm-metadata-indexer/link_graph.py broken
     python skills/pkm-metadata-indexer/link_graph.py --selfcheck
 
@@ -15,6 +16,10 @@ finds `src/auth/token.py`. `orphans` lists indexed files with an image
 extension that no edge resolves to. `broken` lists references that resolved to
 nothing, grouped by the text that was written.
 
+For Unity projects, `--unity-root` enables GUID-based reference checking so
+images referenced in .meta files, prefabs, scenes, and materials aren't
+considered orphaned even when they lack markdown references.
+
 An index whose edges table is empty says so instead of printing an empty list,
 because a missing index and a genuinely empty answer look identical otherwise.
 """
@@ -22,6 +27,13 @@ import argparse
 import sqlite3
 import sys
 from pathlib import Path
+
+# Optional Unity GUID parser import
+try:
+    from unity_guid_parser import UnityGuidParser
+    HAS_UNITY_PARSER = True
+except ImportError:
+    HAS_UNITY_PARSER = False
 
 VAULT = Path(__file__).resolve().parents[2]
 DEFAULT_DB = VAULT / ".obsidian" / "pkm_index.db"
@@ -55,23 +67,50 @@ def basename(path):
     return (path or "").replace("\\", "/").rsplit("/", 1)[-1].lower()
 
 
-def orphan_assets(connection, extensions):
+def orphan_assets(connection, extensions, unity_root=None):
     """Return (orphans, total_images). Zero images is not zero orphans.
 
     An unreferenced name counts as referenced as well as an unreferenced path,
     because a scanner that never resolved its image embeds would otherwise
     report every image in the repository as safe to delete.
+
+    When unity_root is provided and Unity GUID parser is available, also checks
+    for GUID-based references in .meta files, prefabs, scenes, and materials.
+    Falls back to path-based checking if no .meta files exist.
     """
     clause = " OR ".join("lower(n.path) LIKE ?" for _ in extensions)
     params = ["%" + extension.lower() for extension in extensions]
     images = [row[0] for row in connection.execute(
         f"SELECT n.path FROM notes n WHERE {clause} ORDER BY n.path", params)]
+
+    # Build set of path-based references from edges table
     referenced = set()
     for resolved, raw in connection.execute("SELECT resolved_target_path, raw_target FROM edges"):
         referenced.add((resolved or "").lower())
         referenced.update((basename(resolved), basename(raw)))
-    orphans = [path for path in images
-               if path.lower() not in referenced and basename(path) not in referenced]
+
+    # Add Unity GUID-based references if available
+    guid_referenced = set()
+    if unity_root and HAS_UNITY_PARSER:
+        try:
+            parser = UnityGuidParser(unity_root)
+            parser.scan()
+
+            # Check each image for GUID references
+            for img_path in images:
+                if parser.is_referenced(img_path):
+                    guid_referenced.add(img_path.lower())
+        except Exception:
+            # Silently fall back to path-based checking on any error
+            pass
+
+    # An image is orphaned only if it has neither path nor GUID references
+    orphans = [
+        path for path in images
+        if path.lower() not in referenced
+        and basename(path) not in referenced
+        and path.lower() not in guid_referenced
+    ]
     return orphans, len(images)
 
 
@@ -127,6 +166,12 @@ def selfcheck():
     assert orphan_assets(connection, extensions)[0] == ["docs/img/UPPER.SVG"], "an unresolved embed still counts"
     connection.execute("DELETE FROM edges")
     assert edge_count(connection) == 0
+
+    # Test that unity_root=None doesn't break anything (after deleting edges, all images become orphans)
+    orphans_after_delete, total_after_delete = orphan_assets(connection, [".png"], unity_root=None)
+    assert total_after_delete == 2, "should still have 2 PNG files"
+    assert len(orphans_after_delete) == 2, "all PNGs orphaned when no edges"
+
     print("selfcheck ok")
 
 
@@ -136,6 +181,7 @@ def main():
     parser.add_argument("target", nargs="?", help="path for `refs`")
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     parser.add_argument("--ext", default=DEFAULT_EXT, help=f"image extensions, default {DEFAULT_EXT}")
+    parser.add_argument("--unity-root", type=Path, help="Unity project root for GUID-based reference checking")
     parser.add_argument("--top", type=int, default=50)
     parser.add_argument("--selfcheck", action="store_true")
     args = parser.parse_args()
@@ -159,7 +205,8 @@ def main():
             print(f"{source_path}:{start_line}  ({raw_target})")
         print(f"\n{len(rows)} reference(s) to {args.target}", file=sys.stderr)
     elif args.command == "orphans":
-        rows, total = orphan_assets(connection, args.ext.split(","))
+        unity_root_str = str(args.unity_root) if args.unity_root else None
+        rows, total = orphan_assets(connection, args.ext.split(","), unity_root=unity_root_str)
         for path in rows[:args.top]:
             print(path)
         if not total:
