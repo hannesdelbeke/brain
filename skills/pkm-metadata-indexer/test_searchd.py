@@ -1043,5 +1043,47 @@ class FusionZHubDegreeTest(unittest.TestCase):
         self.assertEqual([row["path"] for row in body["results"]], ["east.md", "south.md"])
 
 
+class ParseVaultSpecTest(unittest.TestCase):
+    """The third spec field, which is what lets two corpora share one root."""
+
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.root = Path(self.temp_dir.name).resolve()
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_bare_path_is_named_after_its_folder(self):
+        vault = SEARCHD.parse_vault(str(self.root))
+        self.assertEqual(vault.name, self.root.name)
+        self.assertEqual(vault.root, self.root)
+
+    def test_name_and_path_keeps_the_default_database(self):
+        vault = SEARCHD.parse_vault(f"named={self.root}")
+        self.assertEqual(vault.name, "named")
+        self.assertEqual(vault.db, SEARCHD.pkm.default_db_path(self.root))
+
+    def test_third_field_is_relative_to_the_root(self):
+        vault = SEARCHD.parse_vault(f"branches={self.root}=.obsidian/other.db")
+        self.assertEqual(vault.root, self.root)
+        self.assertEqual(vault.db, self.root / ".obsidian" / "other.db")
+
+    def test_third_field_may_be_absolute(self):
+        elsewhere = self.root / "elsewhere.db"
+        vault = SEARCHD.parse_vault(f"branches={self.root}={elsewhere}")
+        self.assertEqual(vault.db, elsewhere)
+
+    def test_two_corpora_on_one_root_get_separate_databases(self):
+        first = SEARCHD.parse_vault(f"working={self.root}")
+        second = SEARCHD.parse_vault(f"branches={self.root}=.obsidian/branches.db")
+        self.assertEqual(first.root, second.root)
+        self.assertNotEqual(first.db, second.db)
+
+    def test_db_override_wins_over_the_spec(self):
+        override = self.root / "override.db"
+        vault = SEARCHD.parse_vault(f"branches={self.root}=.obsidian/ignored.db", db_override=str(override))
+        self.assertEqual(vault.db, override)
+
+
 if __name__ == "__main__":
     unittest.main()
