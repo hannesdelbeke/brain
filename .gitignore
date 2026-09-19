@@ -5,6 +5,7 @@ __pycache__/
 Thumbs.db
 *.stackdump
 .obsidian/
+.claude/
 *.db
 *.db-shm
 *.db-wal
