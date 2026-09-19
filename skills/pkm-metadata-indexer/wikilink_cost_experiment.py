@@ -38,7 +38,7 @@ def strip_links(text):
 
 def notes(vault):
     for p in sorted(vault.rglob("*.md")):
-        if ".git" in p.parts or "node_modules" in p.parts:
+        if ".git" in p.parts or "node_modules" in p.parts or ".claude" in p.parts:
             continue
         try:
             yield p, p.read_text(encoding="utf-8")

@@ -16,7 +16,7 @@ import sys
 from pathlib import Path
 
 VAULT = Path(__file__).resolve().parents[2]
-SKIP_DIRS = {".git", ".obsidian", "skills", "image", "__pycache__"}
+SKIP_DIRS = {".git", ".obsidian", ".claude", "skills", "image", "__pycache__"}
 
 HEADING = re.compile(r"^#{1,6}\s+(.*)", re.M)
 PROBLEM_HEADING = re.compile(r"problem|issue|bug|error|blocker|not work", re.I)

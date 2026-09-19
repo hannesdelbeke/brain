@@ -62,6 +62,8 @@ class UnityGuidParser:
             return
 
         for meta_file in self.root.rglob('*.meta'):
+            if '.claude' in meta_file.parts:
+                continue
             try:
                 content = meta_file.read_text(encoding='utf-8', errors='ignore')
                 match = GUID_PATTERN.search(content)
@@ -86,6 +88,8 @@ class UnityGuidParser:
 
         for file_path in self.root.rglob('*'):
             if file_path.suffix.lower() not in extensions:
+                continue
+            if '.claude' in file_path.parts:
                 continue
 
             try:
