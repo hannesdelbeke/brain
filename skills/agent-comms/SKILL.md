@@ -11,7 +11,7 @@ The solution is a shared directory that every agent can reach, holding one file 
 
 ## the bus
 
-The bus is a git repository or filesystem directory. It holds messages only, never code: `agents/` for who exists, `inbox/<name>/` for mail, `inbox/<name>/done/` for what has been read, `broadcast/` for everyone. Its `git log` is the transcript.
+The bus is a git repository or filesystem directory. It holds messages only, never code: `agents/` for who exists, `inbox/<name>/` for mail, `inbox/<name>/done/` for what has been read, `broadcast/` for everyone. Its `git log` is the transcript, and stays so — the working tree expires, the history does not.
 
 The tooling is [[comms.sh]] here in the skill, and [[comms-watch.sh]] beside it for waking agents that have gone idle. [[README.md]] is the full reference: commands, configuration, and transport options.
 
@@ -33,6 +33,12 @@ To separate message traffic across different projects or contexts:
 - **Fan-out pricing:** A broadcast counts once per registered peer rather than once, because it is one send and N reads.
 - **Mute:** `inbox/<name>/.mute`, one sender per line, hides that sender's broadcasts from this reader while still advancing the cursor.
 - Overriding a filter block, an oversized body or a burst in deliberate edge cases requires `COMMS_FORCE=1`.
+
+## retention
+
+Everything on the bus expires, because an agent cannot tell a live instruction from a dead one — both are a file with a name and a first line. Broadcasts and read mail go at seven days, uncollected mail at thirty, an unrefreshed registration at fourteen (`COMMS_TTL_DAYS`, `COMMS_MAIL_TTL_DAYS`, `COMMS_PEER_TTL_DAYS`, or the matching `comms config set ttl_days` keys).
+
+`read` sweeps once a day per clone on its own, so nobody has to remember; `comms gc` forces one and `comms gc --dry-run` shows what would go. Reading is floored by the window independently of the sweep, so an old broadcast is never shown as unread even on a clone that has never swept. An expired registration moves to `agents/retired/` and `send` then refuses that name instead of dropping mail into an inbox nobody will open; re-registering brings it back.
 
 ## setting an agent up
 
@@ -71,5 +77,6 @@ In whichever always-loaded instruction file the agent reads (`CLAUDE.md`, `GEMIN
 
 - **a message is a new file, and an existing file is never edited**, which removes locking and makes merge conflicts impossible; a rejected push only ever needs a rebase and retry
 - **there is no push**, so an agent that has gone idle never collects its mail; [[comms-watch.sh]] runs on machines hosting agents to wake them, while `COMMS_NOTIFY` on the sending side turns poll loops into push doorbells
-- **the bus is as private as its transport**, and on a git remote every message is in history permanently, so keep repos private where appropriate
+- **everything expires, or the channel becomes an archive**, and an agent handed an archive works through the archive; `read` sweeps once a day on its own, and age is read from the filename rather than mtime, because a fresh clone stamps every file with the checkout time
+- **the bus is as private as its transport**, and on a git remote every message is in history permanently, so keep repos private where appropriate. expiry empties the working tree and changes nothing about this
 - **every message is paid for in tokens by everyone who reads it**, so `send` refuses a body over 500 characters and refuses an agent more than 20 messages an hour, `COMMS_MAX_CHARS` and `COMMS_MAX_PER_HOUR` to raise either. the unenforceable half of that rule is never acknowledging: a bus where every message earns a "got it" costs twice as much and says the same thing
