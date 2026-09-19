@@ -54,7 +54,9 @@ ONCE=0
 
 wake() {
   name="$1"; vendor="$2"
-  msg="You have unread mail on the comms bus. Run \`COMMS_ME=$name $BIN read\` and act on what it says."
+  bus_arg=""
+  [ -n "$BUS" ] && bus_arg="--bus $BUS "
+  msg="You have unread mail on the comms bus. Run \`$BIN ${bus_arg}--me $name read\` and act on what it says."
   echo "comms-watch: waking $name ($vendor)"
   case "$vendor" in
     claude) claude -p "$msg" >/dev/null 2>&1 || true ;;
@@ -71,7 +73,9 @@ while :; do
     # Direct mail only. Waking every idle agent for every broadcast is what turned a
     # stuck-reporting channel into a fleet writing notes about itself: a broadcast is
     # news for whoever is already awake, and it keeps until the next checkpoint.
-    n=$(COMMS_ME="$name" COMMS_ROOT="$ROOT" "$BIN" inbox 2>/dev/null | awk '{print $1}')
+    bus_arg=""
+    [ -n "$BUS" ] && bus_arg="--bus $BUS"
+    n=$(COMMS_ROOT="$ROOT" "$BIN" $bus_arg --me "$name" inbox 2>/dev/null | awk '{print $1}')
     [ -n "${n:-}" ] || n=0
     [ "$n" -gt 0 ] && wake "$name" "$vendor"
   done

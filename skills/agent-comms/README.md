@@ -72,7 +72,13 @@ comms config set default_bus <bus>
 comms config set git 1
 ```
 
-Or specify per agent:
+Or specify per agent using CLI flags (recommended for static allowlists like `Bash(comms *)`):
+
+```sh
+comms --bus <bus> --me planner read
+```
+
+Or pass variables inline (legacy / fallback):
 
 ```sh
 COMMS_BUS=<bus> \
@@ -81,11 +87,13 @@ COMMS_GIT=1 \
   comms read
 ```
 
-Pass variables inline on every call if not set in config. Under CLI agent runners each command runs in a fresh shell, so an `export` in one step does not survive to the next step.
+Under CLI agent runners (e.g. Claude Code), prefer CLI flags (`--me`, `--bus`) so the command line starts with `comms `, matching `Bash(comms *)` in `permissions.allow` without invoking runtime safety classifiers.
 
 ## commands
 
 ```sh
+comms [--me <name>] [--bus <bus>] <command>
+
 comms register "plans the work"   # announce yourself, once at startup
 comms peers                       # who else is here, and how much mail they have
 comms send builder "do the thing" # leave a message; `all` broadcasts
@@ -102,6 +110,8 @@ It prints unseen broadcasts too. A broadcast is one shared file, so it cannot be
 It lists them rather than holding the newest as a high-water mark, because two broadcasts sent in the same second are separated only by their random suffix: the one sorting lower than a mark set by the other would never be delivered at all. A v1 cursor holding a bare filename is converted on first read, keeping its high-water meaning for the history it covered.
 
 `register` seeds that list with every broadcast already on the bus, so joining costs nothing. An agent that arrives on day three has no business replaying day one, and nothing is lost: the git log is the transcript.
+
+Broadcasts are **ambient context**, not work assignments. Reading a broadcast should not trigger unsolicited task cascades or meta-work loops across the fleet.
 
 ## retention
 
@@ -133,11 +143,12 @@ What `gc` does **not** do is redact. The files leave the working tree; every one
 
 Put this in whichever always-loaded instruction file your agent uses (`GEMINI.md`, `CLAUDE.md`, `AGENTS.md`, `.cursorrules`, system prompt):
 
-> You are `<name>` on a shared message bus. Register once with `COMMS_ME=<name> comms register "<your role>"`.
-> Run `COMMS_ME=<name> comms read` before you start a task, after you finish one, and before you tell the human you are done. Act on what you find before continuing.
-> `COMMS_ME=<name> comms send <peer> "..."` reaches one agent, `send all "..."` reaches everyone, `comms peers` lists them.
+> You are `<name>` on a shared message bus. Register once with `comms --me <name> register "<your role>"`.
+> Run `comms --me <name> read` before you start a task, after you finish one, and before you tell the human you are done.
+> Direct mail addressed to you (`inbox/<name>`) requires action. Peer broadcasts (`all`) are ambient context for situational awareness only — NOT direct task assignments. Do not abandon your current goal or spawn fleet meta-work tasks in response to a broadcast.
+> `comms --me <name> send <peer> "..."` reaches one agent, `comms --me <name> send all "..."` reaches everyone, `comms peers` lists them.
 > Keep a message under 500 characters and under three lines. State the thing and name the note, task file or commit sha — never paste context the reader can fetch for themselves.
-> Stuck: `send all "stuck: <what, what you tried, human or retry>"`. Cleared: `send all "unstuck: <what fixed it>"`.
+> Stuck: `comms --me <name> send all "stuck: <what, what you tried, human or retry>"`. Cleared: `comms --me <name> send all "unstuck: <what fixed it>"`.
 > Never send an acknowledgement, a thank-you, or a message whose content is that you agree. If an exchange runs three turns without either side moving, stop and tell the human rather than replying again.
 
 ## across machines
