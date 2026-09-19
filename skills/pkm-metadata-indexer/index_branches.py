@@ -103,6 +103,29 @@ def contributed_paths(root: Path, default_ref: str, ref: str, default_blobs: dic
     return sorted(path for path in changed.stdout.splitlines() if path.endswith(".md"))
 
 
+# A scan is keyed by the oids that produced it, because the daemon asks far more
+# often than the answer can change. `--watch` watches the working copy, and a
+# write there cannot move a ref: refs move on fetch, which touches no file the
+# watcher sees. So the common call is a redundant one, and the merge-tree pass
+# over every ref is seconds where `git for-each-ref` is one process and settles
+# it in milliseconds. Keyed by root, since one daemon can hold several corpora.
+_CACHE: dict[str, tuple] = {}
+
+
+def ref_state(root: Path) -> tuple[tuple[str, str], ...]:
+    """`((ref, oid), ...)` for every origin ref, enough to tell a scan is stale."""
+    listed = git(root, "for-each-ref", "--format=%(refname:short) %(objectname)",
+                 "refs/remotes/origin", check=False)
+    if listed.returncode != 0:
+        return ()
+    state = []
+    for line in listed.stdout.splitlines():
+        ref, separator, oid = line.rpartition(" ")
+        if separator:
+            state.append((ref, oid))
+    return tuple(state)
+
+
 def read_blobs(root: Path, oids: list[str]) -> dict[str, str]:
     """`{oid: text}` from one `git cat-file --batch`.
 
@@ -139,15 +162,24 @@ def read_blobs(root: Path, oids: list[str]) -> dict[str, str]:
 def scan_branches(root: Path, db_path: Path | None = None, resume: bool = True):
     """Scanner with the same contract as `collect_index_data`.
 
-    `db_path` and `resume` are part of that contract and unused here: the work is
-    a handful of `git` calls over refs rather than a walk of a large tree, so
-    there is nothing an incremental pass would save.
+    `db_path` and `resume` are part of that contract and unused here. The saving
+    an incremental pass would give comes from `_CACHE` instead, which is keyed on
+    the ref oids rather than on file mtimes, because refs are what this corpus is
+    made of.
     """
     root = Path(root).resolve()
     notes, sections, links, errors = [], [], [], []
 
     if not (root / ".git").exists():
         return notes, sections, links, errors
+
+    state = ref_state(root)
+    cached = _CACHE.get(str(root))
+    if state and cached is not None and cached[0] == state:
+        # Copied out, so a caller that sorts or trims its result does not edit
+        # what the next call will be handed.
+        return tuple(list(rows) for rows in cached[1])
+
     branch = default_branch(root)
     if branch is None:
         return notes, sections, links, errors
@@ -216,6 +248,8 @@ def scan_branches(root: Path, db_path: Path | None = None, resume: bool = True):
         except Exception as error:  # one unreadable ref must not fail the run
             errors.append((short_ref, "ref", str(error)))
 
+    if state:  # copies, so the caller's lists and the cache's cannot alias
+        _CACHE[str(root)] = (state, ([*notes], [*sections], [*links], [*errors]))
     return notes, sections, links, errors
 
 
