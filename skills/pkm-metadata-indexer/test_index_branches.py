@@ -24,6 +24,8 @@ class BranchScannerTest(unittest.TestCase):
         self.git("config", "user.name", "test")
         self.git("config", "user.email", "test@localhost")
 
+        index_branches._CACHE.clear()  # module state, and every case is a fresh repo
+
         self.write("shared.md", "# shared\noriginal\n")
         self.write("other.md", "# other\nalso on the default branch\n")
         self.git("add", ".")
@@ -195,6 +197,59 @@ class BranchScannerTest(unittest.TestCase):
         blobs = index_branches.tree_blobs(self.root, "origin/bulky")
         contents = index_branches.read_blobs(self.root, [blobs["bulky.md"]])
         self.assertEqual(contents[blobs["bulky.md"]], body)
+
+    # the cache
+
+    def add_note_on(self, branch, name, text):
+        """Put a note on `branch` and point the remote ref at it."""
+        if self.git("branch", "--list", branch).stdout.strip():
+            self.git("checkout", "-q", branch)
+        else:
+            self.git("checkout", "-qb", branch)
+        self.write(name, text)
+        self.git("add", name)
+        self.git("commit", "-qm", f"add {name}")
+        self.set_remote_ref(branch, "HEAD")
+        self.git("checkout", "-q", "main")
+
+    def test_a_second_scan_with_no_ref_change_does_no_merge_tree_work(self):
+        """The daemon's watcher fires on working-copy writes, which cannot move a ref.
+
+        The saving is the point of the cache, so the test watches for the work
+        rather than only for the answer.
+        """
+        self.add_note_on("cached", "cached note.md", "# cached\n")
+        first = index_branches.scan_branches(self.root)
+
+        calls = []
+        original = index_branches.merged_tree
+        index_branches.merged_tree = lambda *args: calls.append(args) or original(*args)
+        try:
+            second = index_branches.scan_branches(self.root)
+        finally:
+            index_branches.merged_tree = original
+
+        self.assertEqual(calls, [], "a redundant scan re-ran the merge-tree pass")
+        self.assertEqual(second, first)
+
+    def test_a_moved_ref_invalidates_the_cache(self):
+        self.add_note_on("moving", "one.md", "# one\n")
+        self.assertEqual(self.paths(), {"moving/one.md"})
+        self.add_note_on("moving", "two.md", "# two\n")
+        self.assertEqual(self.paths(), {"moving/one.md", "moving/two.md"})
+
+    def test_a_new_ref_invalidates_the_cache(self):
+        self.add_note_on("first-one", "one.md", "# one\n")
+        self.assertEqual(self.paths(), {"first-one/one.md"})
+        self.set_remote_ref("a-copy", "refs/remotes/origin/first-one")
+        self.assertEqual(self.paths(), {"first-one/one.md", "a-copy/one.md"})
+
+    def test_the_cache_does_not_hand_out_the_list_it_kept(self):
+        self.add_note_on("aliasing", "one.md", "# one\n")
+        notes, _, _, _ = index_branches.scan_branches(self.root)
+        notes.clear()
+        again, _, _, _ = index_branches.scan_branches(self.root)
+        self.assertEqual([row[0] for row in again], ["aliasing/one.md"])
 
     def test_self_check_passes(self):
         self.assertEqual(index_branches.self_check(), 0)
