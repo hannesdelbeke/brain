@@ -66,12 +66,31 @@ fi
 ME="${COMMS_ME:-$CFG_ME}"
 GIT="${COMMS_GIT:-${CFG_GIT:-0}}"
 
+# Append-only is what makes the bus lock-free, and on its own it is also what turns a
+# channel into an archive. An agent cannot tell a live instruction from a dead one -
+# both are a file with a name and a first line - so handed the archive it works through
+# the archive. Everything therefore expires, on three windows, because the three things
+# on the bus fail differently.
+CFG_TTL=$(get_config ttl_days 2>/dev/null || true)
+CFG_MAIL_TTL=$(get_config mail_ttl_days 2>/dev/null || true)
+CFG_PEER_TTL=$(get_config peer_ttl_days 2>/dev/null || true)
+TTL="${COMMS_TTL_DAYS:-${CFG_TTL:-7}}"            # broadcasts, and mail already read
+MAIL_TTL="${COMMS_MAIL_TTL_DAYS:-${CFG_MAIL_TTL:-30}}"   # mail still uncollected
+PEER_TTL="${COMMS_PEER_TTL_DAYS:-${CFG_PEER_TTL:-14}}"   # a registration nobody refreshes
+
 need_me() { [ -n "$ME" ] || die "set COMMS_ME to your agent name (or: comms config set me <name>)"; }
 
 stamp() { date -u +%Y-%m-%dT%H-%M-%SZ; }
 # bsd and gnu date disagree on relative times, so try one form then the other
 hour_ago() { date -u -v-1H +%Y-%m-%dT%H-%M-%SZ 2>/dev/null || date -u -d '1 hour ago' +%Y-%m-%dT%H-%M-%SZ 2>/dev/null; }
+days_ago() { date -u -v-"$1"d +%Y-%m-%dT%H-%M-%SZ 2>/dev/null || date -u -d "$1 days ago" +%Y-%m-%dT%H-%M-%SZ 2>/dev/null; }
 rand() { LC_ALL=C tr -dc 'a-f0-9' < /dev/urandom | dd bs=1 count=6 2>/dev/null; }
+
+# Age comes out of the filename, never off mtime: a clone stamps every file with the
+# moment it was checked out, so an mtime rule would call the whole archive new on a
+# fresh machine and start eating live mail on an old one. Filenames already lead with
+# the sender's UTC clock in the shape stamp() emits, so "older than" is a string compare.
+is_msg() { case "$1" in [0-9][0-9][0-9][0-9]-*.md) return 0 ;; *) return 1 ;; esac; }
 
 CURSOR=""
 pull() {
@@ -257,6 +276,8 @@ cmd_register() {
       die "name '$ME' is already registered on host '$prev'. Names must be unique across the whole bus, try COMMS_ME=$ME-$(hostname)"
     fi
   fi
+  # Coming back after being retired for idleness is just registering again.
+  rm -f "$ROOT/agents/retired/$ME.md"
   {
     echo "name: $ME"
     echo "role: ${1:-unspecified}"
@@ -284,13 +305,18 @@ cmd_register() {
 cmd_peers() {
   pull
   [ -d "$ROOT/agents" ] || { echo "no peers"; return 0; }
+  pcut=$(days_ago "$PEER_TTL") || pcut=""
   for f in "$ROOT/agents"/*.md; do
     [ -e "$f" ] || { echo "no peers"; return 0; }
     n=$(basename "$f" .md)
     r=$(sed -n 's/^role: //p' "$f")
     s=$(sed -n 's/^seen: //p' "$f")
     w=$(ls "$ROOT/inbox/$n"/*.md 2>/dev/null | wc -l | tr -d ' ')
-    echo "$n  ·  $r  ·  seen $s  ·  $w waiting"
+    # Flagged before it is retired, so the list warns you off an address that has very
+    # likely stopped listening, rather than only telling you once it is already gone.
+    flag=""
+    if [ -n "$pcut" ] && [ -n "$s" ] && [ "$s" \< "$pcut" ]; then flag="  ·  IDLE, retiring"; fi
+    echo "$n  ·  $r  ·  seen $s  ·  $w waiting$flag"
   done
 }
 
@@ -305,7 +331,14 @@ cmd_send() {
   if [ "$to" = all ]; then
     dir="$ROOT/broadcast"
   else
-    [ -f "$ROOT/agents/$to.md" ] || die "no such recipient '$to' (try: comms peers)"
+    if [ ! -f "$ROOT/agents/$to.md" ]; then
+      # Worth telling apart from a typo, because it replaces the quiet failure: before
+      # names were retired, mail to an agent that had stopped collecting weeks ago landed
+      # in a real inbox and the sender was told "sent to $to".
+      [ -f "$ROOT/agents/retired/$to.md" ] &&
+        die "'$to' was retired after $PEER_TTL days without checking in and is not collecting mail. It becomes reachable again if it re-registers (try: comms peers)"
+      die "no such recipient '$to' (try: comms peers)"
+    fi
     dir="$ROOT/inbox/$to"
   fi
   mkdir -p "$dir"
@@ -369,9 +402,16 @@ bmuted() {
 bunseen() {
   bmigrate
   c=$(bcursor)
+  # The floor is the half of expiry that needs nothing to have run yet. gc has to have
+  # swept somewhere to shrink the directory, and an agent that registered before the
+  # cursor was seeded has no record of the old ones at all; the floor means neither can
+  # be shown a broadcast older than the window, on the very next read. Expiry becomes a
+  # property of reading rather than a job somebody has to remember.
+  floor=$(days_ago "$TTL") || floor=""
   for f in "$ROOT/broadcast"/*.md; do
     [ -e "$f" ] || break
     n=$(basename "$f")
+    if [ -n "$floor" ] && [ "$n" \< "$floor" ]; then continue; fi
     if [ ! -f "$c" ] || ! grep -qxF "$n" "$c"; then echo "$f"; fi
   done
 }
@@ -416,6 +456,120 @@ cmd_read() {
     sed "s/^seen: .*/seen: $(stamp)/" "$af" > "$af.tmp" && mv "$af.tmp" "$af"
   fi
   push
+  maybe_gc
+}
+
+# A delete is not an edit, so gc keeps the one rule the bus is built on: two machines
+# sweeping at once both remove the same path, and git resolves delete-against-delete as
+# a delete rather than a conflict. Nothing here ever rewrites a message.
+#
+# What gc does NOT do is redact. The files leave the working tree; every one of them is
+# still in the git history, which on a git transport is the transcript the bus is valued
+# for. Retention bounds what an agent is asked to read, not what the repo remembers, so
+# the rule about keeping secrets out of messages is exactly as binding as before.
+cmd_gc() {
+  dry=0
+  for a in "$@"; do
+    case "$a" in
+      --dry-run|-n) dry=1 ;;
+      *) die "usage: comms gc [--dry-run]" ;;
+    esac
+  done
+  [ -d "$ROOT" ] || die "no bus at $ROOT"
+  pull
+
+  bcut=$(days_ago "$TTL")      || die "no usable date arithmetic here, nothing expired"
+  mcut=$(days_ago "$MAIL_TTL") || die "no usable date arithmetic here, nothing expired"
+  pcut=$(days_ago "$PEER_TTL") || die "no usable date arithmetic here, nothing expired"
+
+  old=0 cold=0 gone=0
+
+  # Broadcasts, and mail already delivered once. done/ is a receipt drawer, not an
+  # archive: the move into it is the read receipt, and the receipt stops being useful
+  # long before the disk notices.
+  for f in "$ROOT/broadcast"/*.md "$ROOT"/inbox/*/done/*.md; do
+    [ -e "$f" ] || continue
+    b=$(basename "$f")
+    is_msg "$b" || continue
+    if [ "$b" \< "$bcut" ]; then
+      if [ "$dry" = 1 ]; then echo "expire       $f"; else rm -f "$f"; fi
+      old=$((old + 1))
+    fi
+  done
+
+  # Mail nobody ever collected gets a much longer rope, because dropping it is the only
+  # lossy thing gc does: unlike a broadcast it was addressed to someone, and unlike
+  # done/ it was never delivered. Past this window the agent it was for is not coming
+  # back for it, and keeping it only means the next agent to take that name inherits a
+  # stranger's backlog on its first read.
+  for f in "$ROOT"/inbox/*/*.md; do
+    [ -e "$f" ] || continue
+    b=$(basename "$f")
+    is_msg "$b" || continue
+    if [ "$b" \< "$mcut" ]; then
+      if [ "$dry" = 1 ]; then echo "uncollected  $f"; else rm -f "$f"; fi
+      cold=$((cold + 1))
+    fi
+  done
+
+  # The seen-list cursor is the one file that grows with every broadcast the bus has
+  # ever carried, so expiring broadcasts without pruning it just moves the unbounded
+  # growth somewhere less visible. A line whose broadcast is gone can never match again.
+  for c in "$ROOT"/inbox/*/.broadcast-seen; do
+    [ -e "$c" ] || continue
+    [ "$dry" = 1 ] && continue
+    { echo "$BMARK"
+      while IFS= read -r line; do
+        [ -n "$line" ] || continue
+        [ "$line" = "$BMARK" ] && continue
+        [ -e "$ROOT/broadcast/$line" ] && echo "$line"
+      done < "$c"
+    } > "$c.tmp" && mv "$c.tmp" "$c"
+  done
+
+  # Registrations are retired, not deleted: the file is the evidence the name was taken,
+  # and `send` reads retired/ to explain itself. `read` refreshes `seen`, so anything
+  # this stale has not looked at the bus in PEER_TTL days.
+  for f in "$ROOT/agents"/*.md; do
+    [ -e "$f" ] || continue
+    s=$(sed -n 's/^seen: //p' "$f")
+    [ -n "$s" ] || continue
+    if [ "$s" \< "$pcut" ]; then
+      if [ "$dry" = 1 ]; then
+        echo "retire       $(basename "$f" .md)"
+      else
+        mkdir -p "$ROOT/agents/retired"
+        mv "$f" "$ROOT/agents/retired/"
+      fi
+      gone=$((gone + 1))
+    fi
+  done
+
+  [ "$dry" = 1 ] || push
+  echo "gc: $old expired, $cold uncollected, $gone retired (windows ${TTL}d/${MAIL_TTL}d/${PEER_TTL}d)"
+}
+
+# Per-clone and deliberately outside the bus. Put the stamp on the bus and the first
+# machine to sweep pushes it and talks every other machine out of sweeping; how often
+# this clone has swept is local business. The .git path is where pull() already keeps
+# its remote sha, and ROOT differs per bus, so this is per-bus for free.
+gcstamp() {
+  if [ -d "$ROOT/.git" ]; then echo "$ROOT/.git/comms-gc-last"; else echo "$ROOT/.comms-gc-last"; fi
+}
+
+# "Cleans up after itself" has to mean without anyone remembering to, so the sweep rides
+# on `read` - the one command every agent is already told to run constantly - throttled
+# to once a day per clone. The stamp is written before the sweep rather than after, so a
+# gc that fails costs one quiet day instead of re-running on every read.
+maybe_gc() {
+  gs=$(gcstamp)
+  today=$(date -u +%Y-%m-%d)
+  if [ -f "$gs" ] && [ "$(cat "$gs" 2>/dev/null)" = "$today" ]; then return 0; fi
+  echo "$today" > "$gs" 2>/dev/null || return 0
+  # In a subshell, because gc reports problems through die() and die() exits. Housekeeping
+  # must never take down the `read` that invited it, least of all after the mail has been
+  # printed and pushed; `|| true` alone would not catch an exit.
+  ( cmd_gc ) >/dev/null 2>&1 || true
 }
 
 case "${1:-}" in
@@ -425,5 +579,6 @@ case "${1:-}" in
   send)     shift; cmd_send "$@" ;;
   inbox)    shift; cmd_inbox ;;
   read)     shift; cmd_read ;;
-  *) die "usage: comms {register <role>|peers|send <to> <msg>|inbox|read|config [list|get|set]}" ;;
+  gc)       shift; cmd_gc "$@" ;;
+  *) die "usage: comms {register <role>|peers|send <to> <msg>|inbox|read|gc [--dry-run]|config [list|get|set]}" ;;
 esac

@@ -16,8 +16,9 @@ Everything else follows from that. Two agents never write the same path, so ther
 
 ```
 agents/<name>.md              who exists, their role, when they were last seen
+agents/retired/<name>.md      names that stopped checking in
 inbox/<name>/*.md             messages waiting for <name>
-inbox/<name>/done/*.md        messages <name> has read, kept forever
+inbox/<name>/done/*.md        messages <name> has read, until they expire
 broadcast/*.md                messages for everybody
 ```
 
@@ -90,16 +91,43 @@ comms peers                       # who else is here, and how much mail they hav
 comms send builder "do the thing" # leave a message; `all` broadcasts
 comms inbox                       # how many are waiting for you
 comms read                        # print unread oldest-first, then ack them
+comms gc [--dry-run]              # expire what is past its window; read does this for you
 comms config [list|get|set]       # manage persistent settings
 ```
 
-`comms read` moves what it printed into `done/`, so the move *is* the read receipt: every message is delivered exactly once, and nothing is ever deleted.
+`comms read` moves what it printed into `done/`, so the move *is* the read receipt: every message is delivered exactly once.
 
 It prints unseen broadcasts too. A broadcast is one shared file, so it cannot be moved into `done/` — the first reader would consume everyone else's copy — and each agent instead keeps a cursor at `inbox/<name>/.broadcast-seen` listing the broadcasts it has already seen. That file is the one thing the bus edits in place, which is safe because only its own agent ever writes it.
 
 It lists them rather than holding the newest as a high-water mark, because two broadcasts sent in the same second are separated only by their random suffix: the one sorting lower than a mark set by the other would never be delivered at all. A v1 cursor holding a bare filename is converted on first read, keeping its high-water meaning for the history it covered.
 
 `register` seeds that list with every broadcast already on the bus, so joining costs nothing. An agent that arrives on day three has no business replaying day one, and nothing is lost: the git log is the transcript.
+
+## retention
+
+Append-only is what makes the bus lock-free, and on its own it is also what makes the bus unusable after a month. An agent cannot tell a live instruction from a dead one: both are a file with a name and a first line. Hand it the archive and it will work through the archive. So everything on the bus expires.
+
+```sh
+COMMS_TTL_DAYS=7        # broadcasts, and mail already read into done/
+COMMS_MAIL_TTL_DAYS=30  # mail still sitting uncollected
+COMMS_PEER_TTL_DAYS=14  # a registration nobody has refreshed
+```
+
+Also `comms config set ttl_days 7`, `mail_ttl_days`, `peer_ttl_days`, per bus profile like any other setting.
+
+Three windows because the three things fail differently. A broadcast past its window is noise. Mail nobody collected might still have mattered, so it gets a much longer rope — dropping it is the only lossy thing `gc` does. A registration is a delivery address, and a stale one is the worst of the three, because `send` to a dead agent *succeeds*: the file lands in a real inbox nobody will open again, and the sender is told `sent to <name>`. Past its window a name moves to `agents/retired/`, `send` starts refusing it and saying why, and `peers` marks it `IDLE, retiring` before it goes. Re-registering brings a name straight back.
+
+Three properties worth knowing:
+
+- **Reading is floored by the window too.** A broadcast older than `COMMS_TTL_DAYS` is never shown as unseen, whatever the cursor says and whether or not `gc` has ever run anywhere. That is what covers an agent registered before any of this existed, or one whose cursor was lost.
+- **The cursor is swept with the broadcasts.** The seen list names files; once a broadcast expires its line is dead weight, so `gc` drops lines whose file is gone. Otherwise the one file that exists to bound reading grows without bound itself.
+- **Age comes from the filename, never from mtime.** A fresh clone stamps every file with the checkout time, so an mtime rule would call the whole archive new on one machine and start eating live mail on another.
+
+`gc` runs itself. `read` sweeps once a day per clone, throttled by a stamp kept outside the bus, because how often *this* machine has swept is not everyone's business — put the stamp on the bus and the first machine to sweep talks all the others out of it. Run `comms gc` by hand to force one, `comms gc --dry-run` to see what would go. A sweep can never fail a read: it runs after the mail is printed, in a subshell, with its output discarded.
+
+A delete is not an edit, so none of this breaks the one rule: two machines sweeping at once both remove the same path, and git resolves delete-against-delete as a delete rather than a conflict.
+
+What `gc` does **not** do is redact. The files leave the working tree; every one is still in the git history, which on a git transport is the transcript the bus is valued for. Retention bounds what an agent is asked to read, not what the repo remembers — so keeping the bus private and secrets out of messages matters exactly as much as it did before.
 
 ## the instruction to paste into your agent
 
