@@ -1288,11 +1288,27 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def parse_vault(spec: str, db_override: str | None = None, collect=None) -> Vault:
-    name, _, raw_path = spec.partition("=")
-    if not raw_path:
-        name, raw_path = "", name
+    """`PATH`, `NAME=PATH`, or `NAME=PATH=DBPATH`.
+
+    The third field exists because two corpora can share a root: a scanner that
+    reads a repository's committed refs indexes the same directory as the corpus
+    that reads its working copy, and without a database of its own the two would
+    write one index and overwrite each other's rows. Relative to the root unless
+    absolute, so a spec stays readable. `--db` still wins, being the single-vault
+    override.
+    """
+    name, _, remainder = spec.partition("=")
+    if not remainder:
+        name, remainder = "", name
+    raw_path, _, db_spec = remainder.partition("=")
     root = Path(raw_path).expanduser().resolve()
-    db = Path(db_override).resolve() if db_override else pkm.default_db_path(root)
+    if db_override:
+        db = Path(db_override).resolve()
+    elif db_spec:
+        db = Path(db_spec).expanduser()
+        db = db.resolve() if db.is_absolute() else (root / db).resolve()
+    else:
+        db = pkm.default_db_path(root)
     return Vault(name or root.name, root, db, collect)
 
 
@@ -1319,13 +1335,16 @@ def load_module(name: str):
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--vault", action="append", default=[],
-                        help="Vault as PATH or NAME=PATH, repeatable. Defaults to the nearest vault above cwd")
+                        help="Vault as PATH, NAME=PATH or NAME=PATH=DBPATH, repeatable. "
+                             "Defaults to the nearest vault above cwd")
     parser.add_argument("--sessions", action="append", default=[],
-                        help="Agent transcript root as PATH or NAME=PATH, repeatable. Indexed as turns, not notes")
+                        help="Agent transcript root as PATH, NAME=PATH or NAME=PATH=DBPATH, repeatable. "
+                             "Indexed as turns, not notes")
     parser.add_argument("--corpus", action="append", default=[],
-                        help="Any other corpus as MODULE:FUNCTION=NAME=PATH, repeatable, where MODULE is an "
-                             "importable name or a path to a .py file. The function "
-                             "takes a root and returns collect_index_data's tuple")
+                        help="Any other corpus as MODULE:FUNCTION=NAME=PATH or MODULE:FUNCTION=NAME=PATH=DBPATH, "
+                             "repeatable, where MODULE is an importable name or a path to a .py file. The function "
+                             "takes a root and returns collect_index_data's tuple. DBPATH is relative to PATH "
+                             "unless absolute, and is what lets a second corpus share a root with the first")
     parser.add_argument("--db", default=None, help="Database for a single vault, otherwise <vault>/.obsidian/pkm_index.db")
     parser.add_argument("--bind", default=HOST, help="Interface to listen on, loopback unless a token is set")
     parser.add_argument("--port", type=int, default=PORT)
