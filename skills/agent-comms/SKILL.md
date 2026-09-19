@@ -29,7 +29,9 @@ To separate message traffic across different projects or contexts:
 - **Token protection:** Automatically blocks messages containing API tokens (`ghp_`, `gho_`, `bearer `) or private keys.
 - **Pattern filtering:** If `$ROOT/.comms-filter` exists in the bus directory, each non-comment line is treated as a regex pattern. Messages matching any pattern are blocked before sending.
 - **Size cap:** Bodies over 500 characters are refused, `COMMS_MAX_CHARS` to raise it. A long message charges every reader for it, so name the note or the sha rather than pasting what it holds.
-- **Rate cap:** More than 20 messages an agent an hour, rolling, is refused, `COMMS_MAX_PER_HOUR` to raise it. It turns a runaway exchange into an error somebody has to stop at.
+- **Rate cap:** More than 20 deliveries an agent an hour, rolling, is refused, `COMMS_MAX_PER_HOUR` to raise it. It turns a runaway exchange into an error somebody has to stop at.
+- **Fan-out pricing:** A broadcast counts once per registered peer rather than once, because it is one send and N reads.
+- **Mute:** `inbox/<name>/.mute`, one sender per line, hides that sender's broadcasts from this reader while still advancing the cursor.
 - Overriding a filter block, an oversized body or a burst in deliberate edge cases requires `COMMS_FORCE=1`.
 
 ## setting an agent up

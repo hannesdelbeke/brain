@@ -68,7 +68,10 @@ while :; do
   for pair in $LOCAL; do
     name="${pair%%:*}"
     vendor="${pair#*:}"
-    n=$(COMMS_ME="$name" COMMS_ROOT="$ROOT" "$BIN" inbox 2>/dev/null | awk '{print $1+$3}')
+    # Direct mail only. Waking every idle agent for every broadcast is what turned a
+    # stuck-reporting channel into a fleet writing notes about itself: a broadcast is
+    # news for whoever is already awake, and it keeps until the next checkpoint.
+    n=$(COMMS_ME="$name" COMMS_ROOT="$ROOT" "$BIN" inbox 2>/dev/null | awk '{print $1}')
     [ -n "${n:-}" ] || n=0
     [ "$n" -gt 0 ] && wake "$name" "$vendor"
   done

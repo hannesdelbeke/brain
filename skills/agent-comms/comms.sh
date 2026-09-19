@@ -172,11 +172,24 @@ $body"
   # 4. Rate. Two agents can acknowledge each other until a budget is gone, and neither
   # notices, because each message looks reasonable on its own. Counting is free: the
   # filenames already on disk carry the sender and the time.
+  # A broadcast is one send and N reads, so counting it once charges the sender for a
+  # twentieth of what the fleet actually pays. Priced by fan-out, the cap of twenty
+  # means twenty deliveries: four broadcasts to a fleet of seven cost twenty-eight and
+  # stop at three, which is the behaviour that was wanted all along.
   max_hour="${COMMS_MAX_PER_HOUR:-20}"
+  peers=$(ls "$ROOT/agents"/*.md 2>/dev/null | wc -l | tr -d ' ')
+  [ "$peers" -gt 0 ] || peers=1
   ago=$(hour_ago)
   if [ -n "$ago" ]; then
-    recent=$(find "$ROOT/inbox" "$ROOT/broadcast" -name "*--$ME--*.md" 2>/dev/null \
-      | sed 's|.*/||; s|--.*||' | awk -v a="$ago" '$0 > a' | wc -l | tr -d ' ')
+    recent=0
+    for m in $(find "$ROOT/inbox" "$ROOT/broadcast" -name "*--$ME--*.md" 2>/dev/null); do
+      t=$(basename "$m"); t=${t%%--*}
+      [ "$t" \> "$ago" ] || continue
+      case "$m" in
+        "$ROOT"/broadcast/*) recent=$((recent + peers)) ;;
+        *) recent=$((recent + 1)) ;;
+      esac
+    done
     if [ "$recent" -ge "$max_hour" ]; then
       if [ "${COMMS_FORCE:-0}" = 1 ]; then
         echo "comms: warning: $recent messages sent in the last hour against a $max_hour cap, but COMMS_FORCE=1 is set. Proceeding." >&2
@@ -343,6 +356,16 @@ bmigrate() {
   } > "$c.tmp" && mv "$c.tmp" "$c"
 }
 
+# An agent deep in its own work still wants direct mail but not every sweep report.
+# `inbox/<name>/.mute`, one sender per line, drops that sender's broadcasts on the
+# reader's side: the cursor still advances, so muting is never a backlog.
+bmuted() {
+  m="$ROOT/inbox/$ME/.mute"
+  [ -f "$m" ] || return 1
+  b=$(basename "$1" .md); r=${b#*--}
+  grep -qxF "${r%%--*}" "$m"
+}
+
 bunseen() {
   bmigrate
   c=$(bcursor)
@@ -380,6 +403,7 @@ cmd_read() {
     mv "$f" "$ROOT/inbox/$ME/done/"
   done
   for f in $(bunseen); do
+    if bmuted "$f"; then bmark_seen "$(basename "$f")"; continue; fi
     any=1
     hdr "$f" " all"
     cat "$f"
