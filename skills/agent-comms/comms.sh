@@ -301,6 +301,9 @@ cmd_send() {
   # pays for to learn what the path already told them.
   f="$dir/$(stamp)--$ME--$(rand).md"
   printf '%s\n' "$body" > "$f"
+  # You do not need your own broadcast delivered back to you, and reading it costs the
+  # same as reading anyone else's, so record it as seen on the way out.
+  [ "$to" = all ] && [ -d "$ROOT/inbox/$ME" ] && bmark_seen "$(basename "$f")"
   push
   if [ -n "${COMMS_NOTIFY:-}" ]; then
     COMMS_TO="$to" COMMS_FROM="$ME" COMMS_BUS="$BUS" sh -c "$COMMS_NOTIFY" >/dev/null 2>&1 || true
