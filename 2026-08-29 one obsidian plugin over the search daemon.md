@@ -48,15 +48,15 @@ the split that would matter is daemon or no daemon, and none of these four sit o
 
 ## what exists, and the copy to remove first
 
-`unified-search` in the private vault's `.obsidian/plugins/`, extracted to `h-forts/obsidian-unified-search`, 395 lines of plain javascript with no build step: a modal with fuzzy, regex, tag and date modes, and semantic delegating to the daemon.
+`unified-search` in the private vault's `.obsidian/plugins/`, extracted to `obsidian-unified-search`, 395 lines of plain javascript with no build step: a modal with fuzzy, regex, tag and date modes, and semantic delegating to the daemon.
 
-`semantic-local-graph` in this vault's `.obsidian/plugins/`, 413 lines: a local graph of the notes nearest in meaning to the open note, drawing a fixed number of nodes so it does not slow down as the vault grows. it was extracted to `h-forts/obsidian-semantic-local-graph` on 2026-08-30, so the copy that this section says to remove is now recoverable rather than only deletable.
+`semantic-local-graph` in this vault's `.obsidian/plugins/`, 413 lines: a local graph of the notes nearest in meaning to the open note, drawing a fixed number of nodes so it does not slow down as the vault grows. it was extracted to `obsidian-semantic-local-graph` on 2026-08-30, so the copy that this section says to remove is now recoverable rather than only deletable.
 
 both hold their own base URL, their own fetch, their own CLI fallback, their own python discovery and their own spawn of the daemon when it is not running. that duplication is the same failure the engine already paid for as two published python copies, and the backlinks pane is where it becomes a third. merge first, add the pane second.
 
 ## what shipped on 2026-08-30
 
-one plugin, `unified-search` in the private vault and `h-forts/obsidian-unified-search` as its repository, still plain javascript with no build step. five surfaces over one daemon client: the search modal, a related pane holding linked mentions, unlinked mentions and semantic neighbours as three sections, the semantic local graph, the vault graph, and missing links. the related pane fires its three routes in parallel and only `/links` is required, so a corpus with no vectors still renders backlinks.
+one plugin, `unified-search` in the private vault and `obsidian-unified-search` as its repository, still plain javascript with no build step. five surfaces over one daemon client: the search modal, a related pane holding linked mentions, unlinked mentions and semantic neighbours as three sections, the semantic local graph, the vault graph, and missing links. the related pane fires its three routes in parallel and only `/links` is required, so a corpus with no vectors still renders backlinks.
 
 the last two came out of one route. `/graph` returns the whole corpus as mutual nearest neighbours in embedding space with the wikilinks merged in, and the plugin caches that payload for five minutes, so the vault graph is a canvas over it and missing links is a filter over the same bytes: `linked == 0`, sorted, top 200, behind the `!` prefix in the modal. the graph costs 116ms of layout at its 300-node default and 986ms for all 2,960 notes of the public corpus; the missing-links list costs 5ms because the payload is already in memory. see [[2026-08-30 a semantic graph over the whole vault]] for why mutual kNN is the edge rule and [[2026-08-30 what else the index can answer]] for the ranking these two came off.
 

@@ -4,12 +4,16 @@
 # Optional: set COMMS_GIT=1 to sync the bus through a git remote across machines.
 # Optional: set COMMS_BUS=<name> or configure default_bus to select an isolated message bus.
 #
+# Flags (recommended for static allowlist matching: Bash(comms *)):
+#   comms --me <name> <cmd>           # agent identity
+#   comms --bus <bus> <cmd>           # select isolated message bus
+#
 # Configuration & settings:
 #   comms config set default_bus project-a    # sets default bus in ~/.config/agentcomms/config
 #   comms config set git 1                    # enables git sync mode
 #   comms config list                         # prints active configuration
 #
-# Environment overrides:
+# Environment overrides (legacy / fallback):
 #   export COMMS_BUS=project-a        # selects ~/.agentcomms/project-a
 #   export COMMS_ROOT=~/.agentcomms   # explicit override of bus root path
 #   export COMMS_ME=planner           # your agent name
@@ -47,13 +51,93 @@ get_config() {
   echo "$val"
 }
 
+CLI_BUS=""
+CLI_ME=""
+
+# Parse CLI options (--me <name>, --bus <bus>)
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --bus)
+      [ $# -ge 2 ] || die "missing argument for --bus"
+      CLI_BUS="$2"
+      shift 2
+      ;;
+    --bus=*)
+      CLI_BUS="${1#*=}"
+      shift
+      ;;
+    --me)
+      [ $# -ge 2 ] || die "missing argument for --me"
+      CLI_ME="$2"
+      shift 2
+      ;;
+    --me=*)
+      CLI_ME="${1#*=}"
+      shift
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      break
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+# If --me or --bus were not passed before the subcommand, also accept them after
+# for subcommands that do not take positional target arguments (read, inbox, peers, gc)
+if [ $# -gt 1 ]; then
+  case "$1" in
+    read|inbox|peers|gc)
+      _cmd="$1"
+      shift
+      while [ $# -gt 0 ]; do
+        case "$1" in
+          --bus)
+            [ $# -ge 2 ] || die "missing argument for --bus"
+            CLI_BUS="$2"
+            shift 2
+            ;;
+          --bus=*)
+            CLI_BUS="${1#*=}"
+            shift
+            ;;
+          --me)
+            [ $# -ge 2 ] || die "missing argument for --me"
+            CLI_ME="$2"
+            shift 2
+            ;;
+          --me=*)
+            CLI_ME="${1#*=}"
+            shift
+            ;;
+          *)
+            set -- "$_cmd" "$@"
+            _cmd=""
+            break
+            ;;
+        esac
+      done
+      if [ -n "$_cmd" ]; then
+        set -- "$_cmd" "$@"
+      fi
+      ;;
+  esac
+fi
+
 CFG_DEFAULT_BUS=$(get_config default_bus 2>/dev/null || true)
 CFG_ROOT=$(get_config root 2>/dev/null || true)
 CFG_GIT=$(get_config git 2>/dev/null || true)
 CFG_ME=$(get_config me 2>/dev/null || true)
 
-BUS="${COMMS_BUS:-$CFG_DEFAULT_BUS}"
-if [ -n "${COMMS_ROOT:-}" ]; then
+BUS="${CLI_BUS:-${COMMS_BUS:-$CFG_DEFAULT_BUS}}"
+if [ -n "$CLI_BUS" ]; then
+  ROOT="$HOME/.agentcomms/$CLI_BUS"
+elif [ -n "${COMMS_ROOT:-}" ]; then
   ROOT="$COMMS_ROOT"
 elif [ -n "$BUS" ]; then
   ROOT="$HOME/.agentcomms/$BUS"
@@ -63,7 +147,7 @@ else
   ROOT="$HOME/.agentcomms"
 fi
 
-ME="${COMMS_ME:-$CFG_ME}"
+ME="${CLI_ME:-${COMMS_ME:-$CFG_ME}}"
 GIT="${COMMS_GIT:-${CFG_GIT:-0}}"
 
 # Append-only is what makes the bus lock-free, and on its own it is also what turns a
@@ -78,7 +162,7 @@ TTL="${COMMS_TTL_DAYS:-${CFG_TTL:-7}}"            # broadcasts, and mail already
 MAIL_TTL="${COMMS_MAIL_TTL_DAYS:-${CFG_MAIL_TTL:-30}}"   # mail still uncollected
 PEER_TTL="${COMMS_PEER_TTL_DAYS:-${CFG_PEER_TTL:-14}}"   # a registration nobody refreshes
 
-need_me() { [ -n "$ME" ] || die "set COMMS_ME to your agent name (or: comms config set me <name>)"; }
+need_me() { [ -n "$ME" ] || die "set --me <name> or COMMS_ME to your agent name (or: comms config set me <name>)"; }
 
 stamp() { date -u +%Y-%m-%dT%H-%M-%SZ; }
 # bsd and gnu date disagree on relative times, so try one form then the other
@@ -273,7 +357,7 @@ cmd_register() {
   if [ -f "$ROOT/agents/$ME.md" ]; then
     prev=$(sed -n 's/^host: //p' "$ROOT/agents/$ME.md")
     if [ -n "$prev" ] && [ "$prev" != "$(hostname)" ]; then
-      die "name '$ME' is already registered on host '$prev'. Names must be unique across the whole bus, try COMMS_ME=$ME-$(hostname)"
+      die "name '$ME' is already registered on host '$prev'. Names must be unique across the whole bus, try --me $ME-$(hostname)"
     fi
   fi
   # Coming back after being retired for idleness is just registering again.
@@ -562,6 +646,7 @@ gcstamp() {
 # to once a day per clone. The stamp is written before the sweep rather than after, so a
 # gc that fails costs one quiet day instead of re-running on every read.
 maybe_gc() {
+  [ -d "$ROOT" ] || return 0
   gs=$(gcstamp)
   today=$(date -u +%Y-%m-%d)
   if [ -f "$gs" ] && [ "$(cat "$gs" 2>/dev/null)" = "$today" ]; then return 0; fi
@@ -580,5 +665,5 @@ case "${1:-}" in
   inbox)    shift; cmd_inbox ;;
   read)     shift; cmd_read ;;
   gc)       shift; cmd_gc "$@" ;;
-  *) die "usage: comms {register <role>|peers|send <to> <msg>|inbox|read|gc [--dry-run]|config [list|get|set]}" ;;
+  *) die "usage: comms [--me <name>] [--bus <bus>] {register <role>|peers|send <to> <msg>|inbox|read|gc [--dry-run]|config [list|get|set]}" ;;
 esac
