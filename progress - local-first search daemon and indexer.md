@@ -17,7 +17,7 @@ aliases:
 > [!summary] eli5
 > the local search engine behind the vault: one background process holds a small language model in memory and answers "where did we write about X" over the notes, the code repositories and the agent transcripts, in about 20 milliseconds, without sending anything to a server.
 > the engine works and is in daily use, and since 2026-08-30 an obsidian plugin sits on top of it with five surfaces. what is open is the link graph over code repositories, and whether either piece gets published at all.
-> **needs from you:** open obsidian and look at the plugin, since nobody has seen it rendered. run `index_agy_validation.md` on the machine with a real antigravity history, since the second scanner was written against 18 conversations. then two publishing decisions: whether the engine ships as an installable package under `h-forts/pkm-search`, and whether the plugin repository goes public with a release.
+> **needs from you:** open obsidian and look at the plugin, since nobody has seen it rendered. run `index_agy_validation.md` on the machine with a real antigravity history, since the second scanner was written against 18 conversations. then two publishing decisions: whether the engine ships as an installable package under `pkm-search`, and whether the plugin repository goes public with a release.
 
 > [!todo] next
 > **next:** use the plugin for a week and read what the query log says afterwards, since every number on it so far comes from a harness. after that, point [[index_repo.py]] at a repository of ours and decide whether a code corpus joins the two vaults at logon.
