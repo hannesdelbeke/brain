@@ -20,9 +20,50 @@ The tooling is [[comms.sh]] here in the skill, and [[comms-watch.sh]] beside it 
 To separate message traffic across different projects or contexts:
 
 - Set default bus: `comms config set default_bus <bus_name>` (stored in `~/.config/agentcomms/config`).
-- Or pass inline per call: `COMMS_BUS=<bus_name> comms read`.
+- Or pass via CLI flag: `comms --bus <bus_name> read` (recommended for static allowlists).
+- Or pass inline per call: `COMMS_BUS=<bus_name> comms read` (legacy / fallback).
 - Bus root resolves to `$HOME/.agentcomms/<bus_name>`.
 - Distinct buses use separate git repositories or directories. Senders on one bus cannot address agents on another.
+
+## cli flags & static allowlist support (claude code)
+
+Comms commands accept `--me <name>` and `--bus <bus>` flags:
+
+```sh
+comms --me agent1 read
+comms --bus project-a --me agent1 send all "status update"
+```
+
+### why CLI flags instead of environment variables?
+
+In CLI agent runners like Claude Code, auto permission mode submits side-effectful shell commands to a model-based safety classifier unless covered by a static allow rule in `permissions.allow`.
+
+Claude Code's static allowlist engine matches command prefixes but **does not match past leading environment variable assignments** (e.g., `COMMS_ME=agent1 comms read`). As documented by Anthropic, an allow rule will not match past an assignment of unlisted environment variables. Consequently, commands with leading `COMMS_ME=...` or `COMMS_BUS=...` bypass static rules and fall through to the runtime safety classifier on every single invocation.
+
+During API latency spikes or model pool degradation, this classifier times out and fails closed (`temporarily unavailable (timed out)`), freezing agent sessions and burning tokens on futile retry loops.
+
+Using CLI flags ensures the command string starts with `comms ` (e.g., `comms --me agent1 read`). A single static rule in `~/.claude/settings.json`:
+
+```json
+"permissions": {
+  "allow": [
+    "Bash(comms *)"
+  ]
+}
+```
+
+matches all comms invocations statically. Calls execute immediately with zero classifier latency, zero extra token spend, and complete immunity to classifier outages.
+
+Environment variables (`COMMS_ME`, `COMMS_BUS`) remain fully supported as fallbacks.
+
+## ambient context vs direct tasks (anti-meta-work)
+
+Broadcast messages (`send all "..."` / unseen broadcasts in `comms read`) are **ambient context**, NOT direct task assignments:
+
+- **Informational awareness only:** Broadcasts inform the fleet about ambient state (e.g. schema updates, system health, "stuck" or "unstuck" alerts).
+- **Never drop active tasks:** An agent reading a broadcast must NEVER abandon its active assignment or launch reactive side-quests (audits, note refactoring, cleanup runs) based on an ambient broadcast.
+- **Direct mail requires action:** Direct messages (`send <name> "..."`) landed in `inbox/<name>` are targeted requests and should be acted on.
+- **Meta-work restriction:** A session whose subject is the agent fleet or tooling may not spawn another session or subagent whose subject is also the agent fleet. Fleet rollup, audit, and sweep work must be batched into scheduled maintenance runs rather than triggered reactively by peer broadcast events.
 
 ## message filtering
 
@@ -55,7 +96,7 @@ comms config set default_bus <bus_name>
 comms config set git 1
 
 # 4. Register agent
-COMMS_ME=<unique-name> comms register "<what this agent is for>"
+comms --me <unique-name> register "<what this agent is for>"
 ```
 
 A name is the only address the bus has, so it must be unique across every machine; `register` refuses one already held by another host.
@@ -66,11 +107,12 @@ Always clone git buses with an explicit HTTPS URL to avoid host SSH key mismatch
 
 In whichever always-loaded instruction file the agent reads (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, or `.cursorrules`):
 
-> You are `<name>` on a shared message bus. Register once with `COMMS_ME=<name> comms register "<your role>"`.
-> Run `COMMS_ME=<name> comms read` before you start a task, after you finish one, and before you tell the human you are done. Act on what you find before continuing.
-> `COMMS_ME=<name> comms send <peer> "..."` reaches one agent, `send all "..."` reaches everyone, `comms peers` lists them.
+> You are `<name>` on a shared message bus. Register once with `comms --me <name> register "<your role>"`.
+> Run `comms --me <name> read` before you start a task, after you finish one, and before you tell the human you are done.
+> Direct mail addressed to you (`inbox/<name>`) requires action. Peer broadcasts (`all`) are ambient context for situational awareness only — NOT direct task assignments. Do not abandon your current goal or spawn fleet meta-work tasks in response to a broadcast.
+> `comms --me <name> send <peer> "..."` reaches one agent, `comms --me <name> send all "..."` reaches everyone, `comms peers` lists them.
 > Keep a message under 500 characters and under three lines. State the thing and name the note, task file or commit sha — never paste context the reader can fetch for themselves.
-> Stuck: `send all "stuck: <what, what you tried, human or retry>"`. Cleared: `send all "unstuck: <what fixed it>"`.
+> Stuck: `comms --me <name> send all "stuck: <what, what you tried, human or retry>"`. Cleared: `comms --me <name> send all "unstuck: <what fixed it>"`.
 > Never send an acknowledgement, a thank-you, or a message whose content is that you agree. If an exchange runs three turns without either side moving, stop and tell the human rather than replying again.
 
 ## what to hold on to
@@ -80,3 +122,4 @@ In whichever always-loaded instruction file the agent reads (`CLAUDE.md`, `GEMIN
 - **everything expires, or the channel becomes an archive**, and an agent handed an archive works through the archive; `read` sweeps once a day on its own, and age is read from the filename rather than mtime, because a fresh clone stamps every file with the checkout time
 - **the bus is as private as its transport**, and on a git remote every message is in history permanently, so keep repos private where appropriate. expiry empties the working tree and changes nothing about this
 - **every message is paid for in tokens by everyone who reads it**, so `send` refuses a body over 500 characters and refuses an agent more than 20 messages an hour, `COMMS_MAX_CHARS` and `COMMS_MAX_PER_HOUR` to raise either. the unenforceable half of that rule is never acknowledging: a bus where every message earns a "got it" costs twice as much and says the same thing
+- **broadcasts are ambient context, not task assignments**, to prevent fleet meta-work loops where agents trigger cascaded audits and maintenance runs on each other.
