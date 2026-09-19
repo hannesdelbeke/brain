@@ -1,0 +1,41 @@
+# The indexer's dependencies, declared where the scripts are rather than typed
+# out again in each machine's setup notes. Those notes had drifted before:
+# `watchfiles` is what searchd.py needs for --watch, and a setup that installed
+# only numpy and fastembed left the daemon exiting 2 with a usage message.
+#
+#     python3.13 -m venv ~/.venvs/pkm-indexer
+#     ~/.venvs/pkm-indexer/bin/pip install -e "path/to/pkm-metadata-indexer[all]"
+#
+# Nothing here is published to an index. The scripts are run by path and load
+# each other by path (see `load()` in test_searchd.py), so there is no package
+# to install and `py-modules = []` says so: an install brings in the
+# dependencies and nothing else.
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pkm-metadata-indexer"
+version = "0.1.0"
+description = "Local metadata, neural section embeddings, link graph and hybrid search for a Markdown vault, in SQLite."
+readme = "SKILL.md"
+# 3.10 for the `str | None` annotations. macos ships 3.9, which does not fail
+# at a type check but at import, with `unsupported operand type(s) for |`.
+requires-python = ">=3.10"
+dependencies = [
+    # the only hard one: index_pkm_meta.py imports it at module level, and the
+    # cosine ranking is a matrix multiply
+    "numpy",
+]
+
+[project.optional-dependencies]
+# guarded by `try: from fastembed import TextEmbedding`, so search still answers
+# without it, lexically, and says in its output that it did
+embeddings = ["fastembed"]
+# searchd.py --watch only
+daemon = ["watchfiles"]
+all = ["fastembed", "watchfiles"]
+
+[tool.setuptools]
+py-modules = []
