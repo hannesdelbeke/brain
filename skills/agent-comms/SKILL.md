@@ -28,7 +28,9 @@ To separate message traffic across different projects or contexts:
 
 - **Token protection:** Automatically blocks messages containing API tokens (`ghp_`, `gho_`, `bearer `) or private keys.
 - **Pattern filtering:** If `$ROOT/.comms-filter` exists in the bus directory, each non-comment line is treated as a regex pattern. Messages matching any pattern are blocked before sending.
-- Overriding filter blocks in deliberate edge cases requires `COMMS_FORCE=1`.
+- **Size cap:** Bodies over 500 characters are refused, `COMMS_MAX_CHARS` to raise it. A long message charges every reader for it, so name the note or the sha rather than pasting what it holds.
+- **Rate cap:** More than 20 messages an agent an hour, rolling, is refused, `COMMS_MAX_PER_HOUR` to raise it. It turns a runaway exchange into an error somebody has to stop at.
+- Overriding a filter block, an oversized body or a burst in deliberate edge cases requires `COMMS_FORCE=1`.
 
 ## setting an agent up
 
@@ -56,13 +58,16 @@ Always clone git buses with an explicit HTTPS URL to avoid host SSH key mismatch
 
 In whichever always-loaded instruction file the agent reads (`CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, or `.cursorrules`):
 
-> You share a message bus with other agents. Your name on it is `<name>`.
-> Run `comms register "<your role>"` before your first task.
-> Run `comms read` at three points, every time: before you start a task, after you finish one, and before you tell the human you are done. Act on anything you find before continuing.
-> Use `comms send <peer> "<message>"` to ask a peer for something or hand them a result, and `comms peers` if you do not know who is out there.
+> You are `<name>` on a shared message bus. Register once with `COMMS_ME=<name> comms register "<your role>"`.
+> Run `COMMS_ME=<name> comms read` before you start a task, after you finish one, and before you tell the human you are done. Act on what you find before continuing.
+> `COMMS_ME=<name> comms send <peer> "..."` reaches one agent, `send all "..."` reaches everyone, `comms peers` lists them.
+> Keep a message under 500 characters and under three lines. State the thing and name the note, task file or commit sha — never paste context the reader can fetch for themselves.
+> Stuck: `send all "stuck: <what, what you tried, human or retry>"`. Cleared: `send all "unstuck: <what fixed it>"`.
+> Never send an acknowledgement, a thank-you, or a message whose content is that you agree. If an exchange runs three turns without either side moving, stop and tell the human rather than replying again.
 
 ## what to hold on to
 
 - **a message is a new file, and an existing file is never edited**, which removes locking and makes merge conflicts impossible; a rejected push only ever needs a rebase and retry
 - **there is no push**, so an agent that has gone idle never collects its mail; [[comms-watch.sh]] runs on machines hosting agents to wake them, while `COMMS_NOTIFY` on the sending side turns poll loops into push doorbells
 - **the bus is as private as its transport**, and on a git remote every message is in history permanently, so keep repos private where appropriate
+- **every message is paid for in tokens by everyone who reads it**, so `send` refuses a body over 500 characters and refuses an agent more than 20 messages an hour, `COMMS_MAX_CHARS` and `COMMS_MAX_PER_HOUR` to raise either. the unenforceable half of that rule is never acknowledging: a bus where every message earns a "got it" costs twice as much and says the same thing
