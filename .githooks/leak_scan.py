@@ -55,6 +55,7 @@ import sys
 # HMAC-SHA256 of each lowercased private term. See the docstring to add one.
 TERM_DIGESTS = {
     "29ddcc1c909e8cbb755aac6b2d7a27eab694952cc2be3d761e7d71912375be21",
+    "3de738af1da4d66d40b89201f8a85fa4f15103015aa6e6885781098e059d3eb8",
     "4730a3cff64f5fff39133e0ee379b716de51e9620f7cb6481c50569218a2187c",
     "4d9e631494da27bbf7a12ea3152db59a270124cdd5d957aa8b06df35faa6245d",
     "5036755867f017b3878e942f1e544da0d30d6ab9527537493f5ce0fdef1b1ee9",
