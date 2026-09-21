@@ -19,11 +19,13 @@ with the first useful section at mean rank 1.7 against 2.2. This front end
 answers agents and humans rather than other programs, and both pay more for a
 wrong first result than for the wait.
 
-The wait is 2 to 3 seconds per corpus through the daemon, not the 500ms the
-model costs on its own. A process holding the DirectML index session reranks
-20 candidates in 2.4s where the same call in a process without it takes 540ms,
-and the daemon holds that session by definition. `--no-rerank` is the way out
-until that is fixed. See `2026-08-31 turning the rerank on by default`.
+The wait is one cross-encoder batch however many corpora the search spans:
+the daemon merges first and scores the merged candidates once. It is still
+most of the latency, because a process holding the DirectML index session
+reranks 20 candidates in 2.4s where the same call in a process without it
+takes 540ms, and the daemon holds that session by definition. `--no-rerank`
+is the way out until that is fixed. See `2026-08-31 turning the rerank on by
+default`.
 
 Searches every registered corpus by default. The vault on this machine is two
 repositories, private notes and published ones, kept apart so their git
@@ -339,7 +341,7 @@ def main():
                         help="Treat the query as a note title and list unlinked mentions of it")
     parser.add_argument("--no-rerank", action="store_true",
                         help="Return the fused order instead of reordering the top with the "
-                             "cross-encoder. Saves 2 to 3 seconds per corpus and loses precision")
+                             "cross-encoder. Saves a second or two and loses precision")
     args = parser.parse_args()
 
     # --db names one database and the daemon answers from the corpora it was

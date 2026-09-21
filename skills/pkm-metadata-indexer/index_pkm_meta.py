@@ -141,6 +141,27 @@ def get_cross_encoder():
     return _RERANK_CACHE["model"]
 
 
+def fetch_section_texts(section_ids: list[int], cursor: sqlite3.Cursor) -> dict[int, str]:
+    """Fetch section text from FTS index for the given section IDs."""
+    if not section_ids:
+        return {}
+    placeholders = ",".join("?" * len(section_ids))
+    return dict(cursor.execute(
+        f"SELECT section_id, content FROM sections_fts WHERE section_id IN ({placeholders})",
+        section_ids,
+    ).fetchall())
+
+
+def rerank_documents(query: str, results: list[dict], documents: list[str]) -> list[dict]:
+    """Score documents with cross-encoder and sort by rerank_score.
+
+    Assigns rerank_score in place and returns sorted by descending score.
+    """
+    for result, score in zip(results, get_cross_encoder().rerank(query, documents)):
+        result["rerank_score"] = float(score)
+    return sorted(results, key=lambda result: -result["rerank_score"])
+
+
 def rerank_results(query: str, results: list[dict], cursor: sqlite3.Cursor) -> list[dict]:
     """Reorder fused results by reading each section against the query.
 
@@ -150,15 +171,9 @@ def rerank_results(query: str, results: list[dict], cursor: sqlite3.Cursor) -> l
     heading, which is what a vector-only hit for an image or an empty section has.
     """
     section_ids = [result["section_id"] for result in results]
-    placeholders = ",".join("?" * len(section_ids))
-    texts = dict(cursor.execute(
-        f"SELECT section_id, content FROM sections_fts WHERE section_id IN ({placeholders})",
-        section_ids,
-    ).fetchall())
+    texts = fetch_section_texts(section_ids, cursor)
     documents = [texts.get(result["section_id"]) or result["heading"] or "" for result in results]
-    for result, score in zip(results, get_cross_encoder().rerank(query, documents)):
-        result["rerank_score"] = float(score)
-    return sorted(results, key=lambda result: -result["rerank_score"])
+    return rerank_documents(query, results, documents)
 
 
 def attach_section_text(results: list[dict], cursor: sqlite3.Cursor,
