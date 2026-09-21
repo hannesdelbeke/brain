@@ -178,6 +178,136 @@ class CutoffTest(unittest.TestCase):
         self.assertEqual(cut, len(rows))
 
 
+HOUSE_FORMAT = """> [!summary] eli5
+> The daemon answers in 100ms without rerank and 3.6s with it.
+> **needs from you:** whether to default rerank off.
+
+> make search faster
+
+**why:** [[retrieval]]
+
+The cross-encoder is the whole of the difference. Everything else is noise.
+"""
+
+
+class SummarySnippetTest(unittest.TestCase):
+    """Why the notes written to the house format were the ones with no snippet.
+
+    The snippet is what a caller reads instead of the note, so a note with an
+    empty one is a note that has to be opened to be judged. Headings and
+    bullets were the only thing being read, and the house format opens with a
+    callout and a blockquote -- so the 60%-populated corpus was the handwritten
+    one and the 97% was the machine-written one, which is backwards.
+    """
+
+    def test_the_summary_callout_is_the_snippet(self):
+        snippet = PKM.extract_key_lines(HOUSE_FORMAT)
+        self.assertIn("The daemon answers in 100ms", snippet)
+        self.assertIn("needs from you", snippet)
+
+    def test_the_summary_comes_before_the_headings(self):
+        body = "## a heading\n\n> [!summary] eli5\n> the finding\n"
+        self.assertTrue(PKM.extract_key_lines(body).startswith("summary: the finding"))
+
+    def test_the_prompt_blockquote_is_not_mistaken_for_a_callout(self):
+        """A bare `>` quote is the prompt, not a summary; only `[!type]` opens one."""
+        self.assertEqual(dict(PKM.iter_callouts("> just a quote\n> more quote\n")), {})
+
+    def test_a_note_with_only_prose_still_gets_a_snippet(self):
+        """The fallback that makes an empty snippet mean an empty note."""
+        snippet = PKM.extract_key_lines("Bufferbloat is queueing delay under load.\n")
+        self.assertEqual(snippet, "Bufferbloat is queueing delay under load.")
+
+    def test_prose_is_a_last_resort_not_a_first_one(self):
+        body = "some prose first\n\n## the heading\n"
+        self.assertEqual(PKM.extract_key_lines(body), "## the heading")
+
+    def test_headings_and_bullets_still_work_unchanged(self):
+        """Machine-written notes were already at 97%; this must not move them."""
+        body = "## outcome\n- shipped the dedupe\n- [ ] land the branch\n"
+        self.assertEqual(PKM.extract_key_lines(body),
+                         "## outcome\n- shipped the dedupe\n- [ ] land the branch")
+
+    def test_rules_and_fences_never_become_a_snippet(self):
+        self.assertEqual(PKM.extract_key_lines("---\n\n***\n\n```\n```\n"), "")
+
+    def test_a_note_of_only_links_is_summarised_by_its_links(self):
+        """323 measured stubs whose body is a column of wikilinks and nothing else.
+
+        The links are the only thing such a note says. Dropping them left the
+        caller a filename and no way to tell what it relates to but a read.
+        """
+        body = "[[second brain]]\n[[knowledge]]\n[[knowledge graph]]\n"
+        self.assertEqual(PKM.extract_key_lines(body),
+                         "second brain, knowledge, knowledge graph")
+
+    def test_a_link_alias_is_reduced_to_its_target(self):
+        self.assertEqual(PKM.extract_key_lines("[[AWS Lambda function|Lambda function]]\n"),
+                         "AWS Lambda function")
+
+    def test_links_are_a_last_resort_behind_every_other_source(self):
+        body = "[[a note]]\n\nThe finding is that the sign is the boundary.\n"
+        self.assertEqual(PKM.extract_key_lines(body),
+                         "The finding is that the sign is the boundary.")
+
+    def test_a_one_line_callout_falls_back_to_its_title(self):
+        self.assertEqual(PKM.extract_key_lines("> [!summary] the whole finding\n"),
+                         "summary: the whole finding")
+
+    def test_a_todo_callout_is_taken_when_there_is_no_summary(self):
+        body = "> [!todo] next\n> **next:** land the branch\n"
+        self.assertIn("land the branch", PKM.extract_key_lines(body))
+
+    def test_the_line_cap_still_holds(self):
+        body = "\n".join(f"- item {index}" for index in range(40))
+        self.assertEqual(len(PKM.extract_key_lines(body).splitlines()), 15)
+
+    def test_a_long_line_is_truncated(self):
+        snippet = PKM.extract_key_lines("- " + "x" * 400)
+        self.assertTrue(snippet.endswith("..."))
+        self.assertLessEqual(len(snippet), 203)
+
+    def test_the_whole_snippet_is_capped_not_just_each_line(self):
+        """Fifteen 200-char lines is 3k of snippet on a payload sold as cheap."""
+        body = "\n".join("- " + "x" * 190 for _ in range(15))
+        self.assertLessEqual(len(PKM.extract_key_lines(body)), 603)
+
+    def test_an_empty_note_is_the_only_empty_snippet(self):
+        self.assertEqual(PKM.extract_key_lines(""), "")
+
+    def test_any_callout_beats_no_snippet_at_all(self):
+        """Measured: notes whose only structure was a `[!note]` block came back blank."""
+        body = "> [!NOTE]- Power outlet\n> suitable for accessories up to 12A\n"
+        self.assertEqual(PKM.extract_key_lines(body),
+                         "note: suitable for accessories up to 12A")
+
+    def test_a_note_that_is_only_a_table_gets_its_rows(self):
+        body = "| Name | Dose |\n| ---- | ---- |\n| Ginkgo Biloba | 6000mg |\n"
+        snippet = PKM.extract_key_lines(body)
+        self.assertIn("Ginkgo Biloba 6000mg", snippet)
+        # The separator row is punctuation, not content.
+        self.assertNotIn("----", snippet)
+
+    def test_a_note_that_is_only_a_quote_gets_the_quote(self):
+        body = "> In 2016 a group of scientists began wondering the same thing.\n"
+        self.assertEqual(PKM.extract_key_lines(body),
+                         "In 2016 a group of scientists began wondering the same thing.")
+
+    def test_a_definition_opening_in_bold_is_prose_not_a_bullet(self):
+        """Measured: 44 glossary notes came back blank because `**` is not `* `."""
+        body = "**AWS Regions** -- separate geographic areas that AWS uses.\n"
+        self.assertEqual(PKM.extract_key_lines(body),
+                         "**AWS Regions** -- separate geographic areas that AWS uses.")
+
+    def test_a_starred_bullet_is_a_bullet_and_is_still_collected(self):
+        """`* ` is a list in Markdown too, and it must not fall through to prose."""
+        self.assertEqual(PKM.extract_key_lines("* starred item\n"), "* starred item")
+
+    def test_a_summary_callout_still_outranks_a_note_callout(self):
+        body = "> [!note] aside\n> the aside\n\n> [!summary] eli5\n> the finding\n"
+        self.assertEqual(PKM.extract_key_lines(body), "summary: the finding")
+
+
 class PrintResultsTest(unittest.TestCase):
     """What the caller actually sees, which is the only place the saving lands."""
 
