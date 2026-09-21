@@ -171,6 +171,7 @@ def scan_branches(root: Path, db_path: Path | None = None, resume: bool = True):
     notes, sections, links, errors = [], [], [], []
 
     if not (root / ".git").exists():
+        errors.append(("", "status", "not a git repository"))
         return notes, sections, links, errors
 
     state = ref_state(root)
@@ -182,11 +183,17 @@ def scan_branches(root: Path, db_path: Path | None = None, resume: bool = True):
 
     branch = default_branch(root)
     if branch is None:
+        errors.append(("", "status", "no default branch (main/master) found"))
         return notes, sections, links, errors
     default_ref = f"origin/{branch}"
     default_blobs = tree_blobs(root, default_ref)
 
-    for ref in remote_refs(root, branch):
+    refs_to_scan = remote_refs(root, branch)
+    if not refs_to_scan:
+        errors.append(("", "status", f"no remote refs besides {default_ref} and origin/HEAD"))
+        return notes, sections, links, errors
+
+    for ref in refs_to_scan:
         short_ref = ref[len("origin/"):]
         try:
             paths = contributed_paths(root, default_ref, ref, default_blobs)
@@ -323,11 +330,23 @@ def main() -> int:
         parser.error("root path required")
 
     notes, sections, links, errors = scan_branches(Path(arguments.root).resolve())
-    print(f"{len(notes)} notes, {len(sections)} sections, {len(links)} links, {len(errors)} errors")
+
+    # Separate status messages from actual errors
+    status_messages = [(p, k, m) for p, k, m in errors if k == "status"]
+    actual_errors = [(p, k, m) for p, k, m in errors if k != "status"]
+
+    print(f"{len(notes)} notes, {len(sections)} sections, {len(links)} links, {len(actual_errors)} errors")
+
+    if status_messages:
+        for error_path, kind, message in status_messages:
+            print(f"  status: {message}")
+
     for row in notes:
         print(f"  {row[0]}")
-    for error_path, kind, message in errors:
+
+    for error_path, kind, message in actual_errors:
         print(f"  error {error_path} ({kind}): {message}")
+
     return 0
 
 

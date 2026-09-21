@@ -60,7 +60,9 @@ class BranchScannerTest(unittest.TestCase):
 
     def paths(self):
         notes, _, _, errors = index_branches.scan_branches(self.root)
-        self.assertEqual(errors, [], f"unexpected errors: {errors}")
+        # Filter out status messages, only fail on actual errors
+        actual_errors = [(p, k, m) for p, k, m in errors if k != "status"]
+        self.assertEqual(actual_errors, [], f"unexpected errors: {actual_errors}")
         return {row[0] for row in notes}
 
     # the empty cases
@@ -68,15 +70,38 @@ class BranchScannerTest(unittest.TestCase):
     def test_not_a_git_repository_returns_empty(self):
         outside = Path(self.temp_dir.name) / "plain"
         outside.mkdir()
-        self.assertEqual(index_branches.scan_branches(outside), ([], [], [], []))
+        notes, sections, links, errors = index_branches.scan_branches(outside)
+        self.assertEqual((notes, sections, links), ([], [], []))
+        # Should have a status message explaining why
+        status_messages = [(p, k, m) for p, k, m in errors if k == "status"]
+        self.assertEqual(len(status_messages), 1)
+        self.assertIn("not a git repository", status_messages[0][2])
 
     def test_no_default_branch_returns_empty(self):
         self.git("update-ref", "-d", "refs/remotes/origin/main")
         self.set_remote_ref("some-branch", "HEAD")
-        self.assertEqual(index_branches.scan_branches(self.root), ([], [], [], []))
+        notes, sections, links, errors = index_branches.scan_branches(self.root)
+        self.assertEqual((notes, sections, links), ([], [], []))
+        # Should have a status message explaining why
+        status_messages = [(p, k, m) for p, k, m in errors if k == "status"]
+        self.assertEqual(len(status_messages), 1)
+        self.assertIn("no default branch", status_messages[0][2])
 
     def test_no_remote_refs_besides_default_returns_empty(self):
         self.assertEqual(self.paths(), set())
+
+    def test_no_remote_refs_besides_default_reports_status(self):
+        """The normal case when all branches are merged: 0 notes is correct, not broken.
+
+        This is the case that was indistinguishable from a broken indexer, causing
+        the "keeps coming back" problem. The fix: a status message saying why.
+        """
+        notes, sections, links, errors = index_branches.scan_branches(self.root)
+        self.assertEqual(len(notes), 0)
+        status_messages = [(p, k, m) for p, k, m in errors if k == "status"]
+        self.assertEqual(len(status_messages), 1)
+        path, kind, message = status_messages[0]
+        self.assertIn("no remote refs besides origin/main", message)
 
     # the filter
 
