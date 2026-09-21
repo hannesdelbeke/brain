@@ -75,6 +75,13 @@ QUERY_THREADS = 1
 RERANK_MODEL = "Xenova/ms-marco-MiniLM-L-6-v2"
 RERANK_CANDIDATES = 20
 
+# Where a cross-encoder logit stops meaning "this section answers the question".
+# The sign is the model's own decision boundary and it is the one number in a
+# result that means the same thing from one query to the next: measured on this
+# vault, every section above zero was on topic, and the three queries with
+# nothing to find scored every section near -11.
+ANSWER_LOGIT = 0.0
+
 # How much of a matching section travels back with the result. Sections here run
 # a median of 735 characters and a 90th percentile of 815, so 700 returns most of
 # them whole and truncates the tail rather than the typical case. Ten results at
@@ -559,6 +566,34 @@ def last_index_run(db_path) -> str | None:
         return connection.execute("SELECT MAX(completed_at) FROM index_runs").fetchone()[0]
     except sqlite3.DatabaseError:  # no index_runs table yet, or not a database
         return None
+    finally:
+        connection.close()
+
+
+def last_index_status(db_path) -> list[str]:
+    """What the last run said about an index that came out empty on purpose.
+
+    An empty corpus and a broken one look identical from the outside, and the
+    branches corpus is empty most of the time by design -- it holds what is on
+    an unmerged branch, and most days nothing is. Every time it was noticed it
+    was investigated again from scratch. The indexer now records a `status` row
+    for each reason it had nothing to index, and this lifts the latest run's
+    rows so /health can print the reason instead of a zero.
+    """
+    if not Path(db_path).exists():
+        return []
+    connection = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    try:
+        rows = connection.execute(
+            """
+            SELECT message FROM index_errors
+            WHERE stage = 'status' AND run_id = (SELECT MAX(id) FROM index_runs)
+            ORDER BY rowid
+            """
+        ).fetchall()
+        return [message for (message,) in rows]
+    except sqlite3.DatabaseError:  # no index_errors table yet, or not a database
+        return []
     finally:
         connection.close()
 

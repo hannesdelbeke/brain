@@ -189,6 +189,9 @@ CUTOFF_WINDOW = 8
 # The sign is the model's own decision boundary and it holds across queries, which
 # no other number here does: measured on this vault, every section above zero was
 # on topic and the queries with nothing to find scored every section near -11.
+# Mirrors `index_pkm_meta.ANSWER_LOGIT` rather than importing it, because that
+# module pulls numpy and fastembed and costs 1.3s, which is most of the budget
+# for a query answered by the daemon. Change both or neither.
 ANSWER_LOGIT = 0.0
 
 

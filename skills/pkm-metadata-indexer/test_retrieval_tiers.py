@@ -112,6 +112,95 @@ class DedupeByPathTest(unittest.TestCase):
                          SEARCH_VAULT.dedupe_by_path([dict(row) for row in rows]))
 
 
+class CorpusFloorTest(unittest.TestCase):
+    """One slot per corpus that has a real answer, so a big corpus cannot sweep."""
+
+    @staticmethod
+    def rows(*pairs):
+        return [{"vault": vault, "path": f"{vault}{index}.md", "score": 0.02,
+                 "rerank_score": logit}
+                for index, (vault, logit) in enumerate(pairs)]
+
+    def test_a_buried_answer_from_another_corpus_is_pulled_into_the_last_slot(self):
+        rows = self.rows(("traces", 7.0), ("traces", 6.0), ("traces", 5.0),
+                         ("notes", 1.5))
+        kept = SEARCHD.apply_corpus_floor(rows, 3)
+        self.assertEqual([row["vault"] for row in kept], ["traces", "traces", "notes"])
+
+    def test_survivors_stay_in_score_order_so_the_cutoff_still_reads(self):
+        rows = self.rows(("traces", 7.0), ("traces", 6.0), ("notes", 1.5))
+        kept = SEARCHD.apply_corpus_floor(rows, 2)
+        self.assertEqual([row["rerank_score"] for row in kept], [7.0, 1.5])
+
+    def test_a_corpus_below_the_answer_bar_is_given_nothing(self):
+        """The floor keeps a real answer visible. It never promotes noise."""
+        rows = self.rows(("traces", 7.0), ("traces", 6.0), ("notes", -8.0))
+        kept = SEARCHD.apply_corpus_floor(rows, 2)
+        self.assertEqual([row["vault"] for row in kept], ["traces", "traces"])
+
+    def test_without_a_rerank_it_does_nothing_but_truncate(self):
+        """Fused scores tie every corpus's rank-1 row, so the merge is already fair."""
+        rows = [{"vault": "traces", "path": "a.md", "score": 0.03},
+                {"vault": "traces", "path": "b.md", "score": 0.02},
+                {"vault": "notes", "path": "c.md", "score": 0.01}]
+        self.assertEqual(SEARCHD.apply_corpus_floor(rows, 2), rows[:2])
+
+    def test_one_corpus_alone_is_unchanged(self):
+        rows = self.rows(("notes", 7.0), ("notes", 6.0), ("notes", 5.0))
+        self.assertEqual(SEARCHD.apply_corpus_floor(rows, 2), rows[:2])
+
+    def test_more_answering_corpora_than_slots_takes_the_best_of_them(self):
+        rows = self.rows(("a", 7.0), ("b", 6.0), ("c", 5.0))
+        kept = SEARCHD.apply_corpus_floor(rows, 2)
+        self.assertEqual([row["vault"] for row in kept], ["a", "b"])
+
+
+class IndexStatusTest(unittest.TestCase):
+    """Why a corpus is empty, which is the difference between normal and broken."""
+
+    def setUp(self):
+        self.db = Path(__file__).with_name("test_status_scratch.db")
+        self.db.unlink(missing_ok=True)
+        self.connection = sqlite3.connect(self.db)
+        self.connection.executescript(
+            """
+            CREATE TABLE index_runs (id INTEGER PRIMARY KEY, completed_at TEXT);
+            CREATE TABLE index_errors (run_id INTEGER, path TEXT, stage TEXT, message TEXT);
+            INSERT INTO index_runs (id, completed_at) VALUES (1, '2026-09-20'), (2, '2026-09-21');
+            """
+        )
+        self.connection.commit()
+
+    def tearDown(self):
+        self.connection.close()
+        self.db.unlink(missing_ok=True)
+
+    def add(self, run_id, stage, message):
+        self.connection.execute(
+            "INSERT INTO index_errors (run_id, path, stage, message) VALUES (?, '', ?, ?)",
+            (run_id, stage, message))
+        self.connection.commit()
+
+    def test_the_reason_a_corpus_is_empty_survives_to_the_reader(self):
+        self.add(2, "status", "no remote refs besides origin/main and origin/HEAD")
+        self.assertEqual(PKM.last_index_status(self.db),
+                         ["no remote refs besides origin/main and origin/HEAD"])
+
+    def test_only_the_latest_run_is_reported(self):
+        """A stale reason is worse than none: it describes a state that has passed."""
+        self.add(1, "status", "not a git repository")
+        self.add(2, "status", "no default branch (main/master) found")
+        self.assertEqual(PKM.last_index_status(self.db),
+                         ["no default branch (main/master) found"])
+
+    def test_a_parse_failure_is_an_error_not_a_status(self):
+        self.add(2, "parse", "could not read note.md")
+        self.assertEqual(PKM.last_index_status(self.db), [])
+
+    def test_a_missing_database_is_silent_rather_than_a_crash(self):
+        self.assertEqual(PKM.last_index_status(self.db.with_name("absent.db")), [])
+
+
 class CutoffTest(unittest.TestCase):
     """Where the answers stop, on the one score that means the same thing twice."""
 
