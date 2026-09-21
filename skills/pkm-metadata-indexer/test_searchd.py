@@ -575,6 +575,49 @@ class StaleIndexTest(unittest.TestCase):
         self.assertFalse(self.vault.reindexing)
 
 
+class MergedRerankTest(unittest.TestCase):
+    """The cross-encoder runs once over merged candidates, not per-corpus."""
+
+    def test_cross_encoder_invoked_once_in_multi_corpus_search(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [v.close() for v in VAULTS])
+
+        # Two corpora with distinct content
+        alpha = build_vault(Path(temp_dir.name) / "alpha", "alpha", {
+            "note1.md": "## First\nAlpha content here.\n",
+            "note2.md": "## Second\nMore alpha text.\n",
+        })
+        beta = build_vault(Path(temp_dir.name) / "beta", "beta", {
+            "note3.md": "## Third\nBeta content here.\n",
+            "note4.md": "## Fourth\nMore beta text.\n",
+        })
+
+        # Set up STATE (needed by do_search)
+        previous, SEARCHD.STATE = SEARCHD.STATE, SEARCHD.State([alpha, beta])
+        self.addCleanup(setattr, SEARCHD, "STATE", previous)
+
+        # Track cross-encoder invocations
+        invocations = []
+        original_rerank = SEARCHD.pkm.get_cross_encoder().rerank
+
+        def tracked_rerank(query, documents):
+            invocations.append(len(documents))
+            return original_rerank(query, documents)
+
+        SEARCHD.pkm.get_cross_encoder().rerank = tracked_rerank
+        self.addCleanup(setattr, SEARCHD.pkm.get_cross_encoder(), "rerank", original_rerank)
+
+        # Search across both corpora with rerank enabled
+        SEARCHD.do_search([alpha, beta], "content", limit=5, rerank=True)
+
+        # Cross-encoder should be invoked exactly once for the merged candidates
+        self.assertEqual(len(invocations), 1,
+                        f"Expected 1 cross-encoder invocation, got {len(invocations)}")
+        self.assertGreater(invocations[0], 0,
+                          "Cross-encoder should process at least one document")
+
+
 class MatrixCacheTest(unittest.TestCase):
     """A reindex has to reach a search, or the daemon serves the vault it started with."""
 

@@ -484,10 +484,56 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dic
             "raw_sim": row["raw_sim"],
             "snippet": row["snippet"],
             "text": row.get("text", ""),
+            "section_id": row["section_id"],
             **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {}),
         }
         for row in rows
     ]
+
+
+def rerank_merged(vaults: list[Vault], query: str, results: list[dict]) -> list[dict]:
+    """Score the merged candidate set with one cross-encoder pass.
+
+    The candidates span several databases, and one cursor cannot read them all,
+    so the text is fetched per corpus and the model is called once over the
+    union. Reranking the text already attached to each row would have been
+    simpler and was rejected: that copy is truncated to SECTION_TEXT_CHARS,
+    where the model reads roughly four times as far, and the daemon would then
+    disagree with the in-process fallback on the same query.
+
+    Keys are (vault, section_id). A section id is only unique within its own
+    database, so a single dict keyed on the id alone hands one corpus another
+    corpus's text.
+    """
+    if not results or not pkm.HAS_FASTEMBED:
+        return results
+
+    by_vault: dict[str, list[dict]] = {}
+    for result in results:
+        by_vault.setdefault(result["vault"], []).append(result)
+
+    vault_map = {vault.name: vault for vault in vaults}
+    texts: dict[tuple[str, int], str] = {}
+    for name, rows in by_vault.items():
+        vault = vault_map.get(name)
+        if vault is None or not vault.db.exists():
+            continue
+        # A corpus that cannot be read loses its text, not its slots: the rows
+        # fall back to their headings below and still get scored.
+        try:
+            connection = sqlite3.connect(f"file:{vault.db}?mode=ro", uri=True)
+            try:
+                found = pkm.fetch_section_texts([row["section_id"] for row in rows],
+                                                connection.cursor())
+            finally:
+                connection.close()
+        except sqlite3.Error:
+            continue
+        texts.update({(name, section_id): text for section_id, text in found.items()})
+
+    documents = [texts.get((row["vault"], row["section_id"])) or row["heading"] or ""
+                 for row in results]
+    return pkm.rerank_documents(query, results, documents)
 
 
 def dedupe_by_path(results: list[dict]) -> list[dict]:
@@ -584,6 +630,10 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     rank, which is the only comparison between two separate indexes that means
     anything: a bm25 score from one corpus and a bm25 score from another are not
     on the same scale, their positions are.
+
+    When rerank is enabled, the cross-encoder runs once over the merged,
+    deduplicated candidate set rather than per-corpus, so N corpora cost the
+    same as one.
     """
     began = time.perf_counter()
     STATE.last_query = time.time()
@@ -593,22 +643,26 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     # come back four results short.
     fetch = min(max(limit * 3, limit), 30)
     for vault in vaults:
-        results += rank(vault, query, fetch, rerank)
+        results += rank(vault, query, fetch, rerank=False)
         missing = vault.stale()
         indexed_at[vault.name] = missing["indexed_at"]
         if missing["count"] or missing.get("no_index"):
             stale[vault.name] = {**missing, "reindexing": reindex and kick_reindex(vault)}
-    if len(vaults) > 1:
-        # A rerank score is the one number in this payload that means the same
-        # thing in every corpus: the same cross-encoder read the same query
-        # against each section. Sorting the merge on the fused score instead
-        # threw the rerank away the moment more than one corpus answered, which
-        # is the default, so the flag that costs seconds bought nothing.
-        if rerank and all("rerank_score" in row for row in results):
-            results.sort(key=lambda row: row["rerank_score"], reverse=True)
-        else:
-            results.sort(key=lambda row: row["score"], reverse=True)
-    results = apply_corpus_floor(dedupe_by_path(results), limit)
+    # Fused rank is the only comparison between two separate indexes that means
+    # anything: a bm25 score from one corpus and a bm25 score from another are
+    # not on the same scale, their positions are.
+    results.sort(key=lambda row: row["score"], reverse=True)
+    # Deduping before the rerank rather than after is what makes the cut worth
+    # paying for. The model reads a fixed number of candidates either way, so
+    # spending them on distinct notes instead of several sections of the same
+    # note is free recall.
+    results = dedupe_by_path(results)
+    if rerank:
+        results = rerank_merged(vaults, query, results[:pkm.RERANK_CANDIDATES])
+    results = apply_corpus_floor(results, limit)
+    # Carried only so the rerank could find the text; not part of the wire shape.
+    for row in results:
+        row.pop("section_id", None)
     name = ",".join(vault.name for vault in vaults)
     payload = {
         "vault": name,
