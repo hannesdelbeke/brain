@@ -476,10 +476,30 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dic
             "score": round(row["score"], 6),
             "raw_sim": row["raw_sim"],
             "snippet": row["snippet"],
+            "text": row.get("text", ""),
             **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {}),
         }
         for row in rows
     ]
+
+
+def dedupe_by_path(results: list[dict]) -> list[dict]:
+    """Keep the best-scoring section per note, in rank order.
+
+    Ranking is over sections and reading is over notes, so two sections of one
+    note are two results the caller can only act on once. A measured default
+    query filled ten slots with seven notes, twice with the same note at the same
+    line, which is three slots spent saying nothing the caller did not already
+    have. The first occurrence is the best one because the list arrives sorted.
+    """
+    seen, kept = set(), []
+    for row in results:
+        key = (row.get("vault", ""), row["path"])
+        if key in seen:
+            continue
+        seen.add(key)
+        kept.append(row)
+    return kept
 
 
 def kick_reindex(vault: Vault) -> bool:
@@ -522,15 +542,27 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     began = time.perf_counter()
     STATE.last_query = time.time()
     results, stale, indexed_at = [], {}, {}
+    # Ask each corpus for more than the caller wants, because dedupe removes rows
+    # and a query answered by one note with four strong sections would otherwise
+    # come back four results short.
+    fetch = min(max(limit * 3, limit), 30)
     for vault in vaults:
-        results += rank(vault, query, limit, rerank)
+        results += rank(vault, query, fetch, rerank)
         missing = vault.stale()
         indexed_at[vault.name] = missing["indexed_at"]
         if missing["count"] or missing.get("no_index"):
             stale[vault.name] = {**missing, "reindexing": reindex and kick_reindex(vault)}
     if len(vaults) > 1:
-        results.sort(key=lambda row: row["score"], reverse=True)
-        results = results[:limit]
+        # A rerank score is the one number in this payload that means the same
+        # thing in every corpus: the same cross-encoder read the same query
+        # against each section. Sorting the merge on the fused score instead
+        # threw the rerank away the moment more than one corpus answered, which
+        # is the default, so the flag that costs seconds bought nothing.
+        if rerank and all("rerank_score" in row for row in results):
+            results.sort(key=lambda row: row["rerank_score"], reverse=True)
+        else:
+            results.sort(key=lambda row: row["score"], reverse=True)
+    results = dedupe_by_path(results)[:limit]
     name = ",".join(vault.name for vault in vaults)
     payload = {
         "vault": name,

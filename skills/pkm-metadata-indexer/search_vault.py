@@ -32,10 +32,19 @@ Name one with `--vault` when it matters.
 
 Each result header names the corpus that answered and when that corpus was last
 indexed, and any file the index has not read yet is listed under the results.
+
+Results carry the text of the section that matched, not just its path, and the
+list is cut where the scores fall away. A path and a heading cannot be judged
+without opening the note, and the note costs thousands of tokens against the few
+hundred of the section; a third of everything read out of this vault was read to
+find out the note was wrong. The cut is printed rather than applied, so the
+weaker results are still listed by heading when it is wrong. A flat list says so
+instead of inventing a boundary.
 """
 
 import argparse
 import json
+import math
 import subprocess
 import sys
 import urllib.error
@@ -87,11 +96,33 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: 
 def direct_search(query: str, top: int, db: str | None, rerank: bool = True):
     import index_pkm_meta as pkm  # numpy and fastembed cost ~1.3s to import, skip them for a daemon hit
 
-    return [
+    rows = pkm.search_index(query, db_path=db, limit=max(top * 3, top), rerank=rerank)
+    results = [
         {"path": row["path"], "heading": row["heading"],
-         "line": row["start_line"], "score": row["score"]}
-        for row in pkm.search_index(query, db_path=db, limit=top, rerank=rerank)
+         "line": row["start_line"], "score": row["score"],
+         "text": row.get("text", ""),
+         **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {})}
+        for row in rows
     ]
+    return dedupe_by_path(results)[:top]
+
+
+def dedupe_by_path(results: list[dict]) -> list[dict]:
+    """Keep the best-scoring section per note, in rank order.
+
+    The daemon does this for its own answers. Repeating it here keeps the two
+    paths agreeing, which is the whole reason the ranking itself lives in one
+    place: a direct search that returned a note three times would look like a
+    different search rather than the same one without a daemon.
+    """
+    seen, kept = set(), []
+    for row in results:
+        key = (row.get("vault", ""), row["path"])
+        if key in seen:
+            continue
+        seen.add(key)
+        kept.append(row)
+    return kept
 
 
 def direct_unlinked(note: str, top: int, db: str | None):
@@ -145,6 +176,125 @@ def direct_stale(db: str | None, reindex: bool) -> dict:
         spawn_reindex(root, database)
         missing["reindexing"] = True
     return missing
+
+
+# How far a result must fall below the best one before the list is called over.
+# Below this the gap is noise: a fused score of 0.0328 against 0.0246 is rank 1
+# against rank 2 on one side of the fusion instead of both, not a worse answer.
+CUTOFF_DROP = 0.15
+# Only the head of the list is searched for the cut. A drop at rank 9 is not a
+# boundary worth reporting, because nobody was going to read rank 9 anyway.
+CUTOFF_WINDOW = 8
+# Where a cross-encoder logit stops meaning "this section answers the question".
+# The sign is the model's own decision boundary and it holds across queries, which
+# no other number here does: measured on this vault, every section above zero was
+# on topic and the queries with nothing to find scored every section near -11.
+ANSWER_LOGIT = 0.0
+
+
+def sigmoid(value: float) -> float:
+    return 1.0 / (1.0 + math.exp(-value))
+
+
+def fused_cutoff(results: list[dict]) -> tuple[int, str]:
+    """Find the cut from RRF scores alone, for when there is no rerank to read.
+
+    A fused score is a sum of `1/(60 + rank)` capped at 0.0328, so it says nothing
+    about whether a section answers anything -- only how the two retrievers ranked
+    it relative to each other. The largest relative drop is all such a score can
+    support, and when the list is flat the honest answer is that it is flat.
+    """
+    values = [max(row["score"], 0.0) for row in results]
+    top = values[0]
+    if top <= 0:
+        return len(results), ""
+    relative = [value / top for value in values]
+    window = min(CUTOFF_WINDOW, len(relative) - 1)
+    drops = [(relative[index] - relative[index + 1], index + 1) for index in range(window)]
+    best_drop, cut = max(drops, default=(0.0, len(results)))
+    if best_drop < CUTOFF_DROP:
+        return len(results), ("no clear cutoff without rerank, these score within "
+                              f"{round(best_drop * 100)}% of each other")
+    return cut, f"results below {cut} score under {round(relative[cut] * 100)}% of the best"
+
+
+def find_cutoff(results: list[dict]) -> tuple[int, str]:
+    """Return how many results are worth reading, and why that is the number.
+
+    An agent reading search output has no way to tell where the answers stop and
+    the vocabulary matches start, so it reads all of them; that is where a third
+    of the retrieval budget measured on this vault went.
+
+    The cross-encoder logit is the only number in a result that means the same
+    thing from one query to the next, because it is a judgement about this query
+    and this section rather than a position in a list, and its sign is the model's
+    own decision about whether the section answers the question. So the cut is the
+    boundary the model already drew, and nothing more.
+
+    Looking for a cliff among the sections that did qualify was tried and removed.
+    It is the same mistake as reading a rank as a score: on a query where all eight
+    results were genuinely on topic the widest gap fell between ranks 1 and 2 and
+    cut seven good answers, because a gap between two strong scores separates very
+    good from good, not answers from noise. Squashing the logits through a sigmoid
+    to compare them has the mirror failure -- a real spread of 6.9 down to 4.3
+    comes back as 0.9990 to 0.9860, so every list looks flat.
+
+    Three outcomes, each of which the caller has to act on differently: nothing
+    here answers the question, the answers stop at rank N, or all of these
+    answer it and there is no boundary to report.
+    """
+    if not results:
+        return 0, ""
+    if not all("rerank_score" in row for row in results):
+        return fused_cutoff(results)
+
+    logits = [row["rerank_score"] for row in results]
+    answers = [index for index, logit in enumerate(logits) if logit > ANSWER_LOGIT]
+    if not answers:
+        return 0, (f"nothing here answers this; the best section scored "
+                   f"{sigmoid(logits[0]):.0%} and the rest lower. Rephrase, or accept "
+                   "that the vault does not cover it -- reading these will not help")
+
+    # Contiguous because the list is sorted by the same logit being tested.
+    cut = answers[-1] + 1
+    if cut >= len(results):
+        return cut, ""
+    return cut, (f"results below {cut} scored under {sigmoid(logits[cut]):.0%}, "
+                 f"against {sigmoid(logits[cut - 1]):.0%} at {cut}")
+
+
+def print_results(query: str, source: str, results: list[dict]):
+    """Print the head with the text that matched and the tail with headings only.
+
+    A path and a heading cannot be judged, so a caller given only those opens the
+    note, and the note is thousands of tokens against the few hundred of the
+    section that actually matched. Printing the section for the results that are
+    worth reading and the heading for the ones that are not is the whole saving:
+    the head can be judged without a read, and the tail is cheap to carry in case
+    the cutoff was wrong.
+    """
+    print(f'\n--- Semantic Search Results for: "{query}" ({source}) ---')
+    cut, reason = find_cutoff(results)
+    if cut == 0 and reason:
+        # Before the list rather than after it, because the point of the line is
+        # that the list below is not worth reading and a warning underneath it
+        # arrives after the caller has already read it.
+        print(f"\n   ! {reason}\n")
+    for index, row in enumerate(results, 1):
+        where = f"{row['vault']}/" if "vault" in row else ""
+        # Whichever number put the list in this order. Printing the fused score
+        # beside a rerank ordering gave a column that ran 0.025, 0.031, 0.031 --
+        # readable as the ranking being broken rather than as two different scores.
+        score = sigmoid(row["rerank_score"]) if "rerank_score" in row else row["score"]
+        print(f"{index}. [{score:.3f}] {where}{row['path']} "
+              f"(line {row['line']}) -> {row['heading']}")
+        if index <= cut and row.get("text"):
+            print(f"      {row['text']}")
+        if index == cut and cut < len(results):
+            print(f"\n   --- stop here: {reason}. "
+                  f"{len(results) - cut} weaker result(s) follow, headings only ---")
+    if reason and 0 < cut >= len(results):
+        print(f"\n   ! {reason}")
 
 
 def print_stale(stale: dict):
@@ -228,11 +378,7 @@ def main():
         stale = {"vault": missing} if missing["count"] or missing.get("no_index") else {}
         source = f"direct, {order} @ {(missing['indexed_at'] or 'never')[:19]}"
 
-    print(f'\n--- Semantic Search Results for: "{args.query}" ({source}) ---')
-    for index, row in enumerate(results, 1):
-        where = f"{row['vault']}/" if "vault" in row else ""
-        print(f"{index}. [{row['score']:.3f}] {where}{row['path']} "
-              f"(line {row['line']}) -> {row['heading']}")
+    print_results(args.query, source, results)
     print_stale(stale)
 
 
