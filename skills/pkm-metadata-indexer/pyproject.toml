@@ -36,6 +36,7 @@ embeddings = ["fastembed"]
 # searchd.py --watch only
 daemon = ["watchfiles"]
 all = ["fastembed", "watchfiles"]
+mcp = ["mcp<2"]
 
 [tool.setuptools]
 py-modules = []
