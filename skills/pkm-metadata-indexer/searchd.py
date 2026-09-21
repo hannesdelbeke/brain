@@ -387,9 +387,16 @@ class Vault:
             connection.close()
 
     def describe(self) -> dict:
-        return {"name": self.name, "root": str(self.root), "db": str(self.db),
-                "queries": self.queries, "watched": self.watched,
-                "indexed_at": pkm.last_index_run(self.db), **self.counts()}
+        described = {"name": self.name, "root": str(self.root), "db": str(self.db),
+                     "queries": self.queries, "watched": self.watched,
+                     "indexed_at": pkm.last_index_run(self.db), **self.counts()}
+        # Only when there is something to say. A corpus with notes in it needs no
+        # explanation, and an empty `status` key on every other vault would train
+        # the reader to skip the one place the answer is.
+        status = pkm.last_index_status(self.db)
+        if status:
+            described["status"] = status
+        return described
 
 
 class State:
@@ -502,6 +509,45 @@ def dedupe_by_path(results: list[dict]) -> list[dict]:
     return kept
 
 
+def apply_corpus_floor(results: list[dict], limit: int) -> list[dict]:
+    """Keep one slot for every corpus that has a real answer, then fill by score.
+
+    The corpora are wildly uneven -- one session-log corpus held 70% of the
+    indexed sections, and a session log restates the same thing a dozen ways, so
+    a dozen of its sections can score just above the one section elsewhere that
+    actually answers. The loser is always the small corpus, and the caller never
+    learns the answer existed.
+
+    "Real answer" is the cross-encoder's own sign, not a rank: a logit above
+    ANSWER_LOGIT is the model saying this section answers the query, and it is
+    comparable between corpora because the same model read the same query
+    against each. A corpus whose best row is below that bar is given nothing,
+    so this never promotes noise to keep a corpus represented.
+
+    A no-op without a rerank, deliberately. The fused score is a sum of
+    `1/(k + rank)` terms, so every corpus's rank-1 row scores identically to
+    every other's, a stable sort already interleaves them by rank, and there is
+    nothing to correct. Order is preserved: survivors come back in the order
+    they arrived, so the list stays sorted by score for the cutoff downstream.
+    """
+    if limit <= 0 or not results or not all("rerank_score" in row for row in results):
+        return results[:limit]
+    kept, represented = [], set()
+    for index, row in enumerate(results):
+        if len(kept) >= limit:
+            break
+        vault = row.get("vault", "")
+        if vault not in represented and row["rerank_score"] > pkm.ANSWER_LOGIT:
+            represented.add(vault)
+            kept.append(index)
+    chosen = set(kept)
+    for index in range(len(results)):
+        if len(chosen) >= limit:
+            break
+        chosen.add(index)
+    return [results[index] for index in sorted(chosen)]
+
+
 def kick_reindex(vault: Vault) -> bool:
     """Start a reindex behind the search that noticed, at most one per corpus.
 
@@ -562,7 +608,7 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
             results.sort(key=lambda row: row["rerank_score"], reverse=True)
         else:
             results.sort(key=lambda row: row["score"], reverse=True)
-    results = dedupe_by_path(results)[:limit]
+    results = apply_corpus_floor(dedupe_by_path(results), limit)
     name = ",".join(vault.name for vault in vaults)
     payload = {
         "vault": name,
