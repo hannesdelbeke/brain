@@ -143,7 +143,7 @@ In [[public/2026-08-27 what an AI buddy actually needs|what an AI buddy actually
 * **The Fit:** Using open-source Mem0 as a local extraction helper lets a fast local model (or Gemini Flash) extract facts after each session and append them to `memory.md`.
 
 ### 2. Sleep Consolidation & Memory Reconsolidation (Biomimetic AI Note)
-* **Mem0's Built-in Decay:** Mem0 supports memory timestamps, updates, and decay functions. When you add a memory that contradicts an old one (e.g. *"Moved from Manchester to London"*), Mem0 automatically updates or invalidates the conflicting older record.
+* **Mem0's Built-in Decay:** ~~Mem0 supports memory timestamps, updates, and decay functions. When you add a memory that contradicts an old one (e.g. *"Moved from Manchester to London"*), Mem0 automatically updates or invalidates the conflicting older record.~~ **No longer true as of v3,** which is ADD-only: the contradicting fact is stored alongside the old one and the conflict is resolved at retrieval time by recency ranking rather than at write time, per [[public/2026-09-21 mem0 v3 stopped reconciling contradictions at write time|mem0 v3 stopped reconciling contradictions at write time]].
 * **Our Enhancement:** Instead of storing this in an opaque binary vector database, we mirror these updates into human-readable **`profile.md`** and **`memory.md`** files so you maintain 100% visibility and veto power.
 
 ---
