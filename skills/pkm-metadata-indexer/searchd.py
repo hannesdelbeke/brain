@@ -223,9 +223,12 @@ RECENCY_CONFIDENT_MARGIN = RECENCY_LAMBDA
 # the stack reliably win, even though AA alone is a rejected signal on this
 # vault (see the survey note's "shared-neighbor Adamic-Adar" section), so it
 # stays in the wired version.
-FUSION_LAMBDA_RECENCY = 0.05
-FUSION_LAMBDA_COCOMMIT = 1.5
-FUSION_LAMBDA_AA = 0.15
+# Env overrides (defaults unchanged) let an evaluation isolate one fusion term
+# without a reindex — e.g. PKM_FUSION_LAMBDA_RECENCY=0 makes fusion AA-only when
+# co-commit is also absent. Production leaves these unset.
+FUSION_LAMBDA_RECENCY = float(os.environ.get("PKM_FUSION_LAMBDA_RECENCY", "0.05"))
+FUSION_LAMBDA_COCOMMIT = float(os.environ.get("PKM_FUSION_LAMBDA_COCOMMIT", "1.5"))
+FUSION_LAMBDA_AA = float(os.environ.get("PKM_FUSION_LAMBDA_AA", "0.15"))
 
 # The AA term's shared-neighbour z is read from the unfiltered wikilink graph
 # regardless of how aggressively a candidate pool excludes hubs - see the
