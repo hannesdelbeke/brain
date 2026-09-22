@@ -130,6 +130,13 @@ try:
 except ImportError:  # only --watch needs it
     watchfiles = None
 
+try:
+    # generic self-update: re-exec when this checkout's HEAD moves under us.
+    # Optional so a bare checkout without the helper installed still runs.
+    import freshness
+except ImportError:
+    freshness = None
+
 # DefaultFilter drops any path with a `.git` component, which silently made the
 # two `--refresh <repo>/.git/logs=... co_commit.py` watchers dead on arrival:
 # registered, logged at startup, and never once fired on either machine. The
@@ -510,11 +517,21 @@ def keepalive():
     cores idle over 20s. See QUERY_THREADS in index_pkm_meta.
     """
     model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS, pkm.QUERY_THREADS)
+    # Read-only reloader: never fetches (the device drain is the sole fetcher).
+    # Just re-exec when our own checkout's HEAD moved, checked on an idle tick.
+    # KEEPALIVE_S is 250ms, far too hot for a git subprocess, so throttle to 30s.
+    started_head = freshness.head(__file__) if freshness else None
+    RELOAD_CHECK_S = 30.0
+    last_reload_check = time.monotonic()
     while True:
         time.sleep(KEEPALIVE_S)
         if time.time() - STATE.last_query < KEEPALIVE_S:
             continue
         list(model.embed(["."]))
+        if freshness and time.monotonic() - last_reload_check >= RELOAD_CHECK_S:
+            last_reload_check = time.monotonic()
+            freshness.reexec_if_moved(started_head, __file__,
+                                      marker="SEARCHD_RELOADED")
 
 
 def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dict]:
