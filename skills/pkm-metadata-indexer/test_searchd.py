@@ -830,6 +830,7 @@ class RecencyRouteTest(unittest.TestCase):
             "alpha.md": "## Alpha\ntext\n",
             "beta.md": "## Beta\ncompanion, committed 30 minutes after alpha\n",
             "gamma.md": "## Gamma\nunrelated, committed years apart\n",
+            "delta.md": "## Delta\nunrelated, but swept up in alpha's commit\n",
         })
         root = cls.vault.root
         run = lambda *args, when=None: subprocess.run(
@@ -839,7 +840,7 @@ class RecencyRouteTest(unittest.TestCase):
         run("init", "-q")
         run("config", "user.email", "t@t")
         run("config", "user.name", "t")
-        run("add", "alpha.md")
+        run("add", "alpha.md", "delta.md")  # one auto-backup commit, two unrelated notes
         run("commit", "-q", "-m", "alpha", when="2026-01-01T10:00:00+00:00")
         run("add", "beta.md")
         run("commit", "-q", "-m", "beta", when="2026-01-01T10:30:00+00:00")  # 30 min later, inside RECENCY_TAU_HOURS
@@ -883,11 +884,77 @@ class RecencyRouteTest(unittest.TestCase):
         _, body = fetch(self.port, "/similar?note=gamma&recency=1")
         self.assertEqual(body["results"], [])
 
+    def test_a_same_commit_note_is_not_in_the_window_despite_a_zero_gap(self):
+        # delta shares alpha's commit, so its gap is exactly zero - the
+        # strongest point of any decay curve, and the artefact that produced
+        # the +8.60% MRR figure this prior originally shipped on. A commit is
+        # not a writing session, so it must not be surfaced at all; the
+        # assertion above that alpha's window is exactly ["beta.md"] is the
+        # other half of this, since delta would otherwise tie beta's score.
+        near = SEARCHD.notes_within_hours(self.vault, "alpha.md", SEARCHD.RECENCY_TAU_HOURS)
+        self.assertEqual(near, ["beta.md"])
+        self.assertNotIn("delta.md", near)
+        # and beta, committed alone, still sees both of them 30 minutes back
+        self.assertEqual(sorted(SEARCHD.notes_within_hours(self.vault, "beta.md",
+                                                           SEARCHD.RECENCY_TAU_HOURS)),
+                         ["alpha.md", "delta.md"])
+
     def test_similar_without_recency_hints_when_a_near_note_exists(self):
         _, near = fetch(self.port, "/similar?note=alpha")
         self.assertIn("recency=1", near["recency_hint"])
         _, far = fetch(self.port, "/similar?note=gamma")
         self.assertNotIn("recency_hint", far)
+
+
+class RecencyGateTest(unittest.TestCase):
+    """The two gates from the corrected analysis, exercised directly on
+    recency_boost_applies - reproducing the score distributions they key off
+    through a real HTTP fixture would need embeddings the test vaults do not
+    have, and the gates are pure functions of the pool anyway."""
+
+    @staticmethod
+    def rows(*scores):
+        return [{"path": f"n{i}.md", "raw_sim": score} for i, score in enumerate(scores)]
+
+    def test_an_empty_pool_is_never_gated(self):
+        # nothing to be redundant with, and the window's own notes are the
+        # whole result - the unembedded case &recency=1 is most useful in
+        self.assertTrue(SEARCHD.recency_boost_applies([], {"beta.md"}))
+
+    def test_a_clear_top_content_hit_skips_the_boost(self):
+        # leading by more than lambda, so an additive boost provably cannot
+        # promote anything past it: nothing to win at rank one, and the ranks
+        # below get reshuffled for free
+        rows = self.rows(0.90, 0.90 - SEARCHD.RECENCY_LAMBDA - 0.01, 0.40)
+        self.assertFalse(SEARCHD.recency_boost_applies(rows, {"n1.md"}))
+
+    def test_a_close_top_two_leaves_the_boost_alive(self):
+        # five rows rather than three so one near note is 20% of the pool and
+        # clears the redundancy gate: both gates have to pass, and the point
+        # here is only that a margin under lambda does not trip the second one
+        rows = self.rows(0.90, 0.90 - SEARCHD.RECENCY_LAMBDA + 0.01, 0.40, 0.30, 0.20)
+        self.assertTrue(SEARCHD.recency_boost_applies(rows, {"n1.md"}))
+
+    def test_a_pool_mostly_inside_the_window_skips_the_boost(self):
+        # a bonus given to everyone changes nobody's position: measured gain
+        # falls ~18-fold across this axis
+        rows = self.rows(0.90, 0.89, 0.88, 0.87)
+        self.assertFalse(SEARCHD.recency_boost_applies(rows, {"n1.md", "n2.md", "n3.md"}))
+
+    def test_a_pool_barely_touched_by_the_window_keeps_the_boost(self):
+        rows = self.rows(0.90, 0.89, 0.88, 0.87)
+        self.assertTrue(SEARCHD.recency_boost_applies(rows, {"n3.md"}))
+
+    def test_a_single_candidate_is_judged_on_redundancy_alone(self):
+        # no second place, so there is no margin to read - the confidence gate
+        # must not fire off a one-row pool
+        self.assertFalse(SEARCHD.recency_boost_applies(self.rows(0.9), {"n0.md"}))
+        self.assertTrue(SEARCHD.recency_boost_applies(self.rows(0.9), {"other.md"}))
+
+    def test_content_score_prefers_raw_sim_over_an_already_boosted_score(self):
+        self.assertEqual(SEARCHD.content_score({"raw_sim": 0.4, "score": 0.9}), 0.4)
+        self.assertEqual(SEARCHD.content_score({"raw_sim": None, "score": 0.9}), 0.9)
+        self.assertEqual(SEARCHD.content_score(None), 0.0)
 
 
 class FusionRouteTest(unittest.TestCase):

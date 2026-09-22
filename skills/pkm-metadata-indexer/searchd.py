@@ -50,9 +50,16 @@ Endpoints, all accepting `?vault=name`:
                            created within RECENCY_TAU_HOURS of the anchor gets
                            +RECENCY_LAMBDA added to its score, additively, not
                            as a multiplier — see recency_prior_experiment.py
-                           for why the difference matters). A `recency_hint`
-                           field says so when unused and a near-in-time note
-                           exists. `&fusion=1` additively combines vector +
+                           for why the difference matters). Notes sharing the
+                           anchor's exact commit timestamp do not count as
+                           near, and the boost is dropped entirely when the
+                           result pool is too redundant with the window or the
+                           top content hit already leads by more than the
+                           boost, which the response reports as
+                           `recency_gated`. A `recency_hint` field offers the
+                           flag when unused and a near-in-time note exists that
+                           those gates would not drop. `&fusion=1` additively
+                           combines vector +
                            recency + co-commit + Adamic-Adar at once, using
                            lambdas calibrated by a grid search against a held-
                            out fold of real wikilinks (stacked_fusion_
@@ -149,14 +156,56 @@ NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 
-# Validated in recency_prior_experiment.py: additive combine, hard cutoff,
-# swept and stability-checked against real wikilinks (5/5 seeds positive,
-# full-sample +8.60% MRR at exactly these values). Multiplicative and RRF
-# forms were tried first and rejected - additive is the only one where a
-# small weight cannot displace a candidate that was clearly better on
-# content, see that file for the proof.
+# The +8.60% MRR these values originally shipped on was a measurement
+# artefact and is retracted. Creation dates come from the commit that added
+# the file (`git log --diff-filter=A ... %aI`, see build_creation_dates in
+# recency_prior_experiment.py), so one auto-backup commit stamps dozens of
+# unrelated notes with a byte-identical second, and a gap of exactly zero
+# sits at the strongest point of any window. The prior was detecting commit
+# batches, not shared preoccupation - a plain same-commit boolean outscored
+# every decay setting in the sweep, which is the giveaway. Once identical
+# timestamps are excluded the grid collapses: the best configuration
+# anywhere is worth under 1%, 45 of 54 settings go negative, and the
+# lambda=0.15/tau=30d setting the paper published lands around -7%.
+#
+# What survives is narrow, and these are its numbers. On clean pairs - both
+# notes committed alone, so the timestamp really is when the note was
+# written - lambda=0.05 over a 1-8h window is worth +0.0219 in-sample and
+# +0.0115 held out, and the gain runs +0.170 under an hour, +0.092 from 1-6h,
+# +0.009 from 6-24h, negative past a day. tau stays at 6.0 rather than
+# widening to the 8h edge of that range: 6h is where the worthwhile bands
+# stop, and the 6-24h band is flat enough to be noise. Additive, still, not
+# multiplicative - a decay curve models bursts, which fade, and not
+# accretion, which does not, so a multiplied score has no floor: one
+# wikilinked pair four years apart scored ~1e-21 while an unrelated pair
+# four months apart scored ~1e-2.
+#
+# Turning this off entirely (lambda=0) remains defensible on the same data.
+# It is kept on at these values, behind the two gates below, because the
+# under-1h band is large and real and the gates remove the cases where the
+# boost measurably costs.
 RECENCY_TAU_HOURS = 6.0
 RECENCY_LAMBDA = 0.05
+
+# The redundancy gate. Notes written in the same session are about the same
+# thing, so they already look alike to the vector index: the boost lifts the
+# note you wanted and the rivals sitting above it by the same amount, and a
+# bonus given to everyone changes nobody's position. Measured across that
+# axis the gain falls about 18-fold - where under 20% of the above-target
+# rivals are also inside the window the gain is +0.181, where over 80% are
+# it is +0.010 - and the break sits near a 27% share. Above it the boost is
+# reshuffling notes that all moved together, so it is skipped.
+RECENCY_REDUNDANCY_MAX_SHARE = 0.27
+
+# The content-confidence gate. The queries that pay for this prior are the
+# ones content search already answered correctly at rank one, where the only
+# available movement is downward - and those are exactly the queries with
+# the worst redundancy (48.8% of rivals boosted at baseline rank 1, against
+# 0% in the null band). The threshold is derived rather than tuned: an
+# additive lambda cannot promote anything past a top hit that already leads
+# by more than lambda, so skipping above this margin costs nothing at rank
+# one and spares the ranks below it a reshuffle with no gain behind it.
+RECENCY_CONFIDENT_MARGIN = RECENCY_LAMBDA
 
 # Calibrated in stacked_fusion_experiment.py --calibrate: a grid search over
 # lambda_recency/lambda_cocommit/lambda_aa on a 60% calibration fold of real
@@ -854,7 +903,15 @@ def note_snippet(vault: Vault, path: str) -> dict:
 
 def notes_within_hours(vault: Vault, path: str, tau_hours: float) -> list[str]:
     """Every other note created within `tau_hours` of `path`, via one binary
-    search over the vault's sorted creation timestamps rather than a scan."""
+    search over the vault's sorted creation timestamps rather than a scan.
+
+    Candidates sharing the anchor's exact creation timestamp are dropped, not
+    returned with a zero gap. Those are same-commit notes, and a commit is not
+    a writing session: see the RECENCY_TAU_HOURS comment for what including
+    them did to every number this prior was first justified with. Exact
+    equality is the right test rather than a tolerance - same-commit notes do
+    not merely round to the same second, they are read from one `%aI` string.
+    """
     dates, sorted_pairs = vault.creation_index()
     if path not in dates:
         return []
@@ -862,7 +919,40 @@ def notes_within_hours(vault: Vault, path: str, tau_hours: float) -> list[str]:
     window = tau_hours * 3600
     lo = bisect.bisect_left(sorted_pairs, (anchor_ts - window, ""))
     hi = bisect.bisect_right(sorted_pairs, (anchor_ts + window, "￿"))
-    return [candidate for _, candidate in sorted_pairs[lo:hi] if candidate != path]
+    return [candidate for timestamp, candidate in sorted_pairs[lo:hi]
+            if candidate != path and timestamp != anchor_ts]
+
+
+def content_score(row: dict | None) -> float:
+    """A candidate's pure vector cosine, which is what every lambda here was
+    calibrated against - `score` may already carry a boost, `raw_sim` never
+    does. A candidate the vector fetch never surfaced has no known score and
+    starts from 0.0, so only the other signals can carry it in: the
+    conservative direction to be wrong in."""
+    if not row:
+        return 0.0
+    raw = row.get("raw_sim")
+    return float(raw) if raw is not None else float(row["score"])
+
+
+def recency_boost_applies(content_rows: list[dict], near: set[str]) -> bool:
+    """Whether the recency boost can still be worth applying to this pool.
+
+    Both gates come from the same finding: the time signal is real and large,
+    and that is exactly why the ranker gets nothing from it - the notes it
+    promotes are the notes content search already found. See
+    RECENCY_REDUNDANCY_MAX_SHARE and RECENCY_CONFIDENT_MARGIN.
+    """
+    if not content_rows:
+        # Nothing to rerank against, so there is nobody to be redundant with:
+        # the window's own notes are the whole result, which is the unembedded
+        # /empty-index case &recency=1 is most useful in.
+        return True
+    scores = sorted((content_score(row) for row in content_rows), reverse=True)
+    if len(scores) > 1 and scores[0] - scores[1] >= RECENCY_CONFIDENT_MARGIN:
+        return False
+    boosted = sum(1 for row in content_rows if row["path"] in near)
+    return boosted / len(content_rows) <= RECENCY_REDUNDANCY_MAX_SHARE
 
 
 def do_co_commits(vault: Vault, note: str, top: int) -> dict:
@@ -1010,12 +1100,14 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
 
     `&graph=1` RRF-fuses in co_commit's signal (see below). `&recency=1` adds
     RECENCY_LAMBDA to a candidate's raw cosine score if it was created within
-    RECENCY_TAU_HOURS of the anchor — additively, not as a multiplier, and
-    validated: 5/5 seeds positive, full-sample +8.60% MRR against real
-    wikilinks (see recency_prior_experiment.py). A multiplicative or
-    rank-fused version of the same idea was tried first and rejected there;
-    a small additive term is the one form that cannot displace a candidate
-    that was already clearly better on content.
+    RECENCY_TAU_HOURS of the anchor — additively, not as a multiplier, since
+    a multiplied time term has no floor. The boost is deliberately small and
+    heavily gated: notes sharing the anchor's exact commit timestamp are not
+    in the window at all, and recency_boost_applies drops the whole boost
+    when the pool is too redundant or the top content hit is already clear.
+    The headline figure this once carried (+8.60% MRR) was a commit-cluster
+    artefact and is retracted — see the RECENCY_TAU_HOURS comment for the
+    corrected numbers and for why λ=0 is also a defensible setting here.
 
     `&fusion=1` additively combines all three signals at once — vector cosine
     plus FUSION_LAMBDA_RECENCY/COCOMMIT/AA (see those constants for the
@@ -1050,8 +1142,25 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         }
         for row in rows
     ]
+    # The pure content ranking, held aside before a branch below rebinds
+    # `results`: both recency gates have to be judged against what content
+    # search alone returned, not against a list already reranked by one of
+    # the very signals being gated. Trimmed to `limit` rather than the 3x
+    # over-fetch, because the redundancy the gate is looking for is redundancy
+    # among the results a caller will actually see - the research measured the
+    # share of *above-target rivals* inside the window, and diluting that
+    # denominator with ranks nobody reads would keep the gate from ever firing.
+    content_rows = results[:limit]
+    recency_gated = False
     if fusion:
         resolved = resolve_note_path(vault, note) or note
+        # Same-commit exclusion applies here too - it is a data fix, and in
+        # this branch it also stops one relationship being paid for twice,
+        # since FUSION_LAMBDA_COCOMMIT already carries the same-commit signal
+        # explicitly and at 30x the weight. The two gates below do NOT apply
+        # here: the three lambdas were calibrated jointly against this exact
+        # combination, and switching one term off per query is a different
+        # combination from the one that was measured.
         near = set(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
         co_rows = co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
                                                top=limit * 3, exclude_hubs=True)
@@ -1081,13 +1190,7 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         fused = []
         for path in candidates:
             base = by_path.get(path)
-            # raw_sim is the pure cosine the calibration was scored against;
-            # a candidate the vector fetch never surfaced has no known score,
-            # so it starts from 0 - only the other signals can carry it in,
-            # the same conservative floor &recency=1 already uses alone.
-            base_score = (base.get("raw_sim") if base and base.get("raw_sim") is not None
-                         else base["score"] if base else 0.0)
-            score = (base_score
+            score = (content_score(base)
                     + (FUSION_LAMBDA_RECENCY if path in near else 0.0)
                     + FUSION_LAMBDA_COCOMMIT * cc_prox.get(path, 0.0)
                     + FUSION_LAMBDA_AA * aa_prox.get(path, 0.0))
@@ -1118,19 +1221,24 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
     elif recency:
         resolved = resolve_note_path(vault, note) or note
         near = set(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
+        if near and not recency_boost_applies(content_rows, near):
+            # Either the window covers too much of the pool for a flat bonus
+            # to move anything, or content search is already confident enough
+            # that the only available movement is downward. Fall through to
+            # the plain content ranking instead of paying for a gain the
+            # corrected data says is not there.
+            recency_gated = True
+            near = set()
         by_path = {row["path"]: row for row in results}
         boosted = []
         for path in dict.fromkeys([*by_path, *near]):
             base = by_path.get(path)
-            # raw_sim is the pure cosine the experiment validated this against;
-            # a near-in-time note outside the fetched candidates has no known
-            # score at all, so it starts from 0 - the boost alone (0.05) only
-            # surfaces it when nothing better already fills the result list,
-            # which is the conservative direction to be wrong in.
-            base_score = (base.get("raw_sim") if base and base.get("raw_sim") is not None
-                         else base["score"] if base else 0.0)
+            # A near-in-time note the vector fetch never returned starts from
+            # 0.0 (see content_score), so the boost alone only surfaces it
+            # when nothing better already fills the result list.
             entry = base or {"path": path, **note_snippet(vault, path), "raw_sim": None}
-            boosted.append({**entry, "score": round(base_score + (RECENCY_LAMBDA if path in near else 0.0), 6)})
+            score = content_score(base) + (RECENCY_LAMBDA if path in near else 0.0)
+            boosted.append({**entry, "score": round(score, 6)})
         boosted.sort(key=lambda row: -row["score"])
         results = boosted[:limit]
     payload = {
@@ -1139,12 +1247,26 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
         "results": results,
     }
+    if recency_gated:
+        # Say so rather than silently returning the content ranking: a caller
+        # who asked for &recency=1 and got the same list back otherwise has no
+        # way to tell a gated boost from a window with nothing in it.
+        payload["recency_gated"] = ("recency boost skipped - the time window covers too much of "
+                                    "the result pool for a flat bonus to move anything, or "
+                                    "content search already has a clear enough top hit")
     # Hints share one resolution and one pair of lookups rather than each
     # flag re-querying co_commit/creation-dates for the same note.
     resolved = resolve_note_path(vault, note) or note
     has_cocommit = bool(co_commit.query_associations(co_commit.DEFAULT_DB, resolved, vault.name,
                                                      top=1, exclude_hubs=True))
-    has_recency = bool(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
+    near_now = set(notes_within_hours(vault, resolved, RECENCY_TAU_HOURS))
+    has_recency = bool(near_now)
+    # Whether &recency=1 would actually do anything, judged by the same two
+    # gates the route applies. Hinting at a call that will be gated to a no-op
+    # is worse than not hinting: it spends a round trip to return the list
+    # already on screen. fusion_hint stays on raw existence, since the fusion
+    # ranking applies its time term unconditionally.
+    recency_useful = has_recency and recency_boost_applies(content_rows, near_now)
     if not fusion and not graph and has_cocommit:
         # An agent calling this route usually has not read SKILL.md first, so the
         # option to ask for the co-commit signal has to surface here or it may as
@@ -1152,7 +1274,7 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         # a second call is worth it needs "is there anything," not a number to
         # parse, and hub exclusion already prices out the cheap false positives.
         payload["graph_hint"] = "co-commit history exists for this note, retry with &graph=1"
-    if not fusion and not recency and has_recency:
+    if not fusion and not recency and recency_useful:
         payload["recency_hint"] = "a note created within a few hours of this one exists, retry with &recency=1"
     if not fusion and (has_cocommit or has_recency):
         payload["fusion_hint"] = ("co-commit history or a same-session note exists for this note, "
