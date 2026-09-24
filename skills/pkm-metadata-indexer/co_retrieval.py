@@ -33,6 +33,8 @@ improvement.
 
 import argparse
 import json
+import os
+import socket
 import sqlite3
 import sys
 from pathlib import Path
@@ -44,6 +46,95 @@ QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 EDGE_DB = Path.home() / ".pkm" / "co_retrieval.db"
 # One knob: how fast an association cools. The same half-life as mention_heatmap.
 HALF_LIFE_DAYS = 30
+
+
+def get_device_name() -> str:
+    """Return sanitized device name for per-machine telemetry log partitioning."""
+    device = os.environ.get("PKM_DEVICE")
+    if not device:
+        device = socket.gethostname().split(".")[0]
+    clean = "".join(c for c in device if c.isalnum() or c in ("-", "_")).lower()
+    return clean or "unknown"
+
+
+def resolve_log_paths(vault: str = "", log_override: Path | None = None) -> list[Path]:
+    """Find query log paths, defaulting to vault telemetry files if available.
+
+    Reads all queries_*.jsonl in <vault_root>/data/telemetry/queries/, or falls back
+    to legacy pkm_queries.jsonl, and finally ~/.pkm/queries.jsonl.
+    """
+    if log_override is not None:
+        p = Path(log_override).expanduser()
+        if p.is_dir():
+            files = sorted(p.glob("queries_*.jsonl")) or sorted(p.glob("*.jsonl"))
+            if files:
+                return files
+        return [p]
+
+    if vault:
+        # 1. Is vault a direct directory path?
+        p = Path(vault).expanduser().resolve()
+        if p.is_dir():
+            qdir = p / "data" / "telemetry" / "queries"
+            if qdir.is_dir():
+                files = sorted(qdir.glob("queries_*.jsonl"))
+                if files:
+                    return files
+            cand = p / "data" / "telemetry" / "pkm_queries.jsonl"
+            if cand.exists():
+                return [cand]
+
+        # 2. Check running searchd /health if accessible
+        try:
+            import urllib.request
+            with urllib.request.urlopen("http://127.0.0.1:44771/health", timeout=0.5) as resp:
+                data = json.loads(resp.read().decode())
+                for v in data.get("vaults", []):
+                    if v.get("name") == vault:
+                        vroot = Path(v["root"])
+                        qdir = vroot / "data" / "telemetry" / "queries"
+                        if qdir.is_dir():
+                            files = sorted(qdir.glob("queries_*.jsonl"))
+                            if files:
+                                return files
+                        cand = vroot / "data" / "telemetry" / "pkm_queries.jsonl"
+                        if cand.exists():
+                            return [cand]
+        except Exception:
+            pass
+
+        # 3. Check vault root conventions relative to find_vault_root()
+        try:
+            import index_pkm_meta as pkm
+            root = pkm.find_vault_root()
+            candidates = [
+                root if vault.lower() in ("brain", "root", "default") else None,
+                root / vault,
+                root / "work" / vault,
+                root / "work" / vault / f"{vault}PKM",
+                root / "work" / vault / f"{vault.capitalize()}PKM",
+                root / "work" / vault / f"{vault.upper()}PKM",
+            ]
+            for cand_root in candidates:
+                if cand_root and cand_root.is_dir():
+                    qdir = cand_root / "data" / "telemetry" / "queries"
+                    if qdir.is_dir():
+                        files = sorted(qdir.glob("queries_*.jsonl"))
+                        if files:
+                            return files
+                    cand = cand_root / "data" / "telemetry" / "pkm_queries.jsonl"
+                    if cand.exists():
+                        return [cand]
+        except Exception:
+            pass
+
+    # Fallback to ~/.pkm/queries directory or ~/.pkm/queries.jsonl
+    user_queries_dir = Path.home() / ".pkm" / "queries"
+    if user_queries_dir.is_dir():
+        files = sorted(user_queries_dir.glob("queries_*.jsonl"))
+        if files:
+            return files
+    return [QUERY_LOG]
 
 
 def decay(weight: float, days: float) -> float:
@@ -132,28 +223,38 @@ def fold(connection: sqlite3.Connection, lines: list[str]) -> int:
     return folded
 
 
-def update(db_path: Path, log_path: Path, rebuild: bool = False) -> tuple[int, int]:
-    """Fold the unread tail of the log into the edge table. Returns (queries, edges)."""
+def update_all(db_path: Path, log_paths: list[Path], rebuild: bool = False) -> tuple[int, int]:
+    """Fold the unread tails of all log files into the edge table. Returns (queries, edges)."""
     connection = connect(db_path)
     try:
         with connection:
             if rebuild:
                 connection.execute("DELETE FROM co_retrieval")
                 connection.execute("DELETE FROM log_state")
-            state = connection.execute(
-                "SELECT offset, queries FROM log_state WHERE log = ?", (str(log_path),)
-            ).fetchone() or (0, 0)
-            lines, offset = read_new(log_path, state[0])
-            folded = fold(connection, lines)
-            connection.execute(
-                "INSERT INTO log_state (log, offset, queries) VALUES (?, ?, ?) "
-                "ON CONFLICT(log) DO UPDATE SET offset = excluded.offset, queries = excluded.queries",
-                (str(log_path), offset, state[1] + folded),
-            )
+            total_folded = 0
+            for log_path in log_paths:
+                if not Path(log_path).exists():
+                    continue
+                state = connection.execute(
+                    "SELECT offset, queries FROM log_state WHERE log = ?", (str(log_path),)
+                ).fetchone() or (0, 0)
+                lines, offset = read_new(Path(log_path), state[0])
+                folded = fold(connection, lines)
+                connection.execute(
+                    "INSERT INTO log_state (log, offset, queries) VALUES (?, ?, ?) "
+                    "ON CONFLICT(log) DO UPDATE SET offset = excluded.offset, queries = excluded.queries",
+                    (str(log_path), offset, state[1] + folded),
+                )
+                total_folded += folded
         edges = connection.execute("SELECT count(*) FROM co_retrieval").fetchone()[0]
-        return folded, edges
+        return total_folded, edges
     finally:
         connection.close()
+
+
+def update(db_path: Path, log_path: Path, rebuild: bool = False) -> tuple[int, int]:
+    """Fold the unread tail of a single log into the edge table. Retained for backwards compatibility."""
+    return update_all(db_path, [log_path], rebuild=rebuild)
 
 
 def heaviest(db_path: Path, vault: str = "", top: int = 25) -> list[tuple]:
@@ -228,13 +329,31 @@ def selfcheck():
         incremental = stored()
         update(db, log, rebuild=True)
         assert stored() == incremental, "a rebuild from the whole log equals the incremental runs"
+
+        # Test resolve_log_paths with explicit override
+        assert resolve_log_paths("brain", log) == [log]
+        # Test resolve_log_paths with partitioned directory
+        vault_dir = Path(temp) / "vault"
+        qdir = vault_dir / "data" / "telemetry" / "queries"
+        qdir.mkdir(parents=True)
+        qfile = qdir / "queries_test.jsonl"
+        qfile.write_text("", encoding="utf-8")
+        assert resolve_log_paths(str(vault_dir)) == [qfile]
+        # Test update_all across multiple log files
+        qfile2 = qdir / "queries_other.jsonl"
+        with qfile2.open("w", encoding="utf-8") as h:
+            h.write(json.dumps({"t": "2026-08-02T10:00:00", "vault": "v", "results": ["a.md", "d.md"]}) + "\n")
+        db_multi = Path(temp) / "multi.db"
+        f_multi, e_multi = update_all(db_multi, [qfile, qfile2])
+        assert f_multi == 1
     print("selfcheck ok")
 
 
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--log", type=Path, default=QUERY_LOG, help="searchd's query log")
+    parser.add_argument("--log", type=Path, default=None,
+                        help="searchd's query log (default: vault telemetry or ~/.pkm/queries.jsonl)")
     parser.add_argument("--db", type=Path, default=EDGE_DB, help="where edges accumulate")
     parser.add_argument("--vault", default="", help="only show edges from this vault")
     parser.add_argument("--top", type=int, default=25)
@@ -246,8 +365,10 @@ def main():
     if args.selfcheck:
         return selfcheck()
 
-    folded, edges = update(args.db, args.log, args.rebuild)
-    print(f"folded {folded} queries from {args.log}, {edges} edges in {args.db}")
+    log_paths = resolve_log_paths(args.vault, args.log)
+    folded, edges = update_all(args.db, log_paths, args.rebuild)
+    source_desc = str(log_paths[0]) if len(log_paths) == 1 else f"{len(log_paths)} log files"
+    print(f"folded {folded} queries from {source_desc}, {edges} edges in {args.db}")
     rows = heaviest(args.db, args.vault, args.top)
     if not rows:
         print("no co-retrieval yet. run some searches through searchd.py and come back.")

@@ -39,27 +39,35 @@ from datetime import datetime
 from difflib import SequenceMatcher
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from co_retrieval import QUERY_LOG, read_new
+from co_retrieval import QUERY_LOG, read_new, resolve_log_paths
 
 WINDOW_S = 600  # two queries this close, in one vault, are one search
 NEAR = 0.6  # SequenceMatcher ratio at which a rephrase is the same question
 NARROW = 4  # fewer distinct notes than this is a narrow answer
 
 
-def load(log_path: Path) -> list[dict]:
-    """Every complete, parseable row, sorted by vault then time."""
+def load_all(log_paths: list[Path]) -> list[dict]:
+    """Every complete, parseable row across all log paths, sorted by vault then time."""
     rows = []
-    for line in read_new(Path(log_path), 0)[0]:
-        try:
-            row = json.loads(line)
-            row["when"] = datetime.fromisoformat(row["t"])
-            row["notes"] = sorted(set(row.get("results") or []))
-            rows.append(row)
-        except (ValueError, KeyError, TypeError):
-            continue  # a foreign or half-written line is not worth failing a run over
+    for log_path in log_paths:
+        p = Path(log_path)
+        if not p.exists():
+            continue
+        for line in read_new(p, 0)[0]:
+            try:
+                row = json.loads(line)
+                row["when"] = datetime.fromisoformat(row["t"])
+                row["notes"] = sorted(set(row.get("results") or []))
+                rows.append(row)
+            except (ValueError, KeyError, TypeError):
+                continue  # a foreign or half-written line is not worth failing a run over
     rows.sort(key=lambda row: (row["vault"], row["when"]))
     return rows
+
+
+def load(log_path: Path) -> list[dict]:
+    """Every complete, parseable row, sorted by vault then time. Retained for backwards compatibility."""
+    return load_all([Path(log_path)])
 
 
 def runs(rows: list[dict], window_s: int = WINDOW_S) -> list[list[dict]]:
@@ -127,13 +135,22 @@ def selfcheck():
         rows = load(log)
         assert len(rows) == 1, f"one good row, a bad line and a half line, got {len(rows)}"
         assert rows[0]["notes"] == ["a.md"], "one note in two sections is one note found"
+
+        log2 = Path(temp) / "queries_device2.jsonl"
+        with log2.open("w", encoding="utf-8") as handle:
+            handle.write(json.dumps({"t": "2026-01-01T00:00:03", "kind": "search", "vault": "b",
+                                     "q": "y", "limit": 5, "results": ["c.md"]}) + "\n")
+        all_rows = load_all([log, log2])
+        assert len(all_rows) == 2, f"expected 2 rows from 2 files, got {len(all_rows)}"
+        assert all_rows[0]["q"] == "x" and all_rows[1]["q"] == "y"
     print("selfcheck ok")
 
 
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--log", type=Path, default=QUERY_LOG, help="searchd's query log")
+    parser.add_argument("--log", type=Path, default=None,
+                        help="searchd's query log (default: vault telemetry or ~/.pkm/queries.jsonl)")
     parser.add_argument("--vault", default="", help="only this vault")
     parser.add_argument("--window", type=int, default=WINDOW_S, help="reformulation window, seconds")
     parser.add_argument("--narrow", type=int, default=NARROW, help="distinct notes under this is narrow")
@@ -143,9 +160,11 @@ def main():
     if args.selfcheck:
         return selfcheck()
 
-    rows = [row for row in load(args.log) if not args.vault or row["vault"] == args.vault]
+    log_paths = resolve_log_paths(args.vault, args.log)
+    rows = [row for row in load_all(log_paths) if not args.vault or row["vault"] == args.vault]
     if not rows:
-        print(f"no queries in {args.log}. run some searches through searchd.py and come back.")
+        source_desc = str(log_paths[0]) if len(log_paths) == 1 else f"{len(log_paths)} log files"
+        print(f"no queries in {source_desc}. run some searches through searchd.py and come back.")
         return
     # rows come back sorted by vault, so the span is a min and a max, not the ends
     print(f"{len(rows)} queries, {min(r['t'] for r in rows)[:10]} to "
