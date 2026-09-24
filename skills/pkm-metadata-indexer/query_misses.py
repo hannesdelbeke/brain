@@ -27,6 +27,14 @@ A fourth signal, a top score far under the corpus median, is not built: the log
 stores result paths and no scores, on purpose, so the number does not exist to
 read. It would need a writer change first.
 
+A row carrying an `origin` in `NO_RESULT_DATA_ORIGINS` was reconstructed after the
+fact, from a transcript that recorded the query and not the answer. Its `results` is
+empty because nothing was captured, not because search found nothing, so it is left
+out of `empty` and `narrow` and prints `--` for drift. It still counts for
+reformulation, which needs only the query text and the clock. `--include-backfill`
+puts it back in, which is what you want when auditing the backfill itself and not
+when measuring search.
+
 Read-only, and it reads the whole log from offset 0 every run rather than
 resuming. It shares `read_new` with `co_retrieval.py` but not that module's
 stored offset, which stays where co-retrieval left it.
@@ -44,6 +52,18 @@ from co_retrieval import QUERY_LOG, read_new, resolve_log_paths
 WINDOW_S = 600  # two queries this close, in one vault, are one search
 NEAR = 0.6  # SequenceMatcher ratio at which a rephrase is the same question
 NARROW = 4  # fewer distinct notes than this is a narrow answer
+
+# a row reconstructed after the fact records the query and not what came back, so its
+# empty `results` means "unknown" rather than "found nothing". the signals built on
+# result sets, empty and narrow and drift, have to skip it or every such row reads as a
+# miss. the signals built on the query text and its timestamp, reformulation and
+# frequency, are unaffected and keep it.
+NO_RESULT_DATA_ORIGINS = {"backfill_claude_transcript"}
+
+
+def has_result_data(row: dict) -> bool:
+    """Whether this row's `results` is a real answer rather than a backfill placeholder."""
+    return row.get("origin") not in NO_RESULT_DATA_ORIGINS
 
 
 def load_all(log_paths: list[Path]) -> list[dict]:
@@ -154,6 +174,9 @@ def main():
     parser.add_argument("--vault", default="", help="only this vault")
     parser.add_argument("--window", type=int, default=WINDOW_S, help="reformulation window, seconds")
     parser.add_argument("--narrow", type=int, default=NARROW, help="distinct notes under this is narrow")
+    parser.add_argument("--include-backfill", action="store_true",
+                        help="count backfilled rows as empty results, which they are not, "
+                             f"origins treated as having no result data: {sorted(NO_RESULT_DATA_ORIGINS)}")
     parser.add_argument("--selfcheck", action="store_true")
     args = parser.parse_args()
 
@@ -170,19 +193,31 @@ def main():
     print(f"{len(rows)} queries, {min(r['t'] for r in rows)[:10]} to "
           f"{max(r['t'] for r in rows)[:10]}, {len(set(r['q'] for r in rows))} distinct")
 
+    scored = rows if args.include_backfill else [r for r in rows if has_result_data(r)]
+    skipped = len(rows) - len(scored)
+    if skipped:
+        print(f"{skipped} backfilled rows carry no result data and are excluded from empty and "
+              f"narrow, pass --include-backfill to count them")
+
     for label, hits in (
-        ("empty", [r for r in rows if not r["notes"]]),
-        ("narrow", [r for r in rows if r["notes"] and len(r["notes"]) < args.narrow]),
+        ("empty", [r for r in scored if not r["notes"]]),
+        ("narrow", [r for r in scored if r["notes"] and len(r["notes"]) < args.narrow]),
     ):
         print(f"\n{label}: {len(hits)}")
         for row in hits:
             print(f"  {row['t']}  [{row['vault']}] {len(row['notes'])} notes  {row['q']}")
 
+    # reformulation is read off the query text and the clock, so a backfilled run is as
+    # real as a live one and stays in. drift is read off the result sets, so it is
+    # unknowable for a run with no result data and prints as -- rather than as a
+    # confident 1.00 meaning the rephrase changed nothing.
     repeated = [run for run in runs(rows, args.window) if len(run) > 1]
     print(f"\nreformulated: {len(repeated)} runs over {sum(len(r) for r in repeated)} queries")
     for run in sorted(repeated, key=drift):
         span = (run[-1]["when"] - run[0]["when"]).total_seconds()
-        print(f"  drift {drift(run):.2f}  {len(run)}x in {span:.0f}s  [{run[0]['vault']}] "
+        scorable = all(has_result_data(r) for r in run)
+        shown = f"{drift(run):.2f}" if scorable else "  --"
+        print(f"  drift {shown}  {len(run)}x in {span:.0f}s  [{run[0]['vault']}] "
               f"{run[0]['q']}" + (f"  ->  {run[-1]['q']}" if run[-1]["q"] != run[0]["q"] else ""))
 
 
