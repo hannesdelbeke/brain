@@ -142,6 +142,33 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(rows[0]["results"], ["alpha.md"])
         self.assertEqual(rows[1]["results"], ["gamma.md"])
 
+    def test_vault_aware_partitioned_query_logging(self):
+        first_vault = SEARCHD.STATE.vaults["first"]
+        second_vault = SEARCHD.STATE.vaults["second"]
+        device = SEARCHD.get_device_name()
+        first_log = first_vault.root / "data" / "telemetry" / "queries" / f"queries_{device}.jsonl"
+        second_log = second_vault.root / "data" / "telemetry" / "queries" / f"queries_{device}.jsonl"
+
+        SEARCHD.LOG_PATH = "auto"
+        try:
+            self.get("/search?q=distinctivephrase&vault=first")
+            self.get("/search?q=separatephrase&vault=second")
+        finally:
+            SEARCHD.LOG_PATH = None
+
+        self.assertTrue(first_log.exists(), f"expected {first_log} to exist")
+        self.assertTrue(second_log.exists(), f"expected {second_log} to exist")
+
+        rows1 = [json.loads(line) for line in first_log.read_text(encoding="utf-8").splitlines()]
+        rows2 = [json.loads(line) for line in second_log.read_text(encoding="utf-8").splitlines()]
+        self.assertEqual(len(rows1), 1)
+        self.assertEqual(rows1[0]["vault"], "first")
+        self.assertEqual(rows1[0]["results"], ["alpha.md"])
+
+        self.assertEqual(len(rows2), 1)
+        self.assertEqual(rows2[0]["vault"], "second")
+        self.assertEqual(rows2[0]["results"], ["gamma.md"])
+
     def test_each_vault_only_sees_its_own_notes(self):
         _, wrong = self.get("/search?q=separatephrase")
         self.assertEqual(wrong["results"], [])

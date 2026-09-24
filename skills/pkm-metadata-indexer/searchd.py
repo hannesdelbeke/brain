@@ -107,6 +107,7 @@ import importlib.util
 import json
 import os
 import shlex
+import socket
 import sqlite3
 import subprocess
 import sys
@@ -270,6 +271,66 @@ LOG_PATH = None
 LOG_LOCK = threading.Lock()
 
 
+def get_device_name() -> str:
+    """Return sanitized device name for per-machine telemetry log partitioning."""
+    device = os.environ.get("PKM_DEVICE")
+    if not device:
+        device = socket.gethostname().split(".")[0]
+    clean = "".join(c for c in device if c.isalnum() or c in ("-", "_")).lower()
+    return clean or "unknown"
+
+
+def resolve_vault_query_log(vault_root: Path | None) -> Path:
+    """Determine query log destination for a vault.
+
+    Prioritizes per-machine partitioning under <vault_root>/data/telemetry/queries/queries_<device>.jsonl
+    to avoid multi-device Git sync collisions.
+    Falls back to legacy <vault_root>/data/telemetry/pkm_queries.jsonl, and finally to ~/.pkm/queries.jsonl.
+    """
+    if vault_root:
+        queries_dir = vault_root / "data" / "telemetry" / "queries"
+        device = get_device_name()
+        target = queries_dir / f"queries_{device}.jsonl"
+        if target.exists() or queries_dir.exists():
+            return target
+        legacy = vault_root / "data" / "telemetry" / "pkm_queries.jsonl"
+        if legacy.exists() and not queries_dir.exists():
+            return legacy
+        try:
+            queries_dir.mkdir(parents=True, exist_ok=True)
+            if os.access(queries_dir, os.W_OK):
+                return target
+        except OSError:
+            pass
+        try:
+            legacy.parent.mkdir(parents=True, exist_ok=True)
+            if os.access(legacy.parent, os.W_OK):
+                return legacy
+        except OSError:
+            pass
+    return QUERY_LOG
+
+
+def append_log_line(path: Path, line: str):
+    """Append a line to the specified log path with fallback on write failure."""
+    try:
+        with LOG_LOCK:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with path.open("a", encoding="utf-8") as handle:
+                handle.write(line + "\n")
+    except OSError as error:
+        if path != QUERY_LOG:
+            try:
+                with LOG_LOCK:
+                    QUERY_LOG.parent.mkdir(parents=True, exist_ok=True)
+                    with QUERY_LOG.open("a", encoding="utf-8") as handle:
+                        handle.write(line + "\n")
+                return
+            except OSError:
+                pass
+        print(f"query log write failed: {error}", flush=True)
+
+
 def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
               results: list, origin: str = ""):
     """Append one line per query, so ranking changes can be judged after the fact.
@@ -286,32 +347,80 @@ def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
     if LOG_PATH is None:
         return
     when = time.strftime("%Y-%m-%dT%H:%M:%S")
-    names = [vault] if isinstance(vault, str) else list(vault)
-    grouped = {name: [] for name in names}
+    names = [vault] if isinstance(vault, (str, Vault)) else list(vault)
+
+    def _name(v):
+        return v.name if hasattr(v, "name") else str(v)
+
+    name_strings = [_name(v) for v in names]
+    default_name = name_strings[0] if name_strings else ""
+    grouped = {name: [] for name in name_strings}
     for result in results:
-        grouped.setdefault(result.get("vault") or names[0], []).append(result["path"])
-    lines = []
-    for name, paths in grouped.items():
-        row = {
-            "t": when,
-            "kind": kind,
-            "vault": name,
-            "q": subject,
-            "limit": limit,
-            "took_ms": took_ms,
-            "results": paths,
-        }
-        if origin:
-            row["origin"] = origin
-        lines.append(json.dumps(row, ensure_ascii=False))
-    line = "\n".join(lines)
-    try:
-        with LOG_LOCK:
-            LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
-            with LOG_PATH.open("a", encoding="utf-8") as handle:
-                handle.write(line + "\n")
-    except OSError as error:  # a full or read-only disk must not fail the query
-        print(f"query log write failed: {error}", flush=True)
+        res_vault = result.get("vault") or default_name
+        grouped.setdefault(res_vault, []).append(result["path"])
+
+    if LOG_PATH != "auto":
+        lines = []
+        for name, paths in grouped.items():
+            row = {
+                "t": when,
+                "kind": kind,
+                "vault": name,
+                "q": subject,
+                "limit": limit,
+                "took_ms": took_ms,
+                "results": paths,
+            }
+            if origin:
+                row["origin"] = origin
+            lines.append(json.dumps(row, ensure_ascii=False))
+        line = "\n".join(lines)
+        append_log_line(LOG_PATH, line)
+    else:
+        for name, paths in grouped.items():
+            row = {
+                "t": when,
+                "kind": kind,
+                "vault": name,
+                "q": subject,
+                "limit": limit,
+                "took_ms": took_ms,
+                "results": paths,
+            }
+            if origin:
+                row["origin"] = origin
+            line = json.dumps(row, ensure_ascii=False)
+            vault_root = None
+            if STATE and name in STATE.vaults:
+                vault_root = STATE.vaults[name].root
+            elif isinstance(vault, Vault) and vault.name == name:
+                vault_root = vault.root
+            elif isinstance(vault, list):
+                for v in vault:
+                    if isinstance(v, Vault) and v.name == name:
+                        vault_root = v.root
+                        break
+            if vault_root is None:
+                try:
+                    root = pkm.find_vault_root()
+                    clean_name = name.lower()
+                    if clean_name in ("brain", "root", "default"):
+                        vault_root = root
+                    else:
+                        for cand in [
+                            root / name,
+                            root / "work" / name,
+                            root / "work" / name / f"{name}PKM",
+                            root / "work" / name / f"{name.capitalize()}PKM",
+                            root / "work" / name / f"{name.upper()}PKM",
+                        ]:
+                            if cand.is_dir():
+                                vault_root = cand
+                                break
+                except Exception:
+                    pass
+            target_path = resolve_vault_query_log(vault_root)
+            append_log_line(target_path, line)
 
 
 class Vault:
@@ -1617,16 +1726,23 @@ def main():
                         help="Let the model go cold between queries, trading ~30ms on the first "
                              "query after idle. Keepalive costs ~0.00 cores now the ONNX pool is "
                              "capped at QUERY_THREADS, so there is rarely a reason to pass this")
-    parser.add_argument("--query-log", default=str(QUERY_LOG),
+    parser.add_argument("--query-log", default=None,
                         help="JSON Lines file recording one row per /search and /similar: "
-                             "the query text, the vault and the result paths")
+                             "the query text, the vault and the result paths. If omitted, "
+                             "defaults to per-vault telemetry (<vault_root>/data/telemetry/queries/queries_<device>.jsonl) "
+                             "or ~/.pkm/queries.jsonl")
     parser.add_argument("--no-query-log", action="store_true",
                         help="Record nothing. The log holds query strings and result paths in "
                              "plain text, which is the reason to turn it off")
     args = parser.parse_args()
 
     global LOG_PATH
-    LOG_PATH = None if args.no_query_log else Path(args.query_log).expanduser()
+    if args.no_query_log:
+        LOG_PATH = None
+    elif args.query_log is not None:
+        LOG_PATH = Path(args.query_log).expanduser()
+    else:
+        LOG_PATH = "auto"
 
     if args.bind not in LOOPBACK and not args.token:
         parser.error("a non-loopback --bind needs --token, otherwise the vault is served to the network unauthenticated")
@@ -1678,7 +1794,10 @@ def main():
                          daemon=True).start()
         print(f"refresh on change in {root}\n  {' '.join(command)}", flush=True)
 
-    print(f"query log {LOG_PATH or 'off'}", flush=True)
+    if LOG_PATH == "auto":
+        print("query log per-vault telemetry (fallback ~/.pkm/queries.jsonl)", flush=True)
+    else:
+        print(f"query log {LOG_PATH or 'off'}", flush=True)
 
     server = Server((args.bind, args.port), Handler)
     print(f"listening on http://{args.bind}:{args.port}"
