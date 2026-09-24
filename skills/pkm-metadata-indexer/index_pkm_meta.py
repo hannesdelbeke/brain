@@ -46,7 +46,7 @@ EMBEDDING_DIMENSIONS = 384
 CHUNKING_VERSION = "heading-estimate-v1"
 MAX_CHUNK_ESTIMATED_TOKENS = 360
 CHUNK_OVERLAP_ESTIMATED_TOKENS = 40
-SCHEMA_VERSION = "2"
+SCHEMA_VERSION = "3"
 IGNORED_DIRS = {".obsidian", ".git", ".trash", "node_modules", ".venv", "__pycache__"}
 FRONTMATTER_RE = re.compile(r"^---\s*\r?\n(.*?)\r?\n---\s*(?:\r?\n|$)", re.DOTALL)
 WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
@@ -249,7 +249,7 @@ def get_sha256(text: str) -> str:
 
 def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     """Return selected metadata, body text, and the body's absolute first line."""
-    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": []}
+    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": [], "aliases": []}
     match = FRONTMATTER_RE.match(content)
     if not match:
         return meta, content, 1
@@ -281,6 +281,16 @@ def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     tag_match = re.search(r"^tags:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", frontmatter, re.MULTILINE)
     if tag_match:
         meta["tags"] = [tag.strip("- ").strip() for tag in tag_match.group(1).strip().splitlines()]
+
+    alias_match = re.search(r"^aliases:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", frontmatter, re.MULTILINE)
+    if alias_match:
+        meta["aliases"] = [alias.strip("- ").strip().strip('"\'')
+                           for alias in alias_match.group(1).strip().splitlines()]
+    else:
+        inline_aliases = re.search(r"^aliases:\s*\[([^\]]*)\]", frontmatter, re.MULTILINE)
+        if inline_aliases:
+            meta["aliases"] = [alias.strip().strip('"\'')
+                               for alias in inline_aliases.group(1).split(",") if alias.strip()]
 
     return meta, body, body_start_line
 
@@ -665,6 +675,7 @@ def collect_index_data(vault_dir: Path):
                     meta["sentiment"],
                     json.dumps(meta["sentiment_label"]),
                     json.dumps(meta["tags"]),
+                    json.dumps(meta["aliases"]),
                     extract_key_lines(body),
                     len(body.split()),
                 )
@@ -719,11 +730,14 @@ def ensure_schema(connection: sqlite3.Connection):
             sentiment REAL,
             sentiment_labels TEXT NOT NULL,
             tags TEXT NOT NULL,
+            aliases TEXT NOT NULL DEFAULT '[]',
             summary_snippet TEXT NOT NULL,
             word_count INTEGER NOT NULL
         )
         """
     )
+    if "aliases" not in table_columns(connection, "notes"):
+        connection.execute("ALTER TABLE notes ADD COLUMN aliases TEXT NOT NULL DEFAULT '[]'")
 
     connection.execute(
         """
@@ -769,6 +783,33 @@ def ensure_schema(connection: sqlite3.Connection):
     )
     connection.execute("CREATE INDEX IF NOT EXISTS idx_edges_source ON edges(source_path)")
     connection.execute("CREATE INDEX IF NOT EXISTS idx_edges_resolved_target ON edges(resolved_target_path)")
+
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS sessions_idx (
+            session_id TEXT PRIMARY KEY,
+            title TEXT NOT NULL,
+            created TEXT,
+            trace_path TEXT,
+            cost_usd REAL,
+            repo TEXT,
+            note_path TEXT NOT NULL
+        )
+        """
+    )
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_sessions_idx_title ON sessions_idx(title)")
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS session_touches (
+            session_id TEXT NOT NULL,
+            target_path TEXT NOT NULL,
+            action TEXT,
+            PRIMARY KEY (session_id, target_path, action),
+            FOREIGN KEY (session_id) REFERENCES sessions_idx(session_id)
+        )
+        """
+    )
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_session_touches_target ON session_touches(target_path)")
 
     fts_columns = table_columns(connection, "sections_fts")
     if fts_columns and fts_columns != {"section_id", "content"}:
@@ -943,6 +984,89 @@ def remove_missing_rows(cursor: sqlite3.Cursor, table: str, key_column: str, see
     return len(stale_values)
 
 
+def frontmatter_value(content: str, key: str) -> str | None:
+    """Read a scalar frontmatter value without adding a YAML dependency."""
+    match = FRONTMATTER_RE.match(content)
+    if not match:
+        return None
+    value = re.search(rf"^{re.escape(key)}:\s*([^\n#]+)", match.group(1), re.MULTILINE)
+    return value.group(1).strip().strip('"\'') if value else None
+
+
+def session_frontmatter_rows(vault_dir: Path) -> tuple[list[tuple], list[tuple]]:
+    """Project rollup frontmatter into relational provenance tables."""
+    roots = [vault_dir / "sessions"]
+    session_rows, touch_rows = [], []
+    for root in roots:
+        if not root.is_dir():
+            continue
+        for path in sorted(root.rglob("*.md")):
+            try:
+                content = path.read_text(encoding="utf-8", errors="ignore")
+                match = FRONTMATTER_RE.match(content)
+                if not match:
+                    continue
+                frontmatter = match.group(1)
+                session_id = frontmatter_value(content, "session_id") or path.stem
+                heading = re.search(r"^#{1,2}\s+(.+?)\s*$", content[match.end():], re.MULTILINE)
+                title = (frontmatter_value(content, "title") or frontmatter_value(content, "name")
+                         or (heading.group(1) if heading else None) or path.stem.replace("_", " "))
+                created = frontmatter_value(content, "date") or frontmatter_value(content, "created")
+                trace_path = frontmatter_value(content, "trace_path") or frontmatter_value(content, "trace_id")
+                raw_cost = frontmatter_value(content, "cost_usd")
+                try:
+                    cost_usd = float(raw_cost) if raw_cost is not None else None
+                except ValueError:
+                    cost_usd = None
+                repo = (frontmatter_value(content, "repo") or frontmatter_value(content, "project_dir")
+                        or frontmatter_value(content, "project"))
+                note_path = path.relative_to(vault_dir).as_posix()
+                session_rows.append((session_id, title, created, trace_path, cost_usd, repo, note_path))
+
+                touched = re.search(r"^touched:\s*\n((?:[ \t]+-.*\n?(?:[ \t]+.*\n?)*)*)", frontmatter,
+                                    re.MULTILINE)
+                if not touched:
+                    continue
+                for item in re.split(r"^\s*-\s*", touched.group(1), flags=re.MULTILINE):
+                    target = re.search(r"(?:^|\n)\s*target:\s*([^\n#]+)", item)
+                    if not target:
+                        continue
+                    action = re.search(r"(?:^|\n)\s*action:\s*([^\n#]+)", item)
+                    target_path = target.group(1).strip().strip('"\'')
+                    action_value = action.group(1).strip().strip('"\'') if action else None
+                    touch_rows.append((session_id, target_path, action_value))
+            except OSError:
+                continue
+    return session_rows, touch_rows
+
+
+def query_sessions(query: str, db_path: str | None = None, vault_path: str | None = None,
+                   limit: int = 10) -> list[dict]:
+    """Return rollups by title or touched path using only SQLite."""
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
+    if not database_file.exists():
+        return []
+    needle = f"%{query}%"
+    connection = sqlite3.connect(database_file, timeout=1.0)
+    try:
+        rows = connection.execute(
+            """
+            SELECT DISTINCT sessions_idx.session_id, sessions_idx.title, sessions_idx.created,
+                   sessions_idx.trace_path, sessions_idx.cost_usd, sessions_idx.repo, sessions_idx.note_path
+            FROM sessions_idx LEFT JOIN session_touches
+              ON session_touches.session_id = sessions_idx.session_id
+            WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?
+            ORDER BY sessions_idx.created DESC, sessions_idx.title
+            LIMIT ?
+            """, (needle, needle, max(1, limit))
+        ).fetchall()
+        keys = ("session_id", "title", "created", "trace_path", "cost_usd", "repo", "path")
+        return [dict(zip(keys, row)) for row in rows]
+    finally:
+        connection.close()
+
+
 def build_index(vault_path: str | None = None, db_path: str | None = None, skip_embeddings: bool = False,
                 collect=None):
     t_start = time.perf_counter()
@@ -959,6 +1083,10 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
 
         t_scan_start = time.perf_counter()
         notes, sections, links, errors = (collect or collect_index_data)(vault_dir)
+        # Third-party collectors predate the aliases column. Keep their compact
+        # nine-field note contract working while metadata collectors provide it.
+        notes = [note if len(note) == 10 else (*note[:7], json.dumps([]), *note[7:]) for note in notes]
+        session_rows, touch_rows = session_frontmatter_rows(vault_dir)
         scan_seconds = time.perf_counter() - t_scan_start
 
         t_cache_start = time.perf_counter()
@@ -1017,8 +1145,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             cursor.executemany(
                 """
                 INSERT INTO notes
-                (path, filename, category, energy, sentiment, sentiment_labels, tags, summary_snippet, word_count)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(path) DO UPDATE SET
                     filename = excluded.filename,
                     category = excluded.category,
@@ -1026,6 +1154,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     sentiment = excluded.sentiment,
                     sentiment_labels = excluded.sentiment_labels,
                     tags = excluded.tags,
+                    aliases = excluded.aliases,
                     summary_snippet = excluded.summary_snippet,
                     word_count = excluded.word_count
                 """,
@@ -1076,6 +1205,20 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     (link.source_path, link.raw_target, link.resolved_target_path, link.start_line)
                     for link in links
                 ),
+            )
+
+            cursor.execute("DELETE FROM session_touches")
+            cursor.execute("DELETE FROM sessions_idx")
+            cursor.executemany(
+                """
+                INSERT INTO sessions_idx
+                (session_id, title, created, trace_path, cost_usd, repo, note_path)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, session_rows,
+            )
+            cursor.executemany(
+                "INSERT OR IGNORE INTO session_touches(session_id, target_path, action) VALUES (?, ?, ?)",
+                touch_rows,
             )
 
             total_duration = time.perf_counter() - t_start

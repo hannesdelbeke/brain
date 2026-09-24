@@ -47,8 +47,10 @@ instead of inventing a boundary.
 import argparse
 import json
 import math
+import sqlite3
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -67,6 +69,16 @@ DEFAULT_DAEMON = "http://127.0.0.1:44771"
 # missing daemon refuses the connection instantly, so this only costs when there
 # really is one to wait for.
 DAEMON_TIMEOUT_S = 30.0
+HEALTH_TIMEOUT_S = 0.2
+
+
+def daemon_healthy(base: str) -> bool:
+    """Check whether a local daemon can answer before waiting on a search."""
+    try:
+        with urllib.request.urlopen(f"{base.rstrip('/')}/health", timeout=HEALTH_TIMEOUT_S) as response:
+            return response.status == 200
+    except (urllib.error.URLError, OSError, ValueError, TimeoutError):
+        return False
 
 
 def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: float = DAEMON_TIMEOUT_S):
@@ -79,6 +91,8 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: 
     normal. Exit instead, since a search of a corpus the caller did not name is
     worse than no search.
     """
+    if route != "health" and not daemon_healthy(base):
+        return None
     if vault:
         params = {**params, "vault": vault}
     url = f"{base.rstrip('/')}/{route}?{urlencode(params)}"
@@ -93,6 +107,106 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: 
         raise SystemExit(f"daemon refused the request: {message}")
     except (urllib.error.URLError, OSError, ValueError, TimeoutError):
         return None
+
+
+def default_database(db: str | None) -> Path:
+    if db:
+        return Path(db).resolve()
+    current = Path.cwd().resolve()
+    for candidate in (current, *current.parents):
+        database = candidate / ".obsidian" / "pkm_index.db"
+        if database.exists():
+            return database
+    return current / ".obsidian" / "pkm_index.db"
+
+
+def auto_spawn_daemon(db: str | None) -> int | None:
+    """Start one local daemon behind the FTS answer when none is healthy."""
+    if daemon_healthy(DEFAULT_DAEMON):
+        return None
+    database = default_database(db)
+    root = database.parent.parent if database.parent.name == ".obsidian" else database.parent
+    command = [sys.executable, str(Path(__file__).with_name("searchd.py")), "--vault", f"brain={root}"]
+    extra = {"creationflags": 0x00000008 | 0x00000200} if sys.platform == "win32" else {"start_new_session": True}
+    try:
+        process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, **extra)
+        return process.pid
+    except OSError:
+        return None
+
+
+def fast_fts_search(query: str, db_path: str | Path, top: int = 10, expand: bool = True) -> list[dict]:
+    """Search FTS5 directly, without importing numpy or fastembed."""
+    database = Path(db_path)
+    if not database.exists():
+        return []
+    terms = [query]
+    if expand:
+        from entity_expansion import expand_query
+        terms = expand_query(query, database)
+    expression = " OR ".join(f'"{term.replace(chr(34), "")}"' for term in terms if term.strip())
+    if not expression:
+        return []
+    connection = sqlite3.connect(f"file:{database.resolve()}?mode=ro", uri=True, timeout=0.05)
+    try:
+        cursor = connection.cursor()
+        rows = cursor.execute(
+            """
+            SELECT sections.id, sections.path, sections.heading, sections.start_line,
+                   snippet(sections_fts, 1, '[', ']', '...', 24)
+            FROM sections_fts JOIN sections ON sections.id = sections_fts.section_id
+            WHERE sections_fts MATCH ? ORDER BY bm25(sections_fts) LIMIT ?
+            """, (expression, max(top * 3, top)),
+        ).fetchall()
+        title_rows = cursor.execute(
+            """
+            SELECT path, title FROM note_titles_fts
+            WHERE note_titles_fts MATCH ? ORDER BY bm25(note_titles_fts) LIMIT ?
+            """, (expression, max(top * 3, top)),
+        ).fetchall()
+    except sqlite3.Error:
+        return []
+    finally:
+        connection.close()
+    results = [
+        {"path": row[1], "heading": row[2], "line": row[3], "score": 1.0 / (index + 1),
+         "text": row[4], "snippet": row[4]}
+        for index, row in enumerate(rows)
+    ]
+    known = {row["path"] for row in results}
+    for path, title in title_rows:
+        if path not in known:
+            results.append({"path": path, "heading": title, "line": 1,
+                            "score": 1.0 / (len(results) + 1), "text": title, "snippet": title})
+    return dedupe_by_path(results)[:top]
+
+
+def fast_session_search(query: str, db_path: str | Path, top: int = 10) -> list[dict]:
+    """Read the session projection without importing the embedding indexer."""
+    database = Path(db_path)
+    if not database.exists():
+        return []
+    connection = sqlite3.connect(f"file:{database.resolve()}?mode=ro", uri=True, timeout=0.05)
+    try:
+        rows = connection.execute(
+            """
+            SELECT DISTINCT sessions_idx.session_id, sessions_idx.title, sessions_idx.created,
+                   sessions_idx.trace_path, sessions_idx.cost_usd, sessions_idx.repo,
+                   sessions_idx.note_path
+            FROM sessions_idx LEFT JOIN session_touches
+              ON session_touches.session_id = sessions_idx.session_id
+            WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?
+            ORDER BY sessions_idx.created DESC, sessions_idx.title
+            LIMIT ?
+            """,
+            (f"%{query}%", f"%{query}%", max(1, top)),
+        ).fetchall()
+    except sqlite3.Error:
+        return []
+    finally:
+        connection.close()
+    keys = ("session_id", "title", "created", "trace_path", "cost_usd", "repo", "path")
+    return [dict(zip(keys, row)) for row in rows]
 
 
 def direct_search(query: str, top: int, db: str | None, rerank: bool = True):
@@ -341,7 +455,12 @@ def main():
                         help="Treat the query as a note title and list unlinked mentions of it")
     parser.add_argument("--no-rerank", action="store_true",
                         help="Return the fused order instead of reordering the top with the "
-                             "cross-encoder. Saves a second or two and loses precision")
+                        "cross-encoder. Saves a second or two and loses precision")
+    parser.add_argument("--expand", action=argparse.BooleanOptionalAction, default=True,
+                        help="Resolve matching titles, aliases, paths, and outbound links before searching")
+    parser.add_argument("--sessions", action="store_true",
+                        help="Search indexed session rollup titles and touched files")
+    parser.add_argument("--test-healing", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
 
     # --db names one database and the daemon answers from the corpora it was
@@ -349,6 +468,26 @@ def main():
     # name of the other. The flag wins, because it is the more specific request.
     direct = args.direct or bool(args.db)
     vault = None if direct else args.vault
+
+    if args.sessions:
+        began = time.perf_counter()
+        payload = None if direct else daemon_get(
+            args.daemon, "sessions", {"q": args.query, "limit": args.top}, vault
+        )
+        if payload is not None:
+            results = payload["results"]
+            print(f"[PKM Search: daemon active @ {args.daemon.rsplit(':', 1)[-1]} | {payload.get('took_ms', 0)}ms]",
+                  file=sys.stderr)
+        else:
+            database = default_database(args.db)
+            results = fast_session_search(args.query, database, args.top)
+            print(f"[PKM Search: daemon offline | SQLite session fallback answered in "
+                  f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
+        for index, row in enumerate(results, 1):
+            print(f"{index}. {row['title']} ({row['session_id']}) -> {row['path']}")
+            if row.get("trace_path"):
+                print(f"   trace: {row['trace_path']}")
+        return
 
     if args.unlinked:
         payload = None if direct else daemon_get(
@@ -365,11 +504,12 @@ def main():
         return
 
     rerank = not args.no_rerank
-    params = {"q": args.query, "limit": args.top}
+    params = {"q": args.query, "limit": args.top, "expand": "1" if args.expand else "0"}
     if rerank:
         params["rerank"] = "1"
     if args.no_reindex:
         params["reindex"] = "0"
+    began = time.perf_counter()
     payload = None if direct else daemon_get(args.daemon, "search", params, vault)
     order = "rerank" if rerank else "fused"
     if payload is not None:
@@ -377,11 +517,28 @@ def main():
         indexed = ", ".join(f"{name} @ {(at or 'never')[:19]}"
                             for name, at in payload["indexed_at"].items())
         source = f"daemon, {order}: {indexed}"
+        print(f"[PKM Search: daemon active @ {args.daemon.rsplit(':', 1)[-1]} | "
+              f"{payload.get('took_ms', 0)}ms]", file=sys.stderr)
     else:
-        results = direct_search(args.query, args.top, args.db, rerank)
-        missing = direct_stale(args.db, not args.no_reindex)
-        stale = {"vault": missing} if missing["count"] or missing.get("no_index") else {}
-        source = f"direct, {order} @ {(missing['indexed_at'] or 'never')[:19]}"
+        if direct:
+            expanded_query = args.query
+            if args.expand:
+                from entity_expansion import expand_query
+                expanded_query = " ".join(expand_query(args.query, default_database(args.db)))
+            results = direct_search(expanded_query, args.top, args.db, rerank)
+            missing = direct_stale(args.db, not args.no_reindex)
+            stale = {"vault": missing} if missing["count"] or missing.get("no_index") else {}
+            source = f"direct, {order} @ {(missing['indexed_at'] or 'never')[:19]}"
+            print(f"[PKM Search: direct semantic search | {(time.perf_counter() - began) * 1000:.1f}ms]",
+                  file=sys.stderr)
+        else:
+            pid = auto_spawn_daemon(args.db)
+            results = fast_fts_search(args.query, default_database(args.db), args.top, args.expand)
+            stale = {}
+            source = "FTS5 fallback"
+            action = f" -> auto-spawned PID {pid}" if pid else ""
+            print(f"[PKM Search: daemon offline{action} | FTS5 fallback answered in "
+                  f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
 
     print_results(args.query, source, results)
     print_stale(stale)

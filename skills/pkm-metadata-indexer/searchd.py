@@ -626,11 +626,15 @@ def keepalive():
         list(model.embed(["."]))
 
 
-def rank(vault: Vault, query: str, limit: int, rerank: bool = False) -> list[dict]:
+def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: bool = True) -> list[dict]:
     vectors = vault.matrix()
     with vault.lock:
         vault.queries += 1
-    rows = pkm.search_index(query, db_path=str(vault.db), limit=limit,
+    search_query = query
+    if expand:
+        from entity_expansion import expand_query
+        search_query = " ".join(expand_query(query, vault.db))
+    rows = pkm.search_index(search_query, db_path=str(vault.db), limit=limit,
                             vectors=vectors, rerank=rerank)
     return [
         {
@@ -780,7 +784,7 @@ def kick_reindex(vault: Vault) -> bool:
 
 
 def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
-              rerank: bool = False, reindex: bool = True) -> dict:
+              rerank: bool = False, reindex: bool = True, expand: bool = True) -> dict:
     """Search one corpus or several, and say which files the answer could not see.
 
     Merging across corpora sorts on the fused score. Those scores are sums of
@@ -801,7 +805,7 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     # come back four results short.
     fetch = min(max(limit * 3, limit), 30)
     for vault in vaults:
-        results += rank(vault, query, fetch, rerank=False)
+        results += rank(vault, query, fetch, rerank=False, expand=expand)
         missing = vault.stale()
         indexed_at[vault.name] = missing["indexed_at"]
         if missing["count"] or missing.get("no_index"):
@@ -833,6 +837,17 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     log_query("search", [vault.name for vault in vaults], query, limit,
               payload["took_ms"], payload["results"], origin)
     return payload
+
+
+def do_session_query(vaults: list[Vault], query: str, limit: int) -> dict:
+    """Search rollup provenance tables across the selected vaults."""
+    began = time.perf_counter()
+    rows = []
+    for vault in vaults:
+        for row in pkm.query_sessions(query, db_path=str(vault.db), limit=limit):
+            rows.append({"vault": vault.name, **row})
+    return {"query": query, "results": rows[:limit],
+            "took_ms": round((time.perf_counter() - began) * 1000, 1)}
 
 
 def do_links(vault: Vault, note: str) -> dict:
@@ -1588,7 +1603,16 @@ class Handler(BaseHTTPRequestHandler):
                 self.reply(200, do_search(STATE.pick_many(first("vault")), query, limit,
                                           first("origin"),
                                           first("rerank") in {"1", "true", "yes"},
-                                          first("reindex") not in {"0", "false", "no"}))
+                                          first("reindex") not in {"0", "false", "no"},
+                                          first("expand") not in {"0", "false", "no"}))
+                return
+            if url.path == "/sessions" and method == "GET":
+                query = first("q")
+                if not query:
+                    self.reply(400, {"error": "q is required"})
+                    return
+                limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
+                self.reply(200, do_session_query(STATE.pick_many(first("vault")), query, limit))
                 return
             vault = STATE.pick(first("vault"))
             if url.path == "/links" and method == "GET":
