@@ -1,8 +1,19 @@
-"""The FTS5 fallback must answer without paying for numpy or fastembed.
+"""The FTS5 fallback must answer without paying the embedding stack's import cost.
+
+The fallback exists for the seconds when the daemon is down, so its whole value
+is answering from a cold interpreter fast. Measured on this machine with
+python -X importtime: importing search_vault costs 48ms, and importing fastembed
+costs 343ms on top of that -- seven times the entire current startup, before a
+single row is read. That is what this test guards.
+
+It deliberately does not guard numpy, which measures 34ms and is cheap enough
+that banning it would cost more in contorted code than it saves in latency. The
+list below is the expensive stack only: fastembed, its onnxruntime backend,
+torch, and index_pkm_meta, which pulls them in transitively.
 
 This lives apart from test_fts_fallback.py because the assertion only means
 something in a clean interpreter. That module imports index_pkm_meta to build
-its fixture, which pulls numpy and fastembed into sys.modules before the
+its fixture, which pulls the embedding stack into sys.modules before the
 fallback is ever called, so an in-process check there would pass no matter what
 search_vault imported. The child process below imports search_vault and nothing
 else, which is the only arrangement where a regression can actually fail.
@@ -30,14 +41,14 @@ import json, sys
 sys.path.insert(0, {skill!r})
 import search_vault
 results = search_vault.fast_fts_search("fallbackphrase", {database!r}, top=5)
-neural = [name for name in ("numpy", "fastembed", "onnxruntime", "torch", "index_pkm_meta")
-          if name in sys.modules]
-print(json.dumps({{"count": len(results), "neural": neural}}))
+expensive = [name for name in ("fastembed", "onnxruntime", "torch", "index_pkm_meta")
+             if name in sys.modules]
+print(json.dumps({{"count": len(results), "expensive": expensive}}))
 """
 
 
-class FtsNoNeuralImportsTest(unittest.TestCase):
-    def test_fallback_answers_without_importing_neural_dependencies(self):
+class FtsFallbackImportsTest(unittest.TestCase):
+    def test_fallback_answers_without_importing_the_embedding_stack(self):
         with tempfile.TemporaryDirectory() as temp:
             vault = Path(temp) / "vault"
             (vault / ".obsidian").mkdir(parents=True)
@@ -52,7 +63,8 @@ class FtsNoNeuralImportsTest(unittest.TestCase):
             self.assertEqual(completed.returncode, 0, completed.stderr)
             payload = json.loads(completed.stdout.strip().splitlines()[-1])
             self.assertGreater(payload["count"], 0, "fallback returned nothing on the fixture")
-            self.assertEqual(payload["neural"], [], f"fallback imported neural dependencies: {payload['neural']}")
+            self.assertEqual(payload["expensive"], [],
+                             f"fallback imported the embedding stack: {payload['expensive']}")
 
 
 if __name__ == "__main__":
