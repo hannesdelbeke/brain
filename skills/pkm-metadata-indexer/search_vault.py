@@ -455,6 +455,8 @@ def main():
                              "list. Defaults to every registered corpus")
     parser.add_argument("--daemon", default=DEFAULT_DAEMON, help="Daemon base URL")
     parser.add_argument("--direct", action="store_true", help="Never use the daemon, load the model here")
+    parser.add_argument("--no-spawn", action="store_true",
+                        help="Answer from FTS5 without starting a daemon behind the answer")
     parser.add_argument("--no-reindex", action="store_true",
                         help="Report files missing from the index without starting a pass over them")
     parser.add_argument("--unlinked", action="store_true",
@@ -538,10 +540,20 @@ def main():
             print(f"[PKM Search: direct semantic search | {(time.perf_counter() - began) * 1000:.1f}ms]",
                   file=sys.stderr)
         else:
-            pid = auto_spawn_daemon(args.db, args.daemon)
-            results = fast_fts_search(args.query, default_database(args.db), args.top, args.expand)
+            pid = None if args.no_spawn else auto_spawn_daemon(args.db, args.daemon)
+            database = default_database(args.db)
+            # The fallback resolves its database from the working directory,
+            # because only the daemon holds the name-to-root mapping that
+            # --vault is written against. Say so out loud when the caller named
+            # a corpus: answering a question asked of one named corpus out of
+            # whichever index the current directory sits in is the silent
+            # wrong-corpus answer that daemon_get above refuses to give.
+            if args.vault and args.vault != "all" and not args.db:
+                print(f"[PKM Search: --vault {args.vault} cannot be honoured without the daemon, "
+                      f"answering from {database}]", file=sys.stderr)
+            results = fast_fts_search(args.query, database, args.top, args.expand)
             stale = {}
-            source = "FTS5 fallback"
+            source = f"FTS5 fallback @ {database}"
             action = f" -> auto-spawned PID {pid}" if pid else ""
             print(f"[PKM Search: daemon offline{action} | FTS5 fallback answered in "
                   f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
