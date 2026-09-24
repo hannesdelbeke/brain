@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import logging
 import os
 import re
 import sqlite3
@@ -20,6 +21,16 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+# Progress goes through the logger, results go through print. build_index is
+# imported and called by searchd.py, index_sessions.py and the experiment
+# scripts, and a library call has no business writing a timing table to their
+# stdout. A logger with no handler emits nothing below WARNING, so importers and
+# tests are silent by default and only the CLI below installs a handler. The
+# report commands (print_stats, query_links, check_duplicate_batch and friends)
+# keep printing, because there the printed text is the answer the caller asked
+# for rather than a note about progress.
+log = logging.getLogger(__name__)
 
 try:
     from fastembed import TextEmbedding
@@ -970,7 +981,7 @@ def create_embeddings(
 
         completed = min(batch_start + batch_size, len(sections))
         if completed % 512 == 0 or completed == len(sections):
-            print(f"Embedded {completed:,}/{len(sections):,} sections.", flush=True)
+            log.info("Embedded %s/%s sections.", f"{completed:,}", f"{len(sections):,}")
     return vectors, active_provider
 
 
@@ -1254,35 +1265,35 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         db_seconds = time.perf_counter() - t_db_start
         total_duration = time.perf_counter() - t_start
 
-        print(f"Indexed {len(notes):,} notes, {len(sections):,} sections, and {len(links):,} links.")
-        print(
-            f"Vectors: {unchanged_vectors:,} unchanged, {reused_vectors:,} reused by hash, "
-            f"{len(generated_vectors):,} generated."
+        log.info("Indexed %s notes, %s sections, and %s links.", f"{len(notes):,}", f"{len(sections):,}", f"{len(links):,}")
+        log.info(
+            "Vectors: %s unchanged, %s reused by hash, %s generated.",
+            f"{unchanged_vectors:,}", f"{reused_vectors:,}", f"{len(generated_vectors):,}",
         )
-        print(f"Removed {removed_notes:,} notes and {removed_sections:,} sections no longer in the vault.")
-        
+        log.info("Removed %s notes and %s sections no longer in the vault.", f"{removed_notes:,}", f"{removed_sections:,}")
+
         # Performance timing breakdown
         notes_per_sec = len(notes) / max(scan_seconds, 0.001)
         links_per_sec = len(links) / max(scan_seconds, 0.001)
         embed_rate = len(generated_vectors) / max(embed_seconds, 0.001) if generated_vectors else 0.0
-        
-        print("\n--- Performance Timing ---")
-        print(f"  Vault Scan & Parse:   {scan_seconds:6.2f}s  ({notes_per_sec:,.0f} notes/s, {links_per_sec:,.0f} links/s)")
-        print(f"  Vector Cache & Diff:  {cache_seconds:6.2f}s  ({unchanged_vectors + reused_vectors:,} cached)")
+
+        log.info("\n--- Performance Timing ---")
+        log.info("  Vault Scan & Parse:   %6.2fs  (%s notes/s, %s links/s)", scan_seconds, f"{notes_per_sec:,.0f}", f"{links_per_sec:,.0f}")
+        log.info("  Vector Cache & Diff:  %6.2fs  (%s cached)", cache_seconds, f"{unchanged_vectors + reused_vectors:,}")
         if generated_vectors:
-            print(f"  Embedding Generation: {embed_seconds:6.2f}s  ({len(generated_vectors):,} generated, {embed_rate:.1f} vec/s [{active_provider}])")
+            log.info("  Embedding Generation: %6.2fs  (%s generated, %.1f vec/s [%s])", embed_seconds, f"{len(generated_vectors):,}", embed_rate, active_provider)
         elif skip_embeddings:
-            print(f"  Embedding Generation:  skipped (metadata-only)")
+            log.info("  Embedding Generation:  skipped (metadata-only)")
         else:
-            print(f"  Embedding Generation:   0.00s (all vectors up to date)")
-        print(f"  SQLite & FTS5 Commit: {db_seconds:6.2f}s  ({len(notes) + len(sections) + len(links):,} records written)")
-        print(f"  Total Run Duration:   {total_duration:6.2f}s")
-        print("--------------------------\n")
-        
+            log.info("  Embedding Generation:   0.00s (all vectors up to date)")
+        log.info("  SQLite & FTS5 Commit: %6.2fs  (%s records written)", db_seconds, f"{len(notes) + len(sections) + len(links):,}")
+        log.info("  Total Run Duration:   %6.2fs", total_duration)
+        log.info("--------------------------\n")
+
         if errors:
-            print(f"Completed with {len(errors)} parse errors. See --stats for the latest run.")
+            log.info("Completed with %d parse errors. See --stats for the latest run.", len(errors))
         else:
-            print(f"Indexing complete ({status}).")
+            log.info("Indexing complete (%s).", status)
         return {
             "notes": len(notes),
             "sections": len(sections),
@@ -2037,7 +2048,20 @@ def main():
     parser.add_argument("--rerank", action="store_true",
                         help="Reorder the fused top with a cross-encoder, about 533ms over "
                              "20 candidates and a 90 MB model download the first time")
+    parser.add_argument("--quiet", action="store_true",
+                        help="Suppress indexing progress, leaving only warnings and the command's own output")
     args = parser.parse_args()
+
+    # Only the CLI installs a handler, which is what keeps an imported
+    # build_index silent. The format is bare so the progress lines read exactly
+    # as they did when they were print calls, and the stream stays stdout for
+    # the same reason: the daily job's logs should not move to stderr just
+    # because the calls behind them changed.
+    logging.basicConfig(
+        level=logging.WARNING if args.quiet else logging.INFO,
+        format="%(message)s",
+        stream=sys.stdout,
+    )
 
     if args.digest:
         digest_notes(vault_path=args.vault, db_path=args.db, tag=args.tag)
