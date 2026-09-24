@@ -120,9 +120,15 @@ def default_database(db: str | None) -> Path:
     return current / ".obsidian" / "pkm_index.db"
 
 
-def auto_spawn_daemon(db: str | None) -> int | None:
-    """Start one local daemon behind the FTS answer when none is healthy."""
-    if daemon_healthy(DEFAULT_DAEMON):
+def auto_spawn_daemon(db: str | None, base: str = DEFAULT_DAEMON) -> int | None:
+    """Start one local daemon behind the FTS answer when none is healthy.
+
+    The base is a parameter because the caller may have been pointed at another
+    daemon with --daemon, and health-checking the default instead answered about
+    a daemon nobody asked for: a healthy daemon on the default port suppressed
+    the spawn even though the daemon the search actually used was down.
+    """
+    if daemon_healthy(base):
         return None
     database = default_database(db)
     root = database.parent.parent if database.parent.name == ".obsidian" else database.parent
@@ -532,7 +538,7 @@ def main():
             print(f"[PKM Search: direct semantic search | {(time.perf_counter() - began) * 1000:.1f}ms]",
                   file=sys.stderr)
         else:
-            pid = auto_spawn_daemon(args.db)
+            pid = auto_spawn_daemon(args.db, args.daemon)
             results = fast_fts_search(args.query, default_database(args.db), args.top, args.expand)
             stale = {}
             source = "FTS5 fallback"
