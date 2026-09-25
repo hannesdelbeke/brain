@@ -10,3 +10,12 @@ Thumbs.db
 *.db-shm
 *.db-wal
 .pkm_index*
+
+# device-local telemetry, and the reason this is not just tidiness: the
+# obsidian git plugin stages whatever it finds, so an unignored data/ means
+# the next auto backup publishes query logs to a public repo. nothing under
+# data/ has ever been tracked here, so this ignores rather than removes.
+data/
+
+# build artefact from `pip install -e .`
+*.egg-info/
