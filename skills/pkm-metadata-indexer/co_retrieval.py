@@ -46,6 +46,10 @@ QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
 EDGE_DB = Path.home() / ".pkm" / "co_retrieval.db"
 # One knob: how fast an association cools. The same half-life as mention_heatmap.
 HALF_LIFE_DAYS = 30
+# Reserved prefix for synthetic traffic. An eval harness passes origin="eval-*" so
+# co-retrieval edges built from its invented queries don't teach the ranker from
+# its own output. Rows with no origin key are normal real traffic and must count.
+SYNTHETIC_ORIGIN_PREFIX = "eval-"
 
 
 def get_device_name() -> str:
@@ -203,6 +207,10 @@ def fold(connection: sqlite3.Connection, lines: list[str]) -> int:
     for line in lines:
         try:
             row = json.loads(line)
+            # Skip synthetic eval traffic: invented queries should not teach the ranker.
+            origin = row.get("origin", "")
+            if origin.startswith(SYNTHETIC_ORIGIN_PREFIX):
+                continue
             vault, when = row["vault"], row["t"]
             found = pairs(row.get("results") or [])
         except (ValueError, KeyError, TypeError):
