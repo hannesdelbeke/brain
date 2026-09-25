@@ -129,8 +129,14 @@ def judge_request(model: str, prompt: str) -> tuple[str, dict]:
             "generationConfig": {"temperature": 0, "maxOutputTokens": 8,
                                  "thinkingConfig": {"thinkingBudget": 0}},
         }
+    # No `temperature` and 512 rather than 8 tokens, both learned the hard way
+    # against the Claude 5 models: the gateway 400s on `temperature` for
+    # claude-opus-5 and claude-sonnet-5 ("deprecated for this model"), and
+    # claude-opus-5 spends an adaptive-thinking budget before it writes, so at 8
+    # tokens it returns finish_reason "length" and an empty string. Both failures
+    # arrive here as None, which `judge` cannot tell from a judge saying NO.
     return f"{GATEWAY}/v1/chat/completions", {
-        "model": model, "max_tokens": 8, "temperature": 0,
+        "model": model, "max_tokens": 512,
         "messages": [{"role": "user", "content": prompt}],
     }
 
@@ -235,7 +241,12 @@ def main():
         with ThreadPoolExecutor(max_workers=8) as pool:
             for hit, verdict in zip(need, pool.map(lambda pair: judge(*pair),
                                                    [(question, text) for text in texts])):
-                cached[f"{question}|{key(hit)}"] = verdict
+                # A failure is retried next run rather than remembered as a
+                # verdict: a cached None scores as "not useful", so one bad run
+                # permanently records a judge that never answered as a judge
+                # that rejected everything.
+                if verdict is not None:
+                    cached[f"{question}|{key(hit)}"] = verdict
         JUDGEMENTS.write_text(json.dumps(cached, indent=1, sort_keys=True), encoding="utf-8")
 
         verdicts = {identity: cached.get(f"{question}|{identity}") for identity in seen}
