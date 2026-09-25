@@ -11,59 +11,47 @@ CO_RETRIEVAL = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(CO_RETRIEVAL)
 
 
-class CoRetrievalTest(unittest.TestCase):
-    def test_synthetic_origin_contributes_no_edge(self):
-        """Log rows with origin=eval-* must not create co-retrieval edges."""
+class CoRetrievalOriginTest(unittest.TestCase):
+    """Which logged queries are allowed to teach the graph track.
+
+    Every case goes through `update`, the entry point the daemon calls, rather
+    than through `fold` directly, so the filter is tested where it actually runs.
+    """
+
+    def fold_one(self, **extra) -> tuple[int, int]:
+        """Fold a single two-result query, returning (queries folded, edges made)."""
+        row = {"t": "2026-09-25T10:00:00", "vault": "test", "kind": "search",
+               "q": "a query", "results": ["a.md", "b.md"], **extra}
         with tempfile.TemporaryDirectory() as temp:
             log = Path(temp) / "queries.jsonl"
-            db = Path(temp) / "edges.db"
             with log.open("w", encoding="utf-8") as handle:
-                handle.write(json.dumps({
-                    "t": "2026-09-25T10:00:00",
-                    "vault": "test",
-                    "kind": "search",
-                    "q": "synthetic query",
-                    "origin": "eval-gate",
-                    "results": ["a.md", "b.md"]
-                }) + "\n")
-            folded, edges = CO_RETRIEVAL.update(db, log)
-            self.assertEqual(folded, 0, "eval-gate query must not be folded")
-            self.assertEqual(edges, 0, "no edges from synthetic traffic")
+                handle.write(json.dumps(row) + "\n")
+            return CO_RETRIEVAL.update(Path(temp) / "edges.db", log)
+
+    def test_synthetic_origin_contributes_no_edge(self):
+        self.assertEqual(self.fold_one(origin="eval-gate"), (0, 0),
+                         "an eval's invented query must not become an edge")
 
     def test_missing_origin_contributes_edge(self):
-        """Log rows without an origin key are real traffic and must count."""
-        with tempfile.TemporaryDirectory() as temp:
-            log = Path(temp) / "queries.jsonl"
-            db = Path(temp) / "edges.db"
-            with log.open("w", encoding="utf-8") as handle:
-                handle.write(json.dumps({
-                    "t": "2026-09-25T10:00:00",
-                    "vault": "test",
-                    "kind": "search",
-                    "q": "real query",
-                    "results": ["a.md", "b.md"]
-                }) + "\n")
-            folded, edges = CO_RETRIEVAL.update(db, log)
-            self.assertEqual(folded, 1, "query without origin must be folded")
-            self.assertEqual(edges, 1, "one pair creates one edge")
+        # The normal case for real traffic: searchd writes the key only when the
+        # caller passed a non-empty origin, so most rows have no origin at all.
+        self.assertEqual(self.fold_one(), (1, 1),
+                         "a query with no origin is real traffic and must count")
 
     def test_non_synthetic_origin_contributes_edge(self):
-        """Log rows with a non-synthetic origin (e.g. cli) must count."""
-        with tempfile.TemporaryDirectory() as temp:
-            log = Path(temp) / "queries.jsonl"
-            db = Path(temp) / "edges.db"
-            with log.open("w", encoding="utf-8") as handle:
-                handle.write(json.dumps({
-                    "t": "2026-09-25T10:00:00",
-                    "vault": "test",
-                    "kind": "search",
-                    "q": "cli query",
-                    "origin": "cli",
-                    "results": ["a.md", "b.md"]
-                }) + "\n")
-            folded, edges = CO_RETRIEVAL.update(db, log)
-            self.assertEqual(folded, 1, "cli origin query must be folded")
-            self.assertEqual(edges, 1, "one pair creates one edge")
+        self.assertEqual(self.fold_one(origin="cli"), (1, 1),
+                         "a named non-eval origin must count")
+
+    def test_null_origin_counts_as_real_rather_than_crashing(self):
+        # `.startswith` on None raises AttributeError, which fold's except clause
+        # does not catch, so an unguarded read would take down the whole run over
+        # one foreign row instead of skipping it. Null means real, like absent.
+        self.assertEqual(self.fold_one(origin=None), (1, 1),
+                         "a null origin must count, and must not raise")
+
+    def test_non_string_origin_does_not_raise(self):
+        self.assertEqual(self.fold_one(origin=7), (1, 1),
+                         "a number is not the eval prefix, and must not raise")
 
 
 if __name__ == "__main__":
