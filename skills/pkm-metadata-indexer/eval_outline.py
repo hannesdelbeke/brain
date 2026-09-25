@@ -7,42 +7,43 @@ The dual-track fusion changed how the graph walk contributes to the final rankin
 This eval tests GRAPH FUSION ONLY. The semantic track is stubbed to return empty,
 so both arms fuse the same structural+graph rankings with different graph weights.
 It is silent on the semantic gate (facet_count >= 2) since that gate acts on a
-track this eval does not run.
+track this eval does not run -- eval_gate.py judges that one, against the live
+route, because a stubbed track cannot be evidence about whether to run it.
 
 Both arms run from the same track outputs, so the only difference is graph fusion.
 A judge that sees only the question and the outline content for one note decides if
-that note is useful. Verdicts are cached by (question, note, judge_model), so two
-judges never read each other's answers and a rerun is free. Failed judgements are
-NOT cached and will be retried on the next run.
+that note is useful. The judge harness -- the request shape, the cache, the metrics
+and the coverage report -- is eval_judge.py, shared rather than copied.
 
     python eval_outline.py --vault brain --port 44771 --judge claude-sonnet-5 --judge claude-opus-5 \
       --questions eval_questions/outline-multifacet.json
 
 Reports precision at k, mean rank of first useful note, inter-judge agreement, and
-per-judge abstention counts.
+per-judge coverage.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import os
-import sqlite3
 import sys
-import urllib.error
 import urllib.request
-from collections import Counter
-from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-# Import the shared judge infrastructure and dual_track functions
-from eval_rerank import post, judge_answer, private, PRIVATE
 import dual_track
+import eval_judge
+from eval_judge import (cache_key, compute_metrics, judge_all, load_cache,
+                        load_questions, report_agreement, report_arms,
+                        report_coverage, save_cache)
 
-GATEWAY = os.environ.get("GATEWAY", "http://127.0.0.1:8080")
 JUDGEMENTS = Path.home() / ".pkm" / "outline-judgements.json"
 RRF_K = 60  # Same constant as dual_track.py
+ARMS = ("old", "new")
 
+# Kept here verbatim rather than taken from eval_judge, because the cache on disk
+# holds verdicts formed under this exact wording and this eval's content really is
+# "the headings the search matched" -- eval_judge's phrasing describes a note's own
+# headings. Rewording it would mix two framings in one cache for no gain.
 JUDGE_PROMPT = """Someone searching their notes asks: "{question}"
 
 Below is one note from the search results, shown as it would appear in the outline:
@@ -53,65 +54,6 @@ the note's title and the section headings the search matched.
 ---
 
 Would this note help answer the question? Answer with one word, YES or NO."""
-
-
-def cache_key(question: str, path: str, model: str) -> str:
-    """The one place a judgement's identity is spelled.
-
-    The judge model belongs in the key: two judges scoring the same (question,
-    note) must not read each other's verdict, and a key that omits the model
-    silently fuses them into one voter whose numbers look like agreement.
-    """
-    return f"{question}|{path}|{model}"
-
-
-def agreement(results: list[dict], cached: dict, j1: str, j2: str) -> list[bool]:
-    """Did the two judges say the same thing, over the pairs both actually saw.
-
-    Per question, from that question's own note list. Counted only where both
-    judges have a verdict -- a pair one judge never answered is not a
-    disagreement, and folding it in would make a thin judge look contrary.
-    """
-    return [cached[cache_key(result["question"], path, j1)]
-            == cached[cache_key(result["question"], path, j2)]
-            for result in results for path in result["notes"]
-            if cache_key(result["question"], path, j1) in cached
-            and cache_key(result["question"], path, j2) in cached]
-
-
-def judge_request(model: str, prompt: str) -> tuple[str, dict]:
-    """URL and body for one judgement, in whichever dialect the model speaks.
-
-    No `temperature`: the gateway rejects it outright for claude-opus-5 and
-    claude-sonnet-5 with "temperature is deprecated for this model", and an
-    HTTPError is a URLError, so sending it turns every judgement into a caught
-    exception and a judge that answered nothing looks like one that rejected
-    everything.
-
-    `max_tokens` is 512 and not the 8 a one-word answer needs, because
-    claude-opus-5 uses adaptive thinking and spends the budget before it writes
-    anything: at 8 and at 64 tokens it returned finish_reason "length" and an
-    empty string on 293 of 349 real prompts, at 256 it answered 79% of them and
-    at 512 it answers all of them. A one-word verdict needs a paragraph of
-    headroom. Sonnet does not engage thinking on this prompt and was unaffected,
-    which is exactly why a single-judge eval hid this.
-    """
-    if model.startswith("gemini"):
-        return f"{GATEWAY}/v1beta/models/{model}:generateContent", {
-            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0, "maxOutputTokens": 8,
-                                 "thinkingConfig": {"thinkingBudget": 0}},
-        }
-    return f"{GATEWAY}/v1/chat/completions", {
-        "model": model, "max_tokens": 512,
-        "messages": [{"role": "user", "content": prompt}],
-    }
-
-
-def load_questions(path: str) -> list[tuple[str, str]]:
-    """Read a question set. Same shape as eval_rerank: [[question, group], ...]."""
-    rows = json.loads(Path(path).read_text(encoding="utf-8"))
-    return [(row[0], row[1]) for row in rows]
 
 
 def search_tracks(db_path: str, question: str, limit: int = 50) -> dict:
@@ -192,59 +134,6 @@ def note_outline_content(payload: dict, path: str) -> str:
     return "\n".join(lines)
 
 
-def judge(question: str, content: str, model: str) -> bool | None:
-    """Ask one judge model if this note is useful."""
-    if not content.strip():
-        return None
-
-    url, payload = judge_request(
-        model, JUDGE_PROMPT.format(question=question, content=content))
-    try:
-        data = post(url, payload, timeout=120)
-    except (urllib.error.URLError, TimeoutError) as error:
-        print(f"  judge {model} failed: {error}", flush=True)
-        return None
-
-    answer = judge_answer(model, data).strip().upper()
-    if answer.startswith(("YES", "NO")):
-        return answer.startswith("YES")
-    # Said out loud rather than returned quietly. An unparseable reply and a
-    # failed call both became None here, so a model that was burning its whole
-    # token budget on thinking and returning "" was indistinguishable from one
-    # that had judged the note unhelpful -- for two full runs.
-    print(f"  judge {model} gave no verdict: {answer[:60]!r}"
-          f" (finish {data.get('choices', [{}])[0].get('finish_reason')})", flush=True)
-    return None
-
-
-def precision_at_k(ranked: list[str], verdicts: dict[str, bool | None], k: int) -> tuple[int, int]:
-    """Count useful notes in top k."""
-    useful = sum(1 for path in ranked[:k] if verdicts.get(path))
-    return useful, min(k, len(ranked))
-
-
-def first_useful_rank(ranked: list[str], verdicts: dict[str, bool | None]) -> int | None:
-    """1-indexed rank of first useful note, or None if none useful."""
-    for rank, path in enumerate(ranked):
-        if verdicts.get(path):
-            return rank + 1
-    return None
-
-
-def compute_metrics(ranked: list[str], verdicts: dict[str, bool | None]) -> dict:
-    """Compute all metrics for one arm."""
-    p5_useful, p5_total = precision_at_k(ranked, verdicts, 5)
-    p10_useful, p10_total = precision_at_k(ranked, verdicts, 10)
-    first = first_useful_rank(ranked, verdicts)
-
-    return {
-        "p5": (p5_useful, p5_total),
-        "p10": (p10_useful, p10_total),
-        "first_rank": first,
-        "has_useful": first is not None,
-    }
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--db", required=False,
@@ -286,8 +175,7 @@ def main():
             print(f"ERROR: Vault '{args.vault}' not found in daemon", file=sys.stderr)
             return 1
 
-    JUDGEMENTS.parent.mkdir(parents=True, exist_ok=True)
-    cached = json.loads(JUDGEMENTS.read_text(encoding="utf-8")) if JUDGEMENTS.exists() else {}
+    cached = load_cache(JUDGEMENTS)
     # Counted in memory, not in the cache: a failed call is deliberately never
     # cached, so the cache cannot be asked afterwards how many calls failed.
     failures = {model: 0 for model in args.judges}
@@ -306,47 +194,20 @@ def main():
         facet_count = payload.get("facet_count", 0)
 
         # Fuse both ways
-        old_ranked = fuse_old(structural, graph)
-        new_ranked = fuse_new(structural, graph)
+        ranked = {"old": fuse_old(structural, graph),
+                  "new": fuse_new(structural, graph)}
 
-        # Collect all notes we need to judge (top 10 from each arm)
-        all_notes = set(old_ranked[:10] + new_ranked[:10])
+        all_notes = sorted(set(ranked["old"][:10] + ranked["new"][:10]))
+        contents = {path: note_outline_content(payload, path) for path in all_notes}
+        pending = [(question, path, model,
+                    JUDGE_PROMPT.format(question=question, content=contents[path]))
+                   for path in all_notes for model in args.judges
+                   if cache_key(question, path, model) not in cached
+                   and contents[path].strip()]
+        judge_all(pending, cached, failures)
+        if pending:
+            save_cache(JUDGEMENTS, cached)
 
-        # Prepare judge inputs
-        note_contents = {path: note_outline_content(payload, path) for path in all_notes}
-
-        # Identify what needs judging (not cached)
-        need_judging = []
-        for path in all_notes:
-            for model in args.judges:
-                if cache_key(question, path, model) not in cached:
-                    need_judging.append((question, path, model, note_contents[path]))
-
-        # Judge in parallel
-        if need_judging:
-            with ThreadPoolExecutor(max_workers=8) as pool:
-                jobs = [(q, content, model) for q, path, model, content in need_judging]
-                for (q, path, model, content), verdict in zip(need_judging,
-                        pool.map(lambda job: judge(*job), jobs)):
-                    # A failure is retried next run, never remembered: a cached
-                    # null is indistinguishable from "the judge said no", and
-                    # scoring it as not-useful reads a broken call as a verdict.
-                    if verdict is None:
-                        failures[model] += 1
-                    else:
-                        cached[cache_key(q, path, model)] = verdict
-
-            JUDGEMENTS.write_text(json.dumps(cached, indent=1, sort_keys=True), encoding="utf-8")
-
-        # Build verdict dicts per judge
-        per_judge = {}
-        for model in args.judges:
-            per_judge[model] = {
-                path: cached.get(cache_key(question, path, model))
-                for path in all_notes
-            }
-
-        # Compute metrics per judge per arm
         result = {
             "question": question,
             "group": group,
@@ -354,107 +215,37 @@ def main():
             # Kept per question because the agreement pass needs *this*
             # question's notes; reading a loop variable after the loop compares
             # the last question's paths against every question's keys.
-            "notes": sorted(all_notes),
+            "notes": all_notes,
             "judges": {},
         }
 
         for model in args.judges:
-            verdicts = per_judge[model]
-            result["judges"][model] = {
-                "old": compute_metrics(old_ranked, verdicts),
-                "new": compute_metrics(new_ranked, verdicts),
-            }
+            verdicts = {path: cached.get(cache_key(question, path, model))
+                        for path in all_notes}
+            result["judges"][model] = {arm: compute_metrics(ranked[arm], verdicts)
+                                       for arm in ARMS}
 
         results.append(result)
 
-        # Print per-question summary
         for model in args.judges:
-            m = result["judges"][model]
-            print(f"  {model}:", flush=True)
-            print(f"    old: p@5={m['old']['p5'][0]}/{m['old']['p5'][1]} "
-                  f"p@10={m['old']['p10'][0]}/{m['old']['p10'][1]} "
-                  f"first={m['old']['first_rank']}", flush=True)
-            print(f"    new: p@5={m['new']['p5'][0]}/{m['new']['p5'][1]} "
-                  f"p@10={m['new']['p10'][0]}/{m['new']['p10'][1]} "
-                  f"first={m['new']['first_rank']}", flush=True)
+            for arm in ARMS:
+                m = result["judges"][model][arm]
+                print(f"  {model} {arm}: p@5={m['p5'][0]}/{m['p5'][1]} "
+                      f"p@10={m['p10'][0]}/{m['p10'][1]} first={m['first_rank']}", flush=True)
 
-    # Aggregate reporting
     print("\n=== AGGREGATE RESULTS ===\n", flush=True)
-
-    # Coverage, not abstention, is the number that catches an unusable judge.
-    # A judge can be missing verdicts two ways: it was asked and failed, or the
-    # run stopped before it was asked at all. The second is invisible in the
-    # failure count, and it is the one that actually happened -- one judge
-    # answered 332 pairs and the other 32, and both reported 0 failures.
-    expected = {model: sum(len(r["notes"]) for r in results) for model in args.judges}
-    judged = {model: sum(1 for r in results for path in r["notes"]
-                         if cache_key(r["question"], path, model) in cached)
-              for model in args.judges}
-
     for model in args.judges:
         print(f"Judge: {model}", flush=True)
-        for arm in ("old", "new"):
-            p5_useful = sum(r["judges"][model][arm]["p5"][0] for r in results)
-            p5_total = sum(r["judges"][model][arm]["p5"][1] for r in results)
-            p10_useful = sum(r["judges"][model][arm]["p10"][0] for r in results)
-            p10_total = sum(r["judges"][model][arm]["p10"][1] for r in results)
-
-            first_ranks = [r["judges"][model][arm]["first_rank"]
-                          for r in results if r["judges"][model][arm]["first_rank"]]
-            mean_first = sum(first_ranks) / len(first_ranks) if first_ranks else None
-            answered = len(first_ranks)
-
-            p5_pct = f"{p5_useful/p5_total:.1%}" if p5_total else "n/a"
-            p10_pct = f"{p10_useful/p10_total:.1%}" if p10_total else "n/a"
-            mean_str = f"{mean_first:.1f}" if mean_first else "none"
-
-            print(f"  {arm}: precision@5 {p5_useful}/{p5_total} = {p5_pct}  "
-                  f"precision@10 {p10_useful}/{p10_total} = {p10_pct}", flush=True)
-            print(f"       answered {answered}/{len(results)}  "
-                  f"mean first useful rank {mean_str}", flush=True)
-
-        want, got = expected[model], judged[model]
-        share = got / want if want else 0.0
-        print(f"  coverage: {got}/{want} pairs judged = {share:.1%}"
-              f"   calls that failed this run: {failures[model]}", flush=True)
-        if share < 0.90:
-            print(f"  WARNING: {model} judged only {share:.0%} of its pairs. Its numbers "
-                  f"above are NOT comparable to a judge with full coverage -- an unjudged "
-                  f"note scores the same as a rejected one.", flush=True)
+        report_arms(results, model, ARMS)
+        report_coverage(results, cached, model, failures)
         print()
-
-    # Inter-judge agreement
-    if len(args.judges) == 2:
-        j1, j2 = args.judges
-        agreements = agreement(results, cached, j1, j2)
-
-        if agreements:
-            agree_count = sum(agreements)
-            total = len(agreements)
-            print(f"Inter-judge agreement: {agree_count}/{total} = {agree_count/total:.1%}", flush=True)
-            print(f"  ({j1} vs {j2} on {total} (question, note) pairs)", flush=True)
-
+    report_agreement(results, cached, args.judges)
     return 0
 
 
 def self_check():
-    """Verify cache key includes judge model and test fusion logic."""
-    # Test 1: the cache key must separate judges. Asserted through the function
-    # the run actually calls -- a test that rebuilds the key with its own
-    # f-string passes even when the caller's key has no model in it, which is
-    # the bug this is here to catch.
-    assert cache_key("q", "a.md", "judge-one") != cache_key("q", "a.md", "judge-two")
-    assert cache_key("q", "a.md", "j") == cache_key("q", "a.md", "j")
-    assert cache_key("q1", "a.md", "j") != cache_key("q2", "a.md", "j")
-    assert cache_key("q", "a.md", "j") != cache_key("q", "b.md", "j")
-
-    # Test 1b: agreement is counted per question. This once read a loop variable
-    # left over from the judging loop, so every question was scored against the
-    # last question's notes and 31 comparable pairs were reported as 2.
-    results = [{"question": "q1", "notes": ["a.md"]}, {"question": "q2", "notes": ["b.md"]}]
-    cached = {cache_key("q1", "a.md", "j1"): True, cache_key("q1", "a.md", "j2"): True,
-              cache_key("q2", "b.md", "j1"): True, cache_key("q2", "b.md", "j2"): False}
-    assert agreement(results, cached, "j1", "j2") == [True, False]
+    """Verify the shared harness, then this eval's own fusion arms."""
+    eval_judge.self_check()
 
     # Test 2: old arm with self-agreeing graph note
     # structural=[a, b], graph=[a, c]
