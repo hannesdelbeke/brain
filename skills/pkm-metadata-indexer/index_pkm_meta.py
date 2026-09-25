@@ -821,6 +821,12 @@ def ensure_schema(connection: sqlite3.Connection):
         )
         """
     )
+    # create table if not exists is a no-op on databases that already have the three-column table,
+    # so the vault flag has to be added by alter like the notes and sections columns above.
+    # without it every pre-existing index fails the four-column insert and every --touched read
+    # fails on the same missing column.
+    if "vault" not in table_columns(connection, "session_touches"):
+        connection.execute("ALTER TABLE session_touches ADD COLUMN vault INTEGER")
     connection.execute("CREATE INDEX IF NOT EXISTS idx_session_touches_target ON session_touches(target_path)")
 
     fts_columns = table_columns(connection, "sections_fts")

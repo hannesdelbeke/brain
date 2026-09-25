@@ -118,6 +118,69 @@ class SessionSqlTest(unittest.TestCase):
                 {"session-code", "session-mixed"}
             )
 
+    def test_session_touches_vault_migration(self):
+        """ensure_schema adds vault column to existing three-column session_touches table."""
+        with tempfile.TemporaryDirectory() as temp:
+            database = Path(temp) / "test.db"
+            connection = sqlite3.connect(database)
+            try:
+                # simulate old schema: three-column session_touches table
+                connection.execute("PRAGMA journal_mode=WAL;")
+                connection.execute(
+                    """
+                    CREATE TABLE sessions_idx (
+                        session_id TEXT PRIMARY KEY,
+                        title TEXT NOT NULL,
+                        created TEXT,
+                        trace_path TEXT,
+                        cost_usd REAL,
+                        repo TEXT,
+                        note_path TEXT NOT NULL
+                    )
+                    """
+                )
+                connection.execute(
+                    """
+                    CREATE TABLE session_touches (
+                        session_id TEXT NOT NULL,
+                        target_path TEXT NOT NULL,
+                        action TEXT,
+                        PRIMARY KEY (session_id, target_path, action),
+                        FOREIGN KEY (session_id) REFERENCES sessions_idx(session_id)
+                    )
+                    """
+                )
+                connection.commit()
+
+                # verify old schema has only three columns
+                columns_before = {row[1] for row in connection.execute("PRAGMA table_info(session_touches)")}
+                self.assertEqual(columns_before, {"session_id", "target_path", "action"})
+
+                # run schema migration
+                INDEXER.ensure_schema(connection)
+
+                # verify vault column was added
+                columns_after = {row[1] for row in connection.execute("PRAGMA table_info(session_touches)")}
+                self.assertIn("vault", columns_after)
+                self.assertEqual(columns_after, {"session_id", "target_path", "action", "vault"})
+
+                # verify four-column insert succeeds
+                connection.execute("INSERT INTO sessions_idx(session_id, title, note_path) VALUES (?, ?, ?)",
+                                   ("test-session", "Test Session", "sessions/test.md"))
+                connection.execute(
+                    "INSERT INTO session_touches(session_id, target_path, action, vault) VALUES (?, ?, ?, ?)",
+                    ("test-session", "test.md", "edited", 1)
+                )
+                connection.commit()
+
+                # verify the row was inserted correctly
+                row = connection.execute(
+                    "SELECT session_id, target_path, action, vault FROM session_touches"
+                ).fetchone()
+                self.assertEqual(row, ("test-session", "test.md", "edited", 1))
+            finally:
+                connection.close()
+
 
 if __name__ == "__main__":
     unittest.main()
