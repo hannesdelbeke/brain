@@ -22,6 +22,30 @@ def _add(values: list[str], value: str | None) -> None:
         values.append(value)
 
 
+def _tokens(text: str) -> set[str]:
+    return {token.casefold() for token in re.findall(r"[\w']+", text or "", re.UNICODE)}
+
+
+def _open(db_path: str | Path) -> sqlite3.Connection | None:
+    database = Path(db_path)
+    if not database.exists():
+        return None
+    connection = sqlite3.connect(f"file:{database.resolve()}?mode=ro", uri=True, timeout=0.05)
+    connection.row_factory = sqlite3.Row
+    return connection
+
+
+def _load_notes(connection: sqlite3.Connection) -> list[sqlite3.Row]:
+    """One pass over `notes`, shared by both expanders.
+
+    `aliases` is read through a column check rather than assumed, because the
+    column was added later and an index built before it still answers searches.
+    """
+    columns = {row[1] for row in connection.execute("PRAGMA table_info(notes)")}
+    alias_column = "aliases" if "aliases" in columns else "'[]' AS aliases"
+    return connection.execute(f"SELECT path, filename, tags, {alias_column} FROM notes").fetchall()
+
+
 def expand_query(query: str, db_path: str | Path, max_terms: int = 24) -> list[str]:
     """Return ``query`` plus names connected to entities it identifies.
 
@@ -29,29 +53,24 @@ def expand_query(query: str, db_path: str | Path, max_terms: int = 24) -> list[s
     no model, filesystem walk, or YAML parser is loaded on a search hot path.
     """
     terms = [query]
-    database = Path(db_path)
-    if not query.strip() or not database.exists():
+    if not query.strip():
         return terms
-    tokens = {token.casefold() for token in re.findall(r"[\w']+", query, re.UNICODE)}
+    tokens = _tokens(query)
     if not tokens:
         return terms
     try:
-        connection = sqlite3.connect(f"file:{database.resolve()}?mode=ro", uri=True, timeout=0.05)
-        connection.row_factory = sqlite3.Row
+        connection = _open(db_path)
+        if connection is None:
+            return terms
         try:
-            columns = {row[1] for row in connection.execute("PRAGMA table_info(notes)")}
-            alias_column = "aliases" if "aliases" in columns else "'[]' AS aliases"
-            rows = connection.execute(
-                f"SELECT path, filename, tags, {alias_column} FROM notes"
-            ).fetchall()
+            rows = _load_notes(connection)
             matched_paths = set()
             for row in rows:
                 filename = Path(row["filename"]).stem
                 path_parts = [part for part in Path(row["path"]).parts if part]
                 candidates = [filename, *path_parts, *_values(row["tags"]), *_values(row["aliases"])]
                 candidate_tokens = {
-                    token.casefold() for candidate in candidates
-                    for token in re.findall(r"[\w']+", candidate, re.UNICODE)
+                    token for candidate in candidates for token in _tokens(candidate)
                 }
                 if tokens & candidate_tokens:
                     matched_paths.add(row["path"])
@@ -76,3 +95,63 @@ def expand_query(query: str, db_path: str | Path, max_terms: int = 24) -> list[s
     except sqlite3.Error:
         return terms
     return terms[:max_terms]
+
+
+def expand_facets(facets: list[str], db_path: str | Path,
+                  per_facet_limit: int = 4) -> dict[str, list[str]]:
+    """Synonyms for several facets at once, in one pass over `notes`.
+
+    Two differences from `expand_query`, both of which a facet needs and a
+    single-entity lookup does not.
+
+    It is one scan for N facets rather than N scans. `expand_query` reads every
+    row of `notes` per call, which is the right trade once per query and the wrong
+    one five times: on this vault that pass is most of the latency budget the
+    structural track has to fit inside.
+
+    And it is much narrower about what counts as a synonym. `expand_query` also
+    returns path components and the name of every outbound link, which widens a
+    one-word lookup usefully and destroys a facet: a facet that has absorbed a
+    dozen loosely-related names matches most of the vault, every note's coverage
+    count then rises by the same one, and the count stops discriminating -- the
+    exact flattening that facet coverage exists to avoid. So only two things get
+    in. An alias of a note this facet already names, which is what an alias is
+    for; and a tag whose own text contains the facet term, so `stroke` picks up
+    `post-stroke` and not the `health` sitting beside it.
+    """
+    wanted = {facet: _tokens(facet) for facet in facets if _tokens(facet)}
+    found: dict[str, list[str]] = {facet: [] for facet in facets}
+    if not wanted:
+        return found
+    try:
+        connection = _open(db_path)
+        if connection is None:
+            return found
+        try:
+            rows = _load_notes(connection)
+        finally:
+            connection.close()
+    except sqlite3.Error:
+        return found
+
+    for row in rows:
+        aliases = _values(row["aliases"])
+        tags = _values(row["tags"])
+        name_tokens = _tokens(Path(row["filename"]).stem)
+        for alias in aliases:
+            name_tokens |= _tokens(alias)
+        for facet, tokens in wanted.items():
+            bucket = found[facet]
+            if len(bucket) >= per_facet_limit:
+                continue
+            if tokens & name_tokens:
+                for alias in aliases:
+                    if len(bucket) < per_facet_limit:
+                        _add(bucket, alias)
+            for tag in tags:
+                if len(bucket) < per_facet_limit and tokens & _tokens(tag):
+                    _add(bucket, tag)
+    for facet in found:
+        lowered = facet.casefold()
+        found[facet] = [name for name in found[facet] if name.casefold() != lowered][:per_facet_limit]
+    return found

@@ -121,6 +121,7 @@ from urllib.parse import urlparse, parse_qs
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import co_commit
+import dual_track
 import index_pkm_meta as pkm
 import numpy as np
 import recency_prior_experiment as recency
@@ -837,6 +838,60 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     log_query("search", [vault.name for vault in vaults], query, limit,
               payload["took_ms"], payload["results"], origin)
     return payload
+
+
+def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
+               facets: list[str] | None = None, origin: str = "") -> dict:
+    """The dual-track structural answer, per corpus.
+
+    Not merged across corpora, which is the one place this differs from
+    `do_search`. A facet coverage count is `4/5`, and the same note is 4/5 in
+    whichever corpus holds it -- but a graph neighbourhood is not comparable
+    across two separate link graphs, and interleaving the two by fused score would
+    print a 2-hop path from one vault next to a 1-hop path from another as though
+    the walk had crossed between them. So each corpus gets its own outline and its
+    own heading, and the caller reads two short answers instead of one wrong one.
+
+    The semantic track is the same `rank` every other route uses, so the fusion
+    here is over exactly the ranking `/search` would have returned.
+    """
+    began = time.perf_counter()
+    STATE.last_query = time.time()
+    outlines, payloads, stale, indexed_at = {}, {}, {}, {}
+    for vault in vaults:
+        if not vault.db.exists():
+            continue
+        payload = dual_track.dual_track_search(
+            vault.db, query,
+            semantic=lambda text, bound=vault: rank(bound, text, limit, rerank=False, expand=True),
+            hops=hops, top=limit, facets=facets,
+        )
+        payloads[vault.name] = payload
+        outlines[vault.name] = dual_track.render_outline(payload)
+        missing = vault.stale()
+        indexed_at[vault.name] = missing["indexed_at"]
+        if missing["count"] or missing.get("no_index"):
+            stale[vault.name] = missing
+    result = {
+        "vault": ",".join(vault.name for vault in vaults),
+        "query": query,
+        "took_ms": round((time.perf_counter() - began) * 1000, 1),
+        "indexed_at": indexed_at,
+        "stale": stale,
+        "outlines": outlines,
+        "results": {name: payload["fused"] for name, payload in payloads.items()},
+        "facet_count": {name: payload["facet_count"] for name, payload in payloads.items()},
+    }
+    # Logged with the paths rather than empty, so an outline call feeds the
+    # co-retrieval edges the same way a search does. A structural answer is still
+    # a retrieval, and dropping it from the log would bias that graph towards
+    # whichever route happened to be instrumented.
+    log_query("outline", [vault.name for vault in vaults], query, limit,
+              result["took_ms"],
+              [{"vault": name, "path": row["path"]}
+               for name, payload in payloads.items() for row in payload["fused"]],
+              origin)
+    return result
 
 
 def do_session_query(vaults: list[Vault], query: str, limit: int) -> dict:
@@ -1606,6 +1661,17 @@ class Handler(BaseHTTPRequestHandler):
                                           first("reindex") not in {"0", "false", "no"},
                                           first("expand") not in {"0", "false", "no"}))
                 return
+            if url.path == "/outline" and method == "GET":
+                query = first("q")
+                if not query:
+                    self.reply(400, {"error": "q is required"})
+                    return
+                limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
+                hops = max(1, min(2, int(first("hops") or 2)))
+                facets = [term.strip() for term in first("facets").split(",") if term.strip()]
+                self.reply(200, do_outline(STATE.pick_many(first("vault")), query, limit,
+                                          hops, facets or None, first("origin")))
+                return
             if url.path == "/sessions" and method == "GET":
                 query = first("q")
                 if not query:
@@ -1660,7 +1726,7 @@ class Handler(BaseHTTPRequestHandler):
         except KeyError as error:
             self.reply(404, {"error": str(error)})
         except ValueError:
-            self.reply(400, {"error": "limit, top, k and threshold must be numbers"})
+            self.reply(400, {"error": "limit, top, k, hops and threshold must be numbers"})
         except Exception as error:  # a bad query must not take the daemon down
             self.reply(500, {"error": f"{type(error).__name__}: {error}"})
 

@@ -81,7 +81,8 @@ def daemon_healthy(base: str) -> bool:
         return False
 
 
-def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: float = DAEMON_TIMEOUT_S):
+def daemon_get(base: str, route: str, params: dict, vault: str | None,
+               timeout: float = DAEMON_TIMEOUT_S, tolerate_missing_route: bool = False):
     """Ask the daemon, returning None only when there is no daemon to ask.
 
     An HTTP error is an answer: the daemon ran and refused. Catching it
@@ -90,6 +91,14 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: 
     so the wrong corpus answered and the output said `(direct)` as if that were
     normal. Exit instead, since a search of a corpus the caller did not name is
     worse than no search.
+
+    A 404 is the exception, and only for a caller that asks for the exception. It
+    does not mean the daemon refused the question; it means this script is newer
+    than the daemon answering it, which is the normal state of affairs between a
+    `git pull` and the next restart of a process that never exits on its own. A
+    route added here would otherwise be dead for as long as the old daemon stays
+    up, and it would fail with a refusal rather than with anything that points at
+    the real cause.
     """
     if route != "health" and not daemon_healthy(base):
         return None
@@ -100,6 +109,11 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None, timeout: 
         with urllib.request.urlopen(url, timeout=timeout) as response:
             return json.load(response)
     except urllib.error.HTTPError as error:
+        if error.code == 404 and tolerate_missing_route:
+            print(f"[PKM Search: the daemon at {base} has no /{route} route, it predates "
+                  f"this script -- answering locally. Restart it to get the fast path]",
+                  file=sys.stderr)
+            return None
         try:
             message = json.load(error).get("error", error.reason)
         except ValueError:
@@ -443,6 +457,49 @@ def print_stale(stale: dict):
             print(f"    ... and {missing['count'] - len(shown)} more")
 
 
+def outline_search(args, direct: bool, vault: str | None):
+    """Answer structurally: facet coverage, headings, line numbers, link neighbours.
+
+    Prefers the daemon, which has the vectors resident and so can put a real
+    semantic track beside the structural one. Falls back to running both tracks
+    here with FTS5 standing in for track 1, which is a weaker first track but
+    leaves the facet counts and the graph walk -- the two signals this mode exists
+    for -- exactly as good, because neither one needs a model.
+    """
+    began = time.perf_counter()
+    facets = [term for term in (args.facets or "").split(",") if term.strip()] or None
+    params = {"q": args.query, "limit": args.top, "hops": args.hops}
+    if facets:
+        params["facets"] = ",".join(facets)
+    payload = None if direct else daemon_get(args.daemon, "outline", params, vault,
+                                             tolerate_missing_route=True)
+    if payload is not None:
+        print(f"[PKM Search: daemon active @ {args.daemon.rsplit(':', 1)[-1]} | "
+              f"{payload.get('took_ms', 0)}ms | outline]", file=sys.stderr)
+        for name, outline in payload["outlines"].items():
+            print(f"\n--- {name} ---")
+            print(outline)
+        print_stale(payload.get("stale") or {})
+        return
+
+    import dual_track
+
+    database = default_database(args.db)
+    if not Path(database).exists():
+        raise SystemExit(f"no index at {database}; run index_pkm_meta.py first")
+    if args.vault and args.vault != "all" and not args.db:
+        print(f"[PKM Search: --vault {args.vault} cannot be honoured without the daemon, "
+              f"answering from {database}]", file=sys.stderr)
+    payload = dual_track.dual_track_search(
+        database, args.query,
+        semantic=lambda query: fast_fts_search(query, database, args.top, args.expand),
+        hops=args.hops, top=args.top, facets=facets,
+    )
+    print(f"[PKM Search: daemon offline | dual-track outline answered in "
+          f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
+    print(dual_track.render_outline(payload))
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("query", help="Search query or vibe")
@@ -468,6 +525,17 @@ def main():
                         help="Resolve matching titles, aliases, paths, and outbound links before searching")
     parser.add_argument("--sessions", action="store_true",
                         help="Search indexed session rollup titles and touched files")
+    parser.add_argument("--outline", "--headers-only", dest="outline", action="store_true",
+                        help="Structural answer: which facets each note covered, the heading "
+                             "and line each was found on, and the 1-2 hop link neighbourhood. "
+                             "Suppresses section text, so a multi-concept query costs a few "
+                             "hundred tokens instead of several whole notes")
+    parser.add_argument("--facets", default=None,
+                        help="Override facet clustering with a comma-separated list, e.g. "
+                             "--facets \"stroke,fatigue,coding\". Each entry is one facet, "
+                             "verbatim, stop list and tokenizer skipped")
+    parser.add_argument("--hops", type=int, default=2, choices=(1, 2),
+                        help="How far to walk the link graph from the facet winners (default 2)")
     parser.add_argument("--test-healing", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
 
@@ -509,6 +577,10 @@ def main():
         for index, row in enumerate(results, 1):
             print(f"{index}. {row['path']}:{row['line']} -> {row['heading']}")
             print(f"   {row['snippet']}")
+        return
+
+    if args.outline:
+        outline_search(args, direct, vault)
         return
 
     rerank = not args.no_rerank
