@@ -191,10 +191,22 @@ def fast_fts_search(query: str, db_path: str | Path, top: int = 10, expand: bool
     deliberate rather than an oversight. The judged a/b that moved the CLI default
     measured the fused lexical+vector path, where expansion hurts because extra
     list memberships dominate rank position in the RRF sum. This function is
-    lexical only, so that mechanism does not apply and nothing has measured it.
-    Both call sites pass the flag explicitly, so this default is never exercised;
-    it is left as it was rather than changed on the strength of a measurement of a
+    lexical only, so that mechanism does not apply and nothing has measured it. It
+    is left as it was rather than changed on the strength of a measurement of a
     different code path.
+
+    This default never decides anything in production -- both callers pass the flag
+    explicitly, from `main`'s fallback and from the dual-track lambda. It is not
+    dead, though: three tests call this function with `top=` alone and so run it at
+    True, in tests/test_fts_fallback.py, tests/test_fts_fallback_imports.py and
+    tests/test_daemon_healing.py. The import guard is the one that matters. It
+    asserts from a cold interpreter that answering here imports none of fastembed,
+    onnxruntime, torch or index_pkm_meta, and because it runs at this default it
+    proves that of the expansion branch as well as the plain one. So flipping this
+    would not be inert -- it would quietly narrow the strictest assertion in the
+    suite about keeping the cheap path cheap. Whoever measures the lexical path and
+    wants this False should pass expand=True explicitly in those three tests in the
+    same commit.
     """
     database = Path(db_path)
     if not database.exists():
