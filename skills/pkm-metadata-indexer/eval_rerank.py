@@ -95,7 +95,11 @@ def post(url: str, payload: dict, timeout: int = 120) -> dict:
 
 
 def search(base: str, vault: str, question: str, limit: int, rerank: bool) -> list[dict]:
-    params = {"vault": vault, "q": question, "limit": limit}
+    # `origin` because the daemon logs every search with its result paths into the
+    # vault's query telemetry, and co-retrieval edges are built from that log. An
+    # eval's synthetic questions otherwise become evidence about which notes belong
+    # together, and the graph track learns from traffic no human ever sent.
+    params = {"vault": vault, "q": question, "limit": limit, "origin": "eval-rerank"}
     if rerank:
         params["rerank"] = "1"
     with urllib.request.urlopen(f"{base}/search?" + urlencode(params), timeout=120) as response:

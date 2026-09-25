@@ -40,6 +40,7 @@ from __future__ import annotations
 import argparse
 import json
 import sqlite3
+import statistics
 import sys
 import urllib.request
 from pathlib import Path
@@ -61,8 +62,16 @@ def outline(base: str, vault: str, question: str, limit: int,
 
     `semantic=1` is the published override that exists so this comparison can be
     made at all -- see do_outline. Without it the route is production.
+
+    `origin` is set because the daemon logs every outline call, with its result
+    paths, into the vault's own query telemetry, and that log is what co-retrieval
+    edges are built from. An eval asks hundreds of synthetic questions and then
+    teaches the graph track from its own invented traffic: 86 of the 131 rows in
+    this vault's log were this eval's before it started saying so. Labelled here
+    rather than switched off, because the log is also how a ranking change gets
+    judged after the fact, and a run that left no trace could not be audited.
     """
-    params = {"vault": vault, "q": question, "limit": limit}
+    params = {"vault": vault, "q": question, "limit": limit, "origin": "eval-gate"}
     if semantic:
         params["semantic"] = "1"
     with urllib.request.urlopen(f"{base}/outline?" + urlencode(params), timeout=180) as response:
@@ -201,10 +210,17 @@ def main() -> int:
 
     # The other half of the decision. The gate was justified on cost, so cost is
     # reported next to quality rather than left in a docstring.
+    #
+    # Median first, because the mean is not the cost of a query: one call in
+    # twenty takes several seconds for reasons that have nothing to do with the
+    # semantic track -- a cold matrix, a stale-file scan -- and averaging it in
+    # once made the gated arm look slower per call than the arm that does strictly
+    # more work. The max is printed alongside so the tail stays visible.
     for arm in ARMS:
-        times = [r["took_ms"][arm] for r in results]
-        print(f"Latency {arm}: mean {sum(times)/len(times):.0f} ms  "
-              f"min {min(times):.0f}  max {max(times):.0f}", flush=True)
+        times = sorted(r["took_ms"][arm] for r in results)
+        print(f"Latency {arm}: median {statistics.median(times):.0f} ms  "
+              f"mean {statistics.mean(times):.0f}  min {times[0]:.0f}  "
+              f"max {times[-1]:.0f}", flush=True)
     print(f"\nSEMANTIC_GATE_FACETS is {dual_track.SEMANTIC_GATE_FACETS}; "
           f"GRAPH_RRF_WEIGHT is {dual_track.GRAPH_RRF_WEIGHT}.", flush=True)
     return 0
