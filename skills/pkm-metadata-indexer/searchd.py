@@ -1639,15 +1639,33 @@ class Handler(BaseHTTPRequestHandler):
         first = lambda name: (params.get(name) or [""])[0].strip()
         try:
             if url.path == "/health":
-                self.reply(200, {
+                # `probe=1` is liveness only, and it exists because the full
+                # payload is not free: `describe()` opens a read-only connection
+                # per vault and runs three `COUNT(*)`s plus a co-commit lookup on
+                # each, one of them a scan for non-null vectors across every
+                # section in the corpus. Measured on this daemon that is a 25ms
+                # median with a 496ms tail under concurrency -- fine for a human
+                # reading index statistics, and the reason `daemon_healthy()` used
+                # to declare a healthy daemon dead and fall back to a 2s direct
+                # search. A caller that only needs to know something answered gets
+                # the constant-time half.
+                body = {
                     "status": "ok",
                     "warm": STATE.warm,
-                    "query_provider": (pkm.QUERY_PROVIDERS or pkm.get_embedding_providers())[0],
-                    "index_provider": pkm.get_embedding_providers()[0],
                     "uptime_s": round(time.time() - STATE.started, 1),
                     "default_vault": STATE.default,
-                    "vaults": [vault.describe() for vault in STATE.vaults.values()],
-                })
+                }
+                if not first("probe"):
+                    body["query_provider"] = (pkm.QUERY_PROVIDERS
+                                              or pkm.get_embedding_providers())[0]
+                    body["index_provider"] = pkm.get_embedding_providers()[0]
+                    body["vaults"] = [vault.describe() for vault in STATE.vaults.values()]
+                else:
+                    # Named, so a probe response is never mistaken for a full one
+                    # by something reading `vaults` and finding it absent.
+                    body["probe"] = True
+                    body["vaults"] = sorted(STATE.vaults)
+                self.reply(200, body)
                 return
             if url.path == "/search" and method == "GET":
                 query = first("q")
