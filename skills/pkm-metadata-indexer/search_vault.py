@@ -123,9 +123,14 @@ def daemon_get(base: str, route: str, params: dict, vault: str | None,
     route added here would otherwise be dead for as long as the old daemon stays
     up, and it would fail with a refusal rather than with anything that points at
     the real cause.
+
+    The request itself is the liveness probe. A 1.0s precheck that ran here before
+    the 30s request could only produce a false negative — calling a live daemon
+    dead when it answered /health late during a reindex — and a false negative
+    here means a silent wrong-corpus answer (the fallback resolves from the working
+    directory) rather than a slow one. The exception path at the end already handles
+    an absent daemon, measured at under 1ms to refuse the connection.
     """
-    if route != "health" and not daemon_healthy(base):
-        return None
     if vault:
         params = {**params, "vault": vault}
     url = f"{base.rstrip('/')}/{route}?{urlencode(params)}"
