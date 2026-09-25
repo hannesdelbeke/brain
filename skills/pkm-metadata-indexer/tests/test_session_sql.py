@@ -229,6 +229,74 @@ class SessionSqlTest(unittest.TestCase):
                 ("session-trace", "traces/2026-09-25_session-trace-id"),
             ])
 
+    def test_duplicate_session_id_deduplication(self):
+        """deduplicate session_id when a session is continued into a second note.
+
+        when a session continues into a second note, both notes share the same
+        session_id and may list different touched files. the sessions_idx table
+        has session_id as PRIMARY KEY, so duplicates would abort a whole-corpus
+        reindex. this test verifies that:
+        1. exactly one row per session_id survives in sessions_idx
+        2. the winning row has the trace_path (if any note has one)
+        3. touch rows from both notes are present (merged via INSERT OR IGNORE)
+        4. the deduplication count is correctly returned
+        """
+        with tempfile.TemporaryDirectory() as temp:
+            vault = Path(temp) / "vault"
+            session_dir = vault / "sessions"
+            (vault / ".obsidian").mkdir(parents=True)
+            session_dir.mkdir()
+            # first note: has trace_path, touches file_a.py
+            (session_dir / "2026-09-20-session-start.md").write_text(
+                "---\nsession_id: continued-session\ndate: 2026-09-20\n"
+                "trace_path: traces/continued-session.jsonl\n"
+                "touched:\n"
+                "  - target: file_a.py\n    action: created\n    vault: false\n---\n"
+                "## First session\n", encoding="utf-8"
+            )
+            # second note: same session_id, no trace_path, touches file_b.py
+            (session_dir / "2026-09-21-session-continued.md").write_text(
+                "---\nsession_id: continued-session\ndate: 2026-09-21\n"
+                "touched:\n"
+                "  - target: file_b.py\n    action: modified\n    vault: false\n---\n"
+                "## Continued work\n", encoding="utf-8"
+            )
+
+            # verify the deduplication count is correctly returned
+            session_rows, touch_rows, dedup_count = INDEXER.session_frontmatter_rows(vault)
+            self.assertEqual(dedup_count, 1, "expected deduplication count of 1 for one session spanning two notes")
+            self.assertEqual(len(session_rows), 1, "expected one session row after deduplication")
+            self.assertEqual(len(touch_rows), 2, "expected two touch rows from both notes")
+
+            database = vault / ".obsidian" / "pkm_index.db"
+            INDEXER.build_index(str(vault), str(database), skip_embeddings=True)
+            connection = sqlite3.connect(database)
+            try:
+                # verify exactly one sessions_idx row for the shared session_id
+                session_rows = connection.execute(
+                    "SELECT session_id, trace_path, note_path FROM sessions_idx "
+                    "WHERE session_id = 'continued-session'"
+                ).fetchall()
+                self.assertEqual(len(session_rows), 1, "expected exactly one sessions_idx row for duplicate session_id")
+                session_id, trace_path, note_path = session_rows[0]
+                self.assertEqual(session_id, "continued-session")
+                # the row with the trace_path should win
+                self.assertEqual(trace_path, "traces/continued-session.jsonl", "expected the row with trace_path to win")
+                self.assertEqual(note_path, "sessions/2026-09-20-session-start.md")
+
+                # verify touch rows from both notes are present
+                touches = connection.execute(
+                    "SELECT target_path, action FROM session_touches "
+                    "WHERE session_id = 'continued-session' ORDER BY target_path"
+                ).fetchall()
+                self.assertEqual(len(touches), 2, "expected touch rows from both notes")
+                self.assertEqual(touches, [
+                    ("file_a.py", "created"),
+                    ("file_b.py", "modified"),
+                ])
+            finally:
+                connection.close()
+
 
 if __name__ == "__main__":
     unittest.main()
