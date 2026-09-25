@@ -841,7 +841,8 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
 
 
 def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
-               facets: list[str] | None = None, origin: str = "") -> dict:
+               facets: list[str] | None = None, origin: str = "",
+               semantic: bool = False) -> dict:
     """The dual-track structural answer, per corpus.
 
     Not merged across corpora, which is the one place this differs from
@@ -853,7 +854,11 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
     own heading, and the caller reads two short answers instead of one wrong one.
 
     The semantic track is the same `rank` every other route uses, so the fusion
-    here is over exactly the ranking `/search` would have returned.
+    here is over exactly the ranking `/search` would have returned -- on the
+    queries where it runs at all. `dual_track.SEMANTIC_GATE_FACETS` keeps it out of
+    multi-facet queries, where it was measured to cost roughly 140 ms and rank
+    worse than the facet counts alone; `semantic=1` forces it back on for a caller
+    who wants to compare, and is the only way to see the old behaviour.
     """
     began = time.perf_counter()
     STATE.last_query = time.time()
@@ -864,7 +869,7 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
         payload = dual_track.dual_track_search(
             vault.db, query,
             semantic=lambda text, bound=vault: rank(bound, text, limit, rerank=False, expand=True),
-            hops=hops, top=limit, facets=facets,
+            hops=hops, top=limit, facets=facets, gate_semantic=not semantic,
         )
         payloads[vault.name] = payload
         outlines[vault.name] = dual_track.render_outline(payload)
@@ -881,6 +886,10 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
         "outlines": outlines,
         "results": {name: payload["fused"] for name, payload in payloads.items()},
         "facet_count": {name: payload["facet_count"] for name, payload in payloads.items()},
+        # So a caller can tell "the embedding found nothing" from "the embedding
+        # never ran", which are the same empty list in the outline itself.
+        "semantic_skipped": {name: payload["semantic_skipped"]
+                             for name, payload in payloads.items()},
     }
     # Logged with the paths rather than empty, so an outline call feeds the
     # co-retrieval edges the same way a search does. A structural answer is still
@@ -1688,7 +1697,8 @@ class Handler(BaseHTTPRequestHandler):
                 hops = max(1, min(2, int(first("hops") or 2)))
                 facets = [term.strip() for term in first("facets").split(",") if term.strip()]
                 self.reply(200, do_outline(STATE.pick_many(first("vault")), query, limit,
-                                          hops, facets or None, first("origin")))
+                                          hops, facets or None, first("origin"),
+                                          semantic=first("semantic") == "1"))
                 return
             if url.path == "/sessions" and method == "GET":
                 query = first("q")
