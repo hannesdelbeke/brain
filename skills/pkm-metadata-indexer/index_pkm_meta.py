@@ -1011,8 +1011,12 @@ def frontmatter_value(content: str, key: str) -> str | None:
     return value.group(1).strip().strip('"\'') if value else None
 
 
-def session_frontmatter_rows(vault_dir: Path) -> tuple[list[tuple], list[tuple]]:
-    """Project rollup frontmatter into relational provenance tables."""
+def session_frontmatter_rows(vault_dir: Path) -> tuple[list[tuple], list[tuple], int]:
+    """Project rollup frontmatter into relational provenance tables.
+
+    returns (session_rows, touch_rows, duplicate_count) where duplicate_count
+    is the number of session_ids that appeared in more than one note.
+    """
     roots = [vault_dir / "sessions"]
     session_rows, touch_rows = [], []
     for root in roots:
@@ -1072,7 +1076,36 @@ def session_frontmatter_rows(vault_dir: Path) -> tuple[list[tuple], list[tuple]]
                     touch_rows.append((session_id, target_path, action_value, vault_value))
             except OSError:
                 continue
-    return session_rows, touch_rows
+
+    # deduplicate session rows by session_id. when a session is continued into
+    # a second note, both notes share the same session_id, which would trigger
+    # a UNIQUE constraint violation on the PRIMARY KEY and abort a whole-corpus
+    # reindex. prefer the row with a non-empty trace_path; if that ties, prefer
+    # the lexicographically greatest note_path (filenames start with dates, so
+    # that selects the later note). touch rows are kept from all notes; the
+    # session_touches table is keyed (session_id, target_path, action) with
+    # INSERT OR IGNORE, so touches from every note of a continued session merge.
+    rows_before = len(session_rows)
+    seen = {}
+    for row in session_rows:
+        session_id, title, created, trace_path, cost_usd, repo, note_path = row
+        if session_id not in seen:
+            seen[session_id] = row
+        else:
+            existing = seen[session_id]
+            _, _, _, existing_trace, _, _, existing_note = existing
+            # prefer row with trace_path
+            if trace_path and not existing_trace:
+                seen[session_id] = row
+            elif not trace_path and existing_trace:
+                pass  # keep existing
+            # both have or both lack trace_path: prefer lexicographically greatest note_path
+            elif note_path > existing_note:
+                seen[session_id] = row
+    session_rows = list(seen.values())
+    duplicate_count = rows_before - len(session_rows)
+
+    return session_rows, touch_rows, duplicate_count
 
 
 def query_sessions(query: str, db_path: str | None = None, vault_path: str | None = None,
@@ -1137,9 +1170,9 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         # Only populate session projection for the working-tree collector. Ref-based
         # collectors like scan_branches should not read the working tree's sessions/.
         if collector is collect_index_data:
-            session_rows, touch_rows = session_frontmatter_rows(vault_dir)
+            session_rows, touch_rows, session_dedup_count = session_frontmatter_rows(vault_dir)
         else:
-            session_rows, touch_rows = [], []
+            session_rows, touch_rows, session_dedup_count = [], [], 0
         scan_seconds = time.perf_counter() - t_scan_start
 
         t_cache_start = time.perf_counter()
@@ -1264,7 +1297,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             cursor.execute("DELETE FROM sessions_idx")
             cursor.executemany(
                 """
-                INSERT INTO sessions_idx
+                INSERT OR REPLACE INTO sessions_idx
                 (session_id, title, created, trace_path, cost_usd, repo, note_path)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
                 """, session_rows,
@@ -1313,6 +1346,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             f"{unchanged_vectors:,}", f"{reused_vectors:,}", f"{len(generated_vectors):,}",
         )
         log.info("Removed %s notes and %s sections no longer in the vault.", f"{removed_notes:,}", f"{removed_sections:,}")
+        if session_dedup_count > 0:
+            log.info("Sessions: %s indexed, %s continued across multiple notes.", f"{len(session_rows):,}", f"{session_dedup_count:,}")
 
         # Performance timing breakdown
         notes_per_sec = len(notes) / max(scan_seconds, 0.001)
