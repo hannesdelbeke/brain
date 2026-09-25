@@ -396,13 +396,23 @@ def reciprocal_rank_fusion(*rankings: list[str], k: int = RRF_K,
     0.0164, so the outline's first line was the best-covered note on 3 of 12
     multi-facet queries. `weights` exists so a derived ranking can be admitted at
     less than a full vote; callers keep membership disjoint as well, which is what
-    took that measure to 12 of 12.
+    took that measure to 12 of 12. The same correlated evidence hazard exists within
+    a single ranking: the semantic track returns one row per matching section, so a
+    note with four matching sections appears four times in the ranking and would
+    collect four votes for what is one finding. A path repeated within one ranking
+    therefore counts only once, at its best rank. The same path appearing in different
+    rankings still accumulates, which is the cross-track agreement RRF was designed
+    to measure.
     """
     if weights is None:
         weights = [1.0] * len(rankings)
     scores: dict[str, float] = {}
     for ranking, weight in zip(rankings, weights):
+        seen: set[str] = set()
         for index, path in enumerate(ranking):
+            if path in seen:
+                continue
+            seen.add(path)
             scores[path] = scores.get(path, 0.0) + weight / (k + index + 1)
     return scores
 
