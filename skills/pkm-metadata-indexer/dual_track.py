@@ -96,6 +96,12 @@ GRAPH_RRF_WEIGHT = 0.5
 # coverage signal to discriminate on and cosine similarity is the better judge.
 SEMANTIC_GATE_FACETS = 2
 
+# How many notes get section line-ranges resolved. Comfortably above what any
+# outline renders (5) and above the default `--top` (10), so a caller reading the
+# fused list has ranges for all of it, while the cost stays one query instead of one
+# per FTS hit.
+EXTENT_NOTES = 15
+
 
 def connect(db_path: str | Path) -> sqlite3.Connection:
     """Open a short-lived read-only connection with the maths this module needs.
@@ -263,6 +269,45 @@ def facet_intersection(connection: sqlite3.Connection, facets: list[dict],
     return found
 
 
+def attach_section_extents(connection: sqlite3.Connection, rows: list[dict]) -> None:
+    """Fill in where each reported section ends, so a follow-up read can be bounded.
+
+    `sections` stores only `start_line`, and the difference between naming a line and
+    naming a range is the difference between an agent reading the section and an
+    agent reading the whole note to find out how far the section went -- which is the
+    cost this mode exists to remove.
+
+    Done here, for the notes that will actually be reported, rather than in the facet
+    SQL as a correlated subquery per row. That version was correct and five times
+    slower: the facet pass went from 2.9ms to 16.1ms median and 41.9ms at worst,
+    because it resolved an extent for every FTS hit when only the handful that get
+    rendered need one, and `sections` is indexed on `path` alone so each resolution
+    re-scanned a note's sections. This is one query for all of them.
+
+    The next section is the next *different* heading, not simply the next greater
+    start line: a long section is stored as several chunks sharing a heading, so
+    stopping at the next chunk would hand back part of a section. `None` means the
+    last section in a note -- read to the end of the file.
+    """
+    wanted = [row["path"] for row in rows if row.get("headings")]
+    if not wanted:
+        return
+    placeholders = ",".join("?" for _ in wanted)
+    sections: dict[str, list[tuple[int, str]]] = {}
+    for path, heading, start in connection.execute(
+            f"SELECT path, heading, start_line FROM sections "
+            f"WHERE path IN ({placeholders}) ORDER BY path, start_line",
+            tuple(wanted)):
+        sections.setdefault(path, []).append((start, heading))
+    for row in rows:
+        for entry in row.get("headings") or []:
+            entry["end_line"] = None
+            for start, heading in sections.get(row["path"], []):
+                if start > entry["line"] and heading != entry["heading"]:
+                    entry["end_line"] = start - 1
+                    break
+
+
 def rank_facet_matches(found: dict[str, dict]) -> list[dict]:
     """Order notes by facets covered first, summed relevance second.
 
@@ -412,6 +457,9 @@ def structural_search(db_path: str | Path, parsed: dict, hops: int = 2,
             if widened != graph_seeds:
                 graph_seeds = widened
                 graph = graph_neighborhood(connection, graph_seeds, facet_paths, hops)
+        # Only the notes that can be reported. Resolving an extent for every match
+        # was measurably the wrong trade -- see `attach_section_extents`.
+        attach_section_extents(connection, ranked[:EXTENT_NOTES])
     finally:
         if owned:
             connection.close()
@@ -596,7 +644,13 @@ def render_outline(payload: dict, top: int = 5, graph_top: int = 5) -> str:
             for heading in row["headings"]:
                 if (heading["heading"] or "").strip().casefold() == title:
                     continue
-                lines.append(f"   └─ L{heading['line']}: {heading['heading']}")
+                # A range, so the follow-up read is `offset`/`limit` rather than a
+                # whole note. An open end is the last section: read to EOF.
+                end = heading.get("end_line")
+                span = (f"L{heading['line']}-{end}" if end and end > heading["line"]
+                        else f"L{heading['line']}+" if not end
+                        else f"L{heading['line']}")
+                lines.append(f"   └─ {span}: {heading['heading']}")
 
     # Stratified rather than truncated, for the same reason the SQL reserves slots:
     # the 2-hop rows are the ones that found a note sharing no vocabulary with the

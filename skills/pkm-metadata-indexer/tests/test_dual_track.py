@@ -485,6 +485,23 @@ class OutlineThriftTest(unittest.TestCase):
                 dual_track.dual_track_search(database, "stroke fatigue", top=5))
             self.assertIn("Fatigue milestones", outline)
 
+    def test_a_multi_chunk_section_reports_its_whole_extent(self):
+        # A long section is stored as several rows sharing a heading. Ending the
+        # range at the next chunk would hand back part of a section, so the range
+        # must run to the next *different* heading.
+        with tempfile.TemporaryDirectory() as temp:
+            body = "\n".join(f"line {n} stroke and fatigue" for n in range(1, 60))
+            database = build_vault(Path(temp) / "vault", {
+                "long.md": f"## Big\n{body}\n\n## After\ntail\n",
+            })
+            payload = dual_track.dual_track_search(database, "stroke fatigue", top=5)
+            headings = payload["structural"][0]["headings"]
+            big = [h for h in headings if h["heading"] == "Big"]
+            self.assertTrue(big, f"no Big heading in {headings}")
+            after_start = 2 + len(body.splitlines()) + 1
+            self.assertEqual(big[0]["end_line"], after_start - 1,
+                             "the range stopped at a chunk boundary, not the section")
+
     def test_neighbours_of_one_seed_name_it_once(self):
         with tempfile.TemporaryDirectory() as temp:
             database = build_vault(Path(temp) / "vault", {
@@ -565,7 +582,11 @@ class EndToEndTest(unittest.TestCase):
             outline = dual_track.render_outline(payload)
             self.assertIn("Facet Intersections", outline)
             self.assertIn("patterns.md", outline)
-            self.assertRegex(outline, r"L\d+:")
+            # A range, not a bare line: the point is that a follow-up read can be
+            # bounded. `L7+` is the last section in a note -- read to EOF.
+            self.assertRegex(outline, r"L\d+(-\d+|\+):")
+            self.assertIn("L1-3: Physical fatigue", outline)
+            self.assertIn("L7+: Tooling", outline)
             # The token budget the whole mode is for. ~4 chars per token is the
             # usual rule of thumb, so 250 tokens is about 1000 characters.
             self.assertLess(len(outline), 1000, f"outline too long:\n{outline}")
