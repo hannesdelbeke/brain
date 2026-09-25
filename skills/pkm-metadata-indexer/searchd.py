@@ -281,34 +281,28 @@ def get_device_name() -> str:
     return clean or "unknown"
 
 
-def resolve_vault_query_log(vault_root: Path | None) -> Path:
-    """Determine query log destination for a vault.
+def resolve_query_log() -> Path:
+    """Determine the one query log destination for this machine.
 
-    Prioritizes per-machine partitioning under <vault_root>/data/telemetry/queries/queries_<device>.jsonl
-    to avoid multi-device Git sync collisions.
-    Falls back to legacy <vault_root>/data/telemetry/pkm_queries.jsonl, and finally to ~/.pkm/queries.jsonl.
+    PKM_TELEMETRY_DIR names the directory and every corpus writes into the same
+    queries_<device>.jsonl inside it. Telemetry describes the machine that typed
+    the query, not the corpus that answered it, so one file per machine is the
+    honest partition and PKM_DEVICE keeps two machines off each other's rows.
+
+    The directory is deliberately never derived from a vault root. It used to be,
+    and a corpus mounted from a public repo therefore collected query strings
+    typed against every other corpus: `q` holds whatever was typed and a search
+    is logged against each corpus that answered it, so private queries landed
+    inside a public checkout with nothing in the path to suggest they would. A
+    caller that wants telemetry beside a vault passes that vault's directory
+    here explicitly rather than getting it by accident.
+
+    Unset falls back to ~/.pkm/queries.jsonl, which is outside every checkout, so
+    an unconfigured machine logs somewhere private rather than somewhere shared.
     """
-    if vault_root:
-        queries_dir = vault_root / "data" / "telemetry" / "queries"
-        device = get_device_name()
-        target = queries_dir / f"queries_{device}.jsonl"
-        if target.exists() or queries_dir.exists():
-            return target
-        legacy = vault_root / "data" / "telemetry" / "pkm_queries.jsonl"
-        if legacy.exists() and not queries_dir.exists():
-            return legacy
-        try:
-            queries_dir.mkdir(parents=True, exist_ok=True)
-            if os.access(queries_dir, os.W_OK):
-                return target
-        except OSError:
-            pass
-        try:
-            legacy.parent.mkdir(parents=True, exist_ok=True)
-            if os.access(legacy.parent, os.W_OK):
-                return legacy
-        except OSError:
-            pass
+    configured = os.environ.get("PKM_TELEMETRY_DIR")
+    if configured:
+        return Path(configured).expanduser() / f"queries_{get_device_name()}.jsonl"
     return QUERY_LOG
 
 
@@ -360,68 +354,26 @@ def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
         res_vault = result.get("vault") or default_name
         grouped.setdefault(res_vault, []).append(result["path"])
 
-    if LOG_PATH != "auto":
-        lines = []
-        for name, paths in grouped.items():
-            row = {
-                "t": when,
-                "kind": kind,
-                "vault": name,
-                "q": subject,
-                "limit": limit,
-                "took_ms": took_ms,
-                "results": paths,
-            }
-            if origin:
-                row["origin"] = origin
-            lines.append(json.dumps(row, ensure_ascii=False))
-        line = "\n".join(lines)
-        append_log_line(LOG_PATH, line)
-    else:
-        for name, paths in grouped.items():
-            row = {
-                "t": when,
-                "kind": kind,
-                "vault": name,
-                "q": subject,
-                "limit": limit,
-                "took_ms": took_ms,
-                "results": paths,
-            }
-            if origin:
-                row["origin"] = origin
-            line = json.dumps(row, ensure_ascii=False)
-            vault_root = None
-            if STATE and name in STATE.vaults:
-                vault_root = STATE.vaults[name].root
-            elif isinstance(vault, Vault) and vault.name == name:
-                vault_root = vault.root
-            elif isinstance(vault, list):
-                for v in vault:
-                    if isinstance(v, Vault) and v.name == name:
-                        vault_root = v.root
-                        break
-            if vault_root is None:
-                try:
-                    root = pkm.find_vault_root()
-                    clean_name = name.lower()
-                    if clean_name in ("brain", "root", "default"):
-                        vault_root = root
-                    else:
-                        for cand in [
-                            root / name,
-                            root / "work" / name,
-                            root / "work" / name / f"{name}PKM",
-                            root / "work" / name / f"{name.capitalize()}PKM",
-                            root / "work" / name / f"{name.upper()}PKM",
-                        ]:
-                            if cand.is_dir():
-                                vault_root = cand
-                                break
-                except Exception:
-                    pass
-            target_path = resolve_vault_query_log(vault_root)
-            append_log_line(target_path, line)
+    lines = []
+    for name, paths in grouped.items():
+        row = {
+            "t": when,
+            "kind": kind,
+            "vault": name,
+            "q": subject,
+            "limit": limit,
+            "took_ms": took_ms,
+            "results": paths,
+        }
+        if origin:
+            row["origin"] = origin
+        lines.append(json.dumps(row, ensure_ascii=False))
+    # One destination for every corpus. The rows still carry "vault", so a reader
+    # that wants one corpus filters on it, where routing by corpus instead put
+    # each corpus's rows inside that corpus's own checkout and leaked the query
+    # strings of all the others into whichever of them was public.
+    target = resolve_query_log() if LOG_PATH == "auto" else LOG_PATH
+    append_log_line(target, "\n".join(lines))
 
 
 class Vault:
@@ -1847,8 +1799,10 @@ def main():
     parser.add_argument("--query-log", default=None,
                         help="JSON Lines file recording one row per /search and /similar: "
                              "the query text, the vault and the result paths. If omitted, "
-                             "defaults to per-vault telemetry (<vault_root>/data/telemetry/queries/queries_<device>.jsonl) "
-                             "or ~/.pkm/queries.jsonl")
+                             "defaults to $PKM_TELEMETRY_DIR/queries_<device>.jsonl, and to "
+                             "~/.pkm/queries.jsonl when that is unset. Every corpus logs to the "
+                             "one file: the directory is never taken from a vault root, because "
+                             "that wrote one corpus's queries inside another corpus's repo")
     parser.add_argument("--no-query-log", action="store_true",
                         help="Record nothing. The log holds query strings and result paths in "
                              "plain text, which is the reason to turn it off")
@@ -1913,7 +1867,7 @@ def main():
         print(f"refresh on change in {root}\n  {' '.join(command)}", flush=True)
 
     if LOG_PATH == "auto":
-        print("query log per-vault telemetry (fallback ~/.pkm/queries.jsonl)", flush=True)
+        print(f"query log {resolve_query_log()}", flush=True)
     else:
         print(f"query log {LOG_PATH or 'off'}", flush=True)
 
