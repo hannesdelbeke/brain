@@ -41,7 +41,7 @@ class DaemonHealingTest(unittest.TestCase):
             with patch.object(search_vault, "daemon_healthy", return_value=False), \
                  patch.object(search_vault.subprocess, "Popen", side_effect=OSError("no fork for you")):
                 self.assertIsNone(search_vault.auto_spawn_daemon(str(database)))
-            results = search_vault.fast_fts_search("fallbackphrase", database, top=5)
+            results = search_vault.fast_fts_search("fallbackphrase", database, top=5, expand=True)
             self.assertTrue(results, "a failed spawn left the caller with no results")
             self.assertEqual(results[0]["path"], "alpha.md")
 

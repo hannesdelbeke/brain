@@ -113,27 +113,30 @@ class ExpandDefaultTest(unittest.TestCase):
         self.assertIs(parser.parse_args(["query", "--expand"]).expand, True)
         self.assertIs(parser.parse_args(["query", "--no-expand"]).expand, False)
 
-    def test_the_lexical_default_is_pinned_because_a_test_depends_on_it(self):
-        """A tripwire, and it is one on purpose.
+    def test_the_lexical_default_is_still_unmeasured_and_unchanged(self):
+        """A genuine tripwire now, which it was not when it was first written.
 
-        fast_fts_search keeps expand=True while the CLI defaults False, because the
-        a/b measured the fused path and this one is lexical only. That asymmetry is
-        load-bearing rather than untidy: test_fts_fallback_imports.py calls the
-        function at its default, so it currently proves the *expansion* branch also
-        imports none of fastembed, onnxruntime, torch or index_pkm_meta. Flipping
-        the default would silently narrow that to the non-expanding path.
+        The first version of this guarded real coverage: three tests called
+        fast_fts_search at its default, so test_fts_fallback_imports.py depended on
+        that default being True to cover the expanding branch, and flipping it would
+        have silently narrowed the assertion. That was a hazard being watched rather
+        than removed. All three call sites now pass expand=True by name, so the
+        coupling is gone and nothing downstream depends on this default any more.
 
-        So this asserts a literal, which is normally worthless -- the value is the
-        failure message, which tells whoever flips it what else to change and why.
+        What is left is worth much less, and the honest description is: the lexical
+        path has never been measured, and this stops that default drifting on the
+        strength of the fused-path a/b that moved the CLI flag. Nothing breaks if it
+        changes -- which is exactly why the reason to change it should be a
+        measurement rather than a tidy-up.
         """
         default = inspect.signature(SEARCH.fast_fts_search).parameters["expand"].default
         self.assertIs(default, True,
-                      "fast_fts_search's expand default changed. Three tests call it "
-                      "with top= alone (test_fts_fallback, test_fts_fallback_imports, "
-                      "test_daemon_healing); the import guard relies on running at "
-                      "True to cover the expansion branch. Pass expand=True "
-                      "explicitly in those three in the same commit, then update "
-                      "this test and the docstring.")
+                      "fast_fts_search's expand default changed. The judged a/b that "
+                      "turned the CLI flag off measured the fused path, where "
+                      "expansion hurts because list membership dominates rank "
+                      "position in the RRF sum; this function is lexical only, so "
+                      "that result does not transfer and nothing has measured it. "
+                      "Change it on a measurement of this path, not for symmetry.")
 
     def test_the_help_text_says_why_it_is_off(self):
         # The measurement is the justification, so it travels with the flag

@@ -195,18 +195,17 @@ def fast_fts_search(query: str, db_path: str | Path, top: int = 10, expand: bool
     is left as it was rather than changed on the strength of a measurement of a
     different code path.
 
-    This default never decides anything in production -- both callers pass the flag
-    explicitly, from `main`'s fallback and from the dual-track lambda. It is not
-    dead, though: three tests call this function with `top=` alone and so run it at
-    True, in tests/test_fts_fallback.py, tests/test_fts_fallback_imports.py and
-    tests/test_daemon_healing.py. The import guard is the one that matters. It
-    asserts from a cold interpreter that answering here imports none of fastembed,
-    onnxruntime, torch or index_pkm_meta, and because it runs at this default it
-    proves that of the expansion branch as well as the plain one. So flipping this
-    would not be inert -- it would quietly narrow the strictest assertion in the
-    suite about keeping the cheap path cheap. Whoever measures the lexical path and
-    wants this False should pass expand=True explicitly in those three tests in the
-    same commit.
+    No caller decides anything by this default: the two production call sites pass
+    the flag from `main`'s fallback and the dual-track lambda, and all three test
+    call sites now pass expand=True by name. That last part was not true at first --
+    the tests inherited the default, which made tests/test_fts_fallback_imports.py
+    quietly depend on it, since running at True is what makes it prove the
+    *expanding* branch imports none of fastembed, onnxruntime, torch or
+    index_pkm_meta. Naming the argument in the three tests dissolved that coupling
+    instead of guarding it, so flipping this default now breaks nothing.
+
+    Which is the point worth leaving behind: nothing breaking is not a reason to
+    flip it. The lexical path has still never been measured.
     """
     database = Path(db_path)
     if not database.exists():
