@@ -91,6 +91,28 @@ GRAPH_RRF_WEIGHT = 0.5
 # "covers four of five facets", which is the thing a multi-concept query is asking
 # for. Below the gate it still runs, and should: with one facet there is no
 # coverage signal to discriminate on and cosine similarity is the better judge.
+#
+# All of the above is a coverage proxy. eval_gate.py put the gate in front of two
+# blind judges over 20 hold-out multi-facet questions, all 20 of which fired it,
+# running the real route both ways rather than stubbing the track out -- and both
+# judges prefer the gated arm. Under claude-opus-5 precision@5 is 58% gated
+# against 45% forced on, precision@10 51% against 37%, and the first useful note
+# sits at rank 1.8 against 4.2. Under claude-sonnet-5, 36% against 34%, 32.5%
+# against 21.5%, rank 2.2 against 5.3. The two agree with each other on 77.8% of
+# 334 pairs. Median latency on one daemon is 21 ms gated against 150 ms.
+#
+# Read the margins rather than the headline: at precision@5 on the more generous
+# judge the gate wins by 2 points, which is not much. What it wins on clearly is
+# where the first useful note lands and what the query costs, so the case for the
+# gate is rank position plus cost, not raw precision.
+#
+# Worth knowing before touching this: about half the gap that the pre-fix numbers
+# showed was this module's bug, not the embedding's fault. Before the semantic
+# track's one-row-per-section output was deduplicated in reciprocal_rank_fusion,
+# the forced-on arm scored 24% and 40% at precision@5 rather than 34% and 45%.
+# The gated arm is identical to the decimal across both runs, which is the control
+# that makes the comparison readable: the dedupe can only bite on a ranking that
+# repeats a path, and only the semantic track does.
 SEMANTIC_GATE_FACETS = 2
 
 # How many notes get section line-ranges resolved. Comfortably above what any
