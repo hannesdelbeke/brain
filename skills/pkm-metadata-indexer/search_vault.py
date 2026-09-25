@@ -185,7 +185,17 @@ def auto_spawn_daemon(db: str | None, base: str = DEFAULT_DAEMON) -> int | None:
 
 
 def fast_fts_search(query: str, db_path: str | Path, top: int = 10, expand: bool = True) -> list[dict]:
-    """Search FTS5 directly, without importing numpy or fastembed."""
+    """Search FTS5 directly, without importing numpy or fastembed.
+
+    `expand` still defaults True here while the CLI flag defaults False, which is
+    deliberate rather than an oversight. The judged a/b that moved the CLI default
+    measured the fused lexical+vector path, where expansion hurts because extra
+    list memberships dominate rank position in the RRF sum. This function is
+    lexical only, so that mechanism does not apply and nothing has measured it.
+    Both call sites pass the flag explicitly, so this default is never exercised;
+    it is left as it was rather than changed on the strength of a measurement of a
+    different code path.
+    """
     database = Path(db_path)
     if not database.exists():
         return []
@@ -545,7 +555,7 @@ def outline_search(args, direct: bool, vault: str | None):
     print(dual_track.render_outline(payload))
 
 
-def main():
+def build_parser():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("query", help="Search query or vibe")
     parser.add_argument("--top", type=int, default=10, help="Number of results to return")
@@ -566,8 +576,12 @@ def main():
     parser.add_argument("--no-rerank", action="store_true",
                         help="Return the fused order instead of reordering the top with the "
                         "cross-encoder. Saves a second or two and loses precision")
-    parser.add_argument("--expand", action=argparse.BooleanOptionalAction, default=True,
-                        help="Resolve matching titles, aliases, paths, and outbound links before searching")
+    parser.add_argument("--expand", action=argparse.BooleanOptionalAction, default=False,
+                        help="Resolve matching titles, aliases, paths, and outbound links "
+                             "before searching. Off by default: over 20 judged questions it "
+                             "cost 39 points of precision@10 (20.5%% against 59.5%%) and 360ms "
+                             "at p50, and it left first-useful rank unchanged, so it degrades "
+                             "results 2-10 without improving the top hit")
     parser.add_argument("--sessions", action="store_true",
                         help="Search indexed session rollup titles and touched files")
     parser.add_argument("--touched", choices=("any", "notes", "code"), default="any",
@@ -590,7 +604,11 @@ def main():
                              "where it was measured to add about 140ms and rank worse "
                              "than the facet counts on their own")
     parser.add_argument("--test-healing", action="store_true", help=argparse.SUPPRESS)
-    args = parser.parse_args()
+    return parser
+
+
+def main():
+    args = build_parser().parse_args()
 
     # --db names one database and the daemon answers from the corpora it was
     # started with, so honouring both meant printing results from one and the
