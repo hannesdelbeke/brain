@@ -196,10 +196,9 @@ def expand_facets(facets: list[str], db_path: str | Path,
                 continue
             if tokens & row["name_tokens"]:
                 for alias in row["aliases"]:
-                    if len(bucket) < per_facet_limit:
-                        _add(bucket, alias)
+                    _add(bucket, alias)
             for tag, tag_tokens in row["tag_tokens"]:
-                if len(bucket) < per_facet_limit and tokens & tag_tokens:
+                if tokens & tag_tokens:
                     _add(bucket, tag)
     for facet in found:
         lowered = facet.casefold()

@@ -71,9 +71,6 @@ GRAPH_SEED_WIDEN = 12
 # are what turns a 200-token outline into a 900-token one.
 HEADINGS_PER_NOTE = 3
 
-# How many notes reach the cross-encoder when one is asked for.
-RERANK_GATE = 10
-
 # What a graph vote is worth against a facet vote. Below 1.0 because the graph
 # ranking is derived from the facet ranking rather than independent of it, so its
 # agreement is worth less than a second opinion would be -- see
@@ -410,17 +407,14 @@ def reciprocal_rank_fusion(*rankings: list[str], k: int = RRF_K,
     return scores
 
 
-def structural_search(db_path: str | Path, parsed: dict, hops: int = 2,
-                      seeds: list[str] | None = None,
-                      connection: sqlite3.Connection | None = None) -> dict:
+def structural_search(db_path: str | Path, parsed: dict, hops: int = 2) -> dict:
     """Track 2 whole: facet intersection, then a graph walk seeded from its winners.
 
     The graph is seeded from the facet winners rather than from the semantic track
     when no seeds are handed in, so the structural track is self-sufficient and can
     answer on a machine with no embedding model at all.
     """
-    owned = connection is None
-    connection = connection or connect(db_path)
+    connection = connect(db_path)
     try:
         found = facet_intersection(connection, parsed["facets"])
         ranked = rank_facet_matches(found)
@@ -428,9 +422,9 @@ def structural_search(db_path: str | Path, parsed: dict, hops: int = 2,
         # from all of them turned a 2-hop walk into most of the vault.
         best = ranked[0]["coverage"] if ranked else 0
         facet_paths = [row["path"] for row in ranked]
-        graph_seeds = seeds or [row["path"] for row in ranked if row["coverage"] == best][:10]
+        graph_seeds = [row["path"] for row in ranked if row["coverage"] == best][:10]
         graph = graph_neighborhood(connection, graph_seeds, facet_paths, hops)
-        if not graph and seeds is None and ranked:
+        if not graph and ranked:
             # The best tier is often a dead end, and silently so. A wikilink only
             # becomes an edge when its target resolves to a note, and the links in a
             # top-coverage note are frequently to scripts or people -- `search_vault.py`,
@@ -461,13 +455,12 @@ def structural_search(db_path: str | Path, parsed: dict, hops: int = 2,
         # was measurably the wrong trade -- see `attach_section_extents`.
         attach_section_extents(connection, ranked[:EXTENT_NOTES])
     finally:
-        if owned:
-            connection.close()
+        connection.close()
     return {"facets": ranked, "graph": graph, "seeds": graph_seeds}
 
 
 def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int = 2,
-                      top: int = 10, facets: list[str] | None = None, rerank=None,
+                      top: int = 10, facets: list[str] | None = None,
                       gate_semantic: bool = True) -> dict:
     """Run both tracks at once and fuse them -- or run only track 2, when the query
     is one track 1 has been measured to lose money on.
@@ -484,16 +477,6 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
     decorative one. Concurrency does not make track 1 free, though -- it is six
     times the wall clock of track 2, so on a multi-facet query the pool runs one
     task and `SEMANTIC_GATE_FACETS` explains why.
-
-    `rerank` is injected on the same terms and defaults to off, which is a
-    deliberate departure from the specification's "gated cross-encoder, total
-    latency < 50 ms". Those two cannot both hold: `search_vault`'s own header
-    records the cross-encoder at 540 ms for 20 candidates in a bare process and
-    2.4 s in one holding the DirectML session, which is every daemon by
-    definition. The 50 ms budget is the one worth keeping, because the thing this
-    module is for is giving an agent a cheap structural map instead of eight full
-    reads; a caller that wants the model's opinion and will wait for it passes one
-    in and pays for it knowingly.
     """
     from query_parser import parse_query_facets
 
@@ -539,24 +522,6 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
     by_path = {row["path"]: row for row in structural["facets"]}
     semantic_by_path = {row["path"]: row for row in semantic_rows}
 
-    if rerank is not None and ordered:
-        # Gated: the model reads the top RERANK_GATE notes and nothing below them,
-        # which is the whole saving over reranking the candidate set. A failure here
-        # leaves the fused order standing rather than losing the answer.
-        gate = [path for path, _ in ordered[:RERANK_GATE]]
-        try:
-            scored = rerank(query, gate) or {}
-            for path, score in scored.items():
-                if path in by_path:
-                    by_path[path]["rerank_score"] = score
-            ordered = sorted(
-                ordered,
-                key=lambda item: (scored.get(item[0], float("-inf")), item[1]),
-                reverse=True,
-            )
-        except Exception:
-            pass
-
     return {
         "query": query,
         "parsed": parsed,
@@ -571,9 +536,7 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
             {"path": path, "score": score,
              "coverage": by_path.get(path, {}).get("coverage", 0),
              "headings": by_path.get(path, {}).get("headings", []),
-             "semantic_score": semantic_by_path.get(path, {}).get("score"),
-             **({"rerank_score": by_path[path]["rerank_score"]}
-                if path in by_path and "rerank_score" in by_path[path] else {})}
+             "semantic_score": semantic_by_path.get(path, {}).get("score")}
             for path, score in ordered
         ],
     }
@@ -620,7 +583,7 @@ def render_outline(payload: dict, top: int = 5, graph_top: int = 5) -> str:
 
     best = (payload.get("semantic") or [None])[0]
     if best:
-        score = best.get("rerank_score", best.get("score", 0.0))
+        score = best.get("score", 0.0)
         lines.append(f"=== Semantic Best Match (Score: {score:.3f}) ===")
         end = best.get("end_line") or best.get("line")
         span = f"[L{best['line']}-L{end}]" if end and end != best["line"] else f"[L{best['line']}]"
