@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import sqlite3
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -37,7 +38,7 @@ from pathlib import Path
 # The RRF constant. 60 is the value from the original Cormack paper and the one
 # `searchd.rank` already fuses with, so the two fusions stay comparable; it is
 # large enough that the top few ranks are not pulled far apart by rank alone.
-RRF_K = 60
+RRF_K = int(os.environ.get("PKM_RRF_K", "60"))
 
 # Where a note stops being a bridge and starts being an index. Measured on this
 # vault: the 99th percentile of total degree is 23, and everything above it is a

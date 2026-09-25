@@ -133,6 +133,15 @@ RERANK_MAX_CHARS = None
 # nothing to find scored every section near -11.
 ANSWER_LOGIT = 0.0
 
+# Reciprocal Rank Fusion constant for fusing lexical and vector results. At k=60
+# the rank-1 to rank-2 score gap is 1.61% by construction and the rank-1 to
+# rank-10 ratio is 1.148, so list membership dominates rank position: for any
+# candidate pool shallower than 62, the minimum two-list score 2/110 exceeds the
+# maximum single-list score 1/61. At k=5 the same gap is 14.29% and the ratio
+# 2.5, so rank position starts to matter. The constant is exposed to make that
+# an experiment rather than a rewrite.
+RRF_K = int(os.environ.get("PKM_RRF_K", "60"))
+
 # How much of a matching section travels back with the result. Sections here run
 # a median of 735 characters and a 90th percentile of 815, so 700 returns most of
 # them whole and truncates the tail rather than the typical case. Ten results at
@@ -2246,16 +2255,15 @@ def search_index(
             source = semantic or lexical or title
             score = 0.0
             if lexical:
-                score += 1.0 / (60 + lexical["lex_rank"])
+                score += 1.0 / (RRF_K + lexical["lex_rank"])
             if semantic:
-                score += 1.0 / (60 + semantic["vec_rank"])
+                score += 1.0 / (RRF_K + semantic["vec_rank"])
             if title:
-                score += 1.0 / (60 + title["title_rank"])
+                score += 1.0 / (RRF_K + title["title_rank"])
 
             is_pinned = bool(title and title["is_pinned"])
             if is_pinned:
                 score = 100.0 - (title["match_tier"] * 2.0) + (1.0 / (title["title_rank"] + 1))
-
             results.append(
                 {
                     "section_id": section_id,
