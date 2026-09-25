@@ -16,6 +16,7 @@ cannot see: a default left False while something downstream re-enables expansion
 """
 
 import importlib.util
+import inspect
 import json
 import subprocess
 import sys
@@ -111,6 +112,28 @@ class ExpandDefaultTest(unittest.TestCase):
         parser = SEARCH.build_parser()
         self.assertIs(parser.parse_args(["query", "--expand"]).expand, True)
         self.assertIs(parser.parse_args(["query", "--no-expand"]).expand, False)
+
+    def test_the_lexical_default_is_pinned_because_a_test_depends_on_it(self):
+        """A tripwire, and it is one on purpose.
+
+        fast_fts_search keeps expand=True while the CLI defaults False, because the
+        a/b measured the fused path and this one is lexical only. That asymmetry is
+        load-bearing rather than untidy: test_fts_fallback_imports.py calls the
+        function at its default, so it currently proves the *expansion* branch also
+        imports none of fastembed, onnxruntime, torch or index_pkm_meta. Flipping
+        the default would silently narrow that to the non-expanding path.
+
+        So this asserts a literal, which is normally worthless -- the value is the
+        failure message, which tells whoever flips it what else to change and why.
+        """
+        default = inspect.signature(SEARCH.fast_fts_search).parameters["expand"].default
+        self.assertIs(default, True,
+                      "fast_fts_search's expand default changed. Three tests call it "
+                      "with top= alone (test_fts_fallback, test_fts_fallback_imports, "
+                      "test_daemon_healing); the import guard relies on running at "
+                      "True to cover the expansion branch. Pass expand=True "
+                      "explicitly in those three in the same commit, then update "
+                      "this test and the docstring.")
 
     def test_the_help_text_says_why_it_is_off(self):
         # The measurement is the justification, so it travels with the flag
