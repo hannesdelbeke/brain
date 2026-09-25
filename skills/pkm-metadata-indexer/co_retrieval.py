@@ -64,8 +64,16 @@ def get_device_name() -> str:
 def resolve_log_paths(vault: str = "", log_override: Path | None = None) -> list[Path]:
     """Find query log paths, defaulting to vault telemetry files if available.
 
-    Reads all queries_*.jsonl in <vault_root>/data/telemetry/queries/, or falls back
-    to legacy pkm_queries.jsonl, and finally ~/.pkm/queries.jsonl.
+    PKM_TELEMETRY_DIR comes first, because that is where searchd's
+    resolve_query_log writes. Rebuilding the path from a vault root instead agreed
+    with the writer only while the two happened to name the same directory, and
+    disagreeing was silent rather than loud: a reader that guesses wrong globs an
+    empty directory and derives an empty graph, so nothing reports that the
+    analysis ran against no data. An explicit --log still wins over everything;
+    this only replaces the guess.
+
+    Otherwise all queries_*.jsonl in <vault_root>/data/telemetry/queries/, or
+    falls back to legacy pkm_queries.jsonl, and finally ~/.pkm/queries.jsonl.
     """
     if log_override is not None:
         p = Path(log_override).expanduser()
@@ -74,6 +82,12 @@ def resolve_log_paths(vault: str = "", log_override: Path | None = None) -> list
             if files:
                 return files
         return [p]
+
+    configured = os.environ.get("PKM_TELEMETRY_DIR")
+    if configured:
+        files = sorted(Path(configured).expanduser().glob("queries_*.jsonl"))
+        if files:
+            return files
 
     if vault:
         # 1. Is vault a direct directory path?
