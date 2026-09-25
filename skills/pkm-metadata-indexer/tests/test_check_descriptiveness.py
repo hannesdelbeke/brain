@@ -1,5 +1,8 @@
 """Tests for check_descriptiveness.py"""
 import importlib.util
+import json
+import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -128,6 +131,83 @@ class DescriptivenessCheckerTest(unittest.TestCase):
 
         findings = CHECKER.check_note(note, min_words=600)
         self.assertFalse(findings["missing_description"])
+
+
+class WalkBoundaryTest(unittest.TestCase):
+    """The walk must stop at every boundary that holds a second copy of a vault.
+
+    These are regression tests for a real miscount rather than hypotheticals. The
+    first version of the walk excluded only `.obsidian`, `.git` and `.trash`, and
+    reported 11,337 findings against a vault of 1,218 notes: it had descended into
+    `.claude/worktrees/`, which holds a full checkout per agent worktree, and into
+    a nested repository mounted inside the vault. Every check below is cheap and
+    each one maps to one wrong number that shipped.
+    """
+
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.vault = Path(self.temp_dir.name)
+        self.bad_note = "2026-09-25 notes.md"
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def _plant(self, *parts):
+        """Write a note that the checker would flag, at vault/<parts>."""
+        target = self.vault.joinpath(*parts)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("---\n---\n\nSome content here.", encoding="utf-8")
+        return target
+
+    def _findings(self):
+        result = subprocess.run(
+            [sys.executable, str(SCRIPT_PATH), str(self.vault), "--warn-only", "--json"],
+            capture_output=True, text=True, check=True,
+        )
+        return json.loads(result.stdout)
+
+    def test_only_the_real_note_is_counted(self):
+        self._plant(self.bad_note)
+
+        # an agent worktree: a complete second checkout of this same vault
+        self._plant(".claude", "worktrees", "wt", self.bad_note)
+        # a nested repository: a different vault with its own conventions
+        self._plant("nested", self.bad_note)
+        (self.vault / "nested" / ".git").mkdir()
+        # dependencies, which are not notes
+        self._plant("node_modules", "pkg", self.bad_note)
+
+        findings = self._findings()
+        self.assertEqual(len(findings), 1, f"expected 1 finding, got {len(findings)}")
+        self.assertEqual(Path(findings[0]["path"]).name, self.bad_note)
+
+    def test_a_symlinked_directory_is_not_followed(self):
+        # The same second repository is a symlink on one machine and a real clone
+        # on another, so both forms have to be skipped.
+        self._plant(self.bad_note)
+        outside = Path(self.temp_dir.name).parent / f"{self.vault.name}-outside"
+        outside.mkdir(exist_ok=True)
+        try:
+            (outside / self.bad_note).write_text("---\n---\n\nSome content here.",
+                                                 encoding="utf-8")
+            (self.vault / "linked").symlink_to(outside, target_is_directory=True)
+
+            findings = self._findings()
+            self.assertEqual(len(findings), 1, f"expected 1 finding, got {len(findings)}")
+        finally:
+            (outside / self.bad_note).unlink(missing_ok=True)
+            outside.rmdir()
+
+    def test_skip_dir_removes_a_machine_written_directory(self):
+        self._plant(self.bad_note)
+        self._plant("generated", self.bad_note)
+
+        result = subprocess.run(
+            [sys.executable, str(SCRIPT_PATH), str(self.vault),
+             "--warn-only", "--json", "--skip-dir", "generated"],
+            capture_output=True, text=True, check=True,
+        )
+        self.assertEqual(len(json.loads(result.stdout)), 1)
 
 
 if __name__ == "__main__":

@@ -202,11 +202,25 @@ def main():
             if path.exists() and path.suffix == ".md":
                 notes_to_check.append(path)
     else:
-        # Walk the vault
+        # Walk the vault. `.claude` is the load-bearing exclusion and not tidiness:
+        # agent worktrees live in `.claude/worktrees/`, and each one is a complete
+        # second checkout of the vault. Walking them counted this vault's notes nine
+        # times over and reported 11,337 findings against 1,218 real notes, which is
+        # the kind of number that reads as a catastrophe rather than as a bug.
+        # The walk also stops at a nested repository, because that is a different
+        # vault with its own conventions and its own AGENTS.md to be judged against.
+        # Testing for a `.git` entry is what catches it: a vault can mount a second
+        # repo as a symlink on one machine and as a real clone on another, and only
+        # the symlink form is skipped by os.walk, so the symlink test alone silently
+        # audited 146 of the other repo's notes.
         for root, dirs, files in os.walk(vault_root):
-            # Filter out ignored and skipped directories
-            dirs[:] = [d for d in dirs if d not in {".obsidian", ".git", ".trash"}
-                      and d not in args.skip_dirs]
+            # Filter out ignored, skipped, symlinked and nested-repo directories
+            dirs[:] = [d for d in dirs
+                       if d not in {".obsidian", ".git", ".trash", ".claude",
+                                    "node_modules", ".venv", "__pycache__"}
+                       and d not in args.skip_dirs
+                       and not (Path(root) / d).is_symlink()
+                       and not (Path(root) / d / ".git").exists()]
 
             for filename in files:
                 if filename.endswith(".md"):
