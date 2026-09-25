@@ -69,13 +69,37 @@ DEFAULT_DAEMON = "http://127.0.0.1:44771"
 # missing daemon refuses the connection instantly, so this only costs when there
 # really is one to wait for.
 DAEMON_TIMEOUT_S = 30.0
-HEALTH_TIMEOUT_S = 0.2
+# The same argument as above, which the old 0.2s here contradicted. A liveness
+# probe's timeout is only ever spent when something is listening: an absent daemon
+# refuses the connection, measured at 0.4ms, and never reaches the timeout at all.
+# So the only thing a tight budget buys is calling a live daemon dead.
+#
+# Measured over 25 calls against a healthy daemon: median 25.6ms, p95 45.6ms, and
+# a 496ms tail -- so 0.2s failed roughly one call in twenty-five, and 0.5s would
+# still have failed that one. The cost of being wrong is not symmetric: a false
+# "offline" drops the caller into a direct search that loads the embedding model
+# (~2s), answers from whatever database the working directory resolved to, and
+# cannot honour `--vault` at all, so it silently searches a corpus the caller did
+# not ask for. 1.0s sits above the measured tail and stays under the ~1.4s where
+# waiting for the daemon stops being cheaper than the fallback it would trigger.
+HEALTH_TIMEOUT_S = 1.0
 
 
 def daemon_healthy(base: str) -> bool:
-    """Check whether a local daemon can answer before waiting on a search."""
+    """Check whether a local daemon can answer before waiting on a search.
+
+    Asks for the cheap form of `/health`. The full route opens a read-only SQLite
+    connection per vault and runs three `COUNT(*)`s plus a co-commit lookup on
+    each one -- including a scan for non-null vectors over a table of hundreds of
+    thousands of sections -- which is where the 496ms tail comes from. None of it
+    is read here; this only needs to know something answered. `probe=1` is an
+    unknown parameter to a daemon that predates it, and an unknown parameter is
+    ignored rather than rejected, so an older daemon still replies 200 and is
+    merely as slow as it was before.
+    """
     try:
-        with urllib.request.urlopen(f"{base.rstrip('/')}/health", timeout=HEALTH_TIMEOUT_S) as response:
+        with urllib.request.urlopen(f"{base.rstrip('/')}/health?probe=1",
+                                    timeout=HEALTH_TIMEOUT_S) as response:
             return response.status == 200
     except (urllib.error.URLError, OSError, ValueError, TimeoutError):
         return False

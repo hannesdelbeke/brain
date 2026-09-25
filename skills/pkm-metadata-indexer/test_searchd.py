@@ -105,6 +105,23 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(body["vaults"][0]["vectors"], 0)
         self.assertEqual(body["vaults"][0]["co_commit_edges"], 0)
 
+    def test_health_probe_skips_the_per_vault_counts(self):
+        status, body = self.get("/health?probe=1")
+        self.assertEqual(status, 200)
+        self.assertEqual(body["status"], "ok")
+        self.assertTrue(body["probe"])
+        # Names, not statistics: the counts are what cost a connection and three
+        # COUNT(*) per vault, and a liveness probe reads none of them.
+        self.assertEqual(body["vaults"], ["first", "second"])
+        self.assertNotIn("query_provider", body)
+
+    def test_health_without_probe_is_unchanged(self):
+        # The probe must not become the default by accident: /health is also how a
+        # human and an agent read index freshness.
+        body = self.get("/health")[1]
+        self.assertNotIn("probe", body)
+        self.assertEqual(body["vaults"][0]["notes"], 2)
+
     def test_search_finds_a_lexical_hit(self):
         status, body = self.get("/search?q=distinctivephrase")
         self.assertEqual(status, 200)
