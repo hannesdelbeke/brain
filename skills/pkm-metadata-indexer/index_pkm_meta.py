@@ -1031,6 +1031,15 @@ def session_frontmatter_rows(vault_dir: Path) -> tuple[list[tuple], list[tuple]]
                          or (heading.group(1) if heading else None) or path.stem.replace("_", " "))
                 created = frontmatter_value(content, "date") or frontmatter_value(content, "created")
                 trace_path = frontmatter_value(content, "trace_path") or frontmatter_value(content, "trace_id")
+                # the trace location is emitted into the body rather than the frontmatter,
+                # so a frontmatter-only projection left the column null on every row and
+                # the documented promise that session search returns a trace path was unmet
+                if not trace_path:
+                    body = content[match.end():]
+                    trace_match = re.search(r"^##\s+the\s+full\s+trace\s+is\s+at\s+(.+?)\s*$",
+                                           body, re.MULTILINE | re.IGNORECASE)
+                    if trace_match:
+                        trace_path = trace_match.group(1).strip()
                 raw_cost = frontmatter_value(content, "cost_usd")
                 try:
                     cost_usd = float(raw_cost) if raw_cost is not None else None

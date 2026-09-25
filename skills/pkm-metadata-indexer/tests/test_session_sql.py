@@ -181,6 +181,54 @@ class SessionSqlTest(unittest.TestCase):
             finally:
                 connection.close()
 
+    def test_trace_path_body_extraction(self):
+        """extract trace path from body section when not in frontmatter."""
+        with tempfile.TemporaryDirectory() as temp:
+            vault = Path(temp) / "vault"
+            session_dir = vault / "sessions"
+            (vault / ".obsidian").mkdir(parents=True)
+            session_dir.mkdir()
+            # note with trace in body, exact case
+            (session_dir / "with-trace.md").write_text(
+                "---\nsession_id: session-trace\ndate: 2026-09-25\n---\n"
+                "## Summary\nSome content\n\n"
+                "## the full trace is at traces/2026-09-25_session-trace-id\n\n"
+                "Every turn is recorded.\n", encoding="utf-8"
+            )
+            # note with trace in body, different case and extra whitespace
+            (session_dir / "with-trace-case.md").write_text(
+                "---\nsession_id: session-case\ndate: 2026-09-25\n---\n"
+                "## Summary\nSome content\n\n"
+                "##  The  FULL  Trace  IS  At  traces/2026-09-25_case-insensitive\n\n"
+                "Every turn is recorded.\n", encoding="utf-8"
+            )
+            # note without trace in body
+            (session_dir / "no-trace.md").write_text(
+                "---\nsession_id: session-no-trace\ndate: 2026-09-25\n---\n"
+                "## Summary\nSome content\n", encoding="utf-8"
+            )
+            # note with trace in frontmatter (should use frontmatter value)
+            (session_dir / "trace-frontmatter.md").write_text(
+                "---\nsession_id: session-fm\ndate: 2026-09-25\n"
+                "trace_path: traces/from-frontmatter\n---\n"
+                "## the full trace is at traces/should-not-use-this\n", encoding="utf-8"
+            )
+            database = vault / ".obsidian" / "pkm_index.db"
+            INDEXER.build_index(str(vault), str(database), skip_embeddings=True)
+            connection = sqlite3.connect(database)
+            try:
+                traces = connection.execute(
+                    "SELECT session_id, trace_path FROM sessions_idx ORDER BY session_id"
+                ).fetchall()
+            finally:
+                connection.close()
+            self.assertEqual(traces, [
+                ("session-case", "traces/2026-09-25_case-insensitive"),
+                ("session-fm", "traces/from-frontmatter"),
+                ("session-no-trace", None),
+                ("session-trace", "traces/2026-09-25_session-trace-id"),
+            ])
+
 
 if __name__ == "__main__":
     unittest.main()
