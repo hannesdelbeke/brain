@@ -2,6 +2,7 @@ import contextlib
 import importlib.util
 import io
 import json
+import os
 import sqlite3
 import tempfile
 import unittest
@@ -359,6 +360,72 @@ class RerankTest(unittest.TestCase):
 
     def test_fusion_alone_leaves_no_rerank_score(self):
         self.assertTrue(all("rerank_score" not in row for row in self.search(False)))
+
+
+class RrfConstantTest(unittest.TestCase):
+    """`RRF_K` is read from the environment at import, so these reload the module.
+
+    Asserting on `int(os.environ.get("PKM_RRF_K", "60"))` instead would restate the
+    source expression and pass even if the fusion still hardcoded 60, which is the
+    whole thing being changed -- so the score assertion below is the real test and
+    the two constant assertions only localise a failure.
+    """
+
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.vault = Path(self.temp_dir.name) / "vault"
+        (self.vault / ".obsidian").mkdir(parents=True)
+        self.db = self.vault / ".obsidian" / "pkm_index.db"
+        (self.vault / "alpha.md").write_text(
+            "## Planned\nA distinctivephrase appears here.\n", encoding="utf-8"
+        )
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    @contextlib.contextmanager
+    def loaded_with(self, k):
+        previous = os.environ.get("PKM_RRF_K")
+        if k is None:
+            os.environ.pop("PKM_RRF_K", None)
+        else:
+            os.environ["PKM_RRF_K"] = k
+        try:
+            spec = importlib.util.spec_from_file_location("pkm_indexer_rrf", SCRIPT_PATH)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            yield module
+        finally:
+            if previous is None:
+                os.environ.pop("PKM_RRF_K", None)
+            else:
+                os.environ["PKM_RRF_K"] = previous
+
+    def top_score(self, module):
+        module.build_index(vault_path=str(self.vault), db_path=str(self.db),
+                           skip_embeddings=True)
+        rows = module.search_index("distinctivephrase", vault_path=str(self.vault),
+                                   db_path=str(self.db))
+        return rows[0]["score"]
+
+    def test_it_defaults_to_60(self):
+        with self.loaded_with(None) as module:
+            self.assertEqual(module.RRF_K, 60)
+
+    def test_it_honours_the_environment_variable(self):
+        with self.loaded_with("5") as module:
+            self.assertEqual(module.RRF_K, 5)
+
+    def test_the_fusion_output_moves_with_it(self):
+        # `lex_rank` is 1-based, so the single best lexical hit fuses to 1/(k+1)
+        # and k is observable in the score rather than only in the module. Without
+        # embeddings there is no vector arm, which is what makes the value exact --
+        # and 1/61 is also the ceiling a one-list document can reach at k=60, the
+        # number the fusion's membership-dominance comment is reasoning about.
+        with self.loaded_with(None) as module:
+            self.assertAlmostEqual(self.top_score(module), 1 / 61, places=6)
+        with self.loaded_with("5") as module:
+            self.assertAlmostEqual(self.top_score(module), 1 / 6, places=6)
 
 
 if __name__ == "__main__":

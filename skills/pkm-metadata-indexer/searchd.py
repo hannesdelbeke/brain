@@ -1358,12 +1358,12 @@ def do_similar(vault: Vault, note: str, limit: int, graph: bool = False,
         co_rank = {associated: rank for rank, (_, associated, *_rest) in enumerate(co_rows)}
         by_path = {row["path"]: row for row in results}
         fused = []
-        # 1/(60+rank) per source, the same RRF constant do_search fuses lexical
+        # 1/(k+rank) per source, the same RRF constant do_search fuses lexical
         # and vector results with, summed rather than compared on raw score
         # since a vector cosine and a co-commit weight are not on the same scale.
         for path in dict.fromkeys([*vector_rank, *co_rank]):
-            rrf = (1.0 / (60 + vector_rank[path]) if path in vector_rank else 0.0) \
-                + (1.0 / (60 + co_rank[path]) if path in co_rank else 0.0)
+            rrf = (1.0 / (pkm.RRF_K + vector_rank[path]) if path in vector_rank else 0.0) \
+                + (1.0 / (pkm.RRF_K + co_rank[path]) if path in co_rank else 0.0)
             base = by_path.get(path) or {"path": path, **note_snippet(vault, path), "raw_sim": None}
             source = "both" if path in vector_rank and path in co_rank else \
                      ("vector" if path in vector_rank else "co_commit")
