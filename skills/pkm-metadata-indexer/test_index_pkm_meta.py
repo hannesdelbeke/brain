@@ -361,5 +361,130 @@ class RerankTest(unittest.TestCase):
         self.assertTrue(all("rerank_score" not in row for row in self.search(False)))
 
 
+class DescriptionFieldTest(unittest.TestCase):
+    """Description frontmatter field parsing, embedding, and retrieval."""
+
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.vault = Path(self.temp_dir.name) / "vault"
+        (self.vault / ".obsidian").mkdir(parents=True)
+        self.db = self.vault / ".obsidian" / "pkm_index.db"
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_one_line_quoted_and_folded_descriptions_normalize_to_single_line(self):
+        """All description forms parse to the same single-line string."""
+        one_line = "---\ndescription: A brief summary\n---\n\nBody text."
+        quoted = "---\ndescription: 'A brief summary'\n---\n\nBody text."
+        folded = "---\ndescription: >\n  A brief\n  summary\n---\n\nBody text."
+
+        meta_one, _, _ = INDEXER.parse_frontmatter(one_line)
+        meta_quoted, _, _ = INDEXER.parse_frontmatter(quoted)
+        meta_folded, _, _ = INDEXER.parse_frontmatter(folded)
+
+        self.assertEqual(meta_one["description"], "A brief summary")
+        self.assertEqual(meta_quoted["description"], "A brief summary")
+        self.assertEqual(meta_folded["description"], "A brief summary")
+
+    def test_note_with_no_description_indexes_byte_identically_to_before(self):
+        """Backward compatibility: notes without description are unchanged."""
+        (self.vault / "no_desc.md").write_text(
+            "---\ntags:\n  - test\n---\n\n## Section\nContent here.",
+            encoding="utf-8",
+        )
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+
+        connection = sqlite3.connect(self.db)
+        try:
+            # Description should be empty string for notes without one
+            desc = connection.execute(
+                "SELECT description FROM notes WHERE path = 'no_desc.md'"
+            ).fetchone()[0]
+            self.assertEqual(desc, "")
+
+            # Section text should not have extra content prepended
+            section_text = connection.execute(
+                "SELECT heading FROM sections WHERE path = 'no_desc.md'"
+            ).fetchone()[0]
+            self.assertEqual(section_text, "Section")
+        finally:
+            connection.close()
+
+    def test_description_lands_in_preamble_chunk_all_three_cases(self):
+        """Description is prepended to the preamble section in all parse_sections cases."""
+        # Case (a): no ## heading
+        no_heading = "---\ndescription: Test desc\n---\n\nPlain body text."
+        (self.vault / "case_a.md").write_text(no_heading, encoding="utf-8")
+
+        # Case (b): heading with non-empty preamble
+        with_preamble = "---\ndescription: Test desc\n---\n\nPreamble.\n\n## Section\nContent."
+        (self.vault / "case_b.md").write_text(with_preamble, encoding="utf-8")
+
+        # Case (c): heading with empty preamble
+        no_preamble = "---\ndescription: Test desc\n---\n\n## Section\nContent."
+        (self.vault / "case_c.md").write_text(no_preamble, encoding="utf-8")
+
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+
+        connection = sqlite3.connect(self.db)
+        try:
+            # Case (a): description in the single whole-body section
+            sections_a = connection.execute(
+                "SELECT heading, id FROM sections WHERE path = 'case_a.md' ORDER BY start_line"
+            ).fetchall()
+            self.assertEqual(len(sections_a), 1)
+            self.assertEqual(sections_a[0][0], "case_a")
+
+            # Case (b): description prepended to preamble
+            sections_b = connection.execute(
+                "SELECT heading, id FROM sections WHERE path = 'case_b.md' ORDER BY start_line"
+            ).fetchall()
+            self.assertGreater(len(sections_b), 1)
+            self.assertEqual(sections_b[0][0], "case_b")
+
+            # Case (c): description creates preamble section
+            sections_c = connection.execute(
+                "SELECT heading, id FROM sections WHERE path = 'case_c.md' ORDER BY start_line"
+            ).fetchall()
+            self.assertGreater(len(sections_c), 1)
+            self.assertEqual(sections_c[0][0], "case_c")
+        finally:
+            connection.close()
+
+    def test_description_is_first_line_of_extract_key_lines_output(self):
+        """Description appears before summary callout in snippet."""
+        content = "---\ndescription: This is the description\n---\n\n> [!summary]\nThis is the summary.\n\n## Heading\nContent."
+        meta, body, _ = INDEXER.parse_frontmatter(content)
+        snippet = INDEXER.extract_key_lines(body, description=meta["description"])
+
+        lines = snippet.split("\n")
+        self.assertEqual(lines[0], "This is the description")
+        # Summary callout and/or headings come after description
+        self.assertGreater(len(lines), 1)
+
+    def test_notes_table_round_trip_stores_and_returns_description(self):
+        """Description survives the database round trip."""
+        (self.vault / "with_desc.md").write_text(
+            "---\ndescription: A detailed description\n---\n\nBody content.",
+            encoding="utf-8",
+        )
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+
+        connection = sqlite3.connect(self.db)
+        try:
+            desc = connection.execute(
+                "SELECT description FROM notes WHERE path = 'with_desc.md'"
+            ).fetchone()[0]
+            self.assertEqual(desc, "A detailed description")
+        finally:
+            connection.close()
+
+        # Test digest output includes description
+        digest = INDEXER.digest_notes(vault_path=str(self.vault), db_path=str(self.db))
+        by_path = {row["path"]: row for row in digest}
+        self.assertEqual(by_path["with_desc.md"]["description"], "A detailed description")
+
+
 if __name__ == "__main__":
     unittest.main()
