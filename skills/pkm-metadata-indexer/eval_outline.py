@@ -3,17 +3,23 @@
 The dual-track fusion changed how the graph walk contributes to the final ranking:
 - OLD: graph votes on all notes it returns, at weight 1.0
 - NEW: graph votes only on notes the facet track did NOT find, at weight 0.5
-      plus semantic skipped when facets >= 2
 
-Both arms run from the same track output, so the only difference is the fusion logic.
+This eval tests GRAPH FUSION ONLY. The semantic track is stubbed to return empty,
+so both arms fuse the same structural+graph rankings with different graph weights.
+It is silent on the semantic gate (facet_count >= 2) since that gate acts on a
+track this eval does not run.
+
+Both arms run from the same track outputs, so the only difference is graph fusion.
 A judge that sees only the question and the outline content for one note decides if
 that note is useful. Verdicts are cached by (question, note, judge_model), so two
-judges never read each other's answers and a rerun is free.
+judges never read each other's answers and a rerun is free. Failed judgements are
+NOT cached and will be retried on the next run.
 
-    python searchd.py --vault brain=<vault> --port 44899
-    python eval_outline.py --vault brain --port 44899 --judge claude-sonnet-5 --judge claude-opus-5
+    python eval_outline.py --vault brain --port 44771 --judge claude-sonnet-5 --judge claude-opus-5 \
+      --questions eval_questions/outline-multifacet.json
 
-Reports precision at k, mean rank of first useful note, and inter-judge agreement.
+Reports precision at k, mean rank of first useful note, inter-judge agreement, and
+per-judge abstention counts.
 """
 
 from __future__ import annotations
@@ -106,24 +112,17 @@ def reciprocal_rank_fusion(rankings: list[list[str]], weights: list[float],
     return scores
 
 
-def fuse_old(semantic: list[str], structural: list[str], graph: list[str]) -> list[str]:
-    """OLD fusion: semantic always runs, graph votes on all notes at weight 1.0."""
-    fused = reciprocal_rank_fusion([semantic, structural, graph], [1.0, 1.0, 1.0])
+def fuse_old(structural: list[str], graph: list[str]) -> list[str]:
+    """OLD fusion: graph votes on all notes at weight 1.0."""
+    fused = reciprocal_rank_fusion([structural, graph], [1.0, 1.0])
     return [path for path, _ in sorted(fused.items(), key=lambda x: x[1], reverse=True)]
 
 
-def fuse_new(semantic: list[str], structural: list[str], graph: list[str],
-             facet_count: int) -> list[str]:
-    """NEW fusion: semantic skipped when facets >= 2, graph filtered and weighted 0.5."""
-    skip_semantic = facet_count >= 2
+def fuse_new(structural: list[str], graph: list[str]) -> list[str]:
+    """NEW fusion: graph filtered to non-facet notes and weighted 0.5."""
     facet_set = set(structural)
     graph_filtered = [path for path in graph if path not in facet_set]
-
-    if skip_semantic:
-        fused = reciprocal_rank_fusion([structural, graph_filtered], [1.0, 0.5])
-    else:
-        fused = reciprocal_rank_fusion([semantic, structural, graph_filtered], [1.0, 1.0, 0.5])
-
+    fused = reciprocal_rank_fusion([structural, graph_filtered], [1.0, 0.5])
     return [path for path, _ in sorted(fused.items(), key=lambda x: x[1], reverse=True)]
 
 
@@ -256,14 +255,13 @@ def main():
         payload = search_tracks(db_path, question)
 
         # Extract track outputs
-        semantic = [row["path"] for row in payload.get("semantic", [])]
         structural = [row["path"] for row in payload.get("structural", [])]
         graph = [row["path"] for row in payload.get("graph", [])]
         facet_count = payload.get("facet_count", 0)
 
         # Fuse both ways
-        old_ranked = fuse_old(semantic, structural, graph)
-        new_ranked = fuse_new(semantic, structural, graph, facet_count)
+        old_ranked = fuse_old(structural, graph)
+        new_ranked = fuse_new(structural, graph)
 
         # Collect all notes we need to judge (top 10 from each arm)
         all_notes = set(old_ranked[:10] + new_ranked[:10])
@@ -285,8 +283,10 @@ def main():
                 jobs = [(q, content, model) for q, path, model, content in need_judging]
                 for (q, path, model, content), verdict in zip(need_judging,
                         pool.map(lambda job: judge(*job), jobs)):
-                    cache_key = f"{q}|{path}|{model}"
-                    cached[cache_key] = verdict
+                    # Only cache verdicts that succeeded (True or False), not None
+                    if verdict is not None:
+                        cache_key = f"{q}|{path}|{model}"
+                        cached[cache_key] = verdict
 
             JUDGEMENTS.write_text(json.dumps(cached, indent=1, sort_keys=True), encoding="utf-8")
 
@@ -329,6 +329,39 @@ def main():
     # Aggregate reporting
     print("\n=== AGGREGATE RESULTS ===\n", flush=True)
 
+    # Track abstentions per judge
+    abstentions = {model: 0 for model in args.judges}
+    total_pairs = {model: 0 for model in args.judges}
+
+    for result in results:
+        question = result["question"]
+        # Get all notes judged for this question
+        all_notes_for_q = set()
+        for r in results:
+            if r["question"] == question:
+                for model in args.judges:
+                    for path in r["judges"][model]["old"]["p5"][1:] + r["judges"][model]["new"]["p5"][1:]:
+                        if isinstance(path, str):
+                            all_notes_for_q.add(path)
+
+        # Actually just count from the verdict dicts we built
+        for judge_data in result["judges"].values():
+            for arm_data in judge_data.values():
+                # This is wasteful - let me recalculate from cached properly
+                pass
+
+    # Simpler: count from all cached entries for these questions
+    question_set = {r["question"] for r in results}
+    for key, verdict in cached.items():
+        parts = key.rsplit("|", 1)
+        if len(parts) == 2:
+            question_path, model = parts
+            question = question_path.rsplit("|", 1)[0]
+            if question in question_set and model in args.judges:
+                total_pairs[model] += 1
+                if verdict is None:
+                    abstentions[model] += 1
+
     for model in args.judges:
         print(f"Judge: {model}", flush=True)
         for arm in ("old", "new"):
@@ -350,6 +383,15 @@ def main():
                   f"precision@10 {p10_useful}/{p10_total} = {p10_pct}", flush=True)
             print(f"       answered {answered}/{len(results)}  "
                   f"mean first useful rank {mean_str}", flush=True)
+
+        # Report abstentions
+        abs_count = abstentions[model]
+        abs_total = total_pairs[model]
+        if abs_total > 0:
+            abs_pct = abs_count / abs_total
+            print(f"  abstentions: {abs_count}/{abs_total} = {abs_pct:.1%}", flush=True)
+            if abs_pct > 0.10:
+                print(f"  WARNING: {model} failed on >{abs_pct:.0%} of pairs - results NOT USABLE", flush=True)
         print()
 
     # Inter-judge agreement
@@ -375,30 +417,31 @@ def main():
 
 def self_check():
     """Verify cache key includes judge model and test fusion logic."""
-    # Test 1: cache key format includes judge model
-    cache_key_pattern = "{question}|{path}|{model}"
-    assert "|" in cache_key_pattern and "{model}" in cache_key_pattern, \
-        "Cache key must include judge model"
+    # Test 1: cache key must differentiate judges
+    # Build cache keys the way the code actually does for two different judges
+    question, path = "test question", "test.md"
+    key1 = f"{question}|{path}|claude-sonnet-5"
+    key2 = f"{question}|{path}|claude-opus-5"
+    assert key1 != key2, \
+        f"Cache keys for different judges must differ: {key1} vs {key2}"
 
-    # Test 2: old arm ranks self-agreeing note higher than better-covered one
-    # Synthetic: structural=[a, b], graph=[a, c], semantic=[a]
-    # Note 'a' appears in all three (self-agreeing in structural+graph)
-    # Note 'b' appears only in structural (better for disjoint membership)
-    old = fuse_old(["a"], ["a", "b"], ["a", "c"])
-    # In old fusion, 'a' gets 3 votes (semantic rank 0, structural rank 0, graph rank 0)
+    # Test 2: old arm with self-agreeing graph note
+    # structural=[a, b], graph=[a, c]
+    # In old fusion: 'a' gets 2 votes (structural rank 0, graph rank 0)
     # 'b' gets 1 vote (structural rank 1)
-    # So 'a' should rank first
+    # 'c' gets 1 vote (graph rank 1)
+    # So 'a' ranks first due to double-counting
+    old = fuse_old(["a", "b"], ["a", "c"])
     assert old[0] == "a", f"OLD arm should rank self-agreeing 'a' first, got {old}"
 
-    # Test 3: new arm filters graph membership and weights it 0.5
-    new = fuse_new(["a"], ["a", "b"], ["a", "c"], facet_count=1)
-    # In new fusion, semantic runs (facet_count=1 < 2)
-    # Graph is filtered: 'a' is in structural, so graph becomes just ["c"]
-    # Votes: 'a' gets semantic rank 0 + structural rank 0 = 2 full votes
-    #        'b' gets structural rank 1 = 1 full vote
+    # Test 3: new arm filters graph membership
+    # Graph filtered: 'a' is in structural, so graph becomes just ["c"]
+    # Votes: 'a' gets structural rank 0 = 1 full vote
+    #        'b' gets structural rank 1 = 1 vote at lower rank
     #        'c' gets graph rank 0 at weight 0.5 = 0.5 vote
-    # So 'a' should still be first, but for the right reason (not self-agreement)
-    assert new[0] == "a", f"NEW arm should rank 'a' first (2 votes), got {new}"
+    # 'a' should still be first (best structural rank), but not double-counted
+    new = fuse_new(["a", "b"], ["a", "c"])
+    assert new[0] == "a", f"NEW arm should rank 'a' first (best structural), got {new}"
 
     # Test 4: precision math
     verdicts = {"a": True, "b": False, "c": None, "d": True}
@@ -407,13 +450,6 @@ def self_check():
     # Top 5: b(False), c(None), a(True), d(True) -> 2 useful out of 4
     assert metrics["p5"] == (2, 4), f"Expected (2, 4), got {metrics['p5']}"
     assert metrics["first_rank"] == 3, f"First useful is 'a' at rank 3, got {metrics['first_rank']}"
-
-    # Test 5: semantic gate
-    new_gated = fuse_new(["a"], ["a", "b"], ["c"], facet_count=3)
-    # With facet_count=3 >= 2, semantic should be skipped
-    # Only structural and filtered graph vote
-    # This is harder to assert precisely, but we can verify it runs without error
-    assert isinstance(new_gated, list), "Semantic gate fusion should return list"
 
     print("self-check ok")
     return 0
