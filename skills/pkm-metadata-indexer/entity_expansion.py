@@ -48,7 +48,22 @@ def _load_notes(connection: sqlite3.Connection) -> list[sqlite3.Row]:
 
 # Prepared notes, keyed by database path, holding the file stamp they were built
 # from. One entry per corpus, replaced rather than accumulated.
-_PREPARED: dict[str, tuple[tuple[int, int], list[dict]]] = {}
+_PREPARED: dict[str, tuple[tuple[int, int], list[dict], dict[str, int]]] = {}
+
+# A query this long is describing a problem, not naming a thing. Expansion exists
+# to turn `ec` into `Example Corporation`; there is no entity to resolve in a
+# sentence, and every extra name it adds is read by the embedder and the
+# cross-encoder as part of the question being asked.
+MAX_ENTITY_TOKENS = 8
+# How much of a corpus a token may appear in and still identify anything. A token
+# in a tenth of the vault selects a tenth of the vault. Measured as a share rather
+# than a fixed count so it holds on a 2-note test corpus and a 3,000-note one, and
+# floored at one note so a small corpus still expands at all.
+MAX_DOCUMENT_SHARE = 0.10
+# How many of a query's identifying tokens one note must account for before its
+# neighbours are worth adding. Below this the note shares a word with the query
+# rather than naming what the query is about.
+MIN_COVERAGE = 0.6
 
 
 def _prepare(rows: list[sqlite3.Row]) -> list[dict]:
@@ -83,6 +98,48 @@ def _prepare(rows: list[sqlite3.Row]) -> list[dict]:
     return prepared
 
 
+def _document_frequency(prepared: list[dict]) -> dict[str, int]:
+    """How many notes each candidate token appears in.
+
+    Which tokens are worth matching on is a property of the corpus, not something
+    a stopword list can be written for once: `session` and `vault` identify a note
+    in somebody else's vault and identify nothing in this one. Counting is cheap
+    here because it happens once per reindex, beside the scan that already runs.
+    """
+    frequency: dict[str, int] = {}
+    for row in prepared:
+        for token in row["candidate_tokens"]:
+            frequency[token] = frequency.get(token, 0) + 1
+    return frequency
+
+
+def identifying_tokens(query: str, db_path: str | Path) -> set[str]:
+    """The query tokens that can select a note, dropping the ones that select many.
+
+    Matching on any shared token is what made expansion return the vault: a
+    fifteen-word question shares `the`, `files` or `command` with almost every
+    note, so every note matched and the term list filled with whichever titles the
+    scan reached first. A token common enough to do that is exactly the token that
+    cannot identify an entity, which makes document frequency the test.
+    """
+    tokens = _tokens(query)
+    if not tokens:
+        return set()
+    prepared = prepared_notes(db_path)
+    if not prepared:
+        return set()
+    frequency = document_frequency(db_path)
+    ceiling = max(1, int(len(prepared) * MAX_DOCUMENT_SHARE))
+    return {token for token in tokens if 0 < frequency.get(token, 0) <= ceiling}
+
+
+def document_frequency(db_path: str | Path) -> dict[str, int]:
+    """Candidate-token document frequencies for a corpus, cached with its scan."""
+    prepared_notes(db_path)
+    cached = _PREPARED.get(str(Path(db_path)))
+    return cached[2] if cached else {}
+
+
 def prepared_notes(db_path: str | Path) -> list[dict]:
     """`notes`, prepared and cached until the database file changes.
 
@@ -109,7 +166,7 @@ def prepared_notes(db_path: str | Path) -> list[dict]:
     finally:
         connection.close()
     prepared = _prepare(rows)
-    _PREPARED[str(database)] = (stamp, prepared)
+    _PREPARED[str(database)] = (stamp, prepared, _document_frequency(prepared))
     return prepared
 
 
@@ -118,21 +175,44 @@ def expand_query(query: str, db_path: str | Path, max_terms: int = 24) -> list[s
 
     The database is the source of truth, so this stays a cheap read-only lookup:
     no model, filesystem walk, or YAML parser is loaded on a search hot path.
+
+    Returns the query alone when there is no entity to resolve, which is most
+    queries. Expansion used to fire on any single shared token, so a sentence
+    matched most of the vault and came back with two dozen unrelated titles
+    appended -- and because the caller hands the result to `search_index` whole,
+    those titles were embedded and cross-encoded as part of the question. On this
+    vault that cost symptom recall@5 about sixty points. A term is only added now
+    when the query names something: see `MAX_ENTITY_TOKENS`, `MAX_DOCUMENT_SHARE`
+    and `MIN_COVERAGE`.
     """
     terms = [query]
     if not query.strip():
         return terms
     tokens = _tokens(query)
-    if not tokens:
+    if not tokens or len(tokens) > MAX_ENTITY_TOKENS:
         return terms
     try:
         rows = prepared_notes(db_path)
-        matched_paths = set()
+        tokens = identifying_tokens(query, db_path)
+        if not tokens:
+            return terms
+        needed = max(1, round(len(tokens) * MIN_COVERAGE))
+        # Best-covering notes first. Ordering by the scan instead meant the term
+        # budget was spent on whichever note sqlite happened to return first,
+        # which on a date-named vault is the oldest note that shares a word.
+        matches = []
         for row in rows:
-            if tokens & row["candidate_tokens"]:
-                matched_paths.add(row["path"])
-                for candidate in row["candidates"]:
-                    _add(terms, candidate)
+            covered = len(tokens & row["candidate_tokens"])
+            if covered >= needed:
+                matches.append((covered, row))
+        matches.sort(key=lambda match: -match[0])
+        matched_paths = set()
+        for _, row in matches:
+            matched_paths.add(row["path"])
+            for candidate in row["candidates"]:
+                _add(terms, candidate)
+            if len(terms) >= max_terms:
+                break
         if matched_paths:
             connection = _open(db_path)
             if connection is None:

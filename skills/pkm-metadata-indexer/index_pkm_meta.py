@@ -54,6 +54,19 @@ def get_embedding_providers() -> list[str]:
 
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 EMBEDDING_DIMENSIONS = 384
+
+# bge-small-en-v1.5 is an asymmetric retrieval model: it was trained with a short
+# instruction on the query side and passages embedded bare, so in principle a query
+# encoded without it lands in a slightly different region of the space than the
+# passages it is meant to match. Measured on this vault it does not pay for itself:
+# over 18 symptom/answer probe pairs the model's own instruction moved symptom
+# recall@1 from 44.4% to 38.9% and left recall@5 at 88.9%, while answer recall@5
+# rose from 88.9% to 100%. Retrieving from the symptom is the case that matters --
+# an answer-phrased query means the caller already knows the answer -- so the
+# default stays bare, which is also what every index built before 2026-09-25 was
+# searched with. Set PKM_QUERY_INSTRUCTION to turn it on; nothing needs reindexing
+# either way, because only the query side is touched.
+QUERY_INSTRUCTION = os.environ.get("PKM_QUERY_INSTRUCTION", "")
 CHUNKING_VERSION = "heading-estimate-v1"
 MAX_CHUNK_ESTIMATED_TOKENS = 360
 CHUNK_OVERLAP_ESTIMATED_TOKENS = 40
@@ -1501,7 +1514,9 @@ def search_index(
                 print("fastembed is unavailable; returning lexical results only.")
             else:
                 model = get_embedding_model(QUERY_PROVIDERS, QUERY_THREADS)
-                query_vector = np.asarray(next(model.embed([query])), dtype=np.float32)
+                query_vector = np.asarray(
+                    next(model.embed([QUERY_INSTRUCTION + query])), dtype=np.float32
+                )
                 norm = np.linalg.norm(query_vector)
                 if norm > 0:
                     query_vector = query_vector / norm

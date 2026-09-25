@@ -35,6 +35,46 @@ class EntityExpansionTest(unittest.TestCase):
             self.assertIn("Example Tools", terms)
 
 
+class SentenceQueryTest(unittest.TestCase):
+    """A sentence must come back untouched, because the caller searches with it.
+
+    `search_vault` and the daemon hand the expanded string to `search_index`
+    whole, so every name added here is embedded as part of the query vector and
+    read by the cross-encoder as part of the question. Expansion used to fire on
+    any single shared token, which on a real vault meant a fifteen-word symptom
+    matched almost every note and came back with two dozen unrelated titles
+    appended -- measured at symptom recall@5 of 16.7% against 94.4% without them.
+    """
+
+    def build(self, vault: Path) -> Path:
+        (vault / ".obsidian").mkdir(parents=True)
+        # Each note shares a common word with the query below and nothing else.
+        for name in ("alpha", "beta", "gamma", "delta"):
+            (vault / f"{name} the command.md").write_text(
+                f"---\naliases:\n  - {name} corporation\n---\n## {name}\nbody\n", encoding="utf-8")
+        database = vault / ".obsidian" / "pkm_index.db"
+        INDEXER.build_index(str(vault), str(database), skip_embeddings=True)
+        return database
+
+    def test_a_sentence_is_not_expanded(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.build(Path(temp) / "vault")
+            query = ("claude keeps refusing the command saying it cannot "
+                     "determine whether this command is safe to run")
+            self.assertEqual(entity_expansion.expand_query(query, database), [query])
+
+    def test_a_token_in_most_of_the_corpus_expands_nothing(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.build(Path(temp) / "vault")
+            # `command` is in all four titles, so it selects the corpus, not a note.
+            self.assertEqual(entity_expansion.expand_query("command", database), ["command"])
+
+    def test_a_name_still_expands(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.build(Path(temp) / "vault")
+            self.assertIn("alpha corporation", entity_expansion.expand_query("alpha", database))
+
+
 class PreparedNotesCacheTest(unittest.TestCase):
     """The scan is cached across queries, so staleness is the risk worth testing.
 
