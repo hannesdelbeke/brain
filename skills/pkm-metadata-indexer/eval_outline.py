@@ -97,7 +97,7 @@ def search_tracks(db_path: str, question: str, limit: int = 50) -> dict:
     return dual_track.dual_track_search(
         db_path, question,
         semantic=semantic_stub,
-        hops=2, top=limit, facets=None, rerank=None,
+        hops=2, top=limit, facets=None,
         gate_semantic=True  # Let the gate work naturally
     )
 

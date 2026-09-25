@@ -862,7 +862,7 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
     """
     began = time.perf_counter()
     STATE.last_query = time.time()
-    outlines, payloads, stale, indexed_at = {}, {}, {}, {}
+    payloads, stale, indexed_at = {}, {}, {}
     for vault in vaults:
         if not vault.db.exists():
             continue
@@ -872,7 +872,6 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
             hops=hops, top=limit, facets=facets, gate_semantic=not semantic,
         )
         payloads[vault.name] = payload
-        outlines[vault.name] = dual_track.render_outline(payload)
         missing = vault.stale()
         indexed_at[vault.name] = missing["indexed_at"]
         if missing["count"] or missing.get("no_index"):
@@ -883,7 +882,8 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
         "took_ms": round((time.perf_counter() - began) * 1000, 1),
         "indexed_at": indexed_at,
         "stale": stale,
-        "outlines": outlines,
+        "outlines": {name: dual_track.render_outline(payload)
+                     for name, payload in payloads.items()},
         "results": {name: payload["fused"] for name, payload in payloads.items()},
         "facet_count": {name: payload["facet_count"] for name, payload in payloads.items()},
         # So a caller can tell "the embedding found nothing" from "the embedding
