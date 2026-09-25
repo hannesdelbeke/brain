@@ -1340,14 +1340,17 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         db_seconds = time.perf_counter() - t_db_start
         total_duration = time.perf_counter() - t_start
 
+        # Session summary goes to stdout so the daemon can report it, per the
+        # "results go through print" convention. Only log when there are sessions.
+        if len(session_rows) > 0:
+            print(f"Sessions: {len(session_rows)} indexed, {session_dedup_count} continued across multiple notes", flush=True)
+
         log.info("Indexed %s notes, %s sections, and %s links.", f"{len(notes):,}", f"{len(sections):,}", f"{len(links):,}")
         log.info(
             "Vectors: %s unchanged, %s reused by hash, %s generated.",
             f"{unchanged_vectors:,}", f"{reused_vectors:,}", f"{len(generated_vectors):,}",
         )
         log.info("Removed %s notes and %s sections no longer in the vault.", f"{removed_notes:,}", f"{removed_sections:,}")
-        if session_dedup_count > 0:
-            log.info("Sessions: %s indexed, %s continued across multiple notes.", f"{len(session_rows):,}", f"{session_dedup_count:,}")
 
         # Performance timing breakdown
         notes_per_sec = len(notes) / max(scan_seconds, 0.001)
@@ -1378,6 +1381,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             "vectors": sum(vector is not None for vector in vectors_by_id.values()),
             "errors": len(errors),
             "run_id": run_id,
+            "sessions": len(session_rows),
+            "session_duplicates": session_dedup_count,
         }
     finally:
         connection.close()
