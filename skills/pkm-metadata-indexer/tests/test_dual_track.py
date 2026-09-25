@@ -667,5 +667,70 @@ class EndToEndTest(unittest.TestCase):
                         "structural": payload["structural"]})
 
 
+class ReciprocalRankFusionTest(unittest.TestCase):
+    def test_repeated_path_in_one_ranking_counts_once_at_best_rank(self):
+        # A path appearing at positions 0, 5, 10 should score as if it appeared
+        # only at position 0, which is weight / (k + 0 + 1).
+        ranking = ["A.md", "B.md", "C.md", "A.md", "D.md", "A.md"]
+        scores = dual_track.reciprocal_rank_fusion(ranking, k=60, weights=[1.0])
+        # Best rank for A.md is 0, so score = 1.0 / (60 + 0 + 1) = 1/61
+        expected_score = 1.0 / 61
+        self.assertAlmostEqual(scores["A.md"], expected_score, places=6)
+        # B.md appears once at rank 1, so score = 1.0 / (60 + 1 + 1) = 1/62
+        self.assertAlmostEqual(scores["B.md"], 1.0 / 62, places=6)
+
+    def test_same_path_in_different_rankings_accumulates(self):
+        # A.md appears in both rankings. It should get contributions from both.
+        ranking1 = ["A.md", "B.md"]
+        ranking2 = ["C.md", "A.md"]
+        scores = dual_track.reciprocal_rank_fusion(ranking1, ranking2, k=60,
+                                                  weights=[1.0, 1.0])
+        # A.md: rank 0 in ranking1 (1/61) + rank 1 in ranking2 (1/62)
+        expected = (1.0 / 61) + (1.0 / 62)
+        self.assertAlmostEqual(scores["A.md"], expected, places=6)
+
+    def test_dual_track_search_with_repeated_semantic_rows(self):
+        # A note with multiple matching sections should not outrank a note with
+        # a single better-placed section.
+        with tempfile.TemporaryDirectory() as temp:
+            database = build_vault(Path(temp) / "vault", {
+                "multi-section.md": (
+                    "## Section 1\nstroke recovery\n\n"
+                    "## Section 2\nstroke and fatigue\n\n"
+                    "## Section 3\npost stroke exercise\n"
+                ),
+                "single-section.md": "## Best\nstroke dopamine pathway\n",
+            })
+
+            # Mock semantic callable that returns three rows for multi-section.md
+            # and one row for single-section.md. The semantic parameter is a callable
+            # that takes just the query string.
+            def mock_semantic(query):
+                return [
+                    {"path": "single-section.md", "heading": "Best", "line": 1,
+                     "score": 0.95, "section_id": "s1"},
+                    {"path": "multi-section.md", "heading": "Section 1", "line": 1,
+                     "score": 0.70, "section_id": "s2"},
+                    {"path": "multi-section.md", "heading": "Section 2", "line": 3,
+                     "score": 0.68, "section_id": "s3"},
+                    {"path": "multi-section.md", "heading": "Section 3", "line": 5,
+                     "score": 0.65, "section_id": "s4"},
+                ]
+
+            result = dual_track.dual_track_search(database, "stroke", semantic=mock_semantic,
+                                                 top=10)
+            fused_order = [row["path"] for row in result["fused"]]
+
+            # Asserted unconditionally. Guarding the comparison behind "if both are
+            # in the results" makes the test pass without comparing anything the
+            # moment either note drops out, which is the failure it exists to catch.
+            self.assertIn("single-section.md", fused_order, fused_order)
+            self.assertIn("multi-section.md", fused_order, fused_order)
+            self.assertLess(fused_order.index("single-section.md"),
+                            fused_order.index("multi-section.md"),
+                            f"the note ranked first on one section must beat the note "
+                            f"that only appears three times lower down: {fused_order}")
+
+
 if __name__ == "__main__":
     unittest.main()
