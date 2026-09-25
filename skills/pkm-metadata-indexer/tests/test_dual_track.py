@@ -298,6 +298,79 @@ class RecursiveGraphTest(unittest.TestCase):
             self.assertIn("far.md", {row["path"] for row in rows})
 
 
+class SeedWideningTest(unittest.TestCase):
+    """The best-coverage note is a dead end; something below it is not.
+
+    Measured on the real vault: the query this module was built for seeded exactly
+    one 4/5 note whose every wikilink pointed at a script or a person and so
+    resolved to nothing, and the graph section rendered empty while a 2/5 note two
+    rows down sat there with a live neighbourhood.
+    """
+
+    def vault(self, temp: str) -> Path:
+        notes = {
+            # 3/3 coverage and no outbound edges at all -- the dead end.
+            "top.md": "## Body\nalpha beta gamma together\n",
+            # 2/3 coverage, and it can actually be walked from.
+            "mid.md": "## Body\nalpha beta only\n",
+            # 1/3 coverage, also walkable, and must never be seeded for a
+            # multi-facet query -- this is the note that answered a question about
+            # stroke with three notes about wifi passwords.
+            "weak.md": "## Body\nalpha by itself\n",
+            "wanted.md": "## Body\nunrelated vocabulary\n",
+            "unwanted.md": "## Body\nunrelated vocabulary\n",
+        }
+        database = build_vault(Path(temp) / "vault", notes)
+        write_edges(database, [("mid.md", "wanted.md"), ("weak.md", "unwanted.md")])
+        return database
+
+    def test_widens_past_a_dead_end_best_tier(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.vault(temp)
+            parsed = parse_query_facets("alpha beta gamma")
+            payload = dual_track.structural_search(database, parsed, hops=2)
+            self.assertEqual(payload["facets"][0]["path"], "top.md",
+                             "3/3 coverage still has to rank first")
+            reached = {row["path"] for row in payload["graph"]}
+            self.assertIn("wanted.md", reached,
+                          "the 2/3 note is walkable and the 3/3 note is not")
+
+    def test_widening_never_seeds_a_single_facet_match(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.vault(temp)
+            parsed = parse_query_facets("alpha beta gamma")
+            payload = dual_track.structural_search(database, parsed, hops=2)
+            reached = {row["path"] for row in payload["graph"]}
+            self.assertNotIn("unwanted.md", reached,
+                             "1/3 coverage is below the floor; its neighbours are noise")
+
+    def test_stays_silent_when_nothing_above_the_floor_can_be_walked(self):
+        with tempfile.TemporaryDirectory() as temp:
+            notes = {
+                "top.md": "## Body\nalpha beta gamma together\n",
+                "weak.md": "## Body\nalpha by itself\n",
+                "unwanted.md": "## Body\nunrelated vocabulary\n",
+            }
+            database = build_vault(Path(temp) / "vault", notes)
+            write_edges(database, [("weak.md", "unwanted.md")])
+            parsed = parse_query_facets("alpha beta gamma")
+            payload = dual_track.structural_search(database, parsed, hops=2)
+            self.assertEqual(payload["graph"], [],
+                             "an empty section is the honest answer, not a wrong one")
+
+    def test_single_facet_query_may_widen_within_its_own_tier(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.vault(temp)
+            # Every match is 1/1 here, so the floor is that tier and widening is
+            # only buying more attempts -- which is the point when the first seed
+            # picked happens to be the one with no edges.
+            parsed = parse_query_facets("alpha")
+            payload = dual_track.structural_search(database, parsed, hops=2)
+            reached = {row["path"] for row in payload["graph"]}
+            self.assertTrue(reached & {"wanted.md", "unwanted.md"},
+                            "a single-facet query has no weaker tier to exclude")
+
+
 class FusionTest(unittest.TestCase):
     def test_agreement_beats_a_single_strong_rank(self):
         fused = dual_track.reciprocal_rank_fusion(["a.md", "b.md"], ["b.md", "a.md"])
