@@ -71,6 +71,10 @@ CHUNKING_VERSION = "heading-estimate-v1"
 MAX_CHUNK_ESTIMATED_TOKENS = 360
 CHUNK_OVERLAP_ESTIMATED_TOKENS = 40
 SCHEMA_VERSION = "3"
+# The ~800-token break-even from MIN_ROLLUP_TOKENS in note_outline.py: the note size
+# above which a read is routed through an outline instead of the file, which is exactly
+# where a filename plus a truncated snippet stop being enough to judge a note by.
+DESCRIPTION_MIN_WORDS = 600
 IGNORED_DIRS = {".obsidian", ".git", ".trash", "node_modules", ".venv", "__pycache__"}
 FRONTMATTER_RE = re.compile(r"^---\s*\r?\n(.*?)\r?\n---\s*(?:\r?\n|$)", re.DOTALL)
 WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
@@ -273,7 +277,7 @@ def get_sha256(text: str) -> str:
 
 def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     """Return selected metadata, body text, and the body's absolute first line."""
-    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": [], "aliases": []}
+    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": [], "aliases": [], "description": None, "repo": None, "url": None}
     match = FRONTMATTER_RE.match(content)
     if not match:
         return meta, content, 1
@@ -315,6 +319,33 @@ def parse_frontmatter(content: str) -> tuple[dict, str, int]:
         if inline_aliases:
             meta["aliases"] = [alias.strip().strip('"\'')
                                for alias in inline_aliases.group(1).split(",") if alias.strip()]
+
+    # Parse description: one-line scalar or folded/literal block
+    desc_scalar = re.search(r"^description:\s*(.+)$", frontmatter, re.MULTILINE)
+    if desc_scalar:
+        value = desc_scalar.group(1).strip()
+        # Check for folded/literal block indicators
+        if value in (">", ">-", "|", "|-"):
+            # Extract continuation lines (more-indented than the key)
+            desc_block = re.search(r"^description:\s*[>|][-]?\s*\n((?:[ \t]+[^\n]*\n?)+)", frontmatter, re.MULTILINE)
+            if desc_block:
+                # Collapse whitespace runs to single space and strip
+                meta["description"] = " ".join(desc_block.group(1).split())
+        else:
+            # One-line scalar, strip surrounding quotes
+            meta["description"] = value.strip('"\'')
+    # Normalize empty to None
+    if meta["description"] is not None and not meta["description"].strip():
+        meta["description"] = None
+
+    # Parse repo and url for catalog card detection
+    repo_match = re.search(r"^repo:\s*(.+)$", frontmatter, re.MULTILINE)
+    if repo_match:
+        meta["repo"] = repo_match.group(1).strip()
+
+    url_match = re.search(r"^url:\s*(.+)$", frontmatter, re.MULTILINE)
+    if url_match:
+        meta["url"] = url_match.group(1).strip()
 
     return meta, body, body_start_line
 
@@ -389,7 +420,7 @@ def first_prose(body: str, max_lines: int) -> list[str]:
     return prose
 
 
-def extract_key_lines(body: str, max_lines: int = 15, max_chars: int = 600) -> str:
+def extract_key_lines(body: str, max_lines: int = 15, max_chars: int = 600, description: str | None = None) -> str:
     """Build the line a caller reads before deciding whether to open the note.
 
     Headings and bullets used to be the whole of this, which is why the notes
@@ -400,12 +431,19 @@ def extract_key_lines(body: str, max_lines: int = 15, max_chars: int = 600) -> s
     populated against 60% for the hand-written ones -- backwards, because the
     hand-written note is the one whose author already wrote the summary.
 
-    So the summary callout comes first when there is one, since it is the best
-    sentence anyone is going to write about the note, and headings follow it to
-    carry the structure. Prose is the last resort rather than the first, and it
-    exists so that an empty snippet means an empty note and nothing else.
+    The description outranks the summary callout: it is the one sentence the
+    author wrote specifically to be read *instead of* the note, so it is a
+    better first line than any callout, and it is the field a caller sees in
+    search output and in --digest.
+
+    So the description comes first when there is one, the summary callout next,
+    then headings to carry the structure. Prose is the last resort rather than
+    the first, and it exists so that an empty snippet means an empty note and
+    nothing else.
     """
     extracted = []
+    if description:
+        extracted.append(description)
     callouts = dict(iter_callouts(body))
     preferred = [f"{kind}: {callouts[kind]}" for kind in SNIPPET_CALLOUTS if callouts.get(kind)]
     if preferred:
@@ -499,18 +537,29 @@ def resolve_wikilink(
     return candidates[0] if len(candidates) == 1 else None
 
 
-def parse_sections(file_stem: str, body: str, body_start_line: int) -> list[tuple[str, int, str]]:
+def parse_sections(file_stem: str, body: str, body_start_line: int, description: str | None = None) -> list[tuple[str, int, str]]:
     """Split on H2 headings while keeping absolute source locations."""
     lines = body.splitlines()
     heading_positions = [index for index, line in enumerate(lines) if line.startswith("## ")]
     if not heading_positions:
+        # Case (a): body has no ## heading
         text = body.strip()
+        if description and text:
+            text = description + "\n" + text
+        elif description:
+            text = description
         return [(file_stem, body_start_line, text)] if text else []
 
     sections = []
     preamble = "\n".join(lines[: heading_positions[0]]).strip()
     if preamble:
+        # Case (b): body has headings AND a non-empty preamble
+        if description:
+            preamble = description + "\n" + preamble
         sections.append((file_stem, body_start_line, preamble))
+    elif description:
+        # Case (c): body has headings and an EMPTY preamble
+        sections.append((file_stem, body_start_line, description))
 
     for position_index, heading_position in enumerate(heading_positions):
         next_position = (
@@ -690,6 +739,7 @@ def collect_index_data(vault_dir: Path):
         try:
             content = full_path.read_text(encoding="utf-8", errors="ignore")
             meta, body, body_start_line = parse_frontmatter(content)
+            description = meta["description"] or ""
             notes.append(
                 (
                     relative_path,
@@ -700,8 +750,9 @@ def collect_index_data(vault_dir: Path):
                     json.dumps(meta["sentiment_label"]),
                     json.dumps(meta["tags"]),
                     json.dumps(meta["aliases"]),
-                    extract_key_lines(body),
+                    extract_key_lines(body, description=meta["description"]),
                     len(body.split()),
+                    description,
                 )
             )
 
@@ -716,7 +767,7 @@ def collect_index_data(vault_dir: Path):
                 )
 
             for section_ordinal, (heading, start_line, section_text) in enumerate(
-                parse_sections(full_path.stem, body, body_start_line)
+                parse_sections(full_path.stem, body, body_start_line, description=meta["description"])
             ):
                 for chunk_index, chunk_text in enumerate(chunk_section(heading, section_text)):
                     section_id = f"{relative_path}::{section_ordinal}:{chunk_index}"
@@ -756,12 +807,15 @@ def ensure_schema(connection: sqlite3.Connection):
             tags TEXT NOT NULL,
             aliases TEXT NOT NULL DEFAULT '[]',
             summary_snippet TEXT NOT NULL,
-            word_count INTEGER NOT NULL
+            word_count INTEGER NOT NULL,
+            description TEXT NOT NULL DEFAULT ''
         )
         """
     )
     if "aliases" not in table_columns(connection, "notes"):
         connection.execute("ALTER TABLE notes ADD COLUMN aliases TEXT NOT NULL DEFAULT '[]'")
+    if "description" not in table_columns(connection, "notes"):
+        connection.execute("ALTER TABLE notes ADD COLUMN description TEXT NOT NULL DEFAULT ''")
 
     connection.execute(
         """
@@ -1177,9 +1231,20 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         t_scan_start = time.perf_counter()
         collector = collect or collect_index_data
         notes, sections, links, errors = collector(vault_dir)
-        # Third-party collectors predate the aliases column. Keep their compact
-        # nine-field note contract working while metadata collectors provide it.
-        notes = [note if len(note) == 10 else (*note[:7], json.dumps([]), *note[7:]) for note in notes]
+        # Third-party collectors predate the aliases and description columns. Keep their
+        # compact nine-field note contract working while metadata collectors provide them.
+        migrated_notes = []
+        for note in notes:
+            if len(note) == 11:
+                # New format with description, keep as is
+                migrated_notes.append(note)
+            elif len(note) == 10:
+                # Has aliases but no description, add empty description at end
+                migrated_notes.append((*note, ""))
+            else:
+                # Old format without aliases, add both aliases (at position 7) and description (at end)
+                migrated_notes.append((*note[:7], json.dumps([]), *note[7:], ""))
+        notes = migrated_notes
         # Only populate session projection for the working-tree collector. Ref-based
         # collectors like scan_branches should not read the working tree's sessions/.
         if collector is collect_index_data:
@@ -1244,8 +1309,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             cursor.executemany(
                 """
                 INSERT INTO notes
-                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count, description)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(path) DO UPDATE SET
                     filename = excluded.filename,
                     category = excluded.category,
@@ -1255,7 +1320,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     tags = excluded.tags,
                     aliases = excluded.aliases,
                     summary_snippet = excluded.summary_snippet,
-                    word_count = excluded.word_count
+                    word_count = excluded.word_count,
+                    description = excluded.description
                 """,
                 notes,
             )
@@ -1840,7 +1906,7 @@ def query_links(note_reference: str, vault_path: str | None = None, db_path: str
 
 
 def digest_notes(vault_path: str | None = None, db_path: str | None = None, tag: str | None = None):
-    """Print filename, tags, headings, and summary_snippet per note, straight from the index.
+    """Print path, description, tags, headings, and summary_snippet per note, straight from the index.
 
     Zero API cost: every field printed here is already sitting in `notes` and
     `sections` from the last index run. This is the leaf layer from
@@ -1857,7 +1923,7 @@ def digest_notes(vault_path: str | None = None, db_path: str | None = None, tag:
     connection = sqlite3.connect(database_file)
     try:
         cursor = connection.cursor()
-        query = "SELECT path, tags, summary_snippet FROM notes"
+        query = "SELECT path, description, tags, summary_snippet FROM notes"
         params: tuple = ()
         if tag:
             query += " WHERE tags LIKE ?"
@@ -1870,12 +1936,12 @@ def digest_notes(vault_path: str | None = None, db_path: str | None = None, tag:
             headings_by_path.setdefault(path, []).append(heading)
 
         digest = []
-        for path, tags_json, summary_snippet in notes:
+        for path, description, tags_json, summary_snippet in notes:
             tags = ", ".join(json.loads(tags_json)) if tags_json else ""
             headings = " / ".join(headings_by_path.get(path, []))
-            line = f"{path} | tags: {tags} | headings: {headings} | {summary_snippet}"
+            line = f"{path} | description: {description} | tags: {tags} | headings: {headings} | {summary_snippet}"
             print(line)
-            digest.append({"path": path, "tags": tags, "headings": headings, "summary_snippet": summary_snippet})
+            digest.append({"path": path, "description": description, "tags": tags, "headings": headings, "summary_snippet": summary_snippet})
         return digest
     finally:
         connection.close()
@@ -2090,6 +2156,13 @@ def print_stats(vault_path: str | None = None, db_path: str | None = None):
             """
         ).fetchall()
 
+        large_notes = cursor.execute(
+            "SELECT COUNT(*) FROM notes WHERE word_count > ?", (DESCRIPTION_MIN_WORDS,)
+        ).fetchone()[0]
+        with_description = cursor.execute(
+            "SELECT COUNT(*) FROM notes WHERE word_count > ? AND description != ''", (DESCRIPTION_MIN_WORDS,)
+        ).fetchone()[0]
+
         print("\n--- PKM Index Stats ---")
         print(f"Database location: {database_file}")
         print(f"Database size:     {database_file.stat().st_size / (1024 * 1024):.2f} MB")
@@ -2099,6 +2172,7 @@ def print_stats(vault_path: str | None = None, db_path: str | None = None):
         print(f"Title index rows:  {title_count:,}")
         print(f"Vector embeddings: {vector_count:,} ({EMBEDDING_MODEL})")
         print(f"Link graph edges:  {edge_count:,}")
+        print(f"Description:       {with_description}/{large_notes} notes over {DESCRIPTION_MIN_WORDS} words")
         print(f"Hardware provider: {get_embedding_providers()[0] if HAS_FASTEMBED else 'fastembed unavailable'}")
         
         if runs:
