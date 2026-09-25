@@ -24,7 +24,9 @@ class FtsFallbackTest(unittest.TestCase):
             database = vault / ".obsidian" / "pkm_index.db"
             INDEXER.build_index(str(vault), str(database), skip_embeddings=True)
             start = time.perf_counter()
-            results = search_vault.fast_fts_search("fallbackphrase", database, top=5)
+            # expand=True is named rather than inherited: this exercises the
+            # expanding branch on purpose, and the CLI default is False.
+            results = search_vault.fast_fts_search("fallbackphrase", database, top=5, expand=True)
             elapsed = time.perf_counter() - start
             self.assertTrue(results)
             self.assertEqual(results[0]["path"], "alpha.md")
