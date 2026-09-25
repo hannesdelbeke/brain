@@ -11,6 +11,12 @@ that banning it would cost more in contorted code than it saves in latency. The
 list below is the expensive stack only: fastembed, its onnxruntime backend,
 torch, and index_pkm_meta, which pulls them in transitively.
 
+The child passes expand=True explicitly, which is the point rather than an
+artefact. Entity expansion is the branch that could plausibly reach the embedding
+stack, so it is the one worth guarding, and the CLI now defaults expansion off --
+if this relied on fast_fts_search's own default it would silently stop covering
+the expanding branch the day somebody changed it.
+
 This lives apart from test_fts_fallback.py because the assertion only means
 something in a clean interpreter. That module imports index_pkm_meta to build
 its fixture, which pulls the embedding stack into sys.modules before the
@@ -40,7 +46,7 @@ CHILD = """
 import json, sys
 sys.path.insert(0, {skill!r})
 import search_vault
-results = search_vault.fast_fts_search("fallbackphrase", {database!r}, top=5)
+results = search_vault.fast_fts_search("fallbackphrase", {database!r}, top=5, expand=True)
 expensive = [name for name in ("fastembed", "onnxruntime", "torch", "index_pkm_meta")
              if name in sys.modules]
 print(json.dumps({{"count": len(results), "expensive": expensive}}))
