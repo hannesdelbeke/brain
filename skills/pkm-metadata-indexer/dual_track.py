@@ -59,6 +59,13 @@ GRAPH_LIMIT = 30
 # no vocabulary with the query -- actually show up.
 GRAPH_HOP2_RESERVE = 12
 
+# How many notes to seed from when the best-coverage tier walks nowhere. Small on
+# purpose: this is a fallback from an empty graph, not a widening of the normal
+# case, and seeding from twenty weak matches is how a 2-hop walk becomes most of
+# the vault. It buys attempts, not reach -- the coverage floor at the call site is
+# what decides which notes are eligible at all.
+GRAPH_SEED_WIDEN = 12
+
 # Headings printed per note. A note that covered four facets in nine sections is
 # answered by the first two or three; the rest are the same claim again, and they
 # are what turns a 200-token outline into a 900-token one.
@@ -342,6 +349,33 @@ def structural_search(db_path: str | Path, parsed: dict, hops: int = 2,
         facet_paths = [row["path"] for row in ranked]
         graph_seeds = seeds or [row["path"] for row in ranked if row["coverage"] == best][:10]
         graph = graph_neighborhood(connection, graph_seeds, facet_paths, hops)
+        if not graph and seeds is None and ranked:
+            # The best tier is often a dead end, and silently so. A wikilink only
+            # becomes an edge when its target resolves to a note, and the links in a
+            # top-coverage note are frequently to scripts or people -- `search_vault.py`,
+            # `Sarah` -- which resolve to nothing at all. Measured on the real vault:
+            # the query this whole module was built for seeded exactly one 4/5 note
+            # whose three links all resolved to None, so the graph section rendered
+            # empty while a 2/5 note two rows down had a live neighbourhood sitting
+            # right there. Reporting "no neighbourhood" in that case is a lie about
+            # the graph rather than a fact about the query, so the walk gets one more
+            # attempt from a wider seed set. It costs one more CTE, ~3ms, and only in
+            # the case that would otherwise have returned nothing.
+            #
+            # The floor is what keeps that from being worse than silence. Widening to
+            # every match walks from whatever happened to match one facet: the first
+            # version of this fix seeded a 1/5 activity log and answered a query about
+            # stroke and dopamine with three notes about wifi passwords, correctly
+            # labelled and completely useless -- and worse than an empty section,
+            # because an agent reading the outline will go and fetch them. So a
+            # multi-facet query never seeds from a single-facet match. If nothing
+            # covers two facets, staying silent is the honest answer.
+            floor = min(best, 2) if len(parsed["facets"]) > 1 else best
+            widened = [row["path"] for row in ranked
+                       if row["coverage"] >= floor][:GRAPH_SEED_WIDEN]
+            if widened != graph_seeds:
+                graph_seeds = widened
+                graph = graph_neighborhood(connection, graph_seeds, facet_paths, hops)
     finally:
         if owned:
             connection.close()
