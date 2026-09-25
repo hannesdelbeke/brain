@@ -815,6 +815,7 @@ def ensure_schema(connection: sqlite3.Connection):
             session_id TEXT NOT NULL,
             target_path TEXT NOT NULL,
             action TEXT,
+            vault INTEGER,
             PRIMARY KEY (session_id, target_path, action),
             FOREIGN KEY (session_id) REFERENCES sessions_idx(session_id)
         )
@@ -1043,34 +1044,54 @@ def session_frontmatter_rows(vault_dir: Path) -> tuple[list[tuple], list[tuple]]
                     if not target:
                         continue
                     action = re.search(r"(?:^|\n)\s*action:\s*([^\n#]+)", item)
+                    vault = re.search(r"(?:^|\n)\s*vault:\s*([^\n#]+)", item)
                     target_path = target.group(1).strip().strip('"\'')
                     action_value = action.group(1).strip().strip('"\'') if action else None
-                    touch_rows.append((session_id, target_path, action_value))
+                    vault_value = None
+                    if vault:
+                        vault_str = vault.group(1).strip().strip('"\'').lower()
+                        if vault_str in ("true", "yes", "1"):
+                            vault_value = 1
+                        elif vault_str in ("false", "no", "0"):
+                            vault_value = 0
+                    touch_rows.append((session_id, target_path, action_value, vault_value))
             except OSError:
                 continue
     return session_rows, touch_rows
 
 
 def query_sessions(query: str, db_path: str | None = None, vault_path: str | None = None,
-                   limit: int = 10) -> list[dict]:
+                   limit: int = 10, touched: str = "any") -> list[dict]:
     """Return rollups by title or touched path using only SQLite."""
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
     if not database_file.exists():
         return []
     needle = f"%{query}%"
+    # When filtering by touched type, restrict to only touch matches (not title-only).
+    # This is correct because title-only matches have no touch row, so filtering by
+    # vault flag makes no sense for them.
+    if touched == "notes":
+        where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 1"
+        params = (needle, max(1, limit))
+    elif touched == "code":
+        where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 0"
+        params = (needle, max(1, limit))
+    else:
+        where_clause = "WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?"
+        params = (needle, needle, max(1, limit))
     connection = sqlite3.connect(database_file, timeout=1.0)
     try:
         rows = connection.execute(
-            """
+            f"""
             SELECT DISTINCT sessions_idx.session_id, sessions_idx.title, sessions_idx.created,
                    sessions_idx.trace_path, sessions_idx.cost_usd, sessions_idx.repo, sessions_idx.note_path
             FROM sessions_idx LEFT JOIN session_touches
               ON session_touches.session_id = sessions_idx.session_id
-            WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?
+            {where_clause}
             ORDER BY sessions_idx.created DESC, sessions_idx.title
             LIMIT ?
-            """, (needle, needle, max(1, limit))
+            """, params
         ).fetchall()
         keys = ("session_id", "title", "created", "trace_path", "cost_usd", "repo", "path")
         return [dict(zip(keys, row)) for row in rows]
@@ -1093,11 +1114,17 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         existing_by_id, vectors_by_hash = load_vector_cache(connection)
 
         t_scan_start = time.perf_counter()
-        notes, sections, links, errors = (collect or collect_index_data)(vault_dir)
+        collector = collect or collect_index_data
+        notes, sections, links, errors = collector(vault_dir)
         # Third-party collectors predate the aliases column. Keep their compact
         # nine-field note contract working while metadata collectors provide it.
         notes = [note if len(note) == 10 else (*note[:7], json.dumps([]), *note[7:]) for note in notes]
-        session_rows, touch_rows = session_frontmatter_rows(vault_dir)
+        # Only populate session projection for the working-tree collector. Ref-based
+        # collectors like scan_branches should not read the working tree's sessions/.
+        if collector is collect_index_data:
+            session_rows, touch_rows = session_frontmatter_rows(vault_dir)
+        else:
+            session_rows, touch_rows = [], []
         scan_seconds = time.perf_counter() - t_scan_start
 
         t_cache_start = time.perf_counter()
@@ -1228,7 +1255,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                 """, session_rows,
             )
             cursor.executemany(
-                "INSERT OR IGNORE INTO session_touches(session_id, target_path, action) VALUES (?, ?, ?)",
+                "INSERT OR IGNORE INTO session_touches(session_id, target_path, action, vault) VALUES (?, ?, ?, ?)",
                 touch_rows,
             )
 
