@@ -1,0 +1,82 @@
+[
+ [
+  "graph database ranking semantic search",
+  "holdout"
+ ],
+ [
+  "retrieval performance cost index latency",
+  "holdout"
+ ],
+ [
+  "embedding model local inference speed",
+  "holdout"
+ ],
+ [
+  "cross-encoder rerank precision recall",
+  "holdout"
+ ],
+ [
+  "agent token budget context memory",
+  "holdout"
+ ],
+ [
+  "facet coverage intersection multi-concept",
+  "holdout"
+ ],
+ [
+  "link graph walk neighborhood hop",
+  "holdout"
+ ],
+ [
+  "cache prompt api Claude cost",
+  "holdout"
+ ],
+ [
+  "reciprocal rank fusion voting weight",
+  "holdout"
+ ],
+ [
+  "transcript session agent parse extract",
+  "holdout"
+ ],
+ [
+  "sqlite fts5 bm25 tokenizer performance",
+  "holdout"
+ ],
+ [
+  "vector database cosine similarity dimensionality",
+  "holdout"
+ ],
+ [
+  "concurrent parallel search track fusion",
+  "holdout"
+ ],
+ [
+  "outline heading section line range",
+  "holdout"
+ ],
+ [
+  "eval judgement precision rank metric",
+  "holdout"
+ ],
+ [
+  "daemon port health endpoint reload",
+  "holdout"
+ ],
+ [
+  "duplicate detection similarity dedup hash",
+  "holdout"
+ ],
+ [
+  "git commit hook pre-commit staged",
+  "holdout"
+ ],
+ [
+  "python venv interpreter dependency numpy",
+  "holdout"
+ ],
+ [
+  "unittest pytest test discovery fixture",
+  "holdout"
+ ]
+]
