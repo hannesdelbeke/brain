@@ -29,7 +29,7 @@ from urllib.parse import urlencode
 
 import eval_judge
 
-DAEMON = "http://127.0.0.1:44771"
+DEFAULT_DAEMON = "http://127.0.0.1:44771"
 JUDGE_CACHE = Path.home() / ".pkm" / "bench-judgements.json"
 JUDGE_MODEL = os.environ.get("MODEL", "gemini-2.5-flash")
 
@@ -69,7 +69,7 @@ def validate_origin(origin: str) -> None:
         )
 
 
-def search(vault: str, question: str, limit: int, origin: str, arm_params: dict[str, str]) -> tuple[list[dict], float]:
+def search(vault: str, question: str, limit: int, origin: str, arm_params: dict[str, str], daemon: str) -> tuple[list[dict], float]:
     """Issue one search query and return (results, wall_ms).
 
     wall_ms is the caller's full round-trip, which is the number a user feels.
@@ -83,7 +83,7 @@ def search(vault: str, question: str, limit: int, origin: str, arm_params: dict[
     params = {"vault": vault, "q": question, "limit": limit, "origin": origin}
     params.update(arm_params)
 
-    url = f"{DAEMON}/search?" + urlencode(params)
+    url = f"{daemon}/search?" + urlencode(params)
     start = time.perf_counter()
     with urllib.request.urlopen(url, timeout=120) as response:
         data = json.load(response)
@@ -125,14 +125,14 @@ def judged_content(hit: dict) -> str:
 
 
 def measure_latency(vault: str, questions: list[tuple[str, str]], limit: int, origin: str,
-                    arm_params: dict[str, str], reps: int) -> dict[str, float]:
+                    arm_params: dict[str, str], reps: int, daemon: str) -> dict[str, float]:
     """Run each question `reps` times and return p50 and p95 wall-clock, with the
     sample count so a reader can tell a stable number from a noisy one."""
     wall_times = []
 
     for question, _group in questions:
         for _ in range(reps):
-            _results, wall_ms = search(vault, question, limit, origin, arm_params)
+            _results, wall_ms = search(vault, question, limit, origin, arm_params, daemon)
             wall_times.append(wall_ms)
 
     return {
@@ -143,7 +143,7 @@ def measure_latency(vault: str, questions: list[tuple[str, str]], limit: int, or
 
 
 def judge_precision(vault: str, questions: list[tuple[str, str]], limit: int, origin: str,
-                   arm_params: dict[str, str], cache: dict, failures: dict[str, int]) -> list[dict]:
+                   arm_params: dict[str, str], cache: dict, failures: dict[str, int], daemon: str) -> list[dict]:
     """Run each question once, judge all results, and return per-question metrics.
 
     Mutates `cache` and `failures` via eval_judge.judge_all. Returns a list of dicts
@@ -152,7 +152,7 @@ def judge_precision(vault: str, questions: list[tuple[str, str]], limit: int, or
     results = []
     unjudgeable = 0
     for question, group in questions:
-        hits, _wall_ms = search(vault, question, limit, origin, arm_params)
+        hits, _wall_ms = search(vault, question, limit, origin, arm_params, daemon)
         paths = [hit["path"] for hit in hits]
 
         # Build prompts for any unjudged pairs
@@ -278,9 +278,13 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=20, help="Number of results per query (default: 20)")
     parser.add_argument("--reps", type=int, default=3, help="Repetitions per query for latency (default: 3)")
     parser.add_argument("--origin", default="eval-bench", help="Origin label for telemetry (must start with 'eval-', default: eval-bench)")
+    parser.add_argument("--daemon", help="Search daemon base URL (default: PKM_DAEMON_URL env or http://127.0.0.1:44771)")
     parser.add_argument("--no-judge", action="store_true", help="Skip precision phase (latency only)")
 
     args = parser.parse_args()
+
+    # Resolve daemon URL: --daemon flag > PKM_DAEMON_URL env > default
+    daemon = args.daemon or os.environ.get("PKM_DAEMON_URL") or DEFAULT_DAEMON
 
     # Validate origin prefix
     validate_origin(args.origin)
@@ -306,8 +310,8 @@ def main() -> None:
 
     # LATENCY PHASE
     print("\nMeasuring latency...", flush=True)
-    arm_a_latency = measure_latency(args.vault, questions, args.limit, args.origin, arm_a_params, args.reps)
-    arm_b_latency = measure_latency(args.vault, questions, args.limit, args.origin, arm_b_params, args.reps)
+    arm_a_latency = measure_latency(args.vault, questions, args.limit, args.origin, arm_a_params, args.reps, daemon)
+    arm_b_latency = measure_latency(args.vault, questions, args.limit, args.origin, arm_b_params, args.reps, daemon)
 
     report_latency("A", arm_a_latency, "B", arm_b_latency)
 
@@ -317,8 +321,8 @@ def main() -> None:
         cache = eval_judge.load_cache(JUDGE_CACHE)
         failures = defaultdict(int)
 
-        arm_a_results = judge_precision(args.vault, questions, args.limit, args.origin, arm_a_params, cache, failures)
-        arm_b_results = judge_precision(args.vault, questions, args.limit, args.origin, arm_b_params, cache, failures)
+        arm_a_results = judge_precision(args.vault, questions, args.limit, args.origin, arm_a_params, cache, failures, daemon)
+        arm_b_results = judge_precision(args.vault, questions, args.limit, args.origin, arm_b_params, cache, failures, daemon)
 
         eval_judge.save_cache(JUDGE_CACHE, cache)
 
