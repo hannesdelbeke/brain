@@ -383,10 +383,169 @@ class FusionTest(unittest.TestCase):
         fused = dual_track.reciprocal_rank_fusion(["only.md"], [])
         self.assertAlmostEqual(fused["only.md"], 1.0 / (dual_track.RRF_K + 1))
 
+    def test_a_weighted_track_contributes_less(self):
+        full = dual_track.reciprocal_rank_fusion(["a.md"], ["b.md"])
+        self.assertAlmostEqual(full["a.md"], full["b.md"])
+        half = dual_track.reciprocal_rank_fusion(["a.md"], ["b.md"], weights=[1.0, 0.5])
+        self.assertAlmostEqual(half["b.md"], half["a.md"] / 2)
+
+    def test_default_weights_are_still_one_each(self):
+        # The signature grew a parameter; callers that do not pass it must be
+        # unaffected, because searchd.rank fuses with this too.
+        self.assertAlmostEqual(
+            dual_track.reciprocal_rank_fusion(["a.md"], ["a.md"])["a.md"],
+            2.0 / (dual_track.RRF_K + 1))
+
     def test_stratify_falls_back_when_one_hop_is_all_there_is(self):
         graph = [{"hop": 1, "path": f"{index}.md"} for index in range(6)]
         self.assertEqual(len(dual_track.stratify_hops(graph, 5)), 5)
         self.assertEqual(dual_track.stratify_hops(graph, 0), [])
+
+
+class CorrelatedEvidenceTest(unittest.TestCase):
+    """A graph neighbour must not outrank a better-covered note by voting twice.
+
+    The graph is seeded from the facet winners, so a weak facet match that also
+    sits next to one is agreeing with itself. Before the fix that double vote beat
+    the top-coverage note outright and headed the outline with it.
+    """
+
+    def fixture(self, temp):
+        notes = {
+            # Three facets, and no links at all -- one vote, and it must still win.
+            "best.md": "## A\nstroke\n\n## B\nfatigue\n\n## C\ndopamine\n",
+            # One facet, but adjacent to the seed, so it used to collect two.
+            "weak.md": "## A\nstroke only here\n",
+            "hub.md": "## H\nstroke\n",
+        }
+        database = build_vault(Path(temp) / "vault", notes)
+        # weak.md is reachable from the seed, which is what gives it a graph vote.
+        write_edges(database, [("best.md", "weak.md"), ("weak.md", "hub.md")])
+        return database
+
+    def test_top_coverage_note_heads_the_fused_answer(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.fixture(temp)
+            payload = dual_track.dual_track_search(
+                database, "stroke fatigue dopamine", top=5)
+            coverage = {row["path"]: row["coverage"] for row in payload["structural"]}
+            self.assertEqual(coverage["best.md"], 3)
+            self.assertEqual(payload["fused"][0]["path"], "best.md",
+                             f"a weaker note outranked 3/3 coverage: {payload['fused']}")
+
+    def test_a_facet_match_gets_no_second_vote_from_the_graph(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.fixture(temp)
+            payload = dual_track.dual_track_search(
+                database, "stroke fatigue dopamine", top=10)
+            facets = {row["path"] for row in payload["structural"]}
+            fused = {row["path"]: row["score"] for row in payload["fused"]}
+            for row in payload["graph"]:
+                if row["path"] in facets and row["path"] in fused:
+                    # Its score must be explicable by its facet rank alone.
+                    rank = [r["path"] for r in payload["structural"]].index(row["path"])
+                    self.assertAlmostEqual(
+                        fused[row["path"]], 1.0 / (dual_track.RRF_K + rank + 1),
+                        msg=f"{row['path']} was counted by both tracks")
+
+    def test_the_graph_still_carries_notes_the_facets_missed(self):
+        # Narrowing what the graph may vote on must not silence it: a note with no
+        # facet match at all is the only thing the walk is for.
+        with tempfile.TemporaryDirectory() as temp:
+            database = build_vault(Path(temp) / "vault", {
+                "seed.md": "## A\nstroke\n\n## B\nfatigue\n",
+                "neighbour.md": "## N\nnothing in common with the query\n",
+            })
+            write_edges(database, [("seed.md", "neighbour.md")])
+            payload = dual_track.dual_track_search(database, "stroke fatigue", top=5)
+            self.assertIn("neighbour.md", {row["path"] for row in payload["fused"]})
+
+
+class OutlineThriftTest(unittest.TestCase):
+    """Two things the outline used to spend tokens on and get nothing for."""
+
+    def test_a_heading_that_repeats_the_note_name_is_not_printed(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = build_vault(Path(temp) / "vault", {
+                # The atomic-note shape: the only heading is the title.
+                "stroke recovery.md": "## stroke recovery\nfatigue and dopamine\n",
+            })
+            payload = dual_track.dual_track_search(
+                database, "stroke recovery fatigue", top=5)
+            outline = dual_track.render_outline(payload)
+            self.assertIn("stroke recovery.md", outline)
+            self.assertNotIn("└─ L1: stroke recovery", outline)
+
+    def test_a_heading_that_differs_is_still_printed(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = build_vault(Path(temp) / "vault", {
+                "notes.md": "## Fatigue milestones\nstroke and fatigue\n",
+            })
+            outline = dual_track.render_outline(
+                dual_track.dual_track_search(database, "stroke fatigue", top=5))
+            self.assertIn("Fatigue milestones", outline)
+
+    def test_neighbours_of_one_seed_name_it_once(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = build_vault(Path(temp) / "vault", {
+                "seed.md": "## A\nstroke\n\n## B\nfatigue\n",
+                "one.md": "## N\nunrelated\n",
+                "two.md": "## N\nunrelated\n",
+                "three.md": "## N\nunrelated\n",
+            })
+            write_edges(database, [("seed.md", "one.md"), ("seed.md", "two.md"),
+                                   ("seed.md", "three.md")])
+            outline = dual_track.render_outline(
+                dual_track.dual_track_search(database, "stroke fatigue", top=5))
+            self.assertEqual(outline.count("seed ("), 1,
+                             f"the seed was named more than once:\n{outline}")
+            for name in ("one.md", "two.md", "three.md"):
+                self.assertIn(name, outline)
+
+
+class SemanticGateTest(unittest.TestCase):
+    def semantic(self, _query):
+        self.called = True
+        return [{"path": "semantic.md", "heading": "S", "line": 1,
+                 "score": 0.9, "text": "a body"}]
+
+    def setUp(self):
+        self.called = False
+
+    def build(self, temp):
+        return build_vault(Path(temp) / "vault", {
+            "facets.md": "## F\nstroke and fatigue and dopamine\n",
+            "semantic.md": "## S\nunrelated words entirely\n",
+        })
+
+    def test_a_multi_facet_query_does_not_pay_for_the_embedding(self):
+        with tempfile.TemporaryDirectory() as temp:
+            payload = dual_track.dual_track_search(
+                self.build(temp), "stroke fatigue dopamine",
+                semantic=self.semantic, top=5)
+            self.assertFalse(self.called, "the gated track was still called")
+            self.assertTrue(payload["semantic_skipped"])
+            self.assertEqual(payload["semantic"], [])
+            # And the largest block of the outline goes with it.
+            self.assertNotIn("Semantic Best Match", dual_track.render_outline(payload))
+
+    def test_a_single_facet_query_still_runs_it(self):
+        with tempfile.TemporaryDirectory() as temp:
+            payload = dual_track.dual_track_search(
+                self.build(temp), "stroke", semantic=self.semantic, top=5)
+            self.assertTrue(self.called, "a one-facet query has no coverage signal "
+                                        "to rank on and needs the embedding")
+            self.assertFalse(payload["semantic_skipped"])
+
+    def test_the_gate_is_at_the_documented_facet_count(self):
+        self.assertEqual(dual_track.SEMANTIC_GATE_FACETS, 2)
+
+    def test_no_semantic_track_is_not_reported_as_gated(self):
+        with tempfile.TemporaryDirectory() as temp:
+            payload = dual_track.dual_track_search(
+                self.build(temp), "stroke fatigue dopamine", top=5)
+            self.assertFalse(payload["semantic_skipped"],
+                             "nothing was skipped; there was nothing to skip")
 
 
 class EndToEndTest(unittest.TestCase):
@@ -419,15 +578,19 @@ class EndToEndTest(unittest.TestCase):
                 "only-semantic.md": "## S\nnothing lexical in common\n",
                 "facets.md": "## F\nstroke and fatigue\n",
             })
+            # gate_semantic=False because "stroke fatigue" is two facets and would
+            # otherwise be gated; what this test is about is that an injected track
+            # reaches the fusion at all.
             payload = dual_track.dual_track_search(
                 database, "stroke fatigue",
                 semantic=lambda query: [{"path": "only-semantic.md", "heading": "S",
                                          "line": 1, "score": 0.9, "text": "a body"}],
-                top=5)
+                top=5, gate_semantic=False)
             paths = {row["path"] for row in payload["fused"]}
             self.assertIn("only-semantic.md", paths)
             self.assertIn("facets.md", paths)
             self.assertIn("Semantic Best Match", dual_track.render_outline(payload))
+            self.assertFalse(payload["semantic_skipped"])
 
     def test_a_failing_semantic_track_does_not_lose_the_answer(self):
         with tempfile.TemporaryDirectory() as temp:

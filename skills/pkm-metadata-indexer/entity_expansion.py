@@ -46,6 +46,73 @@ def _load_notes(connection: sqlite3.Connection) -> list[sqlite3.Row]:
     return connection.execute(f"SELECT path, filename, tags, {alias_column} FROM notes").fetchall()
 
 
+# Prepared notes, keyed by database path, holding the file stamp they were built
+# from. One entry per corpus, replaced rather than accumulated.
+_PREPARED: dict[str, tuple[tuple[int, int], list[dict]]] = {}
+
+
+def _prepare(rows: list[sqlite3.Row]) -> list[dict]:
+    """Do the JSON and regex work once per note instead of once per note per facet.
+
+    Every row of `notes` was being decoded from JSON and tokenised on each call,
+    and the tag tokens were rebuilt inside the per-facet loop -- so a five-facet
+    query tokenised every tag in the vault five times. None of it varies with the
+    query, which makes it exactly the work a cache is for.
+    """
+    prepared = []
+    for row in rows:
+        stem = Path(row["filename"]).stem
+        aliases = _values(row["aliases"])
+        tags = _values(row["tags"])
+        name_tokens = _tokens(stem)
+        for alias in aliases:
+            name_tokens |= _tokens(alias)
+        candidates = [stem, *[part for part in Path(row["path"]).parts if part],
+                      *tags, *aliases]
+        prepared.append({
+            "path": row["path"],
+            "stem": stem,
+            "aliases": aliases,
+            "tags": tags,
+            "name_tokens": frozenset(name_tokens),
+            "tag_tokens": [(tag, frozenset(_tokens(tag))) for tag in tags],
+            "candidates": candidates,
+            "candidate_tokens": frozenset(
+                token for candidate in candidates for token in _tokens(candidate)),
+        })
+    return prepared
+
+
+def prepared_notes(db_path: str | Path) -> list[dict]:
+    """`notes`, prepared and cached until the database file changes.
+
+    Keyed on the index's mtime and size rather than a version counter, because a
+    reindex rewrites the file and nothing else does: the daemon holds this across
+    thousands of queries and must not answer from a stale corpus after one. Two
+    threads racing here both build the same value and one assignment wins, which
+    costs a duplicated scan and never a wrong answer.
+    """
+    database = Path(db_path)
+    try:
+        stat = database.stat()
+    except OSError:
+        return []
+    stamp = (stat.st_mtime_ns, stat.st_size)
+    cached = _PREPARED.get(str(database))
+    if cached is not None and cached[0] == stamp:
+        return cached[1]
+    connection = _open(database)
+    if connection is None:
+        return []
+    try:
+        rows = _load_notes(connection)
+    finally:
+        connection.close()
+    prepared = _prepare(rows)
+    _PREPARED[str(database)] = (stamp, prepared)
+    return prepared
+
+
 def expand_query(query: str, db_path: str | Path, max_terms: int = 24) -> list[str]:
     """Return ``query`` plus names connected to entities it identifies.
 
@@ -59,39 +126,33 @@ def expand_query(query: str, db_path: str | Path, max_terms: int = 24) -> list[s
     if not tokens:
         return terms
     try:
-        connection = _open(db_path)
-        if connection is None:
-            return terms
-        try:
-            rows = _load_notes(connection)
-            matched_paths = set()
-            for row in rows:
-                filename = Path(row["filename"]).stem
-                path_parts = [part for part in Path(row["path"]).parts if part]
-                candidates = [filename, *path_parts, *_values(row["tags"]), *_values(row["aliases"])]
-                candidate_tokens = {
-                    token for candidate in candidates for token in _tokens(candidate)
-                }
-                if tokens & candidate_tokens:
-                    matched_paths.add(row["path"])
-                    for candidate in candidates:
-                        _add(terms, candidate)
-            if matched_paths:
+        rows = prepared_notes(db_path)
+        matched_paths = set()
+        for row in rows:
+            if tokens & row["candidate_tokens"]:
+                matched_paths.add(row["path"])
+                for candidate in row["candidates"]:
+                    _add(terms, candidate)
+        if matched_paths:
+            connection = _open(db_path)
+            if connection is None:
+                return terms[:max_terms]
+            try:
                 placeholders = ",".join("?" for _ in matched_paths)
                 edges = connection.execute(
                     f"SELECT raw_target, resolved_target_path FROM edges WHERE source_path IN ({placeholders})",
                     tuple(matched_paths),
                 ).fetchall()
-                by_path = {row["path"]: row for row in rows}
-                for edge in edges:
-                    _add(terms, edge["raw_target"])
-                    target = by_path.get(edge["resolved_target_path"])
-                    if target:
-                        _add(terms, Path(target["filename"]).stem)
-                        for alias in _values(target["aliases"]):
-                            _add(terms, alias)
-        finally:
-            connection.close()
+            finally:
+                connection.close()
+            by_path = {row["path"]: row for row in rows}
+            for edge in edges:
+                _add(terms, edge["raw_target"])
+                target = by_path.get(edge["resolved_target_path"])
+                if target:
+                    _add(terms, target["stem"])
+                    for alias in target["aliases"]:
+                        _add(terms, alias)
     except sqlite3.Error:
         return terms
     return terms[:max_terms]
@@ -124,32 +185,21 @@ def expand_facets(facets: list[str], db_path: str | Path,
     if not wanted:
         return found
     try:
-        connection = _open(db_path)
-        if connection is None:
-            return found
-        try:
-            rows = _load_notes(connection)
-        finally:
-            connection.close()
+        rows = prepared_notes(db_path)
     except sqlite3.Error:
         return found
 
     for row in rows:
-        aliases = _values(row["aliases"])
-        tags = _values(row["tags"])
-        name_tokens = _tokens(Path(row["filename"]).stem)
-        for alias in aliases:
-            name_tokens |= _tokens(alias)
         for facet, tokens in wanted.items():
             bucket = found[facet]
             if len(bucket) >= per_facet_limit:
                 continue
-            if tokens & name_tokens:
-                for alias in aliases:
+            if tokens & row["name_tokens"]:
+                for alias in row["aliases"]:
                     if len(bucket) < per_facet_limit:
                         _add(bucket, alias)
-            for tag in tags:
-                if len(bucket) < per_facet_limit and tokens & _tokens(tag):
+            for tag, tag_tokens in row["tag_tokens"]:
+                if len(bucket) < per_facet_limit and tokens & tag_tokens:
                     _add(bucket, tag)
     for facet in found:
         lowered = facet.casefold()

@@ -543,6 +543,40 @@ class WatcherTest(unittest.TestCase):
         watcher.join(10)
 
 
+class OutlineRouteTest(unittest.TestCase):
+    """The route's own job: honour `semantic=1`, gate it otherwise.
+
+    The gate is a judgement made on 12 measured queries rather than a judged
+    relevance eval, so the override is the way to check it. A test is what keeps
+    that override wired.
+    """
+
+    def setUp(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [vault.close() for vault in VAULTS])
+        self.vault = build_vault(
+            Path(temp_dir.name) / "outline", "outline",
+            {"patterns.md": "## Fatigue\npost stroke fatigue\n\n## Core\ndopamine\n"})
+        previous, SEARCHD.STATE = SEARCHD.STATE, SEARCHD.State([self.vault])
+        self.addCleanup(setattr, SEARCHD, "STATE", previous)
+
+    def test_a_multi_facet_outline_skips_the_semantic_track(self):
+        result = SEARCHD.do_outline([self.vault], "stroke fatigue dopamine", 5)
+        self.assertTrue(result["semantic_skipped"]["outline"])
+        self.assertNotIn("Semantic Best Match", result["outlines"]["outline"])
+
+    def test_semantic_true_forces_it_back_on(self):
+        result = SEARCHD.do_outline([self.vault], "stroke fatigue dopamine", 5,
+                                    semantic=True)
+        self.assertFalse(result["semantic_skipped"]["outline"])
+
+    def test_the_outline_still_answers_when_gated(self):
+        result = SEARCHD.do_outline([self.vault], "stroke fatigue dopamine", 5)
+        self.assertIn("patterns.md", result["outlines"]["outline"])
+        self.assertTrue(result["results"]["outline"])
+
+
 class StaleIndexTest(unittest.TestCase):
     """A search over a stale index looks exactly like one over a fresh index.
 

@@ -495,6 +495,8 @@ def outline_search(args, direct: bool, vault: str | None):
     params = {"q": args.query, "limit": args.top, "hops": args.hops}
     if facets:
         params["facets"] = ",".join(facets)
+    if args.semantic:
+        params["semantic"] = "1"
     payload = None if direct else daemon_get(args.daemon, "outline", params, vault,
                                              tolerate_missing_route=True)
     if payload is not None:
@@ -518,6 +520,7 @@ def outline_search(args, direct: bool, vault: str | None):
         database, args.query,
         semantic=lambda query: fast_fts_search(query, database, args.top, args.expand),
         hops=args.hops, top=args.top, facets=facets,
+        gate_semantic=not args.semantic,
     )
     print(f"[PKM Search: daemon offline | dual-track outline answered in "
           f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
@@ -560,6 +563,11 @@ def main():
                              "verbatim, stop list and tokenizer skipped")
     parser.add_argument("--hops", type=int, default=2, choices=(1, 2),
                         help="How far to walk the link graph from the facet winners (default 2)")
+    parser.add_argument("--semantic", action="store_true",
+                        help="Force the semantic track on for an --outline query that "
+                             "would otherwise skip it. Off by default above two facets, "
+                             "where it was measured to add about 140ms and rank worse "
+                             "than the facet counts on their own")
     parser.add_argument("--test-healing", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
 

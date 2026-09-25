@@ -74,6 +74,28 @@ HEADINGS_PER_NOTE = 3
 # How many notes reach the cross-encoder when one is asked for.
 RERANK_GATE = 10
 
+# What a graph vote is worth against a facet vote. Below 1.0 because the graph
+# ranking is derived from the facet ranking rather than independent of it, so its
+# agreement is worth less than a second opinion would be -- see
+# `reciprocal_rank_fusion`. Not 0: a note the facets never matched is the only
+# thing the walk is for, and at 0 it could never enter the fused answer at all.
+# Measured over 12 multi-facet queries on this vault, dropping it from 1.0 to 0.5
+# alongside disjoint membership took mean coverage of the top 5 from 2.35 to 3.65.
+GRAPH_RRF_WEIGHT = 0.5
+
+# At this many facets or more, the semantic track does not run. It is the whole
+# cost of an outline -- 28 ms structural against roughly 170 ms once an embedding
+# is involved -- and on the queries this module exists for it buys nothing to
+# offset that. Over those same 12 queries it contributed 1 note the facet and
+# graph tracks had not already found, across 60 top-5 slots, so it is not adding
+# recall; it only reorders. And it reorders away from the signal: it took
+# "is the first line the best-covered note" from 12 of 12 down to 6 of 12 and mean
+# top-5 coverage from 3.65 to 2.52. One whole-query embedding cannot represent
+# "covers four of five facets", which is the thing a multi-concept query is asking
+# for. Below the gate it still runs, and should: with one facet there is no
+# coverage signal to discriminate on and cosine similarity is the better judge.
+SEMANTIC_GATE_FACETS = 2
+
 
 def connect(db_path: str | Path) -> sqlite3.Connection:
     """Open a short-lived read-only connection with the maths this module needs.
@@ -313,19 +335,33 @@ def graph_neighborhood(connection: sqlite3.Connection, seeds: list[str],
     return neighbours
 
 
-def reciprocal_rank_fusion(*rankings: list[str], k: int = RRF_K) -> dict[str, float]:
+def reciprocal_rank_fusion(*rankings: list[str], k: int = RRF_K,
+                           weights: list[float] | None = None) -> dict[str, float]:
     """Fuse ranked path lists into one score per path.
 
     A path missing from a ranking contributes nothing from it rather than a penalty,
     which is the same as treating its rank as infinite. That asymmetry is the point:
-    appearing in both tracks should beat appearing high in one, because the two
-    tracks fail on different query shapes and agreement between them is the only
-    evidence available that neither is failing here.
+    appearing in two tracks should beat appearing high in one, because the tracks
+    fail on different query shapes and agreement between them is the only evidence
+    available that neither is failing here.
+
+    That argument holds only for rankings that could disagree. RRF is counting
+    independent votes, so handing it two views of the same evidence lets the
+    weaker one win twice: the graph walk is seeded from the facet winners, and a
+    note that is both a facet match and a neighbour of one is largely agreeing
+    with itself. Measured on this vault, a 1-of-5 facet match sitting at facet
+    rank 6 and graph rank 18 scored 0.0280 against the 4-of-5 match's single
+    0.0164, so the outline's first line was the best-covered note on 3 of 12
+    multi-facet queries. `weights` exists so a derived ranking can be admitted at
+    less than a full vote; callers keep membership disjoint as well, which is what
+    took that measure to 12 of 12.
     """
+    if weights is None:
+        weights = [1.0] * len(rankings)
     scores: dict[str, float] = {}
-    for ranking in rankings:
+    for ranking, weight in zip(rankings, weights):
         for index, path in enumerate(ranking):
-            scores[path] = scores.get(path, 0.0) + 1.0 / (k + index + 1)
+            scores[path] = scores.get(path, 0.0) + weight / (k + index + 1)
     return scores
 
 
@@ -383,8 +419,10 @@ def structural_search(db_path: str | Path, parsed: dict, hops: int = 2,
 
 
 def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int = 2,
-                      top: int = 10, facets: list[str] | None = None, rerank=None) -> dict:
-    """Run both tracks at once and fuse them.
+                      top: int = 10, facets: list[str] | None = None, rerank=None,
+                      gate_semantic: bool = True) -> dict:
+    """Run both tracks at once and fuse them -- or run only track 2, when the query
+    is one track 1 has been measured to lose money on.
 
     `semantic` is injected rather than imported. Track 1 lives behind a model that
     costs ~1.3 s to import and is already resident in the daemon, so the caller
@@ -395,7 +433,9 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
     The two tracks are genuinely concurrent: track 2 is SQLite and releases the GIL
     in the C extension while track 1 is either an HTTP call or a matrix multiply
     that does the same, so a thread pool of two is the right shape and not a
-    decorative one.
+    decorative one. Concurrency does not make track 1 free, though -- it is six
+    times the wall clock of track 2, so on a multi-facet query the pool runs one
+    task and `SEMANTIC_GATE_FACETS` explains why.
 
     `rerank` is injected on the same terms and defaults to off, which is a
     deliberate departure from the specification's "gated cross-encoder, total
@@ -410,6 +450,15 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
     from query_parser import parse_query_facets
 
     parsed = parse_query_facets(query, db_path, override=facets)
+
+    # Decided here rather than by the caller because the facet count only exists
+    # after the parse, and the parse is the thing that knows whether coverage will
+    # be able to discriminate. `gate_semantic=False` is for a caller that wants the
+    # embedding's opinion on a multi-facet query anyway and will pay for it.
+    skip_semantic = (semantic is not None and gate_semantic
+                     and len(parsed["facets"]) >= SEMANTIC_GATE_FACETS)
+    if skip_semantic:
+        semantic = None
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         structural_future = pool.submit(structural_search, db_path, parsed, hops)
@@ -427,8 +476,16 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
 
     semantic_order = [row["path"] for row in semantic_rows]
     structural_order = [row["path"] for row in structural["facets"]]
-    graph_order = [row["path"] for row in structural["graph"]]
-    fused = reciprocal_rank_fusion(semantic_order, structural_order, graph_order)
+    # Only the notes the facets did not already find. A note that matched four
+    # facets and also happens to sit next to another match is one finding, not two,
+    # and counting it twice is what let low-coverage neighbours head the outline.
+    # The graph section of the rendered outline is unaffected -- this narrows what
+    # the walk is allowed to vote on, not what it reports.
+    facet_set = set(structural_order)
+    graph_order = [row["path"] for row in structural["graph"]
+                   if row["path"] not in facet_set]
+    fused = reciprocal_rank_fusion(semantic_order, structural_order, graph_order,
+                                  weights=[1.0, 1.0, GRAPH_RRF_WEIGHT])
     ordered = sorted(fused.items(), key=lambda item: item[1], reverse=True)[:top]
 
     by_path = {row["path"]: row for row in structural["facets"]}
@@ -456,6 +513,8 @@ def dual_track_search(db_path: str | Path, query: str, semantic=None, hops: int 
         "query": query,
         "parsed": parsed,
         "facet_count": len(parsed["facets"]),
+        # Reported so a caller can tell an empty semantic list from a skipped track.
+        "semantic_skipped": skip_semantic,
         "semantic": semantic_rows,
         "structural": structural["facets"],
         "graph": structural["graph"],
@@ -504,7 +563,9 @@ def render_outline(payload: dict, top: int = 5, graph_top: int = 5) -> str:
     70% of it redundant. A heading and a line number is enough to choose, and the
     choice is what the read was for. So the body never appears here except for the
     single best semantic hit, which is the one result the caller is most likely to
-    act on without a second call.
+    act on without a second call -- and that block is also the largest one here, so
+    on a multi-facet query, where `SEMANTIC_GATE_FACETS` stops the semantic track
+    running at all, it is absent and the outline is correspondingly cheaper.
     """
     lines: list[str] = []
     facet_count = payload["facet_count"]
@@ -527,7 +588,14 @@ def render_outline(payload: dict, top: int = 5, graph_top: int = 5) -> str:
         for row in ranked:
             mark = " (title)" if row.get("titled") else ""
             lines.append(f"[{row['coverage']}/{facet_count} facets] {row['path']}{mark}")
+            # A heading that restates the note's own name is the line above again.
+            # On this vault that is common and not rare -- an atomic note's single
+            # `## ` heading is usually its title, and `MEMORY.md` answered with
+            # "L1: MEMORY" -- so it is dropped rather than printed as a finding.
+            title = stem(row["path"]).casefold()
             for heading in row["headings"]:
+                if (heading["heading"] or "").strip().casefold() == title:
+                    continue
                 lines.append(f"   └─ L{heading['line']}: {heading['heading']}")
 
     # Stratified rather than truncated, for the same reason the SQL reserves slots:
@@ -544,10 +612,20 @@ def render_outline(payload: dict, top: int = 5, graph_top: int = 5) -> str:
         span = "1 Hop" if deepest == 1 else f"1-{deepest} Hops"
         lines.append("")
         lines.append(f"=== Graph Neighborhood ({span}) ===")
-        for row in graph:
-            hop = "1-hop" if row["hop"] == 1 else f"{row['hop']}-hops"
-            via = f" via '{row['via']}'" if row.get("via") else ""
-            lines.append(f"[{hop} from '{stem(row['seed'])}'{via}] {row['path']}")
+        # Grouped by seed rather than one self-describing line each. The provenance
+        # is the same for every neighbour of a seed, and repeating it was the most
+        # expensive thing in the outline: three rows off one seed printed its name
+        # three times, and a 2-hop row spent 97 characters on "from 'x' via 'y'" to
+        # introduce a 96-character path. The seed is stated once and its neighbours
+        # are indented under it, which is also the shape the facet section uses.
+        for seed, hop, via in dict.fromkeys(
+                (row["seed"], row["hop"], row.get("via") or "") for row in graph):
+            label = "1 hop" if hop == 1 else f"{hop} hops"
+            trail = f" via {stem(via)}" if via else ""
+            lines.append(f"{stem(seed)} ({label}{trail}):")
+            for row in graph:
+                if (row["seed"], row["hop"], row.get("via") or "") == (seed, hop, via):
+                    lines.append(f"   └─ {row['path']}")
 
     dropped = payload["parsed"].get("dropped")
     if dropped:

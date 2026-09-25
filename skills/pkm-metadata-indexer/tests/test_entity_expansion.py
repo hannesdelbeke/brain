@@ -35,5 +35,45 @@ class EntityExpansionTest(unittest.TestCase):
             self.assertIn("Example Tools", terms)
 
 
+class PreparedNotesCacheTest(unittest.TestCase):
+    """The scan is cached across queries, so staleness is the risk worth testing.
+
+    The daemon holds this for its whole lifetime. If a reindex did not invalidate
+    it, every expansion afterwards would answer from the previous corpus.
+    """
+
+    def build(self, vault: Path, notes: dict[str, str]) -> Path:
+        (vault / ".obsidian").mkdir(parents=True, exist_ok=True)
+        for name, body in notes.items():
+            (vault / name).write_text(body, encoding="utf-8")
+        database = vault / ".obsidian" / "pkm_index.db"
+        INDEXER.build_index(str(vault), str(database), skip_embeddings=True)
+        return database
+
+    def test_a_reindex_invalidates_the_cache(self):
+        with tempfile.TemporaryDirectory() as temp:
+            vault = Path(temp) / "vault"
+            database = self.build(vault, {
+                "first.md": "---\naliases:\n  - Alpha\n---\n## A\nbody\n"})
+            self.assertIn("Alpha", entity_expansion.expand_facets(["first"], database)["first"])
+            # A note the first scan never saw, and a fresh index over both.
+            self.build(vault, {"second.md": "---\naliases:\n  - Beta\n---\n## B\nbody\n"})
+            found = entity_expansion.expand_facets(["second"], database)["second"]
+            self.assertIn("Beta", found,
+                          "expansion answered from the pre-reindex corpus")
+
+    def test_a_repeat_call_does_not_reopen_the_database(self):
+        with tempfile.TemporaryDirectory() as temp:
+            database = self.build(Path(temp) / "vault", {
+                "note.md": "---\naliases:\n  - Alpha\n---\n## A\nbody\n"})
+            first = entity_expansion.prepared_notes(database)
+            self.assertIs(entity_expansion.prepared_notes(database), first,
+                          "the second call rebuilt instead of reusing")
+
+    def test_a_missing_database_is_not_an_error(self):
+        with tempfile.TemporaryDirectory() as temp:
+            self.assertEqual(entity_expansion.prepared_notes(Path(temp) / "nope.db"), [])
+
+
 if __name__ == "__main__":
     unittest.main()
