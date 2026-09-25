@@ -152,6 +152,7 @@ def first_useful_rank(ranked: list[str], verdicts: dict[str, bool | None]) -> in
 def compute_metrics(ranked: list[str], verdicts: dict[str, bool | None]) -> dict:
     first = first_useful_rank(ranked, verdicts)
     return {
+        "p3": precision_at_k(ranked, verdicts, 3),
         "p5": precision_at_k(ranked, verdicts, 5),
         "p10": precision_at_k(ranked, verdicts, 10),
         "first_rank": first,
@@ -162,6 +163,8 @@ def compute_metrics(ranked: list[str], verdicts: dict[str, bool | None]) -> dict
 def report_arms(results: list[dict], model: str, arms: tuple[str, ...]) -> None:
     """Print one judge's numbers for each arm."""
     for arm in arms:
+        p3_useful = sum(r["judges"][model][arm]["p3"][0] for r in results)
+        p3_total = sum(r["judges"][model][arm]["p3"][1] for r in results)
         p5_useful = sum(r["judges"][model][arm]["p5"][0] for r in results)
         p5_total = sum(r["judges"][model][arm]["p5"][1] for r in results)
         p10_useful = sum(r["judges"][model][arm]["p10"][0] for r in results)
@@ -170,10 +173,12 @@ def report_arms(results: list[dict], model: str, arms: tuple[str, ...]) -> None:
                        for r in results if r["judges"][model][arm]["first_rank"]]
         mean_first = sum(first_ranks) / len(first_ranks) if first_ranks else None
 
+        p3_pct = f"{p3_useful/p3_total:.1%}" if p3_total else "n/a"
         p5_pct = f"{p5_useful/p5_total:.1%}" if p5_total else "n/a"
         p10_pct = f"{p10_useful/p10_total:.1%}" if p10_total else "n/a"
         mean_str = f"{mean_first:.1f}" if mean_first else "none"
-        print(f"  {arm}: precision@5 {p5_useful}/{p5_total} = {p5_pct}  "
+        print(f"  {arm}: precision@3 {p3_useful}/{p3_total} = {p3_pct}  "
+              f"precision@5 {p5_useful}/{p5_total} = {p5_pct}  "
               f"precision@10 {p10_useful}/{p10_total} = {p10_pct}", flush=True)
         print(f"       answered {len(first_ranks)}/{len(results)}  "
               f"mean first useful rank {mean_str}", flush=True)
@@ -266,6 +271,7 @@ def self_check() -> None:
     # Metrics: a None verdict is not useful, and does not stop the scan.
     verdicts = {"a": True, "b": False, "c": None, "d": True}
     metrics = compute_metrics(["b", "c", "a", "d"], verdicts)
+    assert metrics["p3"] == (1, 3), metrics["p3"]
     assert metrics["p5"] == (2, 4), metrics["p5"]
     assert metrics["p10"] == (2, 4), metrics["p10"]
     assert metrics["first_rank"] == 3, metrics["first_rank"]
