@@ -855,14 +855,26 @@ def do_outline(vaults: list[Vault], query: str, limit: int, hops: int = 2,
     return result
 
 
-def do_session_query(vaults: list[Vault], query: str, limit: int) -> dict:
+def do_session_query(vaults: list[Vault], query: str, limit: int, touched: str = "any") -> dict:
     """Search rollup provenance tables across the selected vaults."""
     began = time.perf_counter()
+    # Fetch a modest multiple per vault to account for dedupe discarding rows.
+    # Mirrors the existing convention at line 759 for the search path.
+    fetch = min(max(limit * 3, limit), 30)
     rows = []
     for vault in vaults:
-        for row in pkm.query_sessions(query, db_path=str(vault.db), limit=limit):
+        for row in pkm.query_sessions(query, db_path=str(vault.db), limit=fetch, touched=touched):
             rows.append({"vault": vault.name, **row})
-    return {"query": query, "results": rows[:limit],
+    # Deduplicate by session_id across vaults before applying the limit.
+    # Two corpora that legitimately overlap (e.g., a vault and its branches index)
+    # should not return the same session twice.
+    seen = set()
+    deduped = []
+    for row in rows:
+        if row["session_id"] not in seen:
+            seen.add(row["session_id"])
+            deduped.append(row)
+    return {"query": query, "results": deduped[:limit],
             "took_ms": round((time.perf_counter() - began) * 1000, 1)}
 
 
@@ -1658,7 +1670,11 @@ class Handler(BaseHTTPRequestHandler):
                     self.reply(400, {"error": "q is required"})
                     return
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
-                self.reply(200, do_session_query(STATE.pick_many(first("vault")), query, limit))
+                touched = first("touched") or "any"
+                if touched not in ("any", "notes", "code"):
+                    self.reply(400, {"error": "touched must be any, notes, or code"})
+                    return
+                self.reply(200, do_session_query(STATE.pick_many(first("vault")), query, limit, touched))
                 return
             vault = STATE.pick(first("vault"))
             if url.path == "/links" and method == "GET":

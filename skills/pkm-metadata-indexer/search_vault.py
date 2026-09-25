@@ -225,25 +225,38 @@ def fast_fts_search(query: str, db_path: str | Path, top: int = 10, expand: bool
     return dedupe_by_path(results)[:top]
 
 
-def fast_session_search(query: str, db_path: str | Path, top: int = 10) -> list[dict]:
+def fast_session_search(query: str, db_path: str | Path, top: int = 10, touched: str = "any") -> list[dict]:
     """Read the session projection without importing the embedding indexer."""
     database = Path(db_path)
     if not database.exists():
         return []
+    # When filtering by touched type, restrict to only touch matches (not title-only).
+    # This is correct because title-only matches have no touch row, so filtering by
+    # vault flag makes no sense for them.
+    needle = f"%{query}%"
+    if touched == "notes":
+        where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 1"
+        params = (needle, max(1, top))
+    elif touched == "code":
+        where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 0"
+        params = (needle, max(1, top))
+    else:
+        where_clause = "WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?"
+        params = (needle, needle, max(1, top))
     connection = sqlite3.connect(f"file:{database.resolve()}?mode=ro", uri=True, timeout=0.05)
     try:
         rows = connection.execute(
-            """
+            f"""
             SELECT DISTINCT sessions_idx.session_id, sessions_idx.title, sessions_idx.created,
                    sessions_idx.trace_path, sessions_idx.cost_usd, sessions_idx.repo,
                    sessions_idx.note_path
             FROM sessions_idx LEFT JOIN session_touches
               ON session_touches.session_id = sessions_idx.session_id
-            WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?
+            {where_clause}
             ORDER BY sessions_idx.created DESC, sessions_idx.title
             LIMIT ?
             """,
-            (f"%{query}%", f"%{query}%", max(1, top)),
+            params,
         ).fetchall()
     except sqlite3.Error:
         return []
@@ -552,6 +565,9 @@ def main():
                         help="Resolve matching titles, aliases, paths, and outbound links before searching")
     parser.add_argument("--sessions", action="store_true",
                         help="Search indexed session rollup titles and touched files")
+    parser.add_argument("--touched", choices=("any", "notes", "code"), default="any",
+                        help="Filter --sessions results to sessions that edited vault notes (notes) "
+                             "or repository code (code). Defaults to any")
     parser.add_argument("--outline", "--headers-only", dest="outline", action="store_true",
                         help="Structural answer: which facets each note covered, the heading "
                              "and line each was found on, and the 1-2 hop link neighbourhood. "
@@ -580,7 +596,7 @@ def main():
     if args.sessions:
         began = time.perf_counter()
         payload = None if direct else daemon_get(
-            args.daemon, "sessions", {"q": args.query, "limit": args.top}, vault
+            args.daemon, "sessions", {"q": args.query, "limit": args.top, "touched": args.touched}, vault
         )
         if payload is not None:
             results = payload["results"]
@@ -588,7 +604,7 @@ def main():
                   file=sys.stderr)
         else:
             database = default_database(args.db)
-            results = fast_session_search(args.query, database, args.top)
+            results = fast_session_search(args.query, database, args.top, touched=args.touched)
             print(f"[PKM Search: daemon offline | SQLite session fallback answered in "
                   f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
         for index, row in enumerate(results, 1):

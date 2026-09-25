@@ -1289,5 +1289,68 @@ class ParseVaultSpecTest(unittest.TestCase):
         self.assertEqual(vault.db, override)
 
 
+class SessionQueryDedupeTest(unittest.TestCase):
+    """Regression test for session query dedupe across multiple vaults."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        cls.root = Path(cls.temp_dir.name)
+
+        # Create first vault with a session
+        first_vault = cls.root / "first"
+        (first_vault / ".obsidian").mkdir(parents=True)
+        (first_vault / "sessions").mkdir()
+        (first_vault / "sessions" / "rollup.md").write_text(
+            "---\nsession_id: shared-session\ndate: 2026-09-25\n"
+            "touched:\n  - target: file.py\n    action: edited\n    vault: false\n---\n"
+            "## Shared session\n", encoding="utf-8"
+        )
+        first_db = first_vault / ".obsidian" / "pkm_index.db"
+        SEARCHD.pkm.build_index(str(first_vault), str(first_db), skip_embeddings=True)
+        cls.first = SEARCHD.Vault("first", first_vault, first_db)
+        VAULTS.append(cls.first)
+
+        # Create second vault with the SAME session (simulating duplicate data)
+        second_vault = cls.root / "second"
+        (second_vault / ".obsidian").mkdir(parents=True)
+        (second_vault / "sessions").mkdir()
+        (second_vault / "sessions" / "rollup.md").write_text(
+            "---\nsession_id: shared-session\ndate: 2026-09-25\n"
+            "touched:\n  - target: file.py\n    action: edited\n    vault: false\n---\n"
+            "## Shared session\n", encoding="utf-8"
+        )
+        second_db = second_vault / ".obsidian" / "pkm_index.db"
+        SEARCHD.pkm.build_index(str(second_vault), str(second_db), skip_embeddings=True)
+        cls.second = SEARCHD.Vault("second", second_vault, second_db)
+        VAULTS.append(cls.second)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.first.close()
+        cls.second.close()
+        for attempt in range(3):
+            try:
+                cls.temp_dir.cleanup()
+                return
+            except PermissionError:
+                if attempt == 2:
+                    raise
+                time.sleep(0.2)
+
+    def test_duplicate_session_across_vaults_is_deduped(self):
+        """Two databases holding the same session_id should produce one result row."""
+        result = SEARCHD.do_session_query([self.first, self.second], "session", limit=10)
+        self.assertEqual(len(result["results"]), 1)
+        self.assertEqual(result["results"][0]["session_id"], "shared-session")
+
+    def test_dedupe_still_honors_limit(self):
+        """After dedupe, result length should match the requested limit."""
+        # Request top 5 but there's only 1 unique session
+        result = SEARCHD.do_session_query([self.first, self.second], "session", limit=5)
+        self.assertEqual(len(result["results"]), 1)
+        self.assertLessEqual(len(result["results"]), 5)
+
+
 if __name__ == "__main__":
     unittest.main()

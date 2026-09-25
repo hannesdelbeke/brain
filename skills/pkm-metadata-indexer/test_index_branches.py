@@ -5,6 +5,7 @@ a remote-tracking ref without a remote to push to, so each case is a few commits
 rather than a clone.
 """
 
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -13,6 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import index_branches  # noqa: E402
+import index_pkm_meta as pkm  # noqa: E402
 
 
 class BranchScannerTest(unittest.TestCase):
@@ -278,6 +280,47 @@ class BranchScannerTest(unittest.TestCase):
 
     def test_self_check_passes(self):
         self.assertEqual(index_branches.self_check(), 0)
+
+    def test_ref_corpus_produces_zero_session_rows(self):
+        """A corpus scanning refs should not populate session tables from the working tree.
+
+        The branches index should only read committed refs, not the working tree's
+        sessions/ directory, even when it exists. This regression test guards against
+        session_frontmatter_rows() being called unconditionally.
+        """
+        # Add a branch with actual content so scan_branches returns something
+        self.git("checkout", "-qb", "feature")
+        self.write("feature.md", "# feature\ncontent\n")
+        self.git("add", "feature.md")
+        self.git("commit", "-qm", "feature note")
+        self.set_remote_ref("feature", "HEAD")
+        self.git("checkout", "-q", "main")
+
+        # Create a sessions directory in the working tree
+        sessions_dir = self.root / "sessions"
+        sessions_dir.mkdir()
+        (sessions_dir / "rollup.md").write_text(
+            "---\nsession_id: test-session\ndate: 2026-09-25\n"
+            "touched:\n  - target: some file\n    action: edited\n---\n"
+            "## Session that should not be indexed\n", encoding="utf-8"
+        )
+
+        # Build index using scan_branches collector
+        db_path = self.root / ".pkm_branches.db"
+        pkm.build_index(str(self.root), str(db_path), skip_embeddings=True, collect=index_branches.scan_branches)
+
+        # Verify the database has notes from refs but zero session rows
+        connection = sqlite3.connect(db_path)
+        try:
+            notes_count = connection.execute("SELECT COUNT(*) FROM notes").fetchone()[0]
+            sessions_count = connection.execute("SELECT COUNT(*) FROM sessions_idx").fetchone()[0]
+            touches_count = connection.execute("SELECT COUNT(*) FROM session_touches").fetchone()[0]
+        finally:
+            connection.close()
+
+        self.assertGreater(notes_count, 0, "scan_branches should have indexed the feature branch note")
+        self.assertEqual(sessions_count, 0, "scan_branches should not populate sessions_idx")
+        self.assertEqual(touches_count, 0, "scan_branches should not populate session_touches")
 
 
 if __name__ == "__main__":
