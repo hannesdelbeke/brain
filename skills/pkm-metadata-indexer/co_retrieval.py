@@ -208,7 +208,12 @@ def fold(connection: sqlite3.Connection, lines: list[str]) -> int:
         try:
             row = json.loads(line)
             # Skip synthetic eval traffic: invented queries should not teach the ranker.
-            origin = row.get("origin", "")
+            # Coerced rather than read straight, because `.startswith` on a null or a
+            # number raises AttributeError, which the except below does not catch, and
+            # one foreign row would take the whole run down instead of being skipped.
+            # A missing, null or empty origin all mean real traffic: searchd writes the
+            # key only when it is non-empty.
+            origin = str(row.get("origin") or "")
             if origin.startswith(SYNTHETIC_ORIGIN_PREFIX):
                 continue
             vault, when = row["vault"], row["t"]
