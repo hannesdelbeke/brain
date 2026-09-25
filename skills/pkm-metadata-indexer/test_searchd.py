@@ -159,32 +159,48 @@ class SearchDaemonTest(unittest.TestCase):
         self.assertEqual(rows[0]["results"], ["alpha.md"])
         self.assertEqual(rows[1]["results"], ["gamma.md"])
 
-    def test_vault_aware_partitioned_query_logging(self):
-        first_vault = SEARCHD.STATE.vaults["first"]
-        second_vault = SEARCHD.STATE.vaults["second"]
+    def test_every_corpus_logs_to_one_configured_file(self):
+        # Routing the log by corpus put each corpus's rows inside that corpus's
+        # own checkout, so a corpus mounted from a public repo collected the query
+        # strings typed against the private ones. One configured directory instead,
+        # and the "vault" key is what a reader of a single corpus filters on.
+        telemetry = Path(self.temp_dir.name) / "telemetry"
         device = SEARCHD.get_device_name()
-        first_log = first_vault.root / "data" / "telemetry" / "queries" / f"queries_{device}.jsonl"
-        second_log = second_vault.root / "data" / "telemetry" / "queries" / f"queries_{device}.jsonl"
+        expected = telemetry / f"queries_{device}.jsonl"
 
         SEARCHD.LOG_PATH = "auto"
+        previous = os.environ.get("PKM_TELEMETRY_DIR")
+        os.environ["PKM_TELEMETRY_DIR"] = str(telemetry)
         try:
             self.get("/search?q=distinctivephrase&vault=first")
             self.get("/search?q=separatephrase&vault=second")
         finally:
             SEARCHD.LOG_PATH = None
+            if previous is None:
+                os.environ.pop("PKM_TELEMETRY_DIR", None)
+            else:
+                os.environ["PKM_TELEMETRY_DIR"] = previous
 
-        self.assertTrue(first_log.exists(), f"expected {first_log} to exist")
-        self.assertTrue(second_log.exists(), f"expected {second_log} to exist")
+        self.assertEqual([path.name for path in sorted(telemetry.iterdir())], [expected.name])
+        rows = [json.loads(line) for line in expected.read_text(encoding="utf-8").splitlines()]
+        self.assertEqual([row["vault"] for row in rows], ["first", "second"])
+        self.assertEqual(rows[0]["results"], ["alpha.md"])
+        self.assertEqual(rows[1]["results"], ["gamma.md"])
 
-        rows1 = [json.loads(line) for line in first_log.read_text(encoding="utf-8").splitlines()]
-        rows2 = [json.loads(line) for line in second_log.read_text(encoding="utf-8").splitlines()]
-        self.assertEqual(len(rows1), 1)
-        self.assertEqual(rows1[0]["vault"], "first")
-        self.assertEqual(rows1[0]["results"], ["alpha.md"])
+        # the leak itself: no corpus root may gain a telemetry directory
+        for name in ("first", "second"):
+            root = SEARCHD.STATE.vaults[name].root
+            self.assertFalse((root / "data" / "telemetry").exists(),
+                             f"{name} corpus root collected telemetry at {root}")
 
-        self.assertEqual(len(rows2), 1)
-        self.assertEqual(rows2[0]["vault"], "second")
-        self.assertEqual(rows2[0]["results"], ["gamma.md"])
+    def test_query_log_falls_back_outside_every_checkout(self):
+        # Unconfigured has to land somewhere private, never beside a corpus.
+        previous = os.environ.pop("PKM_TELEMETRY_DIR", None)
+        try:
+            self.assertEqual(SEARCHD.resolve_query_log(), SEARCHD.QUERY_LOG)
+        finally:
+            if previous is not None:
+                os.environ["PKM_TELEMETRY_DIR"] = previous
 
     def test_each_vault_only_sees_its_own_notes(self):
         _, wrong = self.get("/search?q=separatephrase")
