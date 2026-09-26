@@ -105,6 +105,21 @@ def daemon_healthy(base: str) -> bool:
         return False
 
 
+def get_vault_roots(base: str) -> dict[str, str]:
+    """Fetch vault name -> root path mapping from the daemon.
+
+    Returns empty dict if the daemon is unavailable or does not support
+    the full /health endpoint. Used to construct absolute paths in results.
+    """
+    try:
+        with urllib.request.urlopen(f"{base.rstrip('/')}/health",
+                                    timeout=HEALTH_TIMEOUT_S) as response:
+            data = json.load(response)
+            return {v["name"]: v["root"] for v in data.get("vaults", []) if "root" in v}
+    except (urllib.error.URLError, OSError, ValueError, TimeoutError, KeyError):
+        return {}
+
+
 def daemon_get(base: str, route: str, params: dict, vault: str | None,
                timeout: float = DAEMON_TIMEOUT_S, tolerate_missing_route: bool = False):
     """Ask the daemon, returning None only when there is no daemon to ask.
@@ -444,7 +459,7 @@ def find_cutoff(results: list[dict]) -> tuple[int, str]:
                  f"against {sigmoid(logits[cut - 1]):.0%} at {cut}")
 
 
-def print_results(query: str, source: str, results: list[dict]):
+def print_results(query: str, source: str, results: list[dict], vault_roots: dict[str, str] | None = None):
     """Print the head with the text that matched and the tail with headings only.
 
     A path and a heading cannot be judged, so a caller given only those opens the
@@ -462,13 +477,29 @@ def print_results(query: str, source: str, results: list[dict]):
         # arrives after the caller has already read it.
         print(f"\n   ! {reason}\n")
     for index, row in enumerate(results, 1):
-        where = f"{row['vault']}/" if "vault" in row else ""
+        # Construct absolute path when vault_roots provided, or show vault as label
+        vault_name = row.get("vault")
+        rel_path = row["path"]
+        if vault_roots and vault_name and vault_name in vault_roots:
+            # Absolute path that can be opened directly
+            display_path = str(Path(vault_roots[vault_name]) / rel_path)
+        elif vault_name:
+            # Show vault as a label, not a confusing path prefix
+            display_path = f"{rel_path} [{vault_name}]"
+        else:
+            display_path = rel_path
         # Whichever number put the list in this order. Printing the fused score
         # beside a rerank ordering gave a column that ran 0.025, 0.031, 0.031 --
         # readable as the ranking being broken rather than as two different scores.
         score = sigmoid(row["rerank_score"]) if "rerank_score" in row else row["score"]
-        print(f"{index}. [{score:.3f}] {where}{row['path']} "
+        print(f"{index}. [{score:.3f}] {display_path} "
               f"(line {row['line']}) -> {row['heading']}")
+        # Show description if present (authored summary)
+        if row.get("description"):
+            print(f"      desc: {row['description'][:200]}")
+        # Show absolute path for direct file reading
+        if row.get("abs_path"):
+            print(f"      path: {row['abs_path']}")
         if index <= cut and row.get("text"):
             print(f"      {row['text']}")
         if index == cut and cut < len(results):
@@ -566,8 +597,9 @@ def main():
     parser.add_argument("--no-rerank", action="store_true",
                         help="Return the fused order instead of reordering the top with the "
                         "cross-encoder. Saves a second or two and loses precision")
-    parser.add_argument("--expand", action=argparse.BooleanOptionalAction, default=True,
-                        help="Resolve matching titles, aliases, paths, and outbound links before searching")
+    parser.add_argument("--expand", action=argparse.BooleanOptionalAction, default=False,
+                        help="Resolve matching titles, aliases, paths, and outbound links before searching. "
+                             "Costs 10-15%% latency for measured precision loss (use --expand to enable)")
     parser.add_argument("--sessions", action="store_true",
                         help="Search indexed session rollup titles and touched files")
     parser.add_argument("--touched", choices=("any", "notes", "code"), default="any",
@@ -644,6 +676,8 @@ def main():
         params["reindex"] = "0"
     began = time.perf_counter()
     payload = None if direct else daemon_get(args.daemon, "search", params, vault)
+    # Fetch vault roots from daemon for making paths absolute
+    vault_roots = None if direct else get_vault_roots(args.daemon)
     order = "rerank" if rerank else "fused"
     if payload is not None:
         results, stale = payload["results"], payload["stale"]
@@ -683,7 +717,7 @@ def main():
             print(f"[PKM Search: daemon offline{action} | FTS5 fallback answered in "
                   f"{(time.perf_counter() - began) * 1000:.1f}ms]", file=sys.stderr)
 
-    print_results(args.query, source, results)
+    print_results(args.query, source, results, vault_roots)
     print_stale(stale)
 
 

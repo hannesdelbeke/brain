@@ -96,6 +96,57 @@ class SearchDaemonTest(unittest.TestCase):
     def get(self, path: str, headers: dict | None = None, method: str = "GET"):
         return fetch(self.port, path, headers, method)
 
+    def test_search_result_paths_are_openable(self):
+        """Verify search results contain paths that can be opened directly.
+
+        Regression test for bug where paths were prefixed with vault name
+        (e.g., 'vault/vault/path.md') making them un-openable.
+        """
+        status, data = self.get("/search?q=distinctivephrase&vault=first")
+        self.assertEqual(status, 200)
+        results = data.get("results", [])
+        self.assertGreater(len(results), 0, "Search should return at least one result")
+
+        # Get vault roots from health endpoint
+        status, health = self.get("/health")
+        self.assertEqual(status, 200)
+        vault_roots = {v["name"]: v["root"] for v in health.get("vaults", [])}
+
+        # Verify each result path can be constructed as an openable file
+        for result in results:
+            vault_name = result.get("vault")
+            rel_path = result["path"]
+
+            # If vault is provided, construct absolute path
+            if vault_name and vault_name in vault_roots:
+                abs_path = Path(vault_roots[vault_name]) / rel_path
+                self.assertTrue(abs_path.exists(),
+                    f"Path {abs_path} should exist (vault={vault_name}, path={rel_path})")
+
+    def test_search_results_include_metadata_fields(self):
+        """Verify new metadata fields are present in search results."""
+        status, body = self.get("/search?q=distinctivephrase&limit=3&expand=0")
+        self.assertEqual(200, status)
+        self.assertIn("results", body)
+        results = body["results"]
+        self.assertGreater(len(results), 0, "Should have at least one result")
+
+        result = results[0]
+        # Check new fields are present
+        self.assertIn("description", result, "description field should be present")
+        self.assertIn("outline", result, "outline field should be present")
+        self.assertIn("abs_path", result, "abs_path field should be present")
+        self.assertIn("mtime", result, "mtime field should be present")
+
+        # Verify outline is a list
+        self.assertIsInstance(result["outline"], list, "outline should be a list")
+
+        # Verify abs_path is absolute and exists
+        self.assertIsInstance(result["abs_path"], str, "abs_path should be a string")
+        abs_path = Path(result["abs_path"])
+        self.assertTrue(abs_path.is_absolute(), f"abs_path should be absolute: {abs_path}")
+        self.assertTrue(abs_path.exists(), f"abs_path should exist: {abs_path}")
+
     def test_health_reports_every_vault(self):
         status, body = self.get("/health")
         self.assertEqual(status, 200)
