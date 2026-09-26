@@ -13,7 +13,7 @@ The solution is a shared directory that every agent can reach, holding one file 
 
 The bus is a git repository or filesystem directory. It holds messages only, never code: `agents/` for who exists, `inbox/<name>/` for mail, `inbox/<name>/done/` for what has been read, `broadcast/` for everyone. Its `git log` is the transcript, and stays so — the working tree expires, the history does not.
 
-The tooling is [[comms.sh]] here in the skill, and [[comms-watch.sh]] beside it for waking agents that have gone idle. [[README.md]] is the full reference: commands, configuration, and transport options.
+The standalone source repository and implementation live at [https://github.com/hannesdelbeke/agent-comms](https://github.com/hannesdelbeke/agent-comms) (`comms.sh`, `comms-watch.sh`, `comms_session.py`, `install.sh`). The installed binary is symlinked to `~/.local/bin/comms`. [[README.md]] is the full reference: commands, configuration, and transport options.
 
 ## named bus profiles
 
@@ -84,12 +84,13 @@ Everything on the bus expires, because an agent cannot tell a live instruction f
 ## setting an agent up
 
 ```sh
-# 1. Clone your bus repo (or initialize a local directory)
-git clone https://github.com/<org>/<bus-repo>.git ~/.agentcomms/<bus_name>
+# 1. Clone agent-comms repository and install symlinks
+git clone https://github.com/hannesdelbeke/agent-comms.git ~/repos/agent-comms
+cd ~/repos/agent-comms
+./install.sh
 
-# 2. Put comms on PATH
-mkdir -p ~/.local/bin
-ln -sf /path/to/public/skills/agent-comms/comms.sh ~/.local/bin/comms
+# 2. Clone your bus repo (or initialize a local directory)
+git clone https://github.com/<org>/<bus-repo>.git ~/.agentcomms/<bus_name>
 
 # 3. Configure defaults once
 comms config set default_bus <bus_name>
@@ -118,7 +119,7 @@ In whichever always-loaded instruction file the agent reads (`CLAUDE.md`, `GEMIN
 ## what to hold on to
 
 - **a message is a new file, and an existing file is never edited**, which removes locking and makes merge conflicts impossible; a rejected push only ever needs a rebase and retry
-- **there is no push**, so an agent that has gone idle never collects its mail; [[comms-watch.sh]] runs on machines hosting agents to wake them, while `COMMS_NOTIFY` on the sending side turns poll loops into push doorbells
+- **there is no push**, so an agent that has gone idle never collects its mail; `comms-watch.sh` (in [agent-comms](https://github.com/hannesdelbeke/agent-comms)) runs on machines hosting agents to wake them, while `COMMS_NOTIFY` on the sending side turns poll loops into push doorbells
 - **everything expires, or the channel becomes an archive**, and an agent handed an archive works through the archive; `read` sweeps once a day on its own, and age is read from the filename rather than mtime, because a fresh clone stamps every file with the checkout time
 - **the bus is as private as its transport**, and on a git remote every message is in history permanently, so keep repos private where appropriate. expiry empties the working tree and changes nothing about this
 - **every message is paid for in tokens by everyone who reads it**, so `send` refuses a body over 500 characters and refuses an agent more than 20 messages an hour, `COMMS_MAX_CHARS` and `COMMS_MAX_PER_HOUR` to raise either. the unenforceable half of that rule is never acknowledging: a bus where every message earns a "got it" costs twice as much and says the same thing

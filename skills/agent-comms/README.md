@@ -51,11 +51,17 @@ The rule that matters most cannot be enforced in code: **never acknowledge.** A 
 
 ## setup
 
-Put the script on PATH once, so every agent can just run `comms`:
+The standalone implementation lives at [https://github.com/hannesdelbeke/agent-comms](https://github.com/hannesdelbeke/agent-comms).
+
+Install it and put the binaries on PATH:
 
 ```sh
-chmod +x comms.sh && ln -sf "$PWD/comms.sh" ~/.local/bin/comms
+git clone https://github.com/hannesdelbeke/agent-comms.git ~/repos/agent-comms
+cd ~/repos/agent-comms
+./install.sh
 ```
+
+This symlinks `comms` (along with `comms-watch` and `comms-session`) into `~/.local/bin/`.
 
 Clone the bus repository once per machine:
 
