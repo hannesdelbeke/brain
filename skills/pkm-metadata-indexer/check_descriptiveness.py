@@ -86,7 +86,7 @@ def parse_frontmatter_local(content: str) -> dict:
     return meta
 
 
-def is_exempt_filename(path: Path, stem_no_date: str, meta: dict) -> bool:
+def is_exempt_filename(path: Path, meta: dict) -> bool:
     """Check if a note is exempt from filename checks based on structural rules."""
     # Structural files
     if path.name in STRUCTURAL_EXEMPT_FILENAMES:
@@ -100,11 +100,8 @@ def is_exempt_filename(path: Path, stem_no_date: str, meta: dict) -> bool:
     if re.match(r"^\d{4}-\d{2}-\d{2}$", path.stem):
         return True
 
-    # Concept/glossary notes: correctly named by bare term (no leading date)
-    if not re.match(r"^\d{4}-\d{2}-\d{2}\s", path.stem):
-        return True
-
-    return False
+    # A date anywhere in the stem makes this a dated note, not a bare-term concept.
+    return not re.search(r"\d{4}-\d{2}-\d{2}", path.stem)
 
 
 def check_note(path: Path, min_words: int) -> dict:
@@ -138,7 +135,7 @@ def check_note(path: Path, min_words: int) -> dict:
     stem = path.stem
     stem_no_date = re.sub(r"^\d{4}-\d{2}-\d{2}\s+", "", stem)
 
-    exempt = is_exempt_filename(path, stem_no_date, meta)
+    exempt = is_exempt_filename(path, meta)
 
     # Check 1: Non-descriptive filename (skip if exempt)
     if not exempt:
