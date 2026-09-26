@@ -68,8 +68,10 @@ cons
 - [[markdown link dont support spaces]]
 - no [[autocomplete]] without a plugin like _Link Favicons_ or _Markdown Links_
 
-#### ❔Frontmatter
+#### ❌ Frontmatter
 Use [[YAML front matter|frontmatter]] fields as one‑directional links
+
+This does not give a one-way link: a quoted [[wikilinks in frontmatter|wikilink in frontmatter]] is indexed like any other, so it shows up in the [[Obsidian backlinks]] pane and the graph. Measured 2026-09-26, it registers at any nesting depth, including under a key inside a list of mappings. It is the right technique for *making* a link out of structured metadata, and the wrong one for hiding the backlink.
 
 ---
 
