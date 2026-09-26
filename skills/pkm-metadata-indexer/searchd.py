@@ -113,7 +113,7 @@ import subprocess
 import sys
 import threading
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
@@ -579,6 +579,81 @@ def keepalive():
         list(model.embed(["."]))
 
 
+def enrich_results_with_metadata(vault: Vault, rows: list[dict]) -> list[dict]:
+    """Add description, outline, abs_path, and mtime to search results.
+
+    Fetches note-level metadata (description, headings) and file stats in bulk
+    to minimize database roundtrips.
+    """
+    if not rows or not vault.db.exists():
+        return rows
+
+    # Group by path to avoid duplicate lookups
+    paths = list({row["path"] for row in rows})
+
+    connection = sqlite3.connect(f"file:{vault.db}?mode=ro", uri=True)
+    try:
+        cursor = connection.cursor()
+
+        # Check if description column exists (older indexes may not have it)
+        columns = {row[1] for row in cursor.execute("PRAGMA table_info(notes)")}
+        has_description = "description" in columns
+
+        # Fetch description for all paths at once (if column exists)
+        descriptions = {}
+        if has_description:
+            placeholders = ",".join("?" * len(paths))
+            desc_rows = cursor.execute(
+                f"SELECT path, description FROM notes WHERE path IN ({placeholders})",
+                paths
+            ).fetchall()
+            descriptions = {path: desc for path, desc in desc_rows}
+
+        # Fetch all headings per note (only H2 headings, cap at 12)
+        placeholders = ",".join("?" * len(paths))
+        heading_rows = cursor.execute(
+            f"""
+            SELECT path, heading FROM sections
+            WHERE path IN ({placeholders}) AND chunk_index = 0
+            ORDER BY path, start_line
+            """,
+            paths
+        ).fetchall()
+        outlines = {}
+        for path, heading in heading_rows:
+            if path not in outlines:
+                outlines[path] = []
+            # Exclude the file stem itself as a heading
+            if heading != Path(path).stem and len(outlines[path]) < 12:
+                outlines[path].append(heading)
+    finally:
+        connection.close()
+
+    # Add metadata to each result
+    enriched = []
+    for row in rows:
+        path = row["path"]
+        abs_path = str(vault.root / path)
+
+        # Get mtime if file exists
+        mtime = None
+        try:
+            stat_result = (vault.root / path).stat()
+            mtime = datetime.fromtimestamp(stat_result.st_mtime, tz=timezone.utc).isoformat()
+        except OSError:
+            pass
+
+        enriched.append({
+            **row,
+            "description": descriptions.get(path) or None,
+            "outline": outlines.get(path, []),
+            "abs_path": abs_path,
+            "mtime": mtime,
+        })
+
+    return enriched
+
+
 def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: bool = True) -> list[dict]:
     vectors = vault.matrix()
     with vault.lock:
@@ -587,9 +662,11 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: boo
     if expand:
         from entity_expansion import expand_query
         search_query = " ".join(expand_query(query, vault.db))
+    # Request wider text field (1500 chars instead of default 700)
     rows = pkm.search_index(search_query, db_path=str(vault.db), limit=limit,
-                            vectors=vectors, rerank=rerank)
-    return [
+                            vectors=vectors, rerank=rerank, text_chars=1500)
+
+    base_results = [
         {
             "vault": vault.name,
             "path": row["path"],
@@ -604,6 +681,8 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: boo
         }
         for row in rows
     ]
+
+    return enrich_results_with_metadata(vault, base_results)
 
 
 def rerank_merged(vaults: list[Vault], query: str, results: list[dict]) -> list[dict]:
@@ -1650,7 +1729,7 @@ class Handler(BaseHTTPRequestHandler):
                                           first("origin"),
                                           first("rerank") in {"1", "true", "yes"},
                                           first("reindex") not in {"0", "false", "no"},
-                                          first("expand") not in {"0", "false", "no"}))
+                                          first("expand") in {"1", "true", "yes"}))
                 return
             if url.path == "/outline" and method == "GET":
                 query = first("q")

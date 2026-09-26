@@ -1539,6 +1539,7 @@ def search_index(
     limit: int = 10,
     vectors: tuple | None = None,
     rerank: bool = False,
+    text_chars: int = SECTION_TEXT_CHARS,
 ) -> list[dict]:
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
@@ -1628,7 +1629,7 @@ def search_index(
                 ranked = rerank_results(query, ranked[:RERANK_CANDIDATES], cursor)
         # After the cut, so the extra query reads ten sections rather than every
         # candidate the fusion considered.
-        return attach_section_text(ranked[:limit], cursor)
+        return attach_section_text(ranked[:limit], cursor, max_chars=text_chars)
     finally:
         connection.close()
 
