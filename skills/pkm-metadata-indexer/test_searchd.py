@@ -1503,5 +1503,130 @@ class ConvoyTest(unittest.TestCase):
         self.assertGreaterEqual(result["took_s"], result["build_s"])
 
 
+class IncrementalVectorUpdateTest(unittest.TestCase):
+    """Tests for incremental vector matrix updates."""
+
+    @classmethod
+    def setUpClass(cls):
+        import numpy as np
+        cls.temp_dir = tempfile.TemporaryDirectory()
+        cls.vault_root = Path(cls.temp_dir.name) / "test_vault"
+        cls.vault_root.mkdir()
+        (cls.vault_root / ".obsidian").mkdir()
+        cls.db = cls.vault_root / ".obsidian" / "pkm_index.db"
+
+        # Build initial index with embeddings
+        (cls.vault_root / "note1.md").write_text("## Section A\nContent A\n", encoding="utf-8")
+        (cls.vault_root / "note2.md").write_text("## Section B\nContent B\n", encoding="utf-8")
+
+        if not SEARCHD.pkm.HAS_FASTEMBED:
+            raise unittest.SkipTest("fastembed required for incremental update tests")
+
+        SEARCHD.pkm.build_index(vault_path=str(cls.vault_root), db_path=str(cls.db))
+        cls.vault = SEARCHD.Vault("test", cls.vault_root, cls.db)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.vault.close()
+        for attempt in range(3):
+            try:
+                cls.temp_dir.cleanup()
+                return
+            except PermissionError:
+                if attempt == 2:
+                    raise
+                time.sleep(0.2)
+
+    def test_incremental_update_on_single_section_change(self):
+        """Changing one section should trigger incremental update, not full reload."""
+        # Load initial matrix
+        meta1, matrix1 = self.vault.matrix()
+        initial_count = len(meta1)
+        self.assertGreater(initial_count, 0, "initial matrix should not be empty")
+        incremental_before = self.vault.incremental_update_count
+
+        # Modify one note
+        (self.vault_root / "note1.md").write_text("## Section A\nModified content A\n", encoding="utf-8")
+        SEARCHD.pkm.build_index(vault_path=str(self.vault_root), db_path=str(self.db))
+
+        # Load matrix again - should use incremental update
+        meta2, matrix2 = self.vault.matrix()
+        incremental_after = self.vault.incremental_update_count
+
+        self.assertEqual(incremental_after, incremental_before + 1,
+                        "incremental_update_count should increment by 1")
+        self.assertEqual(len(meta2), initial_count,
+                        "section count should remain the same after modifying content")
+
+    def test_incremental_update_preserves_section_identity(self):
+        """After incremental update, rows should still map to correct sections."""
+        # Load initial matrix and record section IDs
+        meta1, matrix1 = self.vault.matrix()
+        section_ids_before = {meta[0] for meta in meta1}
+
+        # Add a new note
+        (self.vault_root / "note3.md").write_text("## Section C\nContent C\n", encoding="utf-8")
+        SEARCHD.pkm.build_index(vault_path=str(self.vault_root), db_path=str(self.db))
+
+        # Load matrix again
+        meta2, matrix2 = self.vault.matrix()
+        section_ids_after = {meta[0] for meta in meta2}
+
+        # Original sections should still be present
+        self.assertTrue(section_ids_before.issubset(section_ids_after),
+                       "original sections should still be in the matrix")
+        self.assertEqual(len(section_ids_after), len(section_ids_before) + 1,
+                        "should have one additional section")
+
+        # Verify that section_id_to_row mapping is consistent
+        for idx, (section_id, path, heading, line) in enumerate(meta2):
+            self.assertEqual(self.vault.section_id_to_row[section_id], idx,
+                           f"section_id_to_row mapping incorrect for {section_id}")
+
+    def test_incremental_update_handles_deletion(self):
+        """Deleting a note should remove its sections from the matrix."""
+        # Load initial matrix
+        meta1, matrix1 = self.vault.matrix()
+        initial_count = len(meta1)
+
+        # Delete a note
+        (self.vault_root / "note2.md").unlink()
+        SEARCHD.pkm.build_index(vault_path=str(self.vault_root), db_path=str(self.db))
+
+        # Load matrix again
+        meta2, matrix2 = self.vault.matrix()
+
+        self.assertLess(len(meta2), initial_count,
+                       "section count should decrease after deleting a note")
+
+        # Verify deleted sections are not in the new matrix
+        section_ids_after = {meta[0] for meta in meta2}
+        for section_id, path, heading, line in meta1:
+            if "note2.md" in path:
+                self.assertNotIn(section_id, section_ids_after,
+                               f"deleted section {section_id} should not be in matrix")
+
+    def test_consistency_check_triggers_full_reload(self):
+        """When consistency check fails, should fall back to full reload."""
+        import unittest.mock as mock
+
+        # Load initial matrix
+        meta1, matrix1 = self.vault.matrix()
+
+        # Mock _incremental_update to return None (simulating failure)
+        original_incremental = self.vault._incremental_update
+        with mock.patch.object(self.vault, '_incremental_update', return_value=None):
+            # Modify a note to trigger version change
+            (self.vault_root / "note1.md").write_text("## Section A\nChanged again\n", encoding="utf-8")
+            SEARCHD.pkm.build_index(vault_path=str(self.vault_root), db_path=str(self.db))
+
+            # Should fall back to full reload
+            meta2, matrix2 = self.vault.matrix()
+
+            # Should still have valid matrix (from full reload)
+            self.assertIsNotNone(matrix2, "matrix should not be None after fallback")
+            self.assertGreater(len(meta2), 0, "should have sections after fallback")
+
+
 if __name__ == "__main__":
     unittest.main()

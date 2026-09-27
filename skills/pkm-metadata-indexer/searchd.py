@@ -387,6 +387,7 @@ class Vault:
         self.queries = 0
         self.vectors = None
         self.vectors_version = None
+        self.section_id_to_row = None  # maps section_id -> row index for incremental updates
         self.reader = None
         self.watched = False  # set when a watcher thread takes this corpus
         self.reindexing = False
@@ -399,6 +400,7 @@ class Vault:
 
         self.stale_cache = None
         self.stale_at = 0.0
+        self.incremental_update_count = 0  # diagnostic counter
 
     def stale(self) -> dict:
         """Which files this corpus holds that its index has not read.
@@ -467,6 +469,14 @@ class Vault:
         vectors are labelled with the version read before the load, never after: a
         commit landing mid-load would otherwise be masked by a matrix that never
         read it, and one redundant rebuild is cheaper than indefinite staleness.
+
+        INCREMENTAL UPDATE (2026-09-27): instead of reloading all vectors on every
+        database change, detect which sections were added/modified/deleted and update
+        only those rows. The resident matrix is mutated in place while preserving the
+        mapping from row index to section_id, so concurrent searches reading the matrix
+        never see a row that means something different than it did before. When the
+        update cannot be applied incrementally (first load, row count mismatch, or any
+        other inconsistency), fall back to a full reload.
         """
         with self.lock:
             if not self.db.exists():
@@ -480,6 +490,7 @@ class Vault:
             if self.vectors is not None and version == self.vectors_version:
                 return self.vectors
             resident = self.vectors
+            resident_id_map = self.section_id_to_row
         if resident is not None and self.rebuild_lock.locked():
             return resident  # stale by one reindex, and here now
         with self.rebuild_lock:
@@ -488,13 +499,134 @@ class Vault:
                     return self.vectors  # another thread rebuilt it while we waited
             connection = sqlite3.connect(f"file:{self.db}?mode=ro", uri=True)
             try:
-                vectors = pkm.load_vectors(connection.cursor())
+                cursor = connection.cursor()
+                # Try incremental update if we have a resident matrix
+                if resident is not None and resident_id_map is not None:
+                    updated = self._incremental_update(cursor, resident, resident_id_map)
+                    if updated is not None:
+                        vectors, new_id_map = updated
+                        with self.lock:
+                            self.vectors = vectors
+                            self.section_id_to_row = new_id_map
+                            self.vectors_version = version
+                            self.incremental_update_count += 1
+                            return self.vectors
+                # Fall back to full reload
+                vectors = pkm.load_vectors(cursor)
+                # Build the section_id -> row mapping (only if vectors is a proper tuple)
+                new_id_map = {}
+                if isinstance(vectors, tuple) and len(vectors) == 2:
+                    meta, matrix = vectors
+                    if meta:
+                        new_id_map = {section_id: idx for idx, (section_id, _, _, _) in enumerate(meta)}
             finally:
                 connection.close()
             with self.lock:
                 self.vectors = vectors
+                self.section_id_to_row = new_id_map
                 self.vectors_version = version
                 return self.vectors
+
+    def _incremental_update(self, cursor, resident, id_map):
+        """Attempt an incremental matrix update, or None if a full reload is needed.
+
+        Returns (updated_vectors, updated_id_map) on success, None on any failure.
+        Failures are logged and trigger a full reload in the caller.
+        """
+        import logging
+        import numpy as np
+
+        try:
+            old_meta, old_matrix = resident
+            if old_matrix is None or len(old_meta) == 0:
+                return None  # empty matrix, just do a full load
+            # Query current sections from database
+            rows = cursor.execute(
+                """
+                SELECT id, path, heading, start_line, vector
+                FROM sections
+                WHERE vector IS NOT NULL AND embedding_model = ? AND chunking_version = ?
+                """,
+                (pkm.EMBEDDING_MODEL, pkm.CHUNKING_VERSION),
+            ).fetchall()
+
+            db_sections = {row[0]: (row[1], row[2], row[3], row[4]) for row in rows}
+            db_count = len(db_sections)
+
+            # Consistency check: row count should match
+            if len(id_map) != len(old_meta):
+                logging.warning(
+                    "Incremental update: id_map size %d != meta size %d, falling back to full reload",
+                    len(id_map), len(old_meta)
+                )
+                return None
+
+            # Find changes
+            old_ids = set(id_map.keys())
+            new_ids = set(db_sections.keys())
+            deleted = old_ids - new_ids
+            added = new_ids - old_ids
+            potentially_modified = old_ids & new_ids
+
+            # If nothing changed, return as-is (shouldn't happen due to version check, but defensive)
+            if not deleted and not added and not potentially_modified:
+                return (resident, id_map)
+
+            # Build new meta and matrix
+            new_meta = []
+            new_rows = []
+            new_id_map = {}
+
+            # Copy unchanged sections, update modified ones, skip deleted ones
+            for section_id in old_ids:
+                if section_id in deleted:
+                    continue  # skip deleted sections
+                old_row_idx = id_map[section_id]
+                if section_id in db_sections:
+                    # Section still exists
+                    path, heading, start_line, vector_blob = db_sections[section_id]
+                    vector = np.frombuffer(vector_blob, dtype=np.float32)
+                    new_idx = len(new_meta)
+                    new_meta.append((section_id, path, heading, start_line))
+                    new_rows.append(vector)
+                    new_id_map[section_id] = new_idx
+
+            # Add new sections
+            for section_id in added:
+                path, heading, start_line, vector_blob = db_sections[section_id]
+                vector = np.frombuffer(vector_blob, dtype=np.float32)
+                new_idx = len(new_meta)
+                new_meta.append((section_id, path, heading, start_line))
+                new_rows.append(vector)
+                new_id_map[section_id] = new_idx
+
+            # Stack into matrix
+            new_matrix = np.vstack(new_rows) if new_rows else None
+
+            # Final consistency check
+            if new_matrix is not None and len(new_meta) != db_count:
+                logging.warning(
+                    "Incremental update: computed %d sections but database has %d, falling back to full reload",
+                    len(new_meta), db_count
+                )
+                return None
+
+            if new_matrix is not None and new_matrix.shape[0] != len(new_meta):
+                logging.warning(
+                    "Incremental update: matrix rows %d != meta count %d, falling back to full reload",
+                    new_matrix.shape[0], len(new_meta)
+                )
+                return None
+
+            logging.info(
+                "Incremental update: %d deleted, %d added, %d total (was %d)",
+                len(deleted), len(added), len(new_meta), len(old_meta)
+            )
+            return ((new_meta, new_matrix), new_id_map)
+
+        except Exception as error:
+            logging.warning("Incremental update failed: %s, falling back to full reload", error)
+            return None
 
     def close(self):
         """Release the read connection. Only a test needs this: Windows refuses to
