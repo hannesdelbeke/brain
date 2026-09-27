@@ -1403,5 +1403,105 @@ class SessionQueryDedupeTest(unittest.TestCase):
         self.assertLessEqual(len(result["results"]), 5)
 
 
+class ConvoyTest(unittest.TestCase):
+    """A busy daemon must not serialise searches behind its own bookkeeping.
+
+    Both behaviours here were bugs on 2026-09-26, and both were invisible in
+    `/health`, which reported the index warm because it was: the matrix rebuild
+    held the lock a search needs, and nothing bounded the reindex queue, which is
+    how the log came to print `reindexed in 27845.42s` for four seconds of work.
+    """
+
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        root = Path(self.temp_dir.name) / "vault"
+        (root / ".obsidian").mkdir(parents=True)
+        (root / "note.md").write_text("## A heading\n\nsome text\n", encoding="utf-8")
+        db = root / ".obsidian" / "pkm_index.db"
+        SEARCHD.pkm.build_index(str(root), str(db), skip_embeddings=True)
+        self.vault = SEARCHD.Vault("convoy", root, db)
+        self.addCleanup(self.temp_dir.cleanup)
+        self.addCleanup(self.vault.close)
+
+    def test_search_reads_the_resident_matrix_while_a_rebuild_runs(self):
+        released = threading.Event()
+        loaded = []
+
+        def slow_load(cursor):
+            released.wait(10)
+            loaded.append(True)
+            return "REBUILT"
+
+        self.vault.matrix()  # prime the reader and the resident copy
+        with self.vault.lock:
+            self.vault.vectors = "RESIDENT"
+            self.vault.vectors_version = -1  # any commit would look like this
+
+        original = SEARCHD.pkm.load_vectors
+        SEARCHD.pkm.load_vectors = slow_load
+        self.addCleanup(lambda: setattr(SEARCHD.pkm, "load_vectors", original))
+
+        rebuilder = threading.Thread(target=self.vault.matrix, daemon=True)
+        rebuilder.start()
+        deadline = time.perf_counter() + 5
+        while not self.vault.rebuild_lock.locked() and time.perf_counter() < deadline:
+            time.sleep(0.01)
+        self.assertTrue(self.vault.rebuild_lock.locked(), "rebuild never started")
+
+        began = time.perf_counter()
+        served = self.vault.matrix()
+        waited = time.perf_counter() - began
+        self.assertEqual(served, "RESIDENT", "a search waited for the new matrix")
+        self.assertLess(waited, 1.0, f"search blocked for {waited:.2f}s on the rebuild")
+
+        released.set()
+        rebuilder.join(10)
+        self.assertTrue(loaded, "the rebuild never finished")
+        self.assertEqual(self.vault.vectors, "REBUILT")
+
+    def test_a_reindex_request_is_dropped_while_one_is_still_queued(self):
+        entered = threading.Event()
+        released = threading.Event()
+        builds = []
+
+        def slow_build(**kwargs):
+            builds.append(kwargs)
+            entered.set()
+            released.wait(10)
+
+        original = SEARCHD.pkm.build_index
+        SEARCHD.pkm.build_index = slow_build
+        self.addCleanup(lambda: setattr(SEARCHD.pkm, "build_index", original))
+
+        SEARCHD.INDEX_LOCK.acquire()
+        queued = threading.Thread(
+            target=SEARCHD.reindex_coalesced, args=(self.vault,), daemon=True)
+        try:
+            queued.start()
+            deadline = time.perf_counter() + 5
+            while not self.vault.queued and time.perf_counter() < deadline:
+                time.sleep(0.01)
+            self.assertTrue(self.vault.queued, "the first pass never queued")
+
+            self.assertIsNone(SEARCHD.reindex_coalesced(self.vault),
+                              "a second pass queued behind an identical one")
+        finally:
+            SEARCHD.INDEX_LOCK.release()
+
+        self.assertTrue(entered.wait(10), "the queued pass never ran")
+        # Running, not waiting: a change arriving now may be past this pass's read,
+        # so the flag is clear and the next request is allowed to queue.
+        self.assertFalse(self.vault.queued)
+        released.set()
+        queued.join(10)
+        self.assertEqual(len(builds), 1, "the dropped request rebuilt the corpus anyway")
+
+    def test_reindex_reports_the_wait_apart_from_the_work(self):
+        result = SEARCHD.do_reindex(self.vault)
+        self.assertIn("build_s", result)
+        self.assertIn("waited_s", result)
+        self.assertGreaterEqual(result["took_s"], result["build_s"])
+
+
 if __name__ == "__main__":
     unittest.main()

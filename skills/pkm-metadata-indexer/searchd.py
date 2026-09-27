@@ -383,12 +383,14 @@ class Vault:
         self.db = db
         self.collect = collect  # None scans markdown, otherwise a corpus scanner
         self.lock = threading.Lock()  # the resident matrix, its reader, and the counter
+        self.rebuild_lock = threading.Lock()  # one matrix rebuild at a time, off self.lock
         self.queries = 0
         self.vectors = None
         self.vectors_version = None
         self.reader = None
         self.watched = False  # set when a watcher thread takes this corpus
         self.reindexing = False
+        self.queued = False  # a reindex pass is waiting and has not read the corpus yet
         self.graph_cache = None  # (vectors_version, k), payload
         self.duplicate_cache = None  # (vectors_version, threshold), payload
         self.aa_neighbors_cache = None  # vectors_version, wikilink neighbor-set dict for &fusion=1
@@ -447,6 +449,24 @@ class Vault:
         threads, which is what the lock is for: sqlite3 is told to allow it, and
         then told once at a time. What comes back is read-only for its caller, so
         holding the lock past the return would only serialise the search itself.
+
+        The rebuild itself runs outside that lock, and a search that arrives while
+        one is under way is answered from the matrix already resident rather than
+        made to wait for the new one. Holding `self.lock` across the load was the
+        reason a busy daemon stalled: every reindex commit bumps `data_version` and
+        invalidates the matrix, the refresh hooks reindex on every transcript write,
+        so queries queued behind a rebuild and drained together — five different
+        queries completed in the same second on 2026-09-26 at 306s, 156s, 150s,
+        110s and 75s, while `/health` reported the index warm, which it was. The
+        cost of not waiting is answering from a matrix one reindex out of date,
+        which is the trade `stale()` already makes on the same path and reports.
+
+        The version probe stays on the persistent connection because that is the
+        only one that sees another connection's commits, and the load moves to its
+        own short-lived connection so it needs no share of the probe's lock. The
+        vectors are labelled with the version read before the load, never after: a
+        commit landing mid-load would otherwise be masked by a matrix that never
+        read it, and one redundant rebuild is cheaper than indefinite staleness.
         """
         with self.lock:
             if not self.db.exists():
@@ -457,10 +477,24 @@ class Vault:
                 )
             cursor = self.reader.cursor()
             version = cursor.execute("PRAGMA data_version").fetchone()[0]
-            if self.vectors is None or version != self.vectors_version:
-                self.vectors = pkm.load_vectors(cursor)
+            if self.vectors is not None and version == self.vectors_version:
+                return self.vectors
+            resident = self.vectors
+        if resident is not None and self.rebuild_lock.locked():
+            return resident  # stale by one reindex, and here now
+        with self.rebuild_lock:
+            with self.lock:
+                if self.vectors is not None and self.vectors_version == version:
+                    return self.vectors  # another thread rebuilt it while we waited
+            connection = sqlite3.connect(f"file:{self.db}?mode=ro", uri=True)
+            try:
+                vectors = pkm.load_vectors(connection.cursor())
+            finally:
+                connection.close()
+            with self.lock:
+                self.vectors = vectors
                 self.vectors_version = version
-            return self.vectors
+                return self.vectors
 
     def close(self):
         """Release the read connection. Only a test needs this: Windows refuses to
@@ -803,8 +837,13 @@ def kick_reindex(vault: Vault) -> bool:
 
     def run():
         try:
-            result = do_reindex(vault)
-            print(f"stale {vault.name}: reindexed in {result['took_s']}s", flush=True)
+            result = reindex_coalesced(vault)
+            if result is None:
+                print(f"stale {vault.name}: coalesced into the pass already queued",
+                      flush=True)
+                return
+            print(f"stale {vault.name}: reindexed in {result['build_s']}s after "
+                  f"waiting {result['waited_s']}s", flush=True)
         except Exception as error:
             print(f"stale {vault.name}: reindex failed, {type(error).__name__}: {error}", flush=True)
         finally:
@@ -1541,12 +1580,60 @@ def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
     }
 
 
-def do_reindex(vault: Vault) -> dict:
-    began = time.perf_counter()
+def do_reindex(vault: Vault, started=None) -> dict:
+    """Rebuild one corpus, and report the wait separately from the work.
+
+    `took_s` used to cover both, which is how this log came to carry lines
+    reading `reindexed in 27845.42s` for a pass that was four seconds of work and
+    7.7 hours of queue. One number for two things hid the backlog it was the only
+    evidence of, so the wait is now its own field.
+
+    `started` is called once the lock is held, which is the moment this pass
+    begins reading the corpus and therefore the moment a later change needs a
+    pass of its own. See reindex_coalesced.
+    """
+    queued_at = time.perf_counter()
     with INDEX_LOCK:
+        waited = time.perf_counter() - queued_at
+        if started is not None:
+            started()
+        began = time.perf_counter()
         pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect)
+        build = time.perf_counter() - began
     vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
-    return {"vault": vault.name, "took_s": round(time.perf_counter() - began, 2), **vault.counts()}
+    return {"vault": vault.name, "took_s": round(time.perf_counter() - queued_at, 2),
+            "build_s": round(build, 2), "waited_s": round(waited, 2), **vault.counts()}
+
+
+def reindex_coalesced(vault: Vault):
+    """Run a pass, or drop this one because a pass that covers it is already queued.
+
+    Returns None when dropped. A reindex reads whatever the corpus holds at the
+    moment it starts, so two passes queued behind the same lock do identical work
+    and the second is pure delay for everything behind it. Nothing bounded that
+    queue: `watch_vault`, `kick_reindex` and `POST /reindex` each started a pass
+    per event, and the refresh hooks fire on every transcript write and every git
+    log write, which on a machine running nineteen sessions is continuous.
+
+    At most one pass waiting and one running, per corpus. That loses no change:
+    a request arriving while a pass is *running* is not dropped, because that pass
+    may already have read past the change, so it queues the one pending pass that
+    will see it. A request arriving while a pass is still *waiting* is dropped,
+    because that pass has read nothing yet and will see the change itself.
+    """
+    with REINDEX_LOCK:
+        if vault.queued:
+            return None
+        vault.queued = True
+
+    def clear():
+        with REINDEX_LOCK:
+            vault.queued = False
+
+    try:
+        return do_reindex(vault, started=clear)
+    finally:
+        clear()  # idempotent, and the pass may have failed before it ever started
 
 
 def index_writes(path: str) -> bool:
@@ -1639,9 +1726,13 @@ def watch_vault(vault: Vault, stream=None):
         )
     for batch in stream:
         try:
-            result = do_reindex(vault)
+            result = reindex_coalesced(vault)
+            if result is None:
+                print(f"watch {vault.name}: {len(batch)} change(s), coalesced into "
+                      "the pass already queued", flush=True)
+                continue
             print(f"watch {vault.name}: {len(batch)} change(s), reindexed in "
-                  f"{result['took_s']}s", flush=True)
+                  f"{result['build_s']}s after waiting {result['waited_s']}s", flush=True)
         except Exception as error:
             print(f"watch {vault.name}: reindex failed, {type(error).__name__}: {error}",
                   flush=True)
@@ -1795,7 +1886,12 @@ class Handler(BaseHTTPRequestHandler):
                 limit = max(1, min(MAX_LIMIT, int(first("limit") or DEFAULT_LIMIT)))
                 self.reply(200, do_duplicates(vault, threshold, limit))
             elif url.path == "/reindex" and method == "POST":
-                self.reply(200, do_reindex(vault))
+                # The git-log refresh hook curls this on every commit, so it is the
+                # one caller that most needs the queue bounded. A coalesced request
+                # is a success: the pass already queued covers the same change.
+                result = reindex_coalesced(vault)
+                self.reply(200, result if result is not None
+                           else {"vault": vault.name, "coalesced": True})
             else:
                 self.reply(404, {"error": f"no route for {method} {url.path}"})
         except KeyError as error:
