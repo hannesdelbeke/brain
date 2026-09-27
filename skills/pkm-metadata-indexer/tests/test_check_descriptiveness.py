@@ -69,6 +69,14 @@ class DescriptivenessCheckerTest(unittest.TestCase):
         findings = CHECKER.check_note(note, min_words=600)
         self.assertEqual(len(findings["non_descriptive_filename"]), 0)
 
+    def test_date_suffixed_note_is_not_exempt_as_a_concept(self):
+        """A date anywhere in a stem makes it a dated note, not a bare-term concept."""
+        note = self.vault / "meet notes 2026-09-15.md"
+        note.write_text("---\n---\n\n## Context\nMeeting details.", encoding="utf-8")
+
+        findings = CHECKER.check_note(note, min_words=600)
+        self.assertIn("generic: Context", findings["label_headings"])
+
     def test_structural_file_exemption_suppresses_filename_finding(self):
         """AGENTS.md, CLAUDE.md, README.md, SKILL.md are exempt."""
         for filename in ["AGENTS.md", "CLAUDE.md", "README.md", "SKILL.md"]:
