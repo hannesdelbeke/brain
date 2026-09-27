@@ -142,6 +142,20 @@ if watchfiles is not None:
         ignore_dirs=tuple(d for d in watchfiles.DefaultFilter.ignore_dirs if d != ".git")
     )
 
+# Vault watcher needs to ignore Obsidian state directories that hold editor state
+# rather than notes. `index_writes` cannot catch these because it only inspects the
+# basename: `workspace.json` starts with neither `.` nor an index suffix, but a
+# rewrite of `.obsidian/workspace.json` otherwise costs a full reindex. Obsidian
+# rewrites `workspace.json` on nearly every pane or focus change while the vault
+# is open. Built from watchfiles 1.2.0's DefaultFilter.ignore_dirs.
+VAULT_IGNORE_DIRS = None
+VAULT_FILTER = None
+if watchfiles is not None:
+    VAULT_IGNORE_DIRS = tuple(watchfiles.DefaultFilter.ignore_dirs) + (
+        ".obsidian", ".trash", ".smart-env", ".space",
+    )
+    VAULT_FILTER = watchfiles.DefaultFilter(ignore_dirs=VAULT_IGNORE_DIRS)
+
 HOST = "127.0.0.1"
 PORT = 44771
 DEFAULT_LIMIT = 20
@@ -1719,7 +1733,7 @@ def watch_vault(vault: Vault, stream=None):
     if stream is None:
         stream = watchfiles.watch(
             vault.root,
-            watch_filter=lambda change, path: watchfiles.DefaultFilter()(change, path)
+            watch_filter=lambda change, path: VAULT_FILTER(change, path)
             and not index_writes(path),
             debounce=WATCH_DEBOUNCE_MS,
             step=WATCH_STEP_MS,

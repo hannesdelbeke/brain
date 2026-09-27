@@ -609,6 +609,35 @@ class WatcherTest(unittest.TestCase):
         release.set()
         watcher.join(10)
 
+    def test_obsidian_state_directories_are_filtered_from_vault_watcher(self):
+        # .obsidian/workspace.json is rewritten on nearly every pane or focus change
+        # while Obsidian is open. Without filtering, each one triggers a full reindex.
+        # The composed filter is `VAULT_FILTER and not index_writes`, so both gates
+        # must survive: Obsidian state is caught by VAULT_FILTER, and index writes by
+        # index_writes.
+        if SEARCHD.watchfiles is None:
+            self.skipTest("watchfiles is not installed")
+        self.assertIsNotNone(SEARCHD.VAULT_FILTER)
+        change = SEARCHD.watchfiles.Change.modified
+
+        # The filter watch_vault uses: the same predicate but as a standalone function
+        def watch_filter(path):
+            return SEARCHD.VAULT_FILTER(change, str(path)) and not SEARCHD.index_writes(str(path))
+
+        # Obsidian state directories are rejected
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/workspace.json")))
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/app.json")))
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/plugins/dataview/data.json")))
+
+        # Ordinary notes are still accepted (this is the regression that would silently
+        # disable all reindexing)
+        self.assertTrue(watch_filter(Path("/vault/notes/whatever.md")))
+        self.assertTrue(watch_filter(Path("/vault/2026-09-27 a note.md")))
+
+        # Index writes are still rejected by the index_writes guard
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/pkm_index.db")))
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/pkm_index.db-wal")))
+
 
 class OutlineRouteTest(unittest.TestCase):
     """The route's own job: honour `semantic=1`, gate it otherwise.
