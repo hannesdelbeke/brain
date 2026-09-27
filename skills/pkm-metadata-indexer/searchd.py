@@ -1647,6 +1647,38 @@ def index_writes(path: str) -> bool:
     return name.startswith(".") or name.endswith(INDEX_SUFFIXES)
 
 
+def in_nested_repo(path: str, vault_root: Path) -> bool:
+    """True when path sits inside a repository nested in the vault.
+
+    Mirrors the scan's own prune rule, which leaves any directory holding its
+    own `.git` to its own index. The watcher has to agree with the scan or it
+    schedules reindex passes that cannot change anything: a write under a
+    nested worktree is a real file event for a file the scan will never yield.
+    `.git` is a regular file rather than a directory inside a worktree, so the
+    test is existence, not isdir.
+    """
+    try:
+        file_path = Path(path).resolve()
+        vault_resolved = vault_root.resolve()
+
+        # Path outside vault_root is not our concern
+        if vault_resolved not in file_path.parents:
+            return False
+
+        # Walk from the file's parent up to (excluding) vault_root
+        current = file_path.parent
+        while current != vault_resolved and vault_resolved in current.parents:
+            git_marker = current / ".git"
+            if git_marker.exists():
+                return True
+            current = current.parent
+
+        return False
+    except Exception:
+        # Defensive: an exception inside a watchfiles filter kills the watcher
+        return False
+
+
 def catch_up(vaults):
     """Reindex once at startup, for whatever changed while nothing was watching.
 
@@ -1722,7 +1754,8 @@ def watch_vault(vault: Vault, stream=None):
             # Only reindex for .md files: the indexer walks *.md, so non-markdown changes cannot alter the index
             watch_filter=lambda change, path: watchfiles.DefaultFilter()(change, path)
             and path.lower().endswith('.md')
-            and not index_writes(path),
+            and not index_writes(path)
+            and not in_nested_repo(path, vault.root),
             debounce=WATCH_DEBOUNCE_MS,
             step=WATCH_STEP_MS,
         )
