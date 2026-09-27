@@ -1719,7 +1719,9 @@ def watch_vault(vault: Vault, stream=None):
     if stream is None:
         stream = watchfiles.watch(
             vault.root,
+            # Only reindex for .md files: the indexer walks *.md, so non-markdown changes cannot alter the index
             watch_filter=lambda change, path: watchfiles.DefaultFilter()(change, path)
+            and path.lower().endswith('.md')
             and not index_writes(path),
             debounce=WATCH_DEBOUNCE_MS,
             step=WATCH_STEP_MS,
