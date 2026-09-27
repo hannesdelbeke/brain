@@ -272,6 +272,92 @@ LOG_PATH = None
 LOG_LOCK = threading.Lock()
 
 
+class RefreshCoalescer:
+    """Coalesce rapid filesystem events into a single refresh run per target.
+
+    Prevents queueing multiple refreshes for the same target while one is already
+    running, and debounces events with a maximum delay to prevent starvation under
+    continuous writes.
+    """
+
+    def __init__(self, debounce_s: float = 30.0, max_delay_s: float = 120.0):
+        self.debounce_s = debounce_s
+        self.max_delay_s = max_delay_s
+        self.lock = threading.Lock()
+        # Per-target state: first_event_time, last_event_time, running, pending
+        self.state = {}
+
+    def should_run(self, target: str) -> tuple[bool, int]:
+        """Check if a refresh should run for this target.
+
+        Returns (should_run, coalesced_count) where coalesced_count is the number
+        of events coalesced since the last run (0 if this is the first event).
+        """
+        now = time.perf_counter()
+
+        with self.lock:
+            if target not in self.state:
+                # First event for this target
+                self.state[target] = {
+                    "first_event": now,
+                    "last_event": now,
+                    "running": False,
+                    "pending": False,
+                    "event_count": 1
+                }
+                return (True, 0)
+
+            state = self.state[target]
+            state["last_event"] = now
+            state["event_count"] += 1
+
+            if state["running"]:
+                # A refresh is already running, mark as pending
+                state["pending"] = True
+                return (False, 0)
+
+            # Check if we should run based on debounce or max delay
+            time_since_first = now - state["first_event"]
+
+            if time_since_first >= self.max_delay_s:
+                # Max delay exceeded, must run now to prevent starvation
+                count = state["event_count"]
+                state["first_event"] = now
+                state["event_count"] = 0
+                return (True, count)
+
+            # Otherwise wait for quiet period (handled by watchfiles debounce)
+            # This is the normal debounce case
+            count = state["event_count"]
+            state["first_event"] = now
+            state["event_count"] = 0
+            return (True, count)
+
+    def mark_running(self, target: str):
+        """Mark a refresh as running for this target."""
+        with self.lock:
+            if target in self.state:
+                self.state[target]["running"] = True
+
+    def mark_done(self, target: str) -> bool:
+        """Mark a refresh as done and return True if another is pending."""
+        with self.lock:
+            if target not in self.state:
+                return False
+
+            state = self.state[target]
+            state["running"] = False
+            pending = state["pending"]
+            state["pending"] = False
+
+            if pending:
+                # Reset for the pending run
+                state["first_event"] = time.perf_counter()
+                state["event_count"] = 0
+
+            return pending
+
+
 def get_device_name() -> str:
     """Return sanitized device name for per-machine telemetry log partitioning."""
     device = os.environ.get("PKM_DEVICE")
@@ -1668,7 +1754,8 @@ def catch_up(vaults):
             print(f"catch-up {vault.name} failed, {type(error).__name__}: {error}", flush=True)
 
 
-def watch_command(root: Path, command: list[str], debounce: int, stream=None):
+def watch_command(root: Path, command: list[str], debounce: int, stream=None,
+                  coalescer: RefreshCoalescer | None = None):
     """Run a command whenever a directory changes, on a long debounce.
 
     For a corpus that is not markdown and is not searched directly, but is the
@@ -1679,6 +1766,9 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     The debounce is minutes rather than the two seconds a reindex gets, because
     a transcript is appended on every message and the extractor reads all of
     them. Errors print and the loop continues, the same as the reindex watcher.
+
+    When a coalescer is provided, rapid successive events are collapsed into a
+    single refresh run, with at most one pending run after the current one finishes.
     """
     if stream is None:
         stream = watchfiles.watch(root, watch_filter=REFRESH_FILTER,
@@ -1692,8 +1782,21 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     # read healthy. The root disambiguates, but only past `.git/logs`, hence three
     # components rather than the usual one.
     name = f"{script} on {'/'.join(root.parts[-3:])}"
+    target = str(root)  # unique identifier for coalescing
+
     for batch in stream:
+        if coalescer is not None:
+            should_run, coalesced = coalescer.should_run(target)
+            if not should_run:
+                continue  # Skipped because a refresh is already running
+
+            if coalesced > 0:
+                print(f"refresh {name}: coalesced {coalesced} event(s)", flush=True)
+
         began = time.perf_counter()
+        if coalescer is not None:
+            coalescer.mark_running(target)
+
         try:
             # the daemon runs under pythonw with no console of its own, so a console
             # child would allocate one and flash a window on every refresh
@@ -1706,6 +1809,11 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
                 print((result.stderr or result.stdout).strip()[:500], flush=True)
         except Exception as error:
             print(f"refresh {name} failed, {type(error).__name__}: {error}", flush=True)
+        finally:
+            if coalescer is not None:
+                pending = coalescer.mark_done(target)
+                if pending:
+                    print(f"refresh {name}: another run pending", flush=True)
 
 
 def watch_vault(vault: Vault, stream=None):
@@ -1982,6 +2090,12 @@ def main():
                              "searched itself but produces notes that are. Debounced to a minute, "
                              "since the sources this is for are appended to constantly. Write paths "
                              "with forward slashes, the command is split as a posix shell would")
+    parser.add_argument("--refresh-debounce", type=float, default=30.0,
+                        help="Quiet period in seconds before running a refresh after filesystem "
+                             "events (default 30). Rapid events are coalesced into a single refresh")
+    parser.add_argument("--refresh-max-delay", type=float, default=120.0,
+                        help="Maximum delay in seconds before forcing a refresh under continuous "
+                             "writes, preventing starvation (default 120)")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--no-keepalive", action="store_true",
                         help="Let the model go cold between queries, trading ~30ms on the first "
@@ -2052,8 +2166,21 @@ def main():
             vault.watched = True
             threading.Thread(target=watch_vault, args=(vault,), daemon=True).start()
         print(f"watching {len(vaults)} corpus root(s)", flush=True)
+
+    # Create coalescer for refresh watchers if any are registered
+    coalescer = None
+    if refreshes:
+        coalescer = RefreshCoalescer(
+            debounce_s=args.refresh_debounce,
+            max_delay_s=args.refresh_max_delay
+        )
+        print(f"refresh coalescing: debounce={args.refresh_debounce}s, "
+              f"max_delay={args.refresh_max_delay}s", flush=True)
+
     for root, command in refreshes:
-        threading.Thread(target=watch_command, args=(root, command, REFRESH_DEBOUNCE_MS),
+        threading.Thread(target=watch_command,
+                         args=(root, command, REFRESH_DEBOUNCE_MS),
+                         kwargs={"coalescer": coalescer},
                          daemon=True).start()
         print(f"refresh on change in {root}\n  {' '.join(command)}", flush=True)
 

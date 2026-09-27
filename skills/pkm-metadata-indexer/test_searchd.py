@@ -1503,5 +1503,109 @@ class ConvoyTest(unittest.TestCase):
         self.assertGreaterEqual(result["took_s"], result["build_s"])
 
 
+class RefreshCoalescerTest(unittest.TestCase):
+    """Test the coalescing logic for refresh watchers."""
+
+    def test_rapid_events_coalesce_into_one_refresh(self):
+        """N rapid synthetic events for one target produce exactly ONE refresh invocation."""
+        # Use a fake time source to avoid real 30s sleeps
+        coalescer = SEARCHD.RefreshCoalescer(debounce_s=30.0, max_delay_s=120.0)
+        target = "/path/to/watched/dir"
+
+        # First event should run
+        should_run, coalesced = coalescer.should_run(target)
+        self.assertTrue(should_run)
+        self.assertEqual(coalesced, 0)  # First event, nothing coalesced
+
+        coalescer.mark_running(target)
+
+        # Events while running should be marked as pending but not run
+        for _ in range(5):
+            should_run, coalesced = coalescer.should_run(target)
+            self.assertFalse(should_run)
+
+        # Mark the first run as done, which should indicate a pending run
+        pending = coalescer.mark_done(target)
+        self.assertTrue(pending)
+
+        # Now the pending run should be allowed to execute
+        should_run, coalesced = coalescer.should_run(target)
+        self.assertTrue(should_run)
+        self.assertGreater(coalesced, 0)  # Events were coalesced
+
+        coalescer.mark_running(target)
+
+        # More events while this run is executing
+        for _ in range(3):
+            should_run, _ = coalescer.should_run(target)
+            self.assertFalse(should_run)
+
+        # Mark done, should have another pending
+        pending = coalescer.mark_done(target)
+        self.assertTrue(pending)
+
+        # Allow the final pending run
+        should_run, coalesced = coalescer.should_run(target)
+        self.assertTrue(should_run)
+        self.assertGreater(coalesced, 0)
+
+        coalescer.mark_running(target)
+        pending = coalescer.mark_done(target)
+        self.assertFalse(pending)  # No more events, no pending
+
+    def test_max_delay_prevents_starvation(self):
+        """Maximum delay forces a refresh under continuous events."""
+        # Create a coalescer with short timings for testing
+        coalescer = SEARCHD.RefreshCoalescer(debounce_s=1.0, max_delay_s=0.1)
+        target = "/path/to/watched/dir"
+
+        # Inject a fake initial timestamp by manually setting state
+        now = time.perf_counter()
+        old_time = now - 0.2  # 200ms ago, which exceeds our 100ms max_delay
+
+        # First event to initialize state
+        should_run, _ = coalescer.should_run(target)
+        self.assertTrue(should_run)
+
+        # Manually set the first_event time to the past to simulate max delay
+        # Set event_count to 9 because the next should_run call will increment it to 10
+        with coalescer.lock:
+            coalescer.state[target]["first_event"] = old_time
+            coalescer.state[target]["event_count"] = 9  # Will become 10 on next call
+
+        # Next event should force a run due to max_delay being exceeded
+        should_run, coalesced = coalescer.should_run(target)
+        self.assertTrue(should_run)
+        self.assertEqual(coalesced, 10)  # Should report the coalesced events
+
+    def test_multiple_targets_tracked_independently(self):
+        """Different targets are coalesced independently."""
+        coalescer = SEARCHD.RefreshCoalescer(debounce_s=30.0, max_delay_s=120.0)
+        target_a = "/path/to/dir_a"
+        target_b = "/path/to/dir_b"
+
+        # First event for target A
+        should_run_a, _ = coalescer.should_run(target_a)
+        self.assertTrue(should_run_a)
+        coalescer.mark_running(target_a)
+
+        # First event for target B (should run independently)
+        should_run_b, _ = coalescer.should_run(target_b)
+        self.assertTrue(should_run_b)
+        coalescer.mark_running(target_b)
+
+        # More events for A while it's running
+        should_run_a, _ = coalescer.should_run(target_a)
+        self.assertFalse(should_run_a)
+
+        # B can finish independently
+        pending_b = coalescer.mark_done(target_b)
+        self.assertFalse(pending_b)
+
+        # A still has a pending run
+        pending_a = coalescer.mark_done(target_a)
+        self.assertTrue(pending_a)
+
+
 if __name__ == "__main__":
     unittest.main()
