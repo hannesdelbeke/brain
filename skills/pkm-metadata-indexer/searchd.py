@@ -1661,6 +1661,20 @@ def index_writes(path: str) -> bool:
     return name.startswith(".") or name.endswith(INDEX_SUFFIXES)
 
 
+def indexable_note(path: str) -> bool:
+    """True only for markdown files that the indexer can read.
+
+    index_pkm_meta.py walks rglob("*.md"), so a change to any non-.md file
+    cannot alter the index. Reindexing on one is pure waste. The measured
+    motivation: the daemon's own query telemetry log at
+    data/telemetry/queries/*.jsonl inside the watched root turns every search
+    into a reindex when this check is missing. This superset check lives
+    alongside index_writes (the guard against database writes retriggering
+    forever) rather than replacing it, because both are load-bearing.
+    """
+    return Path(path).name.casefold().endswith(".md")
+
+
 def catch_up(vaults):
     """Reindex once at startup, for whatever changed while nothing was watching.
 
@@ -1734,7 +1748,8 @@ def watch_vault(vault: Vault, stream=None):
         stream = watchfiles.watch(
             vault.root,
             watch_filter=lambda change, path: VAULT_FILTER(change, path)
-            and not index_writes(path),
+            and not index_writes(path)
+            and indexable_note(path),
             debounce=WATCH_DEBOUNCE_MS,
             step=WATCH_STEP_MS,
         )

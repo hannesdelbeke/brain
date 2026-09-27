@@ -612,9 +612,9 @@ class WatcherTest(unittest.TestCase):
     def test_obsidian_state_directories_are_filtered_from_vault_watcher(self):
         # .obsidian/workspace.json is rewritten on nearly every pane or focus change
         # while Obsidian is open. Without filtering, each one triggers a full reindex.
-        # The composed filter is `VAULT_FILTER and not index_writes`, so both gates
-        # must survive: Obsidian state is caught by VAULT_FILTER, and index writes by
-        # index_writes.
+        # The composed filter is `VAULT_FILTER and not index_writes and indexable_note`,
+        # so all three gates must survive: Obsidian state is caught by VAULT_FILTER,
+        # index writes by index_writes, and non-markdown files by indexable_note.
         if SEARCHD.watchfiles is None:
             self.skipTest("watchfiles is not installed")
         self.assertIsNotNone(SEARCHD.VAULT_FILTER)
@@ -622,7 +622,9 @@ class WatcherTest(unittest.TestCase):
 
         # The filter watch_vault uses: the same predicate but as a standalone function
         def watch_filter(path):
-            return SEARCHD.VAULT_FILTER(change, str(path)) and not SEARCHD.index_writes(str(path))
+            return (SEARCHD.VAULT_FILTER(change, str(path))
+                    and not SEARCHD.index_writes(str(path))
+                    and SEARCHD.indexable_note(str(path)))
 
         # Obsidian state directories are rejected
         self.assertFalse(watch_filter(Path("/vault/.obsidian/workspace.json")))
@@ -635,6 +637,40 @@ class WatcherTest(unittest.TestCase):
         self.assertTrue(watch_filter(Path("/vault/2026-09-27 a note.md")))
 
         # Index writes are still rejected by the index_writes guard
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/pkm_index.db")))
+        self.assertFalse(watch_filter(Path("/vault/.obsidian/pkm_index.db-wal")))
+
+    def test_vault_watcher_only_triggers_on_markdown_files(self):
+        # index_pkm_meta.py walks rglob("*.md"), so only .md files can change the
+        # index. The measured loop: the daemon's own query telemetry log at
+        # data/telemetry/queries/*.jsonl inside the watched root turned every search
+        # into a reindex when this check was missing.
+        if SEARCHD.watchfiles is None:
+            self.skipTest("watchfiles is not installed")
+        change = SEARCHD.watchfiles.Change.modified
+
+        # The filter watch_vault uses: extract it to verify it matches watch_vault
+        def watch_filter(path):
+            return (SEARCHD.VAULT_FILTER(change, str(path))
+                    and not SEARCHD.index_writes(str(path))
+                    and SEARCHD.indexable_note(str(path)))
+
+        # The specific telemetry loop case that motivated this fix
+        self.assertFalse(watch_filter(Path("/vault/data/telemetry/queries/queries_mac.jsonl")))
+
+        # Other non-.md files that fired reindexes in the wild
+        self.assertFalse(watch_filter(Path("/vault/activity/rollup/queue.jsonl")))
+        self.assertFalse(watch_filter(Path("/vault/scripts/daemon_heartbeat.py")))
+        self.assertFalse(watch_filter(Path("/vault/scripts/daemon_heartbeat.py.tmp.1215.abc")))
+
+        # Ordinary markdown notes are accepted (the regression test)
+        self.assertTrue(watch_filter(Path("/vault/notes/whatever.md")))
+        self.assertTrue(watch_filter(Path("/vault/sessions/2026-09-27 a thing.md")))
+
+        # Case-insensitive on macOS filesystems
+        self.assertTrue(watch_filter(Path("/vault/notes/UPPER.MD")))
+
+        # Index database files remain rejected (both filters compose)
         self.assertFalse(watch_filter(Path("/vault/.obsidian/pkm_index.db")))
         self.assertFalse(watch_filter(Path("/vault/.obsidian/pkm_index.db-wal")))
 
