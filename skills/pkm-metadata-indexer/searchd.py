@@ -154,6 +154,7 @@ WATCH_DEBOUNCE_MS = 2000
 WATCH_STEP_MS = 200
 REFRESH_DEBOUNCE_MS = 60000
 REFRESH_TIMEOUT_S = 300
+MIN_REFRESH_INTERVAL_S = float(os.environ.get("PKM_MIN_REFRESH_INTERVAL_S", "300") if os.environ.get("PKM_MIN_REFRESH_INTERVAL_S", "300").replace(".", "", 1).replace("-", "", 1).isdigit() else "300")
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
@@ -1679,6 +1680,12 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     The debounce is minutes rather than the two seconds a reindex gets, because
     a transcript is appended on every message and the extractor reads all of
     them. Errors print and the loop continues, the same as the reindex watcher.
+
+    Rate limiting: each watcher enforces MIN_REFRESH_INTERVAL_S between runs by
+    sleeping until the interval elapses before running the command. This coalesces
+    rapid events without dropping any — watchfiles accumulates changes during the
+    sleep into the next batch. Sleeping rather than skipping ensures no change is
+    lost if events stop right after a dropped batch would have occurred.
     """
     if stream is None:
         stream = watchfiles.watch(root, watch_filter=REFRESH_FILTER,
@@ -1692,7 +1699,19 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     # read healthy. The root disambiguates, but only past `.git/logs`, hence three
     # components rather than the usual one.
     name = f"{script} on {'/'.join(root.parts[-3:])}"
+    last_run = float('-inf')
     for batch in stream:
+        # Rate limit: sleep until the minimum interval has elapsed since the last
+        # run started. Set the timestamp before running so a crashing command still
+        # consumes its interval (otherwise a failing refresh retries in a hot loop).
+        if MIN_REFRESH_INTERVAL_S > 0:
+            now = time.monotonic()
+            elapsed = now - last_run
+            if elapsed < MIN_REFRESH_INTERVAL_S:
+                delay = MIN_REFRESH_INTERVAL_S - elapsed
+                print(f"refresh {name}: rate-limited, sleeping {delay:.1f}s", flush=True)
+                time.sleep(delay)
+        last_run = time.monotonic()
         began = time.perf_counter()
         try:
             # the daemon runs under pythonw with no console of its own, so a console
