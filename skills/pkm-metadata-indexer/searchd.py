@@ -1740,6 +1740,19 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
             print(f"refresh {name} failed, {type(error).__name__}: {error}", flush=True)
 
 
+def vault_watch_filter(change, path: str, root: Path) -> bool:
+    """Reindex only for files that can change the index.
+
+    The indexer walks `*.md`, so non-markdown changes cannot alter the index.
+    The watcher's own writes (database, dotfiles) would loop forever if seen.
+    Nested repos are pruned during scan, so watching them schedules no-op passes.
+    """
+    return (watchfiles.DefaultFilter()(change, path)
+            and path.lower().endswith('.md')
+            and not index_writes(path)
+            and not in_nested_repo(path, root))
+
+
 def watch_vault(vault: Vault, stream=None):
     """Reindex one corpus whenever its files change.
 
@@ -1751,11 +1764,7 @@ def watch_vault(vault: Vault, stream=None):
     if stream is None:
         stream = watchfiles.watch(
             vault.root,
-            # Only reindex for .md files: the indexer walks *.md, so non-markdown changes cannot alter the index
-            watch_filter=lambda change, path: watchfiles.DefaultFilter()(change, path)
-            and path.lower().endswith('.md')
-            and not index_writes(path)
-            and not in_nested_repo(path, vault.root),
+            watch_filter=lambda change, path: vault_watch_filter(change, path, vault.root),
             debounce=WATCH_DEBOUNCE_MS,
             step=WATCH_STEP_MS,
         )

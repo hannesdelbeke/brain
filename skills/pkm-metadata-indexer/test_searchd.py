@@ -609,6 +609,55 @@ class WatcherTest(unittest.TestCase):
         release.set()
         watcher.join(10)
 
+    def test_vault_watch_filter_accepts_only_markdown_files(self):
+        # the indexer walks *.md, so non-markdown changes cannot alter the index
+        if SEARCHD.watchfiles is None:
+            self.skipTest("watchfiles is not installed")
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        root = Path(temp_dir.name)
+        change = SEARCHD.watchfiles.Change.modified
+
+        # rejected: query telemetry log, rollup queue, python script, temp file
+        self.assertFalse(SEARCHD.vault_watch_filter(change, str(root / "data/telemetry/queries/queries_mac.jsonl"), root))
+        self.assertFalse(SEARCHD.vault_watch_filter(change, str(root / "rollup/queue.jsonl"), root))
+        self.assertFalse(SEARCHD.vault_watch_filter(change, str(root / "scripts/daemon_heartbeat.py"), root))
+        self.assertFalse(SEARCHD.vault_watch_filter(change, str(root / "temp.txt"), root))
+
+        # accepted: ordinary note, nested note, uppercase extension (macOS is case-insensitive)
+        self.assertTrue(SEARCHD.vault_watch_filter(change, str(root / "note.md"), root))
+        self.assertTrue(SEARCHD.vault_watch_filter(change, str(root / "folder/sub/note.md"), root))
+        self.assertTrue(SEARCHD.vault_watch_filter(change, str(root / "NOTE.MD"), root))
+
+    def test_vault_watch_filter_rejects_nested_repos(self):
+        # a markdown file under a directory with its own .git must be rejected,
+        # mirroring the scan's prune rule. .git is a regular file inside a worktree,
+        # not a directory, so both cases are tested
+        if SEARCHD.watchfiles is None:
+            self.skipTest("watchfiles is not installed")
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        root = Path(temp_dir.name)
+        change = SEARCHD.watchfiles.Change.modified
+
+        # .git as directory (normal repo)
+        nested_dir = root / "nested_dir_repo"
+        nested_dir.mkdir(parents=True)
+        (nested_dir / ".git").mkdir()
+        self.assertFalse(SEARCHD.vault_watch_filter(change, str(nested_dir / "note.md"), root),
+                         "markdown in nested repo with .git directory should be rejected")
+
+        # .git as regular file (worktree)
+        nested_file = root / "nested_file_repo"
+        nested_file.mkdir(parents=True)
+        (nested_file / ".git").write_text("gitdir: /elsewhere/.git/worktrees/name\n", encoding="utf-8")
+        self.assertFalse(SEARCHD.vault_watch_filter(change, str(nested_file / "note.md"), root),
+                         "markdown in nested repo with .git file should be rejected")
+
+        # accepted: markdown outside nested repos
+        self.assertTrue(SEARCHD.vault_watch_filter(change, str(root / "regular_note.md"), root),
+                        "markdown outside nested repos should be accepted")
+
 
 class OutlineRouteTest(unittest.TestCase):
     """The route's own job: honour `semantic=1`, gate it otherwise.
