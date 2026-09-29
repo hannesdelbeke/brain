@@ -221,6 +221,106 @@ class MetadataIndexerTest(unittest.TestCase):
         self.assertEqual(calls[0].get("threads"), 1)
         self.assertNotIn("threads", calls[1], "bulk embedding keeps the full pool")
 
+    def test_digest_dir_prefix_scopes_to_folder_and_composes_with_tag(self):
+        (self.vault / "sessions").mkdir()
+        (self.vault / "sessions" / "session1.md").write_text(
+            "---\ntags:\n  - session\n---\n\n## Session 1\nContent here.",
+            encoding="utf-8",
+        )
+        (self.vault / "sessions" / "session2.md").write_text(
+            "---\ntags:\n  - session\n---\n\n## Session 2\nMore content.",
+            encoding="utf-8",
+        )
+        (self.vault / "other.md").write_text(
+            "---\ntags:\n  - session\n---\n\n## Other\nNot in sessions folder.",
+            encoding="utf-8",
+        )
+        self.build_metadata_only()
+
+        # Test --dir scopes to sessions folder
+        digest_sessions = INDEXER.digest_notes(
+            vault_path=str(self.vault), db_path=str(self.db), dir_prefix="sessions"
+        )
+        paths = {row["path"] for row in digest_sessions}
+        self.assertEqual(paths, {"sessions/session1.md", "sessions/session2.md"})
+
+        # Test --dir with trailing slash
+        digest_slash = INDEXER.digest_notes(
+            vault_path=str(self.vault), db_path=str(self.db), dir_prefix="sessions/"
+        )
+        self.assertEqual({row["path"] for row in digest_slash}, paths)
+
+        # Test --dir with ./ prefix
+        digest_dot = INDEXER.digest_notes(
+            vault_path=str(self.vault), db_path=str(self.db), dir_prefix="./sessions"
+        )
+        self.assertEqual({row["path"] for row in digest_dot}, paths)
+
+        # Test --dir composes with --tag
+        digest_both = INDEXER.digest_notes(
+            vault_path=str(self.vault), db_path=str(self.db), dir_prefix="sessions", tag="session"
+        )
+        self.assertEqual({row["path"] for row in digest_both}, paths)
+
+    def test_digest_field_reports_present_field_and_marks_missing(self):
+        (self.vault / "with_field.md").write_text(
+            "---\ndescription: Has description\nduration_active: 45m\n---\n\n## Content",
+            encoding="utf-8",
+        )
+        (self.vault / "without_field.md").write_text(
+            "---\ndescription: Also has description\n---\n\n## Content",
+            encoding="utf-8",
+        )
+        self.build_metadata_only()
+
+        # Capture stdout to verify output format
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            digest = INDEXER.digest_notes(
+                vault_path=str(self.vault),
+                db_path=str(self.db),
+                field_keys=["description", "duration_active"],
+            )
+
+        by_path = {row["path"]: row for row in digest}
+
+        # Test present fields
+        self.assertEqual(by_path["with_field.md"]["fields"]["description"], "Has description")
+        self.assertEqual(by_path["with_field.md"]["fields"]["duration_active"], "45m")
+
+        # Test missing field marked with "-"
+        self.assertEqual(by_path["without_field.md"]["fields"]["description"], "Also has description")
+        self.assertEqual(by_path["without_field.md"]["fields"]["duration_active"], "-")
+
+        # Verify compact output format used when --field is given
+        lines = output.getvalue().splitlines()
+        self.assertTrue(any("with_field.md | description: Has description | duration_active: 45m" in line for line in lines))
+        self.assertTrue(any("without_field.md | description: Also has description | duration_active: -" in line for line in lines))
+
+    def test_digest_output_unchanged_without_field(self):
+        self.build_metadata_only()
+
+        # Capture stdout for both calls
+        output_before = io.StringIO()
+        with contextlib.redirect_stdout(output_before):
+            digest_before = INDEXER.digest_notes(vault_path=str(self.vault), db_path=str(self.db))
+
+        # Verify format is unchanged (contains description, tags, headings, summary_snippet)
+        lines = output_before.getvalue().splitlines()
+        for line in lines:
+            self.assertIn(" | description: ", line)
+            self.assertIn(" | tags: ", line)
+            self.assertIn(" | headings: ", line)
+
+        # Verify returned dict has expected keys and no "fields" key
+        for row in digest_before:
+            self.assertIn("path", row)
+            self.assertIn("description", row)
+            self.assertIn("tags", row)
+            self.assertIn("headings", row)
+            self.assertIn("summary_snippet", row)
+            self.assertNotIn("fields", row)
+
 
 class DuplicateCheckTest(unittest.TestCase):
     """The gate's contract: an exit code a hook can branch on, from cosine alone."""
