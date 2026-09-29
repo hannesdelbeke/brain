@@ -459,6 +459,25 @@ def find_cutoff(results: list[dict]) -> tuple[int, str]:
                  f"against {sigmoid(logits[cut - 1]):.0%} at {cut}")
 
 
+# How much of an authored `description:` a result line carries. A line's worth is
+# enough to judge a hit by, and the field runs to a paragraph on most described
+# notes, so the cut is the common case rather than the rare one. It is marked for
+# the same reason every other cut in this printer is: an unmarked cut lands
+# mid-number as often as mid-word, and a halved figure reads as the whole claim.
+DESCRIPTION_CHARS = 200
+
+
+def elide(text: str, limit: int) -> str:
+    """Cut to `limit` characters on a word boundary and say out loud that it was cut."""
+    if len(text) <= limit:
+        return text
+    head = text[:limit].rstrip()
+    boundary = head.rfind(" ")
+    if boundary > 0:
+        head = head[:boundary]
+    return head.rstrip() + "..."
+
+
 def print_results(query: str, source: str, results: list[dict], vault_roots: dict[str, str] | None = None):
     """Print the head with the text that matched and the tail with headings only.
 
@@ -496,7 +515,7 @@ def print_results(query: str, source: str, results: list[dict], vault_roots: dic
               f"(line {row['line']}) -> {row['heading']}")
         # Show description if present (authored summary)
         if row.get("description"):
-            print(f"      desc: {row['description'][:200]}")
+            print(f"      desc: {elide(row['description'], DESCRIPTION_CHARS)}")
         # Show absolute path for direct file reading
         if row.get("abs_path"):
             print(f"      path: {row['abs_path']}")
