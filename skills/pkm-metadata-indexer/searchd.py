@@ -667,15 +667,25 @@ def enrich_results_with_metadata(vault: Vault, rows: list[dict]) -> list[dict]:
     enriched = []
     for row in rows:
         path = row["path"]
-        abs_path = str(vault.root / path)
 
-        # Get mtime if file exists
+        # A corpus scanned from git refs rather than from the working tree keys its
+        # rows `<ref>/<path>`, and a ref name holds slashes of its own, so nothing
+        # downstream can split the key back apart. Joining a vault root onto one
+        # therefore produced an absolute path that looked real, resolved to nothing,
+        # and could not be opened -- worse than the relative key, which at least
+        # names the ref. The stat is the only thing here that knows whether a row is
+        # a file, so abs_path is derived from it rather than computed beside it and
+        # left unchecked. A row with no file on disk carries abs_path None, and every
+        # caller already treats the field as optional.
+        abs_path = None
         mtime = None
         try:
             stat_result = (vault.root / path).stat()
-            mtime = datetime.fromtimestamp(stat_result.st_mtime, tz=timezone.utc).isoformat()
         except OSError:
             pass
+        else:
+            abs_path = str(vault.root / path)
+            mtime = datetime.fromtimestamp(stat_result.st_mtime, tz=timezone.utc).isoformat()
 
         enriched.append({
             **row,

@@ -477,17 +477,28 @@ def print_results(query: str, source: str, results: list[dict], vault_roots: dic
         # arrives after the caller has already read it.
         print(f"\n   ! {reason}\n")
     for index, row in enumerate(results, 1):
-        # Construct absolute path when vault_roots provided, or show vault as label
         vault_name = row.get("vault")
         rel_path = row["path"]
+        # An absolute path is printed only once something has stat-ed it. A corpus
+        # scanned from git refs keys its rows `<ref>/<path>` with no file behind them,
+        # and joining a vault root onto one of those invents a path that reads as real
+        # and opens nothing -- four such rows, all the same note under four refs, once
+        # took four of ten result slots that way. The daemon's own `abs_path` is
+        # checked rather than trusted because searchd is a long-lived service: it goes
+        # on serving the code it started with, so the client cannot assume its daemon
+        # carries this fix, and one stat per row settles it either way.
+        candidates = []
+        if row.get("abs_path"):
+            candidates.append(row["abs_path"])
         if vault_roots and vault_name and vault_name in vault_roots:
-            # Absolute path that can be opened directly
-            display_path = str(Path(vault_roots[vault_name]) / rel_path)
-        elif vault_name:
-            # Show vault as a label, not a confusing path prefix
-            display_path = f"{rel_path} [{vault_name}]"
+            candidates.append(str(Path(vault_roots[vault_name]) / rel_path))
+        openable = next((c for c in candidates if Path(c).exists()), None)
+        # The ref-prefixed key is the truthful thing to print when nothing resolves,
+        # and it names the ref, which is what `git show '<ref>:<path>'` needs.
+        if openable:
+            display_path = openable
         else:
-            display_path = rel_path
+            display_path = f"{rel_path} [{vault_name}]" if vault_name else rel_path
         # Whichever number put the list in this order. Printing the fused score
         # beside a rerank ordering gave a column that ran 0.025, 0.031, 0.031 --
         # readable as the ranking being broken rather than as two different scores.
@@ -497,9 +508,10 @@ def print_results(query: str, source: str, results: list[dict], vault_roots: dic
         # Show description if present (authored summary)
         if row.get("description"):
             print(f"      desc: {row['description'][:200]}")
-        # Show absolute path for direct file reading
-        if row.get("abs_path"):
-            print(f"      path: {row['abs_path']}")
+        # No second path line. The heading line above already prints the openable path
+        # when there is one, so this repeated it verbatim once per hit; and when there
+        # was not one, it printed the daemon's unchecked `abs_path` instead, which is
+        # the fabricated string the line above just declined to show.
         if index <= cut and row.get("text"):
             print(f"      {row['text']}")
         if index == cut and cut < len(results):

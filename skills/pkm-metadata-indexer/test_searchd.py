@@ -782,6 +782,67 @@ class MatrixCacheTest(unittest.TestCase):
         self.assertNotEqual(vault.vectors_version, warm)
 
 
+class RefCorpusPathTest(unittest.TestCase):
+    """A row with no file behind it gets no absolute path, so nothing can invent one."""
+
+    def test_a_ref_prefixed_row_gets_no_fabricated_abs_path(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.addCleanup(lambda: [v.close() for v in VAULTS])
+        vault = build_vault(Path(temp_dir.name) / "refs", "refs",
+                            {"alpha.md": "## One\nText.\n"})
+        # `<ref>/<path>` is how a corpus scanned from git refs keys its rows, and a ref
+        # name holds slashes of its own, so the key cannot be split back apart by
+        # anything downstream. The working-tree row is the control: the same call still
+        # has to hand back a real file's absolute path, or this would "pass" by
+        # emitting None for everything.
+        rows = [
+            {"path": "alpha.md", "vault": "refs",
+             "line": 1, "heading": "One", "score": 0.5},
+            {"path": "experiment/some-branch/alpha.md", "vault": "refs",
+             "line": 1, "heading": "One", "score": 0.4},
+        ]
+        real, ref_row = SEARCHD.enrich_results_with_metadata(vault, rows)
+        self.assertEqual(real["abs_path"], str(vault.root / "alpha.md"))
+        self.assertTrue(Path(real["abs_path"]).exists())
+        # Joining the vault root onto the ref-prefixed key produced exactly this, an
+        # absolute path that reads as real and opens nothing.
+        self.assertIsNone(ref_row["abs_path"])
+        self.assertIsNone(ref_row["mtime"])
+
+
+class PrintedPathTest(unittest.TestCase):
+    """What reaches stdout, since a path is only wrong once a reader can see it."""
+
+    def test_a_fabricated_abs_path_never_reaches_stdout(self):
+        search_vault = load("search_vault")
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        root = Path(temp_dir.name)
+        (root / "real.md").write_text("## One\nText.\n", encoding="utf-8")
+        invented = str(root / "experiment" / "some-branch" / "real.md")
+        # The second row is what a daemon running older code still sends: an absolute
+        # path built by joining the root onto a `<ref>/<path>` key. The client checks
+        # rather than trusts it, so the invented string must not be printed even though
+        # it arrived in the payload.
+        results = [
+            {"path": "real.md", "vault": "notes", "line": 1, "heading": "One",
+             "score": 0.9, "abs_path": str(root / "real.md")},
+            {"path": "experiment/some-branch/real.md", "vault": "branches", "line": 1,
+             "heading": "One", "score": 0.8, "abs_path": invented},
+        ]
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            search_vault.print_results("q", "test", results,
+                                       {"notes": str(root), "branches": str(root)})
+        printed = buffer.getvalue()
+        self.assertNotIn(invented, printed)
+        # The ref-prefixed key is printed instead, labelled, so the ref stays readable.
+        self.assertIn("experiment/some-branch/real.md [branches]", printed)
+        # The control: a row with a file behind it still prints its path, exactly once.
+        self.assertEqual(printed.count(str(root / "real.md")), 1)
+
+
 class SemanticGraphTest(unittest.TestCase):
     """Mutual nearest neighbours, on vectors chosen so the answer is known."""
 
