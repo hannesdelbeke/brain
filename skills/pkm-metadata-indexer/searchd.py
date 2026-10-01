@@ -136,11 +136,47 @@ except ImportError:  # only --watch needs it
 # two `--refresh <repo>/.git/logs=... co_commit.py` watchers dead on arrival:
 # registered, logged at startup, and never once fired on either machine. The
 # rest of the filter is worth keeping, so only `.git` comes off the ignore list.
+#
+# Nested repositories and worktrees need to be excluded: the indexer's markdown_paths()
+# already skips directories containing `.git` to treat nested repos as separate corpora,
+# but the watcher was seeing all ~54k markdown files in 25 worktrees under .claude/worktrees/
+# plus all their .git internals. This filter replicates markdown_paths()'s exclusion logic.
 REFRESH_FILTER = None
 if watchfiles is not None:
-    REFRESH_FILTER = watchfiles.DefaultFilter(
-        ignore_dirs=tuple(d for d in watchfiles.DefaultFilter.ignore_dirs if d != ".git")
-    )
+    class VaultFilter(watchfiles.DefaultFilter):
+        """Filter that excludes nested repos while still watching the watched vault's own .git.
+
+        A directory containing its own .git (file or directory) is a separate corpus,
+        per markdown_paths() in index_pkm_meta.py. The watched vault's .git directory itself
+        may still be watched (for --refresh watching .git/logs for co-commit tracking),
+        but any subdirectory that contains a .git is skipped.
+        """
+        def __init__(self):
+            # Start with default ignore dirs, remove .git, add .claude
+            base_dirs = set(watchfiles.DefaultFilter.ignore_dirs)
+            base_dirs.discard(".git")  # Remove .git so it can be watched
+            base_dirs.add(".claude")   # Add .claude to skip worktrees directory
+            super().__init__(ignore_dirs=tuple(base_dirs))
+
+        def __call__(self, change, path):
+            # Let parent class do its checks first
+            if not super().__call__(change, path):
+                return False
+
+            # Additionally skip any directory that contains a .git entry (nested repo/worktree)
+            from pathlib import Path
+            path_obj = Path(path)
+
+            # For directories, check if they contain .git
+            if path_obj.is_dir():
+                git_entry = path_obj / ".git"
+                if git_entry.exists():
+                    # This directory contains a .git, so it's a nested repo/worktree
+                    return False
+
+            return True
+
+    REFRESH_FILTER = VaultFilter()
 
 HOST = "127.0.0.1"
 PORT = 44771
