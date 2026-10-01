@@ -293,7 +293,7 @@ def get_sha256(text: str) -> str:
 
 def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     """Return selected metadata, body text, and the body's absolute first line."""
-    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": [], "aliases": [], "description": None, "repo": None, "url": None}
+    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": [], "aliases": [], "description": None, "repo": None, "url": None, "rollup_status": None}
     match = FRONTMATTER_RE.match(content)
     if not match:
         return meta, content, 1
@@ -362,6 +362,11 @@ def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     url_match = re.search(r"^url:\s*(.+)$", frontmatter, re.MULTILINE)
     if url_match:
         meta["url"] = url_match.group(1).strip()
+
+    # Parse rollup_status for retirement markers
+    rollup_status_match = re.search(r"^rollup_status:\s*(.+)$", frontmatter, re.MULTILINE)
+    if rollup_status_match:
+        meta["rollup_status"] = rollup_status_match.group(1).strip()
 
     return meta, body, body_start_line
 
@@ -755,6 +760,12 @@ def collect_index_data(vault_dir: Path):
         try:
             content = full_path.read_text(encoding="utf-8", errors="ignore")
             meta, body, body_start_line = parse_frontmatter(content)
+
+            # Skip retirement markers: they carry no content and 3,600 near-identical
+            # documents distort both BM25 document frequency and dense retrieval
+            if meta.get("rollup_status") == "unrecoverable":
+                continue
+
             description = meta["description"] or ""
             notes.append(
                 (

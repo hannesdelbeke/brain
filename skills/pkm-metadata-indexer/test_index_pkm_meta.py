@@ -485,6 +485,33 @@ class DescriptionFieldTest(unittest.TestCase):
         by_path = {row["path"]: row for row in digest}
         self.assertEqual(by_path["with_desc.md"]["description"], "A detailed description")
 
+    def test_unrecoverable_notes_are_excluded_from_index(self):
+        # Create an ordinary session note and an unrecoverable retirement stub
+        (self.vault / "session_normal.md").write_text(
+            "---\nsession_id: abc123\n---\n\n## Finding\nSome actual content.\n",
+            encoding="utf-8",
+        )
+        (self.vault / "session_unrecoverable.md").write_text(
+            "---\nsession_id: def456\nrollup_status: unrecoverable\n---\n\n"
+            "# session def456 could not be summarised\n\nBoilerplate.\n",
+            encoding="utf-8",
+        )
+
+        result = INDEXER.build_index(
+            vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True
+        )
+        # Only 1 note indexed: session_normal (not the unrecoverable one)
+        self.assertEqual(result["notes"], 1)
+
+        # Verify the unrecoverable note is not in the database
+        connection = sqlite3.connect(self.db)
+        try:
+            paths = {row[0] for row in connection.execute("SELECT path FROM notes").fetchall()}
+            self.assertIn("session_normal.md", paths)
+            self.assertNotIn("session_unrecoverable.md", paths)
+        finally:
+            connection.close()
+
 
 if __name__ == "__main__":
     unittest.main()
