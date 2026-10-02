@@ -58,7 +58,7 @@ def build_vault_index(root: Path):
             d
             for d in dirnames
             if not d.startswith(".")
-            and d not in ("node_modules", "__pycache__", "venv", ".venv", ".obsidian", "dist", "build")
+            and d not in ("node_modules", "__pycache__", "venv", ".venv", ".obsidian", "dist", "build", "google-drive")
         ]
 
         rel_dir = Path(dirpath).relative_to(root)
