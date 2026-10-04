@@ -41,6 +41,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # vault contains, so the hook stays silent rather than measuring every read.
 MIN_CONTEXT = 20000
 
+# Never gate these: `cc-plugin-agents-md` injects them in full on any vault read,
+# so the outline is a detour rather than a saving.
+INSTRUCTION_FILES = {"AGENTS.md", "CLAUDE.md"}
+
 # Tuned for retrieval reads: the agent is mid-task, so the note will sit in
 # context for a while, and one section usually answers the question.
 TURNS = 10
@@ -95,6 +99,11 @@ def main() -> int:
     if tool_input.get("offset") or tool_input.get("limit"):
         return 0
     if not path.endswith(".md") or not os.path.isfile(path):
+        return 0
+    # Instruction files are re-injected whole by the built-in agents-md plugin on
+    # any vault read, so gating a Read of one saves nothing and costs a round
+    # trip: the outline comes back, then the full file arrives anyway.
+    if os.path.basename(path) in INSTRUCTION_FILES:
         return 0
 
     context = prefix_tokens(payload.get("transcript_path") or "")
