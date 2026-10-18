@@ -1,0 +1,23 @@
+skills/pkm-metadata-indexer/SKILL.md
+  s_d07bb8311197a3::t_bebac3d35bfe2b 260-261,268
+skills/pkm-metadata-indexer/co_commit.py
+  s_d07bb8311197a3::t_bebac3d35bfe2b 9,24-31,252-264,286-290,293,297-302,304,308-422,479-500,519-524,535
+skills/pkm-metadata-indexer/test_co_commit.py
+  s_d07bb8311197a3::t_bebac3d35bfe2b 96-162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0765fa20b6d6f9b2f2a58109d880ff65f77eefbe",
+  "prompts": {},
+  "sessions": {
+    "s_d07bb8311197a3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0765fa20",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
