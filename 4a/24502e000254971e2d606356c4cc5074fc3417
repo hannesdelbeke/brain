@@ -1,0 +1,21 @@
+"2026-09-01 adversarial literature check for candidate 2.md"
+  s_97149866fbba0d::t_2278936dd422df 1-60
+"2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2.md"
+  s_97149866fbba0d::t_2278936dd422df 3,133-141,148
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4a24502e000254971e2d606356c4cc5074fc3417",
+  "prompts": {},
+  "sessions": {
+    "s_97149866fbba0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4a24502e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
