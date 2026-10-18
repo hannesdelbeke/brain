@@ -1,0 +1,21 @@
+"2025-12-02 laptop research.md"
+  s_8623279b8e9fb5::t_658be42d5f4779 2-10,12-56
+"2026-08-11 laptop research.md"
+  s_8623279b8e9fb5::t_658be42d5f4779 6-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9c5fa4f8ee6b9ed61b425059a06e2c1964210eaa",
+  "prompts": {},
+  "sessions": {
+    "s_8623279b8e9fb5": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-9c5fa4f8",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
