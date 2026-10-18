@@ -1,0 +1,19 @@
+"Claude Code.md"
+  s_c51fd5032498a0::t_a66bb25c1065df 3-9,12-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c6c9f14435f909d48ec8ec2b4368f559698f61e9",
+  "prompts": {},
+  "sessions": {
+    "s_c51fd5032498a0": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-c6c9f144",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
