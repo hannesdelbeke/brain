@@ -1,0 +1,25 @@
+skills/pkm-metadata-indexer/SKILL.md
+  s_b903fd876ff9b4::t_54e96cf5f7c2de 37,41-42,81-83,85
+skills/pkm-metadata-indexer/eval_rerank.py
+  s_b903fd876ff9b4::t_54e96cf5f7c2de 27,38-39,118-146,150-151,153,157,265-277
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_b903fd876ff9b4::t_54e96cf5f7c2de 114-120
+skills/pkm-metadata-indexer/search_vault.py
+  s_b903fd876ff9b4::t_54e96cf5f7c2de 13-26,87,93,187-189,212,214-215,219,224,226,229
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7e75152c6c06a6c23445fc7627111708140fda31",
+  "prompts": {},
+  "sessions": {
+    "s_b903fd876ff9b4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-7e75152c",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
