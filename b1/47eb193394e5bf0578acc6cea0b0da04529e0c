@@ -1,0 +1,19 @@
+"cognitive limits on deep work and recovery science.md"
+  s_98edb765ebd2a2::t_f3dd316ead4117 25,29,33,41,44,51,54,57-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b147eb193394e5bf0578acc6cea0b0da04529e0c",
+  "prompts": {},
+  "sessions": {
+    "s_98edb765ebd2a2": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b147eb19",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
