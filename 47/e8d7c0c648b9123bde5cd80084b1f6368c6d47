@@ -1,0 +1,29 @@
+"cross-agent session indexing architecture.md"
+  s_c447237d08f6a9::t_ca66919982caf5 15-17,72-74,89-93,129-131,134-137
+skills/pkm-metadata-indexer/SKILL.md
+  s_c447237d08f6a9::t_ca66919982caf5 68,76,87-99
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_c447237d08f6a9::t_ca66919982caf5 95-103,620-621,624,635,902,1002,1061,1113
+skills/pkm-metadata-indexer/index_sessions.py
+  s_c447237d08f6a9::t_ca66919982caf5 1-226
+skills/pkm-metadata-indexer/searchd.py
+  s_c447237d08f6a9::t_ca66919982caf5 64,68,209,296,301-302,309-310,323,326,328-330
+skills/pkm-metadata-indexer/test_index_sessions.py
+  s_c447237d08f6a9::t_ca66919982caf5 1-119
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "47e8d7c0c648b9123bde5cd80084b1f6368c6d47",
+  "prompts": {},
+  "sessions": {
+    "s_c447237d08f6a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-47e8d7c0",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
