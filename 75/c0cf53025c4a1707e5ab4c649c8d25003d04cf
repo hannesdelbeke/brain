@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/search_vault.py
+  s_6dac7c4cd86197::t_10b198591641af 1-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "75c0cf53025c4a1707e5ab4c649c8d25003d04cf",
+  "prompts": {},
+  "sessions": {
+    "s_6dac7c4cd86197": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-75c0cf53",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
