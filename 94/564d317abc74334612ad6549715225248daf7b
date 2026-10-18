@@ -1,0 +1,19 @@
+"anti link RnD.md"
+  s_1cf3d78a6d308a::t_facfc870e7a2d0 1-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "94564d317abc74334612ad6549715225248daf7b",
+  "prompts": {},
+  "sessions": {
+    "s_1cf3d78a6d308a": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-94564d31",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <noreply@google.com>"
+    }
+  }
+}
