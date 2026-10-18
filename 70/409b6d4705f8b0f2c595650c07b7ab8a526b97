@@ -1,0 +1,19 @@
+"why a yes-no checklist can hide the real answer.md"
+  s_fae10e4c604cb8::t_26c8f4af7b9a32 1-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "70409b6d4705f8b0f2c595650c07b7ab8a526b97",
+  "prompts": {},
+  "sessions": {
+    "s_fae10e4c604cb8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-70409b6d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
