@@ -1,0 +1,27 @@
+"hierarchical map-reduce note rollup.md"
+  s_fd87928d37ac0f::t_b8b5554ce67eb5 1-32
+"token efficient PKM analysis architecture.md"
+  s_fd87928d37ac0f::t_b8b5554ce67eb5 10,12,16-18,20-26,29-41,44-45
+"vault MCP server for agents.md"
+  s_fd87928d37ac0f::t_b8b5554ce67eb5 1-25
+"vault graph traversal.md"
+  s_fd87928d37ac0f::t_b8b5554ce67eb5 1-31
+"vault hybrid search.md"
+  s_fd87928d37ac0f::t_b8b5554ce67eb5 1-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1a271b0a337177058252b69748fc668321a25dd8",
+  "prompts": {},
+  "sessions": {
+    "s_fd87928d37ac0f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-1a271b0a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
