@@ -1,0 +1,25 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_3e9eca35f494f8::t_ad83e6ff4fde07 387-428
+skills/pkm-metadata-indexer/search_vault.py
+  s_3e9eca35f494f8::t_ad83e6ff4fde07 13-20,25,41-49,55-61,93-149,154-159,162-163,168-173,175-176,178-181,188-197,199-201,205-208
+skills/pkm-metadata-indexer/searchd.py
+  s_3e9eca35f494f8::t_ad83e6ff4fde07 20-28,33-34,83-84,95-97,146-166,218-219,231-239,241-252,292,297-361,363,366-368,370,453,569-575,714
+skills/pkm-metadata-indexer/test_searchd.py
+  s_3e9eca35f494f8::t_ad83e6ff4fde07 5,121-139,177-186,351-410
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d7a6ec9e8aee4452a1ee6e1bb26b492193116aa2",
+  "prompts": {},
+  "sessions": {
+    "s_3e9eca35f494f8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-d7a6ec9e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
