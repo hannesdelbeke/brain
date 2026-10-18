@@ -1,0 +1,25 @@
+skills/pkm-metadata-indexer/co_retrieval.py
+  s_ca3eb90767878b::t_263eaec307a932 36-37,51-139,226-227,234-248,250,255-259,332-348,355-356,368-371
+skills/pkm-metadata-indexer/query_misses.py
+  s_ca3eb90767878b::t_263eaec307a932 42,49-50,52-63,68-72,138-145,152-153,163-164,166-167
+skills/pkm-metadata-indexer/searchd.py
+  s_ca3eb90767878b::t_263eaec307a932 110,274-333,350-357,359-423,1729,1731-1733,1740-1745,1797-1800
+skills/pkm-metadata-indexer/test_searchd.py
+  s_ca3eb90767878b::t_263eaec307a932 145-171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f86fba59ca135b54ad799e999c252b11edadb33f",
+  "prompts": {},
+  "sessions": {
+    "s_ca3eb90767878b": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-f86fba59",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
