@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/symptom_recall.py
+  s_265ae3b3e31647::t_42c545764e13eb 1-146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c9e29c4cebf77e79708cd71568ec3ab47fc891b7",
+  "prompts": {},
+  "sessions": {
+    "s_265ae3b3e31647": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-c9e29c4c",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
