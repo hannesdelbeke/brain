@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/co_commit_overlap_check.py
+  s_9a157575506d4b::t_6fb7a0c5f051e4 1-138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2375bcabb839a5904d8a4bffac64c7517467e27b",
+  "prompts": {},
+  "sessions": {
+    "s_9a157575506d4b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-2375bcab",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
