@@ -1,0 +1,19 @@
+"examples of public evergreen gardens.md"
+  s_00c5f884558d0c::t_22dd6f1e9a089b 1-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "aa01e8d5e53ca9e795650dd519f4bbf12ffc4484",
+  "prompts": {},
+  "sessions": {
+    "s_00c5f884558d0c": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-aa01e8d5",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
