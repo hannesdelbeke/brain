@@ -1,0 +1,27 @@
+skills/pkm-metadata-indexer/SKILL.md
+  s_3efde825879915::t_807faddd1b241d 87-90
+skills/pkm-metadata-indexer/eval_questions/bramses.json
+  s_3efde825879915::t_807faddd1b241d 1-50
+skills/pkm-metadata-indexer/eval_questions/kepano.json
+  s_3efde825879915::t_807faddd1b241d 1-58
+skills/pkm-metadata-indexer/eval_questions/obsidian-help.json
+  s_3efde825879915::t_807faddd1b241d 1-58
+skills/pkm-metadata-indexer/eval_rerank.py
+  s_3efde825879915::t_807faddd1b241d 171-181,192-195,203-204,218
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3d3a9eea55de9d4f16cb3e42c4994794b8d7dc60",
+  "prompts": {},
+  "sessions": {
+    "s_3efde825879915": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-3d3a9eea",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
