@@ -1,0 +1,19 @@
+"2026-10-04 decision models package a three-year-old mechanism and the free route is llama.cpp's systemone endpoint.md"
+  s_9bf94683de21f5::t_3efeca4de4c6bb 2,81,83,92-93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dda25eae18445e9f1735872979fd42d24d3f035b",
+  "prompts": {},
+  "sessions": {
+    "s_9bf94683de21f5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-dda25eae",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
