@@ -1,0 +1,21 @@
+"2026-09-01 adversarial literature check for candidate 3.md"
+  s_a86437b80c1c45::t_8f3130e55cef68 21,25,41
+"hub-node filtering for co-commit graphs.md"
+  s_a86437b80c1c45::t_8f3130e55cef68 29,31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "eade7b3491ef92053ad5a721dc06c32cb9958df3",
+  "prompts": {},
+  "sessions": {
+    "s_a86437b80c1c45": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-eade7b34",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
