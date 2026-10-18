@@ -1,0 +1,19 @@
+"2026-08-30 readability and reading-speed research applied to note-taking vaults.md"
+  s_cb1a75af389e76::t_7fd47dc78b7286 1-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "65f074c1f3864942b313d773ce6d4609328a2acc",
+  "prompts": {},
+  "sessions": {
+    "s_cb1a75af389e76": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-65f074c1",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
