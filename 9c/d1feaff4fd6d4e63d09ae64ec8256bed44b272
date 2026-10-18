@@ -1,0 +1,21 @@
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_db211a39c2bb80::t_40823d7b7a5eef 111-113
+"2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise.md"
+  s_db211a39c2bb80::t_40823d7b7a5eef 21-23,58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9cd1feaff4fd6d4e63d09ae64ec8256bed44b272",
+  "prompts": {},
+  "sessions": {
+    "s_db211a39c2bb80": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9cd1feaf",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
