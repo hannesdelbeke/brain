@@ -1,0 +1,25 @@
+"caretaker polarity in relationships.md"
+  s_bcd1a34f306cf1::t_7b8e1ccb98fd2f 38
+"emotional disengagement in relationships.md"
+  s_bcd1a34f306cf1::t_7b8e1ccb98fd2f 39
+"relationship inertia.md"
+  s_bcd1a34f306cf1::t_7b8e1ccb98fd2f 40
+relationship.md
+  s_bcd1a34f306cf1::t_7b8e1ccb98fd2f 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ce7659e0e0a17e7ab12d21852b100e4f3a96c72a",
+  "prompts": {},
+  "sessions": {
+    "s_bcd1a34f306cf1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ce7659e0",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
