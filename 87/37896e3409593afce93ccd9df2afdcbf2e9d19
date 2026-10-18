@@ -1,0 +1,25 @@
+"Ability to share notes.md"
+  s_f7edd9929dca08::t_8c7b05e46de188 1-23
+"UK capital gains tax.md"
+  s_f7edd9929dca08::t_8c7b05e46de188 18
+"capital gains tax.md"
+  s_f7edd9929dca08::t_8c7b05e46de188 1-5
+"public notes.md"
+  s_f7edd9929dca08::t_8c7b05e46de188 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8737896e3409593afce93ccd9df2afdcbf2e9d19",
+  "prompts": {},
+  "sessions": {
+    "s_f7edd9929dca08": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-8737896e",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
