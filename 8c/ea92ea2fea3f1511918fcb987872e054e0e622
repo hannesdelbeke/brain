@@ -1,0 +1,23 @@
+skills/style-audit/SKILL.md
+  s_720dfe23dd14b2::t_4b6a4776179f58 1-26
+skills/style-audit/tics.py
+  s_720dfe23dd14b2::t_4b6a4776179f58 1-155
+skills/token-thrift/SKILL.md
+  s_720dfe23dd14b2::t_4b6a4776179f58 1-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8cea92ea2fea3f1511918fcb987872e054e0e622",
+  "prompts": {},
+  "sessions": {
+    "s_720dfe23dd14b2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-8cea92ea",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
