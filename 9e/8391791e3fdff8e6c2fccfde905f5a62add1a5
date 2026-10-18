@@ -1,0 +1,19 @@
+.gitignore
+  s_b8592dc8c8879f::t_2632913154692d 6-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9e8391791e3fdff8e6c2fccfde905f5a62add1a5",
+  "prompts": {},
+  "sessions": {
+    "s_b8592dc8c8879f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9e839179",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
