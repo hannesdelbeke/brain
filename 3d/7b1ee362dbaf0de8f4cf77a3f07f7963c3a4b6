@@ -1,0 +1,19 @@
+"file transfer speed comparison.md"
+  s_da53bffd8ed8a3::t_fd9e4672ae6dd3 8-13,24-26,36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3d7b1ee362dbaf0de8f4cf77a3f07f7963c3a4b6",
+  "prompts": {},
+  "sessions": {
+    "s_da53bffd8ed8a3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-3d7b1ee3",
+        "model": "unknown"
+      },
+      "human_author": "Claude <claude@anthropic.com>"
+    }
+  }
+}
