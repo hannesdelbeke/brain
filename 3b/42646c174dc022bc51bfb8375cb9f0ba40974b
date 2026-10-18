@@ -1,0 +1,19 @@
+"are wikilinks legacy with embedded vector.md"
+  s_650129506babca::t_9799ec637eda27 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3b42646c174dc022bc51bfb8375cb9f0ba40974b",
+  "prompts": {},
+  "sessions": {
+    "s_650129506babca": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-3b42646c",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
