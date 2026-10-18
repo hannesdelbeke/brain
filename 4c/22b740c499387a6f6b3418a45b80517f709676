@@ -1,0 +1,19 @@
+"repo maps via GitHub Actions.md"
+  s_7f382423676d49::t_3abec21d04f738 68-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4c22b740c499387a6f6b3418a45b80517f709676",
+  "prompts": {},
+  "sessions": {
+    "s_7f382423676d49": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-4c22b740",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
