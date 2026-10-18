@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/shared_neighbor_experiment.py
+  s_09c4730e1dc96a::t_8c831a41d92ced 107-108,114-133,158-160,182,197-201,247,270,307-308,337,384-389,408-409,430-444
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f2c0f802d263e56c5c7e4aef8f658277b45d7bae",
+  "prompts": {},
+  "sessions": {
+    "s_09c4730e1dc96a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-f2c0f802",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
