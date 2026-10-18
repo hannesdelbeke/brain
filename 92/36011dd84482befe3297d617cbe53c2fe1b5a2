@@ -1,0 +1,21 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_79877ec4e7a7ce::t_b8fc952e4d73ff 70-72
+"progress - local-first search daemon and indexer.md"
+  s_79877ec4e7a7ce::t_b8fc952e4d73ff 79-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9236011dd84482befe3297d617cbe53c2fe1b5a2",
+  "prompts": {},
+  "sessions": {
+    "s_79877ec4e7a7ce": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-9236011d",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
