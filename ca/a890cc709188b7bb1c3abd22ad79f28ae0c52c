@@ -1,0 +1,31 @@
+"TODO how to highlight urgent tasks.md"
+  s_452eb2ab78b505::t_3f108ed50dbc2c 17
+"TODO include project READMEs in Obsidian.md"
+  s_452eb2ab78b505::t_3f108ed50dbc2c 27,33-92
+"TODO link notes from calendar.md"
+  s_452eb2ab78b505::t_3f108ed50dbc2c 27-56
+"codegraph review.md"
+  s_452eb2ab78b505::t_3f108ed50dbc2c 48-69
+"finding unsolved problems in my vault.md"
+  s_452eb2ab78b505::t_3f108ed50dbc2c 1-40
+skills/pkm-metadata-indexer/SKILL.md
+  s_452eb2ab78b505::t_3f108ed50dbc2c 77-85
+skills/pkm-metadata-indexer/find_open_problems.py
+  s_452eb2ab78b505::t_3f108ed50dbc2c 1-102
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "caa890cc709188b7bb1c3abd22ad79f28ae0c52c",
+  "prompts": {},
+  "sessions": {
+    "s_452eb2ab78b505": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-caa890cc",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
