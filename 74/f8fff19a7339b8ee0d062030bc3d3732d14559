@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/personalized_pagerank_experiment.py
+  s_beea99eb872e31::t_9c9230e33bf15e 1-409
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "74f8fff19a7339b8ee0d062030bc3d3732d14559",
+  "prompts": {},
+  "sessions": {
+    "s_beea99eb872e31": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-74f8fff1",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
