@@ -1,0 +1,21 @@
+"Herding Cats.md"
+  s_7e895bdaaf93a1::t_9cfa485cfc27ee 1-79
+books.md
+  s_7e895bdaaf93a1::t_9cfa485cfc27ee 25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bca6accf1337eee87009f6694d32bbbb5e203fa8",
+  "prompts": {},
+  "sessions": {
+    "s_7e895bdaaf93a1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-bca6accf",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
