@@ -1,0 +1,19 @@
+autism.md
+  s_cd1195d5b3213c::t_8ea9ac1e777837 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6b87244d5fc7aee38ff8c5399e698aef084b4c60",
+  "prompts": {},
+  "sessions": {
+    "s_cd1195d5b3213c": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-6b87244d",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@ai>"
+    }
+  }
+}
