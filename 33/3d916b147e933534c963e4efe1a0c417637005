@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/shared_neighbor_experiment.py
+  s_4bab18ba92a9dc::t_2b1953db2d4640 1-285
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "333d916b147e933534c963e4efe1a0c417637005",
+  "prompts": {},
+  "sessions": {
+    "s_4bab18ba92a9dc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-333d916b",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
