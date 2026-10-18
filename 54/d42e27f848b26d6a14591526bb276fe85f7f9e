@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/co_commit.py
+  s_f32fd4bbbcb111::t_d3b2f18369a8e0 9,13-14,19-23,41-49,97-98,100-101,132-144,146-153,157,161-168,175,178,182-187,200-202,208-209,224,229-261,268,281,285-288,323,332-344,358-362,372-373,384-386
+skills/pkm-metadata-indexer/test_co_commit.py
+  s_f32fd4bbbcb111::t_d3b2f18369a8e0 1-97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "54d42e27f848b26d6a14591526bb276fe85f7f9e",
+  "prompts": {},
+  "sessions": {
+    "s_f32fd4bbbcb111": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-54d42e27",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
