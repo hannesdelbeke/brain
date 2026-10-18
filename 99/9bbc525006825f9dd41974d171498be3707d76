@@ -1,0 +1,19 @@
+"2026-09-01 why academic writing is hard to read.md"
+  s_9dd267f0168c2b::t_9ecf4761df4269 39-44,47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "999bbc525006825f9dd41974d171498be3707d76",
+  "prompts": {},
+  "sessions": {
+    "s_9dd267f0168c2b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-999bbc52",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
