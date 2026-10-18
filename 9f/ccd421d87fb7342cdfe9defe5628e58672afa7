@@ -1,0 +1,27 @@
+"2026-08-29 local search daemon and indexer - release plan and modular decoupling.md"
+  s_2a8f6a3498294a::t_10aa09260b3c8f 30
+"2026-09-01 synthetic hop-ceiling test - two fictional vaults, cross-model content, zero trouble found.md"
+  s_2a8f6a3498294a::t_10aa09260b3c8f 15-17,31,57
+"2026-09-01 the digest's savings need the right baseline.md"
+  s_2a8f6a3498294a::t_10aa09260b3c8f 16-23,40-58
+"publishing independent research.md"
+  s_2a8f6a3498294a::t_10aa09260b3c8f 15
+"why we did the agent hop tests.md"
+  s_2a8f6a3498294a::t_10aa09260b3c8f 62,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9fccd421d87fb7342cdfe9defe5628e58672afa7",
+  "prompts": {},
+  "sessions": {
+    "s_2a8f6a3498294a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9fccd421",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
