@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_0c06b54697b455::t_1093a4043f4ab9 1542,1632
+skills/pkm-metadata-indexer/searchd.py
+  s_0c06b54697b455::t_1093a4043f4ab9 116,582-656,665,667-669,685-686,1732
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ef478e4617ef872ab42c8e71b245308b96b3e729",
+  "prompts": {},
+  "sessions": {
+    "s_0c06b54697b455": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ef478e46",
+        "model": "claude-sonnet-4-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
