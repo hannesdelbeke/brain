@@ -1,0 +1,19 @@
+skills/agent-comms/comms.sh
+  s_05e533ed68bd28::t_96e6c0aa4ac680 78,93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "09e3dfed76b1686a78cb6b03c0237c0f8376373b",
+  "prompts": {},
+  "sessions": {
+    "s_05e533ed68bd28": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-09e3dfed",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
