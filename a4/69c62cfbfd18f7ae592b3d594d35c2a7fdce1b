@@ -1,0 +1,19 @@
+"autonomous agent tool use and memory.md"
+  s_893003e7c5d28a::t_99ec12df6189f5 1-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a469c62cfbfd18f7ae592b3d594d35c2a7fdce1b",
+  "prompts": {},
+  "sessions": {
+    "s_893003e7c5d28a": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-a469c62c",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@gemini.com>"
+    }
+  }
+}
