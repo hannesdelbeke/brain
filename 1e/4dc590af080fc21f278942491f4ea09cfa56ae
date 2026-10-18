@@ -1,0 +1,19 @@
+"hierarchical map-reduce note rollup.md"
+  s_9fd210d71b9d37::t_e1ded499298398 21-34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e4dc590af080fc21f278942491f4ea09cfa56ae",
+  "prompts": {},
+  "sessions": {
+    "s_9fd210d71b9d37": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1e4dc590",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
