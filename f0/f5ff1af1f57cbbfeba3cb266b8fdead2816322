@@ -1,0 +1,23 @@
+"2026-08-27 a link graph over code, docs and assets.md"
+  s_2c0b21cdfe83b5::t_0cce067620ebcd 1-72
+"core Obsidian features to rework on the vault index.md"
+  s_2c0b21cdfe83b5::t_0cce067620ebcd 63-67
+"progress - local-first search daemon and indexer.md"
+  s_2c0b21cdfe83b5::t_0cce067620ebcd 46-47,67-68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f0f5ff1af1f57cbbfeba3cb266b8fdead2816322",
+  "prompts": {},
+  "sessions": {
+    "s_2c0b21cdfe83b5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-f0f5ff1a",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
