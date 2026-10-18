@@ -1,0 +1,19 @@
+"progress - voice AI processing on ThinkPad.md"
+  s_e7ab6d047e763c::t_e7d8871feaf05e 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b505b4eee8a4ec21dac36eee8c0909459ad6a97a",
+  "prompts": {},
+  "sessions": {
+    "s_e7ab6d047e763c": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b505b4ee",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
