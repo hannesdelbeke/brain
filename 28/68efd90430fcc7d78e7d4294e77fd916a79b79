@@ -1,0 +1,19 @@
+"2026-09-01 note-compress skill - design, adversarial review, and bench data.md"
+  s_588e3ad2e0c511::t_7a63e0c40f95a2 91-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2868efd90430fcc7d78e7d4294e77fd916a79b79",
+  "prompts": {},
+  "sessions": {
+    "s_588e3ad2e0c511": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-2868efd9",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
