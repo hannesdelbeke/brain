@@ -1,0 +1,19 @@
+"2026-09-01 the digest's savings need the right baseline.md"
+  s_d8eed67260bc18::t_61dd8782aff89f 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ef0e3f99c4d83019b43ac49f7eb7cfa0a2c1f873",
+  "prompts": {},
+  "sessions": {
+    "s_d8eed67260bc18": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ef0e3f99",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
