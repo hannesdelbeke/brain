@@ -1,0 +1,19 @@
+"2026-09-02 what wikilink markup costs a machine reader.md"
+  s_47cf13884297d3::t_36904c9e86b1a5 10,44-79,96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9079b9e26537aa93936ee98bf0b4034f16512094",
+  "prompts": {},
+  "sessions": {
+    "s_47cf13884297d3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9079b9e2",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
