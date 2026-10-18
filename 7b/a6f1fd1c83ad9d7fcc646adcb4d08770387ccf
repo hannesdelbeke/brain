@@ -1,0 +1,21 @@
+"Obsidian Windows Defender exclusion.md"
+  s_66603242066671::t_ebc3234447caa0 1-47
+"Obsidian faster startup.md"
+  s_66603242066671::t_ebc3234447caa0 21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7ba6f1fd1c83ad9d7fcc646adcb4d08770387ccf",
+  "prompts": {},
+  "sessions": {
+    "s_66603242066671": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-7ba6f1fd",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@ai>"
+    }
+  }
+}
