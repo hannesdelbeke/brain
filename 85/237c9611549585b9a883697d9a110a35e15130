@@ -1,0 +1,29 @@
+"2026-08-27 every read is a write - co-retrieval as synapse strength.md"
+  s_9c326d3706a4e1::t_7ef7b7b3c2a8f8 104,204
+"hosted PKM vector index and note utility.md"
+  s_9c326d3706a4e1::t_7ef7b7b3c2a8f8 27,46
+"note utility and synapse strength from session recaps.md"
+  s_9c326d3706a4e1::t_7ef7b7b3c2a8f8 1-83
+"track prompt history.md"
+  s_9c326d3706a4e1::t_7ef7b7b3c2a8f8 66
+"vault synapse pruning.md"
+  s_9c326d3706a4e1::t_7ef7b7b3c2a8f8 32-33,35-36,50
+"view count.md"
+  s_9c326d3706a4e1::t_7ef7b7b3c2a8f8 18,36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "85237c9611549585b9a883697d9a110a35e15130",
+  "prompts": {},
+  "sessions": {
+    "s_9c326d3706a4e1": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-85237c96",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
