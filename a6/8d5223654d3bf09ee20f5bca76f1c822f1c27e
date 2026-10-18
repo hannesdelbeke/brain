@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/density_ablation_experiment.py
+  s_389c1cbcb04060::t_a1e6bcaa7decb2 1-253
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a68d5223654d3bf09ee20f5bca76f1c822f1c27e",
+  "prompts": {},
+  "sessions": {
+    "s_389c1cbcb04060": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a68d5223",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
