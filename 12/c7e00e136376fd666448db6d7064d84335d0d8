@@ -1,0 +1,25 @@
+"2026-08-31 classifier-based compression with an adversarial fidelity gate.md"
+  s_63e8efe93abbfb::t_c2bd479d056b0a 35
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_63e8efe93abbfb::t_c2bd479d056b0a 154,156,158
+"2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise.md"
+  s_63e8efe93abbfb::t_c2bd479d056b0a 51
+"hub-node filtering for co-commit graphs.md"
+  s_63e8efe93abbfb::t_c2bd479d056b0a 39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "12c7e00e136376fd666448db6d7064d84335d0d8",
+  "prompts": {},
+  "sessions": {
+    "s_63e8efe93abbfb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-12c7e00e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
