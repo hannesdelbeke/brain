@@ -1,0 +1,19 @@
+"2026-09-01 the robust control theory parallel, worked through properly.md"
+  s_31d5354dc3645b::t_6ff166d5167a6a 1-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ec69d0c7f74ef8c079982d85517a629d7ada759c",
+  "prompts": {},
+  "sessions": {
+    "s_31d5354dc3645b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ec69d0c7",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
