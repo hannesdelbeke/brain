@@ -1,0 +1,19 @@
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_0b5530a13bf321::t_49594bca2da008 109-123,126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1fb0e93264660bd6e1b3f321c6185ca22d47cbc2",
+  "prompts": {},
+  "sessions": {
+    "s_0b5530a13bf321": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1fb0e932",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
