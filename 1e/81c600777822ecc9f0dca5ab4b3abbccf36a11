@@ -1,0 +1,39 @@
+"hierarchical map-reduce note rollup.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 7
+map-reduce.md
+  s_58bfec77c3277f::t_ee8d4b02b9f112 1-21
+"multi-repo agent search cost and ROI.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 13,27,39,46
+"multi-repo agentic search architecture.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 36,44,53
+"prompt caching.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 1-24
+"reciprocal rank fusion.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 1-24
+"repo maps via GitHub Actions.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 32,37
+"repository catalog.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 1-20
+tree-sitter.md
+  s_58bfec77c3277f::t_ee8d4b02b9f112 1-20
+"vault hybrid search.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 7,15-16
+"vector embedding.md"
+  s_58bfec77c3277f::t_ee8d4b02b9f112 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e81c600777822ecc9f0dca5ab4b3abbccf36a11",
+  "prompts": {},
+  "sessions": {
+    "s_58bfec77c3277f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-1e81c600",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
