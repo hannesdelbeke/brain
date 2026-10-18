@@ -1,0 +1,19 @@
+"vector search obsoletes empty stub wikilinks.md"
+  s_ee0d0317b9e567::t_9c01de6fe6cedc 69-70,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "602298b5c46215c36ba94eafad525ece64921bc1",
+  "prompts": {},
+  "sessions": {
+    "s_ee0d0317b9e567": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-602298b5",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
