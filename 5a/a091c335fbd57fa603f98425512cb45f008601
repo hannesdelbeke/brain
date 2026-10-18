@@ -1,0 +1,19 @@
+"cross-agent session indexing architecture.md"
+  s_ad449aa6525fe0::t_90e5b77dbc38ca 2-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5aa091c335fbd57fa603f98425512cb45f008601",
+  "prompts": {},
+  "sessions": {
+    "s_ad449aa6525fe0": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-5aa091c3",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@ai>"
+    }
+  }
+}
