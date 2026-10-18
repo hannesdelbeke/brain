@@ -1,0 +1,19 @@
+"2026-08-31 remote work and fulfilment research.md"
+  s_fba2b4e75e62c9::t_7aa03e3c3c8c92 1-76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a3f8a09d03ceb75c15bae8c62035489b2fc51581",
+  "prompts": {},
+  "sessions": {
+    "s_fba2b4e75e62c9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a3f8a09d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
