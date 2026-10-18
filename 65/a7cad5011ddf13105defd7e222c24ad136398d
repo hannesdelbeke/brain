@@ -1,0 +1,25 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_451b9cf23bae6b::t_d23a2c6623ee92 65
+"2026-08-27 vault index work log.md"
+  s_451b9cf23bae6b::t_d23a2c6623ee92 108-113
+"offline GPU embeddings with incremental cache.md"
+  s_451b9cf23bae6b::t_d23a2c6623ee92 12,34-36,39,48
+"progress - local-first search daemon and indexer.md"
+  s_451b9cf23bae6b::t_d23a2c6623ee92 49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "65a7cad5011ddf13105defd7e222c24ad136398d",
+  "prompts": {},
+  "sessions": {
+    "s_451b9cf23bae6b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-65a7cad5",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
