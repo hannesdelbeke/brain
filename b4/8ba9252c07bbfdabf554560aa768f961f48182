@@ -1,0 +1,19 @@
+"hub-node filtering for co-commit graphs.md"
+  s_fc9af81488109c::t_1c2a7bb9ba6b9e 25-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b48ba9252c07bbfdabf554560aa768f961f48182",
+  "prompts": {},
+  "sessions": {
+    "s_fc9af81488109c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b48ba925",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
