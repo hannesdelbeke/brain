@@ -1,0 +1,19 @@
+"proposal - self-learning agent supervisor and continuous prompt failure distillation.md"
+  s_d66d421d0fe971::t_d39e1a9d0f428c 25-53,151
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7b93220a995c9e27cc3cfb07f6a1939df7225a48",
+  "prompts": {},
+  "sessions": {
+    "s_d66d421d0fe971": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-7b93220a",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
