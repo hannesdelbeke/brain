@@ -1,0 +1,23 @@
+"Obsidian alternatives.md"
+  s_939e8964bcb126::t_62ebd5f28dcc88 81-82
+"codegraph review.md"
+  s_939e8964bcb126::t_62ebd5f28dcc88 49
+"pkm vault indexing landscape.md"
+  s_939e8964bcb126::t_62ebd5f28dcc88 1-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "48021edb28aef8b7bb9618f95912ccb73c443970",
+  "prompts": {},
+  "sessions": {
+    "s_939e8964bcb126": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-48021edb",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
