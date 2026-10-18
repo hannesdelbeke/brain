@@ -1,0 +1,25 @@
+"2025-11-18 CAPE.md"
+  s_a9dbb74a5f8a9a::t_53a15c924d874d 19-20
+P-CAPE.md
+  s_a9dbb74a5f8a9a::t_53a15c924d874d 1-59
+"Shiller PE Ratio.md"
+  s_a9dbb74a5f8a9a::t_53a15c924d874d 23-25
+"Total Return EPS to Decompose Historical S&P 500 Performance.md"
+  s_a9dbb74a5f8a9a::t_53a15c924d874d 77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7aee95ac7307552b2dc33a622d9b2b5f1efb8210",
+  "prompts": {},
+  "sessions": {
+    "s_a9dbb74a5f8a9a": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-7aee95ac",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
