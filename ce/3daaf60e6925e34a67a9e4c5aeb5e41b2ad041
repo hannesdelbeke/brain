@@ -1,0 +1,19 @@
+"how can we get value out of public notes.md"
+  s_ba7c55428999c8::t_d009ab01fda515 14-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ce3daaf60e6925e34a67a9e4c5aeb5e41b2ad041",
+  "prompts": {},
+  "sessions": {
+    "s_ba7c55428999c8": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-ce3daaf6",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
