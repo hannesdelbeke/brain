@@ -1,0 +1,35 @@
+skills/pkm-metadata-indexer/entity_expansion.py
+  s_35520e9d07d328::t_13382387d5b6f4 1-78
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_35520e9d07d328::t_13382387d5b6f4 49,252,285-294,678,733,739-740,787-813,987-1069,1086-1089,1148-1149,1157,1210-1223
+skills/pkm-metadata-indexer/search_vault.py
+  s_35520e9d07d328::t_13382387d5b6f4 50,53,72-81,94-95,112-211,458-463,472-491,507,512,520-521,523-541
+skills/pkm-metadata-indexer/searchd.py
+  s_35520e9d07d328::t_13382387d5b6f4 629,633-637,787,808,842-852,1606-1615
+skills/pkm-metadata-indexer/tests/__init__.py
+  s_35520e9d07d328::t_13382387d5b6f4 1
+skills/pkm-metadata-indexer/tests/test_daemon_healing.py
+  s_35520e9d07d328::t_13382387d5b6f4 1-25
+skills/pkm-metadata-indexer/tests/test_entity_expansion.py
+  s_35520e9d07d328::t_13382387d5b6f4 1-39
+skills/pkm-metadata-indexer/tests/test_fts_fallback.py
+  s_35520e9d07d328::t_13382387d5b6f4 1-35
+skills/pkm-metadata-indexer/tests/test_session_sql.py
+  s_35520e9d07d328::t_13382387d5b6f4 1-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3a3b18ada9c8ee3bdd05f900b64f48afd729c012",
+  "prompts": {},
+  "sessions": {
+    "s_35520e9d07d328": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "backfill:commit-3a3b18ad",
+        "model": "unknown"
+      },
+      "human_author": "Copilot <223556219+Copilot@users.noreply.github.com>"
+    }
+  }
+}
