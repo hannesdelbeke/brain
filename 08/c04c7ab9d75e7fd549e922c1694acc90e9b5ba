@@ -1,0 +1,19 @@
+"2026-08-11 laptop research.md"
+  s_e92ccc592bfad8::t_5d4d11e2e5005c 11-16,38,42,46,48,50-58,62-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "08c04c7ab9d75e7fd549e922c1694acc90e9b5ba",
+  "prompts": {},
+  "sessions": {
+    "s_e92ccc592bfad8": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-08c04c7a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
