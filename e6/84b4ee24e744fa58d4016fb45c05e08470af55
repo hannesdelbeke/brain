@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_f51467fe715876::t_4d4da80df7f1ae 310-316,319-321
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  s_f51467fe715876::t_4d4da80df7f1ae 40-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e684b4ee24e744fa58d4016fb45c05e08470af55",
+  "prompts": {},
+  "sessions": {
+    "s_f51467fe715876": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e684b4ee",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
