@@ -1,0 +1,69 @@
+"Manley - upgrade home office internet.md"
+  s_979736a25ee26f::t_3297c3b5abc490 14
+"Max dark script editor listener.md"
+  s_979736a25ee26f::t_3297c3b5abc490 10
+"Maya created controls - dev log.md"
+  s_979736a25ee26f::t_3297c3b5abc490 15
+"Maya get version.md"
+  s_979736a25ee26f::t_3297c3b5abc490 10
+"Obsidian - links decrease readibility.md"
+  s_979736a25ee26f::t_3297c3b5abc490 16
+"Obsidian - navigate sibling pages.md"
+  s_979736a25ee26f::t_3297c3b5abc490 13
+"Obsidian - prevent chat in side bar on startup.md"
+  s_979736a25ee26f::t_3297c3b5abc490 12
+"Obsidian auto collapse linked mentions.md"
+  s_979736a25ee26f::t_3297c3b5abc490 13
+"Obsidian plugin - Excalidraw.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"Obsidian toggle code.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"Tuya smart plug - power reading stuck.md"
+  s_979736a25ee26f::t_3297c3b5abc490 11
+"Unity - back & forward navigation in editor.md"
+  s_979736a25ee26f::t_3297c3b5abc490 11
+"Unity local manifest issue.md"
+  s_979736a25ee26f::t_3297c3b5abc490 11
+"Windows - pin BAT to task bar.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"common blender errors.md"
+  s_979736a25ee26f::t_3297c3b5abc490 10
+"ctrl + W in Qt.md"
+  s_979736a25ee26f::t_3297c3b5abc490 12
+"ensure fbx plugin is loaded in Maya.md"
+  s_979736a25ee26f::t_3297c3b5abc490 10
+"github co-authors for AI.md"
+  s_979736a25ee26f::t_3297c3b5abc490 7
+"markdown link dont support spaces.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"obsidian app detect issue.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"pass custom sys.paths to subprocess.md"
+  s_979736a25ee26f::t_3297c3b5abc490 10
+"pip README emoji bug.md"
+  s_979736a25ee26f::t_3297c3b5abc490 10
+"qt unimenu issue.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"setup TP-LINK RE605X Ax1800.md"
+  s_979736a25ee26f::t_3297c3b5abc490 11
+"support Maya site packages in documents folder.md"
+  s_979736a25ee26f::t_3297c3b5abc490 9
+"support add instance to session.md"
+  s_979736a25ee26f::t_3297c3b5abc490 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "01f4199dd535099ae51d6fbb64c6be4e9356e4d2",
+  "prompts": {},
+  "sessions": {
+    "s_979736a25ee26f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-01f4199d",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
