@@ -1,0 +1,19 @@
+"2026-09-01 wikipedia hop-ceiling test - setup and reproduction steps.md"
+  s_4dfa3978f4baf7::t_1675e46aef35fb 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "62418812856bf9e863d66a9db36fd1c5568f52f4",
+  "prompts": {},
+  "sessions": {
+    "s_4dfa3978f4baf7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-62418812",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
