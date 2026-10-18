@@ -1,0 +1,21 @@
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_4bdd2411e5085c::t_f4df7d91fade76 1-86
+"co-commit graph mining for serendipitous note associations.md"
+  s_4bdd2411e5085c::t_f4df7d91fade76 55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "96e54d931056777a18d9011f6136953f4cbff349",
+  "prompts": {},
+  "sessions": {
+    "s_4bdd2411e5085c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-96e54d93",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
