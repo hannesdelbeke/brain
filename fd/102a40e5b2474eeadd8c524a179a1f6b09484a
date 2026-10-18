@@ -1,0 +1,19 @@
+.githooks/leak_scan.py
+  s_8554cbeed23943::t_3d78528de19269 10-24,28,30-33,44-45,49-50,55-74,80-94,96-132,139,178-180,182-193,201-211,215,217,220
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fd102a40e5b2474eeadd8c524a179a1f6b09484a",
+  "prompts": {},
+  "sessions": {
+    "s_8554cbeed23943": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-fd102a40",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
