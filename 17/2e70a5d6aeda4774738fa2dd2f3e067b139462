@@ -1,0 +1,37 @@
+"Game dev flow.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 105-106
+"choose if link to contacts opens linktree or app.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 49-50
+"consider 2 sources of truth.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 83-84
+"example of linking to a contact.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 36-37
+"idea - auto link notes to calendar.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 34-35
+"idea - insert notes in webpage.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 32-33
+"idea - open google calendar events from notes.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 61-62
+"proposal - cross-app entity registry.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 1-63
+"sync URL shortcuts to obsidian vault.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 46-47
+"sync whatsapp calls to calendar.md"
+  s_088a0c53fec7a9::t_9cf2fc4ffc3d86 55-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "172e70a5d6aeda4774738fa2dd2f3e067b139462",
+  "prompts": {},
+  "sessions": {
+    "s_088a0c53fec7a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-172e70a5",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
