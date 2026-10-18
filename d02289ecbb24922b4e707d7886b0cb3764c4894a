@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/eval_bench.py
+  s_7c08d110b3f4ed::t_4f612fee9ff5f9 32,72,86,128,135,146,155,281,286-288,313-314,324-325
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d02289ecbb24922b4e707d7886b0cb3764c4894a",
+  "prompts": {},
+  "sessions": {
+    "s_7c08d110b3f4ed": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-d02289ec",
+        "model": "claude-sonnet-4-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
