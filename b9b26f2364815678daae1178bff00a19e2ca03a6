@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/co_retrieval.py
+  s_5696f1da34f3b3::t_806cc810cb5702 49-52,210-213
+skills/pkm-metadata-indexer/tests/test_co_retrieval.py
+  s_5696f1da34f3b3::t_806cc810cb5702 1-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b9b26f2364815678daae1178bff00a19e2ca03a6",
+  "prompts": {},
+  "sessions": {
+    "s_5696f1da34f3b3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b9b26f23",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
