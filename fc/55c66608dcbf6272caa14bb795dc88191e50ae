@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/recency_prior_experiment.py
+  s_0e6c861ace6419::t_031f7bc562459b 4-28,40-48,58,66,70,74-77,81,85,88,92,96-97,100-104,135-156,171-172,190,197-226,238-242,250-255,264-280,306-309,314-320,323-336
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fc55c66608dcbf6272caa14bb795dc88191e50ae",
+  "prompts": {},
+  "sessions": {
+    "s_0e6c861ace6419": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-fc55c666",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
