@@ -1,0 +1,23 @@
+"multi-repo agent search cost and ROI.md"
+  s_d17fff48502633::t_4c6119da53eb26 1-62
+"multi-repo agentic search architecture.md"
+  s_d17fff48502633::t_4c6119da53eb26 70
+"single-repo vs multi-repo agent search.md"
+  s_d17fff48502633::t_4c6119da53eb26 22-23,27-28,33-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e8e84fb6aeae9bc5748fb0760c5afa8e48db477b",
+  "prompts": {},
+  "sessions": {
+    "s_d17fff48502633": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-e8e84fb6",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
