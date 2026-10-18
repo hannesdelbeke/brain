@@ -1,0 +1,23 @@
+"Obsidian plugin - Remember cursor position.md"
+  s_2f96bd128ae4ff::t_f8230dd8b45810 9
+"line1 callout render bug.md"
+  s_2f96bd128ae4ff::t_f8230dd8b45810 5,7,11,15-16
+"text cursor.md"
+  s_2f96bd128ae4ff::t_f8230dd8b45810 1-15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e2612876f381e2ec090396022d29c0619cf00e1f",
+  "prompts": {},
+  "sessions": {
+    "s_2f96bd128ae4ff": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-e2612876",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <noreply@google.com>"
+    }
+  }
+}
