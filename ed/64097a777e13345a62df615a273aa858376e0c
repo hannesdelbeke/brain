@@ -1,0 +1,19 @@
+"vault graph tool.md"
+  s_58a1321ddaddda::t_a7ddabdfbb362b 14,49-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ed64097a777e13345a62df615a273aa858376e0c",
+  "prompts": {},
+  "sessions": {
+    "s_58a1321ddaddda": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-ed64097a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
