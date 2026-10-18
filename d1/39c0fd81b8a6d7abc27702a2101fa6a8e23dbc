@@ -1,0 +1,19 @@
+_scripts/check_dead_links.py
+  s_19f185ef8077be::t_4d065bbc04745e 18-48,120-158,160-171,173-174,176-179,181-183,203-213
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d139c0fd81b8a6d7abc27702a2101fa6a8e23dbc",
+  "prompts": {},
+  "sessions": {
+    "s_19f185ef8077be": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-d139c0fd",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
