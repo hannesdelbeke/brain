@@ -1,0 +1,19 @@
+profile.md
+  s_2e2439b3ec99fe::t_f0bd1cac2c60e2 1,29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "32858663725b42550515676ea38e63ae405eb18e",
+  "prompts": {},
+  "sessions": {
+    "s_2e2439b3ec99fe": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-32858663",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
