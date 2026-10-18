@@ -1,0 +1,19 @@
+"semantic search.md"
+  s_cd46c496563218::t_abc4295dd5f53b 1-68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2dddf45ad917091f572c1bc13778c4a0ca2ed873",
+  "prompts": {},
+  "sessions": {
+    "s_cd46c496563218": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-2dddf45a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
