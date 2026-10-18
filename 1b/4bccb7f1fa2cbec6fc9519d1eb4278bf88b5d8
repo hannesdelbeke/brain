@@ -1,0 +1,29 @@
+"agentic tooling upgrades over grep.md"
+  s_e0224da7b57fa0::t_a9de38cb388a3c 8-12,14,16,18,20-26,28,30-34,36-37,39-49
+"offline GPU embeddings with incremental cache.md"
+  s_e0224da7b57fa0::t_a9de38cb388a3c 11-12
+skills/pkm-metadata-indexer/SKILL.md
+  s_e0224da7b57fa0::t_a9de38cb388a3c 1-35
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_e0224da7b57fa0::t_a9de38cb388a3c 1-152
+"token efficient PKM analysis architecture.md"
+  s_e0224da7b57fa0::t_a9de38cb388a3c 10-11
+"vault hybrid search.md"
+  s_e0224da7b57fa0::t_a9de38cb388a3c 7-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1b4bccb7f1fa2cbec6fc9519d1eb4278bf88b5d8",
+  "prompts": {},
+  "sessions": {
+    "s_e0224da7b57fa0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1b4bccb7",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
