@@ -1,0 +1,19 @@
+"vector search obsoletes empty stub wikilinks.md"
+  s_4243dca1b3d4da::t_75aa14f58bc32f 19,35,37-41,49,54-56,59-61,65-69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8b59611a61d5bb1f2074d0b2a02ca3922b1d273c",
+  "prompts": {},
+  "sessions": {
+    "s_4243dca1b3d4da": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-8b59611a",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
