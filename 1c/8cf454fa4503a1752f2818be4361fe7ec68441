@@ -1,0 +1,23 @@
+"HAOS setup ssh.md"
+  s_4c155c4f1829c4::t_03ad3769a5f3fa 1-87
+HAOS.md
+  s_4c155c4f1829c4::t_03ad3769a5f3fa 15-16
+"mcp server home assistant.md"
+  s_4c155c4f1829c4::t_03ad3769a5f3fa 2-4,9-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1c8cf454fa4503a1752f2818be4361fe7ec68441",
+  "prompts": {},
+  "sessions": {
+    "s_4c155c4f1829c4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1c8cf454",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
