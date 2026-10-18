@@ -1,0 +1,19 @@
+"autocommit leftover changes.md"
+  s_36423c80c224cd::t_00da4a84f90699 1-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7147621057884170a266c81a3239289486730a49",
+  "prompts": {},
+  "sessions": {
+    "s_36423c80c224cd": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-71476210",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
