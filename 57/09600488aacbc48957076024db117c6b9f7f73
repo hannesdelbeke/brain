@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/pyproject.toml
+  s_da8039bb743edf::t_f63f6db7486b0f 1-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5709600488aacbc48957076024db117c6b9f7f73",
+  "prompts": {},
+  "sessions": {
+    "s_da8039bb743edf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-57096004",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
