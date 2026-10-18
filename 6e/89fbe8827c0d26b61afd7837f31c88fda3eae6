@@ -1,0 +1,25 @@
+skills/agent-comms/README.md
+  s_486616404c0ff3::t_4fbd7ab9483435 44-46
+skills/agent-comms/SKILL.md
+  s_486616404c0ff3::t_4fbd7ab9483435 32-34
+skills/agent-comms/comms-watch.sh
+  s_486616404c0ff3::t_4fbd7ab9483435 71-74
+skills/agent-comms/comms.sh
+  s_486616404c0ff3::t_4fbd7ab9483435 175-178,180-181,184-192,359-368,406
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6e89fbe8827c0d26b61afd7837f31c88fda3eae6",
+  "prompts": {},
+  "sessions": {
+    "s_486616404c0ff3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-6e89fbe8",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
