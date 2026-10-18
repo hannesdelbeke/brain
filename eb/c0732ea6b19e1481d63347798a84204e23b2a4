@@ -1,0 +1,25 @@
+"progress - local-first search daemon and indexer.md"
+  s_465c4d3586aeab::t_8a1981f7f67a51 29,56-57
+skills/pkm-metadata-indexer/search_vault.py
+  s_465c4d3586aeab::t_8a1981f7f67a51 38-44,47
+skills/pkm-metadata-indexer/searchd.py
+  s_465c4d3586aeab::t_8a1981f7f67a51 44-48,65,67,94-95,104-113,470,508-537,712-716,759-767,778-781
+skills/pkm-metadata-indexer/test_searchd.py
+  s_465c4d3586aeab::t_8a1981f7f67a51 3,317-336,424-439
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ebc0732ea6b19e1481d63347798a84204e23b2a4",
+  "prompts": {},
+  "sessions": {
+    "s_465c4d3586aeab": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ebc0732e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
