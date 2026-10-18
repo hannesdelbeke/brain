@@ -1,0 +1,19 @@
+"Xiaomi MiMo Studio DNS geoblock bypass.md"
+  s_eda3318f6a97ad::t_cad77fd135b633 13,15-16,18,20-23,25-27,29-33,35-36,38-40,42-44,46-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2835199d40d0eecd256625e0e7831468eef69e8b",
+  "prompts": {},
+  "sessions": {
+    "s_eda3318f6a97ad": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-2835199d",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
