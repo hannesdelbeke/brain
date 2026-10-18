@@ -1,0 +1,19 @@
+"human vs AI git history transfers between notes.md"
+  s_e48c6b4c622ceb::t_c6f332a624a881 21-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6493ed449700747897cfc3585c6147591eb235cc",
+  "prompts": {},
+  "sessions": {
+    "s_e48c6b4c622ceb": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-6493ed44",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
