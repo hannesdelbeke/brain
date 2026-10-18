@@ -1,0 +1,19 @@
+"token efficient PKM analysis architecture.md"
+  s_df827d51edc081::t_df09aecf83bcb0 8,10-13,18,22-23,27-28,32-33,38,46,50,53-58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f369c17a7a71431de9066ae7c649a154ff360fef",
+  "prompts": {},
+  "sessions": {
+    "s_df827d51edc081": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-f369c17a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
