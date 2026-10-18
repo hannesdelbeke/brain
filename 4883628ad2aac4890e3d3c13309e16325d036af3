@@ -1,0 +1,29 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_f87d785fb177e0::t_4bc33a60e316f6 818,1047,1050-1057,1064,1071-1082,1086,1091,1094,1117-1118,1122-1127,1258
+skills/pkm-metadata-indexer/search_vault.py
+  s_f87d785fb177e0::t_4bc33a60e316f6 228,233-245,249,255,259,568-570,599,607
+skills/pkm-metadata-indexer/searchd.py
+  s_f87d785fb177e0::t_4bc33a60e316f6 858,861-863,866,868-877,1673-1677
+skills/pkm-metadata-indexer/test_index_branches.py
+  s_f87d785fb177e0::t_4bc33a60e316f6 8,17,284-324
+skills/pkm-metadata-indexer/test_searchd.py
+  s_f87d785fb177e0::t_4bc33a60e316f6 1292-1354
+skills/pkm-metadata-indexer/tests/test_session_sql.py
+  s_f87d785fb177e0::t_4bc33a60e316f6 46-120
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4883628ad2aac4890e3d3c13309e16325d036af3",
+  "prompts": {},
+  "sessions": {
+    "s_f87d785fb177e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4883628a",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
