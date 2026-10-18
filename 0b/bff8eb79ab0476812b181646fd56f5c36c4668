@@ -1,0 +1,29 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_f324ffdc8a4a15::t_ba8ddde846d4fb 1-109
+"living progress notes over calendar logs.md"
+  s_f324ffdc8a4a15::t_ba8ddde846d4fb 23
+pkm-search.md
+  s_f324ffdc8a4a15::t_ba8ddde846d4fb 63-76
+"progress - agentic biomimetic vault.md"
+  s_f324ffdc8a4a15::t_ba8ddde846d4fb 26-27,39
+"progress - fearless vault consolidation and pruning.md"
+  s_f324ffdc8a4a15::t_ba8ddde846d4fb 43
+"progress - local-first search daemon and indexer.md"
+  s_f324ffdc8a4a15::t_ba8ddde846d4fb 35-36,46,52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0bbff8eb79ab0476812b181646fd56f5c36c4668",
+  "prompts": {},
+  "sessions": {
+    "s_f324ffdc8a4a15": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0bbff8eb",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
