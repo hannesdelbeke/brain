@@ -1,0 +1,19 @@
+"anti links.md"
+  s_15a8c9cda95431::t_826b8e5648a61b 5,13,16,18-20,22-24,26-32,39,41,43-44,46-48,50-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ac72d487914f91bb096ceabe54a7d3dbbcd5a87b",
+  "prompts": {},
+  "sessions": {
+    "s_15a8c9cda95431": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-ac72d487",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
