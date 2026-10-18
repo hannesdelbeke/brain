@@ -1,0 +1,21 @@
+"2026-09-02 what wikilink markup costs a machine reader.md"
+  s_f047a1cb3a7850::t_95bd707eb22329 102
+"markdown is the right output format for an agent-written note.md"
+  s_f047a1cb3a7850::t_95bd707eb22329 1-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "744b75420a3628ad014c093018889b8b37ea11b6",
+  "prompts": {},
+  "sessions": {
+    "s_f047a1cb3a7850": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-744b7542",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
