@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_41f13c78571eed::t_bd01ae6ef92981 1343-1347,1384-1385
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fda4faf5b493ad494c11e2db5c7e4875a1bb18dc",
+  "prompts": {},
+  "sessions": {
+    "s_41f13c78571eed": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-fda4faf5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
