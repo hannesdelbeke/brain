@@ -1,0 +1,27 @@
+"2026-08-28 agent instruction bloat - modular skills and compact synthesis.md"
+  s_21858a18cbc036::t_ae70efb8cf87bc 210
+"2026-08-31 classifier-based compression with an adversarial fidelity gate.md"
+  s_21858a18cbc036::t_ae70efb8cf87bc 1-37
+"2026-08-31 research on compressing llm reasoning and notes without losing information.md"
+  s_21858a18cbc036::t_ae70efb8cf87bc 31,66
+"header extraction for token-efficient retrieval.md"
+  s_21858a18cbc036::t_ae70efb8cf87bc 119-122
+"token efficient PKM analysis architecture.md"
+  s_21858a18cbc036::t_ae70efb8cf87bc 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6c1da2464490afbd116e4652f996d365213d588c",
+  "prompts": {},
+  "sessions": {
+    "s_21858a18cbc036": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-6c1da246",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
