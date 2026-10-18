@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/tests/test_fts_fallback_imports.py
+  s_59de56cb9d5482::t_d5821133d2079c 1-12,16,44-46,50-51,66-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dd4e5224b2ab1730c427c2c169c0b2c195b2ed0e",
+  "prompts": {},
+  "sessions": {
+    "s_59de56cb9d5482": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-dd4e5224",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
