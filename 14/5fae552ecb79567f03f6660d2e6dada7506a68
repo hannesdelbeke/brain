@@ -1,0 +1,21 @@
+"2026-08-30 open markdown file links in Obsidian on Linux.md"
+  s_87b7386c031e8c::t_701546614ca8ce 1-91
+"idea - clickable obsidian links in agent console.md"
+  s_87b7386c031e8c::t_701546614ca8ce 48-50,52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "145fae552ecb79567f03f6660d2e6dada7506a68",
+  "prompts": {},
+  "sessions": {
+    "s_87b7386c031e8c": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-145fae55",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
