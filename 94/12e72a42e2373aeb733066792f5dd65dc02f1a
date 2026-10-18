@@ -1,0 +1,19 @@
+"2026-09-21 longmemeval v2 scores a coding agent over raw trajectories above every rag memory layer.md"
+  s_ddb1439a0346ba::t_64b7a9c5438403 1-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9412e72a42e2373aeb733066792f5dd65dc02f1a",
+  "prompts": {},
+  "sessions": {
+    "s_ddb1439a0346ba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9412e72a",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
