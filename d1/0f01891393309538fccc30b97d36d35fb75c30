@@ -1,0 +1,23 @@
+"cursor agent cli models.md"
+  s_43b10065354df4::t_571b0ad5e2177c 1-136
+"free LLM router and rate limit fallback.md"
+  s_43b10065354df4::t_571b0ad5e2177c 1-87
+"free and low-cost CLI coding agents.md"
+  s_43b10065354df4::t_571b0ad5e2177c 83,98
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d10f01891393309538fccc30b97d36d35fb75c30",
+  "prompts": {},
+  "sessions": {
+    "s_43b10065354df4": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-d10f0189",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
