@@ -1,0 +1,41 @@
+"2026-07-31 historic obsidian links.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 9
+"2026-08-19 AI started tagging notes.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 1-3
+"2026-08-19 AI tool research.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 9
+"agent-friendly documentation tools.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 8
+"how can we get value out of public notes.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 6
+"human vs AI git history transfers between notes.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 6
+learning.md
+  s_16e4c61f07a40e::t_027a81e8d98ef8 5
+"linking to git commits and diffs in obsidian via uri.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 8
+"offline GPU embeddings with incremental cache.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 9
+"practice the Feynman technique with AI.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 6
+"the Feynman technique.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 6
+"wikilink temporal integrity.md"
+  s_16e4c61f07a40e::t_027a81e8d98ef8 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b6e2f4ce73aff5dea35ba098c60bac8abeaf0dc6",
+  "prompts": {},
+  "sessions": {
+    "s_16e4c61f07a40e": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b6e2f4ce",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
