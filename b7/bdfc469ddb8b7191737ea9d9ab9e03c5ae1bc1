@@ -1,0 +1,21 @@
+"2026-08-29 Krita pen lag and stylus latency on Linux.md"
+  s_70a61462d8bfc4::t_cca65be96a9cf4 1-52
+Krita.md
+  s_70a61462d8bfc4::t_cca65be96a9cf4 1-22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b7bdfc469ddb8b7191737ea9d9ab9e03c5ae1bc1",
+  "prompts": {},
+  "sessions": {
+    "s_70a61462d8bfc4": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b7bdfc46",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
