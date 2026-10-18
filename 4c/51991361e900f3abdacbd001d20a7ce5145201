@@ -1,0 +1,19 @@
+"2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing.md"
+  s_b417ef1098e74c::t_7351acc1d5785b 1-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4c51991361e900f3abdacbd001d20a7ce5145201",
+  "prompts": {},
+  "sessions": {
+    "s_b417ef1098e74c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4c519913",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
