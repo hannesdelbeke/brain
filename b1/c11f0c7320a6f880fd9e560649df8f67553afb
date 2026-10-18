@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/searchd.py
+  s_b34aa789dadeb8::t_10972c86695722 48-55,79,92,102,125-133,222-223,245-262,661-673,813-826,833,868-885,902-905,1114-1116
+skills/pkm-metadata-indexer/test_searchd.py
+  s_b34aa789dadeb8::t_10972c86695722 3-4,748-818
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b1c11f0c7320a6f880fd9e560649df8f67553afb",
+  "prompts": {},
+  "sessions": {
+    "s_b34aa789dadeb8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b1c11f0c",
+        "model": "unknown"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
