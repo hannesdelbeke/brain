@@ -1,0 +1,27 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_50b3dcb8d74c6d::t_751a8a037fc86e 6,25-34,984,1268-1271,1273-1274,1279-1282,1284,1286,1288-1292,1294,1296,2051-2052,2055-2065
+skills/pkm-metadata-indexer/search_vault.py
+  s_50b3dcb8d74c6d::t_751a8a037fc86e 123-131,541
+skills/pkm-metadata-indexer/tests/test_daemon_healing.py
+  s_50b3dcb8d74c6d::t_751a8a037fc86e 1,13-25,37-68
+skills/pkm-metadata-indexer/tests/test_fts_no_neural_imports.py
+  s_50b3dcb8d74c6d::t_751a8a037fc86e 1-59
+skills/pkm-metadata-indexer/tests/test_logging.py
+  s_50b3dcb8d74c6d::t_751a8a037fc86e 1-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "65f9bfb4b030e3a618526ed69c1994e24b85a584",
+  "prompts": {},
+  "sessions": {
+    "s_50b3dcb8d74c6d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-65f9bfb4",
+        "model": "claude-sonnet-4-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
