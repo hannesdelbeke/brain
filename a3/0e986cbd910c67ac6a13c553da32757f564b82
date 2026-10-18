@@ -1,0 +1,19 @@
+"Obsidian improvements.md"
+  s_1107490bec9ef3::t_37b6d49afc7a18 39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a30e986cbd910c67ac6a13c553da32757f564b82",
+  "prompts": {},
+  "sessions": {
+    "s_1107490bec9ef3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a30e986c",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
