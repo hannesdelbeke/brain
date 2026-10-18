@@ -1,0 +1,43 @@
+"2026-08-18 cutting mcp token cost in claude code.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-42
+"AI model comparison august 2026.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-41
+"GLM 5.2.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-21
+"GLM-5.3 flash.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-19
+GPT-5.6.md
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-21
+"OX Alpha.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-19
+"fable 5.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-19
+"gemini 3.7 flash.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-19
+"kimi K3.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-19
+"muse spark 1.2.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-21
+"opus 4.8.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-19
+"opus 5.md"
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-21
+qwen3.8-max.md
+  s_d0c5ad1e3f1c4e::t_61ef30f02c9d15 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1850b21de4e01fa443f5564095e809d4ca4b6af1",
+  "prompts": {},
+  "sessions": {
+    "s_d0c5ad1e3f1c4e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1850b21d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
