@@ -1,0 +1,31 @@
+"AI slop vs human notes.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 28
+"differentiate between AI and human notes.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 65-75
+"extract historic wikilinks from git.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 60
+"human vs AI git history transfers between notes.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 26
+"human vs ai text context.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 1-7,9-11,13,15-19
+"linking to git commits and diffs in obsidian via uri.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 67
+"wikilink temporal integrity.md"
+  s_31a2f920b2c8fb::t_2de9631f4ef404 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a7eea45b5499c02f3ef352fcfc25831fcc6d968f",
+  "prompts": {},
+  "sessions": {
+    "s_31a2f920b2c8fb": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-a7eea45b",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
