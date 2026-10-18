@@ -1,0 +1,21 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_67c2ee474cad6a::t_d0319354451c49 32,59-60
+"progress - local-first search daemon and indexer.md"
+  s_67c2ee474cad6a::t_d0319354451c49 24-25,42,45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "702cc71f32f78a65a6f9bfbde688bebbaf0b8feb",
+  "prompts": {},
+  "sessions": {
+    "s_67c2ee474cad6a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-702cc71f",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
