@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/mcp_server.py
+  s_a4d62f18cdd396::t_8d95be311962ab 1-79
+skills/pkm-metadata-indexer/pyproject.toml
+  s_a4d62f18cdd396::t_8d95be311962ab 39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ae8e08eec95e60fb9a9063ae9185b3ff1df9128a",
+  "prompts": {},
+  "sessions": {
+    "s_a4d62f18cdd396": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ae8e08ee",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
