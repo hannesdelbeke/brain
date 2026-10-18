@@ -1,0 +1,37 @@
+"MVP MVC MVVM compared.md"
+  s_12334326205f4a::t_0847d65b798933 52-53
+"MVP example.md"
+  s_12334326205f4a::t_0847d65b798933 136
+"MVP py sample function.md"
+  s_12334326205f4a::t_0847d65b798933 83-84
+"MVP vs MVC vs MV in Qt.md"
+  s_12334326205f4a::t_0847d65b798933 43
+"Maya environment variables.md"
+  s_12334326205f4a::t_0847d65b798933 2-3,14,29-34,36
+"Maya menu documentation.md"
+  s_12334326205f4a::t_0847d65b798933 2-3
+"Maya plugin manager.md"
+  s_12334326205f4a::t_0847d65b798933 33-34
+"Obsidian live hook and DOM bridge for AI agents.md"
+  s_12334326205f4a::t_0847d65b798933 70
+"Powerline Ethernet Adapter.md"
+  s_12334326205f4a::t_0847d65b798933 2-3
+"Tesla - full self driving.md"
+  s_12334326205f4a::t_0847d65b798933 2-4,22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "07203a660ad7c5e9437abdec7153b0dd54d54149",
+  "prompts": {},
+  "sessions": {
+    "s_12334326205f4a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-07203a66",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
