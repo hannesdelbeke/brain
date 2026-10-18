@@ -1,0 +1,21 @@
+"agentic tooling upgrades over grep.md"
+  s_62e75b23917a20::t_108cbca4aa5f47 58-59
+"offline GPU embeddings with incremental cache.md"
+  s_62e75b23917a20::t_108cbca4aa5f47 16-22,136,140,142,144,146-148
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1432fa3740b6d022e410a526ec301379afec5cef",
+  "prompts": {},
+  "sessions": {
+    "s_62e75b23917a20": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1432fa37",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
