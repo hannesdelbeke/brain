@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_f53efe14a585a1::t_24f5dce0a4b2f2 1207-1211,1216,1220-1234,1236-1262,1272,1276-1319
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5efca5515fe4f898b706cb14ddca02603388c070",
+  "prompts": {},
+  "sessions": {
+    "s_f53efe14a585a1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d6a5b3f3-0aab-45cc-9506-33644da3741f",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "hannes-fortis <157499826+hannes-fortis@users.noreply.github.com>"
+    }
+  }
+}
