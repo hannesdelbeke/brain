@@ -1,0 +1,23 @@
+"2026-08-30 agent reading versus human reading, which formatting rules transfer.md"
+  s_a3a8340a034aad::t_abfee0311439ba 54-59
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_a3a8340a034aad::t_abfee0311439ba 168-175
+"2026-09-01 the adversarial fidelity gate is llm-as-judge, and that literature explains the non-determinism.md"
+  s_a3a8340a034aad::t_abfee0311439ba 27-33,41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ac81d504d0724c6c5e6e83884564a434bda385a5",
+  "prompts": {},
+  "sessions": {
+    "s_a3a8340a034aad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ac81d504",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
