@@ -1,0 +1,21 @@
+"2026-08-29 local search daemon and indexer - release plan and modular decoupling.md"
+  s_99a4c20ef728ad::t_9ccc3aa2032b3b 56-58,100-102
+"2026-08-30 a semantic graph over the whole vault.md"
+  s_99a4c20ef728ad::t_9ccc3aa2032b3b 14-15,20,32-34,38-40,54-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6e1d07505df12abbb9fc115a67ecc5f745a0fe65",
+  "prompts": {},
+  "sessions": {
+    "s_99a4c20ef728ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-6e1d0750",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
