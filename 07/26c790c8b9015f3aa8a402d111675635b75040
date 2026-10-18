@@ -1,0 +1,19 @@
+"2026-08-31 wide time gaps between repeated notes are stronger signal than close ones.md"
+  s_c8099ae5294397::t_61115a884c3bf8 1-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0726c790c8b9015f3aa8a402d111675635b75040",
+  "prompts": {},
+  "sessions": {
+    "s_c8099ae5294397": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0726c790",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
