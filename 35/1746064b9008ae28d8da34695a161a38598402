@@ -1,0 +1,25 @@
+"2026-09-01 adversarial literature check for candidate 2.md"
+  s_eecf41bcf64605::t_f2bdaf78324588 59-60
+"2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2.md"
+  s_eecf41bcf64605::t_f2bdaf78324588 145-146
+"2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions.md"
+  s_eecf41bcf64605::t_f2bdaf78324588 1-56
+"2026-09-01 why the u-curve disappeared in candidate 2's multi-document test.md"
+  s_eecf41bcf64605::t_f2bdaf78324588 1-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "351746064b9008ae28d8da34695a161a38598402",
+  "prompts": {},
+  "sessions": {
+    "s_eecf41bcf64605": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-35174606",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
