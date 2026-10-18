@@ -1,0 +1,19 @@
+"obsidian-second-brain review.md"
+  s_e7315c12b2ca42::t_919247aa13ed46 14-16,19-24,32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b73363223ace796563c83a84216df69742436578",
+  "prompts": {},
+  "sessions": {
+    "s_e7315c12b2ca42": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b7336322",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
