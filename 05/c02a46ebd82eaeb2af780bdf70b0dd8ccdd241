@@ -1,0 +1,25 @@
+"2026-09-01 process log - from readability question to publish plan.md"
+  s_c3c21587a7703b::t_af2b089e9dc65d 47
+"2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing.md"
+  s_c3c21587a7703b::t_af2b089e9dc65d 19,53
+"hub-node filtering for co-commit graphs.md"
+  s_c3c21587a7703b::t_af2b089e9dc65d 42
+skills/pkm-metadata-indexer/SKILL.md
+  s_c3c21587a7703b::t_af2b089e9dc65d 89,297
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "05c02a46ebd82eaeb2af780bdf70b0dd8ccdd241",
+  "prompts": {},
+  "sessions": {
+    "s_c3c21587a7703b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-05c02a46",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
