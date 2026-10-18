@@ -1,0 +1,21 @@
+"github co-author email collision with third-party accounts.md"
+  s_ec8b720ebc89b8::t_722d75ef9900bc 1-47
+"github co-authors for AI.md"
+  s_ec8b720ebc89b8::t_722d75ef9900bc 3-7,12,16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "70218e927009aee402a3e04f1ce6aac110b68b6c",
+  "prompts": {},
+  "sessions": {
+    "s_ec8b720ebc89b8": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-70218e92",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
