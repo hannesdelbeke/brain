@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/SKILL.md
+  s_60db85431f9b38::t_65126d58691bf0 172-187
+skills/pkm-metadata-indexer/query_misses.py
+  s_60db85431f9b38::t_65126d58691bf0 1-171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e7d51e8b8db80b3ef0d48ae820bb8513b86707bb",
+  "prompts": {},
+  "sessions": {
+    "s_60db85431f9b38": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e7d51e8b",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
