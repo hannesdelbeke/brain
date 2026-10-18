@@ -1,0 +1,19 @@
+"hierarchical map-reduce note rollup.md"
+  s_946bf970328c1c::t_ff649fc82e3026 49,51,53-61,63-64,66-67,69-75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "19eeca8e54f0a388f053bb4ad8a2d3f53c49a59e",
+  "prompts": {},
+  "sessions": {
+    "s_946bf970328c1c": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-19eeca8e",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
