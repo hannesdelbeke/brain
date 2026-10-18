@@ -1,0 +1,23 @@
+"2026-08-11 laptop research.md"
+  s_11e857cfdd6ba8::t_c3d0d98c82790d 1-57
+"2026-08-15 claude 1 million research.md"
+  s_11e857cfdd6ba8::t_c3d0d98c82790d 1-166
+"differentiate between AI and human notes.md"
+  s_11e857cfdd6ba8::t_c3d0d98c82790d 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5f3209be5eb37129c492ebbf27d23137b095fee8",
+  "prompts": {},
+  "sessions": {
+    "s_11e857cfdd6ba8": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-5f3209be",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
