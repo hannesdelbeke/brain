@@ -1,0 +1,21 @@
+skills/note-compress/compress_notes.py
+  s_43cdc5cf292ff6::t_9caf8df2d369d8 1-354
+skills/note-compress/requirements.txt
+  s_43cdc5cf292ff6::t_9caf8df2d369d8 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0b159fef2cccb3cc307add876c8ab3c7ad7252c1",
+  "prompts": {},
+  "sessions": {
+    "s_43cdc5cf292ff6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0b159fef",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
