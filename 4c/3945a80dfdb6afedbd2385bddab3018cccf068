@@ -1,0 +1,19 @@
+"2026-09-01 publish plan - readability and compression research as papers.md"
+  s_a2a56c1b3f6169::t_28ac300510de6d 54,56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4c3945a80dfdb6afedbd2385bddab3018cccf068",
+  "prompts": {},
+  "sessions": {
+    "s_a2a56c1b3f6169": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4c3945a8",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
