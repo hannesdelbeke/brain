@@ -1,0 +1,19 @@
+AGENTS.md
+  s_2d597721c8acdc::t_c50f576af529b5 2-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4f984ee17ae234a1377c0d089edf92c94e9f07e1",
+  "prompts": {},
+  "sessions": {
+    "s_2d597721c8acdc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4f984ee1",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
