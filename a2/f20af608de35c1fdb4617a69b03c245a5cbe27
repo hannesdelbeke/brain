@@ -1,0 +1,23 @@
+Windows.md
+  s_1665f08bacd861::t_8a0dc525eaefa6 1-10
+"anti links.md"
+  s_1665f08bacd861::t_8a0dc525eaefa6 18,32,35,37-39,45-46,50
+window.md
+  s_1665f08bacd861::t_8a0dc525eaefa6 2-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a2f20af608de35c1fdb4617a69b03c245a5cbe27",
+  "prompts": {},
+  "sessions": {
+    "s_1665f08bacd861": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-a2f20af6",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
