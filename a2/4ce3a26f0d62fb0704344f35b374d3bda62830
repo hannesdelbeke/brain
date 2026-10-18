@@ -1,0 +1,21 @@
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_bf3958bb344e64::t_8561533bac803a 156-167
+skills/pkm-metadata-indexer/recency_prior_experiment.py
+  s_bf3958bb344e64::t_8561533bac803a 67,97-122,199-200,218-233,241-243,309-311,316,321-324,353-362,367,371,399-407
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a24ce3a26f0d62fb0704344f35b374d3bda62830",
+  "prompts": {},
+  "sessions": {
+    "s_bf3958bb344e64": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a24ce3a2",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
