@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/search_vault.py
+  s_c639a7c85bf147::t_401c8d90c9ec29 458-459,543-554,556
+skills/pkm-metadata-indexer/tests/test_vault_selection.py
+  s_c639a7c85bf147::t_401c8d90c9ec29 1-70
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5505d66504bd7c7a39453cdee64f3bdaa303c2da",
+  "prompts": {},
+  "sessions": {
+    "s_c639a7c85bf147": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-5505d665",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
