@@ -1,0 +1,21 @@
+"cross-agent session indexing architecture.md"
+  s_b8b6cca5fa0651::t_7923667e7729ca 141
+"proposal - self-learning agent supervisor and continuous prompt failure distillation.md"
+  s_b8b6cca5fa0651::t_7923667e7729ca 14,17,19,21,23,25,27,29,32,35-36,39-40,43,46,49,51,53,55,57,59-63,65,67,69,71,73,75,77-79,81,83,85-90,92,94-118
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "266ccf86fb16da754d25851818f0951c9ceb7e89",
+  "prompts": {},
+  "sessions": {
+    "s_b8b6cca5fa0651": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-266ccf86",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
