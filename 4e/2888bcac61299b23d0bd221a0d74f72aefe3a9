@@ -1,0 +1,19 @@
+"single-repo vs multi-repo agent search.md"
+  s_63fbd0cbfe8c26::t_7f49bdbabc1726 18,21-22,25-26,29-31,35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4e2888bcac61299b23d0bd221a0d74f72aefe3a9",
+  "prompts": {},
+  "sessions": {
+    "s_63fbd0cbfe8c26": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-4e2888bc",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
