@@ -1,0 +1,23 @@
+"2026-08-29 one obsidian plugin over the search daemon.md"
+  s_181262ceaec849::t_b5aecb491b104c 16-17,22,59-61,85
+"2026-08-30 a semantic graph over the whole vault.md"
+  s_181262ceaec849::t_b5aecb491b104c 15,20,60,62
+"2026-08-30 what else the index can answer.md"
+  s_181262ceaec849::t_b5aecb491b104c 1-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "aeb4ce7dce0967474b7a44c55f64e9d18de28369",
+  "prompts": {},
+  "sessions": {
+    "s_181262ceaec849": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-aeb4ce7d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
