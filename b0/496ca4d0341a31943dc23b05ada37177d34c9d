@@ -1,0 +1,19 @@
+"2026-08-27 vault index work log.md"
+  s_2cb7c4dda81e85::t_ef2aa7d2544a84 68-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b0496ca4d0341a31943dc23b05ada37177d34c9d",
+  "prompts": {},
+  "sessions": {
+    "s_2cb7c4dda81e85": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b0496ca4",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
