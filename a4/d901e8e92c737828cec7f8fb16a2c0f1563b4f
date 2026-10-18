@@ -1,0 +1,21 @@
+"2026-08-29 local search daemon and indexer - release plan and modular decoupling.md"
+  s_1f1bf2153f8271::t_288617ae7fd055 58,68-81
+"2026-08-29 one obsidian plugin over the search daemon.md"
+  s_1f1bf2153f8271::t_288617ae7fd055 1-73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a4d901e8e92c737828cec7f8fb16a2c0f1563b4f",
+  "prompts": {},
+  "sessions": {
+    "s_1f1bf2153f8271": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a4d901e8",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
