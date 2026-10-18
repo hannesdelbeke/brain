@@ -1,0 +1,21 @@
+"progress - local-first search daemon and indexer.md"
+  s_e45c1cccd6d565::t_97a6444c35bf20 24,42
+skills/pkm-metadata-indexer/SKILL.md
+  s_e45c1cccd6d565::t_97a6444c35bf20 143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "de97e3affc65748fdb98fc5ae385b6ff0de50e7d",
+  "prompts": {},
+  "sessions": {
+    "s_e45c1cccd6d565": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-de97e3af",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
