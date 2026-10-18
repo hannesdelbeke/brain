@@ -1,0 +1,23 @@
+"2026-08-30 agent reading versus human reading, which formatting rules transfer.md"
+  s_c44422ee682069::t_2d1c7e43f728ce 22,28,30,57,59
+"2026-08-30 readability and reading-speed research applied to note-taking vaults.md"
+  s_c44422ee682069::t_2d1c7e43f728ce 22,24,30,32,34,36,38,40,42
+"2026-09-01 why academic writing is hard to read.md"
+  s_c44422ee682069::t_2d1c7e43f728ce 18,22,24,28,30,41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ea7763d602e52fda765a2146aa2a9cd3a6c20c74",
+  "prompts": {},
+  "sessions": {
+    "s_c44422ee682069": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ea7763d6",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
