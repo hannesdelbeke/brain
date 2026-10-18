@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_15e3546da96b56::t_3fb7ad2fc09720 104-111,190-191,195-199,201-202,208-209,220,1559,1646-1647
+skills/pkm-metadata-indexer/measure_latency.py
+  s_15e3546da96b56::t_3fb7ad2fc09720 1-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0945dff55500ab832a29be4b02912dff9e1e3039",
+  "prompts": {},
+  "sessions": {
+    "s_15e3546da96b56": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0945dff5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
