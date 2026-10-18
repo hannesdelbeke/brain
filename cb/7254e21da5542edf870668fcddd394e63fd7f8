@@ -1,0 +1,23 @@
+"progress - agentic biomimetic vault.md"
+  s_b9a8c28325a5be::t_7dbe78bef1da02 22-25
+"progress - fearless vault consolidation and pruning.md"
+  s_b9a8c28325a5be::t_7dbe78bef1da02 22-25
+"progress - local-first search daemon and indexer.md"
+  s_b9a8c28325a5be::t_7dbe78bef1da02 23-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cb7254e21da5542edf870668fcddd394e63fd7f8",
+  "prompts": {},
+  "sessions": {
+    "s_b9a8c28325a5be": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-cb7254e2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
