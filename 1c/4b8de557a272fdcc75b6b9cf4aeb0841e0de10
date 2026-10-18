@@ -1,0 +1,21 @@
+"2026-08-28 agent instruction bloat - modular skills and compact synthesis.md"
+  s_1d1f4395a49382::t_e1b56c64acb3f6 1-213
+AGENTS.md
+  s_1d1f4395a49382::t_e1b56c64acb3f6 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1c4b8de557a272fdcc75b6b9cf4aeb0841e0de10",
+  "prompts": {},
+  "sessions": {
+    "s_1d1f4395a49382": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1c4b8de5",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
