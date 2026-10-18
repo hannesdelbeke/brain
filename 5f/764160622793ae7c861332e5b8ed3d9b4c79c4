@@ -1,0 +1,29 @@
+"2026-08-30 agent reading versus human reading, which formatting rules transfer.md"
+  s_7f048bf315b7ff::t_359cb4a7ed66d0 22,28,30,57
+"2026-08-30 readability and reading-speed research applied to note-taking vaults.md"
+  s_7f048bf315b7ff::t_359cb4a7ed66d0 22,24,30,32,34,36,38,40,42
+"2026-08-31 classifier-based compression with an adversarial fidelity gate.md"
+  s_7f048bf315b7ff::t_359cb4a7ed66d0 35
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_7f048bf315b7ff::t_359cb4a7ed66d0 154,158
+"2026-08-31 research on compressing llm reasoning and notes without losing information.md"
+  s_7f048bf315b7ff::t_359cb4a7ed66d0 17,69-70,74
+"2026-09-01 adversarial literature check for candidate 3.md"
+  s_7f048bf315b7ff::t_359cb4a7ed66d0 21,25,41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5f764160622793ae7c861332e5b8ed3d9b4c79c4",
+  "prompts": {},
+  "sessions": {
+    "s_7f048bf315b7ff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-5f764160",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
