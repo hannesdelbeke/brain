@@ -1,0 +1,19 @@
+"2026-09-16 wifi mesh modes exist but none span windows linux mac and phone.md"
+  s_aca93c620cd1ae::t_a87df9cc7fe889 1-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3483686b87518102fb8049e2c50ebd30aa3f6ad9",
+  "prompts": {},
+  "sessions": {
+    "s_aca93c620cd1ae": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-3483686b",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
