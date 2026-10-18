@@ -1,0 +1,21 @@
+"2026-08-27 vault index work log.md"
+  s_b9f6a3d7b3f031::t_ab1dbdb96bac1e 62-67,70
+"progress - local-first search daemon and indexer.md"
+  s_b9f6a3d7b3f031::t_ab1dbdb96bac1e 24,46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e9263d37bd0003a278837673eb035d50ff8c7d5a",
+  "prompts": {},
+  "sessions": {
+    "s_b9f6a3d7b3f031": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e9263d37",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
