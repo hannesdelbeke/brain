@@ -1,0 +1,21 @@
+skills/note-search-optimization/SKILL.md
+  s_429b81ea7c065d::t_90fce5c75dc3de 1-135
+skills/note-search-optimization/scripts/audit_search_readiness.py
+  s_429b81ea7c065d::t_90fce5c75dc3de 1-355
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9b130722d85ccc437e4ed6def47d5701d7287528",
+  "prompts": {},
+  "sessions": {
+    "s_429b81ea7c065d": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-9b130722",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
