@@ -1,0 +1,19 @@
+"path alias is human facing not agent.md"
+  s_ebf183483c5e12::t_54f653a0157f0d 11,13,15,21,34,65-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e8def50e20e9449bfe67c8295ca0fb012cf81ed8",
+  "prompts": {},
+  "sessions": {
+    "s_ebf183483c5e12": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e8def50e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
