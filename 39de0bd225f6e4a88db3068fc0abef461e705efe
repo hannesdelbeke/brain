@@ -1,0 +1,23 @@
+skills/pkm-metadata-indexer/eval_gate.py
+  s_38b2d82c8d2f24::t_6327ec8fe10a21 1-250
+skills/pkm-metadata-indexer/eval_judge.py
+  s_38b2d82c8d2f24::t_6327ec8fe10a21 1-278
+skills/pkm-metadata-indexer/eval_outline.py
+  s_38b2d82c8d2f24::t_6327ec8fe10a21 10-11,15-16,22,34-37,41,43-46,178,197-209,218,223-226,231-234,236,239-240,242,247-248
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "39de0bd225f6e4a88db3068fc0abef461e705efe",
+  "prompts": {},
+  "sessions": {
+    "s_38b2d82c8d2f24": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-39de0bd2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
