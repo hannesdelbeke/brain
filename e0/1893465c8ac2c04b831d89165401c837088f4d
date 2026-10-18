@@ -1,0 +1,35 @@
+2D.md
+  s_4739072851a3f4::t_7eb6359c9db214 14
+"AI feedback BQt main - cleaned up.md"
+  s_4739072851a3f4::t_7eb6359c9db214 2-3
+Excalidraw.md
+  s_4739072851a3f4::t_7eb6359c9db214 2-3,22-23
+"Home Assistant.md"
+  s_4739072851a3f4::t_7eb6359c9db214 4
+"Intelligent Octopus Go.md"
+  s_4739072851a3f4::t_7eb6359c9db214 21
+"JPG vs JPEG.md"
+  s_4739072851a3f4::t_7eb6359c9db214 2-4
+"Lisbon todo.md"
+  s_4739072851a3f4::t_7eb6359c9db214 2-3,54-55
+"MVC python example.md"
+  s_4739072851a3f4::t_7eb6359c9db214 97
+"MVP python example.md"
+  s_4739072851a3f4::t_7eb6359c9db214 98
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e01893465c8ac2c04b831d89165401c837088f4d",
+  "prompts": {},
+  "sessions": {
+    "s_4739072851a3f4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e0189346",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
