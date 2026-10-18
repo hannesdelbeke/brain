@@ -1,0 +1,55 @@
+"2026-07-13 vault backup issue.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 19-48
+"2026-08-25 vault index work log.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 1-55
+"Fixing Mermaid XY Chart Rendering in Obsidian.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 10
+"Obsidian core plugin.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 1-3
+"Obsidian unlinked mentions include code snippets.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 27
+"Priority heatmap.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 12,26-55
+"TODO - show backlinks for non supported files.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 10,20-61
+"TODO how to highlight urgent tasks.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 17,36-92
+"codegraph review.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 75
+"collapse properties problem.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 1-6
+"core Obsidian features to rework on the vault index.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 1-71
+"fix issues in my mkdocs wiki.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 10,13-14
+"hierarchical map-reduce note rollup.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 6,11-44,48,75
+"lightning-fast unified search plugin for obsidian.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 111-112,119
+"line1 callout render bug.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 5
+"multi-repo agentic search architecture.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 75
+"semantic index as a git extension.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 1-177
+"semantic search on git history.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 121
+"unlinked mentions from the vault index.md"
+  s_b42f4b0b8a9339::t_7f9c902bb85b6d 1-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5a7f17460a641f0d9e49326e710a8ece3115629a",
+  "prompts": {},
+  "sessions": {
+    "s_b42f4b0b8a9339": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-5a7f1746",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
