@@ -1,0 +1,63 @@
+"1 directional annotations.md"
+  s_9c492dab6da519::t_aad09f79b853fb 64-65
+"2026-02-16 an example of bad cross app linking.md"
+  s_9c492dab6da519::t_aad09f79b853fb 51-52
+"2026-07-31 historic obsidian links.md"
+  s_9c492dab6da519::t_aad09f79b853fb 32-33
+"Link strength.md"
+  s_9c492dab6da519::t_aad09f79b853fb 45-47
+"Obsidian - one way wikilinks.md"
+  s_9c492dab6da519::t_aad09f79b853fb 77-79
+"Obsidian find dead links.md"
+  s_9c492dab6da519::t_aad09f79b853fb 21-23
+"Obsidian redirect for notes.md"
+  s_9c492dab6da519::t_aad09f79b853fb 25-26
+"TODO include project wikis in Obsidian.md"
+  s_9c492dab6da519::t_aad09f79b853fb 60-61
+"URI link to obsidian git diff - RnD.md"
+  s_9c492dab6da519::t_aad09f79b853fb 26-27
+"age links.md"
+  s_9c492dab6da519::t_aad09f79b853fb 21-23
+"github wikis in obsidian & interwikilinks.md"
+  s_9c492dab6da519::t_aad09f79b853fb 36-37
+"hashtag synonyms.md"
+  s_9c492dab6da519::t_aad09f79b853fb 50-53
+"interwikilinks plugin.md"
+  s_9c492dab6da519::t_aad09f79b853fb 83-85
+"link type.md"
+  s_9c492dab6da519::t_aad09f79b853fb 36-38
+"link unlinked notes.md"
+  s_9c492dab6da519::t_aad09f79b853fb 28-30
+"link unlinked websites.md"
+  s_9c492dab6da519::t_aad09f79b853fb 46-47
+"make wikilinks optional.md"
+  s_9c492dab6da519::t_aad09f79b853fb 54-55
+"note linking duplicate source.md"
+  s_9c492dab6da519::t_aad09f79b853fb 41-42
+note-link-janitor.md
+  s_9c492dab6da519::t_aad09f79b853fb 55-57
+"proposal - typed directional links for obsidian.md"
+  s_9c492dab6da519::t_aad09f79b853fb 1-98
+"renaming notes breaks links.md"
+  s_9c492dab6da519::t_aad09f79b853fb 30-32
+"submodule wikilink clashes.md"
+  s_9c492dab6da519::t_aad09f79b853fb 29-30
+"wikilink temporal integrity.md"
+  s_9c492dab6da519::t_aad09f79b853fb 41-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9b36cea3153528415ef75128e16906a28fcd463e",
+  "prompts": {},
+  "sessions": {
+    "s_9c492dab6da519": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9b36cea3",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
