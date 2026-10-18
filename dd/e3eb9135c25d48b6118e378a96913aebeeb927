@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/searchd.py
+  s_51cf0386f88cb7::t_1067aa5d157f81 35,312-314,327-328,331,336-344
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dde3eb9135c25d48b6118e378a96913aebeeb927",
+  "prompts": {},
+  "sessions": {
+    "s_51cf0386f88cb7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-dde3eb91",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
