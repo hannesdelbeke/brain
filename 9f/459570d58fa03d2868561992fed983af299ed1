@@ -1,0 +1,21 @@
+"2026-09-01 monitor brightness control on Linux with ddcutil.md"
+  s_1512a6011bfe14::t_532f160db58af1 1-85
+Monitorian.md
+  s_1512a6011bfe14::t_532f160db58af1 20-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9f459570d58fa03d2868561992fed983af299ed1",
+  "prompts": {},
+  "sessions": {
+    "s_1512a6011bfe14": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-9f459570",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
