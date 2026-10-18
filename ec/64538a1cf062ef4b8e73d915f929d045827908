@@ -1,0 +1,23 @@
+"agentic tooling upgrades over grep.md"
+  s_376327321cfc52::t_0230314428b799 31
+"offline GPU embeddings with incremental cache.md"
+  s_376327321cfc52::t_0230314428b799 22
+"token efficient PKM analysis architecture.md"
+  s_376327321cfc52::t_0230314428b799 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ec64538a1cf062ef4b8e73d915f929d045827908",
+  "prompts": {},
+  "sessions": {
+    "s_376327321cfc52": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ec64538a",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
