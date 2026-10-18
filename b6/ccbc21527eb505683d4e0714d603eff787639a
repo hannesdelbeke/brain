@@ -1,0 +1,19 @@
+"longitudinal personal journals and emotional datasets.md"
+  s_f5b830ee329be6::t_d0b30e0f2b64e3 20,22-24,28-76,80-92,94-97,99-101,103-115,117,119,121-128,132,134-147,153,162,174-175
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b6ccbc21527eb505683d4e0714d603eff787639a",
+  "prompts": {},
+  "sessions": {
+    "s_f5b830ee329be6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b6ccbc21",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
