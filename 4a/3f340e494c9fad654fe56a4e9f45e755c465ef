@@ -1,0 +1,19 @@
+"2026-09-01 pilot design - bringing the u-curve back with real notes and paraphrased questions.md"
+  s_613bf976888893::t_2e05b77d198497 15-17,39-50
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4a3f340e494c9fad654fe56a4e9f45e755c465ef",
+  "prompts": {},
+  "sessions": {
+    "s_613bf976888893": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4a3f340e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
