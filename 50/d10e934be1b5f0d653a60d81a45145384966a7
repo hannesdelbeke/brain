@@ -1,0 +1,19 @@
+"multi-repo agentic search architecture.md"
+  s_7a277914586eca::t_3572cee215ba9a 1-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "50d10e934be1b5f0d653a60d81a45145384966a7",
+  "prompts": {},
+  "sessions": {
+    "s_7a277914586eca": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-50d10e93",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
