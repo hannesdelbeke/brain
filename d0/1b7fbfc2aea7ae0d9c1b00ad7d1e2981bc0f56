@@ -1,0 +1,19 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_50824896243d10::t_7bbbd73d38dba6 34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d01b7fbfc2aea7ae0d9c1b00ad7d1e2981bc0f56",
+  "prompts": {},
+  "sessions": {
+    "s_50824896243d10": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-d01b7fbf",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
