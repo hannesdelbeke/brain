@@ -1,0 +1,19 @@
+"mesh Wi-Fi.md"
+  s_13b0fc0a39d212::t_869e2a85afd447 11,13-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a2fc70ee6caf3f16a9692bb821407df3c6de674a",
+  "prompts": {},
+  "sessions": {
+    "s_13b0fc0a39d212": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-a2fc70ee",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <noreply@google.com>"
+    }
+  }
+}
