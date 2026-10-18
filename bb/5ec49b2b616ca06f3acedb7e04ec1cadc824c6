@@ -1,0 +1,21 @@
+"2026-09-01 synthetic hop-ceiling test - two fictional vaults, cross-model content, zero trouble found.md"
+  s_4e23371f7946a8::t_06b161a184b3ed 1-60
+"2026-09-01 wikipedia hop-ceiling test - setup and reproduction steps.md"
+  s_4e23371f7946a8::t_06b161a184b3ed 88
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bb5ec49b2b616ca06f3acedb7e04ec1cadc824c6",
+  "prompts": {},
+  "sessions": {
+    "s_4e23371f7946a8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-bb5ec49b",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
