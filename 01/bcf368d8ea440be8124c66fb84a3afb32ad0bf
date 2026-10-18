@@ -1,0 +1,19 @@
+"lightning-fast unified search plugin for obsidian.md"
+  s_56058eaa5acc1f::t_d764f6aa35e758 13,18-44,47,49,51,53-59,61,63-69,71-76,78-87,89-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "01bcf368d8ea440be8124c66fb84a3afb32ad0bf",
+  "prompts": {},
+  "sessions": {
+    "s_56058eaa5acc1f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-01bcf368",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@ai>"
+    }
+  }
+}
