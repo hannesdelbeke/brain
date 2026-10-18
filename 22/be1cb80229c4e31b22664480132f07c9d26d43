@@ -1,0 +1,25 @@
+"2026-08-30 co-retrieval edges do not improve ranking.md"
+  s_19f1bfccce5a27::t_1526952f0e658a 1-69
+"2026-08-30 what else the index can answer.md"
+  s_19f1bfccce5a27::t_1526952f0e658a 13,17,30,42,57
+skills/pkm-metadata-indexer/searchd.py
+  s_19f1bfccce5a27::t_1526952f0e658a 132,140-143,147-166,416-417
+skills/pkm-metadata-indexer/test_searchd.py
+  s_19f1bfccce5a27::t_1526952f0e658a 113-126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "22be1cb80229c4e31b22664480132f07c9d26d43",
+  "prompts": {},
+  "sessions": {
+    "s_19f1bfccce5a27": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-22be1cb8",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
