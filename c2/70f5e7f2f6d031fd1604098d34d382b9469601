@@ -1,0 +1,19 @@
+"easiest way to support agentic map reduce.md"
+  s_64766098c292b3::t_7630eb478a42f7 1-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c270f5e7f2f6d031fd1604098d34d382b9469601",
+  "prompts": {},
+  "sessions": {
+    "s_64766098c292b3": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-c270f5e7",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
