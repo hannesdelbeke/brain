@@ -1,0 +1,19 @@
+"note utility and synapse strength from session recaps.md"
+  s_9780c28c339b00::t_d676291173b755 8,17,21,23,25,27,29-33,36-53,56-129,131,133-138,140-145,147,149,151-154,156,159-164,167
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f6587a569c748d6a311381bb7e51a2f0d7c1fcf3",
+  "prompts": {},
+  "sessions": {
+    "s_9780c28c339b00": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-f6587a56",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
