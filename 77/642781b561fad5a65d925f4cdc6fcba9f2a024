@@ -1,0 +1,19 @@
+zenodo.md
+  s_3e5c46f6439d40::t_6dfe2f38f2d5bb 1-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "77642781b561fad5a65d925f4cdc6fcba9f2a024",
+  "prompts": {},
+  "sessions": {
+    "s_3e5c46f6439d40": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-77642781",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
