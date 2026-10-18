@@ -1,0 +1,21 @@
+"moving files across submodules loses created date.md"
+  s_0410d594f5d4f8::t_4f1cae3a4b2491 40,45
+skills/private-to-public-note-promotion/SKILL.md
+  s_0410d594f5d4f8::t_4f1cae3a4b2491 113-116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ee450d520701eafd9f0fec2aa52990bb9c36459f",
+  "prompts": {},
+  "sessions": {
+    "s_0410d594f5d4f8": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-ee450d52",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
