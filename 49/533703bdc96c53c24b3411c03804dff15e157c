@@ -1,0 +1,23 @@
+"2026-09-01 process log - from readability question to publish plan.md"
+  s_dbf4ace92ea4c3::t_f3438f3d54e8f0 41-53
+"2026-09-01 publish plan - readability and compression research as papers.md"
+  s_dbf4ace92ea4c3::t_f3438f3d54e8f0 52-75,83-84
+"2026-09-01 the adversarial fidelity gate is llm-as-judge, and that literature explains the non-determinism.md"
+  s_dbf4ace92ea4c3::t_f3438f3d54e8f0 42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "49533703bdc96c53c24b3411c03804dff15e157c",
+  "prompts": {},
+  "sessions": {
+    "s_dbf4ace92ea4c3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-49533703",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
