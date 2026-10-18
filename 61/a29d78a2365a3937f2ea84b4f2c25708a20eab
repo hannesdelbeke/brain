@@ -1,0 +1,19 @@
+"2026-08-31 research on compressing llm reasoning and notes without losing information.md"
+  s_62bbe2ef3b4e37::t_c80c7d82fca4dd 29-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "61a29d78a2365a3937f2ea84b4f2c25708a20eab",
+  "prompts": {},
+  "sessions": {
+    "s_62bbe2ef3b4e37": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-61a29d78",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
