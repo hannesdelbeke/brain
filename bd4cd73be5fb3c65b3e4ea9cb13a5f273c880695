@@ -1,0 +1,19 @@
+_scripts/check_dead_links.py
+  s_869c9adaa1f093::t_d8441dc3665406 61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bd4cd73be5fb3c65b3e4ea9cb13a5f273c880695",
+  "prompts": {},
+  "sessions": {
+    "s_869c9adaa1f093": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-bd4cd73b",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
