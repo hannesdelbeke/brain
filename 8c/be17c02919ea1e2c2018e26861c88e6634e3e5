@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/query_misses.py
+  s_e0ea858275c110::t_5213054f6d3429 30-37,56-67,177-179,196-201,203-204,210-213,218-220
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8cbe17c02919ea1e2c2018e26861c88e6634e3e5",
+  "prompts": {},
+  "sessions": {
+    "s_e0ea858275c110": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-8cbe17c0",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
