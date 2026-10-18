@@ -1,0 +1,31 @@
+"Obsidian data worth exposing to AI agents.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 56
+"Obsidian live hook and DOM bridge for AI agents.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 70
+"Obsidian visual link color debugging and AI bridge plan.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 65
+"conditional color obsidian header path.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 50
+"global search personal notes.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 13-14
+"proposal - live AI agent bridge into obsidian.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 1-55
+"vault graph complexity.md"
+  s_ea5b92370a5935::t_fa4220e82a7897 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "125df5b364450bb85e8408e2ac7e12c339b03385",
+  "prompts": {},
+  "sessions": {
+    "s_ea5b92370a5935": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-125df5b3",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
