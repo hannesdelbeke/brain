@@ -1,0 +1,23 @@
+"reciprocal rank fusion.md"
+  s_cd921591ef2b48::t_686ae598cd6d91 22-30
+skills/pkm-metadata-indexer/dual_track.py
+  s_cd921591ef2b48::t_686ae598cd6d91 399-405,411,413-415
+skills/pkm-metadata-indexer/tests/test_dual_track.py
+  s_cd921591ef2b48::t_686ae598cd6d91 670-734
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "819bee6960cb4d1547b46e13dbf3cb9722db25cd",
+  "prompts": {},
+  "sessions": {
+    "s_cd921591ef2b48": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-819bee69",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
