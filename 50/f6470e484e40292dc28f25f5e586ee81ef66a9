@@ -1,0 +1,19 @@
+corpus.md
+  s_9525957b500554::t_20180cf16fef68 13,15,17,19,21-24,26,28,30-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "50f6470e484e40292dc28f25f5e586ee81ef66a9",
+  "prompts": {},
+  "sessions": {
+    "s_9525957b500554": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-50f6470e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
