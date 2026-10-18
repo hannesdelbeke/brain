@@ -1,0 +1,23 @@
+skills/pkm-metadata-indexer/find_open_problems.py
+  s_3760097cb1a2ed::t_c62003d909c676 19
+skills/pkm-metadata-indexer/unity_guid_parser.py
+  s_3760097cb1a2ed::t_c62003d909c676 65-66,92-93
+skills/pkm-metadata-indexer/wikilink_cost_experiment.py
+  s_3760097cb1a2ed::t_c62003d909c676 41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1c307f573db3562df2e10e4331c1b3b8fdfa2c1c",
+  "prompts": {},
+  "sessions": {
+    "s_3760097cb1a2ed": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1c307f57",
+        "model": "claude-sonnet-4-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
