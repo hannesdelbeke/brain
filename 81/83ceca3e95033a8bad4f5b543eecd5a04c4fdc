@@ -1,0 +1,19 @@
+"2026-09-01 does git history benefit from token compression for an agent.md"
+  s_02d3f6e0a1ec01::t_574bc084adcbc0 1-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8183ceca3e95033a8bad4f5b543eecd5a04c4fdc",
+  "prompts": {},
+  "sessions": {
+    "s_02d3f6e0a1ec01": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-8183ceca",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
