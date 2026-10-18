@@ -1,0 +1,23 @@
+"multi-repo agentic search architecture.md"
+  s_9ce49449869452::t_9aa0fd2e65b2ae 44-45,70
+"single-repo vs multi-repo agent search.md"
+  s_9ce49449869452::t_9aa0fd2e65b2ae 1-33
+"vault graph traversal.md"
+  s_9ce49449869452::t_9aa0fd2e65b2ae 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c87d5de05fb1d7779577f438b7787b029bffceb8",
+  "prompts": {},
+  "sessions": {
+    "s_9ce49449869452": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-c87d5de0",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
