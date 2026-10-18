@@ -1,0 +1,21 @@
+"map rollup.md"
+  s_57bfad69f81abc::t_1ac15771290df0 1-19
+map-reduce.md
+  s_57bfad69f81abc::t_1ac15771290df0 19-20,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ca6d70761d05f9acd5f6924aa6a7fba99def1b7b",
+  "prompts": {},
+  "sessions": {
+    "s_57bfad69f81abc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ca6d7076",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
