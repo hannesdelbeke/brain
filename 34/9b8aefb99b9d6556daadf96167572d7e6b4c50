@@ -1,0 +1,23 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_dec6c7331e9680::t_2a9e2c344ea79e 81
+"2026-08-27 every read is a write - co-retrieval as synapse strength.md"
+  s_dec6c7331e9680::t_2a9e2c344ea79e 34
+"progress - local-first search daemon and indexer.md"
+  s_dec6c7331e9680::t_2a9e2c344ea79e 24,42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "349b8aefb99b9d6556daadf96167572d7e6b4c50",
+  "prompts": {},
+  "sessions": {
+    "s_dec6c7331e9680": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-349b8aef",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
