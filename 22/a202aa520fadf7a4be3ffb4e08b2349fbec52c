@@ -1,0 +1,21 @@
+"2026-09-02 what wikilink markup costs a machine reader.md"
+  s_d347e0d453a3ef::t_43aab267e998f1 10,48-54
+"path alias is human facing not agent.md"
+  s_d347e0d453a3ef::t_43aab267e998f1 12-45,66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "22a202aa520fadf7a4be3ffb4e08b2349fbec52c",
+  "prompts": {},
+  "sessions": {
+    "s_d347e0d453a3ef": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-22a202aa",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
