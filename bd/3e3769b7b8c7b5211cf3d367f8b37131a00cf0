@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/index_repo.py
+  s_cc805ff25965e8::t_db414a9cb4ebfa 104-109,115,126-138,147-150,152-154,156,168-177,180-220,228-230,298-302,311-312,321,325-326,340-345
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bd3e3769b7b8c7b5211cf3d367f8b37131a00cf0",
+  "prompts": {},
+  "sessions": {
+    "s_cc805ff25965e8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-bd3e3769",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
