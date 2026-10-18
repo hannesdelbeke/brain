@@ -1,0 +1,27 @@
+pkm-search.md
+  s_3b77be48a2509b::t_a1527daa2b8535 61,63,65-69,71-73
+"progress - local-first search daemon and indexer.md"
+  s_3b77be48a2509b::t_a1527daa2b8535 30,36
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_3b77be48a2509b::t_a1527daa2b8535 60-65,67,69-70,76-78,80,82-83,960
+skills/pkm-metadata-indexer/searchd.py
+  s_3b77be48a2509b::t_a1527daa2b8535 142,152-159,161,415-416
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  s_3b77be48a2509b::t_a1527daa2b8535 186-207
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f6b75cf0a4d2a89d951e95f6566c2496c8f6ee44",
+  "prompts": {},
+  "sessions": {
+    "s_3b77be48a2509b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-f6b75cf0",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
