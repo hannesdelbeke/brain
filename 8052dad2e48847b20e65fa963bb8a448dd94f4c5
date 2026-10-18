@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/check_descriptiveness.py
+  s_a537f61ddc5dbc::t_1f02702e27d71b 89,103-104,138
+skills/pkm-metadata-indexer/tests/test_check_descriptiveness.py
+  s_a537f61ddc5dbc::t_1f02702e27d71b 72-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8052dad2e48847b20e65fa963bb8a448dd94f4c5",
+  "prompts": {},
+  "sessions": {
+    "s_a537f61ddc5dbc": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "backfill:commit-8052dad2",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
