@@ -1,0 +1,19 @@
+"track prompt history.md"
+  s_bb936f961b9ba8::t_f7f404abb4d2ce 9,11-20,23-33,35-55,58,60,62-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "53a9ca119bb88307b3214caa44d5d191aca89f33",
+  "prompts": {},
+  "sessions": {
+    "s_bb936f961b9ba8": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-53a9ca11",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
