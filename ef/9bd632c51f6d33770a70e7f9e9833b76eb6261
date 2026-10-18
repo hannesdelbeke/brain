@@ -1,0 +1,29 @@
+skills/token-audit/SKILL.md
+  s_956cefdcb7695d::t_ab19e45ad84959 1-23
+skills/token-audit/artifact-cost.py
+  s_956cefdcb7695d::t_ab19e45ad84959 1-83
+skills/token-audit/session-cost.py
+  s_956cefdcb7695d::t_ab19e45ad84959 1-46
+skills/token-audit/session-timing.py
+  s_956cefdcb7695d::t_ab19e45ad84959 1-75
+skills/token-audit/subagent-cost.py
+  s_956cefdcb7695d::t_ab19e45ad84959 1-120
+skills/token-audit/web-cost.py
+  s_956cefdcb7695d::t_ab19e45ad84959 1-73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ef9bd632c51f6d33770a70e7f9e9833b76eb6261",
+  "prompts": {},
+  "sessions": {
+    "s_956cefdcb7695d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ef9bd632",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
