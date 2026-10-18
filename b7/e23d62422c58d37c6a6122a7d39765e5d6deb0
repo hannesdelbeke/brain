@@ -1,0 +1,19 @@
+"Total Return EPS to Decompose Historical S&P 500 Performance.md"
+  s_44e18504439b1f::t_9ff7511ee314a0 16,18,27-41,43,45,47-53,55,57-62,64,66-67,69-70,72-73,149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b7e23d62422c58d37c6a6122a7d39765e5d6deb0",
+  "prompts": {},
+  "sessions": {
+    "s_44e18504439b1f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b7e23d62",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
