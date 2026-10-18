@@ -1,0 +1,21 @@
+"cross-agent session indexing architecture.md"
+  s_6133067aa2817f::t_6b4ba8fbfddd30 138-141
+"proposal - self-learning agent supervisor and continuous prompt failure distillation.md"
+  s_6133067aa2817f::t_6b4ba8fbfddd30 1-154
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "da0c04b219c89aba92636e76712b4c2d2294065b",
+  "prompts": {},
+  "sessions": {
+    "s_6133067aa2817f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-da0c04b2",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
