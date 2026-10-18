@@ -1,0 +1,19 @@
+"2026-08-30 agent reading versus human reading, which formatting rules transfer.md"
+  s_269683dc9198f8::t_c4cc10e40543fa 1-53
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e1e4a2338c51e5d96e0b7255af9406d47ab7dc1c",
+  "prompts": {},
+  "sessions": {
+    "s_269683dc9198f8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e1e4a233",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
