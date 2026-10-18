@@ -1,0 +1,19 @@
+.gitignore
+  s_cc9ac20b39a455::t_ca0b617f68370b 13-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c09bcb7493851ae179b5dcbf610d9ab2d4c91f2b",
+  "prompts": {},
+  "sessions": {
+    "s_cc9ac20b39a455": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-c09bcb74",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
