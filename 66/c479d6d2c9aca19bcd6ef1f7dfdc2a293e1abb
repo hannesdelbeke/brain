@@ -1,0 +1,19 @@
+skills/agent-comms/test-retention.sh
+  s_c0a6fed55490f9::t_4837894f93f687 1-138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "66c479d6d2c9aca19bcd6ef1f7dfdc2a293e1abb",
+  "prompts": {},
+  "sessions": {
+    "s_c0a6fed55490f9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-66c479d6",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
