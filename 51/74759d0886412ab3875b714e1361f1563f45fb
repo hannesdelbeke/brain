@@ -1,0 +1,27 @@
+"caretaker polarity in relationships.md"
+  s_5a82ef6255988c::t_b8d9a5b55aeb0b 1-38
+"emotional disengagement in relationships.md"
+  s_5a82ef6255988c::t_b8d9a5b55aeb0b 1-39
+"relationship inertia.md"
+  s_5a82ef6255988c::t_b8d9a5b55aeb0b 1-40
+relationship.md
+  s_5a82ef6255988c::t_b8d9a5b55aeb0b 16-19
+"starter relationship calibration deficit.md"
+  s_5a82ef6255988c::t_b8d9a5b55aeb0b 1-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5174759d0886412ab3875b714e1361f1563f45fb",
+  "prompts": {},
+  "sessions": {
+    "s_5a82ef6255988c": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-5174759d",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
