@@ -1,0 +1,21 @@
+relationship.md
+  s_6166469b5da4c0::t_c7127c6c126519 15-17
+"structural constraint outpacing genuine dedication.md"
+  s_6166469b5da4c0::t_c7127c6c126519 1-61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "47c5c40e8bcb646481c4cb44a08899dc947798e8",
+  "prompts": {},
+  "sessions": {
+    "s_6166469b5da4c0": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-47c5c40e",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
