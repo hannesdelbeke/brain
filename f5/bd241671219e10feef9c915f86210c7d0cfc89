@@ -1,0 +1,23 @@
+"git author.md"
+  s_f549a5d5266c9f::t_8f3bb42e088f13 1-18
+"github co-authors for AI.md"
+  s_f549a5d5266c9f::t_8f3bb42e088f13 88-96
+"human vs AI git history transfers between notes.md"
+  s_f549a5d5266c9f::t_8f3bb42e088f13 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f5bd241671219e10feef9c915f86210c7d0cfc89",
+  "prompts": {},
+  "sessions": {
+    "s_f549a5d5266c9f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-f5bd2416",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
