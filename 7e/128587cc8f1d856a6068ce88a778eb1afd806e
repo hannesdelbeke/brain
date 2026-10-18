@@ -1,0 +1,19 @@
+"algo to differentiate between AI and human notes.md"
+  s_83431403a7ef63::t_de5f1d8994d8b3 21-24,26-31,43,48,53-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7e128587cc8f1d856a6068ce88a778eb1afd806e",
+  "prompts": {},
+  "sessions": {
+    "s_83431403a7ef63": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-7e128587",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
