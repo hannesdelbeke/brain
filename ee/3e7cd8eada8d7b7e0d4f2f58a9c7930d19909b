@@ -1,0 +1,41 @@
+"2025-11-25 keepsidian issues.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 30-31
+"Github markdown to site.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 20-21
+"Glasp review.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 28-29
+"Hypothesis review.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 57-58
+"Obsidian plugin - Tabber.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 136-137
+"Obsidian private comments.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 36-37
+"Obsidian web integration.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 235-236
+"export goodreads to obsidian.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 25-26
+obsidian-strava-sync.md
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 106-107
+"proposal - resumable bidirectional sync adapter.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 1-61
+"review publish notes.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 22-23
+"strava sync backfill past data.md"
+  s_7a7bd34e27fb98::t_55a7d9b5be2356 109-110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ee3e7cd8eada8d7b7e0d4f2f58a9c7930d19909b",
+  "prompts": {},
+  "sessions": {
+    "s_7a7bd34e27fb98": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ee3e7cd8",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
