@@ -1,0 +1,21 @@
+"publishing independent research.md"
+  s_8693134cf3e956::t_a52477c48bfbe0 1-49
+"types of research.md"
+  s_8693134cf3e956::t_a52477c48bfbe0 46-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b0529c42817caed7ae6475420e33831d3f674f34",
+  "prompts": {},
+  "sessions": {
+    "s_8693134cf3e956": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b0529c42",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
