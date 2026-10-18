@@ -1,0 +1,21 @@
+"2026-08-30 search engines compared to the vector search we use.md"
+  s_aa3ac56f1e1053::t_0a3fc8e3118d35 1-41
+"2026-08-30 sharing a vector index across people and orgs.md"
+  s_aa3ac56f1e1053::t_0a3fc8e3118d35 1-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d72003566a7337139a1121481877349fe9af6458",
+  "prompts": {},
+  "sessions": {
+    "s_aa3ac56f1e1053": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-d7200356",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
