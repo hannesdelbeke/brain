@@ -1,0 +1,21 @@
+"agentic tooling upgrades over grep.md"
+  s_d8617463c60699::t_54c294ce044a3f 90-95
+"cross-agent session indexing architecture.md"
+  s_d8617463c60699::t_54c294ce044a3f 1-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "14657f10ef68864add51b2939f7b283ea9895dca",
+  "prompts": {},
+  "sessions": {
+    "s_d8617463c60699": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-14657f10",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
