@@ -1,0 +1,19 @@
+"line1 callout render bug.md"
+  s_08073eb78560e5::t_39e0a7f69538df 1-6,9-12,14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b500ba467ade3258750ba989bc4b1a8f2daf4d90",
+  "prompts": {},
+  "sessions": {
+    "s_08073eb78560e5": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b500ba46",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <noreply@google.com>"
+    }
+  }
+}
