@@ -1,0 +1,19 @@
+"2026-09-01 adversarial literature check for candidate 2.md"
+  s_3641d81c4056a4::t_22ce17a56555dd 44,61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "693555ff9c0144031cc87e379b456efc2b624e71",
+  "prompts": {},
+  "sessions": {
+    "s_3641d81c4056a4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-693555ff",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
