@@ -1,0 +1,19 @@
+"2026-08-29 installing Fedora on the Yoga without working USB ports.md"
+  s_17d0fc3d894819::t_dac19f15d5b504 68-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2f7a2cd40ad21b7a63c5f71ca5e36d724051803c",
+  "prompts": {},
+  "sessions": {
+    "s_17d0fc3d894819": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-2f7a2cd4",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
