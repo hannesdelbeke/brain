@@ -1,0 +1,19 @@
+.gitignore
+  s_8eced457c00297::t_27b43b9a857b5b 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7083f82b9ec2a7a74aa5fb954894f71c65e3c1a0",
+  "prompts": {},
+  "sessions": {
+    "s_8eced457c00297": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-7083f82b",
+        "model": "claude-sonnet-4-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
