@@ -1,0 +1,25 @@
+.gitattributes
+  s_d2547cd76eaf12::t_9b3534ee036e1e 1
+.githooks/pre-commit
+  s_d2547cd76eaf12::t_9b3534ee036e1e 2-25,27,29-30
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_d2547cd76eaf12::t_9b3534ee036e1e 1141-1168,1171-1172,1174,1176-1205,1210-1267,1577-1585,1614-1618,1623,1627
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  s_d2547cd76eaf12::t_9b3534ee036e1e 1,3-4,212-303
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d8cae189786923a27b20f99572f6cbdeab750c58",
+  "prompts": {},
+  "sessions": {
+    "s_d2547cd76eaf12": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-d8cae189",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
