@@ -1,0 +1,21 @@
+skills/note-compress/SKILL.md
+  s_f58e62cdfe74ed::t_30a07f44408281 43,74-75
+skills/note-compress/compress_notes.py
+  s_f58e62cdfe74ed::t_30a07f44408281 49-62,107-122,319-321,325,337-357,416-417,479-481,483-495,540-581
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9992d197512af28674a0fe4afafc26c28bd14643",
+  "prompts": {},
+  "sessions": {
+    "s_f58e62cdfe74ed": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9992d197",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
