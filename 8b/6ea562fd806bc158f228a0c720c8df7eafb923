@@ -1,0 +1,19 @@
+"2026-08-30 proposal embedding cache and session indexing ideas.md"
+  s_957c19d845d7f7::t_d0ed952d764311 1-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8b6ea562fd806bc158f228a0c720c8df7eafb923",
+  "prompts": {},
+  "sessions": {
+    "s_957c19d845d7f7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-8b6ea562",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
