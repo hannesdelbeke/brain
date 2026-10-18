@@ -1,0 +1,19 @@
+"free and low-cost CLI coding agents.md"
+  s_43620e1ec415c5::t_ff8a8d836c94a0 14,95-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2b53e32249d53460a6600caad1dac847572c0db2",
+  "prompts": {},
+  "sessions": {
+    "s_43620e1ec415c5": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-2b53e322",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
