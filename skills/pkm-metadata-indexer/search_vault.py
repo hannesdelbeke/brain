@@ -246,23 +246,61 @@ def fast_fts_search(query: str, db_path: str | Path, top: int = 10, expand: bool
 
 
 def fast_session_search(query: str, db_path: str | Path, top: int = 10, touched: str = "any") -> list[dict]:
-    """Read the session projection without importing the embedding indexer."""
+    """Read the session projection without importing the embedding indexer.
+
+    Splits multi-word queries into independent terms. Tries AND first (all terms match),
+    falls back to OR ranked by term count if AND returns nothing. Fixes adjacent-substring
+    bug where "rollup drain cost" matched nothing (measured 2026-10-18).
+    """
     database = Path(db_path)
     if not database.exists():
         return []
     # When filtering by touched type, restrict to only touch matches (not title-only).
     # This is correct because title-only matches have no touch row, so filtering by
     # vault flag makes no sense for them.
-    needle = f"%{query}%"
-    if touched == "notes":
-        where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 1"
-        params = (needle, max(1, top))
-    elif touched == "code":
-        where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 0"
-        params = (needle, max(1, top))
+    terms = query.split()
+
+    if len(terms) == 1:
+        # Single term: behave exactly as before
+        needle = f"%{query}%"
+        if touched == "notes":
+            where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 1"
+            params = (needle, max(1, top))
+        elif touched == "code":
+            where_clause = "WHERE session_touches.target_path LIKE ? AND session_touches.vault = 0"
+            params = (needle, max(1, top))
+        else:
+            where_clause = "WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?"
+            params = (needle, needle, max(1, top))
+        order_by = "ORDER BY sessions_idx.created DESC, sessions_idx.title"
     else:
-        where_clause = "WHERE sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?"
-        params = (needle, needle, max(1, top))
+        # Multi-term: try AND first, fall back to OR if empty
+        needles = [f"%{term}%" for term in terms]
+        if touched == "notes":
+            # Each term must match target_path
+            term_conditions = " AND ".join(["session_touches.target_path LIKE ?" for _ in terms])
+            where_clause = f"WHERE ({term_conditions}) AND session_touches.vault = 1"
+            params_and = tuple(needles) + (max(1, top),)
+        elif touched == "code":
+            term_conditions = " AND ".join(["session_touches.target_path LIKE ?" for _ in terms])
+            where_clause = f"WHERE ({term_conditions}) AND session_touches.vault = 0"
+            params_and = tuple(needles) + (max(1, top),)
+        else:
+            # Each term must match either title or target_path
+            term_conditions = " AND ".join([
+                "(sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?)"
+                for _ in terms
+            ])
+            where_clause = f"WHERE {term_conditions}"
+            # Flatten: for each term, provide (needle, needle) for title/path
+            flat_needles = []
+            for needle in needles:
+                flat_needles.extend([needle, needle])
+            params_and = tuple(flat_needles) + (max(1, top),)
+
+        params = params_and
+        order_by = "ORDER BY sessions_idx.created DESC, sessions_idx.title"
+
     connection = sqlite3.connect(f"file:{database.resolve()}?mode=ro", uri=True, timeout=0.05)
     try:
         rows = connection.execute(
@@ -273,11 +311,55 @@ def fast_session_search(query: str, db_path: str | Path, top: int = 10, touched:
             FROM sessions_idx LEFT JOIN session_touches
               ON session_touches.session_id = sessions_idx.session_id
             {where_clause}
-            ORDER BY sessions_idx.created DESC, sessions_idx.title
+            {order_by}
             LIMIT ?
             """,
             params,
         ).fetchall()
+
+        # Multi-term fallback: if AND returned nothing, try OR ranked by match count
+        if len(terms) > 1 and len(rows) == 0:
+            if touched == "notes":
+                or_conditions = " OR ".join(["session_touches.target_path LIKE ?" for _ in terms])
+                where_clause_or = f"WHERE ({or_conditions}) AND session_touches.vault = 1"
+                score_expr = " + ".join([f"(session_touches.target_path LIKE ? COLLATE NOCASE)" for _ in terms])
+                params_or = tuple(needles) + tuple(needles) + (max(1, top),)
+            elif touched == "code":
+                or_conditions = " OR ".join(["session_touches.target_path LIKE ?" for _ in terms])
+                where_clause_or = f"WHERE ({or_conditions}) AND session_touches.vault = 0"
+                score_expr = " + ".join([f"(session_touches.target_path LIKE ? COLLATE NOCASE)" for _ in terms])
+                params_or = tuple(needles) + tuple(needles) + (max(1, top),)
+            else:
+                or_conditions = " OR ".join([
+                    "(sessions_idx.title LIKE ? OR session_touches.target_path LIKE ?)"
+                    for _ in terms
+                ])
+                where_clause_or = f"WHERE {or_conditions}"
+                # Score: count how many terms match
+                score_parts = []
+                for _ in terms:
+                    score_parts.append("(sessions_idx.title LIKE ? COLLATE NOCASE)")
+                    score_parts.append("(session_touches.target_path LIKE ? COLLATE NOCASE)")
+                score_expr = " + ".join(score_parts)
+                # Params: OR clause gets flat needles, score expr gets them again, then LIMIT
+                flat_needles = []
+                for needle in needles:
+                    flat_needles.extend([needle, needle])
+                params_or = tuple(flat_needles) + tuple(flat_needles) + (max(1, top),)
+
+            rows = connection.execute(
+                f"""
+                SELECT DISTINCT sessions_idx.session_id, sessions_idx.title, sessions_idx.created,
+                       sessions_idx.trace_path, sessions_idx.cost_usd, sessions_idx.repo,
+                       sessions_idx.note_path
+                FROM sessions_idx LEFT JOIN session_touches
+                  ON session_touches.session_id = sessions_idx.session_id
+                {where_clause_or}
+                ORDER BY ({score_expr}) DESC, sessions_idx.created DESC, sessions_idx.title
+                LIMIT ?
+                """,
+                params_or,
+            ).fetchall()
     except sqlite3.Error:
         return []
     finally:
