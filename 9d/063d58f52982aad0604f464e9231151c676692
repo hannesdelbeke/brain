@@ -1,0 +1,19 @@
+"2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise.md"
+  s_8bb40c8986ef8f::t_eb9c22dabb80ba 43-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9d063d58f52982aad0604f464e9231151c676692",
+  "prompts": {},
+  "sessions": {
+    "s_8bb40c8986ef8f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-9d063d58",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
