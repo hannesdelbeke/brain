@@ -1,0 +1,23 @@
+skills/pkm-metadata-indexer/shared_neighbor_experiment.py
+  s_e7631fc35d6204::t_c4ca42d15759d5 62-72,106-107,131-142,153-158,193-195,283-287,301-302,318-321
+skills/pkm-metadata-indexer/stacked_fusion_experiment.py
+  s_e7631fc35d6204::t_c4ca42d15759d5 1-287
+skills/pkm-metadata-indexer/tags_overlap_experiment.py
+  s_e7631fc35d6204::t_c4ca42d15759d5 39,69-100,116-117,141-148,172-174,285-289,301-302,321-324
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "454c8bc9f2f42fcd6882ce4f1f8b1b0bc8c31add",
+  "prompts": {},
+  "sessions": {
+    "s_e7631fc35d6204": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-454c8bc9",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
