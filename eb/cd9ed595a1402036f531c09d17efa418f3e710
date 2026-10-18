@@ -1,0 +1,19 @@
+"2026-08-31 splitting money in relationships.md"
+  s_17541dfb0b5d5b::t_421cc61f3a8dbe 33-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ebcd9ed595a1402036f531c09d17efa418f3e710",
+  "prompts": {},
+  "sessions": {
+    "s_17541dfb0b5d5b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ebcd9ed5",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
