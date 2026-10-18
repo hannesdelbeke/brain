@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/eval_outline.py
+  s_33f9a34fb08310::t_346815bddfe6b0 7-12,15-16,18-19,21-22,115-117,121-122,125,263-264,286-289,332-364,386-394,420-430,432-434,437-440,442-444
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "19a33e8e56fbd9949eea8d4d0e0e1872db8db99b",
+  "prompts": {},
+  "sessions": {
+    "s_33f9a34fb08310": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-19a33e8e",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
