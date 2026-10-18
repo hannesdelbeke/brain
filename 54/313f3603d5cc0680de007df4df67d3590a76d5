@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/lift_cooccurrence_experiment.py
+  s_e71e36a91edadf::t_b25bbe7ecc990f 1-375
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "54313f3603d5cc0680de007df4df67d3590a76d5",
+  "prompts": {},
+  "sessions": {
+    "s_e71e36a91edadf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-54313f36",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
