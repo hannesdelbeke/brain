@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/co_touch.py
+  s_83150ce231fceb::t_72f4163798e5f7 1-412
+skills/pkm-metadata-indexer/tags_overlap_experiment.py
+  s_83150ce231fceb::t_72f4163798e5f7 1-274
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "87cbecb7af04526b24acbb747c280a8ccbe764b7",
+  "prompts": {},
+  "sessions": {
+    "s_83150ce231fceb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-87cbecb7",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
