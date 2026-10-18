@@ -1,0 +1,21 @@
+skills/agent-comms/README.md
+  s_c068594c36bbb3::t_9e45c3d7f261a4 54-56,59-61,64-65
+skills/agent-comms/SKILL.md
+  s_c068594c36bbb3::t_9e45c3d7f261a4 16,87-90,92-93,122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a35ec9a87323121dade95ed557c10c9741ad2f59",
+  "prompts": {},
+  "sessions": {
+    "s_c068594c36bbb3": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-a35ec9a8",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
