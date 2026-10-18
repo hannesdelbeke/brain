@@ -1,0 +1,21 @@
+"Obsidian plugin - Remember cursor position.md"
+  s_e9508b5d1349a5::t_81b8d72f1ad3be 1-16
+"line1 callout render bug.md"
+  s_e9508b5d1349a5::t_81b8d72f1ad3be 1-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "20b73dc1dd3e8a0657925fabd2118132cce8fc86",
+  "prompts": {},
+  "sessions": {
+    "s_e9508b5d1349a5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-20b73dc1",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
