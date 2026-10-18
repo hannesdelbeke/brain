@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/check_note_format.py
+  s_8f2bb9d2103683::t_70fe0454dcb643 1-126
+skills/pkm-metadata-indexer/judge_health.py
+  s_8f2bb9d2103683::t_70fe0454dcb643 1-140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "98fcd1701cbf8b619e849b4e1e27bf89a744734e",
+  "prompts": {},
+  "sessions": {
+    "s_8f2bb9d2103683": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-98fcd170",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
