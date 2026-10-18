@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/eval_outline.py
+  s_b316eafaaa3128::t_dd80855bd23c94 1-423
+skills/pkm-metadata-indexer/eval_questions/outline-multifacet.json
+  s_b316eafaaa3128::t_dd80855bd23c94 1-82
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f1a1d6dc24be9ed44508280fac1e02688e1216bb",
+  "prompts": {},
+  "sessions": {
+    "s_b316eafaaa3128": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-f1a1d6dc",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
