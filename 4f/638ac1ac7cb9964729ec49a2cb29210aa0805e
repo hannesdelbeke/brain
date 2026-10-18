@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/link_graph.py
+  s_393d5e3b958083::t_bc8f2700eccaa0 1-177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4f638ac1ac7cb9964729ec49a2cb29210aa0805e",
+  "prompts": {},
+  "sessions": {
+    "s_393d5e3b958083": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4f638ac1",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
