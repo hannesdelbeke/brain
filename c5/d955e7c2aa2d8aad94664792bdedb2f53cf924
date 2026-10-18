@@ -1,0 +1,19 @@
+"codegraph review.md"
+  s_b06ac517bd3c10::t_f876919e1c6dc3 46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c5d955e7c2aa2d8aad94664792bdedb2f53cf924",
+  "prompts": {},
+  "sessions": {
+    "s_b06ac517bd3c10": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-c5d955e7",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@ai>"
+    }
+  }
+}
