@@ -1,0 +1,19 @@
+"autocommit leftover changes.md"
+  s_a9d90cf7563605::t_4db9f614c6539b 41-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b65dd2be431537611a067654ea33ae79a02572e1",
+  "prompts": {},
+  "sessions": {
+    "s_a9d90cf7563605": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b65dd2be",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
