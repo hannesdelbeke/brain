@@ -1,0 +1,21 @@
+"2026-08-28 agent instruction bloat - modular skills and compact synthesis.md"
+  s_44e650db86c848::t_f14185c5160ae3 209
+"2026-08-31 research on compressing llm reasoning and notes without losing information.md"
+  s_44e650db86c848::t_f14185c5160ae3 28-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "72661c185aa0f044228395e6b393bc2e12626885",
+  "prompts": {},
+  "sessions": {
+    "s_44e650db86c848": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-72661c18",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
