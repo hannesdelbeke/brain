@@ -1,0 +1,21 @@
+"co-commit graph mining architecture and edge case specification.md"
+  s_0212ac7db6e1a5::t_49cd2e552e8944 40-44,51,55,71-72,85-87,114,117-121,123-125,128-129,132,138-148,153-154,157,160,162,166-172,178-179
+"co-commit graph mining for serendipitous note associations.md"
+  s_0212ac7db6e1a5::t_49cd2e552e8944 49,68-72,79-80,112,116,119,122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e9c549282ccc634b09b7c07d99349eb2670a2087",
+  "prompts": {},
+  "sessions": {
+    "s_0212ac7db6e1a5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e9c54928",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
