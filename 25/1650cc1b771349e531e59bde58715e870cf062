@@ -1,0 +1,23 @@
+"co-commit graph mining architecture and edge case specification.md"
+  s_123a757c8cb526::t_c38f78f9211aa6 59-60
+"co-commit graph mining for serendipitous note associations.md"
+  s_123a757c8cb526::t_c38f78f9211aa6 41-53,75,87,89,91-94,104-105
+skills/pkm-metadata-indexer/SKILL.md
+  s_123a757c8cb526::t_c38f78f9211aa6 259
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "251650cc1b771349e531e59bde58715e870cf062",
+  "prompts": {},
+  "sessions": {
+    "s_123a757c8cb526": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-251650cc",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
