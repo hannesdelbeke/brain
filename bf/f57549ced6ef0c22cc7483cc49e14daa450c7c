@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  s_49e26844dea423::t_4a38068fb5ba73 1-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bff57549ced6ef0c22cc7483cc49e14daa450c7c",
+  "prompts": {},
+  "sessions": {
+    "s_49e26844dea423": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "backfill:commit-bff57549",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@openai.com>"
+    }
+  }
+}
