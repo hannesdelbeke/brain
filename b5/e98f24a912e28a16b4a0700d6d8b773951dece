@@ -1,0 +1,21 @@
+"vault hybrid search.md"
+  s_c93d9d0365b1c5::t_4cbcd0813d58e3 26
+"vault indexer - lightweight metadata pass vs full vector embedding.md"
+  s_c93d9d0365b1c5::t_4cbcd0813d58e3 1-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b5e98f24a912e28a16b4a0700d6d8b773951dece",
+  "prompts": {},
+  "sessions": {
+    "s_c93d9d0365b1c5": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-b5e98f24",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
