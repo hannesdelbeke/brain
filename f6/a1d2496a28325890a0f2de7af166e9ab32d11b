@@ -1,0 +1,19 @@
+"agentic tooling upgrades over grep.md"
+  s_b200d9213bc25f::t_e110ce8675dd24 8,10-11,15,19-26,32-33,35,38-40,45,67-69,73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f6a1d2496a28325890a0f2de7af166e9ab32d11b",
+  "prompts": {},
+  "sessions": {
+    "s_b200d9213bc25f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-f6a1d249",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
