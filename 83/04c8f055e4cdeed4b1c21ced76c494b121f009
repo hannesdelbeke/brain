@@ -1,0 +1,25 @@
+skills/pkm-metadata-indexer/link_graph.py
+  s_579ef7c45e010c::t_b1e6303bfc0ad1 10,19-22,31-37,70,76-79,85-86,91-113,169-174,184,208-209
+skills/pkm-metadata-indexer/test_link_graph_unity.py
+  s_579ef7c45e010c::t_b1e6303bfc0ad1 1-191
+skills/pkm-metadata-indexer/test_unity_guid_parser.py
+  s_579ef7c45e010c::t_b1e6303bfc0ad1 1-384
+skills/pkm-metadata-indexer/unity_guid_parser.py
+  s_579ef7c45e010c::t_b1e6303bfc0ad1 1-193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8304c8f055e4cdeed4b1c21ced76c494b121f009",
+  "prompts": {},
+  "sessions": {
+    "s_579ef7c45e010c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-8304c8f0",
+        "model": "claude-sonnet-4-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
