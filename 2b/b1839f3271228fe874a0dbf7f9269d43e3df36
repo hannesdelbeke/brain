@@ -1,0 +1,19 @@
+"supervising AI agents - sustainability and output research.md"
+  s_ca69cc90433fe2::t_e286479c35e73e 1-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2bb1839f3271228fe874a0dbf7f9269d43e3df36",
+  "prompts": {},
+  "sessions": {
+    "s_ca69cc90433fe2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-2bb1839f",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
