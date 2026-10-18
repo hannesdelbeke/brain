@@ -1,0 +1,19 @@
+"when to request wikilinks from AI.md"
+  s_845fc4905d1f73::t_c8a74c8be71cc0 1-77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2b2fc676226853b91725cd5efbb558ab7df9a51a",
+  "prompts": {},
+  "sessions": {
+    "s_845fc4905d1f73": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-2b2fc676",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
