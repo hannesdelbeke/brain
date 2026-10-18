@@ -1,0 +1,27 @@
+"2026-08-31 remote work and fulfilment research.md"
+  s_95a2e35538b68f::t_69d8ce630155b9 24,34,36,44
+"2026-08-31 splitting money in relationships.md"
+  s_95a2e35538b68f::t_69d8ce630155b9 15,19,55,69
+"Olympic medalists lifespan comparison.md"
+  s_95a2e35538b68f::t_69d8ce630155b9 12-14,16-17,19-20,22
+"blue zones.md"
+  s_95a2e35538b68f::t_69d8ce630155b9 15,39-41
+"mirror - thomas j frank notes - hyperfocus.md"
+  s_95a2e35538b68f::t_69d8ce630155b9 95-96,98-99,884,896
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "da146900b5a658fc534e76936af0b1f8ae8b78a8",
+  "prompts": {},
+  "sessions": {
+    "s_95a2e35538b68f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-da146900",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
