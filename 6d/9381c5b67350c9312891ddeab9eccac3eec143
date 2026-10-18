@@ -1,0 +1,25 @@
+skills/agent-comms/README.md
+  s_223e016efa5635::t_68a02c0462aa1a 1-123
+skills/agent-comms/SKILL.md
+  s_223e016efa5635::t_68a02c0462aa1a 1-68
+skills/agent-comms/comms-watch.sh
+  s_223e016efa5635::t_68a02c0462aa1a 1-77
+skills/agent-comms/comms.sh
+  s_223e016efa5635::t_68a02c0462aa1a 1-323
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6d9381c5b67350c9312891ddeab9eccac3eec143",
+  "prompts": {},
+  "sessions": {
+    "s_223e016efa5635": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-6d9381c5",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
