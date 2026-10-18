@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/check_descriptiveness.py
+  s_981761d4202bba::t_034f95a6d939ea 205-215,217-223
+skills/pkm-metadata-indexer/tests/test_check_descriptiveness.py
+  s_981761d4202bba::t_034f95a6d939ea 3-5,136-212
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "70e1503095337a0e891c8b45e2e202d04ea3189e",
+  "prompts": {},
+  "sessions": {
+    "s_981761d4202bba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-70e15030",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
