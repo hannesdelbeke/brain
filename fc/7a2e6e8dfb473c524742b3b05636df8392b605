@@ -1,0 +1,19 @@
+"agentic tooling upgrades over grep.md"
+  s_6c087eef79c9d4::t_ad895cf1bb70c0 81,92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fc7a2e6e8dfb473c524742b3b05636df8392b605",
+  "prompts": {},
+  "sessions": {
+    "s_6c087eef79c9d4": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-fc7a2e6e",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <noreply@google.com>"
+    }
+  }
+}
