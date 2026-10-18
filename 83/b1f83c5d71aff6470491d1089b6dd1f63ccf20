@@ -1,0 +1,19 @@
+"public zettelkasten repos on high level concepts.md"
+  s_aa7271a9334b6d::t_5dd7f721ce6514 7-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "83b1f83c5d71aff6470491d1089b6dd1f63ccf20",
+  "prompts": {},
+  "sessions": {
+    "s_aa7271a9334b6d": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-83b1f83c",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
