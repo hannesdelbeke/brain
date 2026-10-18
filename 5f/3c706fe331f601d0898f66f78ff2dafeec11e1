@@ -1,0 +1,21 @@
+"cognitive limits on deep work and recovery science.md"
+  s_1277be394f756f::t_3610dd64d45fb9 18,25-27,30-32,42,46-47,52,55,58-59,66-67
+"proposal - self-learning agent supervisor and continuous prompt failure distillation.md"
+  s_1277be394f756f::t_3610dd64d45fb9 156-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5f3c706fe331f601d0898f66f78ff2dafeec11e1",
+  "prompts": {},
+  "sessions": {
+    "s_1277be394f756f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-5f3c706f",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
