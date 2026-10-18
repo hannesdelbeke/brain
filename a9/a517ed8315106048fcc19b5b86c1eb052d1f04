@@ -1,0 +1,19 @@
+skills/agent-comms/comms.sh
+  s_2b51f20af32921::t_3341ca1718c044 304-306
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a9a517ed8315106048fcc19b5b86c1eb052d1f04",
+  "prompts": {},
+  "sessions": {
+    "s_2b51f20af32921": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a9a517ed",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
