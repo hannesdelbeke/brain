@@ -1,0 +1,19 @@
+autism.md
+  s_0885ad3c8b938b::t_41bd829175bd1a 7,10,12-13,15-16,18-19,21-22,25,27-28,30-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4de2671aec8f4e8d6703056d6d0f1c1fd3071c91",
+  "prompts": {},
+  "sessions": {
+    "s_0885ad3c8b938b": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-4de2671a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@ai>"
+    }
+  }
+}
