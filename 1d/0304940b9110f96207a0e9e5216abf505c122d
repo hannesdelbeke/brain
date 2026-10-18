@@ -1,0 +1,35 @@
+"2026-07-31 historic obsidian links.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 28
+"2026-08-19 AI started tagging notes.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 24
+"2026-08-19 AI tool research.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 93
+"2026-08-20 domain masters hub.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 40
+"agent-friendly documentation tools.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 35
+"extract historic wikilinks from git.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 56
+"learnings from public zettelkasten vaults.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 33
+"obsidian-second-brain review.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 29
+"offline GPU embeddings with incremental cache.md"
+  s_14a0d91d0e8729::t_c5018fd2f5cb5f 146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1d0304940b9110f96207a0e9e5216abf505c122d",
+  "prompts": {},
+  "sessions": {
+    "s_14a0d91d0e8729": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-1d030494",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
