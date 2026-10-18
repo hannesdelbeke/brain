@@ -1,0 +1,21 @@
+"2026-08-31 classifier-based compression with an adversarial fidelity gate.md"
+  s_6bbaeccc7201fb::t_b4f15299f33c9a 35
+"2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise.md"
+  s_6bbaeccc7201fb::t_b4f15299f33c9a 49-51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a29701e35c7d57b74c7338a881273f91394ea084",
+  "prompts": {},
+  "sessions": {
+    "s_6bbaeccc7201fb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a29701e3",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
