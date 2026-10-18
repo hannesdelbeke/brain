@@ -1,0 +1,37 @@
+"Unreal editor button.md"
+  s_0d857466060580::t_b78f77f54c6d57 2-3,43-44
+"backlog.md intro.md"
+  s_0d857466060580::t_b78f77f54c6d57 2-4,15-16
+flooring.md
+  s_0d857466060580::t_b78f77f54c6d57 2-3
+"idea - open google calendar events from notes.md"
+  s_0d857466060580::t_b78f77f54c6d57 60
+"learnings from public zettelkasten vaults.md"
+  s_0d857466060580::t_b78f77f54c6d57 34
+"life span GPT 4.md"
+  s_0d857466060580::t_b78f77f54c6d57 2-3,52-55
+"link Unity to Obsidian.md"
+  s_0d857466060580::t_b78f77f54c6d57 28-30
+"medical condition.md"
+  s_0d857466060580::t_b78f77f54c6d57 1-2
+medical.md
+  s_0d857466060580::t_b78f77f54c6d57 1-2
+"tool distribution.md"
+  s_0d857466060580::t_b78f77f54c6d57 2-3,17-20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b35cd5d63543bb0f52d6b6816f4835fdb4e74ac2",
+  "prompts": {},
+  "sessions": {
+    "s_0d857466060580": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-b35cd5d6",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
