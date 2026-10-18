@@ -1,0 +1,23 @@
+skills/pkm-metadata-indexer/entity_expansion.py
+  s_82c0e8239cfa99::t_3a7325f7e53493 51-66,101-142,169,178-186,192,196-203,205-215
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_82c0e8239cfa99::t_3a7325f7e53493 57-69,1517-1519
+skills/pkm-metadata-indexer/tests/test_entity_expansion.py
+  s_82c0e8239cfa99::t_3a7325f7e53493 38-77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "248fedd7eabced695b2182dd68b65237ace1b742",
+  "prompts": {},
+  "sessions": {
+    "s_82c0e8239cfa99": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-248fedd7",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
