@@ -1,0 +1,19 @@
+"Claude Code.md"
+  s_bcca33459babe1::t_7d5513f9edbe13 3-9,12-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "028855cafd2812c1a245c87ee10f76dc906dc4d5",
+  "prompts": {},
+  "sessions": {
+    "s_bcca33459babe1": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-028855ca",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
