@@ -1,0 +1,19 @@
+"co-commit graph mining for serendipitous note associations.md"
+  s_d6fb23a1390d7d::t_dfc91fe5ca6a8c 53-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "75a87693d98f6685b25113abb74cf253dac2b9c5",
+  "prompts": {},
+  "sessions": {
+    "s_d6fb23a1390d7d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-75a87693",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
