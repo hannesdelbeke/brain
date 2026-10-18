@@ -1,0 +1,19 @@
+"mcp server home assistant.md"
+  s_4d2045f1f5217e::t_b95644d3dbc898 2-6,11-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "29a1131d4720dc79b21658350eed77fb4a530c29",
+  "prompts": {},
+  "sessions": {
+    "s_4d2045f1f5217e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-29a1131d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
