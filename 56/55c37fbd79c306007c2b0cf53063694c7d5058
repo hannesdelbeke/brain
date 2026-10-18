@@ -1,0 +1,21 @@
+"practice the Feynman technique with AI.md"
+  s_79f4a81270d782::t_bfd217a35c13f2 1-31
+"the Feynman technique.md"
+  s_79f4a81270d782::t_bfd217a35c13f2 1-25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5655c37fbd79c306007c2b0cf53063694c7d5058",
+  "prompts": {},
+  "sessions": {
+    "s_79f4a81270d782": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-5655c37f",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
