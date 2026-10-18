@@ -1,0 +1,21 @@
+"2026-08-29 one obsidian plugin over the search daemon.md"
+  s_756431d41e0b63::t_82783185dec092 53
+"2026-08-30 vault index work log.md"
+  s_756431d41e0b63::t_82783185dec092 112-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5f291f8f3a23c707aafafcd43df255ee4ce404d6",
+  "prompts": {},
+  "sessions": {
+    "s_756431d41e0b63": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-5f291f8f",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
