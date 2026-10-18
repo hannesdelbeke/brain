@@ -1,0 +1,19 @@
+"2026-10-04 a decision-model benchmark costs under $25 in api spend and its strongest result is whether 2023 primitives match the 2026 products.md"
+  s_47e9de46532309::t_fd58e6e0e5603a 1-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "72673dc9a179457f1ead7fbaa1c2391bbdf5ae7f",
+  "prompts": {},
+  "sessions": {
+    "s_47e9de46532309": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-72673dc9",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
