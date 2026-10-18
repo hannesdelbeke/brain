@@ -1,0 +1,19 @@
+"Obsidian alternatives.md"
+  s_66bcc24c6bccf0::t_a80360d7a38cd8 12-15,22-23,30-31,35-36,41,44,48-50,56-57,63,68-69,73,75-76,79,83,85-87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4442569b832c00f0c145759073e3bb70e965aefa",
+  "prompts": {},
+  "sessions": {
+    "s_66bcc24c6bccf0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4442569b",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
