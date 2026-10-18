@@ -1,0 +1,21 @@
+"Pyblish issues.md"
+  s_507b9519ca21fe::t_1ea1305d7cc7e8 55-56
+"proposal - pipeline as code follow-up.md"
+  s_507b9519ca21fe::t_1ea1305d7cc7e8 1-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0625b3d08af5a7115f314bd64e56e814a9e678e1",
+  "prompts": {},
+  "sessions": {
+    "s_507b9519ca21fe": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0625b3d0",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
