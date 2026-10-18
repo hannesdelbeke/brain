@@ -1,0 +1,21 @@
+pkm-search.md
+  s_4f8fed58be4358::t_0e75bfbd0c4802 20
+skills/pkm-metadata-indexer/SKILL.md
+  s_4f8fed58be4358::t_0e75bfbd0c4802 140-158
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1bcd9ed09ba979cdc134df271b2646b9efef7da3",
+  "prompts": {},
+  "sessions": {
+    "s_4f8fed58be4358": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1bcd9ed0",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
