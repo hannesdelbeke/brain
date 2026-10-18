@@ -1,0 +1,25 @@
+"2026-08-31 research on compressing llm reasoning and notes without losing information.md"
+  s_aaf0bd022c5889::t_891cb9f609c9b0 17,69-70,74
+"2026-09-01 note-compress skill - design, adversarial review, and bench data.md"
+  s_aaf0bd022c5889::t_891cb9f609c9b0 24
+"2026-09-01 the adversarial fidelity gate is llm-as-judge, and that literature explains the non-determinism.md"
+  s_aaf0bd022c5889::t_891cb9f609c9b0 19,21,23,27
+"talent density, information density, and why shorter isn't automatically denser.md"
+  s_aaf0bd022c5889::t_891cb9f609c9b0 24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cb9a9d821b5cf9c610394b5de317ca9ac8fb7207",
+  "prompts": {},
+  "sessions": {
+    "s_aaf0bd022c5889": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-cb9a9d82",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
