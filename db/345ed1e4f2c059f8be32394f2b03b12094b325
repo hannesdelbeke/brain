@@ -1,0 +1,19 @@
+"cross-agent session indexing architecture.md"
+  s_679a9d69397b76::t_a8b7a2b09a319e 40,46,49,53-55,57,59,63-78,83-91,93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "db345ed1e4f2c059f8be32394f2b03b12094b325",
+  "prompts": {},
+  "sessions": {
+    "s_679a9d69397b76": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-db345ed1",
+        "model": "unknown"
+      },
+      "human_author": "Claude <claude@anthropic.com>"
+    }
+  }
+}
