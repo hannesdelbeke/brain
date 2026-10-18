@@ -1,0 +1,29 @@
+"autonomous agent tool use and memory.md"
+  s_56537f8dc3096a::t_eab025c98fdcdb 30
+"cross-agent session indexing architecture.md"
+  s_56537f8dc3096a::t_eab025c98fdcdb 15-16,28,57-66,68-70,74-86,113-117,119,121-123,125
+"lightning-fast unified search plugin for obsidian.md"
+  s_56537f8dc3096a::t_eab025c98fdcdb 13-15,95-112
+"offline GPU embeddings with incremental cache.md"
+  s_56537f8dc3096a::t_eab025c98fdcdb 144,148
+"pkm metadata indexer.md"
+  s_56537f8dc3096a::t_eab025c98fdcdb 3-8
+skills/notes-sentiment-analysis/SKILL.md
+  s_56537f8dc3096a::t_eab025c98fdcdb 28,48,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bcd8fe573019bcc766354d79e6f76186df4406e9",
+  "prompts": {},
+  "sessions": {
+    "s_56537f8dc3096a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-bcd8fe57",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
