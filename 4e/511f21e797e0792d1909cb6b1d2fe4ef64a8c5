@@ -1,0 +1,19 @@
+skills/note-compress/compress_notes.py
+  s_befebd60c77e38::t_eab01a460518f7 15-21,63,77-103,264,392-404
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4e511f21e797e0792d1909cb6b1d2fe4ef64a8c5",
+  "prompts": {},
+  "sessions": {
+    "s_befebd60c77e38": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4e511f21",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
