@@ -1,0 +1,23 @@
+.githooks/commit-msg
+  s_e0ac342f0b995f::t_c9e08aa1d9c57d 1-18
+.githooks/leak_scan.py
+  s_e0ac342f0b995f::t_c9e08aa1d9c57d 1-148
+.githooks/pre-commit
+  s_e0ac342f0b995f::t_c9e08aa1d9c57d 29-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6b49329ef0158d12d2d08e9528247f65c1213e00",
+  "prompts": {},
+  "sessions": {
+    "s_e0ac342f0b995f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-6b49329e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
