@@ -1,0 +1,21 @@
+"Obsidian - one way wikilinks.md"
+  s_506d52e3613b62::t_524d0beb731c4b 71,74-75
+"wikilinks in frontmatter.md"
+  s_506d52e3613b62::t_524d0beb731c4b 28-56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "da01b5feae09fbe02cdfad884ed91f64eb920189",
+  "prompts": {},
+  "sessions": {
+    "s_506d52e3613b62": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-da01b5fe",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
