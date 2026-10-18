@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/link_graph.py
+  s_f7b9b975329bf6::t_ea30fd66315091 1-177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "aa02530956cc5ed7dfc2facbc65ffb335d798e7f",
+  "prompts": {},
+  "sessions": {
+    "s_f7b9b975329bf6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-aa025309",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
