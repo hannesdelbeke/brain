@@ -1,0 +1,33 @@
+"2026-02 app‑agnostic Entity Registry - copilot first pass.md"
+  s_02034048320954::t_843f2a23ec59c1 290
+"2026-07-22 follow up Obsidian viewcount.md"
+  s_02034048320954::t_843f2a23ec59c1 24
+"compression on mesh variations.md"
+  s_02034048320954::t_843f2a23ec59c1 36
+"extract historic wikilinks from git.md"
+  s_02034048320954::t_843f2a23ec59c1 9
+"hierarchical map-reduce note rollup.md"
+  s_02034048320954::t_843f2a23ec59c1 77,89
+"human vs AI git history transfers between notes.md"
+  s_02034048320954::t_843f2a23ec59c1 21,26
+"human vs ai text context.md"
+  s_02034048320954::t_843f2a23ec59c1 11,16,70
+"public zettelkasten repos on high level concepts.md"
+  s_02034048320954::t_843f2a23ec59c1 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "377681398ad552a6bd0ecb0ecbd6068bb557bd5d",
+  "prompts": {},
+  "sessions": {
+    "s_02034048320954": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-37768139",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
