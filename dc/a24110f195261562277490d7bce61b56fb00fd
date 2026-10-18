@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/index_branches.py
+  s_f69a9dd2d38f76::t_09ac4b7c38f271 174,186,191-196,333-343,346-347,349
+skills/pkm-metadata-indexer/test_index_branches.py
+  s_f69a9dd2d38f76::t_09ac4b7c38f271 63-65,73-78,83-88,93-105
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dca24110f195261562277490d7bce61b56fb00fd",
+  "prompts": {},
+  "sessions": {
+    "s_f69a9dd2d38f76": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-dca24110",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
