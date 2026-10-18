@@ -1,0 +1,23 @@
+"2026-08-29 local search daemon and indexer - release plan and modular decoupling.md"
+  s_e5d5dea2d70afb::t_10a3039021ba3d 17,23-24,80,102
+corpus.md
+  s_e5d5dea2d70afb::t_10a3039021ba3d 22
+"cross-agent session indexing architecture.md"
+  s_e5d5dea2d70afb::t_10a3039021ba3d 15,22,99,124,153,155,162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e5ee82cef5895b5b1704a91edfbd9c8c46d524b0",
+  "prompts": {},
+  "sessions": {
+    "s_e5d5dea2d70afb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e5ee82ce",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
