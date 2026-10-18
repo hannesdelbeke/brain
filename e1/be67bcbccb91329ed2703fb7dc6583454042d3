@@ -1,0 +1,19 @@
+"2026-08-27 broken screen laptop vs mini pc as NAS.md"
+  s_36791acb3e116f::t_abc39f4daeff0c 1-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e1be67bcbccb91329ed2703fb7dc6583454042d3",
+  "prompts": {},
+  "sessions": {
+    "s_36791acb3e116f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e1be67bc",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
