@@ -1,0 +1,29 @@
+"2026-08-30 vault index work log.md"
+  s_7c5758732d62e0::t_ad5d2115ee016f 86-99
+"2026-08-30 what else the index can answer.md"
+  s_7c5758732d62e0::t_ad5d2115ee016f 13-14,17,34,44,58
+"progress - local-first search daemon and indexer.md"
+  s_7c5758732d62e0::t_ad5d2115ee016f 65-66
+skills/pkm-metadata-indexer/SKILL.md
+  s_7c5758732d62e0::t_ad5d2115ee016f 256-270
+skills/pkm-metadata-indexer/searchd.py
+  s_7c5758732d62e0::t_ad5d2115ee016f 39-40,64,193,561-679,923-928,936
+skills/pkm-metadata-indexer/test_searchd.py
+  s_7c5758732d62e0::t_ad5d2115ee016f 552-621,660-673
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "af36493e3d3ad714bd146cd4233ded80da664d35",
+  "prompts": {},
+  "sessions": {
+    "s_7c5758732d62e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-af36493e",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
