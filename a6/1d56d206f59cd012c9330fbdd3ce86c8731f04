@@ -1,0 +1,19 @@
+"cognitive limits on deep work and recovery science.md"
+  s_82cbeb15781583::t_a49b5fc9d4b7fc 16-17,20-23,25-31,40-45,49-56,63-79,106-108,111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a61d56d206f59cd012c9330fbdd3ce86c8731f04",
+  "prompts": {},
+  "sessions": {
+    "s_82cbeb15781583": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a61d56d2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
