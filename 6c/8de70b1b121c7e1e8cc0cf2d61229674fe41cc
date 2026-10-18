@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/llm_judge_scratch.py
+  s_335b798c0a6294::t_a31eb2cd2cacb0 1-149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6c8de70b1b121c7e1e8cc0cf2d61229674fe41cc",
+  "prompts": {},
+  "sessions": {
+    "s_335b798c0a6294": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-6c8de70b",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
