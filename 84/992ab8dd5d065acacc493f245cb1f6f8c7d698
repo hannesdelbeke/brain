@@ -1,0 +1,19 @@
+"2026-08-30 a semantic graph over the whole vault.md"
+  s_86cdcaa64e9a0a::t_665f60e5291326 21,135,138-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "84992ab8dd5d065acacc493f245cb1f6f8c7d698",
+  "prompts": {},
+  "sessions": {
+    "s_86cdcaa64e9a0a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-84992ab8",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
