@@ -1,0 +1,19 @@
+"2026-09-01 hop-ceiling pilot - a u-curve shadow the token-ceiling test never found.md"
+  s_1a66cf06f492c6::t_d2f87262935cd2 15-17,29,34-35,37,55-60,65-68,72,74,78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d1c142ea6c5f421da1b9bfceb217dda69a944ae3",
+  "prompts": {},
+  "sessions": {
+    "s_1a66cf06f492c6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-d1c142ea",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
