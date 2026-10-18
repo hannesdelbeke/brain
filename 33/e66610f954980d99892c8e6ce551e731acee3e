@@ -1,0 +1,19 @@
+"2026-09-01 quantum probability engineering as a model for llm reliability and token thrift.md"
+  s_c9cd5295740c06::t_c1b403f2400d51 1-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "33e66610f954980d99892c8e6ce551e731acee3e",
+  "prompts": {},
+  "sessions": {
+    "s_c9cd5295740c06": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-33e66610",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
