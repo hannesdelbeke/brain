@@ -1,0 +1,23 @@
+"2026-08-27 build or install, measuring the engine against the plugin that already exists.md"
+  s_268345a4cf8949::t_605f66d50fc3e9 1-56
+"2026-08-27 what already exists, prior art for a local hybrid search engine.md"
+  s_268345a4cf8949::t_605f66d50fc3e9 67-68
+"progress - local-first search daemon and indexer.md"
+  s_268345a4cf8949::t_605f66d50fc3e9 46-47,67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0dee949b5eb47ce97e1d506c68b6bb5a37c56e23",
+  "prompts": {},
+  "sessions": {
+    "s_268345a4cf8949": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-0dee949b",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
