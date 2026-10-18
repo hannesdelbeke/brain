@@ -1,0 +1,23 @@
+skills/agent-comms/README.md
+  s_40653ae93dda28::t_2bfe286c055afa 75-81,90,95-96,114-115,146-149,151
+skills/agent-comms/SKILL.md
+  s_40653ae93dda28::t_2bfe286c055afa 23-24,28-67,99,110-113,115,125
+skills/agent-comms/scripts/setup_mac.sh
+  s_40653ae93dda28::t_2bfe286c055afa 1-106
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "09fcf81f97358d6c8d3fedb9b7eca4f2db634800",
+  "prompts": {},
+  "sessions": {
+    "s_40653ae93dda28": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-09fcf81f",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
