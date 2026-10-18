@@ -1,0 +1,19 @@
+"vault indexer - lightweight metadata pass vs full vector embedding.md"
+  s_a852ad734534a9::t_6fcf3e4b6f9f34 61-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e2179afb6176f38a1d7f6e9c9c67645988140d6",
+  "prompts": {},
+  "sessions": {
+    "s_a852ad734534a9": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-1e2179af",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
