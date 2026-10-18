@@ -1,0 +1,19 @@
+"2026-08-27 Mem0 memory architecture - cloud pricing, security, and local privacy.md"
+  s_20ff6f8583e49f::t_6771ace8a30cdb 146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4aa6e8e4d7a18144b206494178bb083ee62c3aa7",
+  "prompts": {},
+  "sessions": {
+    "s_20ff6f8583e49f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-4aa6e8e4",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
