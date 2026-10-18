@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/stacked_fusion_experiment.py
+  s_b2a76e84140224::t_8da3e5ce4e2960 32-38,114,118-123,171,266-267,273-277,292,346-347,353-358,383,385,396,436-439,462,470,524-542
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dda78a3e6347e066c0a40f616f1e80f9e7fdebcb",
+  "prompts": {},
+  "sessions": {
+    "s_b2a76e84140224": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-dda78a3e",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
