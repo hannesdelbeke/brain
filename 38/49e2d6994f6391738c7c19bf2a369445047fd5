@@ -1,0 +1,21 @@
+"2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2.md"
+  s_94ec97b1011f76::t_e13f085906bcb4 113-116
+"talent density, information density, and why shorter isn't automatically denser.md"
+  s_94ec97b1011f76::t_e13f085906bcb4 1-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3849e2d6994f6391738c7c19bf2a369445047fd5",
+  "prompts": {},
+  "sessions": {
+    "s_94ec97b1011f76": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-3849e2d6",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
