@@ -1,0 +1,19 @@
+"free and low-cost CLI coding agents.md"
+  s_fac83be17e47dd::t_5e84318e33dc5d 13-14,26-42,46-62,66-79,83-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fcb2298d4e8c8bcf04809791319091add2245e2c",
+  "prompts": {},
+  "sessions": {
+    "s_fac83be17e47dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-fcb2298d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
