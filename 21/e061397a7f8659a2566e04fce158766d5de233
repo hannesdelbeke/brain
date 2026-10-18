@@ -1,0 +1,39 @@
+alcohol.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 31-33,35
+carnitine.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 20,25
+carnosine.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 17
+curcumin.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 19-20,24,26,42
+"essential fatty acid.md"
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 20
+ionizer.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 13-14
+osteoporosis.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 25
+phytate.md
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 13
+"vegetarian macros.md"
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 26,34,38,40,42,47,49,53
+"vitamin A.md"
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 16
+"vitamin D3.md"
+  s_7f9fcd5cd0d8d4::t_104cc7e5d6fbe1 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "21e061397a7f8659a2566e04fce158766d5de233",
+  "prompts": {},
+  "sessions": {
+    "s_7f9fcd5cd0d8d4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-21e06139",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
