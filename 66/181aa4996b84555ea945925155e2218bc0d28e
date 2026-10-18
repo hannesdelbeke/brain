@@ -1,0 +1,19 @@
+"2026-09-16 nature is full of radio emitters but no organism evolved to use them.md"
+  s_84a62a81094f38::t_57261917c34091 1-61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "66181aa4996b84555ea945925155e2218bc0d28e",
+  "prompts": {},
+  "sessions": {
+    "s_84a62a81094f38": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-66181aa4",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
