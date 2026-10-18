@@ -1,0 +1,25 @@
+skills/pkm-metadata-indexer/SKILL.md
+  s_29dbc2da3ccd22::t_b5f88076e663f7 281-288
+skills/pkm-metadata-indexer/searchd.py
+  s_29dbc2da3ccd22::t_b5f88076e663f7 55-66,114,146-165,254,847-848,857-867,874,889-933,953,977-983,989-994,1205-1206
+skills/pkm-metadata-indexer/stacked_fusion_experiment.py
+  s_29dbc2da3ccd22::t_b5f88076e663f7 219-390,407-411,431-438,468-495
+skills/pkm-metadata-indexer/test_searchd.py
+  s_29dbc2da3ccd22::t_b5f88076e663f7 819-927
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "337465e05de83eabba3a6ceb15e17815bedf2248",
+  "prompts": {},
+  "sessions": {
+    "s_29dbc2da3ccd22": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-337465e0",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
