@@ -1,0 +1,21 @@
+"2026-08-27 agentic pkm action plan.md"
+  s_6d153920297265::t_d28470c9aea31b 31,43-46
+"2026-08-27 what an AI buddy actually needs.md"
+  s_6d153920297265::t_d28470c9aea31b 72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "60c8b8be7bf2488bad5906b77677e93726b70cdc",
+  "prompts": {},
+  "sessions": {
+    "s_6d153920297265": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-60c8b8be",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
