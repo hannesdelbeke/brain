@@ -1,0 +1,21 @@
+"2026-09-02 what wikilink markup costs a machine reader.md"
+  s_ef63c774b4f68a::t_1df1027614eab9 1-65
+skills/pkm-metadata-indexer/wikilink_cost_experiment.py
+  s_ef63c774b4f68a::t_1df1027614eab9 1-204
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3c5fcb81ac90454b8d4c129114beab4d6ac0c0d1",
+  "prompts": {},
+  "sessions": {
+    "s_ef63c774b4f68a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-3c5fcb81",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
