@@ -1,0 +1,23 @@
+"2026-09-23 the rollup break-even is 2.5 percent of your context.md"
+  s_8748f3bbd5afb8::t_32288fc18ad45f 1-150
+skills/pkm-metadata-indexer/note_outline.py
+  s_8748f3bbd5afb8::t_32288fc18ad45f 1-330
+skills/pkm-metadata-indexer/outline_gate.py
+  s_8748f3bbd5afb8::t_32288fc18ad45f 1-147
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "01e6ff515e1bf31a271b9751b9d9953f3003e85e",
+  "prompts": {},
+  "sessions": {
+    "s_8748f3bbd5afb8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-01e6ff51",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
