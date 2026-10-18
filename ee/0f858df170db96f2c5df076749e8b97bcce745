@@ -1,0 +1,21 @@
+"Anonymous SHA Pointer.md"
+  s_054e22d2738428::t_19da70b0ff8fbc 2-4,12-25,27-30
+skills/private-to-public-note-promotion/SKILL.md
+  s_054e22d2738428::t_19da70b0ff8fbc 113
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ee0f858df170db96f2c5df076749e8b97bcce745",
+  "prompts": {},
+  "sessions": {
+    "s_054e22d2738428": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-ee0f858d",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
