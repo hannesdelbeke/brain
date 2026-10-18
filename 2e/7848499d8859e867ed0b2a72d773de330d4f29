@@ -1,0 +1,23 @@
+"how to inspect Claude Code sessions.md"
+  s_1854d44270be38::t_5c2e4dbbba4d62 1-84
+"how to inspect Codex sessions.md"
+  s_1854d44270be38::t_5c2e4dbbba4d62 1-68
+"how to inspect antigravity cli sessions.md"
+  s_1854d44270be38::t_5c2e4dbbba4d62 1-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2e7848499d8859e867ed0b2a72d773de330d4f29",
+  "prompts": {},
+  "sessions": {
+    "s_1854d44270be38": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-2e784849",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
