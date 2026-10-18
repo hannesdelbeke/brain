@@ -1,0 +1,19 @@
+"wikilink temporal integrity.md"
+  s_8b50d7c6aa0aa2::t_9a15c37fb82901 8,10-11,13,15,17-18,20-23,25-26,28-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "34d8e38be87eb221c7b5e7532adde9ced999e1f6",
+  "prompts": {},
+  "sessions": {
+    "s_8b50d7c6aa0aa2": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-34d8e38b",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
