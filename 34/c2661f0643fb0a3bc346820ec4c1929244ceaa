@@ -1,0 +1,19 @@
+"note search readiness audit.md"
+  s_79b7db62812866::t_835803ff73aef4 1-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "34c2661f0643fb0a3bc346820ec4c1929244ceaa",
+  "prompts": {},
+  "sessions": {
+    "s_79b7db62812866": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-34c2661f",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
