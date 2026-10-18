@@ -1,0 +1,19 @@
+"PKM indexer performance log.md"
+  s_762a147b2c601b::t_bf3299dd53a0b9 17,105-128,134,158-159,161
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "eb6ea459e330d4dd4f5b72016453ccf51d58e08f",
+  "prompts": {},
+  "sessions": {
+    "s_762a147b2c601b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-eb6ea459",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
