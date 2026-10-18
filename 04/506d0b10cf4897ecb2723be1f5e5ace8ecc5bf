@@ -1,0 +1,45 @@
+"PKM social media.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 40-41
+"auto add obsidian aliases.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 30-31
+"discover a garden's essence.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 43-44
+"drag drop extract to new note.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 30-31
+"infinite scroll for notes.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 27-28
+"notes fuzzy search.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 25-26
+"obsidian - delete tab ux different from close tab.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 21-22
+"proposal - note-taking workflow gaps.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 1-44
+"pros cons of saving ai output.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 15-16
+"public notes.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 22-23
+"random title note flow.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 44-45
+"reducing note folders.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 66-67
+"share TA notes with world.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 29-30
+"sliding panes.md"
+  s_7df3eb5e1f2f4d::t_28c6c9bc9965c7 45-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "04506d0b10cf4897ecb2723be1f5e5ace8ecc5bf",
+  "prompts": {},
+  "sessions": {
+    "s_7df3eb5e1f2f4d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-04506d0b",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
