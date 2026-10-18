@@ -1,0 +1,39 @@
+"boiling water tap.md"
+  s_b5432007bd2422::t_7f27594b1e1863 21-22
+books.md
+  s_b5432007bd2422::t_7f27594b1e1863 2-3,14-15
+"caffeine dosing.md"
+  s_b5432007bd2422::t_7f27594b1e1863 2-3
+"countertop boiling water boiler.md"
+  s_b5432007bd2422::t_7f27594b1e1863 17
+"social media is distracting.md"
+  s_b5432007bd2422::t_7f27594b1e1863 2-3,16-19
+"software architecture.md"
+  s_b5432007bd2422::t_7f27594b1e1863 19
+"software development.md"
+  s_b5432007bd2422::t_7f27594b1e1863 1-6,8-9
+"sound treatment.md"
+  s_b5432007bd2422::t_7f27594b1e1863 29
+"the urge to write notes for everything.md"
+  s_b5432007bd2422::t_7f27594b1e1863 32
+validator.md
+  s_b5432007bd2422::t_7f27594b1e1863 4-5,37-39
+"writing notes can be procrastination.md"
+  s_b5432007bd2422::t_7f27594b1e1863 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ff8d0fa2bb026d6db0201682536c33fa4cfe22d7",
+  "prompts": {},
+  "sessions": {
+    "s_b5432007bd2422": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-ff8d0fa2",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
