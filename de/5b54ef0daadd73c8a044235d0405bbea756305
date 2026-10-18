@@ -1,0 +1,19 @@
+"multi-repo agent search cost and ROI.md"
+  s_8f83127cfb97a7::t_d612367b164f60 9-27,38,45-46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "de5b54ef0daadd73c8a044235d0405bbea756305",
+  "prompts": {},
+  "sessions": {
+    "s_8f83127cfb97a7": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-de5b54ef",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
