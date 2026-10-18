@@ -1,0 +1,19 @@
+"2026-09-01 should the tightening pass become a skill.md"
+  s_b9fce4ff447a83::t_017d6958a4ce1d 1-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e4f6b48bc9bed5f0966c54b75bd7211ffe7f8477",
+  "prompts": {},
+  "sessions": {
+    "s_b9fce4ff447a83": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-e4f6b48b",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
