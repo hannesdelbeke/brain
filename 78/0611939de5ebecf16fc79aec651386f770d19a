@@ -1,0 +1,19 @@
+.gitignore
+  s_1d724283bee1dd::t_ca26b64f1a1884 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "780611939de5ebecf16fc79aec651386f770d19a",
+  "prompts": {},
+  "sessions": {
+    "s_1d724283bee1dd": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-78061193",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
