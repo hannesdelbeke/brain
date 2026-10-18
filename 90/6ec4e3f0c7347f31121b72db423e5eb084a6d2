@@ -1,0 +1,19 @@
+"2026-08-29 local search daemon and indexer - release plan and modular decoupling.md"
+  s_0e208c6cf0a979::t_22c36700276858 18,98-111,118
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "906ec4e3f0c7347f31121b72db423e5eb084a6d2",
+  "prompts": {},
+  "sessions": {
+    "s_0e208c6cf0a979": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-906ec4e3",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
