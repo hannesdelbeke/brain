@@ -1,0 +1,27 @@
+"2026-08-27 build or install, measuring the engine against the plugin that already exists.md"
+  s_ff32672515e04c::t_131aa2e2abbe10 58
+"2026-08-27 vault index work log.md"
+  s_ff32672515e04c::t_131aa2e2abbe10 74-84,88
+"progress - local-first search daemon and indexer.md"
+  s_ff32672515e04c::t_131aa2e2abbe10 24-25,48
+skills/pkm-metadata-indexer/SKILL.md
+  s_ff32672515e04c::t_131aa2e2abbe10 80-81
+skills/pkm-metadata-indexer/eval_rerank.py
+  s_ff32672515e04c::t_131aa2e2abbe10 1-198
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c941726e41cccec251e2915c669b130bf798bae9",
+  "prompts": {},
+  "sessions": {
+    "s_ff32672515e04c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-c941726e",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
