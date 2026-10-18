@@ -1,0 +1,27 @@
+"autocommit leftover changes.md"
+  s_6ce4ccb384020e::t_3c89e5d32ece6a 48
+"hashtag synonyms.md"
+  s_6ce4ccb384020e::t_3c89e5d32ece6a 53
+"medical condition.md"
+  s_6ce4ccb384020e::t_3c89e5d32ece6a 2
+medical.md
+  s_6ce4ccb384020e::t_3c89e5d32ece6a 2
+"single-repo vs multi-repo agent search.md"
+  s_6ce4ccb384020e::t_3c89e5d32ece6a 40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "85e9a19f810085651574a42853177925fdd1679b",
+  "prompts": {},
+  "sessions": {
+    "s_6ce4ccb384020e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-85e9a19f",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
