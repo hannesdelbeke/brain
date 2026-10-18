@@ -1,0 +1,19 @@
+"codegraph review.md"
+  s_70f63b42c39d79::t_bd690457683e33 48-69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "cb869d1dd887c784c8976da83c863b4783c67db2",
+  "prompts": {},
+  "sessions": {
+    "s_70f63b42c39d79": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-cb869d1d",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
