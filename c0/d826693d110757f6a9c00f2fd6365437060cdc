@@ -1,0 +1,19 @@
+"agent-friendly documentation tools.md"
+  s_76227f6fa34b1a::t_2a6ea83cdc73b4 1-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c0d826693d110757f6a9c00f2fd6365437060cdc",
+  "prompts": {},
+  "sessions": {
+    "s_76227f6fa34b1a": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-c0d82669",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
