@@ -1,0 +1,19 @@
+"why we did the agent hop tests.md"
+  s_b55e119a8a6056::t_55b4c5451b0349 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5f1688af5050abe0cc281023765a15e1d0aafaf5",
+  "prompts": {},
+  "sessions": {
+    "s_b55e119a8a6056": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-5f1688af",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
