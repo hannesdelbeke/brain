@@ -1,0 +1,19 @@
+"AI review queue workflow.md"
+  s_4639b3dfb161f2::t_d3df413f164225 1-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3753fb22556e3e4fa3d7897d6f0c59d4321f5e30",
+  "prompts": {},
+  "sessions": {
+    "s_4639b3dfb161f2": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-3753fb22",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@gemini.com>"
+    }
+  }
+}
