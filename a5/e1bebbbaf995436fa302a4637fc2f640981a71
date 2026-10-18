@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/co_touch_value_experiment.py
+  s_2cce0c65925064::t_5b101f8cb4e817 1-317
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a5e1bebbbaf995436fa302a4637fc2f640981a71",
+  "prompts": {},
+  "sessions": {
+    "s_2cce0c65925064": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-a5e1bebb",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
