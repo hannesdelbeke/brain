@@ -1,0 +1,19 @@
+corpus.md
+  s_57e1b0edf99122::t_ed91605e24c7bc 13,15,17,19,21-24,26,28,30-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2388433280a2c3e8a4497afeeb7869fa658a5728",
+  "prompts": {},
+  "sessions": {
+    "s_57e1b0edf99122": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-23884332",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
