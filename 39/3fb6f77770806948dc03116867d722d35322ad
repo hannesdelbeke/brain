@@ -1,0 +1,19 @@
+"2026-09-01 designing a true multi-document lost-in-the-middle test for candidate 2.md"
+  s_dcb5212929d25e::t_40b1c7a8257ddc 113-130
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "393fb6f77770806948dc03116867d722d35322ad",
+  "prompts": {},
+  "sessions": {
+    "s_dcb5212929d25e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-393fb6f7",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
