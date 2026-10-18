@@ -1,0 +1,45 @@
+"2026-07-31 historic obsidian links.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 13,19
+"2026-08-19 AI tool research.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 17,25,33,41,49,57,69
+"2026-08-20 domain masters hub.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 14,16,21,25,30,34
+"agent-friendly documentation tools.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 11,18,24,30,38
+"are wikilinks legacy with embedded vector.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 9,13,17,21
+"extract historic wikilinks from git.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 11,16,51,60
+"how can we get value out of public notes.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 9,13,31,40
+"human vs AI git history transfers between notes.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 11
+"learnings from public zettelkasten vaults.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 9,13,17,21,25,29,36
+"linking to git commits and diffs in obsidian via uri.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 1-74
+"obsidian-second-brain review.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 10,13,18,26,34
+"offline GPU embeddings with incremental cache.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 21,47,49,54,130
+"public zettelkasten repos on high level concepts.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 12,22,36,48,58,68,82
+"wikilink temporal integrity.md"
+  s_2eb2c7e4e47eca::t_bb03cf98d08c4d 11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ea7310a1524432cfbb30bc4ff173f7350e82168d",
+  "prompts": {},
+  "sessions": {
+    "s_2eb2c7e4e47eca": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-ea7310a1",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
