@@ -1,0 +1,19 @@
+"agent answers in callout.md"
+  s_f999739be7940a::t_74624398b8b76c 1-7,9-12,14,16,18-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "957edfbe709399e7ca25d6d5d73c32719f3aa455",
+  "prompts": {},
+  "sessions": {
+    "s_f999739be7940a": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-957edfbe",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
