@@ -1,0 +1,19 @@
+"mcp vs skill performance and subagent scaling.md"
+  s_0bf290dd808c25::t_765acf603f470e 1-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "31d199f2d50933587f5d837551b782b3180c1871",
+  "prompts": {},
+  "sessions": {
+    "s_0bf290dd808c25": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-31d199f2",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@gemini.com>"
+    }
+  }
+}
