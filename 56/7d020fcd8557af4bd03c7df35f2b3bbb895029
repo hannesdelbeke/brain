@@ -1,0 +1,41 @@
+"2026-08-19 AI started tagging notes.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 28
+"2026-08-19 AI tool research.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 53,96
+"agent answers in callout.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 19-22
+"agent-friendly documentation tools.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 36-38
+"algo to differentiate between AI and human notes.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 7
+antigravity.md
+  s_6ed038df37c280::t_28cb14e3595e6d 1-21
+"human vs AI git history transfers between notes.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 23
+"human vs ai text context.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 3,5-6,8-11,13-14,16-63,66-72
+"linking to git commits and diffs in obsidian via uri.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 68
+"obsidian-second-brain review.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 32
+"track prompt history.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 1-33
+"wikilink temporal integrity.md"
+  s_6ed038df37c280::t_28cb14e3595e6d 38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "567d020fcd8557af4bd03c7df35f2b3bbb895029",
+  "prompts": {},
+  "sessions": {
+    "s_6ed038df37c280": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-567d020f",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
