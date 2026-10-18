@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/recency_prior_experiment.py
+  s_4db145e50430b6::t_ca3d0d7c0391f0 1-222
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "75a2543fb586a360384b018367ebca7f04d972c6",
+  "prompts": {},
+  "sessions": {
+    "s_4db145e50430b6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-75a2543f",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
