@@ -1,0 +1,45 @@
+"2026-07-31 historic obsidian links.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 32
+"2026-08-27 what an AI buddy actually needs.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 251
+"2026-08-30 search engines compared to the vector search we use.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 42
+"2026-08-30 sharing a vector index across people and orgs.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 45
+"2026-08-31 recency-proximity reranking prior tested against real wikilinks.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 204
+"2026-08-31 research on compressing llm reasoning and notes without losing information.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 88
+"2026-09-01 adversarial literature check for candidate 2.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 65
+"2026-09-01 adversarial literature check for candidate 3.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 57
+"2026-09-01 research on expertise-location, federated privacy, and home-assistant LLM indexing.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 55
+"anti links.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 55-56
+"co-commit graph mining for serendipitous note associations.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 142
+"extract historic wikilinks from git.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 62
+"moving files across submodules loses created date.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 46
+"retrieval augmented generation.md"
+  s_86e2e11a5265a5::t_0b15bd650dc799 13-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "941be38815869b37c99d4290334c854a34060f15",
+  "prompts": {},
+  "sessions": {
+    "s_86e2e11a5265a5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-941be388",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
