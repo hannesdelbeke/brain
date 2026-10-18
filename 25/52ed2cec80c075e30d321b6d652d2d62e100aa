@@ -1,0 +1,19 @@
+"proposal - self-learning agent supervisor and continuous prompt failure distillation.md"
+  s_2557e7c04b7bbc::t_9edc209820e5d0 154
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2552ed2cec80c075e30d321b6d652d2d62e100aa",
+  "prompts": {},
+  "sessions": {
+    "s_2557e7c04b7bbc": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-2552ed2c",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@users.noreply.github.com>"
+    }
+  }
+}
