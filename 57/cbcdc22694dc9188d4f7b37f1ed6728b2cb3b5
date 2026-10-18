@@ -1,0 +1,19 @@
+"progress - local-first search daemon and indexer.md"
+  s_e2cc2e476b3798::t_d61cffcbe11602 27-29,53-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "57cbcdc22694dc9188d4f7b37f1ed6728b2cb3b5",
+  "prompts": {},
+  "sessions": {
+    "s_e2cc2e476b3798": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-57cbcdc2",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
