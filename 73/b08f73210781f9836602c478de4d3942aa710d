@@ -1,0 +1,19 @@
+"learnings from public zettelkasten vaults.md"
+  s_4302c243afd535::t_3c0772dc3e12ef 1-36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "73b08f73210781f9836602c478de4d3942aa710d",
+  "prompts": {},
+  "sessions": {
+    "s_4302c243afd535": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-73b08f73",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
