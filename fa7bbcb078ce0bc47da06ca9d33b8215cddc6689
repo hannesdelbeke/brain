@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/outline_gate.py
+  s_b63acc9734117d::t_8f402bcef02ab5 44-47,103-107
+skills/pkm-metadata-indexer/test_outline_gate.py
+  s_b63acc9734117d::t_8f402bcef02ab5 1-128
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fa7bbcb078ce0bc47da06ca9d33b8215cddc6689",
+  "prompts": {},
+  "sessions": {
+    "s_b63acc9734117d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-fa7bbcb0",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
