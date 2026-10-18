@@ -1,0 +1,19 @@
+"why vector search obsoletes empty stub wikilinks.md"
+  s_e55b9f598d1630::t_069b09fda09c91 1-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0042957a0291ac47b91229f4dda159264df8f666",
+  "prompts": {},
+  "sessions": {
+    "s_e55b9f598d1630": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-0042957a",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <antigravity@google.com>"
+    }
+  }
+}
