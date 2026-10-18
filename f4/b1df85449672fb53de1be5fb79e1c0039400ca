@@ -1,0 +1,21 @@
+"repo maps via GitHub Actions.md"
+  s_cf8469a3b6e91f::t_39591e2ec15c6f 12,36,43-67
+"single-repo vs multi-repo agent search.md"
+  s_cf8469a3b6e91f::t_39591e2ec15c6f 9,14,34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f4b1df85449672fb53de1be5fb79e1c0039400ca",
+  "prompts": {},
+  "sessions": {
+    "s_cf8469a3b6e91f": {
+      "agent_id": {
+        "tool": "antigravity",
+        "id": "backfill:commit-f4b1df85",
+        "model": "unknown"
+      },
+      "human_author": "Antigravity <ai@antigravity>"
+    }
+  }
+}
