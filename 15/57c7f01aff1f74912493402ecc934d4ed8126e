@@ -1,0 +1,33 @@
+"2026-09-01 note-compress skill - design, adversarial review, and bench data.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 24
+"2026-09-01 prior exposure as an implicit edge - the link between recency reranking and code-authorship expertise.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 51
+"2026-09-01 the adversarial fidelity gate is llm-as-judge, and that literature explains the non-determinism.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 19,21,23,27
+"2026-09-01 why academic writing is hard to read.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 22,24,28,41
+"cognitive limits on deep work and recovery science.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 25-26,30-31,42,46-47,52,58-59
+"hub-node filtering for co-commit graphs.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 29,31,39
+"mirror - thomas j frank notes - hyperfocus.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 95-96,98-99,884,896
+"proposal - self-learning agent supervisor and continuous prompt failure distillation.md"
+  s_3d24d7c1e7385d::t_77e4f571653a3d 156-159
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1557c7f01aff1f74912493402ecc934d4ed8126e",
+  "prompts": {},
+  "sessions": {
+    "s_3d24d7c1e7385d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "backfill:commit-1557c7f0",
+        "model": "unknown"
+      },
+      "human_author": "Claude <noreply@anthropic.com>"
+    }
+  }
+}
