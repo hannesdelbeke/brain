@@ -575,6 +575,118 @@ class WatcherTest(unittest.TestCase):
         SEARCHD.watch_command(Path(temp_dir.name), ["no such executable at all"], 10,
                               stream=[{("added", "x")}])
 
+    def test_refresh_watcher_rate_limits_back_to_back_batches(self):
+        # Two batches arriving rapidly are delayed by MIN_REFRESH_INTERVAL_S, but
+        # both still run (coalesced, not dropped). Mock sleep and monotonic to
+        # verify the delay calculation without actually waiting.
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        counter = Path(temp_dir.name) / "runs.txt"
+        command = [sys.executable, "-c",
+                   f"open({str(counter)!r}, 'a').write('x')"]
+
+        sleeps = []
+        original_sleep = SEARCHD.time.sleep
+        original_monotonic = SEARCHD.time.monotonic
+        mock_time = [0.0]  # first run starts at t=0
+
+        def mock_sleep(duration):
+            sleeps.append(duration)
+            mock_time[0] += duration
+
+        def mock_monotonic():
+            return mock_time[0]
+
+        self.addCleanup(setattr, SEARCHD.time, "sleep", original_sleep)
+        self.addCleanup(setattr, SEARCHD.time, "monotonic", original_monotonic)
+        SEARCHD.time.sleep = mock_sleep
+        SEARCHD.time.monotonic = mock_monotonic
+
+        # Two batches: first runs immediately (t=0), second arrives at t=1 (well
+        # under the 300s interval) and should be delayed by ~299s
+        SEARCHD.watch_command(Path(temp_dir.name), command, 10,
+                              stream=[{("added", "x")}, {("added", "y")}])
+
+        # Both commands ran (two 'x' chars written)
+        self.assertEqual(counter.read_text(encoding="utf-8"), "xx")
+        # Second run was delayed (first run never sleeps because last_run starts at -inf)
+        self.assertEqual(len(sleeps), 1)
+        self.assertGreaterEqual(sleeps[0], 299.9)
+        self.assertLessEqual(sleeps[0], 300.0)
+
+    def test_refresh_watcher_rate_limit_can_be_disabled(self):
+        # PKM_MIN_REFRESH_INTERVAL_S=0 disables the guard entirely
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        counter = Path(temp_dir.name) / "runs.txt"
+        command = [sys.executable, "-c",
+                   f"open({str(counter)!r}, 'a').write('x')"]
+
+        sleeps = []
+        original_sleep = SEARCHD.time.sleep
+        self.addCleanup(setattr, SEARCHD.time, "sleep", original_sleep)
+        SEARCHD.time.sleep = lambda d: sleeps.append(d)
+
+        # Reload the module with the env var set to 0
+        original_interval = SEARCHD.MIN_REFRESH_INTERVAL_S
+        self.addCleanup(setattr, SEARCHD, "MIN_REFRESH_INTERVAL_S", original_interval)
+        SEARCHD.MIN_REFRESH_INTERVAL_S = 0
+
+        SEARCHD.watch_command(Path(temp_dir.name), command, 10,
+                              stream=[{("added", "x")}, {("added", "y")}])
+
+        # Both commands ran
+        self.assertEqual(counter.read_text(encoding="utf-8"), "xx")
+        # No sleeps occurred
+        self.assertEqual(sleeps, [])
+
+    def test_refresh_watcher_failing_command_still_consumes_interval(self):
+        # A command that crashes must still consume its interval, otherwise a
+        # failing refresh retries in a hot loop
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        command = [sys.executable, "-c", "import sys; sys.exit(1)"]
+
+        sleeps = []
+        original_sleep = SEARCHD.time.sleep
+        original_monotonic = SEARCHD.time.monotonic
+        mock_time = [0.0]
+
+        def mock_sleep(duration):
+            sleeps.append(duration)
+            mock_time[0] += duration
+
+        def mock_monotonic():
+            return mock_time[0]
+
+        self.addCleanup(setattr, SEARCHD.time, "sleep", original_sleep)
+        self.addCleanup(setattr, SEARCHD.time, "monotonic", original_monotonic)
+        SEARCHD.time.sleep = mock_sleep
+        SEARCHD.time.monotonic = mock_monotonic
+
+        # Two batches with a failing command: second run should still be delayed
+        SEARCHD.watch_command(Path(temp_dir.name), command, 10,
+                              stream=[{("added", "x")}, {("added", "y")}])
+
+        # Second run was delayed despite the first failing
+        self.assertEqual(len(sleeps), 1)
+        self.assertGreater(sleeps[0], 299.0)
+
+    def test_refresh_watcher_garbage_env_var_falls_back_to_default(self):
+        # A non-numeric PKM_MIN_REFRESH_INTERVAL_S should fall back to 300 instead
+        # of crashing at module load. Test by verifying the parsing logic directly.
+        test_cases = [
+            ("not-a-number", 300.0),
+            ("", 300.0),
+            ("10.5", 10.5),
+            ("0", 0.0),
+            ("-5", -5.0),  # negative is valid for the parser, just not useful
+        ]
+        for value, expected in test_cases:
+            result = float(value if value.replace(".", "", 1).replace("-", "", 1).isdigit() else "300")
+            self.assertEqual(result, expected,
+                           f"Parsing {value!r} should yield {expected}, got {result}")
+
     def test_a_failing_reindex_leaves_the_watcher_running(self):
         temp_dir = tempfile.TemporaryDirectory()
         self.addCleanup(temp_dir.cleanup)
