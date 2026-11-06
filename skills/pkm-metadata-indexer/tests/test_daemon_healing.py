@@ -27,8 +27,9 @@ def build_fixture(temp: str) -> Path:
 class DaemonHealingTest(unittest.TestCase):
     def test_auto_heal_spawns_without_crashing_when_daemon_is_offline(self):
         with tempfile.TemporaryDirectory() as temp:
-            database = Path(temp) / "pkm_index.db"
+            database = build_fixture(temp)
             with patch.object(search_vault, "daemon_healthy", return_value=False), \
+                 patch.object(search_vault, "managed_daemon_label", return_value=None), \
                  patch.object(search_vault.subprocess, "Popen") as popen:
                 popen.return_value.pid = 4242
                 self.assertEqual(search_vault.auto_spawn_daemon(str(database)), 4242)
@@ -39,6 +40,7 @@ class DaemonHealingTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             database = build_fixture(temp)
             with patch.object(search_vault, "daemon_healthy", return_value=False), \
+                 patch.object(search_vault, "managed_daemon_label", return_value=None), \
                  patch.object(search_vault.subprocess, "Popen", side_effect=OSError("no fork for you")):
                 self.assertIsNone(search_vault.auto_spawn_daemon(str(database)))
             results = search_vault.fast_fts_search("fallbackphrase", database, top=5)
@@ -61,10 +63,36 @@ class DaemonHealingTest(unittest.TestCase):
                 return False
 
             with patch.object(search_vault, "daemon_healthy", side_effect=health), \
+                 patch.object(search_vault, "managed_daemon_label", return_value=None), \
                  patch.object(search_vault.subprocess, "Popen") as popen:
                 popen.return_value.pid = 99
                 search_vault.auto_spawn_daemon(str(database), "http://127.0.0.1:9999")
             self.assertEqual(seen, ["http://127.0.0.1:9999"])
+
+    def test_a_managed_daemon_is_kickstarted_not_replaced(self):
+        """A stand-in on the shared port starves launchd's daemon and serves one corpus.
+
+        2026-11-05: a spawn from another repo's worktree held 44771 for ~16h while the
+        launchd searchd crash-looped 1,416 times on the taken port.
+        """
+        with tempfile.TemporaryDirectory() as temp:
+            database = build_fixture(temp)
+            with patch.object(search_vault, "daemon_healthy", return_value=False), \
+                 patch.object(search_vault, "managed_daemon_label", return_value="local.searchd"), \
+                 patch.object(search_vault.subprocess, "Popen") as popen:
+                self.assertIsNone(search_vault.auto_spawn_daemon(str(database)))
+            popen.assert_called_once()
+            self.assertEqual(popen.call_args.args[0][:2], ["launchctl", "kickstart"])
+
+    def test_no_spawn_when_cwd_is_not_a_vault(self):
+        """No index up the tree means the root would be an arbitrary directory."""
+        with tempfile.TemporaryDirectory() as temp:
+            missing = Path(temp) / ".obsidian" / "pkm_index.db"
+            with patch.object(search_vault, "daemon_healthy", return_value=False), \
+                 patch.object(search_vault, "managed_daemon_label", return_value=None), \
+                 patch.object(search_vault.subprocess, "Popen") as popen:
+                self.assertIsNone(search_vault.auto_spawn_daemon(str(missing)))
+            popen.assert_not_called()
 
 
 if __name__ == "__main__":

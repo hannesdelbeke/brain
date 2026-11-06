@@ -47,6 +47,7 @@ instead of inventing a boundary.
 import argparse
 import json
 import math
+import os
 import sqlite3
 import subprocess
 import sys
@@ -178,6 +179,22 @@ def default_database(db: str | None) -> Path:
     return current / ".obsidian" / "pkm_index.db"
 
 
+def managed_daemon_label() -> str | None:
+    """The launchd label of an installed agent that runs searchd.py, if any.
+
+    Found by content rather than by name so no machine-specific label lives here.
+    """
+    if sys.platform != "darwin":
+        return None
+    for plist in sorted((Path.home() / "Library" / "LaunchAgents").glob("*.plist")):
+        try:
+            if b"searchd.py" in plist.read_bytes():
+                return plist.stem
+        except OSError:
+            continue
+    return None
+
+
 def auto_spawn_daemon(db: str | None, base: str = DEFAULT_DAEMON) -> int | None:
     """Start one local daemon behind the FTS answer when none is healthy.
 
@@ -188,7 +205,25 @@ def auto_spawn_daemon(db: str | None, base: str = DEFAULT_DAEMON) -> int | None:
     """
     if daemon_healthy(base):
         return None
+    # A spawned daemon binds the shared port with a single cwd-derived vault,
+    # and then every later caller - and the real launchd daemon, which
+    # crash-loops on the taken port - gets that one corpus. On 2026-11-05 a run
+    # from an unrelated repo's worktree did exactly this and served 0.000-score
+    # hits from that worktree to every query for ~16h. So: when a managed daemon
+    # exists, wake it instead of standing in for it.
+    label = managed_daemon_label() if base == DEFAULT_DAEMON else None
+    if label:
+        try:
+            subprocess.Popen(["launchctl", "kickstart", f"gui/{os.getuid()}/{label}"],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except OSError:
+            pass
+        return None
     database = default_database(db)
+    # No index found walking up from cwd means cwd is not a vault; a daemon
+    # rooted there would index an arbitrary directory under the vault's name.
+    if not database.exists():
+        return None
     root = database.parent.parent if database.parent.name == ".obsidian" else database.parent
     command = [sys.executable, str(Path(__file__).with_name("searchd.py")), "--vault", f"brain={root}"]
     extra = {"creationflags": 0x00000008 | 0x00000200} if sys.platform == "win32" else {"start_new_session": True}
