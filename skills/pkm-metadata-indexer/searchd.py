@@ -106,6 +106,7 @@ import importlib
 import importlib.util
 import json
 import os
+import queue
 import shlex
 import socket
 import sqlite3
@@ -188,8 +189,24 @@ STALE_TTL_S = 30
 WATCHED_STALE_TTL_S = 300
 WATCH_DEBOUNCE_MS = 2000
 WATCH_STEP_MS = 200
-REFRESH_DEBOUNCE_MS = 60000
+# A plain watchfiles debounce is a ceiling, not a quiet period: under continuous
+# writes (20+ agent sessions committing to agent-session-traces every 5-30s) it
+# keeps yielding a batch every `debounce`ms forever rather than ever going
+# quiet, so the old REFRESH_DEBOUNCE_MS=60000 fired a subprocess once a minute,
+# nonstop, for as long as anything was writing. REFRESH_INNER_DEBOUNCE_MS now
+# only batches raw filesystem events cheaply; _coalesce_quiet layered on top
+# is what actually waits for REFRESH_QUIET_MS of real silence before firing,
+# capped by REFRESH_MAX_STALENESS_MS so a storm that never goes quiet still
+# flushes periodically instead of starving the refresh forever.
+REFRESH_INNER_DEBOUNCE_MS = 1000
+REFRESH_QUIET_MS = 5000
+REFRESH_MAX_STALENESS_MS = 120000
 REFRESH_TIMEOUT_S = 300
+# Serializes every --refresh subprocess (co_commit.py for each repo, the
+# branches curl) so at most one runs at a time machine-wide: under a write
+# storm across several repos, stacking two or three of these concurrently is
+# what turns a background refresh into CPU contention a query feels.
+REFRESH_LOCK = threading.Lock()
 NO_WINDOW = getattr(subprocess, "CREATE_NO_WINDOW", 0)
 INDEX_SUFFIXES = (".db", ".db-wal", ".db-shm", ".db-journal")
 QUERY_LOG = Path.home() / ".pkm" / "queries.jsonl"
@@ -1714,21 +1731,126 @@ def catch_up(vaults):
             print(f"catch-up {vault.name} failed, {type(error).__name__}: {error}", flush=True)
 
 
-def watch_command(root: Path, command: list[str], debounce: int, stream=None):
-    """Run a command whenever a directory changes, on a long debounce.
+# POSIX-only: preexec_fn raises on Windows, so the refresh subprocess there
+# just keeps the default priority rather than failing to start.
+def _lower_refresh_priority():
+    try:
+        os.nice(10)
+    except Exception:
+        pass
+
+
+_REFRESH_PREEXEC = None if sys.platform == "win32" else _lower_refresh_priority
+
+
+def _head_fingerprint(logs_root: Path):
+    """Cheap proxy for "did HEAD actually move", read with no subprocess.
+
+    logs_root is a repo's `.git/logs` directory, the --refresh watch target.
+    Git appends a line to `.git/logs/HEAD` on every commit or checkout, and
+    that line's second field is already the new sha, so reading its last line
+    answers the question a `git rev-parse HEAD` would, for the cost of one
+    file read instead of a git subprocess on top of the python startup and
+    sqlite work co_commit.py pays regardless of whether anything changed.
+    Returns None when there is nothing to read (e.g. the branches watcher's
+    root is .git/logs/refs/remotes, which has no HEAD file of its own), and a
+    caller that gets None should fall back to always firing.
+    """
+    try:
+        text = (Path(logs_root) / "HEAD").read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return None
+    for line in reversed(text.splitlines()):
+        parts = line.split()
+        if len(parts) >= 2:
+            return parts[1]
+    return None
+
+
+def _refresh_watch_filter(change, path):
+    """REFRESH_FILTER plus dropping lock files, which cannot change what a
+    refresh command would find and would otherwise double its already-cheap
+    firing rate during a commit (git briefly creates HEAD.lock alongside the
+    write to HEAD)."""
+    if REFRESH_FILTER is not None and not REFRESH_FILTER(change, path):
+        return False
+    return not path.endswith(".lock")
+
+
+def _coalesce_quiet(inner_stream, quiet_ms: int, max_staleness_ms: int):
+    """Turn a raw watchfiles stream into batches separated by real silence.
+
+    `watchfiles.watch(..., debounce=N)` is a ceiling, not a quiet period: under
+    continuous writes it keeps yielding a batch every N ms forever, because it
+    never sees the gap it would need to call the directory quiet. This drains
+    `inner_stream` on a background thread into a queue and only yields a merged
+    batch once `quiet_ms` has passed with nothing new, or once `max_staleness_ms`
+    has elapsed since the oldest unflushed change, whichever comes first -- so a
+    quiet repo refreshes within `quiet_ms` of its last write, and a repo that
+    never goes quiet still flushes at least every `max_staleness_ms`.
+    """
+    q = queue.Queue()
+    sentinel = object()
+
+    def producer():
+        try:
+            for item in inner_stream:
+                q.put(item)
+        finally:
+            q.put(sentinel)
+
+    threading.Thread(target=producer, daemon=True).start()
+
+    pending = set()
+    first_pending_at = None
+    while True:
+        if first_pending_at is None:
+            timeout = None
+        else:
+            staleness_left = max_staleness_ms / 1000 - (time.monotonic() - first_pending_at)
+            timeout = max(0.0, min(quiet_ms / 1000, staleness_left))
+        try:
+            item = q.get(timeout=timeout)
+        except queue.Empty:
+            if pending:
+                yield pending
+            pending = set()
+            first_pending_at = None
+            continue
+        if item is sentinel:
+            if pending:
+                yield pending
+            return
+        pending |= item
+        if first_pending_at is None:
+            first_pending_at = time.monotonic()
+
+
+def watch_command(root: Path, command: list[str], quiet_ms: int, stream=None):
+    """Run a command once real writes to a directory settle down.
 
     For a corpus that is not markdown and is not searched directly, but is the
     source of notes that are: the agent transcripts hold a recap per session and
     a script turns them into a note in the vault. Watched, that note carries this
     morning's work; run daily, it carries yesterday's.
 
-    The debounce is minutes rather than the two seconds a reindex gets, because
-    a transcript is appended on every message and the extractor reads all of
-    them. Errors print and the loop continues, the same as the reindex watcher.
+    Three things keep this off a query's critical path under a write storm
+    (20+ agent sessions, each with subagents, committing to
+    agent-session-traces every 5-30s): batches only form after `quiet_ms` of
+    real silence or `REFRESH_MAX_STALENESS_MS` of staleness, whichever is
+    first (`_coalesce_quiet`, see its docstring for why a bigger debounce
+    alone does not do this); a batch whose repo's HEAD has not moved since the
+    last run costs one file read rather than a subprocess
+    (`_head_fingerprint`); and every refresh subprocess, across every watcher,
+    runs at a lowered OS priority and never more than one at a time
+    (REFRESH_LOCK), so a refresh competes for the CPU behind a query rather
+    than beside it. Errors print and the loop continues, the same as the
+    reindex watcher.
     """
     if stream is None:
-        stream = watchfiles.watch(root, watch_filter=REFRESH_FILTER,
-                                  debounce=debounce, step=WATCH_STEP_MS)
+        inner = watchfiles.watch(root, watch_filter=_refresh_watch_filter,
+                                  debounce=REFRESH_INNER_DEBOUNCE_MS, step=WATCH_STEP_MS)
+        stream = _coalesce_quiet(inner, quiet_ms, REFRESH_MAX_STALENESS_MS)
     # the script, not the interpreter, and not the tail of a -c one-liner
     script = next((Path(token).name for token in reversed(command) if token.endswith(".py")),
                   Path(command[0]).name)
@@ -1738,13 +1860,22 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
     # read healthy. The root disambiguates, but only past `.git/logs`, hence three
     # components rather than the usual one.
     name = f"{script} on {'/'.join(root.parts[-3:])}"
+    last_fp = _head_fingerprint(root)
     for batch in stream:
+        fp = _head_fingerprint(root)
+        if fp is not None and fp == last_fp:
+            print(f"refresh {name}: {len(batch)} change(s), HEAD unchanged, skip", flush=True)
+            continue
         began = time.perf_counter()
         try:
             # the daemon runs under pythonw with no console of its own, so a console
-            # child would allocate one and flash a window on every refresh
-            result = subprocess.run(command, capture_output=True, text=True, timeout=REFRESH_TIMEOUT_S,
-                                    creationflags=NO_WINDOW)
+            # child would allocate one and flash a window on every refresh. The lock
+            # keeps every --refresh watcher's subprocess off the CPU at the same time
+            # as any other, and the lowered priority keeps it behind a query even
+            # while it runs, per the module docstring above.
+            with REFRESH_LOCK:
+                result = subprocess.run(command, capture_output=True, text=True, timeout=REFRESH_TIMEOUT_S,
+                                        creationflags=NO_WINDOW, preexec_fn=_REFRESH_PREEXEC)
             status = "ok" if result.returncode == 0 else f"exit {result.returncode}"
             print(f"refresh {name}: {len(batch)} change(s), {status} in "
                   f"{time.perf_counter() - began:.2f}s", flush=True)
@@ -1752,6 +1883,7 @@ def watch_command(root: Path, command: list[str], debounce: int, stream=None):
                 print((result.stderr or result.stdout).strip()[:500], flush=True)
         except Exception as error:
             print(f"refresh {name} failed, {type(error).__name__}: {error}", flush=True)
+        last_fp = fp
 
 
 def watch_vault(vault: Vault, stream=None):
@@ -2101,7 +2233,7 @@ def main():
             threading.Thread(target=watch_vault, args=(vault,), daemon=True).start()
         print(f"watching {len(vaults)} corpus root(s)", flush=True)
     for root, command in refreshes:
-        threading.Thread(target=watch_command, args=(root, command, REFRESH_DEBOUNCE_MS),
+        threading.Thread(target=watch_command, args=(root, command, REFRESH_QUIET_MS),
                          daemon=True).start()
         print(f"refresh on change in {root}\n  {' '.join(command)}", flush=True)
 
