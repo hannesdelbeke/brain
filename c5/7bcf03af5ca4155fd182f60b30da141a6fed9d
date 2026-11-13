@@ -1,0 +1,23 @@
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  s_fe63143ab85a74::t_006c9a013aa09d 516-565
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_fe63143ab85a74::t_14cce86fe39e24 195,206-208,786,850-865,1367-1369,1371-1373,1375-1376,1378-1379,1445-1446,1457-1458,1669-1790,1858-1881,1883,1886-1887,1893-1899,1910-1911,1914,1924-1926
+skills/pkm-metadata-indexer/searchd.py
+  s_fe63143ab85a74::t_6d85ceffdef1bb 778,828-830,876-881,959
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c57bcf03af5ca4155fd182f60b30da141a6fed9d",
+  "prompts": {},
+  "sessions": {
+    "s_fe63143ab85a74": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "31ef7d97-e4f0-4e5b-ba33-e3d550456288",
+        "model": "unknown"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
