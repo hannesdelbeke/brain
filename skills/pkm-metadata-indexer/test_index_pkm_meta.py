@@ -513,5 +513,55 @@ class DescriptionFieldTest(unittest.TestCase):
             connection.close()
 
 
+class TestFilenameTitlePriorityMatching(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.vault = Path(self.temp_dir.name)
+        self.db = self.vault / "test_index.db"
+
+    def tearDown(self):
+        self.temp_dir.cleanup()
+
+    def test_is_code_or_slug(self):
+        self.assertTrue(INDEXER.is_code_or_slug("p50"))
+        self.assertTrue(INDEXER.is_code_or_slug("rq4"))
+        self.assertTrue(INDEXER.is_code_or_slug("p50-12-as3600"))
+        self.assertTrue(INDEXER.is_code_or_slug("nep_50"))
+        self.assertTrue(INDEXER.is_code_or_slug("python3.14"))
+        self.assertFalse(INDEXER.is_code_or_slug("what is the latency of search queries across four corpora"))
+
+    def test_slug_match_pinned_at_top(self):
+        (self.vault / "regular_note.md").write_text(
+            "# Regular Note\n\nThis note mentions p50 multiple times in text: p50 p50 p50.\n",
+            encoding="utf-8",
+        )
+        (self.vault / "p50-benchmark.md").write_text(
+            "---\naliases: [p50-run]\n---\n# P50 Benchmark Paper\n\nSome findings.\n",
+            encoding="utf-8",
+        )
+
+        INDEXER.build_index(
+            vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True
+        )
+
+        # Check stem in database
+        connection = sqlite3.connect(self.db)
+        try:
+            stems = dict(connection.execute("SELECT path, stem FROM notes").fetchall())
+            self.assertEqual(stems["p50-benchmark.md"], "p50-benchmark")
+            self.assertEqual(stems["regular_note.md"], "regular_note")
+        finally:
+            connection.close()
+
+        # Search for slug 'p50'
+        results = INDEXER.search_index("p50", vault_path=str(self.vault), db_path=str(self.db))
+        self.assertTrue(len(results) > 0)
+        # The note with p50 in filename should be pinned and at rank 1
+        top = results[0]
+        self.assertEqual(top["path"], "p50-benchmark.md")
+        self.assertTrue(top.get("is_pinned"))
+        self.assertGreater(top["score"], 50.0)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -775,6 +775,7 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: boo
             "text": row.get("text", ""),
             "section_id": row["section_id"],
             **({"rerank_score": row["rerank_score"]} if "rerank_score" in row else {}),
+            **({"is_pinned": True} if row.get("is_pinned") else {}),
         }
         for row in rows
     ]
@@ -824,7 +825,9 @@ def rerank_merged(vaults: list[Vault], query: str, results: list[dict]) -> list[
 
     documents = [texts.get((row["vault"], row["section_id"])) or row["heading"] or ""
                  for row in results]
-    return pkm.rerank_documents(query, results, documents)
+    reranked = pkm.rerank_documents(query, results, documents)
+    reranked.sort(key=lambda row: (1 if row.get("is_pinned") else 0, row.get("rerank_score", -999.0)), reverse=True)
+    return reranked
 
 
 def dedupe_by_path(results: list[dict]) -> list[dict]:
@@ -870,6 +873,12 @@ def apply_corpus_floor(results: list[dict], limit: int) -> list[dict]:
     if limit <= 0 or not results or not all("rerank_score" in row for row in results):
         return results[:limit]
     kept, represented = [], set()
+    for index, row in enumerate(results):
+        if len(kept) >= limit:
+            break
+        if row.get("is_pinned"):
+            represented.add(row.get("vault", ""))
+            kept.append(index)
     for index, row in enumerate(results):
         if len(kept) >= limit:
             break
@@ -947,7 +956,7 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     # Fused rank is the only comparison between two separate indexes that means
     # anything: a bm25 score from one corpus and a bm25 score from another are
     # not on the same scale, their positions are.
-    results.sort(key=lambda row: row["score"], reverse=True)
+    results.sort(key=lambda row: (1 if row.get("is_pinned") else 0, row["score"]), reverse=True)
     # Deduping before the rerank rather than after is what makes the cut worth
     # paying for. The model reads a fixed number of candidates either way, so
     # spending them on distinct notes instead of several sections of the same

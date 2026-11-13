@@ -192,6 +192,7 @@ def rerank_documents(query: str, results: list[dict], documents: list[str],
     """Score documents with cross-encoder and sort by rerank_score.
 
     Assigns rerank_score in place and returns sorted by descending score.
+    Pinned results retain top priority and are not demoted below unpinned items.
 
     Args:
         max_chars: If provided, truncate each document to this many characters
@@ -202,7 +203,9 @@ def rerank_documents(query: str, results: list[dict], documents: list[str],
         documents = [doc[:max_chars] for doc in documents]
     for result, score in zip(results, get_cross_encoder().rerank(query, documents)):
         result["rerank_score"] = float(score)
-    return sorted(results, key=lambda result: -result["rerank_score"])
+        if result.get("is_pinned"):
+            result["rerank_score"] = max(result["rerank_score"], 10.0)
+    return sorted(results, key=lambda result: (-1 if result.get("is_pinned") else 0, -result["rerank_score"]))
 
 
 def rerank_results(query: str, results: list[dict], cursor: sqlite3.Cursor,
@@ -780,6 +783,7 @@ def collect_index_data(vault_dir: Path):
                     extract_key_lines(body, description=meta["description"]),
                     len(body.split()),
                     description,
+                    full_path.stem,
                 )
             )
 
@@ -843,6 +847,22 @@ def ensure_schema(connection: sqlite3.Connection):
         connection.execute("ALTER TABLE notes ADD COLUMN aliases TEXT NOT NULL DEFAULT '[]'")
     if "description" not in table_columns(connection, "notes"):
         connection.execute("ALTER TABLE notes ADD COLUMN description TEXT NOT NULL DEFAULT ''")
+    if "stem" not in table_columns(connection, "notes"):
+        connection.execute("ALTER TABLE notes ADD COLUMN stem TEXT NOT NULL DEFAULT ''")
+
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_filename ON notes(filename)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_stem ON notes(stem)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_filename_nocase ON notes(filename COLLATE NOCASE)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_stem_nocase ON notes(stem COLLATE NOCASE)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_path_nocase ON notes(path COLLATE NOCASE)")
+
+    # Ensure existing rows have stem populated
+    rows = connection.execute("SELECT path, filename FROM notes WHERE stem = ''").fetchall()
+    if rows:
+        connection.executemany(
+            "UPDATE notes SET stem = ? WHERE path = ?",
+            ((Path(filename).stem, path) for path, filename in rows),
+        )
 
     connection.execute(
         """
@@ -1344,15 +1364,19 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
         # compact nine-field note contract working while metadata collectors provide them.
         migrated_notes = []
         for note in notes:
-            if len(note) == 11:
-                # New format with description, keep as is
+            stem = Path(note[1]).stem if len(note) > 1 else ""
+            if len(note) == 12:
+                # New format with description and stem
                 migrated_notes.append(note)
+            elif len(note) == 11:
+                # Format with description, add stem
+                migrated_notes.append((*note, stem))
             elif len(note) == 10:
-                # Has aliases but no description, add empty description at end
-                migrated_notes.append((*note, ""))
+                # Has aliases but no description, add empty description and stem
+                migrated_notes.append((*note, "", stem))
             else:
-                # Old format without aliases, add both aliases (at position 7) and description (at end)
-                migrated_notes.append((*note[:7], json.dumps([]), *note[7:], ""))
+                # Old format without aliases, add aliases, empty description, and stem
+                migrated_notes.append((*note[:7], json.dumps([]), *note[7:], "", stem))
         notes = migrated_notes
         # Only populate session projection for the working-tree collector. Ref-based
         # collectors like scan_branches should not read the working tree's sessions/.
@@ -1418,8 +1442,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             cursor.executemany(
                 """
                 INSERT INTO notes
-                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count, description)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count, description, stem)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(path) DO UPDATE SET
                     filename = excluded.filename,
                     category = excluded.category,
@@ -1430,7 +1454,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     aliases = excluded.aliases,
                     summary_snippet = excluded.summary_snippet,
                     word_count = excluded.word_count,
-                    description = excluded.description
+                    description = excluded.description,
+                    stem = excluded.stem
                 """,
                 notes,
             )
@@ -1641,6 +1666,128 @@ def load_vectors(cursor: sqlite3.Cursor):
     return meta, matrix
 
 
+def is_code_or_slug(query: str) -> bool:
+    q = query.strip().strip("`'\"")
+    if not q:
+        return False
+    parts = q.split()
+    if len(parts) > 3:
+        return False
+    for part in parts:
+        has_alpha = bool(re.search(r"[a-zA-Z]", part))
+        has_digit = bool(re.search(r"\d", part))
+        has_sep = bool(re.search(r"[-_./:#]", part))
+        if has_alpha and has_digit:
+            return True
+        if has_sep:
+            return True
+    if len(parts) == 1 and len(q) <= 20 and re.match(r"^[a-zA-Z0-9_\.\-]+$", q):
+        return True
+    return False
+
+
+def lookup_filename_title(cursor: sqlite3.Cursor, query: str, limit: int = 50) -> list[dict]:
+    raw = query.strip().strip("`'\"")
+    if not raw:
+        return []
+    term = raw.lower()
+    prefix = term + "%"
+    contains = f"%{term}%"
+    multi = "%" + "%".join(term.split()) + "%" if len(term.split()) > 1 else ""
+
+    cols = table_columns(cursor.connection, "notes")
+    has_stem = "stem" in cols
+    stem_col = "stem" if has_stem else "filename"
+
+    sql = f"""
+    SELECT path, filename, aliases, summary_snippet,
+      CASE
+        -- 1. Exact match on stem, filename, or alias
+        WHEN {stem_col} = :term COLLATE NOCASE
+          OR filename = :term COLLATE NOCASE
+          OR filename = :term || '.md' COLLATE NOCASE
+          OR aliases LIKE '%"' || :term || '"%' COLLATE NOCASE THEN 1
+        -- 2. Prefix match on stem or filename
+        WHEN {stem_col} LIKE :prefix COLLATE NOCASE
+          OR filename LIKE :prefix COLLATE NOCASE THEN 2
+        -- 3. Exact slug token inside filename or path (bounded by - _ space / .)
+        WHEN filename LIKE '%-' || :term || '-%' COLLATE NOCASE
+          OR filename LIKE '%_' || :term || '_%' COLLATE NOCASE
+          OR filename LIKE '% ' || :term || ' %' COLLATE NOCASE
+          OR filename LIKE :term || '-%' COLLATE NOCASE
+          OR filename LIKE :term || '_%' COLLATE NOCASE
+          OR path LIKE '%/' || :term || '-%' COLLATE NOCASE
+          OR path LIKE '%/' || :term || '_%' COLLATE NOCASE
+          OR path LIKE '%/' || :term || '.%' COLLATE NOCASE
+          OR path LIKE '%/' || :term || '/%' COLLATE NOCASE THEN 3
+        -- 4. Substring in filename or stem
+        WHEN filename LIKE :contains COLLATE NOCASE
+          OR {stem_col} LIKE :contains COLLATE NOCASE THEN 4
+        -- 5. Multi-token pattern in filename or path
+        WHEN :multi <> '' AND (filename LIKE :multi COLLATE NOCASE OR path LIKE :multi COLLATE NOCASE) THEN 5
+        -- 6. Substring in path
+        WHEN path LIKE :contains COLLATE NOCASE THEN 6
+        -- 7. Substring in aliases
+        WHEN aliases LIKE :contains COLLATE NOCASE THEN 7
+        ELSE 8
+      END AS match_tier
+    FROM notes
+    WHERE filename LIKE :contains COLLATE NOCASE
+       OR {stem_col} LIKE :contains COLLATE NOCASE
+       OR path LIKE :contains COLLATE NOCASE
+       OR aliases LIKE :contains COLLATE NOCASE
+       OR (:multi <> '' AND (filename LIKE :multi COLLATE NOCASE OR path LIKE :multi COLLATE NOCASE))
+    ORDER BY match_tier ASC, length(filename) ASC
+    LIMIT :limit
+    """
+    try:
+        rows = cursor.execute(sql, {
+            "term": term,
+            "prefix": prefix,
+            "contains": contains,
+            "multi": multi,
+            "limit": limit,
+        }).fetchall()
+    except sqlite3.Error:
+        return []
+
+    if not rows:
+        return []
+
+    paths = [row[0] for row in rows]
+    placeholders = ",".join("?" * len(paths))
+    sec_sql = f"""
+    SELECT path, id, heading, MIN(start_line) AS start_line
+    FROM sections
+    WHERE path IN ({placeholders})
+    GROUP BY path
+    """
+    try:
+        sec_rows = cursor.execute(sec_sql, paths).fetchall()
+        sec_map = {r[0]: (r[1], r[2], r[3]) for r in sec_rows}
+    except sqlite3.Error:
+        sec_map = {}
+
+    matches = []
+    for path, filename, aliases_raw, summary, tier in rows:
+        sec = sec_map.get(path)
+        if sec:
+            sec_id, heading, line = sec
+        else:
+            sec_id = f"{path}::0:0"
+            heading = Path(filename).stem
+            line = 1
+        matches.append({
+            "section_id": sec_id,
+            "path": path,
+            "heading": heading,
+            "start_line": line,
+            "match_tier": tier,
+            "summary_snippet": summary,
+        })
+    return matches
+
+
 def search_index(
     query: str,
     vault_path: str | None = None,
@@ -1708,16 +1855,48 @@ def search_index(
                         "raw_sim": float(scores[index]),
                     }
 
+        # Filename / Title lookup lane
+        title_matches = lookup_filename_title(cursor, query, limit=30)
+        is_slug = is_code_or_slug(query)
+
+        # Map path -> existing section_id in lexical/vector results
+        path_to_section = {}
+        for sid, lex in lexical_results.items():
+            path_to_section.setdefault(lex["path"], sid)
+        for sid, vec in vector_results.items():
+            path_to_section.setdefault(vec["path"], sid)
+
+        title_results = {}
+        for rank, match in enumerate(title_matches, 1):
+            sec_id = path_to_section.get(match["path"], match["section_id"])
+            title_results[sec_id] = {
+                "path": match["path"],
+                "heading": match["heading"],
+                "start_line": match["start_line"],
+                "title_rank": rank,
+                "match_tier": match["match_tier"],
+                "is_pinned": is_slug or (match["match_tier"] <= 2),
+                "summary": match["summary_snippet"],
+            }
+
         results = []
-        for section_id in set(lexical_results) | set(vector_results):
+        for section_id in set(lexical_results) | set(vector_results) | set(title_results):
             lexical = lexical_results.get(section_id)
             semantic = vector_results.get(section_id)
-            source = semantic or lexical
+            title = title_results.get(section_id)
+            source = semantic or lexical or title
             score = 0.0
             if lexical:
                 score += 1.0 / (60 + lexical["lex_rank"])
             if semantic:
                 score += 1.0 / (60 + semantic["vec_rank"])
+            if title:
+                score += 1.0 / (60 + title["title_rank"])
+
+            is_pinned = bool(title and title["is_pinned"])
+            if is_pinned:
+                score = 100.0 - (title["match_tier"] * 2.0) + (1.0 / (title["title_rank"] + 1))
+
             results.append(
                 {
                     "section_id": section_id,
@@ -1728,16 +1907,20 @@ def search_index(
                     "lex_rank": lexical["lex_rank"] if lexical else None,
                     "vec_rank": semantic["vec_rank"] if semantic else None,
                     "raw_sim": semantic["raw_sim"] if semantic else None,
-                    "snippet": lexical["snippet"] if lexical else None,
+                    "snippet": (lexical["snippet"] if lexical else None) or (title["summary"] if title else None),
+                    "is_pinned": is_pinned,
                 }
             )
-        ranked = sorted(results, key=lambda result: -result["score"])
+        ranked = sorted(results, key=lambda result: (-1 if result.get("is_pinned") else 0, -result["score"]))
         if rerank and ranked:
             if not HAS_FASTEMBED:
                 print("fastembed is unavailable; returning fused results unranked.")
             else:
                 ranked = rerank_results(query, ranked[:RERANK_CANDIDATES], cursor,
                                         max_chars=rerank_max_chars)
+        # After the cut, so the extra query reads ten sections rather than every
+        # candidate the fusion considered.
+        return attach_section_text(ranked[:limit], cursor, max_chars=text_chars)
         # After the cut, so the extra query reads ten sections rather than every
         # candidate the fusion considered.
         return attach_section_text(ranked[:limit], cursor, max_chars=text_chars)

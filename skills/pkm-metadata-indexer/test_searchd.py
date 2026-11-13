@@ -1564,5 +1564,24 @@ class ConvoyTest(unittest.TestCase):
         self.assertGreaterEqual(result["took_s"], result["build_s"])
 
 
+class TestSearchdPinnedResults(unittest.TestCase):
+    def test_apply_corpus_floor_retains_pinned_items(self):
+        results = [
+            {"vault": "v1", "path": "p50.md", "heading": "p50", "score": 99.0,
+             "rerank_score": -1.5, "is_pinned": True},
+            {"vault": "v2", "path": "other.md", "heading": "other", "score": 0.5,
+             "rerank_score": 2.5},
+            {"vault": "v1", "path": "third.md", "heading": "third", "score": 0.4,
+             "rerank_score": 1.5},
+        ]
+        kept = SEARCHD.apply_corpus_floor(results, limit=2)
+        self.assertEqual(len(kept), 2)
+        # Pinned item must be first
+        self.assertEqual(kept[0]["path"], "p50.md")
+        self.assertTrue(kept[0]["is_pinned"])
+        # Second item is other from v2 (corpus floor representation)
+        self.assertEqual(kept[1]["path"], "other.md")
+
+
 if __name__ == "__main__":
     unittest.main()
