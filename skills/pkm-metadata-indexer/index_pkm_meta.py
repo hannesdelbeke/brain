@@ -40,13 +40,29 @@ except ImportError:
     HAS_FASTEMBED = False
 
 
+ACCELERATION_PROVIDERS = [
+    "CUDAExecutionProvider",
+    "ROCMExecutionProvider",
+    "CoreMLExecutionProvider",
+    "TensorrtExecutionProvider",
+    "OpenVINOExecutionProvider",
+    "DmlExecutionProvider",
+    "CPUExecutionProvider",
+]
+
+
 def get_embedding_providers() -> list[str]:
     if not HAS_FASTEMBED:
         return ["CPUExecutionProvider"]
+    # Allow explicit override via environment variable (e.g. PKM_EMBEDDING_PROVIDER=CPU or CoreML)
+    override = os.environ.get("PKM_EMBEDDING_PROVIDER")
+    if override:
+        name = override if override.endswith("ExecutionProvider") else f"{override}ExecutionProvider"
+        return [name, "CPUExecutionProvider"]
     try:
         import onnxruntime as ort
         available = set(ort.get_available_providers())
-        providers = [p for p in ["CUDAExecutionProvider", "DmlExecutionProvider", "CPUExecutionProvider"] if p in available]
+        providers = [p for p in ACCELERATION_PROVIDERS if p in available]
         return providers or ["CPUExecutionProvider"]
     except Exception:
         return ["CPUExecutionProvider"]
@@ -147,7 +163,20 @@ def get_embedding_model(providers: list[str] | None = None, threads: int | None 
     with _LOAD_LOCK:
         if key not in _MODEL_CACHE:
             kwargs = {"threads": threads} if threads is not None else {}
-            _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=list(key[0]), **kwargs)
+            provider_list = list(key[0])
+            try:
+                _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=provider_list, **kwargs)
+            except Exception as exc:
+                if provider_list != ["CPUExecutionProvider"]:
+                    log.warning("Failed to initialize providers %s (%s: %s); falling back to CPUExecutionProvider",
+                                provider_list, type(exc).__name__, exc)
+                    fallback_key = (("CPUExecutionProvider",), threads)
+                    if fallback_key not in _MODEL_CACHE:
+                        _MODEL_CACHE[fallback_key] = TextEmbedding(
+                            model_name=EMBEDDING_MODEL, providers=["CPUExecutionProvider"], **kwargs
+                        )
+                    return _MODEL_CACHE[fallback_key]
+                raise
     return _MODEL_CACHE[key]
 
 
