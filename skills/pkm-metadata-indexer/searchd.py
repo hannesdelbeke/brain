@@ -598,10 +598,11 @@ class Vault:
 
 
 class State:
-    def __init__(self, vaults: list[Vault], token: str | None = None):
+    def __init__(self, vaults: list[Vault], token: str | None = None, skip_embeddings: bool = False):
         self.vaults = {vault.name: vault for vault in vaults}
         self.default = vaults[0].name
         self.token = token
+        self.skip_embeddings = skip_embeddings
         self.warm = False
         self.started = time.time()
         self.last_query = 0.0
@@ -752,7 +753,7 @@ def enrich_results_with_metadata(vault: Vault, rows: list[dict]) -> list[dict]:
 
 
 def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: bool = True) -> list[dict]:
-    vectors = vault.matrix()
+    vectors = ([], None) if getattr(STATE, "skip_embeddings", False) else vault.matrix()
     with vault.lock:
         vault.queries += 1
     search_query = query
@@ -1670,7 +1671,9 @@ def do_reindex(vault: Vault, started=None) -> dict:
         if started is not None:
             started()
         began = time.perf_counter()
-        pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect)
+        skip_emb = getattr(STATE, "skip_embeddings", False)
+        pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
+                        skip_embeddings=skip_emb)
         build = time.perf_counter() - began
     vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
     return {"vault": vault.name, "took_s": round(time.perf_counter() - queued_at, 2),
@@ -1984,6 +1987,7 @@ class Handler(BaseHTTPRequestHandler):
                 body = {
                     "status": "ok",
                     "warm": STATE.warm,
+                    "skip_embeddings": STATE.skip_embeddings,
                     "uptime_s": round(time.time() - STATE.started, 1),
                     "default_vault": STATE.default,
                 }
@@ -2171,6 +2175,8 @@ def main():
                              "searched itself but produces notes that are. Debounced to a minute, "
                              "since the sources this is for are appended to constantly. Write paths "
                              "with forward slashes, the command is split as a posix shell would")
+    parser.add_argument("--skip-embeddings", action="store_true",
+                        help="Index metadata and FTS5 BM25 text only, skipping neural vector embeddings")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--no-keepalive", action="store_true",
                         help="Let the model go cold between queries, trading ~30ms on the first "
@@ -2216,8 +2222,11 @@ def main():
             parser.error(f"--corpus wants MODULE:FUNCTION=NAME=PATH, got {spec!r}")
         vaults.append(parse_vault(vault_spec, collect=getattr(load_module(module_name), function_name)))
 
+    if args.skip_embeddings:
+        args.no_warm = True
+        args.no_keepalive = True
     global STATE
-    STATE = State(vaults, args.token)
+    STATE = State(vaults, args.token, skip_embeddings=args.skip_embeddings)
     for vault in vaults:
         print(f"vault {vault.name}\n  root {vault.root}\n  db   {vault.db}", flush=True)
         if not vault.db.exists():

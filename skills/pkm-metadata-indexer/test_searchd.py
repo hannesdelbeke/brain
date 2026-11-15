@@ -1583,5 +1583,13 @@ class TestSearchdPinnedResults(unittest.TestCase):
         self.assertEqual(kept[1]["path"], "other.md")
 
 
+class TestSearchdSkipEmbeddings(unittest.TestCase):
+    def test_skip_embeddings_flag(self):
+        vault = SEARCHD.Vault("test", Path("/tmp"), Path("/tmp/db.sqlite"))
+        state = SEARCHD.State([vault], skip_embeddings=True)
+        self.assertTrue(state.skip_embeddings)
+        self.assertFalse(state.warm)
+
+
 if __name__ == "__main__":
     unittest.main()
