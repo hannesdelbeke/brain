@@ -600,11 +600,13 @@ class Vault:
 
 
 class State:
-    def __init__(self, vaults: list[Vault], token: str | None = None, skip_embeddings: bool = False):
+    def __init__(self, vaults: list[Vault], token: str | None = None, skip_embeddings: bool = False,
+                 embed_sessions: bool = False):
         self.vaults = {vault.name: vault for vault in vaults}
         self.default = vaults[0].name
         self.token = token
         self.skip_embeddings = skip_embeddings
+        self.embed_sessions = embed_sessions
         self.warm = False
         self.started = time.time()
         self.last_query = 0.0
@@ -1674,8 +1676,9 @@ def do_reindex(vault: Vault, started=None) -> dict:
             started()
         began = time.perf_counter()
         skip_emb = vault.skip_embeddings or getattr(STATE, "skip_embeddings", False)
+        embed_sess = getattr(STATE, "embed_sessions", False)
         pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
-                        skip_embeddings=skip_emb)
+                        skip_embeddings=skip_emb, embed_sessions=embed_sess)
         build = time.perf_counter() - began
     vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
     return {"vault": vault.name, "took_s": round(time.perf_counter() - queued_at, 2),
@@ -2180,6 +2183,8 @@ def main():
     parser.add_argument("--skip-embeddings", nargs="*", default=None, metavar="VAULT",
                         help="Skip neural embeddings for specified vaults (e.g. --skip-embeddings traces), "
                              "or for ALL vaults if passed with no names")
+    parser.add_argument("--embed-sessions", action="store_true",
+                        help="Generate neural embeddings for agent session notes (sessions/, traces/)")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--no-keepalive", action="store_true",
                         help="Let the model go cold between queries, trading ~30ms on the first "
@@ -2242,7 +2247,7 @@ def main():
         args.no_warm = True
         args.no_keepalive = True
     global STATE
-    STATE = State(vaults, args.token, skip_embeddings=global_skip)
+    STATE = State(vaults, args.token, skip_embeddings=global_skip, embed_sessions=args.embed_sessions)
     for vault in vaults:
         print(f"vault {vault.name}\n  root {vault.root}\n  db   {vault.db}", flush=True)
         if not vault.db.exists():

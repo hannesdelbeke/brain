@@ -1372,8 +1372,18 @@ def query_sessions(query: str, db_path: str | None = None, vault_path: str | Non
         connection.close()
 
 
+def is_session_path(path: str) -> bool:
+    posix = path.replace("\\", "/")
+    return (
+        posix.startswith("sessions/")
+        or posix.startswith("traces/")
+        or "/sessions/" in posix
+        or "/traces/" in posix
+    )
+
+
 def build_index(vault_path: str | None = None, db_path: str | None = None, skip_embeddings: bool = False,
-                collect=None):
+                collect=None, embed_sessions: bool = False):
     t_start = time.perf_counter()
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
@@ -1436,6 +1446,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                 vectors_by_id[section.section_id] = cached_vector
                 reused_vectors += 1
             elif not skip_embeddings:
+                if not embed_sessions and is_session_path(section.path):
+                    continue
                 sections_to_embed.append(section)
         cache_seconds = time.perf_counter() - t_cache_start
 
@@ -2523,6 +2535,9 @@ def main():
     parser.add_argument(
         "--skip-embeddings", action="store_true", help="Build metadata, FTS, and links without generating vectors"
     )
+    parser.add_argument(
+        "--embed-sessions", action="store_true", help="Generate vectors for agent sessions (sessions/ and traces/)"
+    )
     parser.add_argument("--search", type=str, default=None, help="Run hybrid search across indexed sections")
     parser.add_argument("--check-duplicate", type=str, default=None, help="Show likely existing notes before creation")
     parser.add_argument(
@@ -2588,7 +2603,8 @@ def main():
     elif args.links:
         query_links(args.links, vault_path=args.vault, db_path=args.db)
     else:
-        build_index(vault_path=args.vault, db_path=args.db, skip_embeddings=args.skip_embeddings)
+        build_index(vault_path=args.vault, db_path=args.db, skip_embeddings=args.skip_embeddings,
+                    embed_sessions=args.embed_sessions)
     return 0
 
 
