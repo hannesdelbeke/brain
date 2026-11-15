@@ -1590,6 +1590,14 @@ class TestSearchdSkipEmbeddings(unittest.TestCase):
         self.assertTrue(state.skip_embeddings)
         self.assertFalse(state.warm)
 
+    def test_per_vault_skip_embeddings(self):
+        v1 = SEARCHD.Vault("v1", Path("/tmp"), Path("/tmp/db1.sqlite"), skip_embeddings=True)
+        v2 = SEARCHD.Vault("v2", Path("/tmp"), Path("/tmp/db2.sqlite"), skip_embeddings=False)
+        self.assertTrue(v1.skip_embeddings)
+        self.assertFalse(v2.skip_embeddings)
+        # matrix() returns empty immediately for skipped vault
+        self.assertEqual(v1.matrix(), ([], None))
+
 
 if __name__ == "__main__":
     unittest.main()

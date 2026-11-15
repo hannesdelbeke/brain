@@ -430,11 +430,12 @@ def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
 
 
 class Vault:
-    def __init__(self, name: str, root: Path, db: Path, collect=None):
+    def __init__(self, name: str, root: Path, db: Path, collect=None, skip_embeddings: bool = False):
         self.name = name
         self.root = root
         self.db = db
         self.collect = collect  # None scans markdown, otherwise a corpus scanner
+        self.skip_embeddings = skip_embeddings
         self.lock = threading.Lock()  # the resident matrix, its reader, and the counter
         self.rebuild_lock = threading.Lock()  # one matrix rebuild at a time, off self.lock
         self.queries = 0
@@ -522,7 +523,7 @@ class Vault:
         read it, and one redundant rebuild is cheaper than indefinite staleness.
         """
         with self.lock:
-            if not self.db.exists():
+            if self.skip_embeddings or not self.db.exists():
                 return [], None
             if self.reader is None:
                 self.reader = sqlite3.connect(
@@ -586,6 +587,7 @@ class Vault:
 
     def describe(self) -> dict:
         described = {"name": self.name, "root": str(self.root), "db": str(self.db),
+                     "skip_embeddings": self.skip_embeddings,
                      "queries": self.queries, "watched": self.watched,
                      "indexed_at": pkm.last_index_run(self.db), **self.counts()}
         # Only when there is something to say. A corpus with notes in it needs no
@@ -753,7 +755,7 @@ def enrich_results_with_metadata(vault: Vault, rows: list[dict]) -> list[dict]:
 
 
 def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: bool = True) -> list[dict]:
-    vectors = ([], None) if getattr(STATE, "skip_embeddings", False) else vault.matrix()
+    vectors = ([], None) if (vault.skip_embeddings or getattr(STATE, "skip_embeddings", False)) else vault.matrix()
     with vault.lock:
         vault.queries += 1
     search_query = query
@@ -1671,7 +1673,7 @@ def do_reindex(vault: Vault, started=None) -> dict:
         if started is not None:
             started()
         began = time.perf_counter()
-        skip_emb = getattr(STATE, "skip_embeddings", False)
+        skip_emb = vault.skip_embeddings or getattr(STATE, "skip_embeddings", False)
         pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
                         skip_embeddings=skip_emb)
         build = time.perf_counter() - began
@@ -2175,8 +2177,9 @@ def main():
                              "searched itself but produces notes that are. Debounced to a minute, "
                              "since the sources this is for are appended to constantly. Write paths "
                              "with forward slashes, the command is split as a posix shell would")
-    parser.add_argument("--skip-embeddings", action="store_true",
-                        help="Index metadata and FTS5 BM25 text only, skipping neural vector embeddings")
+    parser.add_argument("--skip-embeddings", nargs="*", default=None, metavar="VAULT",
+                        help="Skip neural embeddings for specified vaults (e.g. --skip-embeddings traces), "
+                             "or for ALL vaults if passed with no names")
     parser.add_argument("--no-warm", action="store_true", help="Skip the startup model load")
     parser.add_argument("--no-keepalive", action="store_true",
                         help="Let the model go cold between queries, trading ~30ms on the first "
@@ -2222,11 +2225,24 @@ def main():
             parser.error(f"--corpus wants MODULE:FUNCTION=NAME=PATH, got {spec!r}")
         vaults.append(parse_vault(vault_spec, collect=getattr(load_module(module_name), function_name)))
 
-    if args.skip_embeddings:
+    global_skip = False
+    if args.skip_embeddings is not None:
+        if len(args.skip_embeddings) == 0:
+            for vault in vaults:
+                vault.skip_embeddings = True
+            global_skip = True
+        else:
+            skip_set = set(args.skip_embeddings)
+            for vault in vaults:
+                if vault.name in skip_set or str(vault.root) in skip_set:
+                    vault.skip_embeddings = True
+            global_skip = all(vault.skip_embeddings for vault in vaults)
+
+    if global_skip:
         args.no_warm = True
         args.no_keepalive = True
     global STATE
-    STATE = State(vaults, args.token, skip_embeddings=args.skip_embeddings)
+    STATE = State(vaults, args.token, skip_embeddings=global_skip)
     for vault in vaults:
         print(f"vault {vault.name}\n  root {vault.root}\n  db   {vault.db}", flush=True)
         if not vault.db.exists():
