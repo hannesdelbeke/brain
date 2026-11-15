@@ -1,0 +1,19 @@
+skills/pkm-metadata-indexer/searchd.py
+  s_04214594badddb::t_45fe1e599dd314 109,192-203,205-209,1734-1830,1837-1848,1851-1853,1863,1865-1868,1872-1878,1886,2236
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f111e5f7963dd1b61f9951d7b4c4b2dd8119bab2",
+  "prompts": {},
+  "sessions": {
+    "s_04214594badddb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b3a6353d-9393-4e56-aae6-2ba88304f081",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "hannes-fortis <157499826+hannes-fortis@users.noreply.github.com>"
+    }
+  }
+}
