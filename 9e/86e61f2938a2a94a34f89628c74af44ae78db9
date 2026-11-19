@@ -1,0 +1,21 @@
+skills/pkm-metadata-indexer/co_retrieval.py
+  s_75510bea3df6d5::t_d521ca8c135ad9 53-56,235
+skills/pkm-metadata-indexer/tests/test_co_retrieval_origin.py
+  s_75510bea3df6d5::t_b58579e087f066 35-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9e86e61f2938a2a94a34f89628c74af44ae78db9",
+  "prompts": {},
+  "sessions": {
+    "s_75510bea3df6d5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b6a29946-e083-4ee0-bd60-b629c4357001",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
