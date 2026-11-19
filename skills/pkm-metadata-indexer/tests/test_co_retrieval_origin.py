@@ -32,6 +32,10 @@ class CoRetrievalOriginTest(unittest.TestCase):
         self.assertEqual(self.fold_one(origin="eval-gate"), (0, 0),
                          "an eval's invented query must not become an edge")
 
+    def test_heartbeat_probe_contributes_no_edge(self):
+        self.assertEqual(self.fold_one(origin="heartbeat", q="heartbeat"), (0, 0),
+                         "a health probe's fixed query must not become an edge")
+
     def test_missing_origin_contributes_edge(self):
         # The normal case for real traffic: searchd writes the key only when the
         # caller passed a non-empty origin, so most rows have no origin at all.

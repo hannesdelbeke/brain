@@ -50,6 +50,10 @@ HALF_LIFE_DAYS = 30
 # co-retrieval edges built from its invented queries don't teach the ranker from
 # its own output. Rows with no origin key are normal real traffic and must count.
 SYNTHETIC_ORIGIN_PREFIX = "eval-"
+# Health probes send a fixed query on a timer. They are labelled, not eval-prefixed,
+# so they need their own entry: unskipped, the daemon heartbeat's literal query
+# "heartbeat" became the most-retrieved traffic in the log.
+SYNTHETIC_ORIGINS = frozenset({"heartbeat"})
 
 
 def get_device_name() -> str:
@@ -228,7 +232,7 @@ def fold(connection: sqlite3.Connection, lines: list[str]) -> int:
             # A missing, null or empty origin all mean real traffic: searchd writes the
             # key only when it is non-empty.
             origin = str(row.get("origin") or "")
-            if origin.startswith(SYNTHETIC_ORIGIN_PREFIX):
+            if origin.startswith(SYNTHETIC_ORIGIN_PREFIX) or origin in SYNTHETIC_ORIGINS:
                 continue
             vault, when = row["vault"], row["t"]
             found = pairs(row.get("results") or [])
