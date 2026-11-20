@@ -1,0 +1,16 @@
+skills/pkm-metadata-indexer/search_vault.py
+  h_cc77ab4c551060 115-123,128-129,194,196,198-209,224,232-237,751
+skills/pkm-metadata-indexer/searchd.py
+  h_cc77ab4c551060 1998,2012-2014,2272,2278-2280
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "905b6837ef166670a69fa08b4d8f97d47391faf7",
+  "prompts": {},
+  "humans": {
+    "h_cc77ab4c551060": {
+      "author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
