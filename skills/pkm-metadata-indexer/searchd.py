@@ -1995,6 +1995,7 @@ class Handler(BaseHTTPRequestHandler):
                     "skip_embeddings": STATE.skip_embeddings,
                     "uptime_s": round(time.time() - STATE.started, 1),
                     "default_vault": STATE.default,
+                    "roots": {v.name: str(v.root) for v in STATE.vaults.values()},
                 }
                 if not first("probe"):
                     body["query_provider"] = (pkm.QUERY_PROVIDERS
@@ -2007,6 +2008,9 @@ class Handler(BaseHTTPRequestHandler):
                     body["probe"] = True
                     body["vaults"] = sorted(STATE.vaults)
                 self.reply(200, body)
+                return
+            if url.path == "/roots" and method == "GET":
+                self.reply(200, {v.name: str(v.root) for v in STATE.vaults.values()})
                 return
             if url.path == "/search" and method == "GET":
                 query = first("q")
@@ -2265,12 +2269,15 @@ def main():
         warm_up()
     if STATE.warm and not args.no_keepalive:
         threading.Thread(target=keepalive, daemon=True).start()
-    if args.watch:
+    def start_watchers():
         catch_up(vaults)
         for vault in vaults:
             vault.watched = True
             threading.Thread(target=watch_vault, args=(vault,), daemon=True).start()
         print(f"watching {len(vaults)} corpus root(s)", flush=True)
+
+    if args.watch:
+        threading.Thread(target=start_watchers, daemon=True).start()
     for root, command in refreshes:
         threading.Thread(target=watch_command, args=(root, command, REFRESH_QUIET_MS),
                          daemon=True).start()

@@ -113,9 +113,20 @@ def get_vault_roots(base: str) -> dict[str, str]:
     the full /health endpoint. Used to construct absolute paths in results.
     """
     try:
+        with urllib.request.urlopen(f"{base.rstrip('/')}/health?probe=1",
+                                    timeout=HEALTH_TIMEOUT_S) as response:
+            data = json.load(response)
+            if "roots" in data and isinstance(data["roots"], dict):
+                return data["roots"]
+    except (urllib.error.URLError, OSError, ValueError, TimeoutError, KeyError):
+        pass
+
+    try:
         with urllib.request.urlopen(f"{base.rstrip('/')}/health",
                                     timeout=HEALTH_TIMEOUT_S) as response:
             data = json.load(response)
+            if "roots" in data and isinstance(data["roots"], dict):
+                return data["roots"]
             return {v["name"]: v["root"] for v in data.get("vaults", []) if "root" in v}
     except (urllib.error.URLError, OSError, ValueError, TimeoutError, KeyError):
         return {}
@@ -180,18 +191,22 @@ def default_database(db: str | None) -> Path:
 
 
 def managed_daemon_label() -> str | None:
-    """The launchd label of an installed agent that runs searchd.py, if any.
+    """The launchd label or systemd service of an installed agent that runs searchd.py, if any.
 
-    Found by content rather than by name so no machine-specific label lives here.
+    Found by content/service file rather than hardcoding so no machine-specific label lives here.
     """
-    if sys.platform != "darwin":
-        return None
-    for plist in sorted((Path.home() / "Library" / "LaunchAgents").glob("*.plist")):
-        try:
-            if b"searchd.py" in plist.read_bytes():
-                return plist.stem
-        except OSError:
-            continue
+    if sys.platform == "darwin":
+        for plist in sorted((Path.home() / "Library" / "LaunchAgents").glob("*.plist")):
+            try:
+                if b"searchd.py" in plist.read_bytes():
+                    return plist.stem
+            except OSError:
+                continue
+    elif sys.platform.startswith("linux"):
+        user_units = Path.home() / ".config" / "systemd" / "user"
+        for name in ("pkm-searchd.service", "pkm-search.service"):
+            if (user_units / name).exists():
+                return name
     return None
 
 
@@ -206,7 +221,7 @@ def auto_spawn_daemon(db: str | None, base: str = DEFAULT_DAEMON) -> int | None:
     if daemon_healthy(base):
         return None
     # A spawned daemon binds the shared port with a single cwd-derived vault,
-    # and then every later caller - and the real launchd daemon, which
+    # and then every later caller - and the real launchd/systemd daemon, which
     # crash-loops on the taken port - gets that one corpus. On 2026-11-05 a run
     # from an unrelated repo's worktree did exactly this and served 0.000-score
     # hits from that worktree to every query for ~16h. So: when a managed daemon
@@ -214,8 +229,12 @@ def auto_spawn_daemon(db: str | None, base: str = DEFAULT_DAEMON) -> int | None:
     label = managed_daemon_label() if base == DEFAULT_DAEMON else None
     if label:
         try:
-            subprocess.Popen(["launchctl", "kickstart", f"gui/{os.getuid()}/{label}"],
-                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            if sys.platform == "darwin":
+                subprocess.Popen(["launchctl", "kickstart", f"gui/{os.getuid()}/{label}"],
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            elif sys.platform.startswith("linux"):
+                subprocess.Popen(["systemctl", "--user", "start", label],
+                                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         except OSError:
             pass
         return None
@@ -729,7 +748,7 @@ def main():
     parser.add_argument("--expand", action=argparse.BooleanOptionalAction, default=False,
                         help="Resolve matching titles, aliases, paths, and outbound links before searching. "
                              "Costs 10-15%% latency for measured precision loss (use --expand to enable)")
-    parser.add_argument("--sessions", action="store_true",
+    parser.add_argument("-s", "--sessions", action="store_true",
                         help="Search indexed session rollup titles and touched files")
     parser.add_argument("--touched", choices=("any", "notes", "code"), default="any",
                         help="Filter --sessions results to sessions that edited vault notes (notes) "
