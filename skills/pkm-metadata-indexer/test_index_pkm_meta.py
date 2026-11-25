@@ -3,8 +3,11 @@ import importlib.util
 import io
 import json
 import sqlite3
+import subprocess
+import sys
 import tempfile
 import unittest
+from datetime import date
 from pathlib import Path
 
 
@@ -561,6 +564,124 @@ class TestFilenameTitlePriorityMatching(unittest.TestCase):
         self.assertEqual(top["path"], "p50-benchmark.md")
         self.assertTrue(top.get("is_pinned"))
         self.assertGreater(top["score"], 50.0)
+
+
+class TaskIndexingAndWhyChainTest(unittest.TestCase):
+    def setUp(self):
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp_dir.cleanup)
+        self.vault = Path(self.temp_dir.name) / "vault"
+        (self.vault / ".obsidian").mkdir(parents=True)
+        self.db = self.vault / ".obsidian" / "pkm_index.db"
+
+    def test_task_extraction_and_fenced_code_exclusion(self):
+        (self.vault / "notes.md").write_text(
+            "---\npriority: medium\n---\n"
+            "- [ ] Buy milk [due:: 2026-12-01] [created:: 2026-11-20]\n"
+            "* [ ] Call dentist 📅 2026-12-05 ➕ 2026-11-22 [why:: [[health]]]\n"
+            "- [x] Completed task\n"
+            "```markdown\n"
+            "- [ ] Fake task inside code fence\n"
+            "#archive inside fence should not archive note\n"
+            "```\n",
+            encoding="utf-8",
+        )
+        (self.vault / "health.md").write_text("---\nstatus: active\npriority: high\n---\n", encoding="utf-8")
+
+        result = INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+        self.assertEqual(result["tasks"], 3)
+
+        connection = sqlite3.connect(self.db)
+        try:
+            rows = connection.execute(
+                "SELECT line_number, done, due_date, created_date, why_resolved_path, effective_status, effective_priority "
+                "FROM tasks ORDER BY line_number"
+            ).fetchall()
+        finally:
+            connection.close()
+
+        self.assertEqual(len(rows), 3)
+        self.assertEqual(rows[0], (4, 0, "2026-12-01", "2026-11-20", None, "active", "medium"))
+        self.assertEqual(rows[1], (5, 0, "2026-12-05", "2026-11-22", "health.md", "active", "medium"))
+        self.assertEqual(rows[2], (6, 1, None, None, None, "done", "medium"))
+
+    def test_why_chain_inheritance_and_archive_tag(self):
+        (self.vault / "goal_hold.md").write_text("---\nstatus: on-hold\n---\nPaused goal.\n", encoding="utf-8")
+        (self.vault / "goal_archived.md").write_text("---\ntags:\n  - archive\n---\nOld goal.\n", encoding="utf-8")
+        (self.vault / "goal_inline_archive.md").write_text("Legacy #archive note.\n", encoding="utf-8")
+        (self.vault / "goal_active.md").write_text("---\nstatus: active\npriority: high\n---\nLive goal.\n", encoding="utf-8")
+
+        (self.vault / "proj_hold.md").write_text("---\nwhy: \"[[goal_hold]]\"\n---\n- [ ] Blocked on hold\n", encoding="utf-8")
+        (self.vault / "proj_archived.md").write_text("---\nwhy: \"[[goal_archived]]\"\n---\n- [ ] Blocked archived\n", encoding="utf-8")
+        (self.vault / "proj_inline_arch.md").write_text("---\nwhy: \"[[goal_inline_archive]]\"\n---\n- [ ] Blocked inline archive\n", encoding="utf-8")
+        (self.vault / "proj_active.md").write_text("---\nwhy: \"[[goal_active]]\"\n---\n- [ ] Active inherited high\n", encoding="utf-8")
+
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+
+        active = INDEXER.query_tasks(vault_path=str(self.vault), db_path=str(self.db), include_on_hold=False)
+        self.assertEqual([t["path"] for t in active], ["proj_active.md"])
+        self.assertEqual(active[0]["effective_priority"], "high")
+
+        all_open = INDEXER.query_tasks(vault_path=str(self.vault), db_path=str(self.db), include_on_hold=True)
+        by_path = {t["path"]: t for t in all_open}
+        self.assertEqual(set(by_path), {"proj_hold.md", "proj_archived.md", "proj_inline_arch.md", "proj_active.md"})
+        self.assertEqual(by_path["proj_hold.md"]["effective_status"], "on-hold")
+        self.assertEqual(by_path["proj_hold.md"]["blocked_by"], "goal_hold.md")
+        self.assertEqual(by_path["proj_archived.md"]["effective_status"], "archived")
+        self.assertEqual(by_path["proj_archived.md"]["blocked_by"], "goal_archived.md")
+        self.assertEqual(by_path["proj_inline_arch.md"]["effective_status"], "archived")
+        self.assertEqual(by_path["proj_inline_arch.md"]["blocked_by"], "goal_inline_archive.md")
+
+    def test_why_chain_cycle_protection(self):
+        (self.vault / "cycle_a.md").write_text("---\nwhy: \"[[cycle_b]]\"\n---\n- [ ] Task A\n", encoding="utf-8")
+        (self.vault / "cycle_b.md").write_text("---\nwhy: \"[[cycle_a]]\"\n---\n- [ ] Task B\n", encoding="utf-8")
+        (self.vault / "self_loop.md").write_text("---\nwhy: \"[[self_loop]]\"\n---\n- [ ] Task Self\n", encoding="utf-8")
+
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+        tasks = INDEXER.query_tasks(vault_path=str(self.vault), db_path=str(self.db))
+        self.assertEqual({t["path"] for t in tasks}, {"cycle_a.md", "cycle_b.md", "self_loop.md"})
+        self.assertTrue(all(t["effective_status"] == "active" for t in tasks))
+
+    def test_recency_decay_and_scoring_order(self):
+        today = date(2026, 11, 25)
+        fresh = INDEXER.score_task(None, "2026-11-24", None, today=today)
+        week_old = INDEXER.score_task(None, "2026-11-18", None, today=today)
+        ancient = INDEXER.score_task(None, "2024-01-01", None, today=today)
+        self.assertGreater(fresh, week_old)
+        self.assertGreater(week_old, ancient)
+        self.assertLess(ancient, 0.01)
+
+        due_soon_high = INDEXER.score_task("2026-11-26", "2026-11-20", "high", today=today)
+        due_soon_low = INDEXER.score_task("2026-11-26", "2026-11-20", "low", today=today)
+        self.assertGreater(due_soon_high, due_soon_low)
+
+    def test_cli_tasks_flag(self):
+        (self.vault / "todo.md").write_text(
+            "---\npriority: high\n---\n- [ ] Urgent CLI task [due:: 2026-11-25]\n",
+            encoding="utf-8",
+        )
+        (self.vault / "paused.md").write_text(
+            "---\nstatus: on-hold\n---\n- [ ] Paused CLI task\n",
+            encoding="utf-8",
+        )
+        INDEXER.build_index(vault_path=str(self.vault), db_path=str(self.db), skip_embeddings=True)
+
+        proc = subprocess.run(
+            [sys.executable, str(SCRIPT_PATH), "--vault", str(self.vault), "--db", str(self.db),
+             "--tasks", "--tasks-top", "5", "--json"],
+            capture_output=True, text=True, check=True,
+        )
+        data = json.loads(proc.stdout)
+        self.assertEqual(len(data), 1)
+        self.assertEqual(data[0]["path"], "todo.md")
+
+        proc_hold = subprocess.run(
+            [sys.executable, str(SCRIPT_PATH), "--vault", str(self.vault), "--db", str(self.db),
+             "--tasks", "--include-on-hold"],
+            capture_output=True, text=True, check=True,
+        )
+        self.assertIn("Urgent CLI task", proc_hold.stdout)
+        self.assertIn("[on-hold via paused.md]", proc_hold.stdout)
 
 
 if __name__ == "__main__":

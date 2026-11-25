@@ -12,7 +12,7 @@ import threading
 import time
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path, PurePosixPath
 
 import numpy as np
@@ -86,7 +86,7 @@ QUERY_INSTRUCTION = os.environ.get("PKM_QUERY_INSTRUCTION", "")
 CHUNKING_VERSION = "heading-estimate-v1"
 MAX_CHUNK_ESTIMATED_TOKENS = 360
 CHUNK_OVERLAP_ESTIMATED_TOKENS = 40
-SCHEMA_VERSION = "3"
+SCHEMA_VERSION = "4"
 # The ~800-token break-even from MIN_ROLLUP_TOKENS in note_outline.py: the note size
 # above which a read is routed through an outline instead of the file, which is exactly
 # where a filename plus a truncated snippet stop being enough to judge a note by.
@@ -325,7 +325,20 @@ def get_sha256(text: str) -> str:
 
 def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     """Return selected metadata, body text, and the body's absolute first line."""
-    meta = {"energy": None, "sentiment": None, "sentiment_label": [], "tags": [], "aliases": [], "description": None, "repo": None, "url": None, "rollup_status": None}
+    meta = {
+        "energy": None,
+        "sentiment": None,
+        "sentiment_label": [],
+        "tags": [],
+        "aliases": [],
+        "description": None,
+        "repo": None,
+        "url": None,
+        "rollup_status": None,
+        "status": None,
+        "priority": None,
+        "why": None,
+    }
     match = FRONTMATTER_RE.match(content)
     if not match:
         return meta, content, 1
@@ -357,6 +370,18 @@ def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     tag_match = re.search(r"^tags:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", frontmatter, re.MULTILINE)
     if tag_match:
         meta["tags"] = [tag.strip("- ").strip() for tag in tag_match.group(1).strip().splitlines()]
+    else:
+        inline_tags = re.search(r"^tags:\s*\[([^\]]*)\]", frontmatter, re.MULTILINE)
+        if inline_tags:
+            meta["tags"] = [
+                tag.strip().strip('"\'') for tag in inline_tags.group(1).split(",") if tag.strip()
+            ]
+        else:
+            scalar_tag = re.search(r"^tags:\s*([^\n]+)$", frontmatter, re.MULTILINE)
+            if scalar_tag:
+                val = scalar_tag.group(1).strip().strip('"\'')
+                if val:
+                    meta["tags"] = [val]
 
     alias_match = re.search(r"^aliases:\s*\n((?:\s*-\s*[^\n]+\s*\n?)+)", frontmatter, re.MULTILINE)
     if alias_match:
@@ -399,6 +424,25 @@ def parse_frontmatter(content: str) -> tuple[dict, str, int]:
     rollup_status_match = re.search(r"^rollup_status:\s*(.+)$", frontmatter, re.MULTILINE)
     if rollup_status_match:
         meta["rollup_status"] = rollup_status_match.group(1).strip()
+
+    status_match = re.search(r"^status:\s*(.+)$", frontmatter, re.MULTILINE)
+    if status_match:
+        val = status_match.group(1).strip().strip('"\'').lower()
+        if val:
+            meta["status"] = val
+
+    priority_match = re.search(r"^priority:\s*(.+)$", frontmatter, re.MULTILINE)
+    if priority_match:
+        val = priority_match.group(1).strip().strip('"\'').lower()
+        if val:
+            meta["priority"] = val
+
+    why_match = re.search(r"^why:\s*(.+)$", frontmatter, re.MULTILINE)
+    if why_match:
+        val = why_match.group(1).strip().strip('"\'')
+        if val:
+            link_match = WIKILINK_RE.search(val)
+            meta["why"] = link_match.group(1).strip() if link_match else val
 
     return meta, body, body_start_line
 
@@ -590,6 +634,170 @@ def resolve_wikilink(
     return candidates[0] if len(candidates) == 1 else None
 
 
+TASK_LINE_RE = re.compile(r"^\s*[-*]\s+\[([ xX])\]\s+(.+)$")
+TASK_DUE_RE = re.compile(r"\[due::\s*(\d{4}-\d{2}-\d{2})\s*\]|📅\s*(\d{4}-\d{2}-\d{2})")
+TASK_CREATED_RE = re.compile(r"\[created::\s*(\d{4}-\d{2}-\d{2})\s*\]|➕\s*(\d{4}-\d{2}-\d{2})")
+TASK_WHY_RE = re.compile(r"\[why::\s*(?:\[\[([^\]]+)\]\]|([^\]\n]+?))\s*\]")
+INLINE_ARCHIVE_TAG_RE = re.compile(r"(?:^|\s)#archive(?:\s|$|[.,;:!?])", re.IGNORECASE)
+
+_STATUS_ALIASES = {
+    "on-hold": "on-hold",
+    "on_hold": "on-hold",
+    "paused": "on-hold",
+    "archived": "archived",
+    "archive": "archived",
+    "done": "done",
+    "completed": "done",
+}
+_BLOCKING_STATUSES = {"on-hold", "archived", "done"}
+_TASK_DEADLINE_FLOOR = 3
+_TASK_RECENCY_HALF_LIFE_DAYS = 14.0
+_TASK_RECENCY_MAX = 10.0
+
+
+def normalize_note_status(raw_status: str | None, tags: list[str], has_inline_archive: bool = False) -> str:
+    """Normalize note status from frontmatter and #archive tags."""
+    if has_inline_archive or any(t.lstrip("#").strip().lower() == "archive" for t in tags):
+        return "archived"
+    if not raw_status:
+        return "active"
+    return _STATUS_ALIASES.get(raw_status.strip().lower(), raw_status.strip().lower())
+
+
+def priority_score(priority: str | None) -> float:
+    """Convert priority label or number into a scoring bonus."""
+    if not priority:
+        return 0.0
+    norm = str(priority).strip().lower()
+    mapping = {
+        "high": 25.0,
+        "urgent": 25.0,
+        "critical": 25.0,
+        "p1": 25.0,
+        "1": 25.0,
+        "medium": 10.0,
+        "med": 10.0,
+        "p2": 10.0,
+        "2": 10.0,
+        "low": 0.0,
+        "p3": 0.0,
+        "3": 0.0,
+    }
+    if norm in mapping:
+        return mapping[norm]
+    try:
+        val = float(norm)
+        return max(0.0, min(val, 30.0))
+    except ValueError:
+        return 0.0
+
+
+def score_task(
+    due_str: str | None,
+    created_str: str | None,
+    priority: str | None,
+    today: date | None = None,
+) -> float:
+    """Score a task using priority + deadline urgency + bounded recency decay."""
+    today = today or date.today()
+    total = priority_score(priority)
+    if due_str:
+        try:
+            due_dt = date.fromisoformat(due_str)
+            total += 100.0 / max(_TASK_DEADLINE_FLOOR, (due_dt - today).days + _TASK_DEADLINE_FLOOR)
+        except ValueError:
+            pass
+    if created_str:
+        try:
+            created_dt = date.fromisoformat(created_str)
+            age_days = max(0, (today - created_dt).days)
+            total += _TASK_RECENCY_MAX * (0.5 ** (age_days / _TASK_RECENCY_HALF_LIFE_DAYS))
+        except ValueError:
+            pass
+    return total
+
+
+def parse_tasks_from_body(
+    body: str,
+    body_start_line: int,
+    relative_path: str,
+    by_path: dict[str, str],
+    by_stem: dict[str, list[str]],
+) -> tuple[list[dict], bool]:
+    """Extract markdown checkbox tasks and detect inline #archive outside code fences."""
+    tasks = []
+    has_inline_archive = False
+    fenced = False
+    for offset, line in enumerate(body.splitlines()):
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
+        if not has_inline_archive and INLINE_ARCHIVE_TAG_RE.search(line):
+            has_inline_archive = True
+        match = TASK_LINE_RE.match(line)
+        if not match:
+            continue
+        done = 1 if match.group(1).lower() == "x" else 0
+        text = match.group(2).strip()
+        due_match = TASK_DUE_RE.search(text)
+        due_date = (due_match.group(1) or due_match.group(2)) if due_match else None
+        created_match = TASK_CREATED_RE.search(text)
+        created_date = (created_match.group(1) or created_match.group(2)) if created_match else None
+        why_match = TASK_WHY_RE.search(text)
+        why_raw = (why_match.group(1) or why_match.group(2)).strip() if why_match else None
+        why_resolved = (
+            resolve_wikilink(why_raw, relative_path, by_path, by_stem) if why_raw else None
+        )
+        line_number = body_start_line + offset
+        tasks.append(
+            {
+                "id": f"{relative_path}:{line_number}",
+                "path": relative_path,
+                "line_number": line_number,
+                "text": text,
+                "done": done,
+                "due_date": due_date,
+                "created_date": created_date,
+                "why_raw": why_raw,
+                "why_resolved_path": why_resolved,
+            }
+        )
+    return tasks, has_inline_archive
+
+
+def resolve_why_chain(
+    note_path: str,
+    task_why_path: str | None,
+    done: bool,
+    notes_meta: dict[str, dict],
+) -> tuple[str, str | None, str]:
+    """Walk task -> note -> why -> parent... with cycle guard for status & priority."""
+    note_info = notes_meta.get(note_path, {})
+    note_status = note_info.get("status") or "active"
+    effective_priority = note_info.get("priority") or ""
+    if done:
+        return "done", None, effective_priority
+    if note_status in _BLOCKING_STATUSES:
+        return note_status, note_path, effective_priority
+
+    visited = {note_path}
+    curr = task_why_path or note_info.get("why") or None
+    while curr and curr not in visited:
+        visited.add(curr)
+        anc = notes_meta.get(curr)
+        if anc is None:
+            break
+        if not effective_priority and anc.get("priority"):
+            effective_priority = anc["priority"]
+        anc_status = anc.get("status") or "active"
+        if anc_status in _BLOCKING_STATUSES:
+            return anc_status, curr, effective_priority
+        curr = anc.get("why") or None
+    return "active", None, effective_priority
+
+
 def parse_sections(file_stem: str, body: str, body_start_line: int, description: str | None = None) -> list[tuple[str, int, str]]:
     """Split on H2 headings while keeping absolute source locations."""
     lines = body.splitlines()
@@ -778,7 +986,7 @@ def stale_paths(vault_dir, db_path, limit: int = 25) -> dict:
     return {"count": len(newer), "paths": newer[:limit], "indexed_at": completed_at}
 
 
-def collect_index_data(vault_dir: Path):
+def _collect_index_data_full(vault_dir: Path):
     file_paths = markdown_paths(vault_dir)
     relative_paths = [path.relative_to(vault_dir).as_posix() for path in file_paths]
     by_path, by_stem = make_note_lookup(relative_paths)
@@ -786,6 +994,8 @@ def collect_index_data(vault_dir: Path):
     notes = []
     sections = []
     links = []
+    raw_tasks = []
+    notes_meta: dict[str, dict] = {}
     errors = []
 
     for full_path, relative_path in zip(file_paths, relative_paths):
@@ -797,6 +1007,26 @@ def collect_index_data(vault_dir: Path):
             # documents distort both BM25 document frequency and dense retrieval
             if meta.get("rollup_status") == "unrecoverable":
                 continue
+
+            file_tasks, has_inline_archive = parse_tasks_from_body(
+                body, body_start_line, relative_path, by_path, by_stem
+            )
+            note_status = normalize_note_status(meta.get("status"), meta["tags"], has_inline_archive)
+            note_priority = meta.get("priority") or ""
+            note_why = (
+                resolve_wikilink(meta["why"], relative_path, by_path, by_stem)
+                if meta.get("why")
+                else None
+            ) or ""
+            notes_meta[relative_path] = {
+                "status": note_status,
+                "priority": note_priority,
+                "why": note_why,
+            }
+            for task in file_tasks:
+                task["note_status"] = note_status
+                task["note_priority"] = note_priority
+                raw_tasks.append(task)
 
             description = meta["description"] or ""
             notes.append(
@@ -813,6 +1043,9 @@ def collect_index_data(vault_dir: Path):
                     len(body.split()),
                     description,
                     full_path.stem,
+                    note_status,
+                    note_priority,
+                    note_why,
                 )
             )
 
@@ -845,6 +1078,38 @@ def collect_index_data(vault_dir: Path):
         except Exception as error:
             errors.append((relative_path, "parse", str(error)))
 
+    today = date.today()
+    task_rows = []
+    for task in raw_tasks:
+        eff_status, blocked_by, eff_priority = resolve_why_chain(
+            task["path"], task["why_resolved_path"], bool(task["done"]), notes_meta
+        )
+        task_score = score_task(task["due_date"], task["created_date"], eff_priority, today=today)
+        task_rows.append(
+            (
+                task["id"],
+                task["path"],
+                task["line_number"],
+                task["text"],
+                task["done"],
+                task["due_date"],
+                task["created_date"],
+                task["why_raw"],
+                task["why_resolved_path"],
+                task["note_status"],
+                task["note_priority"],
+                eff_status,
+                blocked_by,
+                eff_priority,
+                task_score,
+            )
+        )
+
+    return notes, sections, links, task_rows, errors
+
+
+def collect_index_data(vault_dir: Path):
+    notes, sections, links, _tasks, errors = _collect_index_data_full(vault_dir)
     return notes, sections, links, errors
 
 
@@ -878,6 +1143,13 @@ def ensure_schema(connection: sqlite3.Connection):
         connection.execute("ALTER TABLE notes ADD COLUMN description TEXT NOT NULL DEFAULT ''")
     if "stem" not in table_columns(connection, "notes"):
         connection.execute("ALTER TABLE notes ADD COLUMN stem TEXT NOT NULL DEFAULT ''")
+    for column, definition in (
+        ("status", "TEXT NOT NULL DEFAULT 'active'"),
+        ("priority", "TEXT NOT NULL DEFAULT ''"),
+        ("why", "TEXT NOT NULL DEFAULT ''"),
+    ):
+        if column not in table_columns(connection, "notes"):
+            connection.execute(f"ALTER TABLE notes ADD COLUMN {column} {definition}")
 
     connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_filename ON notes(filename)")
     connection.execute("CREATE INDEX IF NOT EXISTS idx_notes_stem ON notes(stem)")
@@ -937,6 +1209,31 @@ def ensure_schema(connection: sqlite3.Connection):
     )
     connection.execute("CREATE INDEX IF NOT EXISTS idx_edges_source ON edges(source_path)")
     connection.execute("CREATE INDEX IF NOT EXISTS idx_edges_resolved_target ON edges(resolved_target_path)")
+
+    connection.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tasks (
+            id TEXT PRIMARY KEY,
+            path TEXT NOT NULL,
+            line_number INTEGER NOT NULL,
+            text TEXT NOT NULL,
+            done INTEGER NOT NULL DEFAULT 0,
+            due_date TEXT,
+            created_date TEXT,
+            why_raw TEXT,
+            why_resolved_path TEXT,
+            note_status TEXT NOT NULL DEFAULT 'active',
+            note_priority TEXT NOT NULL DEFAULT '',
+            effective_status TEXT NOT NULL DEFAULT 'active',
+            blocked_by TEXT,
+            effective_priority TEXT NOT NULL DEFAULT '',
+            score REAL NOT NULL DEFAULT 0.0
+        )
+        """
+    )
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_tasks_path ON tasks(path)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_tasks_effective_status ON tasks(effective_status)")
+    connection.execute("CREATE INDEX IF NOT EXISTS idx_tasks_score ON tasks(score DESC)")
 
     connection.execute(
         """
@@ -1398,24 +1695,30 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
 
         t_scan_start = time.perf_counter()
         collector = collect or collect_index_data
-        notes, sections, links, errors = collector(vault_dir)
+        if collector is collect_index_data:
+            notes, sections, links, task_rows, errors = _collect_index_data_full(vault_dir)
+        else:
+            notes, sections, links, errors = collector(vault_dir)
+            task_rows = []
         # Third-party collectors predate the aliases and description columns. Keep their
         # compact nine-field note contract working while metadata collectors provide them.
         migrated_notes = []
         for note in notes:
             stem = Path(note[1]).stem if len(note) > 1 else ""
-            if len(note) == 12:
-                # New format with description and stem
+            if len(note) == 15:
                 migrated_notes.append(note)
+            elif len(note) == 12:
+                # Format with description and stem; add status, priority, why
+                migrated_notes.append((*note, "active", "", ""))
             elif len(note) == 11:
-                # Format with description, add stem
-                migrated_notes.append((*note, stem))
+                # Format with description, add stem, status, priority, why
+                migrated_notes.append((*note, stem, "active", "", ""))
             elif len(note) == 10:
-                # Has aliases but no description, add empty description and stem
-                migrated_notes.append((*note, "", stem))
+                # Has aliases but no description, add empty description, stem, status, priority, why
+                migrated_notes.append((*note, "", stem, "active", "", ""))
             else:
-                # Old format without aliases, add aliases, empty description, and stem
-                migrated_notes.append((*note[:7], json.dumps([]), *note[7:], "", stem))
+                # Old format without aliases, add aliases, empty description, stem, status, priority, why
+                migrated_notes.append((*note[:7], json.dumps([]), *note[7:], "", stem, "active", "", ""))
         notes = migrated_notes
         # Only populate session projection for the working-tree collector. Ref-based
         # collectors like scan_branches should not read the working tree's sessions/.
@@ -1483,8 +1786,8 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             cursor.executemany(
                 """
                 INSERT INTO notes
-                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count, description, stem)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                (path, filename, category, energy, sentiment, sentiment_labels, tags, aliases, summary_snippet, word_count, description, stem, status, priority, why)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(path) DO UPDATE SET
                     filename = excluded.filename,
                     category = excluded.category,
@@ -1496,7 +1799,10 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     summary_snippet = excluded.summary_snippet,
                     word_count = excluded.word_count,
                     description = excluded.description,
-                    stem = excluded.stem
+                    stem = excluded.stem,
+                    status = excluded.status,
+                    priority = excluded.priority,
+                    why = excluded.why
                 """,
                 notes,
             )
@@ -1545,6 +1851,17 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
                     (link.source_path, link.raw_target, link.resolved_target_path, link.start_line)
                     for link in links
                 ),
+            )
+
+            cursor.execute("DELETE FROM tasks")
+            cursor.executemany(
+                """
+                INSERT INTO tasks
+                (id, path, line_number, text, done, due_date, created_date, why_raw, why_resolved_path,
+                 note_status, note_priority, effective_status, blocked_by, effective_priority, score)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                task_rows,
             )
 
             cursor.execute("DELETE FROM session_touches")
@@ -1632,6 +1949,7 @@ def build_index(vault_path: str | None = None, db_path: str | None = None, skip_
             "notes": len(notes),
             "sections": len(sections),
             "links": len(links),
+            "tasks": len(task_rows),
             "vectors": sum(vector is not None for vector in vectors_by_id.values()),
             "errors": len(errors),
             "run_id": run_id,
@@ -2468,6 +2786,113 @@ def find_unlinked_mentions(
         connection.close()
 
 
+def query_tasks(
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    top: int = 25,
+    include_on_hold: bool = False,
+    today: date | None = None,
+) -> list[dict]:
+    """Query indexed tasks from SQLite, re-scoring against `today`."""
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
+    if not database_file.exists():
+        return []
+
+    today = today or date.today()
+    connection = sqlite3.connect(database_file)
+    try:
+        ensure_schema(connection)
+        if include_on_hold:
+            where = "done = 0"
+        else:
+            where = "done = 0 AND effective_status = 'active'"
+        rows = connection.execute(
+            f"""
+            SELECT id, path, line_number, text, done, due_date, created_date,
+                   why_raw, why_resolved_path, effective_status, blocked_by, effective_priority
+            FROM tasks
+            WHERE {where}
+            """
+        ).fetchall()
+    finally:
+        connection.close()
+
+    results = []
+    for row in rows:
+        (
+            task_id,
+            path,
+            line_number,
+            text,
+            done,
+            due_date,
+            created_date,
+            why_raw,
+            why_resolved_path,
+            effective_status,
+            blocked_by,
+            effective_priority,
+        ) = row
+        task_score = score_task(due_date, created_date, effective_priority, today=today)
+        results.append(
+            {
+                "id": task_id,
+                "path": path,
+                "line_number": line_number,
+                "text": text,
+                "done": bool(done),
+                "due_date": due_date,
+                "created_date": created_date,
+                "why_raw": why_raw,
+                "why_resolved_path": why_resolved_path,
+                "effective_status": effective_status,
+                "blocked_by": blocked_by,
+                "effective_priority": effective_priority,
+                "score": round(task_score, 4),
+            }
+        )
+    results.sort(key=lambda r: (-r["score"], r["path"], r["line_number"]))
+    return results[:top] if top is not None and top >= 0 else results
+
+
+def print_tasks(
+    vault_path: str | None = None,
+    db_path: str | None = None,
+    top: int = 25,
+    include_on_hold: bool = False,
+    as_json: bool = False,
+):
+    vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
+    database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
+    if not database_file.exists():
+        print("Database not found. Run indexing first.")
+        return
+
+    tasks = query_tasks(
+        vault_path=str(vault_dir),
+        db_path=str(database_file),
+        top=top,
+        include_on_hold=include_on_hold,
+    )
+    if as_json:
+        print(json.dumps(tasks, indent=2))
+        return
+    if not tasks:
+        print("No matching tasks found.")
+        return
+    for task in tasks:
+        badges = []
+        if task["effective_priority"]:
+            badges.append(f"[{task['effective_priority']}]")
+        if task["effective_status"] != "active":
+            blocker = task["blocked_by"] or "unknown"
+            badges.append(f"[{task['effective_status']} via {blocker}]")
+        badge_str = (" ".join(badges) + " ") if badges else ""
+        print(f"{task['score']:6.1f}  {badge_str}- [ ] {task['text']}")
+        print(f"        {task['path']}:{task['line_number']}")
+
+
 def print_stats(vault_path: str | None = None, db_path: str | None = None):
     vault_dir = Path(vault_path).resolve() if vault_path else find_vault_root()
     database_file = Path(db_path).resolve() if db_path else default_db_path(vault_dir)
@@ -2553,6 +2978,10 @@ def main():
     parser.add_argument("--digest", action="store_true",
                         help="Print filename, tags, headings, and summary_snippet per note, zero API cost")
     parser.add_argument("--tag", type=str, default=None, help="Restrict --digest to notes carrying this tag")
+    parser.add_argument("--tasks", action="store_true", help="List ranked active tasks from the SQLite index")
+    parser.add_argument("--tasks-top", type=int, default=25, help="Maximum number of tasks to list (default 25)")
+    parser.add_argument("--include-on-hold", action="store_true",
+                        help="Include tasks whose note or why-chain ancestor is on-hold or archived")
     parser.add_argument("--stats", "--perf", action="store_true", help="Display database and indexing performance benchmarks")
     parser.add_argument("--limit", type=int, default=10, help="Maximum search results")
     parser.add_argument("--rerank", action="store_true",
@@ -2575,6 +3004,14 @@ def main():
 
     if args.digest:
         digest_notes(vault_path=args.vault, db_path=args.db, tag=args.tag)
+    elif args.tasks:
+        print_tasks(
+            vault_path=args.vault,
+            db_path=args.db,
+            top=args.tasks_top,
+            include_on_hold=args.include_on_hold,
+            as_json=args.json,
+        )
     elif args.stats:
         print_stats(vault_path=args.vault, db_path=args.db)
     elif args.search:

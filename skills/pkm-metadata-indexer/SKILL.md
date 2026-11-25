@@ -118,7 +118,7 @@ python skills/pkm-metadata-indexer/find_open_problems.py --self-test
 ```
 It scans markdown directly rather than the index, so a stale or missing database does not matter; a full pass over 3200 notes takes about 2s. Score comes from a problem-shaped heading with no solution-shaped heading (+3), a `TODO ` title prefix (+3), open task checkboxes (+1 each, capped at 3), and body markers such as "unresolved", "doesn't work" or "can't figure out" (+2). Notes carrying the `solved` tag score zero and drop off the list permanently, which is how a finished problem gets retired. See [[finding unsolved problems in my vault]].
 
-### 8. Urgent Task Ranking ([[urgent_tasks.py]])
+### 8. Urgent Task Ranking ([[urgent_tasks.py]]) & Indexed Tasks (`--tasks`)
 Orders open `- [ ]` tasks by a time-based urgency score, for tasks whose importance changes with the calendar rather than with their wording:
 ```bash
 python skills/pkm-metadata-indexer/urgent_tasks.py
@@ -126,6 +126,17 @@ python skills/pkm-metadata-indexer/urgent_tasks.py --top 40 --min-score 0
 python skills/pkm-metadata-indexer/urgent_tasks.py --selfcheck
 ```
 Score is `100 / max(3, days_until_due + 3) + days_since_created / 3`, so a deadline term that stays near zero until the last weeks then climbs to 33 on the due date, plus a rot term of one point per three days a task has sat. Dates come from `[due:: YYYY-MM-DD]` and `[created:: YYYY-MM-DD]` inline fields or the equivalent 📅 and ➕ emoji. Like the open problem finder it reads markdown directly, ignores fenced code blocks so documented examples do not rank, and skips tasks with neither date. See [[TODO how to highlight urgent tasks]].
+
+For Obsidian-independent task indexing in `.obsidian/pkm_index.db` with `why`-chain status and priority inheritance, use `--tasks` on [[index_pkm_meta.py]]:
+```bash
+python skills/pkm-metadata-indexer/index_pkm_meta.py --tasks
+python skills/pkm-metadata-indexer/index_pkm_meta.py --tasks --tasks-top 15
+python skills/pkm-metadata-indexer/index_pkm_meta.py --tasks --include-on-hold
+python skills/pkm-metadata-indexer/index_pkm_meta.py --tasks --json
+```
+During indexing, `- [ ]` / `- [x]` and `* [ ]` / `* [x]` lines outside fenced code blocks are extracted into the `tasks` table with optional `[due:: YYYY-MM-DD]` / `📅 YYYY-MM-DD`, `[created:: YYYY-MM-DD]` / `➕ YYYY-MM-DD`, and `[why:: [[Target]]]` fields. Note frontmatter `status` (`active`, `on-hold`, `archived`, `done`), `priority` (`high`, `medium`, `low`, or numeric), `why: "[[Target]]"`, and `#archive` tags (frontmatter or inline) are stored on `notes` and walked (`task -> note -> why -> parent ...` with cycle protection) to resolve effective status and priority:
+- **Blocking inheritance:** if a task's note or any `why` ancestor is `on-hold`, `archived`, `done`, or tagged `#archive`, the task inherits that status and is excluded from `--tasks` by default; pass `--include-on-hold` to show blocked tasks alongside their `blocked_by` ancestor.
+- **Bounded scoring:** active tasks are scored by `priority` (`high` +25, `medium` +10, `low` +0) + deadline urgency (`100 / max(3, days_until_due + 3)`) + bounded recency decay (`10 * 0.5 ** (days_since_created / 14)`), so untouched old tasks fade rather than climbing forever.
 
 ### 9. Mention Heatmap ([[mention_heatmap.py]])
 Ranks wikilink targets by how often they were newly written over time, so a subject that keeps coming back surfaces above one that is merely linked from many old notes:
@@ -344,7 +355,8 @@ Four behaviours worth knowing before reading a result:
 Weights use natural `ln()`, not SQLite's base-10 `log()`: the weight is a product across hops, so changing the base reorders 1-hop against 2-hop rather than scaling uniformly. A graph neighbourhood is **not** merged across corpora — two vaults are two separate link graphs — so `/outline` returns one outline block per vault it was asked about. `tests/test_dual_track.py` covers facet clustering, FTS intersection, the recursive CTE, RRF weighting, the correlated-evidence fix, the semantic gate, and a 30ms structural-only performance gate (measured 3.3ms).
 
 ## What it extracts
-- **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags.
+- **Frontmatter metadata:** energy, sentiment, sentiment_labels, tags, status, priority, why.
+- **Tasks (`tasks`):** Markdown checkboxes (`- [ ]` / `- [x]` / `* [ ]` / `* [x]`) outside fenced code blocks, with due/created dates, `why`-chain effective status/priority, and bounded urgency scores.
 - **Heading-Level Sections:** Sections split by `## ` with line numbers and SHA256 hashes for incremental caching.
 - **Neural Embeddings:** 384-dimensional dense vectors (`BAAI/bge-small-en-v1.5`) stored as float32 blobs.
 - **Link Graph (`edges`):** All source-to-target [[wikilink|wikilinks]] for instant traversal without grepping files.
