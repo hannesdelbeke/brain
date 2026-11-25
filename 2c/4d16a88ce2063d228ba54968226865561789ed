@@ -1,0 +1,18 @@
+skills/browse-history/SKILL.md
+  h_cc77ab4c551060 1-40
+skills/browse-history/aw_history.py
+  h_cc77ab4c551060 1-411
+skills/browse-history/test_aw_history.py
+  h_cc77ab4c551060 1-177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2c4d16a88ce2063d228ba54968226865561789ed",
+  "prompts": {},
+  "humans": {
+    "h_cc77ab4c551060": {
+      "author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
