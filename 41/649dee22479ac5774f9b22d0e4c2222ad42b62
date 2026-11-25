@@ -1,0 +1,18 @@
+skills/pkm-metadata-indexer/SKILL.md
+  h_cc77ab4c551060 121,130-140,358-359
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  h_cc77ab4c551060 15,89,328-341,373-384,428-446,637-800,989,997-998,1011-1030,1046-1048,1081-1112,1146-1152,1213-1237,1698-1702,1708,1710-1712,1714-1715,1717-1718,1720-1721,1789-1790,1802-1805,1856-1866,1952,2789-2895,2981-2984,3007-3014
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  h_cc77ab4c551060 6-7,10,569-686
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "41649dee22479ac5774f9b22d0e4c2222ad42b62",
+  "prompts": {},
+  "humans": {
+    "h_cc77ab4c551060": {
+      "author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
