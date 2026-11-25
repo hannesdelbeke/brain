@@ -22,6 +22,32 @@ DEDUP_WINDOW_SECONDS = 60.0
 _GOOGLE_HOST_RE = re.compile(r"^(?:www\.)?google\.[a-z]{2,}(?:\.[a-z]{2,})?$")
 _DDG_HOST_RE = re.compile(r"^(?:[a-z0-9-]+\.)?duckduckgo\.com$")
 _BING_HOST_RE = re.compile(r"^(?:www\.)?bing\.com$")
+_SENSITIVE_PARAM_RE = re.compile(
+    r"(^|_)(token|access_token|id_token|refresh_token|code|api_key|apikey|secret|password|passwd|auth|session|sig|signature)$",
+    re.IGNORECASE,
+)
+
+
+def sanitize_url(url: str) -> str:
+    """Redact sensitive query parameter values (tokens, secrets, OAuth codes) from a URL."""
+    if not url or "?" not in url:
+        return url
+    parsed = urllib.parse.urlparse(url)
+    if not parsed.query:
+        return url
+    pairs = urllib.parse.parse_qsl(parsed.query, keep_blank_values=True)
+    changed = False
+    redacted: list[tuple[str, str]] = []
+    for k, v in pairs:
+        if _SENSITIVE_PARAM_RE.match(k) and v:
+            redacted.append((k, "REDACTED"))
+            changed = True
+        else:
+            redacted.append((k, v))
+    if not changed:
+        return url
+    new_query = urllib.parse.urlencode(redacted)
+    return urllib.parse.urlunparse(parsed._replace(query=new_query))
 
 
 def parse_timestamp(ts: str) -> datetime:
@@ -100,6 +126,9 @@ def compute_date_range(
     current = now if now is not None else datetime.now().astimezone()
     tz = current.tzinfo or timezone.utc
 
+    if today and (from_date or to_date):
+        raise ValueError("--today cannot be combined with --from or --to")
+
     if today:
         start = current.replace(hour=0, minute=0, second=0, microsecond=0)
         end = current
@@ -142,7 +171,7 @@ def normalize_event(raw: dict[str, Any], bucket_id: str) -> dict[str, Any] | Non
         "duration": duration,
         "bucket": bucket_id,
         "browser": infer_browser(bucket_id),
-        "url": url,
+        "url": sanitize_url(url),
         "title": title,
         "domain": extract_domain(url),
         "search_engine": search_info[0] if search_info else None,
@@ -233,6 +262,54 @@ def aggregate_top_domains(events: list[dict[str, Any]], limit: int = 30) -> list
     return rows[:limit]
 
 
+def aggregate_timeline(events: list[dict[str, Any]], limit: int = 30) -> list[dict[str, Any]]:
+    """Collapse events into per-day summary clusters, newest day first."""
+    by_day: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for ev in events:
+        day_str = ev["dt"].astimezone().strftime("%Y-%m-%d")
+        by_day[day_str].append(ev)
+
+    days: list[dict[str, Any]] = []
+    for day_str in sorted(by_day.keys(), reverse=True)[:limit]:
+        day_events = by_day[day_str]
+        domain_counts: dict[str, int] = defaultdict(int)
+        searches: list[str] = []
+        seen_searches: set[str] = set()
+        titles: list[str] = []
+        seen_titles: set[str] = set()
+        total_duration = 0.0
+
+        for ev in day_events:
+            total_duration += float(ev.get("duration") or 0.0)
+            dom = ev.get("domain")
+            if dom:
+                domain_counts[dom] += 1
+            sq = ev.get("search_query")
+            if sq and sq not in seen_searches:
+                seen_searches.add(sq)
+                searches.append(sq)
+            title = (ev.get("title") or "").strip()
+            if title and not sq and title not in seen_titles:
+                seen_titles.add(title)
+                titles.append(title)
+
+        top_doms = [
+            {"domain": d, "count": c}
+            for d, c in sorted(domain_counts.items(), key=lambda kv: kv[1], reverse=True)[:5]
+        ]
+        days.append(
+            {
+                "date": day_str,
+                "visits": len(day_events),
+                "duration": round(total_duration, 1),
+                "top_domains": top_doms,
+                "searches": searches[:5],
+                "sample_titles": titles[:3],
+            }
+        )
+    return days
+
+
 def _http_get_json(url: str, timeout: float = 10.0) -> Any:
     req = urllib.request.Request(url, headers={"Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -310,6 +387,22 @@ def format_text_domains(rows: list[dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+def format_text_timeline(days: list[dict[str, Any]]) -> str:
+    """Format per-day timeline clusters as compact lines."""
+    if not days:
+        return "No matching browsing history found."
+    lines: list[str] = []
+    for d in days:
+        doms = ", ".join(f"{x['domain']} ({x['count']})" for x in d["top_domains"][:3])
+        line = f"{d['date']}  {d['visits']:>3} visits  {d['duration']:>6.0f}s  [{doms}]"
+        if d["searches"]:
+            line += "  searches: " + "; ".join(d["searches"][:3])
+        elif d["sample_titles"]:
+            line += "  pages: " + "; ".join(d["sample_titles"][:2])
+        lines.append(line)
+    return "\n".join(lines)
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="aw-history",
@@ -335,12 +428,17 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Rank top domains by visit count across matching events.",
     )
+    parser.add_argument(
+        "--timeline",
+        action="store_true",
+        help="Collapse matching events into per-day summary clusters.",
+    )
     parser.add_argument("--limit", type=int, default=30, help="Max results to return (default: 30).")
     parser.add_argument("--json", action="store_true", dest="as_json", help="Output JSON.")
     parser.add_argument(
         "--base-url",
         default=os.environ.get("AW_BASE_URL", DEFAULT_BASE_URL),
-        help=argparse.SUPPRESS,
+        help=f"ActivityWatch API base URL (default: {DEFAULT_BASE_URL}, or AW_BASE_URL env).",
     )
     return parser
 
@@ -390,6 +488,14 @@ def main(argv: list[str] | None = None) -> int:
         start_dt=start_dt,
         end_dt=end_dt,
     )
+
+    if args.timeline:
+        days = aggregate_timeline(filtered, limit=args.limit)
+        if args.as_json:
+            print(json.dumps(days, indent=2))
+        else:
+            print(format_text_timeline(days))
+        return 0
 
     if args.top_domains:
         rows = aggregate_top_domains(filtered, limit=args.limit)

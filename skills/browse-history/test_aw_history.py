@@ -45,6 +45,15 @@ class TestSearchExtraction(unittest.TestCase):
         url = "https://example.com/items?q=not-a-search-engine"
         self.assertIsNone(aw_history.extract_search_query(url))
 
+    def test_sanitize_url_redacts_sensitive_params(self) -> None:
+        url = "https://app.example.com/callback?code=secret123&state=ok&access_token=tok456"
+        sanitized = aw_history.sanitize_url(url)
+        self.assertIn("code=REDACTED", sanitized)
+        self.assertIn("access_token=REDACTED", sanitized)
+        self.assertIn("state=ok", sanitized)
+        self.assertNotIn("secret123", sanitized)
+        self.assertNotIn("tok456", sanitized)
+
     def test_google_non_search_path_ignored(self) -> None:
         url = "https://www.google.com/maps?q=london"
         self.assertIsNone(aw_history.extract_search_query(url))
@@ -171,6 +180,15 @@ class TestFilteringAndAggregation(unittest.TestCase):
         self.assertEqual(len(rows), 2)
         self.assertEqual(rows[0]["domain"], "docs.python.org")
         self.assertEqual(rows[0]["count"], 1)
+
+    def test_timeline_aggregation(self) -> None:
+        days = aw_history.aggregate_timeline(self.events, limit=10)
+        self.assertEqual(len(days), 3)
+        self.assertEqual(days[0]["date"], "2026-11-25")
+        self.assertEqual(days[0]["visits"], 1)
+        self.assertEqual(days[0]["searches"], ["taskwarrior hooks"])
+        self.assertEqual(days[1]["date"], "2026-11-24")
+        self.assertEqual(days[1]["top_domains"][0]["domain"], "docs.python.org")
 
 
 if __name__ == "__main__":

@@ -31,10 +31,14 @@ aw-history --from 2026-11-20 --to 2026-11-25 --json --limit 20
 
 # Top visited domains over the last 7 days
 aw-history --top-domains --days 7 --limit 15
+
+# Per-day timeline clusters ("when did I research X?")
+aw-history "activitywatch" --timeline --days 30
 ```
 
 ## behavior notes
 
 - Queries every `aw-watcher-web-*` bucket exposed by `/api/0/buckets/`, so desktop browsers and future synced buckets are included automatically.
 - Deduplicates rapid/consecutive `(url, title)` heartbeats within a 60-second window so output stays compact.
-- Override the API endpoint with `AW_BASE_URL` if ActivityWatch runs on a non-default host or port.
+- Redacts common sensitive query parameters (`token`, `access_token`, `code`, `api_key`, `secret`, etc.) from URLs before printing.
+- Override the API endpoint with `--base-url` or `AW_BASE_URL` if ActivityWatch runs on a non-default host or port.
