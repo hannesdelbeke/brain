@@ -84,6 +84,69 @@ DAEMON_TIMEOUT_S = 30.0
 # not ask for. 1.0s sits above the measured tail and stays under the ~1.4s where
 # waiting for the daemon stops being cheaper than the fallback it would trigger.
 HEALTH_TIMEOUT_S = 1.0
+GEMINI_SYNC_MAX_AGE_S = 900
+
+
+def _pid_running(pid_path: Path) -> bool:
+    try:
+        pid = int(pid_path.read_text().strip())
+        os.kill(pid, 0)
+        return True
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except (OSError, ValueError):
+        return False
+
+
+def maybe_sync_gemini(vault: str | None, daemon_base: str) -> None:
+    """Sync recent Gemini chats if `gemini` is searched and the cache is >15m stale."""
+    requested = {v.strip() for v in (vault or "").split(",") if v.strip()}
+    if "all" not in requested and "gemini" not in requested:
+        return
+    py = Path.home() / ".venvs" / "gemini-webapi" / "bin" / "python"
+    script = Path.home() / "repos" / "gemini-chats" / "sync" / "gemini_chats.py"
+    if not py.is_file() or not script.is_file():
+        return
+    cache_dir = Path.home() / ".cache" / "gemini-webapi"
+    last_sync = cache_dir / "last_sync"
+    try:
+        if last_sync.is_file() and (time.time() - last_sync.stat().st_mtime) <= GEMINI_SYNC_MAX_AGE_S:
+            return
+    except OSError:
+        return
+    pid_file = cache_dir / "sync.pid"
+    if pid_file.is_file() and _pid_running(pid_file):
+        return
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_dir.chmod(0o700)
+    try:
+        pid_file.write_text(str(os.getpid()))
+    except OSError:
+        return
+    try:
+        proc = subprocess.run(
+            [str(py), "-B", str(script), "export", "15"],
+            capture_output=True,
+            text=True,
+            timeout=20,
+        )
+        if proc.returncode == 0 and "done: written 0," not in proc.stdout:
+            req = urllib.request.Request(
+                f"{daemon_base.rstrip('/')}/reindex?vault=gemini",
+                method="POST",
+            )
+            try:
+                urllib.request.urlopen(req, timeout=15).close()
+            except Exception:
+                pass
+        elif proc.returncode != 0:
+            print("[PKM Search: gemini sync failed, searching existing index]", file=sys.stderr)
+    except (subprocess.TimeoutExpired, OSError) as err:
+        print(f"[PKM Search: gemini sync skipped ({type(err).__name__})]", file=sys.stderr)
+    finally:
+        pid_file.unlink(missing_ok=True)
 
 
 def daemon_healthy(base: str) -> bool:
@@ -811,6 +874,9 @@ def main():
             print(f"{index}. {row['path']}:{row['line']} -> {row['heading']}")
             print(f"   {row['snippet']}")
         return
+
+    if not direct:
+        maybe_sync_gemini(vault, args.daemon)
 
     if args.outline:
         outline_search(args, direct, vault)
