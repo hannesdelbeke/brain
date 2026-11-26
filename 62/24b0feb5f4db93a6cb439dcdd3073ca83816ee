@@ -1,0 +1,43 @@
+skills/pkm-link-store/SKILL.md
+  s_cbae9f48fdfb8f::t_a41f7cb80a2770 1-43
+skills/pkm-link-store/link_store/__init__.py
+  s_cbae9f48fdfb8f::t_32cf1290b30a41 1-6
+skills/pkm-link-store/link_store/adapters/__init__.py
+  s_cbae9f48fdfb8f::t_0194e5fe3b3117 1-93
+skills/pkm-link-store/link_store/adapters/git_adapter.py
+  s_cbae9f48fdfb8f::t_0a464c09a92c21 1-186
+skills/pkm-link-store/link_store/canonical_ids.py
+  s_cbae9f48fdfb8f::t_665d6eb4627a0d 1-187
+skills/pkm-link-store/link_store/cli.py
+  s_cbae9f48fdfb8f::t_5170a32e8c3510 1-171
+skills/pkm-link-store/link_store/db.py
+  s_cbae9f48fdfb8f::t_a2f4886d05612b 1-278
+skills/pkm-link-store/link_store/schema_compiler.py
+  s_cbae9f48fdfb8f::t_6c03d526aedea3 1-198
+skills/pkm-link-store/pyproject.toml
+  s_cbae9f48fdfb8f::t_18f61d7d6daf1f 1-19
+skills/pkm-link-store/schema/artifacts.yaml
+  s_cbae9f48fdfb8f::t_80fb6ba77849a9 1-105
+skills/pkm-link-store/schema/core.yaml
+  s_cbae9f48fdfb8f::t_a71c011217afee 1-79
+skills/pkm-link-store/schema/linkstore.yaml
+  s_cbae9f48fdfb8f::t_3d7c2f167d19b8 1-12
+skills/pkm-link-store/tests/test_privacy_boundaries.py
+  s_cbae9f48fdfb8f::t_61b9b533343285 1-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6224b0feb5f4db93a6cb439dcdd3073ca83816ee",
+  "prompts": {},
+  "sessions": {
+    "s_cbae9f48fdfb8f": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "23c48ba9-8182-42d7-aac4-d34a4688fb36",
+        "model": "gemini-4-hydrogen-medium"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
