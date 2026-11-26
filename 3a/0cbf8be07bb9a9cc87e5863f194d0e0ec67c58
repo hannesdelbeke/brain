@@ -1,0 +1,14 @@
+skills/pkm-metadata-indexer/search_vault.py
+  h_cc77ab4c551060 87-149,878-880
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3a0cbf8be07bb9a9cc87e5863f194d0e0ec67c58",
+  "prompts": {},
+  "humans": {
+    "h_cc77ab4c551060": {
+      "author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
