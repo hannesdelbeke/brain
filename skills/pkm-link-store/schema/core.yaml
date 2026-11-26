@@ -1,0 +1,79 @@
+id: https://w3id.org/pkm/linkstore/core
+name: linkstore_core
+title: PKM Link Store Core Types
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pkm: https://w3id.org/pkm/linkstore/
+default_prefix: pkm
+default_range: string
+imports:
+  - linkml:types
+
+slots:
+  id:
+    identifier: true
+    range: string
+    required: true
+    description: Canonical entity identifier (e.g. note:vault/path.md, session:uuid).
+  node_type:
+    range: string
+    required: true
+  title:
+    range: string
+  metadata_json:
+    range: string
+  valid_from:
+    range: string
+    description: ISO-8601 UTC timestamp when fact/relationship started being true.
+  valid_to:
+    range: string
+    description: ISO-8601 UTC timestamp when fact/relationship stopped being true.
+  recorded_at:
+    range: string
+    required: true
+    description: ISO-8601 UTC timestamp when this record was ingested.
+  expired_at:
+    range: string
+    description: ISO-8601 UTC timestamp when this record was superseded or expired.
+  source_adapter:
+    range: string
+    required: true
+  source_ref:
+    range: string
+  confidence:
+    range: float
+  src_id:
+    range: string
+    required: true
+  dst_id:
+    range: string
+    required: true
+  rel:
+    range: string
+    required: true
+
+classes:
+  Entity:
+    abstract: true
+    slots:
+      - id
+      - node_type
+      - title
+      - metadata_json
+      - recorded_at
+      - expired_at
+
+  Edge:
+    abstract: true
+    slots:
+      - src_id
+      - dst_id
+      - rel
+      - valid_from
+      - valid_to
+      - recorded_at
+      - expired_at
+      - source_adapter
+      - source_ref
+      - confidence
+      - metadata_json

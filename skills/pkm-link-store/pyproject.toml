@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pkm-link-store"
+version = "0.1.0"
+description = "Modular LinkML + SQLite bitemporal provenance link store for PKM notes, sessions, repos, commits, and URLs."
+readme = "SKILL.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+pkm-link-store = "link_store.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["link_store*"]

@@ -1599,5 +1599,165 @@ class TestSearchdSkipEmbeddings(unittest.TestCase):
         self.assertEqual(v1.matrix(), ([], None))
 
 
+class TestLinkStoreBridge(unittest.TestCase):
+    @staticmethod
+    def _create_link_db(db_path: Path, nodes: list[tuple], edges: list[tuple]) -> None:
+        import sqlite3
+        conn = sqlite3.connect(str(db_path))
+        conn.executescript(
+            """
+            CREATE TABLE nodes (
+                id TEXT PRIMARY KEY, node_type TEXT NOT NULL, title TEXT,
+                metadata_json TEXT, recorded_at TEXT NOT NULL, expired_at TEXT
+            );
+            CREATE TABLE aliases (
+                alias TEXT PRIMARY KEY, node_id TEXT NOT NULL, recorded_at TEXT NOT NULL
+            );
+            CREATE TABLE edges (
+                edge_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                src_id TEXT NOT NULL, dst_id TEXT NOT NULL, rel TEXT NOT NULL,
+                valid_from TEXT, valid_to TEXT, recorded_at TEXT NOT NULL,
+                expired_at TEXT, source_adapter TEXT NOT NULL, source_ref TEXT,
+                confidence REAL DEFAULT 1.0, metadata_json TEXT
+            );
+            """
+        )
+        for nid, ntype, title, meta in nodes:
+            conn.execute(
+                "INSERT INTO nodes VALUES (?, ?, ?, ?, '2026-01-01T00:00:00Z', NULL)",
+                (nid, ntype, title, meta),
+            )
+        for src, dst, rel in edges:
+            conn.execute(
+                "INSERT INTO edges(src_id, dst_id, rel, recorded_at, source_adapter) VALUES (?, ?, ?, '2026-01-01T00:00:00Z', 'test')",
+                (src, dst, rel),
+            )
+        conn.commit()
+        conn.close()
+
+    def test_missing_and_corrupt_link_store_graceful_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            v = build_vault(root / "brain", "brain", {"a.md": "## Head\nuniquetokenalpha\n"})
+            corrupt = root / "corrupt.db"
+            corrupt.write_text("not a sqlite db", encoding="utf-8")
+            missing = root / "missing.db"
+
+            old_state = SEARCHD.STATE
+            try:
+                SEARCHD.STATE = SEARCHD.State(
+                    [v], link_stores={"brain": corrupt, "other": missing}
+                )
+                server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+                port = server.server_address[1]
+                t = threading.Thread(target=server.serve_forever, daemon=True)
+                t.start()
+                try:
+                    st, body = fetch(port, "/search?q=uniquestockmissing&cluster=1")
+                    self.assertEqual(st, 200)
+                    st, body = fetch(port, "/search?q=uniquestockmissing")
+                    self.assertEqual(st, 200)
+                    st, body = fetch(port, "/search?q=uniquetokenalpha&cluster=1")
+                    self.assertEqual(st, 200)
+                    self.assertIn("clusters", body)
+                    self.assertEqual(body["clusters"], [])
+
+                    st, lbody = fetch(port, "/links?note=a.md&vault=brain")
+                    self.assertEqual(st, 200)
+                    self.assertEqual(lbody.get("entity_links"), [])
+
+                    st, hbody = fetch(port, "/health")
+                    self.assertEqual(st, 200)
+                    self.assertFalse(hbody["link_store"]["brain"]["ok"])
+                    self.assertFalse(hbody["link_store"]["other"]["ok"])
+                finally:
+                    server.shutdown()
+                    server.server_close()
+                    v.close()
+            finally:
+                SEARCHD.STATE = old_state
+
+    def test_cross_corpus_clustering_and_store_isolation(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            v_brain = build_vault(root / "brain", "brain", {"alpha.md": "## A\nsharedtopicneedle\n"})
+            v_traces = build_vault(root / "traces", "traces", {"trace1.md": "## T\nsharedtopicneedle\n"})
+            v_work = build_vault(root / "work", "work", {"gamma.md": "## W\nsharedtopicneedle\n"})
+
+            personal_db = root / "personal.db"
+            work_db = root / "work.db"
+
+            # brain/alpha.md and traces/trace1.md share session:s1 (and another session:s2 so deg=2)
+            self._create_link_db(
+                personal_db,
+                nodes=[
+                    ("note:brain/alpha.md", "Note", "alpha.md", None),
+                    ("note:traces/trace1.md", "Note", "trace1.md", None),
+                    ("session:s1", "Session", "s1", None),
+                    ("branch:github.com/org/r@main", "Branch", "main", '{"is_default": true}'),
+                ],
+                edges=[
+                    ("session:s1", "note:brain/alpha.md", "read_file"),
+                    ("session:s1", "note:traces/trace1.md", "modified_file"),
+                    ("session:s1", "branch:github.com/org/r@main", "worked_in_branch"),
+                ],
+            )
+            self._create_link_db(
+                work_db,
+                nodes=[
+                    ("note:work/gamma.md", "Note", "gamma.md", None),
+                    ("session:s1", "Session", "s1", None),
+                ],
+                edges=[("session:s1", "note:work/gamma.md", "read_file")],
+            )
+
+            old_state = SEARCHD.STATE
+            try:
+                SEARCHD.STATE = SEARCHD.State(
+                    [v_brain, v_traces, v_work],
+                    link_stores={"brain": personal_db, "traces": personal_db, "work": work_db},
+                )
+                server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+                port = server.server_address[1]
+                t = threading.Thread(target=server.serve_forever, daemon=True)
+                t.start()
+                try:
+                    st, plain = fetch(port, "/search?q=sharedtopicneedle&vault=all&limit=10")
+                    self.assertEqual(st, 200)
+                    st, clustered = fetch(port, "/search?q=sharedtopicneedle&vault=all&limit=10&cluster=1")
+                    self.assertEqual(st, 200)
+                    # Rank order must be strictly preserved
+                    self.assertEqual(
+                        [(r["vault"], r["path"]) for r in plain["results"]],
+                        [(r["vault"], r["path"]) for r in clustered["results"]],
+                    )
+                    by_vault = {r["vault"]: r for r in clustered["results"]}
+                    # brain and traces share personal.db and session:s1 -> same cluster_id
+                    self.assertEqual(by_vault["brain"]["cluster_id"], by_vault["traces"]["cluster_id"])
+                    self.assertEqual(by_vault["brain"]["cluster_size"], 2)
+                    # work uses work.db -> isolated cluster
+                    self.assertNotEqual(by_vault["work"]["cluster_id"], by_vault["brain"]["cluster_id"])
+                    self.assertEqual(by_vault["work"]["cluster_size"], 1)
+
+                    # /links?note=alpha.md&vault=brain includes entity_links (excluding default branch)
+                    st, lbody = fetch(port, "/links?note=alpha.md&vault=brain")
+                    self.assertEqual(st, 200)
+                    self.assertTrue(any(e["node_id"] == "session:s1" for e in lbody["entity_links"]))
+
+                    # /health reports link_store
+                    st, hbody = fetch(port, "/health")
+                    self.assertEqual(st, 200)
+                    self.assertTrue(hbody["link_store"]["brain"]["ok"])
+                    self.assertTrue(hbody["link_store"]["work"]["ok"])
+                finally:
+                    server.shutdown()
+                    server.server_close()
+                    v_brain.close()
+                    v_traces.close()
+                    v_work.close()
+            finally:
+                SEARCHD.STATE = old_state
+
+
 if __name__ == "__main__":
     unittest.main()

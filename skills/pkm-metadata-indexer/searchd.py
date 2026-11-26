@@ -124,6 +124,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import co_commit
 import dual_track
 import index_pkm_meta as pkm
+import link_store_bridge
 import numpy as np
 import recency_prior_experiment as recency
 import shared_neighbor_experiment as shared_neighbor
@@ -601,12 +602,13 @@ class Vault:
 
 class State:
     def __init__(self, vaults: list[Vault], token: str | None = None, skip_embeddings: bool = False,
-                 embed_sessions: bool = False):
+                 embed_sessions: bool = False, link_stores: dict[str, Path] | None = None):
         self.vaults = {vault.name: vault for vault in vaults}
         self.default = vaults[0].name
         self.token = token
         self.skip_embeddings = skip_embeddings
         self.embed_sessions = embed_sessions
+        self.link_stores = dict(link_stores or {})
         self.warm = False
         self.started = time.time()
         self.last_query = 0.0
@@ -932,7 +934,8 @@ def kick_reindex(vault: Vault) -> bool:
 
 
 def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
-              rerank: bool = False, reindex: bool = True, expand: bool = True) -> dict:
+              rerank: bool = False, reindex: bool = True, expand: bool = True,
+              cluster: bool = False) -> dict:
     """Search one corpus or several, and say which files the answer could not see.
 
     Merging across corpora sorts on the fused score. Those scores are sums of
@@ -982,6 +985,8 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
         "stale": stale,
         "results": results,
     }
+    if cluster and STATE.link_stores:
+        payload["clusters"] = link_store_bridge.cluster_results(results, STATE.link_stores)
     log_query("search", [vault.name for vault in vaults], query, limit,
               payload["took_ms"], payload["results"], origin)
     return payload
@@ -1077,7 +1082,7 @@ def do_links(vault: Vault, note: str) -> dict:
     found = pkm.query_links(note, db_path=str(vault.db))
     if not found:
         return {"error": f"no single indexed note matches {note!r}"}
-    return {
+    payload = {
         "vault": vault.name,
         "path": found["path"],
         "outbound": [
@@ -1089,6 +1094,11 @@ def do_links(vault: Vault, note: str) -> dict:
             for source, raw, line in found["inbound"]
         ],
     }
+    if STATE is not None and vault.name in STATE.link_stores:
+        payload["entity_links"] = link_store_bridge.entity_links(
+            STATE.link_stores[vault.name], vault.name, found["path"]
+        )
+    return payload
 
 
 def note_vectors(meta, matrix):
@@ -2002,6 +2012,8 @@ class Handler(BaseHTTPRequestHandler):
                                               or pkm.get_embedding_providers())[0]
                     body["index_provider"] = pkm.get_embedding_providers()[0]
                     body["vaults"] = [vault.describe() for vault in STATE.vaults.values()]
+                    if STATE.link_stores:
+                        body["link_store"] = link_store_bridge.status(STATE.link_stores)
                 else:
                     # Named, so a probe response is never mistaken for a full one
                     # by something reading `vaults` and finding it absent.
@@ -2022,7 +2034,8 @@ class Handler(BaseHTTPRequestHandler):
                                           first("origin"),
                                           first("rerank") in {"1", "true", "yes"},
                                           first("reindex") not in {"0", "false", "no"},
-                                          first("expand") in {"1", "true", "yes"}))
+                                          first("expand") in {"1", "true", "yes"},
+                                          first("cluster") in {"1", "true", "yes"}))
                 return
             if url.path == "/outline" and method == "GET":
                 query = first("q")
@@ -2204,6 +2217,8 @@ def main():
     parser.add_argument("--no-query-log", action="store_true",
                         help="Record nothing. The log holds query strings and result paths in "
                              "plain text, which is the reason to turn it off")
+    parser.add_argument("--link-store", action="append", default=[], metavar="VAULT=DBPATH",
+                        help="Read-only pkm-link-store SQLite DB for a vault, repeatable")
     args = parser.parse_args()
 
     global LOG_PATH
@@ -2247,11 +2262,19 @@ def main():
                     vault.skip_embeddings = True
             global_skip = all(vault.skip_embeddings for vault in vaults)
 
+    link_stores: dict[str, Path] = {}
+    for spec in args.link_store:
+        vname, sep, db_raw = spec.partition("=")
+        if not sep or not vname.strip() or not db_raw.strip():
+            parser.error(f"--link-store wants VAULT=DBPATH, got {spec!r}")
+        link_stores[vname.strip()] = Path(db_raw.strip()).expanduser()
+
     if global_skip:
         args.no_warm = True
         args.no_keepalive = True
     global STATE
-    STATE = State(vaults, args.token, skip_embeddings=global_skip, embed_sessions=args.embed_sessions)
+    STATE = State(vaults, args.token, skip_embeddings=global_skip,
+                  embed_sessions=args.embed_sessions, link_stores=link_stores)
     for vault in vaults:
         print(f"vault {vault.name}\n  root {vault.root}\n  db   {vault.db}", flush=True)
         if not vault.db.exists():

@@ -1,0 +1,12 @@
+id: https://w3id.org/pkm/linkstore
+name: linkstore
+title: PKM Link Store Schema
+version: 0.1.0
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pkm: https://w3id.org/pkm/linkstore/
+default_prefix: pkm
+default_range: string
+imports:
+  - core
+  - artifacts

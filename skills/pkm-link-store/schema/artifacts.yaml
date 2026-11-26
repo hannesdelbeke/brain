@@ -1,0 +1,105 @@
+id: https://w3id.org/pkm/linkstore/artifacts
+name: linkstore_artifacts
+title: PKM Link Store Artifact Classes and Relations
+prefixes:
+  linkml: https://w3id.org/linkml/
+  pkm: https://w3id.org/pkm/linkstore/
+default_prefix: pkm
+imports:
+  - core
+
+classes:
+  Note:
+    is_a: Entity
+    description: Markdown note in a PKM vault (note:<vault>/<rel_path>).
+  Session:
+    is_a: Entity
+    description: Agent session or subagent transcript (session:<uuid> or session:<uuid>:agent-<agentId>).
+  Repo:
+    is_a: Entity
+    description: Git repository (repo:<host>/<owner>/<repo>).
+  Branch:
+    is_a: Entity
+    description: Git branch (branch:<repo_id>@<short_branch>).
+  Commit:
+    is_a: Entity
+    description: Git commit (commit:<repo_id>@<sha40>).
+  File:
+    is_a: Entity
+    description: Non-note file in a repository or workspace (file:<repo_id>@<rel_path>).
+  Url:
+    is_a: Entity
+    description: Canonicalized web URL (url:<canonical_url>).
+
+  EdgeSpec:
+    description: Declarative domain/range rule for an allowed edge relation.
+
+slots:
+  child_of:
+    domain: Session
+    range: Session
+    description: Subagent session spawned by a parent session.
+  continued_in:
+    domain: Session
+    range: Session
+    description: Session continued or resumed in another session.
+  derived_from:
+    domain: Session
+    range: Session
+    description: Session forked or derived from another session.
+  worked_in_branch:
+    domain: Session
+    range: Branch
+    description: Session observed working on a git branch over a valid_from..valid_to span.
+  read_file:
+    domain: Session
+    range: File
+    description: Session read a file or note.
+    annotations:
+      allowed_ranges:
+        - File
+        - Note
+  modified_file:
+    domain: Session
+    range: File
+    description: Session created or edited a file or note.
+    annotations:
+      allowed_ranges:
+        - File
+        - Note
+  fetched_url:
+    domain: Session
+    range: Url
+    description: Session fetched a URL via WebFetch/browser tool.
+  cited_url:
+    domain: Session
+    range: Url
+    description: Session referenced or cited a URL in prose/tool args.
+  in_repo:
+    domain: Branch
+    range: Repo
+    description: Branch or commit belongs to a repository.
+    annotations:
+      allowed_domains:
+        - Branch
+        - Commit
+  on_branch:
+    domain: Commit
+    range: Branch
+    description: Commit is reachable on a branch.
+  changed_file:
+    domain: Commit
+    range: File
+    description: Commit touched a file or note.
+    annotations:
+      allowed_ranges:
+        - File
+        - Note
+  mentions_session:
+    domain: Commit
+    range: Session
+    description: Commit trailer (e.g. Session:) references an agent session.
+  links_to:
+    domain: Note
+    range: Note
+    description: Wikilink or markdown link from one note to another.
