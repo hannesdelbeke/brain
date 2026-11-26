@@ -1,0 +1,25 @@
+skills/pkm-metadata-indexer/dual_track.py
+  s_23cb051ebf8fde::t_20ebbf3e1a5dae 33,41
+skills/pkm-metadata-indexer/index_pkm_meta.py
+  s_23cb051ebf8fde::t_20ebbf3e1a5dae 136-144,2258
+skills/pkm-metadata-indexer/searchd.py
+  s_23cb051ebf8fde::t_20ebbf3e1a5dae 1556,1560-1561
+skills/pkm-metadata-indexer/test_index_pkm_meta.py
+  s_23cb051ebf8fde::t_20ebbf3e1a5dae 5,688-695,702-751
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4f60c3abbd20a6e00c9e70aa44dd2462a67710da",
+  "prompts": {},
+  "sessions": {
+    "s_23cb051ebf8fde": {
+      "agent_id": {
+        "tool": "gemini",
+        "id": "b49d97db-05fe-4de2-92ca-ba7cc2818cf2",
+        "model": "gemini-4-hydrogen-medium"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
