@@ -74,7 +74,11 @@ slots:
   cited_url:
     domain: Session
     range: Url
-    description: Session referenced or cited a URL in prose/tool args.
+    description: Session or note referenced or cited a URL in prose/tool args.
+    annotations:
+      allowed_domains:
+        - Session
+        - Note
   in_repo:
     domain: Branch
     range: Repo
@@ -103,3 +107,23 @@ slots:
     domain: Note
     range: Note
     description: Wikilink or markdown link from one note to another.
+  wikilinks_to:
+    domain: Note
+    range: Note
+    description: Resolved wikilink from one vault note to another.
+  backed_by:
+    domain: Note
+    range: File
+    description: Note links to a non-note file that exists in the vault.
+  documented_in:
+    domain: Session
+    range: Note
+    description: Session recorded in a rollup or recap note.
+  made_commit:
+    domain: Session
+    range: Commit
+    description: Session authored a git commit.
+  handed_over_to:
+    domain: Session
+    range: Session
+    description: Inferred handover from an earlier session to a later one (heuristic).

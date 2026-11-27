@@ -1,4 +1,4 @@
-"""CLI for pkm-link-store: sync, audit, and query."""
+"""CLI for pkm-link-store: sync, sync-vault, derive-handovers, audit, and query."""
 
 from __future__ import annotations
 
@@ -7,7 +7,14 @@ import json
 import math
 from pathlib import Path
 
-from .adapters import BoundaryPolicy, sync_claude_root, sync_git_repo
+from .adapters import (
+    BoundaryPolicy,
+    derive_handovers,
+    sync_claude_root,
+    sync_git_repo,
+    sync_vault,
+)
+from .adapters.handover import DEFAULT_HUB_MAX_SESSIONS
 from .db import LinkStoreDB
 
 
@@ -37,6 +44,27 @@ def cmd_sync(args: argparse.Namespace) -> dict:
             )
             summary["repos"].append({"name": rname, "path": rpath, **res})
     return summary
+
+
+def cmd_sync_vault(args: argparse.Namespace) -> dict:
+    vault_roots = dict(_parse_kv(v) for v in args.vault)
+    policy = BoundaryPolicy.from_args(
+        allow_roots=args.allow_root,
+        deny_roots=args.deny_root,
+        vault_roots=vault_roots,
+    )
+    summary: dict = {"db": str(Path(args.db).expanduser()), "vaults": []}
+    with LinkStoreDB(args.db) as db:
+        for name, path in vault_roots.items():
+            res = sync_vault(db, name, path, policy=policy)
+            summary["vaults"].append({"name": name, "path": path, **res})
+    return summary
+
+
+def cmd_derive_handovers(args: argparse.Namespace) -> dict:
+    with LinkStoreDB(args.db) as db:
+        res = derive_handovers(db, hub_max_sessions=args.hub_max_sessions)
+    return {"db": str(Path(args.db).expanduser()), **res}
 
 
 def cmd_audit(args: argparse.Namespace) -> dict:
@@ -149,6 +177,21 @@ def main(argv: list[str] | None = None) -> int:
     p_sync.add_argument("--deny-root", action="append", default=[])
     p_sync.add_argument("--max-commits", type=int, default=None)
 
+    p_vault = sub.add_parser("sync-vault", help="Ingest vault notes, links, and session notes")
+    p_vault.add_argument("--db", required=True, help="Path to SQLite link store DB")
+    p_vault.add_argument("--vault", action="append", required=True, metavar="NAME=PATH")
+    p_vault.add_argument("--allow-root", action="append", default=[])
+    p_vault.add_argument("--deny-root", action="append", default=[])
+
+    p_hand = sub.add_parser("derive-handovers", help="Infer handed_over_to edges between sessions")
+    p_hand.add_argument("--db", required=True, help="Path to SQLite link store DB")
+    p_hand.add_argument(
+        "--hub-max-sessions",
+        type=int,
+        default=DEFAULT_HUB_MAX_SESSIONS,
+        help="Targets modified by more sessions than this are ignored as shared evidence",
+    )
+
     p_audit = sub.add_parser("audit", help="Audit graph counts, density, and hubs")
     p_audit.add_argument("--db", required=True)
 
@@ -157,12 +200,14 @@ def main(argv: list[str] | None = None) -> int:
     p_query.add_argument("--node", required=True)
 
     args = parser.parse_args(argv)
-    if args.command == "sync":
-        out = cmd_sync(args)
-    elif args.command == "audit":
-        out = cmd_audit(args)
-    else:
-        out = cmd_query(args)
+    commands = {
+        "sync": cmd_sync,
+        "sync-vault": cmd_sync_vault,
+        "derive-handovers": cmd_derive_handovers,
+        "audit": cmd_audit,
+        "query": cmd_query,
+    }
+    out = commands[args.command](args)
     print(json.dumps(out, indent=2))
     return 0
 

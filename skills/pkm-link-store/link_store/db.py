@@ -127,6 +127,14 @@ class LinkStoreDB:
                 (alias, node_id, now),
             )
 
+    def delete_alias(self, alias: str, node_id: str) -> None:
+        """Remove an alias only while it still points at node_id."""
+        with self.conn:
+            self.conn.execute(
+                "DELETE FROM aliases WHERE alias = ? AND node_id = ?",
+                (alias, node_id),
+            )
+
     def resolve_alias(self, alias: str) -> str | None:
         """Resolve an alias to its canonical node_id, or None."""
         row = self.conn.execute(
