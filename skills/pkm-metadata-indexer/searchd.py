@@ -102,8 +102,6 @@ import argparse
 import bisect
 import collections
 import hmac
-import importlib
-import importlib.util
 import json
 import os
 import queue
@@ -431,11 +429,13 @@ def log_query(kind: str, vault, subject: str, limit: int, took_ms: float,
 
 
 class Vault:
-    def __init__(self, name: str, root: Path, db: Path, collect=None, skip_embeddings: bool = False):
+    def __init__(self, name: str, root: Path, db: Path, collect=None, skip_embeddings: bool = False,
+                 collect_spec: str | None = None):
         self.name = name
         self.root = root
         self.db = db
         self.collect = collect  # None scans markdown, otherwise a corpus scanner
+        self.collect_spec = collect_spec  # MODULE:FUNCTION for subprocess reindex
         self.skip_embeddings = skip_embeddings
         self.lock = threading.Lock()  # the resident matrix, its reader, and the counter
         self.rebuild_lock = threading.Lock()  # one matrix rebuild at a time, off self.lock
@@ -1667,8 +1667,13 @@ def do_unlinked(vault: Vault, note: str, limit: int) -> dict:
     }
 
 
+INDEXER_SCRIPT = Path(__file__).resolve().with_name("index_pkm_meta.py")
+INDEXER_DIR = Path(__file__).resolve().parent
+REINDEX_TIMEOUT_S = int(os.environ.get("PKM_REINDEX_TIMEOUT", "1800"))
+
+
 def do_reindex(vault: Vault, started=None) -> dict:
-    """Rebuild one corpus, and report the wait separately from the work.
+    """Rebuild one corpus in a subprocess, and report the wait separately from the work.
 
     `took_s` used to cover both, which is how this log came to carry lines
     reading `reindexed in 27845.42s` for a pass that was four seconds of work and
@@ -1678,6 +1683,10 @@ def do_reindex(vault: Vault, started=None) -> dict:
     `started` is called once the lock is held, which is the moment this pass
     begins reading the corpus and therefore the moment a later change needs a
     pass of its own. See reindex_coalesced.
+
+    Running the build in a short-lived subprocess isolates fastembed/ONNX
+    indexing memory and glibc arenas so the daemon's indexing-time RSS stays flat
+    (trading a cold ONNX model load on embedding passes).
     """
     queued_at = time.perf_counter()
     with INDEX_LOCK:
@@ -1687,8 +1696,30 @@ def do_reindex(vault: Vault, started=None) -> dict:
         began = time.perf_counter()
         skip_emb = vault.skip_embeddings or getattr(STATE, "skip_embeddings", False)
         embed_sess = getattr(STATE, "embed_sessions", False)
-        pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
-                        skip_embeddings=skip_emb, embed_sessions=embed_sess)
+        if vault.collect is not None and vault.collect_spec is None:
+            # Unserializable in-memory collector (e.g. test lambda)
+            pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
+                            skip_embeddings=skip_emb, embed_sessions=embed_sess)
+        else:
+            cmd = [
+                sys.executable,
+                str(INDEXER_SCRIPT),
+                "--vault", str(vault.root),
+                "--db", str(vault.db),
+            ]
+            if skip_emb:
+                cmd.append("--skip-embeddings")
+            if embed_sess:
+                cmd.append("--embed-sessions")
+            if vault.collect_spec:
+                cmd.extend(["--collect", vault.collect_spec])
+            timeout = REINDEX_TIMEOUT_S if (vault.db.exists() and REINDEX_TIMEOUT_S > 0) else None
+            try:
+                proc = subprocess.run(cmd, cwd=str(INDEXER_DIR), timeout=timeout)
+            except subprocess.TimeoutExpired as exc:
+                raise RuntimeError(f"reindex subprocess for {vault.name} timed out after {timeout}s") from exc
+            if proc.returncode != 0:
+                raise RuntimeError(f"reindex subprocess for {vault.name} exited with code {proc.returncode}")
         build = time.perf_counter() - began
     vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
     return {"vault": vault.name, "took_s": round(time.perf_counter() - queued_at, 2),
@@ -2126,7 +2157,7 @@ class Handler(BaseHTTPRequestHandler):
         print(f"{self.address_string()} {fmt % args}", flush=True)
 
 
-def parse_vault(spec: str, db_override: str | None = None, collect=None) -> Vault:
+def parse_vault(spec: str, db_override: str | None = None, collect=None, collect_spec: str | None = None) -> Vault:
     """`PATH`, `NAME=PATH`, or `NAME=PATH=DBPATH`.
 
     The third field exists because two corpora can share a root: a scanner that
@@ -2148,27 +2179,10 @@ def parse_vault(spec: str, db_override: str | None = None, collect=None) -> Vaul
         db = db.resolve() if db.is_absolute() else (root / db).resolve()
     else:
         db = pkm.default_db_path(root)
-    return Vault(name or root.name, root, db, collect)
+    return Vault(name or root.name, root, db, collect, collect_spec=collect_spec)
 
 
-def load_module(name: str):
-    """Import a scanner module by dotted name, or by path to its file.
-
-    A corpus scanner usually lives in the repository holding the corpus rather
-    than beside the daemon, and taking a path there is one argument where an
-    importable name is a `PYTHONPATH` the caller has to remember to set.
-    """
-    if not name.endswith(".py"):
-        return importlib.import_module(name)
-    path = Path(name).expanduser().resolve()
-    spec = importlib.util.spec_from_file_location(path.stem, path)
-    if spec is None or spec.loader is None:
-        raise SystemExit(f"cannot load a scanner from {path}")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[path.stem] = module  # so the scanner can import its own siblings
-    sys.path.insert(0, str(path.parent))
-    spec.loader.exec_module(module)
-    return module
+load_module = pkm.load_module
 
 
 def main():
@@ -2239,7 +2253,10 @@ def main():
     vaults = [parse_vault(spec, args.db) for spec in specs]
     if args.sessions:
         import index_sessions
-        vaults += [parse_vault(spec, collect=index_sessions.scan_sessions) for spec in args.sessions]
+        vaults += [
+            parse_vault(spec, collect=index_sessions.scan_sessions, collect_spec="index_sessions:scan_sessions")
+            for spec in args.sessions
+        ]
     for spec in args.corpus:
         # First `=` and last `:`, so that `C:/x/scan.py:scan` parses as well as
         # `scan:scan` does.
@@ -2247,7 +2264,12 @@ def main():
         module_name, _, function_name = scanner.rpartition(":")
         if not (vault_spec and function_name and module_name):
             parser.error(f"--corpus wants MODULE:FUNCTION=NAME=PATH, got {spec!r}")
-        vaults.append(parse_vault(vault_spec, collect=getattr(load_module(module_name), function_name)))
+        resolved_mod = str(Path(module_name).expanduser().resolve()) if module_name.endswith(".py") else module_name
+        vaults.append(parse_vault(
+            vault_spec,
+            collect=getattr(load_module(resolved_mod), function_name),
+            collect_spec=f"{resolved_mod}:{function_name}",
+        ))
 
     global_skip = False
     if args.skip_embeddings is not None:

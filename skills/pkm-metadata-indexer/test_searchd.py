@@ -1525,14 +1525,17 @@ class ConvoyTest(unittest.TestCase):
         released = threading.Event()
         builds = []
 
-        def slow_build(**kwargs):
-            builds.append(kwargs)
+        import unittest.mock
+
+        def slow_build(*args, **kwargs):
+            builds.append(args[0] if args else kwargs.get("args"))
             entered.set()
             released.wait(10)
+            return unittest.mock.MagicMock(returncode=0)
 
-        original = SEARCHD.pkm.build_index
-        SEARCHD.pkm.build_index = slow_build
-        self.addCleanup(lambda: setattr(SEARCHD.pkm, "build_index", original))
+        original = SEARCHD.subprocess.run
+        SEARCHD.subprocess.run = slow_build
+        self.addCleanup(lambda: setattr(SEARCHD.subprocess, "run", original))
 
         SEARCHD.INDEX_LOCK.acquire()
         queued = threading.Thread(
@@ -1757,6 +1760,94 @@ class TestLinkStoreBridge(unittest.TestCase):
                     v_work.close()
             finally:
                 SEARCHD.STATE = old_state
+
+
+class TestSubprocessReindex(unittest.TestCase):
+    def test_do_reindex_passes_expected_cli_flags_and_handles_failure(self):
+        import subprocess
+        import unittest.mock
+
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        root = Path(temp_dir.name) / "v"
+        root.mkdir()
+        (root / "a.md").write_text("## A\nhello\n", encoding="utf-8")
+        db = root / ".obsidian" / "pkm_index.db"
+        SEARCHD.pkm.build_index(str(root), str(db), skip_embeddings=True)
+
+        vault = SEARCHD.Vault(
+            "sess", root, db,
+            collect=lambda r: ([], [], [], []),
+            skip_embeddings=True,
+            collect_spec="index_sessions:scan_sessions",
+        )
+        self.addCleanup(vault.close)
+
+        calls = []
+
+        def fake_run(cmd, **kwargs):
+            calls.append((cmd, kwargs))
+            return subprocess.CompletedProcess(cmd, 0)
+
+        old_state = SEARCHD.STATE
+        SEARCHD.STATE = SEARCHD.State([vault], skip_embeddings=True, embed_sessions=True)
+        self.addCleanup(setattr, SEARCHD, "STATE", old_state)
+
+        with unittest.mock.patch.object(SEARCHD.subprocess, "run", side_effect=fake_run):
+            SEARCHD.do_reindex(vault)
+
+        self.assertEqual(len(calls), 1)
+        cmd, kwargs = calls[0]
+        self.assertIn("--vault", cmd)
+        self.assertEqual(cmd[cmd.index("--vault") + 1], str(root))
+        self.assertIn("--db", cmd)
+        self.assertEqual(cmd[cmd.index("--db") + 1], str(db))
+        self.assertIn("--skip-embeddings", cmd)
+        self.assertIn("--embed-sessions", cmd)
+        self.assertIn("--collect", cmd)
+        self.assertEqual(cmd[cmd.index("--collect") + 1], "index_sessions:scan_sessions")
+        self.assertEqual(kwargs.get("timeout"), SEARCHD.REINDEX_TIMEOUT_S)
+
+        def fail_run(cmd, **kwargs):
+            return subprocess.CompletedProcess(cmd, 2)
+
+        with unittest.mock.patch.object(SEARCHD.subprocess, "run", side_effect=fail_run):
+            with self.assertRaises(RuntimeError):
+                SEARCHD.do_reindex(vault)
+
+    def test_worker_cli_collect_and_lazy_fastembed(self):
+        import subprocess
+        import sys
+
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        root = Path(temp_dir.name) / "sessions"
+        root.mkdir()
+        db = Path(temp_dir.name) / "sess.db"
+        indexer_dir = Path(SEARCHD.__file__).resolve().parent
+
+        # Verify importing index_pkm_meta does not import fastembed
+        if SEARCHD.pkm.HAS_FASTEMBED:
+            probe = subprocess.run(
+                [sys.executable, "-c",
+                 "import sys, index_pkm_meta; assert 'fastembed' not in sys.modules"],
+                cwd=str(indexer_dir),
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(probe.returncode, 0, probe.stderr)
+
+        # Verify --collect index_sessions:scan_sessions works via CLI
+        res = subprocess.run(
+            [sys.executable, str(indexer_dir / "index_pkm_meta.py"),
+             "--vault", str(root), "--db", str(db),
+             "--skip-embeddings", "--collect", "index_sessions:scan_sessions"],
+            cwd=str(indexer_dir),
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(res.returncode, 0, res.stderr + res.stdout)
+        self.assertTrue(db.exists())
 
 
 if __name__ == "__main__":

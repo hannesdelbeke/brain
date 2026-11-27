@@ -1,7 +1,11 @@
 """Local metadata, section, link, and hybrid search index for a Markdown vault."""
 
 import argparse
+import functools
 import hashlib
+import importlib
+import importlib.util
+import inspect
 import json
 import logging
 import os
@@ -32,12 +36,8 @@ if hasattr(sys.stderr, "reconfigure"):
 # for rather than a note about progress.
 log = logging.getLogger(__name__)
 
-try:
-    from fastembed import TextEmbedding
-
-    HAS_FASTEMBED = True
-except ImportError:
-    HAS_FASTEMBED = False
+HAS_FASTEMBED = importlib.util.find_spec("fastembed") is not None
+TextEmbedding = None
 
 
 ACCELERATION_PROVIDERS = [
@@ -173,15 +173,18 @@ def get_embedding_model(providers: list[str] | None = None, threads: int | None 
         if key not in _MODEL_CACHE:
             kwargs = {"threads": threads} if threads is not None else {}
             provider_list = list(key[0])
+            model_cls = TextEmbedding
+            if model_cls is None:
+                from fastembed import TextEmbedding as model_cls
             try:
-                _MODEL_CACHE[key] = TextEmbedding(model_name=EMBEDDING_MODEL, providers=provider_list, **kwargs)
+                _MODEL_CACHE[key] = model_cls(model_name=EMBEDDING_MODEL, providers=provider_list, **kwargs)
             except Exception as exc:
                 if provider_list != ["CPUExecutionProvider"]:
                     log.warning("Failed to initialize providers %s (%s: %s); falling back to CPUExecutionProvider",
                                 provider_list, type(exc).__name__, exc)
                     fallback_key = (("CPUExecutionProvider",), threads)
                     if fallback_key not in _MODEL_CACHE:
-                        _MODEL_CACHE[fallback_key] = TextEmbedding(
+                        _MODEL_CACHE[fallback_key] = model_cls(
                             model_name=EMBEDDING_MODEL, providers=["CPUExecutionProvider"], **kwargs
                         )
                     return _MODEL_CACHE[fallback_key]
@@ -2961,6 +2964,26 @@ def print_stats(vault_path: str | None = None, db_path: str | None = None):
         connection.close()
 
 
+def load_module(name: str):
+    """Import a scanner module by dotted name, or by path to its file.
+
+    A corpus scanner usually lives in the repository holding the corpus rather
+    than beside the daemon, and taking a path there is one argument where an
+    importable name is a `PYTHONPATH` the caller has to remember to set.
+    """
+    if not name.endswith(".py"):
+        return importlib.import_module(name)
+    path = Path(name).expanduser().resolve()
+    spec = importlib.util.spec_from_file_location(path.stem, path)
+    if spec is None or spec.loader is None:
+        raise SystemExit(f"cannot load a scanner from {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[path.stem] = module  # so the scanner can import its own siblings
+    sys.path.insert(0, str(path.parent))
+    spec.loader.exec_module(module)
+    return module
+
+
 def main():
     parser = argparse.ArgumentParser(description="Index Markdown metadata, sections, links, and local hybrid search.")
     parser.add_argument("--vault", type=str, default=None, help="Path to the vault root")
@@ -2970,6 +2993,10 @@ def main():
     )
     parser.add_argument(
         "--embed-sessions", action="store_true", help="Generate vectors for agent sessions (sessions/ and traces/)"
+    )
+    parser.add_argument(
+        "--collect", type=str, default=None,
+        help="Custom corpus collector as MODULE:FUNCTION (importable dotted name or path to .py)",
     )
     parser.add_argument("--search", type=str, default=None, help="Run hybrid search across indexed sections")
     parser.add_argument("--check-duplicate", type=str, default=None, help="Show likely existing notes before creation")
@@ -3048,8 +3075,18 @@ def main():
     elif args.links:
         query_links(args.links, vault_path=args.vault, db_path=args.db)
     else:
+        collect = None
+        if args.collect:
+            module_name, _, function_name = args.collect.rpartition(":")
+            if not (module_name and function_name):
+                parser.error(f"--collect wants MODULE:FUNCTION, got {args.collect!r}")
+            func = getattr(load_module(module_name), function_name)
+            if args.db and "db_path" in inspect.signature(func).parameters:
+                collect = functools.partial(func, db_path=Path(args.db).resolve())
+            else:
+                collect = func
         build_index(vault_path=args.vault, db_path=args.db, skip_embeddings=args.skip_embeddings,
-                    embed_sessions=args.embed_sessions)
+                    collect=collect, embed_sessions=args.embed_sessions)
     return 0
 
 
