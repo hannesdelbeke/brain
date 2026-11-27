@@ -121,10 +121,10 @@ RERANK_MODEL = "Xenova/ms-marco-MiniLM-L-6-v2"
 # to ~321ms with about 1 point of precision gained.
 RERANK_CANDIDATES = 12
 
-# How much document text the cross-encoder reads before scoring. None means no
-# truncation (full section text). Smaller windows reduce latency at the cost of
-# potentially missing relevant content further down in the section.
-RERANK_MAX_CHARS = None
+# How much document text the cross-encoder reads before scoring. Bounded to 1800
+# chars so a single huge session-log section does not pad an entire 20-doc
+# batch out to 512 tokens and spike ONNX arena memory.
+RERANK_MAX_CHARS = 1800
 
 # Where a cross-encoder logit stops meaning "this section answers the question".
 # The sign is the model's own decision boundary and it is the one number in a
@@ -212,8 +212,11 @@ def get_cross_encoder():
     with _LOAD_LOCK:
         if "model" not in _RERANK_CACHE:
             from fastembed.rerank.cross_encoder import TextCrossEncoder
-            _RERANK_CACHE["model"] = TextCrossEncoder(model_name=RERANK_MODEL,
-                                                      providers=QUERY_PROVIDERS)
+            _RERANK_CACHE["model"] = TextCrossEncoder(
+                model_name=RERANK_MODEL,
+                providers=QUERY_PROVIDERS,
+                enable_cpu_mem_arena=False,
+            )
     return _RERANK_CACHE["model"]
 
 

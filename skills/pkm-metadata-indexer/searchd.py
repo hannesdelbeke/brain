@@ -103,11 +103,14 @@ can name where a search came from with `&origin=<note>`.
 import argparse
 import bisect
 import collections
+import ctypes
+import gc
 import hmac
 import json
 import os
 import queue
 import shlex
+import shutil
 import socket
 import sqlite3
 import subprocess
@@ -319,6 +322,11 @@ INDEX_LOCK = threading.Lock()
 
 # Guards the one-reindex-per-corpus flag only, never held across a reindex.
 REINDEX_LOCK = threading.Lock()
+
+IDLE_UNLOAD_DEFAULT_S = 1800
+RERANK_IDLE_UNLOAD_DEFAULT_S = 300
+IDLE_REAPER_POLL_S = 60
+REINDEX_MEMORY_MAX = os.environ.get("PKM_REINDEX_MEMORY_MAX", "1G")
 
 # Set by main(), None disables logging. Its own lock, so appending a row never
 # waits on anything a query holds.
@@ -537,7 +545,7 @@ class Vault:
             if self.vectors is not None and version == self.vectors_version:
                 return self.vectors
             resident = self.vectors
-        if resident is not None and self.rebuild_lock.locked():
+        if resident is not None and (self.rebuild_lock.locked() or self.reindexing):
             return resident  # stale by one reindex, and here now
         with self.rebuild_lock:
             with self.lock:
@@ -614,6 +622,7 @@ class State:
         self.warm = False
         self.started = time.time()
         self.last_query = 0.0
+        self.last_rerank = 0.0
 
     def pick_many(self, name: str) -> list[Vault]:
         """Resolve a vault parameter, which may name several.
@@ -667,12 +676,85 @@ def keepalive():
     left 11.93 cores spinning between ticks. Capped, the daemon measures 0.00
     cores idle over 20s. See QUERY_THREADS in index_pkm_meta.
     """
-    model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS, pkm.QUERY_THREADS)
     while True:
         time.sleep(KEEPALIVE_S)
+        if not STATE.warm:
+            continue
         if time.time() - STATE.last_query < KEEPALIVE_S:
             continue
+        model = pkm.get_embedding_model(pkm.QUERY_PROVIDERS, pkm.QUERY_THREADS)
         list(model.embed(["."]))
+
+
+def _malloc_trim():
+    """Return freed glibc heap pages to the OS after large cache evictions."""
+    try:
+        ctypes.CDLL("libc.so.6").malloc_trim(0)
+    except Exception:
+        pass
+
+
+def evict_idle(rerank_idle_s: int, idle_unload_s: int, now: float | None = None) -> bool:
+    """Unload cross-encoder, embedding model, and vault caches after idle periods."""
+    if STATE is None:
+        return False
+    now = time.time() if now is None else now
+    evicted = False
+
+    if rerank_idle_s > 0 and STATE.last_rerank > 0 and (now - STATE.last_rerank) > rerank_idle_s:
+        with pkm._LOAD_LOCK:
+            if pkm._RERANK_CACHE:
+                pkm._RERANK_CACHE.clear()
+                evicted = True
+        STATE.last_rerank = 0.0
+
+    if idle_unload_s > 0:
+        last_active = max(STATE.last_query, STATE.started)
+        if (now - last_active) > idle_unload_s:
+            STATE.warm = False
+            STATE.last_rerank = 0.0
+            with pkm._LOAD_LOCK:
+                if pkm._MODEL_CACHE:
+                    pkm._MODEL_CACHE.clear()
+                    evicted = True
+                if pkm._RERANK_CACHE:
+                    pkm._RERANK_CACHE.clear()
+                    evicted = True
+            for vault in STATE.vaults.values():
+                with vault.rebuild_lock:
+                    with vault.lock:
+                        if (
+                            vault.vectors is not None
+                            or vault.graph_cache is not None
+                            or vault.duplicate_cache is not None
+                            or vault.aa_neighbors_cache is not None
+                        ):
+                            vault.vectors = None
+                            vault.vectors_version = None
+                            vault.graph_cache = None
+                            vault.duplicate_cache = None
+                            vault.aa_neighbors_cache = None
+                            evicted = True
+            if hasattr(link_store_bridge, "_SNAPSHOT_CACHE") and hasattr(link_store_bridge, "_CACHE_LOCK"):
+                with link_store_bridge._CACHE_LOCK:
+                    if link_store_bridge._SNAPSHOT_CACHE:
+                        link_store_bridge._SNAPSHOT_CACHE.clear()
+                        evicted = True
+
+    if evicted:
+        gc.collect()
+        _malloc_trim()
+    return evicted
+
+
+def idle_reaper(rerank_idle_s: int, idle_unload_s: int):
+    """Periodically evict idle models and cached matrices to bound overnight RSS."""
+    while True:
+        time.sleep(IDLE_REAPER_POLL_S)
+        try:
+            evict_idle(rerank_idle_s, idle_unload_s)
+        except Exception as exc:
+            print(f"idle reaper error: {type(exc).__name__}: {exc}", flush=True)
 
 
 def enrich_results_with_metadata(vault: Vault, rows: list[dict]) -> list[dict]:
@@ -769,8 +851,17 @@ def rank(vault: Vault, query: str, limit: int, rerank: bool = False, expand: boo
         from entity_expansion import expand_query
         search_query = " ".join(expand_query(query, vault.db))
     # Request wider text field (1500 chars instead of default 700)
+    if rerank and STATE is not None:
+        STATE.last_rerank = time.time()
     rows = pkm.search_index(search_query, db_path=str(vault.db), limit=limit,
                             vectors=vectors, rerank=rerank, text_chars=1500)
+    if (
+        STATE is not None
+        and not STATE.warm
+        and not (vault.skip_embeddings or getattr(STATE, "skip_embeddings", False))
+        and pkm._MODEL_CACHE
+    ):
+        STATE.warm = True
 
     base_results = [
         {
@@ -834,6 +925,8 @@ def rerank_merged(vaults: list[Vault], query: str, results: list[dict]) -> list[
 
     documents = [texts.get((row["vault"], row["section_id"])) or row["heading"] or ""
                  for row in results]
+    if STATE is not None:
+        STATE.last_rerank = time.time()
     reranked = pkm.rerank_documents(query, results, documents)
     reranked.sort(key=lambda row: (1 if row.get("is_pinned") else 0, row.get("rerank_score", -999.0)), reverse=True)
     return reranked
@@ -1702,6 +1795,37 @@ INDEXER_DIR = Path(__file__).resolve().parent
 REINDEX_TIMEOUT_S = int(os.environ.get("PKM_REINDEX_TIMEOUT", "1800"))
 
 
+def _systemd_user_available() -> bool:
+    """Return True if systemd-run --user can talk to a live user manager."""
+    if not shutil.which("systemd-run"):
+        return False
+    runtime_dir = os.environ.get("XDG_RUNTIME_DIR") or (f"/run/user/{os.getuid()}" if hasattr(os, "getuid") else "")
+    if not runtime_dir:
+        return False
+    return (Path(runtime_dir) / "systemd" / "private").exists()
+
+
+def _wrap_worker_cmd(cmd: list[str]) -> list[str]:
+    """Isolate the reindex subprocess in its own systemd user scope when available.
+
+    Sharing the daemon's MemoryMax cgroup between searchd and the indexer worker
+    causes OOM loops during catch-up; a sibling scope bounds the worker separately.
+    """
+    if os.environ.get("PKM_NO_SYSTEMD_SCOPE") == "1" or not _systemd_user_available():
+        return cmd
+    return [
+        "systemd-run", "--user", "--scope", "--quiet",
+        "-p", f"MemoryMax={REINDEX_MEMORY_MAX}",
+        "-p", "MemorySwapMax=256M",
+        "-p", "CPUQuota=400%",
+        "-E", "GLIBC_TUNABLES=glibc.malloc.arena_max=2:glibc.malloc.mmap_threshold=131072",
+        "-E", "MALLOC_ARENA_MAX=2",
+        "-E", "MALLOC_MMAP_THRESHOLD_=131072",
+        "--",
+        *cmd,
+    ]
+
+
 def do_reindex(vault: Vault, started=None) -> dict:
     """Rebuild one corpus in a subprocess, and report the wait separately from the work.
 
@@ -1726,30 +1850,39 @@ def do_reindex(vault: Vault, started=None) -> dict:
         began = time.perf_counter()
         skip_emb = vault.skip_embeddings or getattr(STATE, "skip_embeddings", False)
         embed_sess = getattr(STATE, "embed_sessions", False)
-        if vault.collect is not None and vault.collect_spec is None:
-            # Unserializable in-memory collector (e.g. test lambda)
-            pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
-                            skip_embeddings=skip_emb, embed_sessions=embed_sess)
-        else:
-            cmd = [
-                sys.executable,
-                str(INDEXER_SCRIPT),
-                "--vault", str(vault.root),
-                "--db", str(vault.db),
-            ]
-            if skip_emb:
-                cmd.append("--skip-embeddings")
-            if embed_sess:
-                cmd.append("--embed-sessions")
-            if vault.collect_spec:
-                cmd.extend(["--collect", vault.collect_spec])
-            timeout = REINDEX_TIMEOUT_S if (vault.db.exists() and REINDEX_TIMEOUT_S > 0) else None
-            try:
-                proc = subprocess.run(cmd, cwd=str(INDEXER_DIR), timeout=timeout)
-            except subprocess.TimeoutExpired as exc:
-                raise RuntimeError(f"reindex subprocess for {vault.name} timed out after {timeout}s") from exc
-            if proc.returncode != 0:
-                raise RuntimeError(f"reindex subprocess for {vault.name} exited with code {proc.returncode}")
+        vault.reindexing = True
+        try:
+            if vault.collect is not None and vault.collect_spec is None:
+                # Unserializable in-memory collector (e.g. test lambda)
+                pkm.build_index(vault_path=str(vault.root), db_path=str(vault.db), collect=vault.collect,
+                                skip_embeddings=skip_emb, embed_sessions=embed_sess)
+            else:
+                cmd = [
+                    sys.executable,
+                    str(INDEXER_SCRIPT),
+                    "--vault", str(vault.root),
+                    "--db", str(vault.db),
+                ]
+                if skip_emb:
+                    cmd.append("--skip-embeddings")
+                if embed_sess:
+                    cmd.append("--embed-sessions")
+                if vault.collect_spec:
+                    cmd.extend(["--collect", vault.collect_spec])
+                timeout = REINDEX_TIMEOUT_S if (vault.db.exists() and REINDEX_TIMEOUT_S > 0) else None
+                try:
+                    proc = subprocess.run(_wrap_worker_cmd(cmd), cwd=str(INDEXER_DIR), timeout=timeout)
+                except subprocess.TimeoutExpired as exc:
+                    raise RuntimeError(f"reindex subprocess for {vault.name} timed out after {timeout}s") from exc
+                if proc.returncode in (-9, 137):
+                    raise RuntimeError(
+                        f"reindex subprocess for {vault.name} was killed (SIGKILL/OOM, code {proc.returncode}; "
+                        f"PKM_REINDEX_MEMORY_MAX={REINDEX_MEMORY_MAX})"
+                    )
+                if proc.returncode != 0:
+                    raise RuntimeError(f"reindex subprocess for {vault.name} exited with code {proc.returncode}")
+        finally:
+            vault.reindexing = False
         build = time.perf_counter() - began
     vault.stale_at = 0.0  # whatever was missing is in now, do not report it again
     return {"vault": vault.name, "took_s": round(time.perf_counter() - queued_at, 2),
@@ -2046,6 +2179,8 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(403, {"error": "loopback clients only, or send X-PKM-Token"})
             return
         url = urlparse(self.path)
+        if STATE is not None and url.path not in ("/health", "/roots", "/reindex"):
+            STATE.last_query = time.time()
         params = parse_qs(url.query)
         first = lambda name: (params.get(name) or [""])[0].strip()
         try:
@@ -2252,6 +2387,13 @@ def main():
                         help="Let the model go cold between queries, trading ~30ms on the first "
                              "query after idle. Keepalive costs ~0.00 cores now the ONNX pool is "
                              "capped at QUERY_THREADS, so there is rarely a reason to pass this")
+    parser.add_argument("--idle-unload", type=int, default=IDLE_UNLOAD_DEFAULT_S, metavar="SECONDS",
+                        help=f"Unload models and cached matrices after SECONDS idle "
+                             f"(default {IDLE_UNLOAD_DEFAULT_S}, 0 to disable)")
+    parser.add_argument("--rerank-idle-unload", type=int, default=RERANK_IDLE_UNLOAD_DEFAULT_S,
+                        metavar="SECONDS",
+                        help=f"Unload cross-encoder reranker after SECONDS idle "
+                             f"(default {RERANK_IDLE_UNLOAD_DEFAULT_S}, 0 to disable)")
     parser.add_argument("--query-log", default=None,
                         help="JSON Lines file recording one row per /search and /similar: "
                              "the query text, the vault and the result paths. If omitted, "
@@ -2345,6 +2487,12 @@ def main():
         warm_up()
     if STATE.warm and not args.no_keepalive:
         threading.Thread(target=keepalive, daemon=True).start()
+    if args.idle_unload > 0 or args.rerank_idle_unload > 0:
+        threading.Thread(
+            target=idle_reaper,
+            args=(args.rerank_idle_unload, args.idle_unload),
+            daemon=True,
+        ).start()
     def start_watchers():
         catch_up(vaults)
         for vault in vaults:

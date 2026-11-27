@@ -2046,5 +2046,127 @@ class TestSubprocessReindex(unittest.TestCase):
         self.assertTrue(db.exists())
 
 
+class MemoryAndIdleEvictionTest(unittest.TestCase):
+    def test_matrix_skips_reload_while_vault_reindexing_but_loads_initial(self):
+        import unittest.mock
+
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        vault = build_vault(Path(temp_dir.name) / "v", "v", {"a.md": "## A\nhello\n"})
+        self.addCleanup(vault.close)
+
+        # First load succeeds even if vault.reindexing is True
+        vault.reindexing = True
+        try:
+            initial = vault.matrix()
+            self.assertIsNotNone(vault.vectors)
+            self.assertEqual(initial, vault.vectors)
+        finally:
+            vault.reindexing = False
+
+        # Simulate DB bump while this vault is reindexing: resident matrix is returned
+        with vault.lock:
+            vault.vectors = "RESIDENT"
+            vault.vectors_version = -1
+        vault.reindexing = True
+        try:
+            with unittest.mock.patch.object(SEARCHD.pkm, "load_vectors", side_effect=AssertionError("should not reload")):
+                self.assertEqual(vault.matrix(), "RESIDENT")
+        finally:
+            vault.reindexing = False
+
+    def test_wrap_worker_cmd_respects_systemd_availability_and_disable_env(self):
+        import unittest.mock
+
+        cmd = ["python", "index_pkm_meta.py"]
+        with unittest.mock.patch.dict(os.environ, {"PKM_NO_SYSTEMD_SCOPE": "1"}):
+            self.assertEqual(SEARCHD._wrap_worker_cmd(cmd), cmd)
+
+        with unittest.mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("PKM_NO_SYSTEMD_SCOPE", None)
+            with unittest.mock.patch.object(SEARCHD, "_systemd_user_available", return_value=False):
+                self.assertEqual(SEARCHD._wrap_worker_cmd(cmd), cmd)
+            with unittest.mock.patch.object(SEARCHD, "_systemd_user_available", return_value=True):
+                wrapped = SEARCHD._wrap_worker_cmd(cmd)
+                self.assertEqual(wrapped[:4], ["systemd-run", "--user", "--scope", "--quiet"])
+                self.assertIn(f"MemoryMax={SEARCHD.REINDEX_MEMORY_MAX}", wrapped)
+                self.assertEqual(wrapped[-2:], cmd)
+
+    def test_evict_idle_unloads_reranker_then_full_caches(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        vault = build_vault(Path(temp_dir.name) / "v", "v", {"a.md": "## A\nhello\n"})
+        self.addCleanup(vault.close)
+        vault.matrix()
+        vault.graph_cache = ("k", {})
+        vault.duplicate_cache = ("t", [])
+        vault.aa_neighbors_cache = ("v", {})
+        vault.creation_dates = {"a.md": "2026-01-01T00:00:00+00:00"}
+
+        old_state = SEARCHD.STATE
+        state = SEARCHD.State([vault])
+        state.warm = True
+        state.started = 1000.0
+        state.last_query = 1000.0
+        state.last_rerank = 1000.0
+        SEARCHD.STATE = state
+        self.addCleanup(setattr, SEARCHD, "STATE", old_state)
+
+        SEARCHD.pkm._MODEL_CACHE[("cpu", 1)] = object()
+        SEARCHD.pkm._RERANK_CACHE["model"] = object()
+        SEARCHD.link_store_bridge._SNAPSHOT_CACHE[Path("/tmp/fake.db")] = object()
+        self.addCleanup(SEARCHD.pkm._MODEL_CACHE.clear)
+        self.addCleanup(SEARCHD.pkm._RERANK_CACHE.clear)
+        self.addCleanup(SEARCHD.link_store_bridge._SNAPSHOT_CACHE.clear)
+
+        # After rerank idle (301s), only reranker is evicted and last_rerank resets
+        self.assertTrue(SEARCHD.evict_idle(300, 1800, now=1301.0))
+        self.assertNotIn("model", SEARCHD.pkm._RERANK_CACHE)
+        self.assertEqual(state.last_rerank, 0.0)
+        self.assertTrue(SEARCHD.pkm._MODEL_CACHE)
+        self.assertIsNotNone(vault.vectors)
+        self.assertTrue(state.warm)
+
+        # After full idle (1801s), model, vault caches, and snapshot cache are evicted; reader & creation_dates kept
+        self.assertTrue(SEARCHD.evict_idle(300, 1800, now=2801.0))
+        self.assertFalse(SEARCHD.pkm._MODEL_CACHE)
+        self.assertFalse(SEARCHD.link_store_bridge._SNAPSHOT_CACHE)
+        self.assertIsNone(vault.vectors)
+        self.assertIsNone(vault.vectors_version)
+        self.assertIsNone(vault.graph_cache)
+        self.assertIsNone(vault.duplicate_cache)
+        self.assertIsNone(vault.aa_neighbors_cache)
+        self.assertIsNotNone(vault.reader)
+        self.assertIsNotNone(vault.creation_dates)
+        self.assertFalse(state.warm)
+
+    def test_health_does_not_update_last_query(self):
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        vault = build_vault(Path(temp_dir.name) / "v", "v", {"a.md": "## A\nhello\n"})
+        self.addCleanup(vault.close)
+
+        old_state = SEARCHD.STATE
+        state = SEARCHD.State([vault])
+        state.last_query = 123.0
+        SEARCHD.STATE = state
+        self.addCleanup(setattr, SEARCHD, "STATE", old_state)
+
+        server = SEARCHD.Server(("127.0.0.1", 0), SEARCHD.Handler)
+        port = server.server_address[1]
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+
+        status, _ = fetch(port, "/health?probe=1")
+        self.assertEqual(status, 200)
+        self.assertEqual(state.last_query, 123.0)
+
+        status, _ = fetch(port, "/search?q=hello&reindex=0")
+        self.assertEqual(status, 200)
+        self.assertGreater(state.last_query, 123.0)
+
+
 if __name__ == "__main__":
     unittest.main()
