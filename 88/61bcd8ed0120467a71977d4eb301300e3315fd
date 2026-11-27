@@ -1,0 +1,36 @@
+skills/pkm-link-store/link_store/adapters/vault_adapter.py
+  s_29b68a804e35a0::t_ab330e0e7c3b89 365-366
+  s_29b68a804e35a0::t_10b34038da9c5d 1-364,367-522
+skills/pkm-link-store/SKILL.md
+  s_29b68a804e35a0::t_10b34038da9c5d 12,16,29-39,47-54
+  s_29b68a804e35a0::t_1cb1ff7e63085d 55
+skills/pkm-link-store/link_store/db.py
+  s_29b68a804e35a0::t_10b34038da9c5d 130-137
+skills/pkm-link-store/link_store/cli.py
+  s_29b68a804e35a0::t_10b34038da9c5d 1,10-17,49-69,180-194,203-210
+skills/pkm-link-store/schema/artifacts.yaml
+  s_29b68a804e35a0::t_10b34038da9c5d 77-81,110-129
+skills/pkm-link-store/tests/test_vault_and_handover.py
+  s_29b68a804e35a0::t_e773e695bbf4e0 6,238-246
+  s_29b68a804e35a0::t_10b34038da9c5d 1-5,7-237,247-461
+skills/pkm-link-store/link_store/adapters/handover.py
+  s_29b68a804e35a0::t_10b34038da9c5d 1-215
+skills/pkm-link-store/link_store/adapters/__init__.py
+  s_29b68a804e35a0::t_10b34038da9c5d 92-101
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8861bcd8ed0120467a71977d4eb301300e3315fd",
+  "prompts": {},
+  "sessions": {
+    "s_29b68a804e35a0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "53986c42-7d67-44d5-994a-794da6b7eaeb",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
