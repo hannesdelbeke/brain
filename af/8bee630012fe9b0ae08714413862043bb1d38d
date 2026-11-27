@@ -1,0 +1,55 @@
+skills/pkm-link-store/tests/test_session_identity.py
+  s_e393963b44441a::t_fb8d4ca0cf43c6 1-165,173-274,283-420
+  s_e393963b44441a::t_ef1c05555cc4a1 166-172,275-282
+skills/pkm-link-store/link_store/cli.py
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 1,13,47,66-71,194-198,219
+skills/pkm-link-store/link_store/adapters/reconcile.py
+  s_e393963b44441a::t_6bbef5e5a37f14 7,48-49
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 1-6,8-47,50-89
+skills/pkm-link-store/link_store/db.py
+  s_e393963b44441a::t_aa6f205bb28ebf 7,15-20,59-61,124-128,135-136,139-140,142,160-193,202-203,205-219
+  s_e393963b44441a::t_ef1c05555cc4a1 194-201,204
+  s_e393963b44441a::t_31c5d62c2c5f79 220
+skills/pkm-link-store/link_store/adapters/__init__.py
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 93,99
+skills/pkm-metadata-indexer/searchd.py
+  s_e393963b44441a::t_6bbef5e5a37f14 34-36,842-862,961,973-976,1001-1004,2099-2100
+skills/pkm-link-store/link_store/adapters/git_adapter.py
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 11,38-81,92-99,150-161,206-209,236-237
+skills/pkm-link-store/SKILL.md
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 37-39,50-56
+  s_e393963b44441a::t_6bbef5e5a37f14 75-78
+  s_e393963b44441a::t_41ad1d8f3531f5 57
+skills/pkm-link-store/link_store/schema_compiler.py
+  s_e393963b44441a::t_aa6f205bb28ebf 33-34
+skills/pkm-link-store/link_store/adapters/vault_adapter.py
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 26,315-317,466-469
+skills/pkm-link-store/link_store/adapters/claude_jsonl.py
+  s_e393963b44441a::t_ef1c05555cc4a1 134-157,170-172
+  s_e393963b44441a::t_8e9bcb5ed2cd1e 346
+  s_e393963b44441a::t_aa6f205bb28ebf 17-18,25-33,76-82,86,92-133,158-169,187-190,215-217,221-273,296-297,306-307,309,317,319-322,330-345,347-369,372,378,421-422,432,436,438,441,445,472
+  s_e393963b44441a::t_9900e9c051de44 173-174
+skills/pkm-metadata-indexer/link_store_bridge.py
+  s_e393963b44441a::t_c567099bad7b2f 44-46,50,326,339,342,346-371,381,389-391,441,444,461-466,474,481-486,488-498,502,504-532
+  s_e393963b44441a::t_6bbef5e5a37f14 34-43,47-49,51,206-218,295,298,301-309,325,327-338,340-341,343-345,372-380,382-388,392-440,442-443,445-460,467-473,475-480,487,499-501,503
+  s_e393963b44441a::t_2b301520c7289c 533-534
+skills/pkm-metadata-indexer/test_searchd.py
+  s_e393963b44441a::t_4562fb56863ae7 1765-1901,1905-1920,1922-1931,1939-1960
+  s_e393963b44441a::t_0625cd6c47ccab 1902-1904,1921,1932-1938
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "af8bee630012fe9b0ae08714413862043bb1d38d",
+  "prompts": {},
+  "sessions": {
+    "s_e393963b44441a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e5b966d6-987b-4990-8f78-0098b50bbd9a",
+        "model": "claude-sonnet-5-5"
+      },
+      "human_author": "Hannes Delbeke <3758308+hannesdelbeke@users.noreply.github.com>"
+    }
+  }
+}
