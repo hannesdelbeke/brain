@@ -30,7 +30,8 @@ DDL_STATEMENTS = (
     CREATE TABLE IF NOT EXISTS aliases (
         alias TEXT PRIMARY KEY,
         node_id TEXT NOT NULL REFERENCES nodes(id) ON DELETE CASCADE,
-        recorded_at TEXT NOT NULL
+        recorded_at TEXT NOT NULL,
+        alias_kind TEXT
     )
     """,
     """

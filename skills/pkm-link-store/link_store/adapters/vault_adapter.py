@@ -23,7 +23,7 @@ import yaml
 from ..canonical_ids import file_id, note_id, repo_id, session_id, url_id
 from ..db import LinkStoreDB
 from . import BoundaryPolicy
-from .claude_jsonl import _detect_git_repo
+from .claude_jsonl import LABEL_ALIAS_KINDS, _detect_git_repo
 
 ADAPTER = "vault_adapter"
 
@@ -312,7 +312,9 @@ def _sync_aliases(
             db.delete_alias(alias, nid)
     emitted: list[list[str]] = []
     for alias, nid in sorted(desired.items()):
-        if db.resolve_alias(alias) in (None, nid):
+        current = db.get_alias(alias)
+        # A note's declared alias outranks a free-text session label.
+        if current is None or current["node_id"] == nid or current["alias_kind"] in LABEL_ALIAS_KINDS:
             db.upsert_alias(alias, nid)
             emitted.append([alias, nid])
     return emitted, len(wanted) - len(emitted)
@@ -461,10 +463,10 @@ def sync_vault(
                 db.upsert_node(uid, "Url", title=uid[4:])
                 add_edge(nid, uid, "cited_url", f"{rel}:{_line_of(content, match.start())}")
 
-        if PurePosixPath(rel).parts[0] == "sessions":
-            for key in _SESSION_KEYS:
-                for sid in _string_list(frontmatter.get(key)):
-                    session_refs.append((sid, rel, key))
+        # Any note declaring a session counts (sessions/, traces/, or elsewhere).
+        for key in _SESSION_KEYS:
+            for sid in _string_list(frontmatter.get(key)):
+                session_refs.append((sid, rel, key))
 
     for raw_sid, note_rel, via in session_refs:
         dst = note_nodes.get(note_rel)

@@ -1762,6 +1762,202 @@ class TestLinkStoreBridge(unittest.TestCase):
                 SEARCHD.STATE = old_state
 
 
+class TestLinkExpansion(unittest.TestCase):
+    """expand_links and link_context backfill, over synthetic stores and indexes."""
+
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+        self.brain = build_vault(root / "brain", "brain", {
+            "seed.md": "## Seed\nseedneedle\n",
+            "edited.md": "## Intro\nunrelated opening\n\n## Detail\nseedword detail section\n",
+        })
+        self.traces = build_vault(root / "traces", "traces", {
+            "record.md": "## Record\nwhat the later session did\n",
+        })
+        self.work = build_vault(root / "work", "work", {"secret.md": "## W\nother store\n"})
+        self.claude = build_vault(root / "claude", "claude", {})
+        # A transcript row: indexed under the path the .jsonl alias names.
+        self._add_section(self.claude, "p/s3.jsonl", "transcript of session three")
+        for vault in (self.brain, self.traces, self.work, self.claude):
+            self.addCleanup(vault.close)
+
+        self.personal = root / "personal.db"
+        self.work_db = root / "work.db"
+        TestLinkStoreBridge._create_link_db(
+            self.personal,
+            nodes=[
+                ("note:brain/seed.md", "Note", "seed.md", None),
+                ("note:brain/edited.md", "Note", "edited.md", None),
+                ("note:traces/record.md", "Note", "record.md", None),
+                ("note:work/secret.md", "Note", "secret.md", None),
+                ("session:s1", "Session", "s1", None),
+                ("session:s2", "Session", "s2", None),
+                ("session:s3", "Session", "s3", None),
+                ("branch:r@feat", "Branch", "feat", None),
+                ("commit:r@abc", "Commit", "abc", None),
+                ("url:https://x.test/", "Url", "x", None),
+                ("file:r@a.py", "File", "a.py", None),
+            ],
+            edges=[
+                ("session:s1", "note:brain/seed.md", "documented_in"),
+                ("session:s1", "note:brain/edited.md", "modified_file"),
+                ("session:s1", "session:s2", "continued_in"),
+                ("session:s2", "note:traces/record.md", "documented_in"),
+                ("session:s1", "session:s3", "handed_over_to"),
+                ("session:s1", "note:work/secret.md", "modified_file"),
+                ("session:s1", "branch:r@feat", "worked_in_branch"),
+                ("session:s1", "url:https://x.test/", "cited_url"),
+                ("session:s1", "file:r@a.py", "modified_file"),
+                ("commit:r@abc", "session:s1", "mentions_session"),
+                ("note:brain/seed.md", "note:brain/edited.md", "wikilinks_to"),
+            ],
+        )
+        import sqlite3
+        conn = sqlite3.connect(str(self.personal))
+        conn.execute("INSERT INTO aliases VALUES ('p/s1.jsonl', 'session:s1', 'now')")
+        conn.execute("INSERT INTO aliases VALUES ('p/s3.jsonl', 'session:s3', 'now')")
+        conn.commit()
+        conn.close()
+        TestLinkStoreBridge._create_link_db(
+            self.work_db, nodes=[("note:work/secret.md", "Note", "secret.md", None)], edges=[])
+        self.stores = {name: self.personal for name in ("brain", "traces", "claude")}
+        self.stores["work"] = self.work_db
+        self.vaults = {v.name: v for v in (self.brain, self.traces, self.work, self.claude)}
+        self.bridge = SEARCHD.link_store_bridge
+
+    @staticmethod
+    def _add_section(vault, path: str, content: str):
+        import sqlite3
+        conn = sqlite3.connect(str(vault.db))
+        conn.execute(
+            "INSERT INTO sections(id, path, heading, start_line, chunk_index, sha256) "
+            "VALUES (?, ?, 'Turn', 1, 0, 'x')", (f"{path}::0:0", path))
+        conn.execute("INSERT INTO sections_fts(section_id, content) VALUES (?, ?)",
+                     (f"{path}::0:0", content))
+        conn.commit()
+        conn.close()
+
+    def _row(self, vault: str, path: str) -> dict:
+        return {"vault": vault, "path": path}
+
+    def _expand(self, results, **kwargs):
+        return self.bridge.expand_candidates(results, self.stores, self.vaults, **kwargs)
+
+    def test_session_seed_reaches_one_hop_documents_in_its_own_store(self):
+        results = [self._row("claude", "p/s1.jsonl")]
+        extras = self._expand(results, query="seedword")
+        found = {(r["vault"], r["path"]): r for r in extras}
+        # documented_in, modified_file, continued_in (via its note), handover
+        # (via its transcript). work/ belongs to another store.
+        self.assertEqual(set(found), {
+            ("brain", "seed.md"), ("brain", "edited.md"),
+            ("traces", "record.md"), ("claude", "p/s3.jsonl"),
+        })
+        edited = found[("brain", "edited.md")]
+        self.assertEqual(edited["heading"], "Detail")  # best section, not the first
+        self.assertIn("seedword", edited["text"])
+        self.assertEqual(edited["expanded_from"]["rel"], "modified_file")
+        self.assertEqual(results, [self._row("claude", "p/s1.jsonl")])
+
+    def test_dedupe_caps_and_unsearched_vaults(self):
+        results = [self._row("claude", "p/s1.jsonl"), self._row("brain", "seed.md")]
+        paths = [(r["vault"], r["path"]) for r in self._expand(results)]
+        self.assertEqual(len(paths), len(set(paths)))
+        self.assertNotIn(("brain", "seed.md"), paths)
+        self.assertEqual(len(self._expand(results, max_extra=2)), 2)
+        self.assertEqual(self._expand(results, max_seeds=0), [])
+        only_brain = self.bridge.expand_candidates(
+            results, self.stores, {"brain": self.brain, "claude": self.claude})
+        self.assertNotIn("traces", {r["vault"] for r in only_brain})
+        # A seed in a different store sees none of these edges.
+        self.assertEqual(self._expand([self._row("work", "secret.md")]), [])
+
+    def test_default_cap_is_eight(self):
+        notes = [f"n{i:02d}.md" for i in range(12)]
+        for name in notes:
+            self._add_section(self.brain, name, "filler")
+        store = self.personal.with_name("many.db")
+        TestLinkStoreBridge._create_link_db(
+            store,
+            nodes=[("session:m", "Session", "m", None)]
+            + [(f"note:brain/{n}", "Note", n, None) for n in notes]
+            + [("note:brain/seed.md", "Note", "seed.md", None)],
+            edges=[("session:m", f"note:brain/{n}", "modified_file") for n in notes]
+            + [("session:m", "note:brain/seed.md", "documented_in")],
+        )
+        import sqlite3
+        conn = sqlite3.connect(str(store))
+        conn.execute("INSERT INTO aliases VALUES ('m.jsonl', 'session:m', 'now')")
+        conn.commit()
+        conn.close()
+        extras = self.bridge.expand_candidates(
+            [self._row("brain", "m.jsonl")], {"brain": store}, {"brain": self.brain})
+        self.assertEqual(len(extras), 8)
+
+    def test_expand_links_is_gated_on_rerank_and_reaches_the_reranker(self):
+        import unittest.mock
+
+        # With the transcript corpus searched, s1 is represented by it.
+        self._add_section(self.claude, "p/s1.jsonl", "first session transcript")
+        state = SEARCHD.State([self.brain, self.claude], link_stores=self.stores)
+        old_state, SEARCHD.STATE = SEARCHD.STATE, state
+        self.addCleanup(setattr, SEARCHD, "STATE", old_state)
+        server = ThreadingHTTPServer(("127.0.0.1", 0), SEARCHD.Handler)
+        port = server.server_address[1]
+        threading.Thread(target=server.serve_forever, daemon=True).start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(server.shutdown)
+
+        seen_documents = []
+
+        def fake_rerank(query, results, documents, max_chars=None):
+            seen_documents.append(documents)
+            for row in results:
+                row["rerank_score"] = 1.0 if "expanded_from" in row else 0.5
+            return results
+
+        base = "/search?q=seedneedle&vault=brain,claude&reindex=0"
+        with unittest.mock.patch.object(SEARCHD.pkm, "HAS_FASTEMBED", True), \
+                unittest.mock.patch.object(SEARCHD.pkm, "rerank_documents", fake_rerank), \
+                unittest.mock.patch.object(SEARCHD.Vault, "matrix", lambda self: ([], None)):
+            for suffix in ("", "&rerank=1", "&expand_links=1"):
+                status, body = fetch(port, base + suffix)
+                self.assertEqual(status, 200, body)
+                self.assertEqual([r["path"] for r in body["results"]], ["seed.md"], suffix)
+            status, body = fetch(port, base + "&rerank=1&expand_links=1")
+
+        self.assertEqual(status, 200, body)
+        # The expanded row outscored the seed, so it was ranked with it, not appended.
+        self.assertEqual([r["path"] for r in body["results"]], ["p/s1.jsonl", "seed.md"])
+        added = body["results"][0]
+        self.assertEqual(added["expanded_from"],
+                         {"vault": "brain", "path": "seed.md", "rel": "documented_in"})
+        self.assertIn("outline", added)
+        self.assertNotIn("section_id", added)
+        self.assertIn("first session transcript", seen_documents[-1])
+
+    def test_thin_hits_get_direct_neighbors_as_link_context(self):
+        results = [self._row("claude", "p/s1.jsonl"), self._row("traces", "record.md"),
+                   self._row("brain", "unknown.md")]
+        clusters = self.bridge.cluster_results(results, self.stores, threshold=99.0)
+        self.assertEqual({r["cluster_size"] for r in results}, {1})
+        context = results[0]["link_context"]
+        self.assertEqual(len(context), 5)
+        # Sessions first, then branch, commit; notes and files never.
+        self.assertEqual([c["node_type"] for c in context],
+                         ["Session", "Session", "Branch", "Commit", "Url"])
+        self.assertEqual([c["node_id"] for c in results[1]["link_context"]], ["session:s2"])
+        self.assertEqual(results[2]["link_context"], [])
+        self.assertTrue(all(c["shared_entities"] == [] for c in clusters))
+
+    def test_wikilinks_are_not_backfilled(self):
+        results = [self._row("brain", "edited.md")]
+        self.bridge.cluster_results(results, self.stores)
+        self.assertEqual([c["node_id"] for c in results[0]["link_context"]], ["session:s1"])
+
+
 class TestSubprocessReindex(unittest.TestCase):
     def test_do_reindex_passes_expected_cli_flags_and_handles_failure(self):
         import subprocess

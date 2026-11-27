@@ -31,6 +31,24 @@ Z_HUB_DEGREE: dict[str, int] = {
 }
 DEFAULT_HUB_DEGREE = 80
 
+# Relations followed by expand_candidates, strongest evidence first.
+EXPAND_RELS: tuple[str, ...] = (
+    "documented_in",
+    "continued_in",
+    "derived_from",
+    "handed_over_to",
+    "child_of",
+    "modified_file",
+    "mentions_session",
+)
+# Node types worth showing as direct context, most informative first. Handovers
+# are handed_over_to edges, so their neighbors are Sessions.
+CONTEXT_TYPES: tuple[str, ...] = ("Session", "Branch", "Commit", "Url")
+MIN_CONTEXT = 3
+MAX_CONTEXT = 5
+EXPANDED_TEXT_CHARS = 1500  # matches the `text` width searchd asks search_index for
+SQL_BATCH = 500
+
 _UUID_RE = re.compile(r"([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})")
 
 
@@ -185,6 +203,19 @@ def _pair_adamic_adar(snap: GraphSnapshot, u: str, v: str) -> tuple[float, list[
     return score, shared
 
 
+def _direct_context(snap: GraphSnapshot, nid: str) -> list[dict[str, str]]:
+    """Direct active neighbors of nid that explain a hit, excluding wikilinks."""
+    found: list[tuple[int, str, dict[str, str]]] = []
+    for nbr_id, rel in snap.adj.get(nid, ()):
+        ntype, title = snap.nodes[nbr_id]
+        if rel == "wikilinks_to" or ntype not in CONTEXT_TYPES:
+            continue
+        item = {"node_id": nbr_id, "node_type": ntype, "title": title, "rel": rel}
+        found.append((CONTEXT_TYPES.index(ntype), nbr_id, item))
+    found.sort(key=lambda entry: (entry[0], entry[1], entry[2]["rel"]))
+    return [item for _, _, item in found]
+
+
 def cluster_results(
     results: list[dict[str, Any]],
     link_stores: dict[str, Path],
@@ -261,12 +292,21 @@ def cluster_results(
             size = len(member_indices)
             shared_entities: dict[str, dict[str, str]] = {}
             for idx in member_indices:
-                ctx = list(context_by_idx[idx].values())[:5]
+                ctx = list(context_by_idx[idx].values())[:MAX_CONTEXT]
                 results[idx]["cluster_id"] = cid
                 results[idx]["cluster_size"] = size
-                results[idx]["link_context"] = ctx
+                # Only shared evidence belongs to the cluster; backfill is per hit.
                 for item in ctx:
                     shared_entities[item["node_id"]] = item
+                if idx in resolved and len(ctx) < MIN_CONTEXT:
+                    present = {item["node_id"] for item in ctx}
+                    for item in _direct_context(snap, resolved[idx]):
+                        if len(ctx) >= MAX_CONTEXT:
+                            break
+                        if item["node_id"] not in present:
+                            present.add(item["node_id"])
+                            ctx.append(item)
+                results[idx]["link_context"] = ctx
             clusters_out.append(
                 {
                     "cluster_id": cid,
@@ -280,6 +320,216 @@ def cluster_results(
             )
 
     return clusters_out
+
+
+def _node_documents(
+    snap: GraphSnapshot, nid: str, corpora: list[str], transcripts: dict[str, list[str]]
+) -> list[tuple[str, str]]:
+    """(vault, path) pairs that could hold a node's text, best first.
+
+    A Note is its own document. A Session is read through its transcript (the
+    .jsonl alias) or, failing that, the notes that document it.
+    """
+    node_type = snap.nodes[nid][0]
+    if node_type == "Note":
+        vault, sep, path = nid.removeprefix("note:").partition("/")
+        return [(vault, path)] if sep and vault in corpora else []
+    if node_type != "Session":
+        return []
+    docs = [(vault, path) for path in transcripts.get(nid, ()) for vault in corpora]
+    for nbr_id, rel in sorted(snap.adj.get(nid, ())):
+        if rel == "documented_in" and snap.nodes[nbr_id][0] == "Note":
+            docs += _node_documents(snap, nbr_id, corpora, transcripts)
+    return docs
+
+
+def _indexed_paths(db_path: Path, paths: list[str]) -> set[str]:
+    """The subset of paths that have at least one section in this index."""
+    if not db_path.exists():
+        return set()
+    try:
+        conn = _connect_ro(db_path)
+    except sqlite3.Error:
+        return set()
+    try:
+        found: set[str] = set()
+        for start in range(0, len(paths), SQL_BATCH):
+            batch = paths[start : start + SQL_BATCH]
+            placeholders = ",".join("?" * len(batch))
+            found.update(
+                str(row["path"])
+                for row in conn.execute(
+                    f"SELECT DISTINCT path FROM sections WHERE path IN ({placeholders})", batch
+                )
+            )
+        return found
+    except sqlite3.Error:
+        return set()
+    finally:
+        conn.close()
+
+
+def _best_sections(db_path: Path, paths: list[str], terms: set[str]) -> dict[str, dict[str, Any]]:
+    """The section of each indexed path that matches the query best, else its first."""
+    try:
+        conn = _connect_ro(db_path)
+    except sqlite3.Error:
+        return {}
+    try:
+        placeholders = ",".join("?" * len(paths))
+        rows = conn.execute(
+            f"SELECT id, path, heading, start_line FROM sections "
+            f"WHERE path IN ({placeholders}) ORDER BY path, start_line, chunk_index",
+            paths,
+        ).fetchall()
+        # section_id is unindexed in FTS5, so read all candidates in one pass.
+        texts = {
+            row["section_id"]: str(row["content"] or "")
+            for row in conn.execute(
+                f"SELECT section_id, content FROM sections_fts WHERE section_id IN "
+                f"(SELECT id FROM sections WHERE path IN ({placeholders}))",
+                paths,
+            )
+        }
+    except sqlite3.Error:
+        return {}
+    finally:
+        conn.close()
+
+    best: dict[str, tuple[tuple[int, int], dict[str, Any]]] = {}
+    for row in rows:
+        text = texts.get(row["id"], "")
+        words = [w for w in re.findall(r"\w+", text.lower()) if w in terms]
+        score = (len(set(words)), len(words))
+        path = str(row["path"])
+        if path in best and score <= best[path][0]:
+            continue
+        flat = " ".join(text.split())
+        if len(flat) > EXPANDED_TEXT_CHARS:
+            flat = flat[:EXPANDED_TEXT_CHARS].rsplit(" ", 1)[0] + " ..."
+        best[path] = (
+            score,
+            {
+                "path": path,
+                "heading": row["heading"],
+                "line": row["start_line"],
+                "section_id": row["id"],
+                "text": flat,
+            },
+        )
+    return {path: section for path, (_, section) in best.items()}
+
+
+def expand_candidates(
+    results: list[dict[str, Any]],
+    link_stores: dict[str, Path],
+    vaults_by_name: dict[str, Any],
+    max_seeds: int = 5,
+    max_extra: int = 8,
+    query: str = "",
+) -> list[dict[str, Any]]:
+    """Return up to max_extra new rows for 1-hop graph neighbors of the top results.
+
+    The rows are unscored, so the caller must rerank them with the originals.
+    A neighbor stays inside its seed's link-store DB, and only vaults in
+    vaults_by_name (anything with a `.db` index path) are read. Seeds take turns,
+    so one heavily linked hit cannot use every slot. `results` is not modified.
+    """
+    if not results or not link_stores or max_extra <= 0:
+        return []
+
+    # One queue of neighbors per seed: [(rel, candidate documents, seed row)]
+    queues: list[list[tuple[str, list[tuple[str, str]], dict[str, Any]]]] = []
+    wanted: dict[str, set[str]] = defaultdict(set)
+    transcripts_by_db: dict[Path, dict[str, list[str]]] = {}
+    for row in results[:max_seeds]:
+        vname = str(row.get("vault") or "")
+        if vname not in link_stores:
+            continue
+        db_path = link_stores[vname].expanduser().resolve()
+        snap = _load_snapshot(db_path)
+        if snap is None:
+            continue
+        seed = resolve_node_id(snap, vname, str(row.get("path") or ""))
+        if not seed:
+            continue
+        corpora = sorted(
+            name
+            for name, path in link_stores.items()
+            if name in vaults_by_name and path.expanduser().resolve() == db_path
+        )
+        transcripts = transcripts_by_db.get(db_path)
+        if transcripts is None:
+            transcripts = transcripts_by_db[db_path] = defaultdict(list)
+            for alias, target in sorted(snap.aliases.items()):
+                if alias.endswith(".jsonl"):
+                    transcripts[target].append(alias)
+        neighbors = sorted(
+            (EXPAND_RELS.index(rel), nbr_id, rel)
+            for nbr_id, rel in snap.adj.get(seed, ())
+            if rel in EXPAND_RELS
+        )
+        queue = []
+        for _, nbr_id, rel in neighbors:
+            docs = _node_documents(snap, nbr_id, corpora, transcripts)
+            if docs:
+                queue.append((rel, docs, row))
+                for vault, path in docs:
+                    wanted[vault].add(path)
+        if queue:
+            queues.append(queue)
+
+    indexed = {
+        (vault, path)
+        for vault, paths in wanted.items()
+        for path in _indexed_paths(Path(vaults_by_name[vault].db), sorted(paths))
+    }
+
+    seen = {(row.get("vault"), row.get("path")) for row in results}
+    chosen: list[tuple[tuple[str, str], str, dict[str, Any]]] = []
+    pending = [iter(queue) for queue in queues]
+    while pending and len(chosen) < max_extra:
+        for queue_iter in list(pending):
+            if len(chosen) >= max_extra:
+                break
+            for rel, docs, seed_row in queue_iter:
+                # The first indexed document stands for the node; if that's
+                # already a candidate, the neighbor is represented.
+                doc = next((d for d in docs if d in indexed), None)
+                if doc is None or doc in seen:
+                    continue
+                seen.add(doc)
+                chosen.append((doc, rel, seed_row))
+                break
+            else:
+                pending.remove(queue_iter)
+
+    by_vault: dict[str, list[str]] = defaultdict(list)
+    for (vault, path), _, _ in chosen:
+        by_vault[vault].append(path)
+    terms = set(re.findall(r"\w+", query.lower()))
+    sections = {
+        (vault, path): section
+        for vault, paths in by_vault.items()
+        for path, section in _best_sections(Path(vaults_by_name[vault].db), paths, terms).items()
+    }
+
+    return [
+        {
+            "vault": doc[0],
+            **sections[doc],
+            "score": 0.0,
+            "raw_sim": None,
+            "snippet": None,
+            "expanded_from": {
+                "vault": seed_row.get("vault"),
+                "path": seed_row.get("path"),
+                "rel": rel,
+            },
+        }
+        for doc, rel, seed_row in chosen
+        if doc in sections
+    ]
 
 
 def entity_links(db_path: Path, vault_name: str, note_path: str, limit: int = 50) -> list[dict[str, Any]]:

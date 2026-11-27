@@ -8,7 +8,7 @@ import subprocess
 from pathlib import Path
 
 from ..canonical_ids import branch_id, commit_id, repo_id, session_id, strip_branch_ref
-from ..db import LinkStoreDB
+from ..db import SHORT_SESSION_RE, LinkStoreDB
 from . import BoundaryPolicy
 
 MAX_COMMIT_FILES = 200
@@ -35,6 +35,50 @@ def _detect_default_branch(repo_path: Path, local_branches: list[str]) -> str | 
     return local_branches[0] if local_branches else None
 
 
+def _resolve_trailer_session(db: LinkStoreDB, token: str) -> str | None:
+    """Session node for a Session: trailer value.
+
+    An 8-char value resolves through its alias, then a unique id prefix, and
+    returns None rather than creating a stub when neither identifies one session.
+    """
+    aliased = db.resolve_alias(token)
+    if not SHORT_SESSION_RE.fullmatch(token):
+        resolved = aliased or f"session:{token}"
+        if not db.get_node(resolved):
+            db.upsert_node(resolved, "Session", title=token)
+        return resolved
+
+    for candidate in (aliased, db.resolve_alias(token.lower())):
+        node = db.get_node(candidate) if candidate else None
+        if node and node["node_type"] == "Session" and node["expired_at"] is None:
+            return candidate
+    matches = db.find_sessions_by_prefix(token)
+    if len(matches) == 1:
+        return matches[0]
+    if matches:
+        return None
+    # A stub that already exists (e.g. from a session note) is still a valid target.
+    stub = db.get_node(f"session:{token}")
+    return stub["id"] if stub and stub["expired_at"] is None else None
+
+
+def _link_trailer(
+    db: LinkStoreDB, cid: str, token: str, author_iso: str, sha40: str
+) -> bool:
+    session_node = _resolve_trailer_session(db, token)
+    if session_node is None:
+        return False
+    db.upsert_edge(
+        cid,
+        session_node,
+        "mentions_session",
+        "git_adapter",
+        valid_from=author_iso,
+        source_ref=sha40,
+    )
+    return True
+
+
 def sync_git_repo(
     db: LinkStoreDB,
     repo_name: str,
@@ -45,7 +89,14 @@ def sync_git_repo(
     """Incrementally ingest branches, commits, changed files, and Session: trailers."""
     root = Path(repo_path).expanduser().resolve()
     pol = policy or BoundaryPolicy()
-    totals = {"branches": 0, "expired_branches": 0, "commits": 0, "edges": 0, "skipped_large": 0}
+    totals = {
+        "branches": 0,
+        "expired_branches": 0,
+        "commits": 0,
+        "edges": 0,
+        "skipped_large": 0,
+        "unresolved_trailers": 0,
+    }
     if not root.exists() or not pol.is_allowed(root):
         return totals
 
@@ -96,6 +147,18 @@ def sync_git_repo(
         json.loads(state["extra_json"]) if state and state.get("extra_json") else {}
     )
 
+    # Commits are read once, so unresolved short trailers are kept and retried
+    # until their transcript shows up.
+    pending_key = f"git_pending:{rid}"
+    pending_state = db.get_sync_state("git_adapter", pending_key)
+    pending: set[tuple[str, str, str, str]] = set()
+    if pending_state and pending_state.get("extra_json"):
+        for item in json.loads(pending_state["extra_json"]).get("pending", []):
+            if _link_trailer(db, *item):
+                totals["edges"] += 1
+            else:
+                pending.add(tuple(item))
+
     for full_ref, short in zip(full_refs, short_branches):
         bid = branch_id(rid, full_ref)
         tip_res = _run_git(root, ["rev-parse", full_ref])
@@ -140,23 +203,10 @@ def sync_git_repo(
             totals["edges"] += 2
 
             for sess_match in _SESSION_TRAILER_RE.findall(body):
-                sid = (
-                    f"session:{sess_match}"
-                    if not sess_match.startswith("session:")
-                    else sess_match
-                )
-                resolved = db.resolve_alias(sess_match) or sid
-                if not db.get_node(resolved):
-                    db.upsert_node(resolved, "Session", title=sess_match)
-                db.upsert_edge(
-                    cid,
-                    resolved,
-                    "mentions_session",
-                    "git_adapter",
-                    valid_from=author_iso,
-                    source_ref=sha40,
-                )
-                totals["edges"] += 1
+                if _link_trailer(db, cid, sess_match, author_iso, sha40):
+                    totals["edges"] += 1
+                else:
+                    pending.add((cid, sess_match, author_iso, sha40))
 
             changed_files = [f.strip() for f in files_blob.splitlines() if f.strip()]
             if len(changed_files) > MAX_COMMIT_FILES:
@@ -183,4 +233,6 @@ def sync_git_repo(
         seen_tips[short] = tip_sha
 
     db.set_sync_state("git_adapter", state_key, extra=seen_tips)
+    db.set_sync_state("git_adapter", pending_key, extra={"pending": sorted(pending)})
+    totals["unresolved_trailers"] = len(pending)
     return totals

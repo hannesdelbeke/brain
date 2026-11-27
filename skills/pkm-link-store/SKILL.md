@@ -34,6 +34,9 @@ python -m link_store.cli sync-vault \
   --vault brain=/path/to/vault \
   --deny-root /path/to/private
 
+# Fold session:<8hex> stubs into the unique full session (`sync` runs this too)
+python -m link_store.cli reconcile-sessions --db ~/.pkm/stores/personal.db
+
 # Infer handed_over_to edges, run after `sync` so sessions have timestamps
 python -m link_store.cli derive-handovers --db ~/.pkm/stores/personal.db
 
@@ -43,6 +46,14 @@ python -m link_store.cli audit --db ~/.pkm/stores/personal.db
 # Query neighbors of a canonical node ID or alias
 python -m link_store.cli query --db ~/.pkm/stores/personal.db --node "note:brain/foo.md"
 ```
+
+## Session Identity & Lineage
+- `claude_jsonl` reads `continued-in`, `derived-from` (mechanisms in edge metadata `via`), `fork-context-ref` (`child_of`), `ai-title` / `agent-name` (node title, agent name wins), and the `compact_file_reference`, `edited_text_file` (both `read_file`), and `remote_session_change` (`cited_url`) attachments. Tool-result and attachment bodies are never read. `gitBranch: HEAD` is ignored.
+- Each full-UUID session gets an 8-char `short_id` alias, dropped while two sessions share the prefix.
+- A short `Session:` commit trailer that matches no single session creates no stub. It's kept in `sync_state` and retried on later syncs.
+- Reconciled stubs and their old edges are expired, not deleted.
+- A parser version bump re-reads transcripts from the start on the next `sync`.
+- Any note with `session_id` or `recap_session` frontmatter emits `documented_in`.
 
 ## Handover Heuristic
 `handed_over_to` (A -> B) is inferred when all of these hold:
@@ -61,3 +72,7 @@ python skills/pkm-metadata-indexer/searchd.py \
   --link-store brain=~/.pkm/stores/personal.db
 ```
 Then query `/search?q=...&cluster=1` or `/links?note=...` or `/health`.
+
+`cluster=1` annotates each hit with `link_context`. A hit sharing fewer than 3 entities is topped up (max 5) with its direct session, branch, commit, URL, and handover neighbors; cluster `shared_entities` stays shared-only.
+
+`rerank=1&expand_links=1` adds up to 8 one-hop neighbors of the top 5 hits to the rerank pool, marked `expanded_from`. They stay within the seed's link store and the searched vaults. A session neighbor appears as its indexed transcript, else its documenting note, so its corpus needs a `--link-store` mapping too.

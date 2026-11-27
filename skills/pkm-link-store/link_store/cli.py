@@ -1,4 +1,4 @@
-"""CLI for pkm-link-store: sync, sync-vault, derive-handovers, audit, and query."""
+"""CLI for pkm-link-store: sync, sync-vault, reconcile-sessions, derive-handovers, audit, query."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from pathlib import Path
 from .adapters import (
     BoundaryPolicy,
     derive_handovers,
+    reconcile_sessions,
     sync_claude_root,
     sync_git_repo,
     sync_vault,
@@ -43,6 +44,7 @@ def cmd_sync(args: argparse.Namespace) -> dict:
                 db, rname, rpath, policy=policy, max_commits=args.max_commits
             )
             summary["repos"].append({"name": rname, "path": rpath, **res})
+        summary["reconcile"] = reconcile_sessions(db)
     return summary
 
 
@@ -59,6 +61,12 @@ def cmd_sync_vault(args: argparse.Namespace) -> dict:
             res = sync_vault(db, name, path, policy=policy)
             summary["vaults"].append({"name": name, "path": path, **res})
     return summary
+
+
+def cmd_reconcile_sessions(args: argparse.Namespace) -> dict:
+    with LinkStoreDB(args.db) as db:
+        res = reconcile_sessions(db)
+    return {"db": str(Path(args.db).expanduser()), **res}
 
 
 def cmd_derive_handovers(args: argparse.Namespace) -> dict:
@@ -183,6 +191,11 @@ def main(argv: list[str] | None = None) -> int:
     p_vault.add_argument("--allow-root", action="append", default=[])
     p_vault.add_argument("--deny-root", action="append", default=[])
 
+    p_rec = sub.add_parser(
+        "reconcile-sessions", help="Fold session:<8hex> stubs into unique full session nodes"
+    )
+    p_rec.add_argument("--db", required=True, help="Path to SQLite link store DB")
+
     p_hand = sub.add_parser("derive-handovers", help="Infer handed_over_to edges between sessions")
     p_hand.add_argument("--db", required=True, help="Path to SQLite link store DB")
     p_hand.add_argument(
@@ -203,6 +216,7 @@ def main(argv: list[str] | None = None) -> int:
     commands = {
         "sync": cmd_sync,
         "sync-vault": cmd_sync_vault,
+        "reconcile-sessions": cmd_reconcile_sessions,
         "derive-handovers": cmd_derive_handovers,
         "audit": cmd_audit,
         "query": cmd_query,

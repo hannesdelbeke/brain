@@ -4,12 +4,19 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from .schema_compiler import CompiledSchema, compile_schema
+
+SHORT_SESSION_RE = re.compile(r"[0-9a-fA-F]{8}")
+_FULL_SESSION_ID_RE = re.compile(
+    r"session:[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", re.IGNORECASE
+)
+SHORT_ID_KIND = "short_id"
 
 
 def utc_now_iso() -> str:
@@ -49,6 +56,9 @@ class LinkStoreDB:
         with self.conn:
             for stmt in self.schema.ddl:
                 self.conn.execute(stmt)
+            alias_columns = {row[1] for row in self.conn.execute("PRAGMA table_info(aliases)")}
+            if "alias_kind" not in alias_columns:  # stores created before alias kinds
+                self.conn.execute("ALTER TABLE aliases ADD COLUMN alias_kind TEXT")
             self.conn.execute(
                 "INSERT OR REPLACE INTO meta(key, value) VALUES (?, ?)",
                 ("schema_name", self.schema.schema_name),
@@ -111,20 +121,25 @@ class LinkStoreDB:
         return dict(row) if row else None
 
     def upsert_alias(
-        self, alias: str, node_id: str, recorded_at: str | None = None
+        self,
+        alias: str,
+        node_id: str,
+        recorded_at: str | None = None,
+        alias_kind: str | None = None,
     ) -> None:
         """Map an alias string to a canonical node_id."""
         now = recorded_at or utc_now_iso()
         with self.conn:
             self.conn.execute(
                 """
-                INSERT INTO aliases(alias, node_id, recorded_at)
-                VALUES (?, ?, ?)
+                INSERT INTO aliases(alias, node_id, recorded_at, alias_kind)
+                VALUES (?, ?, ?, ?)
                 ON CONFLICT(alias) DO UPDATE SET
                     node_id = excluded.node_id,
-                    recorded_at = excluded.recorded_at
+                    recorded_at = excluded.recorded_at,
+                    alias_kind = excluded.alias_kind
                 """,
-                (alias, node_id, now),
+                (alias, node_id, now, alias_kind),
             )
 
     def delete_alias(self, alias: str, node_id: str) -> None:
@@ -141,6 +156,67 @@ class LinkStoreDB:
             "SELECT node_id FROM aliases WHERE alias = ?", (alias,)
         ).fetchone()
         return str(row["node_id"]) if row else None
+
+    def get_alias(self, alias: str) -> dict[str, Any] | None:
+        """Fetch an alias row (alias, node_id, alias_kind), or None."""
+        row = self.conn.execute(
+            "SELECT * FROM aliases WHERE alias = ?", (alias,)
+        ).fetchone()
+        return dict(row) if row else None
+
+    def find_sessions_by_prefix(self, prefix: str) -> list[str]:
+        """Active full-UUID parent Session ids starting with an 8-hex prefix.
+
+        Subagents and short-id stubs share the prefix but are not candidates.
+        """
+        if not SHORT_SESSION_RE.fullmatch(prefix):
+            return []
+        low = f"session:{prefix.lower()}-"
+        rows = self.conn.execute(
+            """
+            SELECT id FROM nodes
+            WHERE node_type = 'Session' AND expired_at IS NULL
+              AND lower(id) LIKE ? || '%'
+            ORDER BY id
+            """,
+            (low,),
+        ).fetchall()
+        return [row["id"] for row in rows if _FULL_SESSION_ID_RE.fullmatch(row["id"])]
+
+    def refresh_short_id_alias(self, prefix: str) -> str | None:
+        """Point the 8-char alias at its only matching session, or drop it if ambiguous.
+
+        Aliases of another kind are left alone unless they point at the short-id
+        stub itself or at an expired node.
+        """
+        prefix = prefix.lower()
+        matches = self.find_sessions_by_prefix(prefix)
+        # Drop other-case spellings (and, when ambiguous, every spelling) so a
+        # stale alias can't outlive the uniqueness it was based on.
+        keep = prefix if len(matches) == 1 else ""
+        with self.conn:
+            self.conn.execute(
+                "DELETE FROM aliases WHERE alias_kind = ? AND lower(alias) = ? AND alias != ?",
+                (SHORT_ID_KIND, prefix, keep),
+            )
+        if len(matches) != 1:
+            return None
+        current = self.get_alias(prefix)
+        target = matches[0]
+        if current:
+            if current["node_id"] == target and current["alias_kind"] == SHORT_ID_KIND:
+                return target
+            owner = self.get_node(current["node_id"])
+            replaceable = (
+                current["alias_kind"] == SHORT_ID_KIND
+                or current["node_id"] in (target, f"session:{prefix}")
+                or owner is None
+                or owner["expired_at"] is not None
+            )
+            if not replaceable:
+                return None
+        self.upsert_alias(prefix, target, alias_kind=SHORT_ID_KIND)
+        return target
 
     def upsert_edge(
         self,

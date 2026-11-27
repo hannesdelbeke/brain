@@ -90,11 +90,13 @@ class BoundaryPolicy:
 from .claude_jsonl import sync_claude_root  # noqa: E402
 from .git_adapter import sync_git_repo  # noqa: E402
 from .handover import derive_handovers  # noqa: E402
+from .reconcile import reconcile_sessions  # noqa: E402
 from .vault_adapter import sync_vault  # noqa: E402
 
 __all__ = [
     "BoundaryPolicy",
     "derive_handovers",
+    "reconcile_sessions",
     "sync_claude_root",
     "sync_git_repo",
     "sync_vault",

@@ -31,7 +31,9 @@ Endpoints, all accepting `?vault=name`:
     GET  /health           registered vaults, counts, provider, warm state
     GET  /search?q=&limit= hybrid FTS5 + vector results with RRF scores,
                            `&rerank=1` reorders the top with a cross-encoder,
-                           `&vault=all` searches every registered corpus
+                           `&vault=all` searches every registered corpus,
+                           `&expand_links=1` (with rerank=1) also reranks up to 8
+                           link-store neighbors of the top hits
     GET  /links?note=      inbound and outbound wikilink edges for one note
     GET  /unlinked?note=   sections naming a note without linking to it
     GET  /graph?k=         the whole corpus as nodes and edges: mutual nearest
@@ -837,6 +839,27 @@ def rerank_merged(vaults: list[Vault], query: str, results: list[dict]) -> list[
     return reranked
 
 
+def linked_candidates(vaults: list[Vault], query: str, results: list[dict]) -> list[dict]:
+    """Link-store neighbors of the top results, shaped like retrieval rows.
+
+    Only the corpora this request searches are eligible, so expansion never
+    widens what `vault=` asked for.
+    """
+    vault_map = {vault.name: vault for vault in vaults}
+    extras = link_store_bridge.expand_candidates(
+        results, STATE.link_stores, vault_map, query=query
+    )
+    by_vault: dict[str, list[dict]] = {}
+    for row in extras:
+        by_vault.setdefault(row["vault"], []).append(row)
+    enriched = {
+        (row["vault"], row["path"]): row
+        for name, rows in by_vault.items()
+        for row in enrich_results_with_metadata(vault_map[name], rows)
+    }
+    return [enriched[(row["vault"], row["path"])] for row in extras]
+
+
 def dedupe_by_path(results: list[dict]) -> list[dict]:
     """Keep the best-scoring section per note, in rank order.
 
@@ -935,7 +958,7 @@ def kick_reindex(vault: Vault) -> bool:
 
 def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
               rerank: bool = False, reindex: bool = True, expand: bool = True,
-              cluster: bool = False) -> dict:
+              cluster: bool = False, expand_links: bool = False) -> dict:
     """Search one corpus or several, and say which files the answer could not see.
 
     Merging across corpora sorts on the fused score. Those scores are sums of
@@ -947,6 +970,10 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     When rerank is enabled, the cross-encoder runs once over the merged,
     deduplicated candidate set rather than per-corpus, so N corpora cost the
     same as one.
+
+    `expand_links` adds link-store neighbors of the top candidates before that
+    pass. It needs the rerank, the only thing able to score a row retrieval never
+    ranked, and is ignored without it.
     """
     began = time.perf_counter()
     STATE.last_query = time.time()
@@ -971,7 +998,10 @@ def do_search(vaults: list[Vault], query: str, limit: int, origin: str = "",
     # note is free recall.
     results = dedupe_by_path(results)
     if rerank:
-        results = rerank_merged(vaults, query, results[:pkm.RERANK_CANDIDATES])
+        candidates = results[:pkm.RERANK_CANDIDATES]
+        if expand_links and STATE.link_stores and pkm.HAS_FASTEMBED:
+            candidates += linked_candidates(vaults, query, candidates)
+        results = rerank_merged(vaults, query, candidates)
     results = apply_corpus_floor(results, limit)
     # Carried only so the rerank could find the text; not part of the wire shape.
     for row in results:
@@ -2066,7 +2096,8 @@ class Handler(BaseHTTPRequestHandler):
                                           first("rerank") in {"1", "true", "yes"},
                                           first("reindex") not in {"0", "false", "no"},
                                           first("expand") in {"1", "true", "yes"},
-                                          first("cluster") in {"1", "true", "yes"}))
+                                          first("cluster") in {"1", "true", "yes"},
+                                          first("expand_links") in {"1", "true", "yes"}))
                 return
             if url.path == "/outline" and method == "GET":
                 query = first("q")
